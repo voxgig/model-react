@@ -25,7 +25,7 @@ function BasicLed(props: any) {
   const { ent, cols } = def
 
   const cmpstate = useSelector((state:any)=>state.main.vxg.cmp)
-  
+
   const entstate = useSelector((state:any)=>state.main.vxg.ent.meta.main[def.ent].state)
   const entlist = useSelector((state:any)=>state.main.vxg.ent.list.main[def.ent])
 
@@ -37,11 +37,11 @@ function BasicLed(props: any) {
     })
   }
 
-  
+
   const rows = entlist
-  
+
   let [editRow, setEditRow] = useState()
-  
+
   let selectRow = (ids:any) => {
     let id = ids[0]
     let row: any = rows.find((r:any)=>r.id===id)
@@ -50,17 +50,26 @@ function BasicLed(props: any) {
       setEditRow(row)
     }
   }
-  
-  const open=()=>{}
-  const processValueChange=()=>{}
-  const applyChanges=()=>{}
+
+  const open=()=>{
+
+  }
+
+  const processValueChange=async(val,col)=>{
+
+  }
+
+  const applyChanges=(row)=>{
+
+  }
+
   const cancelChanges=()=>{
     setEditRow(undefined)
   }
 
-  
+
   return (
-    <div style={{ height:'calc(100vh - 6rem)', width: 'calc(100vw - 18rem)' }}>
+    <div style={{ height:'calc(100vh - 6rem)', width: 'calc(100vw - 18rem)'}}>
 
       { editRow &&
         <Popup
@@ -70,15 +79,15 @@ function BasicLed(props: any) {
           onChange={processValueChange}
           onApplyChanges={applyChanges}
           onCancelChanges={cancelChanges}
-        />      
+        />
       }
-      
+
       <DataGrid
         rows={rows}
         columns={cols}
         onSelectionModelChange={selectRow}
       />
-      
+
     </div>
   )
 }
@@ -93,7 +102,10 @@ function Popup(props:any) {
     onCancelChanges,
     open
   } = props
-  
+
+  const [rowData, setRowData] = useState(row)
+  const [editRowUpdate, setEditRowUpdate] = useState(false)
+
   return <Dialog
     fullWidth
     open={open}
@@ -110,8 +122,14 @@ function Popup(props:any) {
                 margin="normal"
                 name={col.field}
                 label={col.headerName}
-                value={row[col.field]}
-                onChange={onChange}
+                value={rowData[col.field]}
+                onChange={async(e)=>{
+                  let editRowTmp = {...row}
+                  editRowTmp[col.field] = e.target.value
+                  await setRowData(editRowTmp)
+                  await setEditRowUpdate(!editRowUpdate)
+                  onChange(e.target.value,col.field)
+                }}
               />
             ))}
           </FormGroup>
@@ -122,7 +140,9 @@ function Popup(props:any) {
       <Button onClick={onCancelChanges} color="secondary">
         Cancel
       </Button>
-      <Button onClick={onApplyChanges} color="primary">
+      <Button onClick={()=>{
+        onApplyChanges(rowData)
+      }} color="primary">
         Save
       </Button>
     </DialogActions>

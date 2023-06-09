@@ -18,6 +18,26 @@ var __spreadValues = (a, b) => {
   return a;
 };
 var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
+var __async = (__this, __arguments, generator) => {
+  return new Promise((resolve, reject) => {
+    var fulfilled = (value) => {
+      try {
+        step(generator.next(value));
+      } catch (e) {
+        reject(e);
+      }
+    };
+    var rejected = (value) => {
+      try {
+        step(generator.throw(value));
+      } catch (e) {
+        reject(e);
+      }
+    };
+    var step = (x) => x.done ? resolve(x.value) : Promise.resolve(x.value).then(fulfilled, rejected);
+    step((generator = generator.apply(__this, __arguments)).next());
+  });
+};
 import * as React from "react";
 import React__default, { createElement, isValidElement, Children, cloneElement, useState } from "react";
 import { useSelector } from "react-redux";
@@ -157,28 +177,28 @@ function requireReactJsxRuntime_development() {
         return null;
       }
       var ReactSharedInternals = React2.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
-      function error(format2) {
+      function error(format) {
         {
           {
             for (var _len2 = arguments.length, args = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
               args[_key2 - 1] = arguments[_key2];
             }
-            printWarning("error", format2, args);
+            printWarning("error", format, args);
           }
         }
       }
-      function printWarning(level, format2, args) {
+      function printWarning(level, format, args) {
         {
           var ReactDebugCurrentFrame2 = ReactSharedInternals.ReactDebugCurrentFrame;
           var stack = ReactDebugCurrentFrame2.getStackAddendum();
           if (stack !== "") {
-            format2 += "%s";
+            format += "%s";
             args = args.concat([stack]);
           }
           var argsWithFormat = args.map(function(item) {
             return String(item);
           });
-          argsWithFormat.unshift("Warning: " + format2);
+          argsWithFormat.unshift("Warning: " + format);
           Function.prototype.apply.call(console[level], console, argsWithFormat);
         }
       }
@@ -2226,7 +2246,7 @@ function deepClone(source) {
 function deepmerge(target, source, options = {
   clone: true
 }) {
-  const output = options.clone ? _extends({}, target) : target;
+  const output = options.clone ? __spreadValues({}, target) : target;
   if (isPlainObject(target) && isPlainObject(source)) {
     Object.keys(source).forEach((key) => {
       if (key === "__proto__") {
@@ -2302,7 +2322,7 @@ function exactProp(propTypes2) {
   if (process.env.NODE_ENV === "production") {
     return propTypes2;
   }
-  return _extends({}, propTypes2, {
+  return __spreadProps(__spreadValues({}, propTypes2), {
     [specialProperty]: (props) => {
       const unsupportedProps = Object.keys(props).filter((prop) => !propTypes2.hasOwnProperty(prop));
       if (unsupportedProps.length > 0) {
@@ -2748,7 +2768,7 @@ function requirePropFactory(componentNameInError, Component) {
   if (process.env.NODE_ENV === "production") {
     return () => null;
   }
-  const prevPropTypes = Component ? _extends({}, Component.propTypes) : null;
+  const prevPropTypes = Component ? __spreadValues({}, Component.propTypes) : null;
   const requireProp = (requiredProp) => (props, propName, componentName, location, propFullName, ...args) => {
     const propFullNameSafe = propFullName || propName;
     const defaultTypeChecker = prevPropTypes == null ? void 0 : prevPropTypes[propFullNameSafe];
@@ -2785,7 +2805,7 @@ function useGlobalId(idOverride) {
   }, [defaultId]);
   return id;
 }
-const maybeReactUseId = React["useId"];
+const maybeReactUseId = React["useId".toString()];
 function useId(idOverride) {
   if (maybeReactUseId !== void 0) {
     const reactId = maybeReactUseId();
@@ -3082,10 +3102,10 @@ validator.isRequired = requiredInteger;
 validatorNoop.isRequired = validatorNoop;
 const integerPropType = process.env.NODE_ENV === "production" ? validatorNoop : validator;
 function resolveProps(defaultProps2, props) {
-  const output = _extends({}, props);
+  const output = __spreadValues({}, props);
   Object.keys(defaultProps2).forEach((propName) => {
     if (propName.toString().match(/^(components|slots)$/)) {
-      output[propName] = _extends({}, defaultProps2[propName], output[propName]);
+      output[propName] = __spreadValues(__spreadValues({}, defaultProps2[propName]), output[propName]);
     } else if (propName.toString().match(/^(componentsProps|slotProps)$/)) {
       const defaultSlotProps = defaultProps2[propName] || {};
       const slotProps = props[propName];
@@ -3095,7 +3115,7 @@ function resolveProps(defaultProps2, props) {
       } else if (!defaultSlotProps || !Object.keys(defaultSlotProps)) {
         output[propName] = slotProps;
       } else {
-        output[propName] = _extends({}, slotProps);
+        output[propName] = __spreadValues({}, slotProps);
         Object.keys(defaultSlotProps).forEach((slotPropName) => {
           output[propName][slotPropName] = resolveProps(defaultSlotProps[slotPropName], slotProps[slotPropName]);
         });
@@ -3106,7 +3126,7 @@ function resolveProps(defaultProps2, props) {
   });
   return output;
 }
-function composeClasses(slots, getUtilityClass, classes) {
+function composeClasses(slots, getUtilityClass, classes = void 0) {
   const output = {};
   Object.keys(slots).forEach(
     // `Objet.keys(slots)` can't be wider than `T` because we infer `T` from `slots`.
@@ -3114,7 +3134,10 @@ function composeClasses(slots, getUtilityClass, classes) {
     (slot) => {
       output[slot] = slots[slot].reduce((acc, key) => {
         if (key) {
-          acc.push(getUtilityClass(key));
+          const utilityClass = getUtilityClass(key);
+          if (utilityClass !== "") {
+            acc.push(utilityClass);
+          }
           if (classes && classes[key]) {
             acc.push(classes[key]);
           }
@@ -6440,7 +6463,7 @@ var min = Math.min;
 var round$1 = Math.round;
 function getUAString() {
   var uaData = navigator.userAgentData;
-  if (uaData != null && uaData.brands) {
+  if (uaData != null && uaData.brands && Array.isArray(uaData.brands)) {
     return uaData.brands.map(function(item) {
       return item.brand + "/" + item.version;
     }).join(" ");
@@ -6654,15 +6677,7 @@ function effect$1(_ref2) {
       return;
     }
   }
-  if (process.env.NODE_ENV !== "production") {
-    if (!isHTMLElement$1(arrowElement)) {
-      console.error(['Popper: "arrow" element must be an HTMLElement (not an SVGElement).', "To use an SVG arrow, wrap it in an HTMLElement that will be used as", "the arrow."].join(" "));
-    }
-  }
   if (!contains(state.elements.popper, arrowElement)) {
-    if (process.env.NODE_ENV !== "production") {
-      console.error(['Popper: "arrow" modifier\'s `element` must be a child of the popper', "element."].join(" "));
-    }
     return;
   }
   state.elements.arrow = arrowElement;
@@ -6685,9 +6700,8 @@ var unsetSides = {
   bottom: "auto",
   left: "auto"
 };
-function roundOffsetsByDPR(_ref) {
+function roundOffsetsByDPR(_ref, win) {
   var x = _ref.x, y = _ref.y;
-  var win = window;
   var dpr = win.devicePixelRatio || 1;
   return {
     x: round$1(x * dpr) / dpr || 0,
@@ -6749,7 +6763,7 @@ function mapToStyles(_ref2) {
   var _ref4 = roundOffsets === true ? roundOffsetsByDPR({
     x,
     y
-  }) : {
+  }, getWindow(popper2)) : {
     x,
     y
   };
@@ -6764,14 +6778,6 @@ function mapToStyles(_ref2) {
 function computeStyles(_ref5) {
   var state = _ref5.state, options = _ref5.options;
   var _options$gpuAccelerat = options.gpuAcceleration, gpuAcceleration = _options$gpuAccelerat === void 0 ? true : _options$gpuAccelerat, _options$adaptive = options.adaptive, adaptive = _options$adaptive === void 0 ? true : _options$adaptive, _options$roundOffsets = options.roundOffsets, roundOffsets = _options$roundOffsets === void 0 ? true : _options$roundOffsets;
-  if (process.env.NODE_ENV !== "production") {
-    var transitionProperty = getComputedStyle(state.elements.popper).transitionProperty || "";
-    if (adaptive && ["transform", "top", "right", "bottom", "left"].some(function(property) {
-      return transitionProperty.indexOf(property) >= 0;
-    })) {
-      console.warn(["Popper: Detected CSS transitions on at least one of the following", 'CSS properties: "transform", "top", "right", "bottom", "left".', "\n\n", 'Disable the "computeStyles" modifier\'s `adaptive` option to allow', "for smooth transitions, or remove these properties from the CSS", "transition declaration on the popper element if only transitioning", "opacity or background-color for example.", "\n\n", "We recommend using the popper element as a wrapper around an inner", "element that can have any CSS property transitioned for animations."].join(" "));
-    }
-  }
   var commonStyles = {
     placement: getBasePlacement(state.placement),
     variation: getVariation(state.placement),
@@ -7101,9 +7107,6 @@ function computeAutoPlacement(state, options) {
   });
   if (allowedPlacements.length === 0) {
     allowedPlacements = placements$1;
-    if (process.env.NODE_ENV !== "production") {
-      console.error(["Popper: The `allowedAutoPlacements` option did not allow any", "placements. Ensure the `placement` option matches the variation", "of the allowed placements.", 'For example, "auto" cannot be used to allow "bottom-start".', 'Use "auto-start" instead.'].join(" "));
-    }
   }
   var overflows = allowedPlacements.reduce(function(acc, placement2) {
     acc[placement2] = detectOverflow(state, {
@@ -7525,86 +7528,6 @@ function debounce(fn2) {
     return pending;
   };
 }
-function format(str) {
-  for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-    args[_key - 1] = arguments[_key];
-  }
-  return [].concat(args).reduce(function(p, c) {
-    return p.replace(/%s/, c);
-  }, str);
-}
-var INVALID_MODIFIER_ERROR = 'Popper: modifier "%s" provided an invalid %s property, expected %s but got %s';
-var MISSING_DEPENDENCY_ERROR = 'Popper: modifier "%s" requires "%s", but "%s" modifier is not available';
-var VALID_PROPERTIES = ["name", "enabled", "phase", "fn", "effect", "requires", "options"];
-function validateModifiers(modifiers) {
-  modifiers.forEach(function(modifier) {
-    [].concat(Object.keys(modifier), VALID_PROPERTIES).filter(function(value, index2, self2) {
-      return self2.indexOf(value) === index2;
-    }).forEach(function(key) {
-      switch (key) {
-        case "name":
-          if (typeof modifier.name !== "string") {
-            console.error(format(INVALID_MODIFIER_ERROR, String(modifier.name), '"name"', '"string"', '"' + String(modifier.name) + '"'));
-          }
-          break;
-        case "enabled":
-          if (typeof modifier.enabled !== "boolean") {
-            console.error(format(INVALID_MODIFIER_ERROR, modifier.name, '"enabled"', '"boolean"', '"' + String(modifier.enabled) + '"'));
-          }
-          break;
-        case "phase":
-          if (modifierPhases.indexOf(modifier.phase) < 0) {
-            console.error(format(INVALID_MODIFIER_ERROR, modifier.name, '"phase"', "either " + modifierPhases.join(", "), '"' + String(modifier.phase) + '"'));
-          }
-          break;
-        case "fn":
-          if (typeof modifier.fn !== "function") {
-            console.error(format(INVALID_MODIFIER_ERROR, modifier.name, '"fn"', '"function"', '"' + String(modifier.fn) + '"'));
-          }
-          break;
-        case "effect":
-          if (modifier.effect != null && typeof modifier.effect !== "function") {
-            console.error(format(INVALID_MODIFIER_ERROR, modifier.name, '"effect"', '"function"', '"' + String(modifier.fn) + '"'));
-          }
-          break;
-        case "requires":
-          if (modifier.requires != null && !Array.isArray(modifier.requires)) {
-            console.error(format(INVALID_MODIFIER_ERROR, modifier.name, '"requires"', '"array"', '"' + String(modifier.requires) + '"'));
-          }
-          break;
-        case "requiresIfExists":
-          if (!Array.isArray(modifier.requiresIfExists)) {
-            console.error(format(INVALID_MODIFIER_ERROR, modifier.name, '"requiresIfExists"', '"array"', '"' + String(modifier.requiresIfExists) + '"'));
-          }
-          break;
-        case "options":
-        case "data":
-          break;
-        default:
-          console.error('PopperJS: an invalid property has been provided to the "' + modifier.name + '" modifier, valid properties are ' + VALID_PROPERTIES.map(function(s) {
-            return '"' + s + '"';
-          }).join(", ") + '; but "' + key + '" was provided.');
-      }
-      modifier.requires && modifier.requires.forEach(function(requirement) {
-        if (modifiers.find(function(mod) {
-          return mod.name === requirement;
-        }) == null) {
-          console.error(format(MISSING_DEPENDENCY_ERROR, String(modifier.name), requirement, requirement));
-        }
-      });
-    });
-  });
-}
-function uniqueBy(arr, fn2) {
-  var identifiers = /* @__PURE__ */ new Set();
-  return arr.filter(function(item) {
-    var identifier2 = fn2(item);
-    if (!identifiers.has(identifier2)) {
-      identifiers.add(identifier2);
-      return true;
-    }
-  });
-}
 function mergeByName(modifiers) {
   var merged = modifiers.reduce(function(merged2, current) {
     var existing = merged2[current.name];
@@ -7618,8 +7541,6 @@ function mergeByName(modifiers) {
     return merged[key];
   });
 }
-var INVALID_ELEMENT_ERROR = "Popper: Invalid reference or popper argument provided. They must be either a DOM element or virtual element.";
-var INFINITE_LOOP_ERROR = "Popper: An infinite loop in the modifiers cycle has been detected! The cycle has been interrupted to prevent a browser crash.";
 var DEFAULT_OPTIONS = {
   placement: "bottom",
   modifiers: [],
@@ -7670,28 +7591,6 @@ function popperGenerator(generatorOptions) {
         state.orderedModifiers = orderedModifiers.filter(function(m) {
           return m.enabled;
         });
-        if (process.env.NODE_ENV !== "production") {
-          var modifiers = uniqueBy([].concat(orderedModifiers, state.options.modifiers), function(_ref) {
-            var name = _ref.name;
-            return name;
-          });
-          validateModifiers(modifiers);
-          if (getBasePlacement(state.options.placement) === auto) {
-            var flipModifier = state.orderedModifiers.find(function(_ref2) {
-              var name = _ref2.name;
-              return name === "flip";
-            });
-            if (!flipModifier) {
-              console.error(['Popper: "auto" placements require the "flip" modifier be', "present and enabled to work."].join(" "));
-            }
-          }
-          var _getComputedStyle = getComputedStyle(popper2), marginTop = _getComputedStyle.marginTop, marginRight = _getComputedStyle.marginRight, marginBottom = _getComputedStyle.marginBottom, marginLeft = _getComputedStyle.marginLeft;
-          if ([marginTop, marginRight, marginBottom, marginLeft].some(function(margin2) {
-            return parseFloat(margin2);
-          })) {
-            console.warn(['Popper: CSS "margin" styles cannot be used to apply padding', "between the popper and its reference element or boundary.", "To replicate margin, use the `offset` modifier, as well as", "the `padding` option in the `preventOverflow` and `flip`", "modifiers."].join(" "));
-          }
-        }
         runModifierEffects();
         return instance.update();
       },
@@ -7706,9 +7605,6 @@ function popperGenerator(generatorOptions) {
         }
         var _state$elements = state.elements, reference3 = _state$elements.reference, popper3 = _state$elements.popper;
         if (!areValidElements(reference3, popper3)) {
-          if (process.env.NODE_ENV !== "production") {
-            console.error(INVALID_ELEMENT_ERROR);
-          }
           return;
         }
         state.rects = {
@@ -7720,15 +7616,7 @@ function popperGenerator(generatorOptions) {
         state.orderedModifiers.forEach(function(modifier) {
           return state.modifiersData[modifier.name] = Object.assign({}, modifier.data);
         });
-        var __debug_loops__ = 0;
         for (var index2 = 0; index2 < state.orderedModifiers.length; index2++) {
-          if (process.env.NODE_ENV !== "production") {
-            __debug_loops__ += 1;
-            if (__debug_loops__ > 100) {
-              console.error(INFINITE_LOOP_ERROR);
-              break;
-            }
-          }
           if (state.reset === true) {
             state.reset = false;
             index2 = -1;
@@ -7759,9 +7647,6 @@ function popperGenerator(generatorOptions) {
       }
     };
     if (!areValidElements(reference2, popper2)) {
-      if (process.env.NODE_ENV !== "production") {
-        console.error(INVALID_ELEMENT_ERROR);
-      }
       return instance;
     }
     instance.setOptions(options).then(function(state2) {
@@ -7770,8 +7655,8 @@ function popperGenerator(generatorOptions) {
       }
     });
     function runModifierEffects() {
-      state.orderedModifiers.forEach(function(_ref3) {
-        var name = _ref3.name, _ref3$options = _ref3.options, options2 = _ref3$options === void 0 ? {} : _ref3$options, effect2 = _ref3.effect;
+      state.orderedModifiers.forEach(function(_ref) {
+        var name = _ref.name, _ref$options = _ref.options, options2 = _ref$options === void 0 ? {} : _ref$options, effect2 = _ref.effect;
         if (typeof effect2 === "function") {
           var cleanupFn = effect2({
             state,
@@ -7873,7 +7758,7 @@ function getPopperUnstyledUtilityClass(slot) {
   return generateUtilityClass("MuiPopperUnstyled", slot);
 }
 const popperUnstyledClasses = generateUtilityClasses("MuiPopperUnstyled", ["root"]);
-const _excluded$15 = ["anchorEl", "children", "component", "direction", "disablePortal", "modifiers", "open", "ownerState", "placement", "popperOptions", "popperRef", "slotProps", "slots", "TransitionProps"], _excluded2$6 = ["anchorEl", "children", "container", "direction", "disablePortal", "keepMounted", "modifiers", "open", "placement", "popperOptions", "popperRef", "style", "transition", "slotProps", "slots"];
+const _excluded$15 = ["anchorEl", "children", "component", "direction", "disablePortal", "modifiers", "open", "ownerState", "placement", "popperOptions", "popperRef", "slotProps", "slots", "TransitionProps"], _excluded2$5 = ["anchorEl", "children", "container", "direction", "disablePortal", "keepMounted", "modifiers", "open", "placement", "popperOptions", "popperRef", "style", "transition", "slotProps", "slots"];
 function flipPlacement(placement, direction) {
   if (direction === "ltr") {
     return placement;
@@ -8039,7 +7924,7 @@ const PopperUnstyled = /* @__PURE__ */ React.forwardRef(function PopperUnstyled2
     transition = false,
     slotProps = {},
     slots = {}
-  } = props, other = _objectWithoutPropertiesLoose(props, _excluded2$6);
+  } = props, other = _objectWithoutPropertiesLoose(props, _excluded2$5);
   const [exited, setExited] = React.useState(true);
   const handleEnter = () => {
     setExited(false);
@@ -13200,6 +13085,7 @@ var KEYFRAMES = "@keyframes";
 var FONT_FACE = "@font-face";
 var COUNTER_STYLE = "@counter-style";
 var FONT_FEATURE_VALUES = "@font-feature-values";
+var LAYER = "@layer";
 var abs = Math.abs;
 var from = String.fromCharCode;
 var assign = Object.assign;
@@ -13438,6 +13324,8 @@ function parse(value, root, parent, rule, rules, rulesets, pseudo, points, decla
           case 125:
             scanning = 0;
           case 59 + offset2:
+            if (ampersand == -1)
+              characters2 = replace(characters2, /\f/g, "");
             if (property > 0 && strlen(characters2) - length2)
               append(property > 32 ? declaration(characters2 + ";", rule, parent, length2 - 1) : declaration(replace(characters2, " ", "") + ";", rule, parent, length2 - 2), declarations);
             break;
@@ -13451,6 +13339,7 @@ function parse(value, root, parent, rule, rules, rulesets, pseudo, points, decla
               else
                 switch (atrule === 99 && charat(characters2, 3) === 110 ? 100 : atrule) {
                   case 100:
+                  case 108:
                   case 109:
                   case 115:
                     parse(value, reference2, reference2, rule && append(ruleset(value, reference2, reference2, 0, 0, rules, points, type, rules, props = [], length2), children2), rules, children2, length2, points, rule ? props : children2);
@@ -13662,6 +13551,9 @@ function serialize(children2, callback) {
 }
 function stringify(element, index2, children2, callback) {
   switch (element.type) {
+    case LAYER:
+      if (element.children.length)
+        break;
     case IMPORT:
     case DECLARATION:
       return element.return = element.return || element.value;
@@ -13871,8 +13763,8 @@ var createUnsafeSelectorsAlarm = function createUnsafeSelectorsAlarm2(cache2) {
       return;
     var unsafePseudoClasses = element.value.match(/(:first|:nth|:nth-last)-child/g);
     if (unsafePseudoClasses) {
-      var isNested = element.parent === children2[0];
-      var commentContainer = isNested ? children2[0].children : (
+      var isNested = !!element.parent;
+      var commentContainer = isNested ? element.parent.children : (
         // global rule at the root level
         children2
       );
@@ -14204,7 +14096,7 @@ process.env.NODE_ENV !== "production" ? StyledEngineProvider.propTypes = {
 function isEmpty$3(obj) {
   return obj === void 0 || obj === null || Object.keys(obj).length === 0;
 }
-function GlobalStyles$1(props) {
+function GlobalStyles$2(props) {
   const {
     styles: styles2,
     defaultTheme: defaultTheme2 = {}
@@ -14214,12 +14106,12 @@ function GlobalStyles$1(props) {
     styles: globalStyles
   });
 }
-process.env.NODE_ENV !== "production" ? GlobalStyles$1.propTypes = {
+process.env.NODE_ENV !== "production" ? GlobalStyles$2.propTypes = {
   defaultTheme: propTypesExports.object,
-  styles: propTypesExports.oneOfType([propTypesExports.string, propTypesExports.object, propTypesExports.func])
+  styles: propTypesExports.oneOfType([propTypesExports.array, propTypesExports.string, propTypesExports.object, propTypesExports.func])
 } : void 0;
 /**
- * @mui/styled-engine v5.11.11
+ * @mui/styled-engine v5.13.2
  *
  * @license MIT
  * This source code is licensed under the MIT license found in the
@@ -14244,6 +14136,83 @@ const internal_processStyles = (tag, processor) => {
   if (Array.isArray(tag.__emotion_styles)) {
     tag.__emotion_styles = processor(tag.__emotion_styles);
   }
+};
+const _excluded$O = ["values", "unit", "step"];
+const breakpointKeys = ["xs", "sm", "md", "lg", "xl"];
+const sortBreakpointsValues = (values2) => {
+  const breakpointsAsArray = Object.keys(values2).map((key) => ({
+    key,
+    val: values2[key]
+  })) || [];
+  breakpointsAsArray.sort((breakpoint1, breakpoint2) => breakpoint1.val - breakpoint2.val);
+  return breakpointsAsArray.reduce((acc, obj) => {
+    return _extends({}, acc, {
+      [obj.key]: obj.val
+    });
+  }, {});
+};
+function createBreakpoints(breakpoints2) {
+  const {
+    // The breakpoint **start** at this value.
+    // For instance with the first breakpoint xs: [xs, sm).
+    values: values2 = {
+      xs: 0,
+      // phone
+      sm: 600,
+      // tablet
+      md: 900,
+      // small laptop
+      lg: 1200,
+      // desktop
+      xl: 1536
+      // large screen
+    },
+    unit = "px",
+    step = 5
+  } = breakpoints2, other = _objectWithoutPropertiesLoose(breakpoints2, _excluded$O);
+  const sortedValues = sortBreakpointsValues(values2);
+  const keys = Object.keys(sortedValues);
+  function up(key) {
+    const value = typeof values2[key] === "number" ? values2[key] : key;
+    return `@media (min-width:${value}${unit})`;
+  }
+  function down(key) {
+    const value = typeof values2[key] === "number" ? values2[key] : key;
+    return `@media (max-width:${value - step / 100}${unit})`;
+  }
+  function between(start2, end2) {
+    const endIndex = keys.indexOf(end2);
+    return `@media (min-width:${typeof values2[start2] === "number" ? values2[start2] : start2}${unit}) and (max-width:${(endIndex !== -1 && typeof values2[keys[endIndex]] === "number" ? values2[keys[endIndex]] : end2) - step / 100}${unit})`;
+  }
+  function only(key) {
+    if (keys.indexOf(key) + 1 < keys.length) {
+      return between(key, keys[keys.indexOf(key) + 1]);
+    }
+    return up(key);
+  }
+  function not(key) {
+    const keyIndex = keys.indexOf(key);
+    if (keyIndex === 0) {
+      return up(keys[1]);
+    }
+    if (keyIndex === keys.length - 1) {
+      return down(keys[keyIndex]);
+    }
+    return between(key, keys[keys.indexOf(key) + 1]).replace("@media", "@media not all and");
+  }
+  return _extends({
+    keys,
+    values: sortedValues,
+    up,
+    down,
+    between,
+    only,
+    not,
+    unit
+  }, other);
+}
+const shape = {
+  borderRadius: 4
 };
 const responsivePropType = process.env.NODE_ENV !== "production" ? propTypesExports.oneOfType([propTypesExports.number, propTypesExports.string, propTypesExports.object, propTypesExports.array]) : {};
 function merge(acc, item) {
@@ -14458,25 +14427,6 @@ function style$2(options) {
   fn2.filterProps = [prop];
   return fn2;
 }
-function compose(...styles2) {
-  const handlers = styles2.reduce((acc, style2) => {
-    style2.filterProps.forEach((prop) => {
-      acc[prop] = style2;
-    });
-    return acc;
-  }, {});
-  const fn2 = (props) => {
-    return Object.keys(props).reduce((acc, prop) => {
-      if (handlers[prop]) {
-        return merge(acc, handlers[prop](props));
-      }
-      return acc;
-    }, {});
-  };
-  fn2.propTypes = process.env.NODE_ENV !== "production" ? styles2.reduce((acc, style2) => Object.assign(acc, style2.propTypes), {}) : {};
-  fn2.filterProps = styles2.reduce((acc, style2) => acc.concat(style2.filterProps), []);
-  return fn2;
-}
 function memoize(fn2) {
   const cache2 = {};
   return (arg) => {
@@ -14619,6 +14569,47 @@ spacing.propTypes = process.env.NODE_ENV !== "production" ? spacingKeys.reduce((
   return obj;
 }, {}) : {};
 spacing.filterProps = spacingKeys;
+function createSpacing(spacingInput = 8) {
+  if (spacingInput.mui) {
+    return spacingInput;
+  }
+  const transform = createUnarySpacing({
+    spacing: spacingInput
+  });
+  const spacing2 = (...argsInput) => {
+    if (process.env.NODE_ENV !== "production") {
+      if (!(argsInput.length <= 4)) {
+        console.error(`MUI: Too many arguments provided, expected between 0 and 4, got ${argsInput.length}`);
+      }
+    }
+    const args = argsInput.length === 0 ? [1] : argsInput;
+    return args.map((argument) => {
+      const output = transform(argument);
+      return typeof output === "number" ? `${output}px` : output;
+    }).join(" ");
+  };
+  spacing2.mui = true;
+  return spacing2;
+}
+function compose(...styles2) {
+  const handlers = styles2.reduce((acc, style2) => {
+    style2.filterProps.forEach((prop) => {
+      acc[prop] = style2;
+    });
+    return acc;
+  }, {});
+  const fn2 = (props) => {
+    return Object.keys(props).reduce((acc, prop) => {
+      if (handlers[prop]) {
+        return merge(acc, handlers[prop](props));
+      }
+      return acc;
+    }, {});
+  };
+  fn2.propTypes = process.env.NODE_ENV !== "production" ? styles2.reduce((acc, style2) => Object.assign(acc, style2.propTypes), {}) : {};
+  fn2.filterProps = styles2.reduce((acc, style2) => acc.concat(style2.filterProps), []);
+  return fn2;
+}
 function borderTransform(value) {
   if (typeof value !== "number") {
     return value;
@@ -14685,71 +14676,6 @@ borderRadius.propTypes = process.env.NODE_ENV !== "production" ? {
 } : {};
 borderRadius.filterProps = ["borderRadius"];
 const borders = compose(border, borderTop, borderRight, borderBottom, borderLeft, borderColor, borderTopColor, borderRightColor, borderBottomColor, borderLeftColor, borderRadius);
-const displayPrint = style$2({
-  prop: "displayPrint",
-  cssProperty: false,
-  transform: (value) => ({
-    "@media print": {
-      display: value
-    }
-  })
-});
-const displayRaw = style$2({
-  prop: "display"
-});
-const overflow = style$2({
-  prop: "overflow"
-});
-const textOverflow = style$2({
-  prop: "textOverflow"
-});
-const visibility = style$2({
-  prop: "visibility"
-});
-const whiteSpace = style$2({
-  prop: "whiteSpace"
-});
-const display = compose(displayPrint, displayRaw, overflow, textOverflow, visibility, whiteSpace);
-const flexBasis = style$2({
-  prop: "flexBasis"
-});
-const flexDirection = style$2({
-  prop: "flexDirection"
-});
-const flexWrap = style$2({
-  prop: "flexWrap"
-});
-const justifyContent = style$2({
-  prop: "justifyContent"
-});
-const alignItems = style$2({
-  prop: "alignItems"
-});
-const alignContent = style$2({
-  prop: "alignContent"
-});
-const order = style$2({
-  prop: "order"
-});
-const flex = style$2({
-  prop: "flex"
-});
-const flexGrow = style$2({
-  prop: "flexGrow"
-});
-const flexShrink = style$2({
-  prop: "flexShrink"
-});
-const alignSelf = style$2({
-  prop: "alignSelf"
-});
-const justifyItems = style$2({
-  prop: "justifyItems"
-});
-const justifySelf = style$2({
-  prop: "justifySelf"
-});
-const flexbox = compose(flexBasis, flexDirection, flexWrap, justifyContent, alignItems, alignContent, order, flex, flexGrow, flexShrink, alignSelf, justifyItems, justifySelf);
 const gap = (props) => {
   if (props.gap !== void 0 && props.gap !== null) {
     const transformer = createUnaryUnit(props.theme, "spacing", 8, "gap");
@@ -14843,30 +14769,6 @@ const backgroundColor = style$2({
   transform: paletteTransform
 });
 const palette = compose(color, bgcolor, backgroundColor);
-const position = style$2({
-  prop: "position"
-});
-const zIndex$1 = style$2({
-  prop: "zIndex",
-  themeKey: "zIndex"
-});
-const top = style$2({
-  prop: "top"
-});
-const right = style$2({
-  prop: "right"
-});
-const bottom = style$2({
-  prop: "bottom"
-});
-const left = style$2({
-  prop: "left"
-});
-const positions = compose(position, zIndex$1, top, right, bottom, left);
-const boxShadow = style$2({
-  prop: "boxShadow",
-  themeKey: "shadows"
-});
 function sizingTransform(value) {
   return value <= 1 && value !== 0 ? `${value * 100}%` : value;
 }
@@ -14918,40 +14820,6 @@ const boxSizing = style$2({
   prop: "boxSizing"
 });
 const sizing = compose(width, maxWidth, minWidth, height, maxHeight, minHeight, boxSizing);
-const fontFamily = style$2({
-  prop: "fontFamily",
-  themeKey: "typography"
-});
-const fontSize = style$2({
-  prop: "fontSize",
-  themeKey: "typography"
-});
-const fontStyle = style$2({
-  prop: "fontStyle",
-  themeKey: "typography"
-});
-const fontWeight = style$2({
-  prop: "fontWeight",
-  themeKey: "typography"
-});
-const letterSpacing = style$2({
-  prop: "letterSpacing"
-});
-const textTransform = style$2({
-  prop: "textTransform"
-});
-const lineHeight = style$2({
-  prop: "lineHeight"
-});
-const textAlign = style$2({
-  prop: "textAlign"
-});
-const typographyVariant = style$2({
-  prop: "typography",
-  cssProperty: false,
-  themeKey: "typography"
-});
-const typography = compose(typographyVariant, fontFamily, fontSize, fontStyle, fontWeight, letterSpacing, lineHeight, textAlign, textTransform);
 const defaultSxConfig = {
   // borders
   border: {
@@ -15259,6 +15127,11 @@ function unstable_createStyleFunctionSx() {
     if (val == null) {
       return null;
     }
+    if (themeKey === "typography" && val === "inherit") {
+      return {
+        [prop]: val
+      };
+    }
     const themeMapping = getPath(theme, themeKey) || {};
     if (style2) {
       return style2(props);
@@ -15334,7 +15207,201 @@ function unstable_createStyleFunctionSx() {
 }
 const styleFunctionSx = unstable_createStyleFunctionSx();
 styleFunctionSx.filterProps = ["sx"];
-const _excluded$O = ["sx"];
+const _excluded$N = ["breakpoints", "palette", "spacing", "shape"];
+function createTheme$1(options = {}, ...args) {
+  const {
+    breakpoints: breakpointsInput = {},
+    palette: paletteInput = {},
+    spacing: spacingInput,
+    shape: shapeInput = {}
+  } = options, other = _objectWithoutPropertiesLoose(options, _excluded$N);
+  const breakpoints2 = createBreakpoints(breakpointsInput);
+  const spacing2 = createSpacing(spacingInput);
+  let muiTheme = deepmerge({
+    breakpoints: breakpoints2,
+    direction: "ltr",
+    components: {},
+    // Inject component definitions.
+    palette: _extends({
+      mode: "light"
+    }, paletteInput),
+    spacing: spacing2,
+    shape: _extends({}, shape, shapeInput)
+  }, other);
+  muiTheme = args.reduce((acc, argument) => deepmerge(acc, argument), muiTheme);
+  muiTheme.unstable_sxConfig = _extends({}, defaultSxConfig, other == null ? void 0 : other.unstable_sxConfig);
+  muiTheme.unstable_sx = function sx(props) {
+    return styleFunctionSx({
+      sx: props,
+      theme: this
+    });
+  };
+  return muiTheme;
+}
+function isObjectEmpty(obj) {
+  return Object.keys(obj).length === 0;
+}
+function useTheme$3(defaultTheme2 = null) {
+  const contextTheme = React.useContext(ThemeContext$1);
+  return !contextTheme || isObjectEmpty(contextTheme) ? defaultTheme2 : contextTheme;
+}
+const systemDefaultTheme$1 = createTheme$1();
+function useTheme$2(defaultTheme2 = systemDefaultTheme$1) {
+  return useTheme$3(defaultTheme2);
+}
+function GlobalStyles$1({
+  styles: styles2,
+  themeId,
+  defaultTheme: defaultTheme2 = {}
+}) {
+  const upperTheme = useTheme$2(defaultTheme2);
+  const globalStyles = typeof styles2 === "function" ? styles2(themeId ? upperTheme[themeId] || upperTheme : upperTheme) : styles2;
+  return /* @__PURE__ */ jsx(GlobalStyles$2, {
+    styles: globalStyles
+  });
+}
+process.env.NODE_ENV !== "production" ? GlobalStyles$1.propTypes = {
+  // ----------------------------- Warning --------------------------------
+  // | These PropTypes are generated from the TypeScript type definitions |
+  // |     To update them edit TypeScript types and run "yarn proptypes"  |
+  // ----------------------------------------------------------------------
+  /**
+   * @ignore
+   */
+  defaultTheme: propTypesExports.object,
+  /**
+   * @ignore
+   */
+  styles: propTypesExports.oneOfType([propTypesExports.array, propTypesExports.func, propTypesExports.number, propTypesExports.object, propTypesExports.string, propTypesExports.bool]),
+  /**
+   * @ignore
+   */
+  themeId: propTypesExports.string
+} : void 0;
+const displayPrint = style$2({
+  prop: "displayPrint",
+  cssProperty: false,
+  transform: (value) => ({
+    "@media print": {
+      display: value
+    }
+  })
+});
+const displayRaw = style$2({
+  prop: "display"
+});
+const overflow = style$2({
+  prop: "overflow"
+});
+const textOverflow = style$2({
+  prop: "textOverflow"
+});
+const visibility = style$2({
+  prop: "visibility"
+});
+const whiteSpace = style$2({
+  prop: "whiteSpace"
+});
+const display = compose(displayPrint, displayRaw, overflow, textOverflow, visibility, whiteSpace);
+const flexBasis = style$2({
+  prop: "flexBasis"
+});
+const flexDirection = style$2({
+  prop: "flexDirection"
+});
+const flexWrap = style$2({
+  prop: "flexWrap"
+});
+const justifyContent = style$2({
+  prop: "justifyContent"
+});
+const alignItems = style$2({
+  prop: "alignItems"
+});
+const alignContent = style$2({
+  prop: "alignContent"
+});
+const order = style$2({
+  prop: "order"
+});
+const flex = style$2({
+  prop: "flex"
+});
+const flexGrow = style$2({
+  prop: "flexGrow"
+});
+const flexShrink = style$2({
+  prop: "flexShrink"
+});
+const alignSelf = style$2({
+  prop: "alignSelf"
+});
+const justifyItems = style$2({
+  prop: "justifyItems"
+});
+const justifySelf = style$2({
+  prop: "justifySelf"
+});
+const flexbox = compose(flexBasis, flexDirection, flexWrap, justifyContent, alignItems, alignContent, order, flex, flexGrow, flexShrink, alignSelf, justifyItems, justifySelf);
+const position = style$2({
+  prop: "position"
+});
+const zIndex$1 = style$2({
+  prop: "zIndex",
+  themeKey: "zIndex"
+});
+const top = style$2({
+  prop: "top"
+});
+const right = style$2({
+  prop: "right"
+});
+const bottom = style$2({
+  prop: "bottom"
+});
+const left = style$2({
+  prop: "left"
+});
+const positions = compose(position, zIndex$1, top, right, bottom, left);
+const boxShadow = style$2({
+  prop: "boxShadow",
+  themeKey: "shadows"
+});
+const fontFamily = style$2({
+  prop: "fontFamily",
+  themeKey: "typography"
+});
+const fontSize = style$2({
+  prop: "fontSize",
+  themeKey: "typography"
+});
+const fontStyle = style$2({
+  prop: "fontStyle",
+  themeKey: "typography"
+});
+const fontWeight = style$2({
+  prop: "fontWeight",
+  themeKey: "typography"
+});
+const letterSpacing = style$2({
+  prop: "letterSpacing"
+});
+const textTransform = style$2({
+  prop: "textTransform"
+});
+const lineHeight = style$2({
+  prop: "lineHeight"
+});
+const textAlign = style$2({
+  prop: "textAlign"
+});
+const typographyVariant = style$2({
+  prop: "typography",
+  cssProperty: false,
+  themeKey: "typography"
+});
+const typography = compose(typographyVariant, fontFamily, fontSize, fontStyle, fontWeight, letterSpacing, lineHeight, textAlign, textTransform);
+const _excluded$M = ["sx"];
 const splitProps = (props) => {
   var _props$theme$unstable, _props$theme;
   const result = {
@@ -15354,7 +15421,7 @@ const splitProps = (props) => {
 function extendSxProp(props) {
   const {
     sx: inSx
-  } = props, other = _objectWithoutPropertiesLoose(props, _excluded$O);
+  } = props, other = _objectWithoutPropertiesLoose(props, _excluded$M);
   const {
     systemProps,
     otherProps
@@ -15417,218 +15484,10 @@ function getThemeValue(prop, value, theme) {
     [prop]: value
   };
 }
-const _excluded$N = ["values", "unit", "step"];
-const breakpointKeys = ["xs", "sm", "md", "lg", "xl"];
-const sortBreakpointsValues = (values2) => {
-  const breakpointsAsArray = Object.keys(values2).map((key) => ({
-    key,
-    val: values2[key]
-  })) || [];
-  breakpointsAsArray.sort((breakpoint1, breakpoint2) => breakpoint1.val - breakpoint2.val);
-  return breakpointsAsArray.reduce((acc, obj) => {
-    return _extends({}, acc, {
-      [obj.key]: obj.val
-    });
-  }, {});
-};
-function createBreakpoints(breakpoints2) {
-  const {
-    // The breakpoint **start** at this value.
-    // For instance with the first breakpoint xs: [xs, sm).
-    values: values2 = {
-      xs: 0,
-      // phone
-      sm: 600,
-      // tablet
-      md: 900,
-      // small laptop
-      lg: 1200,
-      // desktop
-      xl: 1536
-      // large screen
-    },
-    unit = "px",
-    step = 5
-  } = breakpoints2, other = _objectWithoutPropertiesLoose(breakpoints2, _excluded$N);
-  const sortedValues = sortBreakpointsValues(values2);
-  const keys = Object.keys(sortedValues);
-  function up(key) {
-    const value = typeof values2[key] === "number" ? values2[key] : key;
-    return `@media (min-width:${value}${unit})`;
-  }
-  function down(key) {
-    const value = typeof values2[key] === "number" ? values2[key] : key;
-    return `@media (max-width:${value - step / 100}${unit})`;
-  }
-  function between(start2, end2) {
-    const endIndex = keys.indexOf(end2);
-    return `@media (min-width:${typeof values2[start2] === "number" ? values2[start2] : start2}${unit}) and (max-width:${(endIndex !== -1 && typeof values2[keys[endIndex]] === "number" ? values2[keys[endIndex]] : end2) - step / 100}${unit})`;
-  }
-  function only(key) {
-    if (keys.indexOf(key) + 1 < keys.length) {
-      return between(key, keys[keys.indexOf(key) + 1]);
-    }
-    return up(key);
-  }
-  function not(key) {
-    const keyIndex = keys.indexOf(key);
-    if (keyIndex === 0) {
-      return up(keys[1]);
-    }
-    if (keyIndex === keys.length - 1) {
-      return down(keys[keyIndex]);
-    }
-    return between(key, keys[keys.indexOf(key) + 1]).replace("@media", "@media not all and");
-  }
-  return _extends({
-    keys,
-    values: sortedValues,
-    up,
-    down,
-    between,
-    only,
-    not,
-    unit
-  }, other);
-}
-const shape = {
-  borderRadius: 4
-};
-function createSpacing(spacingInput = 8) {
-  if (spacingInput.mui) {
-    return spacingInput;
-  }
-  const transform = createUnarySpacing({
-    spacing: spacingInput
-  });
-  const spacing2 = (...argsInput) => {
-    if (process.env.NODE_ENV !== "production") {
-      if (!(argsInput.length <= 4)) {
-        console.error(`MUI: Too many arguments provided, expected between 0 and 4, got ${argsInput.length}`);
-      }
-    }
-    const args = argsInput.length === 0 ? [1] : argsInput;
-    return args.map((argument) => {
-      const output = transform(argument);
-      return typeof output === "number" ? `${output}px` : output;
-    }).join(" ");
-  };
-  spacing2.mui = true;
-  return spacing2;
-}
-const _excluded$M = ["breakpoints", "palette", "spacing", "shape"];
-function createTheme$1(options = {}, ...args) {
-  const {
-    breakpoints: breakpointsInput = {},
-    palette: paletteInput = {},
-    spacing: spacingInput,
-    shape: shapeInput = {}
-  } = options, other = _objectWithoutPropertiesLoose(options, _excluded$M);
-  const breakpoints2 = createBreakpoints(breakpointsInput);
-  const spacing2 = createSpacing(spacingInput);
-  let muiTheme = deepmerge({
-    breakpoints: breakpoints2,
-    direction: "ltr",
-    components: {},
-    // Inject component definitions.
-    palette: _extends({
-      mode: "light"
-    }, paletteInput),
-    spacing: spacing2,
-    shape: _extends({}, shape, shapeInput)
-  }, other);
-  muiTheme = args.reduce((acc, argument) => deepmerge(acc, argument), muiTheme);
-  muiTheme.unstable_sxConfig = _extends({}, defaultSxConfig, other == null ? void 0 : other.unstable_sxConfig);
-  muiTheme.unstable_sx = function sx(props) {
-    return styleFunctionSx({
-      sx: props,
-      theme: this
-    });
-  };
-  return muiTheme;
-}
-const ThemeContext = /* @__PURE__ */ React.createContext(null);
-if (process.env.NODE_ENV !== "production") {
-  ThemeContext.displayName = "ThemeContext";
-}
-function useTheme$3() {
-  const theme = React.useContext(ThemeContext);
-  if (process.env.NODE_ENV !== "production") {
-    React.useDebugValue(theme);
-  }
-  return theme;
-}
-const hasSymbol = typeof Symbol === "function" && Symbol.for;
-const nested = hasSymbol ? Symbol.for("mui.nested") : "__THEME_NESTED__";
-function mergeOuterLocalTheme(outerTheme, localTheme) {
-  if (typeof localTheme === "function") {
-    const mergedTheme = localTheme(outerTheme);
-    if (process.env.NODE_ENV !== "production") {
-      if (!mergedTheme) {
-        console.error(["MUI: You should return an object from your theme function, i.e.", "<ThemeProvider theme={() => ({})} />"].join("\n"));
-      }
-    }
-    return mergedTheme;
-  }
-  return _extends({}, outerTheme, localTheme);
-}
-function ThemeProvider$1(props) {
-  const {
-    children: children2,
-    theme: localTheme
-  } = props;
-  const outerTheme = useTheme$3();
-  if (process.env.NODE_ENV !== "production") {
-    if (outerTheme === null && typeof localTheme === "function") {
-      console.error(["MUI: You are providing a theme function prop to the ThemeProvider component:", "<ThemeProvider theme={outerTheme => outerTheme} />", "", "However, no outer theme is present.", "Make sure a theme is already injected higher in the React tree or provide a theme object."].join("\n"));
-    }
-  }
-  const theme = React.useMemo(() => {
-    const output = outerTheme === null ? localTheme : mergeOuterLocalTheme(outerTheme, localTheme);
-    if (output != null) {
-      output[nested] = outerTheme !== null;
-    }
-    return output;
-  }, [localTheme, outerTheme]);
-  return /* @__PURE__ */ jsx(ThemeContext.Provider, {
-    value: theme,
-    children: children2
-  });
-}
-process.env.NODE_ENV !== "production" ? ThemeProvider$1.propTypes = {
-  /**
-   * Your component tree.
-   */
-  children: propTypesExports.node,
-  /**
-   * A theme object. You can provide a function to extend the outer theme.
-   */
-  theme: propTypesExports.oneOfType([propTypesExports.object, propTypesExports.func]).isRequired
-} : void 0;
-if (process.env.NODE_ENV !== "production") {
-  process.env.NODE_ENV !== "production" ? ThemeProvider$1.propTypes = exactProp(ThemeProvider$1.propTypes) : void 0;
-}
-/**
- * @mui/private-theming v5.11.12
- *
- * @license MIT
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-function isObjectEmpty(obj) {
-  return Object.keys(obj).length === 0;
-}
-function useTheme$2(defaultTheme2 = null) {
-  const contextTheme = useTheme$3();
-  return !contextTheme || isObjectEmpty(contextTheme) ? defaultTheme2 : contextTheme;
-}
-const systemDefaultTheme$1 = createTheme$1();
-function useTheme$1(defaultTheme2 = systemDefaultTheme$1) {
-  return useTheme$2(defaultTheme2);
-}
 const _excluded$L = ["className", "component"];
 function createBox(options = {}) {
   const {
+    themeId,
     defaultTheme: defaultTheme2,
     defaultClassName = "MuiBox-root",
     generateClassName
@@ -15637,7 +15496,7 @@ function createBox(options = {}) {
     shouldForwardProp: (prop) => prop !== "theme" && prop !== "sx" && prop !== "as"
   })(styleFunctionSx);
   const Box2 = /* @__PURE__ */ React.forwardRef(function Box3(inProps, ref) {
-    const theme = useTheme$1(defaultTheme2);
+    const theme = useTheme$2(defaultTheme2);
     const _extendSxProp = extendSxProp(inProps), {
       className,
       component = "div"
@@ -15646,7 +15505,7 @@ function createBox(options = {}) {
       as: component,
       ref,
       className: clsx(className, generateClassName ? generateClassName(defaultClassName) : defaultClassName),
-      theme
+      theme: themeId ? theme[themeId] || theme : theme
     }, other));
   });
   return Box2;
@@ -15689,7 +15548,7 @@ function propsToClassKey(props) {
   });
   return classKey;
 }
-const _excluded$J = ["name", "slot", "skipVariantsResolver", "skipSx", "overridesResolver"], _excluded2$5 = ["theme"], _excluded3 = ["theme"];
+const _excluded$J = ["name", "slot", "skipVariantsResolver", "skipSx", "overridesResolver"];
 function isEmpty$1(obj) {
   return Object.keys(obj).length === 0;
 }
@@ -15746,16 +15605,26 @@ const systemDefaultTheme = createTheme$1();
 const lowercaseFirstLetter = (string) => {
   return string.charAt(0).toLowerCase() + string.slice(1);
 };
+function resolveTheme({
+  defaultTheme: defaultTheme2,
+  theme,
+  themeId
+}) {
+  return isEmpty$1(theme) ? defaultTheme2 : theme[themeId] || theme;
+}
 function createStyled(input = {}) {
   const {
+    themeId,
     defaultTheme: defaultTheme2 = systemDefaultTheme,
     rootShouldForwardProp: rootShouldForwardProp2 = shouldForwardProp,
     slotShouldForwardProp: slotShouldForwardProp2 = shouldForwardProp
   } = input;
   const systemSx = (props) => {
-    const theme = isEmpty$1(props.theme) ? defaultTheme2 : props.theme;
     return styleFunctionSx(_extends({}, props, {
-      theme
+      theme: resolveTheme(_extends({}, props, {
+        defaultTheme: defaultTheme2,
+        themeId
+      }))
     }));
   };
   systemSx.__mui_systemSx = true;
@@ -15790,19 +15659,22 @@ function createStyled(input = {}) {
     }, options));
     const muiStyledResolver = (styleArg, ...expressions) => {
       const expressionsWithDefaultTheme = expressions ? expressions.map((stylesArg) => {
-        return typeof stylesArg === "function" && stylesArg.__emotion_real !== stylesArg ? (_ref) => {
-          let {
-            theme: themeInput
-          } = _ref, other = _objectWithoutPropertiesLoose(_ref, _excluded2$5);
-          return stylesArg(_extends({
-            theme: isEmpty$1(themeInput) ? defaultTheme2 : themeInput
-          }, other));
+        return typeof stylesArg === "function" && stylesArg.__emotion_real !== stylesArg ? (props) => {
+          return stylesArg(_extends({}, props, {
+            theme: resolveTheme(_extends({}, props, {
+              defaultTheme: defaultTheme2,
+              themeId
+            }))
+          }));
         } : stylesArg;
       }) : [];
       let transformedStyleArg = styleArg;
       if (componentName && overridesResolver) {
         expressionsWithDefaultTheme.push((props) => {
-          const theme = isEmpty$1(props.theme) ? defaultTheme2 : props.theme;
+          const theme = resolveTheme(_extends({}, props, {
+            defaultTheme: defaultTheme2,
+            themeId
+          }));
           const styleOverrides = getStyleOverrides(componentName, theme);
           if (styleOverrides) {
             const resolvedStyleOverrides = {};
@@ -15818,7 +15690,10 @@ function createStyled(input = {}) {
       }
       if (componentName && !skipVariantsResolver) {
         expressionsWithDefaultTheme.push((props) => {
-          const theme = isEmpty$1(props.theme) ? defaultTheme2 : props.theme;
+          const theme = resolveTheme(_extends({}, props, {
+            defaultTheme: defaultTheme2,
+            themeId
+          }));
           return variantsResolver(props, getVariantStyles(componentName, theme), theme, componentName);
         });
       }
@@ -15834,14 +15709,12 @@ function createStyled(input = {}) {
       // component stays as a function. This condition makes sure that we do not interpolate functions
       // which are basically components used as a selectors.
       styleArg.__emotion_real !== styleArg) {
-        transformedStyleArg = (_ref2) => {
-          let {
-            theme: themeInput
-          } = _ref2, other = _objectWithoutPropertiesLoose(_ref2, _excluded3);
-          return styleArg(_extends({
-            theme: isEmpty$1(themeInput) ? defaultTheme2 : themeInput
-          }, other));
-        };
+        transformedStyleArg = (props) => styleArg(_extends({}, props, {
+          theme: resolveTheme(_extends({}, props, {
+            defaultTheme: defaultTheme2,
+            themeId
+          }))
+        }));
       }
       const Component = defaultStyledResolver(transformedStyleArg, ...expressionsWithDefaultTheme);
       if (process.env.NODE_ENV !== "production") {
@@ -15853,6 +15726,9 @@ function createStyled(input = {}) {
           displayName = `Styled(${getDisplayName(tag)})`;
         }
         Component.displayName = displayName;
+      }
+      if (tag.muiName) {
+        Component.muiName = tag.muiName;
       }
       return Component;
     };
@@ -15877,9 +15753,13 @@ function getThemeProps(params) {
 function useThemeProps$1({
   props,
   name,
-  defaultTheme: defaultTheme2
+  defaultTheme: defaultTheme2,
+  themeId
 }) {
-  const theme = useTheme$1(defaultTheme2);
+  let theme = useTheme$2(defaultTheme2);
+  if (themeId) {
+    theme = theme[themeId] || theme;
+  }
   const mergedProps = getThemeProps({
     theme,
     name,
@@ -16110,28 +15990,112 @@ function private_safeEmphasize(color2, coefficient, warning) {
     return color2;
   }
 }
-const EMPTY_THEME = {};
-function InnerThemeProvider(props) {
-  const theme = useTheme$1();
-  return /* @__PURE__ */ jsx(ThemeContext$1.Provider, {
-    value: typeof theme === "object" ? theme : EMPTY_THEME,
-    children: props.children
-  });
+const ThemeContext = /* @__PURE__ */ React.createContext(null);
+if (process.env.NODE_ENV !== "production") {
+  ThemeContext.displayName = "ThemeContext";
 }
-process.env.NODE_ENV !== "production" ? InnerThemeProvider.propTypes = {
-  /**
-   * Your component tree.
-   */
-  children: propTypesExports.node
-} : void 0;
-function ThemeProvider(props) {
+function useTheme$1() {
+  const theme = React.useContext(ThemeContext);
+  if (process.env.NODE_ENV !== "production") {
+    React.useDebugValue(theme);
+  }
+  return theme;
+}
+const hasSymbol = typeof Symbol === "function" && Symbol.for;
+const nested = hasSymbol ? Symbol.for("mui.nested") : "__THEME_NESTED__";
+function mergeOuterLocalTheme(outerTheme, localTheme) {
+  if (typeof localTheme === "function") {
+    const mergedTheme = localTheme(outerTheme);
+    if (process.env.NODE_ENV !== "production") {
+      if (!mergedTheme) {
+        console.error(["MUI: You should return an object from your theme function, i.e.", "<ThemeProvider theme={() => ({})} />"].join("\n"));
+      }
+    }
+    return mergedTheme;
+  }
+  return __spreadValues(__spreadValues({}, outerTheme), localTheme);
+}
+function ThemeProvider$1(props) {
   const {
     children: children2,
     theme: localTheme
   } = props;
-  return /* @__PURE__ */ jsx(ThemeProvider$1, {
+  const outerTheme = useTheme$1();
+  if (process.env.NODE_ENV !== "production") {
+    if (outerTheme === null && typeof localTheme === "function") {
+      console.error(["MUI: You are providing a theme function prop to the ThemeProvider component:", "<ThemeProvider theme={outerTheme => outerTheme} />", "", "However, no outer theme is present.", "Make sure a theme is already injected higher in the React tree or provide a theme object."].join("\n"));
+    }
+  }
+  const theme = React.useMemo(() => {
+    const output = outerTheme === null ? localTheme : mergeOuterLocalTheme(outerTheme, localTheme);
+    if (output != null) {
+      output[nested] = outerTheme !== null;
+    }
+    return output;
+  }, [localTheme, outerTheme]);
+  return /* @__PURE__ */ jsx(ThemeContext.Provider, {
+    value: theme,
+    children: children2
+  });
+}
+process.env.NODE_ENV !== "production" ? ThemeProvider$1.propTypes = {
+  /**
+   * Your component tree.
+   */
+  children: propTypesExports.node,
+  /**
+   * A theme object. You can provide a function to extend the outer theme.
+   */
+  theme: propTypesExports.oneOfType([propTypesExports.object, propTypesExports.func]).isRequired
+} : void 0;
+if (process.env.NODE_ENV !== "production") {
+  process.env.NODE_ENV !== "production" ? ThemeProvider$1.propTypes = exactProp(ThemeProvider$1.propTypes) : void 0;
+}
+/**
+ * @mui/private-theming v5.13.1
+ *
+ * @license MIT
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+const EMPTY_THEME = {};
+function useThemeScoping(themeId, upperTheme, localTheme, isPrivate = false) {
+  return React.useMemo(() => {
+    const resolvedTheme = themeId ? upperTheme[themeId] || upperTheme : upperTheme;
+    if (typeof localTheme === "function") {
+      const mergedTheme = localTheme(resolvedTheme);
+      const result = themeId ? _extends({}, upperTheme, {
+        [themeId]: mergedTheme
+      }) : mergedTheme;
+      if (isPrivate) {
+        return () => result;
+      }
+      return result;
+    }
+    return themeId ? _extends({}, upperTheme, {
+      [themeId]: localTheme
+    }) : _extends({}, upperTheme, localTheme);
+  }, [themeId, upperTheme, localTheme, isPrivate]);
+}
+function ThemeProvider(props) {
+  const {
+    children: children2,
     theme: localTheme,
-    children: /* @__PURE__ */ jsx(InnerThemeProvider, {
+    themeId
+  } = props;
+  const upperTheme = useTheme$3(EMPTY_THEME);
+  const upperPrivateTheme = useTheme$1() || EMPTY_THEME;
+  if (process.env.NODE_ENV !== "production") {
+    if (upperTheme === null && typeof localTheme === "function" || themeId && upperTheme && !upperTheme[themeId] && typeof localTheme === "function") {
+      console.error(["MUI: You are providing a theme function prop to the ThemeProvider component:", "<ThemeProvider theme={outerTheme => outerTheme} />", "", "However, no outer theme is present.", "Make sure a theme is already injected higher in the React tree or provide a theme object."].join("\n"));
+    }
+  }
+  const engineTheme = useThemeScoping(themeId, upperTheme, localTheme);
+  const privateTheme = useThemeScoping(themeId, upperPrivateTheme, localTheme, true);
+  return /* @__PURE__ */ jsx(ThemeProvider$1, {
+    theme: privateTheme,
+    children: /* @__PURE__ */ jsx(ThemeContext$1.Provider, {
+      value: engineTheme,
       children: children2
     })
   });
@@ -16148,7 +16112,11 @@ process.env.NODE_ENV !== "production" ? ThemeProvider.propTypes = {
   /**
    * A theme object. You can provide a function to extend the outer theme.
    */
-  theme: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object]).isRequired
+  theme: propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object]).isRequired,
+  /**
+   * The design system's unique id for getting the corresponded theme when there are multiple design systems.
+   */
+  themeId: propTypesExports.string
 } : void 0;
 if (process.env.NODE_ENV !== "production") {
   process.env.NODE_ENV !== "production" ? ThemeProvider.propTypes = exactProp(ThemeProvider.propTypes) : void 0;
@@ -16396,6 +16364,7 @@ const _excluded$I = ["colorSchemes", "components", "generateCssVars", "cssVarPre
 const DISABLE_CSS_TRANSITION = "*{-webkit-transition:none!important;-moz-transition:none!important;-o-transition:none!important;-ms-transition:none!important;transition:none!important}";
 function createCssVarsProvider(options) {
   const {
+    themeId,
     theme: defaultTheme2 = {},
     attribute: defaultAttribute = DEFAULT_ATTRIBUTE,
     modeStorageKey: defaultModeStorageKey = DEFAULT_MODE_STORAGE_KEY,
@@ -16403,7 +16372,7 @@ function createCssVarsProvider(options) {
     defaultMode: designSystemMode = "light",
     defaultColorScheme: designSystemColorScheme,
     disableTransitionOnChange: designSystemTransitionOnChange = false,
-    resolveTheme,
+    resolveTheme: resolveTheme2,
     excludeVariablesFromRoot: excludeVariablesFromRoot2
   } = options;
   if (!defaultTheme2.colorSchemes || typeof designSystemColorScheme === "string" && !defaultTheme2.colorSchemes[designSystemColorScheme] || typeof designSystemColorScheme === "object" && !defaultTheme2.colorSchemes[designSystemColorScheme == null ? void 0 : designSystemColorScheme.light] || typeof designSystemColorScheme === "object" && !defaultTheme2.colorSchemes[designSystemColorScheme == null ? void 0 : designSystemColorScheme.dark]) {
@@ -16434,10 +16403,11 @@ function createCssVarsProvider(options) {
     disableStyleSheetGeneration = false
   }) {
     const hasMounted = React.useRef(false);
-    const upperTheme = useTheme$3();
+    const upperTheme = useTheme$1();
     const ctx = React.useContext(ColorSchemeContext);
     const nested2 = !!ctx && !disableNestedContext;
-    const {
+    const scopedTheme = themeProp[themeId];
+    const _ref = scopedTheme || themeProp, {
       colorSchemes = {},
       components = {},
       generateCssVars = () => ({
@@ -16445,7 +16415,7 @@ function createCssVarsProvider(options) {
         css: {}
       }),
       cssVarPrefix
-    } = themeProp, restThemeProp = _objectWithoutPropertiesLoose(themeProp, _excluded$I);
+    } = _ref, restThemeProp = _objectWithoutPropertiesLoose(_ref, _excluded$I);
     const allColorSchemes = Object.keys(colorSchemes);
     const defaultLightColorScheme2 = typeof defaultColorScheme === "string" ? defaultColorScheme : defaultColorScheme.light;
     const defaultDarkColorScheme2 = typeof defaultColorScheme === "string" ? defaultColorScheme : defaultColorScheme.dark;
@@ -16587,17 +16557,18 @@ function createCssVarsProvider(options) {
     }
     const element = /* @__PURE__ */ jsxs(React.Fragment, {
       children: [shouldGenerateStyleSheet && /* @__PURE__ */ jsxs(React.Fragment, {
-        children: [/* @__PURE__ */ jsx(GlobalStyles$1, {
+        children: [/* @__PURE__ */ jsx(GlobalStyles$2, {
           styles: {
             [colorSchemeSelector]: rootCss
           }
-        }), /* @__PURE__ */ jsx(GlobalStyles$1, {
+        }), /* @__PURE__ */ jsx(GlobalStyles$2, {
           styles: defaultColorSchemeStyleSheet
-        }), /* @__PURE__ */ jsx(GlobalStyles$1, {
+        }), /* @__PURE__ */ jsx(GlobalStyles$2, {
           styles: otherColorSchemesStyleSheet
         })]
       }), /* @__PURE__ */ jsx(ThemeProvider, {
-        theme: resolveTheme ? resolveTheme(theme) : theme,
+        themeId: scopedTheme ? themeId : void 0,
+        theme: resolveTheme2 ? resolveTheme2(theme) : theme,
         children: children2
       })]
     });
@@ -16821,11 +16792,14 @@ function prepareCssVars(theme, parserConfig) {
   const generateCssVars = (colorScheme) => {
     if (!colorScheme) {
       return {
-        css: rootCss,
+        css: _extends({}, rootCss),
         vars: rootVars
       };
     }
-    return colorSchemesMap[colorScheme];
+    return {
+      css: _extends({}, colorSchemesMap[colorScheme].css),
+      vars: colorSchemesMap[colorScheme].vars
+    };
   };
   return {
     vars: themeVars,
@@ -17014,21 +16988,33 @@ function getContainerUtilityClass$1(slot) {
   return generateUtilityClass("MuiContainer", slot);
 }
 const containerClasses$1 = generateUtilityClasses("MuiContainer", ["root", "disableGutters", "fixed", "maxWidthXs", "maxWidthSm", "maxWidthMd", "maxWidthLg", "maxWidthXl"]);
+function appendLevel(level) {
+  if (!level) {
+    return "";
+  }
+  return `Level${level}`;
+}
 function isNestedContainer(ownerState) {
-  return ownerState.level > 0 && ownerState.container;
+  return ownerState.unstable_level > 0 && ownerState.container;
 }
 function createGetSelfSpacing(ownerState) {
   return function getSelfSpacing(axis) {
-    return `var(--Grid-${axis}Spacing${ownerState.level || ""})`;
+    return `var(--Grid-${axis}Spacing${appendLevel(ownerState.unstable_level)})`;
   };
 }
 function createGetParentSpacing(ownerState) {
   return function getParentSpacing(axis) {
-    if (ownerState.level === 0) {
+    if (ownerState.unstable_level === 0) {
       return `var(--Grid-${axis}Spacing)`;
     }
-    return `var(--Grid-${axis}Spacing${ownerState.level - 1 || ""})`;
+    return `var(--Grid-${axis}Spacing${appendLevel(ownerState.unstable_level - 1)})`;
   };
+}
+function getParentColumns(ownerState) {
+  if (ownerState.unstable_level === 0) {
+    return `var(--Grid-columns)`;
+  }
+  return `var(--Grid-columns${appendLevel(ownerState.unstable_level - 1)})`;
 }
 const filterBreakpointKeys = (breakpointsKeys, responsiveKeys) => breakpointsKeys.filter((key) => responsiveKeys.includes(key));
 const traverseBreakpoints = (breakpoints2, responsive, iterator) => {
@@ -17095,7 +17081,7 @@ const generateGridSizeStyles = ({
       style2 = {
         flexGrow: 0,
         flexBasis: "auto",
-        width: `calc(100% * ${value} / var(--Grid-columns)${isNestedContainer(ownerState) ? ` + ${getSelfSpacing("column")}` : ""})`
+        width: `calc(100% * ${value} / ${getParentColumns(ownerState)}${isNestedContainer(ownerState) ? ` + ${getSelfSpacing("column")}` : ""})`
       };
     }
     appendStyle(styles2, style2);
@@ -17116,7 +17102,7 @@ const generateGridOffsetStyles = ({
     }
     if (typeof value === "number") {
       style2 = {
-        marginLeft: value === 0 ? "0px" : `calc(100% * ${value} / var(--Grid-columns))`
+        marginLeft: value === 0 ? "0px" : `calc(100% * ${value} / ${getParentColumns(ownerState)})`
       };
     }
     appendStyle(styles2, style2);
@@ -17130,12 +17116,14 @@ const generateGridColumnsStyles = ({
   if (!ownerState.container) {
     return {};
   }
-  const styles2 = {
+  const styles2 = isNestedContainer(ownerState) ? {
+    [`--Grid-columns${appendLevel(ownerState.unstable_level)}`]: getParentColumns(ownerState)
+  } : {
     "--Grid-columns": 12
   };
   traverseBreakpoints(theme.breakpoints, ownerState.columns, (appendStyle, value) => {
     appendStyle(styles2, {
-      "--Grid-columns": value
+      [`--Grid-columns${appendLevel(ownerState.unstable_level)}`]: value
     });
   });
   return styles2;
@@ -17151,12 +17139,12 @@ const generateGridRowSpacingStyles = ({
   const styles2 = isNestedContainer(ownerState) ? {
     // Set the default spacing as its parent spacing.
     // It will be overridden if spacing props are provided
-    [`--Grid-rowSpacing${ownerState.level || ""}`]: getParentSpacing("row")
+    [`--Grid-rowSpacing${appendLevel(ownerState.unstable_level)}`]: getParentSpacing("row")
   } : {};
   traverseBreakpoints(theme.breakpoints, ownerState.rowSpacing, (appendStyle, value) => {
     var _theme$spacing;
     appendStyle(styles2, {
-      [`--Grid-rowSpacing${ownerState.level || ""}`]: typeof value === "string" ? value : (_theme$spacing = theme.spacing) == null ? void 0 : _theme$spacing.call(theme, value)
+      [`--Grid-rowSpacing${appendLevel(ownerState.unstable_level)}`]: typeof value === "string" ? value : (_theme$spacing = theme.spacing) == null ? void 0 : _theme$spacing.call(theme, value)
     });
   });
   return styles2;
@@ -17172,12 +17160,12 @@ const generateGridColumnSpacingStyles = ({
   const styles2 = isNestedContainer(ownerState) ? {
     // Set the default spacing as its parent spacing.
     // It will be overridden if spacing props are provided
-    [`--Grid-columnSpacing${ownerState.level || ""}`]: getParentSpacing("column")
+    [`--Grid-columnSpacing${appendLevel(ownerState.unstable_level)}`]: getParentSpacing("column")
   } : {};
   traverseBreakpoints(theme.breakpoints, ownerState.columnSpacing, (appendStyle, value) => {
     var _theme$spacing2;
     appendStyle(styles2, {
-      [`--Grid-columnSpacing${ownerState.level || ""}`]: typeof value === "string" ? value : (_theme$spacing2 = theme.spacing) == null ? void 0 : _theme$spacing2.call(theme, value)
+      [`--Grid-columnSpacing${appendLevel(ownerState.unstable_level)}`]: typeof value === "string" ? value : (_theme$spacing2 = theme.spacing) == null ? void 0 : _theme$spacing2.call(theme, value)
     });
   });
   return styles2;
@@ -17259,7 +17247,7 @@ const generateDirectionClasses = (direction) => {
   }
   return [`direction-xs-${String(direction)}`];
 };
-const _excluded$E = ["className", "columns", "container", "component", "direction", "wrap", "spacing", "rowSpacing", "columnSpacing", "disableEqualOverflow"];
+const _excluded$E = ["className", "children", "columns", "container", "component", "direction", "wrap", "spacing", "rowSpacing", "columnSpacing", "disableEqualOverflow", "unstable_level"];
 const defaultTheme$4 = createTheme$1();
 const defaultCreateStyledComponent$1 = styled$1("div", {
   name: "MuiGrid",
@@ -17280,7 +17268,6 @@ function createGrid(options = {}) {
     useThemeProps: useThemeProps2 = useThemePropsDefault$1,
     componentName = "MuiGrid"
   } = options;
-  const NestedContext = /* @__PURE__ */ React.createContext(0);
   const OverflowContext = /* @__PURE__ */ React.createContext(void 0);
   const useUtilityClasses2 = (ownerState, theme) => {
     const {
@@ -17298,13 +17285,13 @@ function createGrid(options = {}) {
   const GridRoot2 = createStyledComponent(generateGridColumnsStyles, generateGridColumnSpacingStyles, generateGridRowSpacingStyles, generateGridSizeStyles, generateGridDirectionStyles, generateGridStyles, generateGridOffsetStyles);
   const Grid3 = /* @__PURE__ */ React.forwardRef(function Grid4(inProps, ref) {
     var _inProps$columns, _inProps$spacing, _ref, _inProps$rowSpacing, _ref2, _inProps$columnSpacin, _ref3, _disableEqualOverflow;
-    const theme = useTheme$1();
+    const theme = useTheme$2();
     const themeProps = useThemeProps2(inProps);
     const props = extendSxProp(themeProps);
-    const level = React.useContext(NestedContext);
     const overflow2 = React.useContext(OverflowContext);
     const {
       className,
+      children: children2,
       columns: columnsProp = 12,
       container = false,
       component = "div",
@@ -17313,7 +17300,8 @@ function createGrid(options = {}) {
       spacing: spacingProp = 0,
       rowSpacing: rowSpacingProp = spacingProp,
       columnSpacing: columnSpacingProp = spacingProp,
-      disableEqualOverflow: themeDisableEqualOverflow
+      disableEqualOverflow: themeDisableEqualOverflow,
+      unstable_level: level = 0
     } = props, rest = _objectWithoutPropertiesLoose(props, _excluded$E);
     let disableEqualOverflow = themeDisableEqualOverflow;
     if (level && themeDisableEqualOverflow !== void 0) {
@@ -17357,13 +17345,17 @@ function createGrid(options = {}) {
       as: component,
       ownerState,
       className: clsx(classes.root, className)
-    }, other));
-    if (container) {
-      result = /* @__PURE__ */ jsx(NestedContext.Provider, {
-        value: level + 1,
-        children: result
-      });
-    }
+    }, other, {
+      children: React.Children.map(children2, (child) => {
+        if (/* @__PURE__ */ React.isValidElement(child) && isMuiElement(child, ["Grid"])) {
+          var _child$props$unstable;
+          return /* @__PURE__ */ React.cloneElement(child, {
+            unstable_level: (_child$props$unstable = child.props.unstable_level) != null ? _child$props$unstable : level + 1
+          });
+        }
+        return child;
+      })
+    }));
     if (disableEqualOverflow !== void 0 && disableEqualOverflow !== (overflow2 != null ? overflow2 : false)) {
       result = /* @__PURE__ */ jsx(OverflowContext.Provider, {
         value: disableEqualOverflow,
@@ -17396,6 +17388,7 @@ function createGrid(options = {}) {
     xs: propTypesExports.oneOfType([propTypesExports.oneOf(["auto"]), propTypesExports.number, propTypesExports.bool]),
     xsOffset: propTypesExports.oneOfType([propTypesExports.oneOf(["auto"]), propTypesExports.number])
   } : void 0;
+  Grid3.muiName = "Grid";
   return Grid3;
 }
 const Grid$1 = createGrid();
@@ -17560,7 +17553,7 @@ const gridClasses$1 = generateUtilityClasses("MuiGrid", [
   ...GRID_SIZES$1.map((size) => `grid-lg-${size}`),
   ...GRID_SIZES$1.map((size) => `grid-xl-${size}`)
 ]);
-const _excluded$D = ["component", "direction", "spacing", "divider", "children", "className"];
+const _excluded$D = ["component", "direction", "spacing", "divider", "children", "className", "useFlexGap"];
 const defaultTheme$3 = createTheme$1();
 const defaultCreateStyledComponent = styled$1("div", {
   name: "MuiStack",
@@ -17635,6 +17628,11 @@ const style = ({
       });
     }
     const styleFromPropValue = (propValue, breakpoint) => {
+      if (ownerState.useFlexGap) {
+        return {
+          gap: getValue(transformer, propValue)
+        };
+      }
       return {
         "& > :not(style) + :not(style)": {
           margin: 0,
@@ -17672,11 +17670,13 @@ function createStack(options = {}) {
       spacing: spacing2 = 0,
       divider,
       children: children2,
-      className
+      className,
+      useFlexGap = false
     } = props, other = _objectWithoutPropertiesLoose(props, _excluded$D);
     const ownerState = {
       direction,
-      spacing: spacing2
+      spacing: spacing2,
+      useFlexGap
     };
     const classes = useUtilityClasses2();
     return /* @__PURE__ */ jsx(StackRoot, _extends({
@@ -17730,7 +17730,17 @@ process.env.NODE_ENV !== "production" ? Stack.propTypes = {
   /**
    * The system prop, which allows defining system overrides as well as additional CSS styles.
    */
-  sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object])
+  sx: propTypesExports.oneOfType([propTypesExports.arrayOf(propTypesExports.oneOfType([propTypesExports.func, propTypesExports.object, propTypesExports.bool])), propTypesExports.func, propTypesExports.object]),
+  /**
+   * If `true`, the CSS flexbox `gap` is used instead of applying `margin` to children.
+   *
+   * While CSS `gap` removes the [known limitations](https://mui.com/joy-ui/react-stack/#limitations),
+   * it is not fully supported in some browsers. We recommend checking https://caniuse.com/?search=flex%20gap before using this flag.
+   *
+   * To enable this flag globally, follow the theme's default props configuration.
+   * @default false
+   */
+  useFlexGap: propTypesExports.bool
 } : void 0;
 function getStackUtilityClass(slot) {
   return generateUtilityClass("MuiStack", slot);
@@ -21430,7 +21440,7 @@ const getOverlayAlpha = (elevation) => {
   return (alphaValue / 100).toFixed(2);
 };
 function useTheme() {
-  const theme = useTheme$1(defaultTheme$2);
+  const theme = useTheme$2(defaultTheme$2);
   if (process.env.NODE_ENV !== "production") {
     React.useDebugValue(theme);
   }
@@ -28494,6 +28504,7 @@ function BasicLed(props) {
   }
   const rows = entlist;
   let [editRow, setEditRow] = useState();
+  let [editRowUpdate, setEditRowUpdate] = useState(false);
   let selectRow = (ids) => {
     let id = ids[0];
     let row = rows.find((r2) => r2.id === id);
@@ -28503,8 +28514,8 @@ function BasicLed(props) {
   };
   const open = () => {
   };
-  const processValueChange = () => {
-  };
+  const processValueChange = (val, col) => __async(this, null, function* () {
+  });
   const applyChanges = () => {
   };
   const cancelChanges = () => {
@@ -28541,6 +28552,9 @@ function Popup(props) {
     onCancelChanges,
     open
   } = props;
+  const [rowData, setRowData] = useState(row);
+  const [columnData, setColumnData] = useState(columns);
+  const [editRowUpdate, setEditRowUpdate] = useState(false);
   return /* @__PURE__ */ jsxs(
     Dialog,
     {
@@ -28550,14 +28564,20 @@ function Popup(props) {
       "aria-labelledby": "form-dialog-title",
       children: [
         /* @__PURE__ */ jsx(DialogTitle, { id: "form-dialog-title", children: "Edit Details" }),
-        /* @__PURE__ */ jsx(DialogContent, { children: /* @__PURE__ */ jsx(Grid, { container: true, spacing: 3, children: /* @__PURE__ */ jsx(Grid, { item: true, xs: 6, children: /* @__PURE__ */ jsx(FormGroup, { children: columns.map((col) => /* @__PURE__ */ jsx(
+        /* @__PURE__ */ jsx(DialogContent, { children: /* @__PURE__ */ jsx(Grid, { container: true, spacing: 3, children: /* @__PURE__ */ jsx(Grid, { item: true, xs: 6, children: /* @__PURE__ */ jsx(FormGroup, { children: columnData.map((col) => /* @__PURE__ */ jsx(
           TextField,
           {
             margin: "normal",
             name: col.field,
             label: col.headerName,
-            value: row[col.field],
-            onChange
+            value: rowData[col.field],
+            onChange: (e) => __async(this, null, function* () {
+              let editRowTmp = __spreadValues({}, row);
+              editRowTmp[col.field] = e.target.value;
+              yield setRowData(editRowTmp);
+              yield setEditRowUpdate(!editRowUpdate);
+              onChange(e.target.value, col.field);
+            })
           },
           col.field
         )) }) }) }) }),
