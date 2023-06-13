@@ -1,12 +1,13 @@
 
 import React, {useState} from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 
 
 import TextField from '@mui/material/TextField';
 import FormGroup from '@mui/material/FormGroup';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
+import Snackbar from '@mui/material/Snackbar';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
@@ -41,13 +42,18 @@ function BasicLed(props: any) {
   const rows = entlist
 
   let [editRow, setEditRow] = useState()
+  let [editRowIndex, setEditRowIndex] = useState()
+  let [snackbarMessage, setSnackbarMessage] = useState()
+  let [snackbarOpen, setSnackbarOpen] = useState()
 
   let selectRow = (ids:any) => {
     let id = ids[0]
     let row: any = rows.find((r:any)=>r.id===id)
+    let index:number = rows.findIndex((r:any)=>r.id===id)
 
     if(row) {
       setEditRow(row)
+      setEditRowIndex(index)
     }
   }
 
@@ -55,12 +61,31 @@ function BasicLed(props: any) {
 
   }
 
-  const processValueChange=async(val,col)=>{
+  const processValueChange=async(val:any,col:any)=>{
 
   }
 
-  const applyChanges=(row)=>{
+  const applyChanges = async(row:any)=>{
 
+    const dispatch = useDispatch()
+
+    let q = custom.BasicLed.query(spec,cmpstate)
+    const applyRes = await seneca.post('aim:web,on:entity,save:entity', {
+      canon: def.ent,
+      ent:row
+    })
+
+    if(applyRes.ok){
+      alert("Saved!")
+    }else{
+      alert("Error!")
+    }
+
+    //applyRes.ent
+    let editRowTmp = {...rows}
+    //editRowTmp[col.field] = e.target.value
+    //setRow(editRowTmp)
+    setEditRow(undefined)
   }
 
   const cancelChanges=()=>{
@@ -88,6 +113,12 @@ function BasicLed(props: any) {
         onSelectionModelChange={selectRow}
       />
 
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={5000}
+        message={snackbarMessage}
+      />
+
     </div>
   )
 }
@@ -106,6 +137,14 @@ function Popup(props:any) {
   const [rowData, setRowData] = useState(row)
   const [editRowUpdate, setEditRowUpdate] = useState(false)
 
+  const valueChange = async(e, col)=>{
+    let editRowTmp = {...rowData}
+    editRowTmp[col.field] = e.target.value
+    await setRowData(editRowTmp)
+    await setEditRowUpdate(!editRowUpdate)
+    onChange(e.target.value,col.field)
+  }
+
   return <Dialog
     fullWidth
     open={open}
@@ -123,13 +162,7 @@ function Popup(props:any) {
                 name={col.field}
                 label={col.headerName}
                 value={rowData[col.field]}
-                onChange={async(e)=>{
-                  let editRowTmp = {...row}
-                  editRowTmp[col.field] = e.target.value
-                  await setRowData(editRowTmp)
-                  await setEditRowUpdate(!editRowUpdate)
-                  onChange(e.target.value,col.field)
-                }}
+                onChange={(e)=>valueChange(e,col)}
               />
             ))}
           </FormGroup>
