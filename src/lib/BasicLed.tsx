@@ -13,9 +13,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import MuiGrid from '@mui/material/Grid';
 
-
 import { DataGrid } from '@mui/x-data-grid';
-
 
 
 function BasicLed(props: any) {
@@ -67,8 +65,6 @@ function BasicLed(props: any) {
 
   const applyChanges = async(row:any)=>{
 
-    const dispatch = useDispatch()
-
     let q = custom.BasicLed.query(spec,cmpstate)
     const applyRes = await seneca.post('aim:web,on:entity,save:entity', {
       canon: def.ent,
@@ -76,15 +72,26 @@ function BasicLed(props: any) {
     })
 
     if(applyRes.ok){
-      alert("Saved!")
+
+      let rowsTmp = [].concat(rows)
+      rowsTmp[editRowIndex] = {...applyRes.ent}
+
+      await seneca.act('aim:app,set:state', {
+          section: 'vxg.ent.list.main.'+def.ent,
+          content: rowsTmp
+      })
+      setEditRowIndex(undefined)
+      setSnackbarOpen(true)
+      setSnackbarMessage('Task Saved.')
+      setTimeout(()=>{ setSnackbarOpen(false) },3000)
     }else{
-      alert("Error!")
+      setEditRowIndex(undefined)
+      setSnackbarOpen(true)
+      setSnackbarMessage('There was an error saving the task.')
+      setTimeout(()=>{ setSnackbarOpen(false) },3000)
     }
 
-    //applyRes.ent
-    let editRowTmp = {...rows}
-    //editRowTmp[col.field] = e.target.value
-    //setRow(editRowTmp)
+
     setEditRow(undefined)
   }
 
@@ -115,8 +122,9 @@ function BasicLed(props: any) {
 
       <Snackbar
         open={snackbarOpen}
-        autoHideDuration={5000}
+        autoHideDuration={3000}
         message={snackbarMessage}
+        anchorOrigin={{ vertical:'bottom', horizontal:'right' }}
       />
 
     </div>
@@ -137,11 +145,10 @@ function Popup(props:any) {
   const [rowData, setRowData] = useState(row)
   const [editRowUpdate, setEditRowUpdate] = useState(false)
 
-  const valueChange = async(e, col)=>{
+  const valueChange = async(e:any, col:any)=>{
     let editRowTmp = {...rowData}
     editRowTmp[col.field] = e.target.value
-    await setRowData(editRowTmp)
-    await setEditRowUpdate(!editRowUpdate)
+    setRowData(editRowTmp)
     onChange(e.target.value,col.field)
   }
 

@@ -29011,13 +29011,16 @@ Please use another name.` : formatMuiErrorMessage(18));
     }
     const rows = entlist;
     let [editRow, setEditRow] = React.useState();
+    let [editRowIndex, setEditRowIndex] = React.useState();
     let [snackbarMessage, setSnackbarMessage] = React.useState();
     let [snackbarOpen, setSnackbarOpen] = React.useState();
     let selectRow = (ids) => {
       let id = ids[0];
       let row = rows.find((r2) => r2.id === id);
+      let index2 = rows.findIndex((r2) => r2.id === id);
       if (row) {
         setEditRow(row);
+        setEditRowIndex(index2);
       }
     };
     const open = () => {
@@ -29031,11 +29034,26 @@ Please use another name.` : formatMuiErrorMessage(18));
         ent: row
       });
       if (applyRes.ok) {
-        alert("Saved!");
+        let rowsTmp = [].concat(rows);
+        rowsTmp[editRowIndex] = __spreadValues({}, applyRes.ent);
+        yield seneca.act("aim:app,set:state", {
+          section: "vxg.ent.list.main." + def.ent,
+          content: rowsTmp
+        });
+        setEditRowIndex(void 0);
+        setSnackbarOpen(true);
+        setSnackbarMessage("Task Saved.");
+        setTimeout(() => {
+          setSnackbarOpen(false);
+        }, 3e3);
       } else {
-        alert("Error!");
+        setEditRowIndex(void 0);
+        setSnackbarOpen(true);
+        setSnackbarMessage("There was an error saving the task.");
+        setTimeout(() => {
+          setSnackbarOpen(false);
+        }, 3e3);
       }
-      console.log(applyRes.ent);
       setEditRow(void 0);
     });
     const cancelChanges = () => {
@@ -29066,7 +29084,8 @@ Please use another name.` : formatMuiErrorMessage(18));
         {
           open: snackbarOpen,
           autoHideDuration: 5e3,
-          message: snackbarMessage
+          message: snackbarMessage,
+          anchorOrigin: { vertical: "bottom", horizontal: "right" }
         }
       )
     ] });
@@ -29085,8 +29104,7 @@ Please use another name.` : formatMuiErrorMessage(18));
     const valueChange = (e, col) => __async(this, null, function* () {
       let editRowTmp = __spreadValues({}, rowData);
       editRowTmp[col.field] = e.target.value;
-      yield setRowData(editRowTmp);
-      yield setEditRowUpdate(!editRowUpdate);
+      setRowData(editRowTmp);
       onChange(e.target.value, col.field);
     });
     return /* @__PURE__ */ jsxs(
