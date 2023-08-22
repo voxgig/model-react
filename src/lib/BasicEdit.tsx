@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 
 import {
   Grid,
@@ -51,18 +51,14 @@ function BasicEdit(props: any) {
     control
   } = forms
   
+  const formRef = useRef({} as any)
+  
   return (
     <div className="BasicEdit">
     
       <form
+        ref={ formRef }
         className="vxg-form-field"
-        onSubmit={handleSubmit( async (data: any)=> {
-          let selitem = { ...item }
-          for(let k in data) {
-            selitem[k] = data[k]
-          }
-          onSubmit(selitem)
-        }) }
       >
         <Grid container spacing={3}>
           {
@@ -154,39 +150,47 @@ function BasicEdit(props: any) {
             })
           }
           
-          { 
-            0 != children.length ?
-            <Grid item xs={12}>
-              { children }
-            </Grid> : null
-          }
-          
-          <Grid item xs={12}>
-            <Grid container justifyContent="space-between" alignItems="center" marginTop={2}>
-              <Grid item>
-                <BasicButton variant="outlined"
-                  size="large"
-                  onClick={ () => onClose() }
-                >
-                  Cancel
-                </BasicButton> 
-              </Grid>
-              <Grid item>
-                <BasicButton
-                  type="submit"
-                  variant="outlined"
-                  size="large"
-                >
-                  SAVE
-                </BasicButton>
-            
-              </Grid>
-            </Grid>
-          </Grid>
           
         </Grid>
-      </form>
         
+      </form>
+      { 
+        0 != children.length ?
+          <Grid item xs={12}>
+            { children }
+          </Grid> : null
+      }
+          
+      <Grid item xs={12}>
+        <Grid container justifyContent="space-between" alignItems="center" marginTop={2}>
+          <Grid item>
+            <BasicButton variant="outlined"
+              size="large"
+              onClick={ () => onClose() }
+            >
+              Cancel
+            </BasicButton> 
+          </Grid>
+          
+          <Grid item>
+            <BasicButton
+              variant="outlined"
+              size="large"
+              onClick={handleSubmit( async (data: any)=> {
+                let selitem = { ...item }
+                for(let k in data) {
+                  selitem[k] = data[k]
+                }
+                onSubmit(selitem)
+              }) }
+            >
+              SAVE
+            </BasicButton>
+            
+          </Grid>
+        </Grid>
+      </Grid>
+         
     </div>)
 }
 
