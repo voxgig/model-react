@@ -34,18 +34,17 @@ function BasicFoot(props: any) {
               {part.title}
             </Typography>
           </Grid>
-          { /*
+          {/*
           <Grid item xs={12}>
             <Typography color="textSecondary" variant="subtitle1">
               {`${new Date().getFullYear()} | React | Material UI | React Router`}
             </Typography>
           </Grid>
-           */ }
+           */}
         </Grid>
       </Container>
     </Box>
   )
 }
-
 
 export default BasicFoot

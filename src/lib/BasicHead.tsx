@@ -12,8 +12,8 @@ import {
   Autocomplete,
   Typography,
   IconButton,
-  createFilterOptions,
-} from "@mui/material"
+  createFilterOptions
+} from '@mui/material'
 
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 
@@ -48,7 +48,7 @@ function resolveOptions(tooldef: any, tooldata: any) {
 function addItem(seneca: any, led_add: any) {
   seneca.act('aim:app,set:state', {
     section: 'vxg.trigger.led.add',
-    content: ++led_add,
+    content: ++led_add
   })
 }
 
@@ -62,7 +62,7 @@ function BasicHead(props: any) {
   const { seneca } = ctx()
 
   const {
-    frame,
+    frame
   } = spec
 
   // console.log('BasicHead.spec', spec)
@@ -108,7 +108,6 @@ function BasicHead(props: any) {
             ent: selected
           }
         }
-
       }
     }
   })
@@ -127,12 +126,12 @@ function BasicHead(props: any) {
 
   return (
     <BasicAppBar
-      //position="fixed"
+      // position="fixed"
       drawerwidth={drawerwidth}
       open={open}
       sx={{
         color: 'black',
-        bgcolor: "white",
+        bgcolor: 'white'
       }}
     >
       <Toolbar>
@@ -143,7 +142,7 @@ function BasicHead(props: any) {
           edge="start"
           sx={{
             marginRight: 2,
-            ...(open && { display: 'none' }),
+            ...(open && { display: 'none' })
           }}
         >
           <ChevronRightIcon />
@@ -192,7 +191,7 @@ function BasicHead(props: any) {
 
               onClick={() => addItem(seneca, led_add)}
             >
-              {tooldef.title + ' ' + spec.view[viewPath].name}
+              {tooldef.title + ' ' + model.app.web.frame.private.view[viewPath].name}
             </BasicButton>
 
           }
@@ -208,6 +207,5 @@ function BasicHead(props: any) {
     </BasicAppBar>
   )
 }
-
 
 export default BasicHead

@@ -23,9 +23,9 @@ function BasicList(props: any) {
       <MaterialReactTable
         enableColumnActions={false}
         enableColumnFilters={false}
-        enablePagination={true}
+        enablePagination
         enableSorting={false}
-        enableBottomToolbar={true}
+        enableBottomToolbar
         enableTopToolbar={false}
         columns={columns}
         data={data}

@@ -26,6 +26,8 @@ function fields(spec: any) {
     }
 
     return fds
+  } catch (err) {
+    // console.log(err)
   }
   catch (err) {
     // console.log(err)
@@ -97,11 +99,10 @@ function BasicLed(props: any) {
     setItem({})
   }, [location.pathname])
 
-  let led_add = vxgState.trigger.led.add
+  const led_add = vxgState.trigger.led.add
   let [triggerLed, setTriggerLed] = useState(0)
   useEffect(() => {
-
-    // a workaround to prevent 
+    // a workaround to prevent
     // 'useEffect' to trigger when re-rendered
     if (triggerLed >= 2) {
       // setItem( { entity$: '-/' + def.ent } )
@@ -143,6 +144,5 @@ function BasicLed(props: any) {
     </div>
   )
 }
-
 
 export default BasicLed

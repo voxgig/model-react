@@ -30,73 +30,71 @@ function Copyright(props: any) {
 
 // const theme = createTheme()
 
-function BasicAuth(props: any) {
-    const { ctx, spec } = props
+function BasicAuth (props: any) {
+  const { ctx, spec } = props
 
-    const { handle } = spec
+  const { handle } = spec
 
-
-    { /* <ThemeProvider theme={theme}> */ }
-    return (
-    <Container component="main" maxWidth="xs" >
+  { /* <ThemeProvider theme={theme}> */ }
+  return (
+    <Container component='main' maxWidth='xs'>
       <CssBaseline />
       <Box
         sx={{
-                    marginTop: 8,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                }
-                }
-            >
-                { /*
+          marginTop: 8,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center'
+        }}
+      >
+        {/*
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             <LockOutlinedIcon />
       </Avatar>
-      */ }
+      */}
 
-                <img style={{ width: 400 }} src={spec.img.logo} />
+        <img style={{ width: 400 }} src={spec.img.logo} />
 
-                <Typography sx={{ marginTop: 4 }} component="h1" variant="h5" >
-                    {spec.title}
-                </Typography>
-                <Box component="form" onSubmit={handle.signin} noValidate sx={{ mt: 1 }}>
-                    <TextField
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="email"
-                        label="Email Address"
-                        name="email"
-                        autoComplete="email"
-                        autoFocus
-                    />
-                    <TextField
-                        margin="normal"
-                        required
-                        fullWidth
-                        name="password"
-                        label="Password"
-                        type="password"
-                        id="password"
-                        autoComplete="current-password"
-                    />
-                    { /*
+        <Typography sx={{ marginTop: 4 }} component='h1' variant='h5'>
+          {spec.title}
+        </Typography>
+        <Box component='form' onSubmit={handle.signin} noValidate sx={{ mt: 1 }}>
+          <TextField
+            margin='normal'
+            required
+            fullWidth
+            id='email'
+            label='Email Address'
+            name='email'
+            autoComplete='email'
+            autoFocus
+          />
+          <TextField
+            margin='normal'
+            required
+            fullWidth
+            name='password'
+            label='Password'
+            type='password'
+            id='password'
+            autoComplete='current-password'
+          />
+          {/*
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
       />
-      */ }
+      */}
           <Button
-            type="submit"
+            type='submit'
             fullWidth
-            variant="contained"
+            variant='contained'
             sx={{ mt: 3, mb: 2 }}
           >
             Sign In
           </Button>
 
-                        { /*
+          {/*
             <Grid container>
               <Grid item xs>
                 <Link href="#" variant="body2">
@@ -109,15 +107,13 @@ function BasicAuth(props: any) {
                 </Link>
               </Grid>
       </Grid>
-      */ }
+      */}
         </Box>
       </Box>
-                { /* <Copyright sx={{ mt: 8, mb: 4 }} /> */}
-        </Container>
-    )
-    { /* </ThemeProvider> */ }
+      {/* <Copyright sx={{ mt: 8, mb: 4 }} /> */}
+    </Container>
+  )
+  { /* </ThemeProvider> */ }
 }
-
-
 
 export default BasicAuth

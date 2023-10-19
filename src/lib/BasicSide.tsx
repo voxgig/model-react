@@ -22,9 +22,8 @@ import {
   ListItemText,
   Toolbar,
   Typography,
-  IconButton,
-} from "@mui/material"
-
+  IconButton
+} from '@mui/material'
 
 import {
   ChevronLeft,
@@ -43,9 +42,9 @@ import {
   Security as AdminIcon,
   ContentPaste as ClipBoardIcon,
   FitScreen,
-  Apps as DotsSquareIcon,
+  Apps as DotsSquareIcon
 
-} from "@mui/icons-material"
+} from '@mui/icons-material'
 
 import {
   BasicDrawer,
@@ -53,22 +52,20 @@ import {
 } from './BasicDrawer'
 import { Exact, Gubu } from 'gubu'
 
-
-
 const iconmap: any = {
-  'factory': FactoryOutlined,
-  'key': KeyOutlined,
-  'done': AssignmentTurnedInOutlined,
-  'docs': TextSnippetOutlined,
-  'hightlight': HighlightAlt,
-  'map': MapIcon,
-  'account': AccountIcon,
-  'tablet': TabletIcon,
-  'update': UpdateIcon,
-  'admin': AdminIcon,
-  'clipboard': ClipBoardIcon,
-  'fitscreen': FitScreen,
-  'dots-square': DotsSquareIcon,
+  factory: FactoryOutlined,
+  key: KeyOutlined,
+  done: AssignmentTurnedInOutlined,
+  docs: TextSnippetOutlined,
+  hightlight: HighlightAlt,
+  map: MapIcon,
+  account: AccountIcon,
+  tablet: TabletIcon,
+  update: UpdateIcon,
+  admin: AdminIcon,
+  clipboard: ClipBoardIcon,
+  fitscreen: FitScreen,
+  'dots-square': DotsSquareIcon
 }
 
 function makeIcon(name: string) {
@@ -82,7 +79,6 @@ function onClose(seneca: any) {
     section: 'vxg.cmp.BasicSide.show',
     content: false
   })
-
 }
 
 function allow(vxg: any, item: any) {
@@ -97,7 +93,7 @@ function BasicSide(props: any) {
     ctx,
     spec
   } = props
-  const { model, seneca, } = ctx()
+  const { model, seneca } = ctx()
 
   const vxgState = useSelector((state: any) => state.main.vxg)
   const open = vxgState.cmp.BasicSide.show
@@ -169,7 +165,6 @@ function BasicSide(props: any) {
     }
   }
 
-
   const DefaultNavMenu = (props: any) => {
     const { viewdefs, viewOrder } = props
     return (
@@ -237,7 +232,7 @@ function BasicSide(props: any) {
           {
             sections.map((section: any, sectionNumber: number) => (
               <ToggleButton
-                value="check"
+                value='check'
                 selected={showViewsData[sectionNumber]}
                 sx={{
                   padding: '0.5em',
@@ -296,6 +291,5 @@ function BasicSide(props: any) {
     </BasicDrawer>
   )
 }
-
 
 export default BasicSide

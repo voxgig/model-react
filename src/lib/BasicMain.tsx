@@ -8,7 +8,6 @@ import {
   Route
 } from 'react-router-dom'
 
-
 import BasicLed from './BasicLed'
 import { Gubu } from 'gubu'
 
@@ -34,7 +33,7 @@ function BasicMain(props: any) {
   const {
     vxg,
     ctx,
-    spec,
+    spec
   } = props
   const { model, content } = ctx()
 
@@ -57,8 +56,8 @@ function BasicMain(props: any) {
 
 
   const divStyle = {
-    'paddingLeft': sideOpen ? '12.0em' : '0em',
-    'paddingRight': 0,
+    paddingLeft: sideOpen ? '12.0em' : '0em',
+    paddingRight: 0
   }
   const mainDiv = {
     height: 'calc(100vh - 6rem)',
@@ -70,7 +69,7 @@ function BasicMain(props: any) {
     <div className="BasicMain" style={mainDiv}>
       <div style={{ width: '100%', height: '100%', ...divStyle }}>
         <Routes>
-          <Route path="/view">
+          <Route path='/view'>
             {
               views.map((view: any) => {
                 const Cmp: any = makeCmp(view, ctx)
@@ -102,6 +101,5 @@ function BasicMain(props: any) {
     </div>
   )
 }
-
 
 export default BasicMain

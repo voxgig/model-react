@@ -5,14 +5,13 @@ import BasicHead from './BasicHead'
 import BasicSide from './BasicSide'
 import BasicMain from './BasicMain'
 import BasicFoot from './BasicFoot'
-import { Gubu } from 'gubu'
 
 
 function BasicAdmin(props: any) {
   const {
     vxg,
     ctx,
-    spec,
+    spec
   } = props
   const model = ctx().model
 
@@ -57,6 +56,5 @@ function BasicAdmin(props: any) {
     </div>
   )
 }
-
 
 export default BasicAdmin
