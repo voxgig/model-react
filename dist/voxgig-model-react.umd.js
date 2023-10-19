@@ -45671,6 +45671,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     let {
       onRowClick = () => {
       },
+      onEditingRowSave = () => {
+      },
       data,
       columns,
       sx = {}
@@ -45678,6 +45680,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const { ctx, spec } = props;
     const { model, seneca, custom } = ctx();
     const vxg = reactRedux.useSelector((state) => state.main.vxg);
+    const handleSaveRow = (_0) => __async(this, [_0], function* ({ exitEditingMode, row, values: values2 }) {
+      onEditingRowSave(row, values2);
+      exitEditingMode();
+    });
     return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "BasicList", style: __spreadValues({}, sx), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
       MaterialReactTable,
       {
@@ -45687,13 +45693,16 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         enableSorting: false,
         enableBottomToolbar: true,
         enableTopToolbar: false,
+        editingMode: "row",
+        enableEditing: true,
         columns,
         data,
+        onEditingRowSave: handleSaveRow,
         muiTableBodyRowProps: ({ row }) => ({
-          onClick: (event) => {
-            let selitem = __spreadValues({}, data[Number(row.id)]);
-            onRowClick(event, selitem);
-          },
+          // onClick: (event: any) => {
+          //   let selitem = { ...data[Number(row.id)] }
+          //   onRowClick(event, selitem)
+          // },
           sx: { cursor: "pointer" }
         })
       }
@@ -47631,12 +47640,13 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const itemFields = fields(spec);
     const columns = itemFields.map(
       (field) => ({
-        accessorFn: (row) => {
-          var _a;
-          return "status" === field.type ? (_a = field.kind[row[field.name]]) == null ? void 0 : _a.title : row[field.name];
-        },
+        // accessorFn: (row: any) => ('status' === field.type ? field.kind[row[field.name]]?.title : row[field.name]),
+        accessorFn: (row) => row[field.name],
         accessorKey: field.name,
         header: field.headerName,
+        enableEditing: field.edit,
+        editVariant: "status" === field.type ? "select" : "text",
+        editSelectOptions: "status" === field.type ? ["open", "closed"] : null,
         Header: () => /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: field.headerName }),
         // muiTableHeadCellProps: { sx: { color: 'green' } },
         Cell: ({ cell }) => /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: cell.getValue() })
@@ -47661,9 +47671,15 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         spec,
         data,
         columns,
-        onRowClick: (event, item2) => {
-          setItem(item2);
-        }
+        onEditingRowSave: (row, values2) => __async(this, null, function* () {
+          let selectedItem = __spreadValues({}, data[row.index]);
+          for (let k in values2) {
+            selectedItem[k] = values2[k];
+          }
+          console.log("selectedItem: ", selectedItem);
+          yield seneca.entity(canon).save$(selectedItem);
+          setItem({});
+        })
       }
     ) : /* @__PURE__ */ jsxRuntimeExports.jsx(
       BasicEdit,
