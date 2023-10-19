@@ -19,15 +19,15 @@
     "build": "tsc && vite build",
     "watch": "vite build -w",
     "preview": "vite preview",
-    "test": "vitest",
+    "test": "vitest && npm run lint",
     "clean": "rm -rf dist node_modules yarn.lock package-lock.json",
     "reset": "npm run clean && npm install && npm run build",
     "repo-check": "REPO_VERSION=`node -e \"console.log(require('./package').version)\"` && echo TAG: v$REPO_VERSION && [[ '' == `git tag --list v${REPO_VERSION}` ]]",
     "repo-tag": "REPO_VERSION=`node -e \"console.log(require('./package').version)\"` && echo TAG: v$REPO_VERSION && git commit -a -m v$REPO_VERSION && git push && git tag v$REPO_VERSION && git push --tags;",
     "repo-publish": "npm run repo-check && npm run clean && npm install --registry https://registry.npmjs.org && npm run build && npm test && npm run repo-tag && npm publish --registry https://registry.npmjs.org",
-    "repo-publish-quick": "npm run repo-check && npm run build && npm run repo-tag && npm publish --registry https://registry.npmjs.org --access=public",
-    "lint": "npx ts-standard 'src/**/*.tsx'",
-    "lint-and-fix": "npx ts-standard --fix 'src/**/*.tsx'"
+    "repo-publish-quick": "npm run repo-check && npm run build && npm run lint && npm run repo-tag && npm publish --registry https://registry.npmjs.org --access=public",
+    "lint": "ts-standard src",
+    "lint:fix": "ts-standard --fix src"
   },
   "peerDependencies": {
     "@emotion/react": ">=11",
