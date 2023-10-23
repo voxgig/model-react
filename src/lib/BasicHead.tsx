@@ -191,7 +191,7 @@ function BasicHead(props: any) {
 
               onClick={() => addItem(seneca, led_add)}
             >
-              {tooldef.title + ' ' + model.app.web.frame.private.view[viewPath].name}
+              {tooldef.title + ' ' + spec.view[viewPath].name}
             </BasicButton>
 
           }
