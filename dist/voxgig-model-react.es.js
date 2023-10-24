@@ -567,7 +567,7 @@ function requireReactJsxRuntime_development() {
           }
         }
       }
-      function checkPropTypes(typeSpecs, values2, location, componentName, element) {
+      function checkPropTypes(typeSpecs, values2, location2, componentName, element) {
         {
           var has2 = Function.call.bind(hasOwnProperty);
           for (var typeSpecName in typeSpecs) {
@@ -575,23 +575,23 @@ function requireReactJsxRuntime_development() {
               var error$1 = void 0;
               try {
                 if (typeof typeSpecs[typeSpecName] !== "function") {
-                  var err = Error((componentName || "React class") + ": " + location + " type `" + typeSpecName + "` is invalid; it must be a function, usually from the `prop-types` package, but received `" + typeof typeSpecs[typeSpecName] + "`.This often happens because of typos such as `PropTypes.function` instead of `PropTypes.func`.");
+                  var err = Error((componentName || "React class") + ": " + location2 + " type `" + typeSpecName + "` is invalid; it must be a function, usually from the `prop-types` package, but received `" + typeof typeSpecs[typeSpecName] + "`.This often happens because of typos such as `PropTypes.function` instead of `PropTypes.func`.");
                   err.name = "Invariant Violation";
                   throw err;
                 }
-                error$1 = typeSpecs[typeSpecName](values2, typeSpecName, componentName, location, null, "SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED");
+                error$1 = typeSpecs[typeSpecName](values2, typeSpecName, componentName, location2, null, "SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED");
               } catch (ex) {
                 error$1 = ex;
               }
               if (error$1 && !(error$1 instanceof Error)) {
                 setCurrentlyValidatingElement(element);
-                error("%s: type specification of %s `%s` is invalid; the type checker function must return `null` or an `Error` but returned a %s. You may have forgotten to pass an argument to the type checker creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and shape all require an argument).", componentName || "React class", location, typeSpecName, typeof error$1);
+                error("%s: type specification of %s `%s` is invalid; the type checker function must return `null` or an `Error` but returned a %s. You may have forgotten to pass an argument to the type checker creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and shape all require an argument).", componentName || "React class", location2, typeSpecName, typeof error$1);
                 setCurrentlyValidatingElement(null);
               }
               if (error$1 instanceof Error && !(error$1.message in loggedTypeFailures)) {
                 loggedTypeFailures[error$1.message] = true;
                 setCurrentlyValidatingElement(element);
-                error("Failed %s type: %s", location, error$1.message);
+                error("Failed %s type: %s", location2, error$1.message);
                 setCurrentlyValidatingElement(null);
               }
             }
@@ -2016,7 +2016,7 @@ function requireCheckPropTypes() {
       }
     };
   }
-  function checkPropTypes(typeSpecs, values2, location, componentName, getStack) {
+  function checkPropTypes(typeSpecs, values2, location2, componentName, getStack) {
     if (process.env.NODE_ENV !== "production") {
       for (var typeSpecName in typeSpecs) {
         if (has2(typeSpecs, typeSpecName)) {
@@ -2024,25 +2024,25 @@ function requireCheckPropTypes() {
           try {
             if (typeof typeSpecs[typeSpecName] !== "function") {
               var err = Error(
-                (componentName || "React class") + ": " + location + " type `" + typeSpecName + "` is invalid; it must be a function, usually from the `prop-types` package, but received `" + typeof typeSpecs[typeSpecName] + "`.This often happens because of typos such as `PropTypes.function` instead of `PropTypes.func`."
+                (componentName || "React class") + ": " + location2 + " type `" + typeSpecName + "` is invalid; it must be a function, usually from the `prop-types` package, but received `" + typeof typeSpecs[typeSpecName] + "`.This often happens because of typos such as `PropTypes.function` instead of `PropTypes.func`."
               );
               err.name = "Invariant Violation";
               throw err;
             }
-            error = typeSpecs[typeSpecName](values2, typeSpecName, componentName, location, null, ReactPropTypesSecret);
+            error = typeSpecs[typeSpecName](values2, typeSpecName, componentName, location2, null, ReactPropTypesSecret);
           } catch (ex) {
             error = ex;
           }
           if (error && !(error instanceof Error)) {
             printWarning(
-              (componentName || "React class") + ": type specification of " + location + " `" + typeSpecName + "` is invalid; the type checker function must return `null` or an `Error` but returned a " + typeof error + ". You may have forgotten to pass an argument to the type checker creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and shape all require an argument)."
+              (componentName || "React class") + ": type specification of " + location2 + " `" + typeSpecName + "` is invalid; the type checker function must return `null` or an `Error` but returned a " + typeof error + ". You may have forgotten to pass an argument to the type checker creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and shape all require an argument)."
             );
           }
           if (error instanceof Error && !(error.message in loggedTypeFailures)) {
             loggedTypeFailures[error.message] = true;
             var stack = getStack ? getStack() : "";
             printWarning(
-              "Failed " + location + " type: " + error.message + (stack != null ? stack : "")
+              "Failed " + location2 + " type: " + error.message + (stack != null ? stack : "")
             );
           }
         }
@@ -2135,7 +2135,7 @@ function requireFactoryWithTypeCheckers() {
         var manualPropTypeCallCache = {};
         var manualPropTypeWarningCount = 0;
       }
-      function checkType(isRequired, props, propName, componentName, location, propFullName, secret) {
+      function checkType(isRequired, props, propName, componentName, location2, propFullName, secret) {
         componentName = componentName || ANONYMOUS;
         propFullName = propFullName || propName;
         if (secret !== ReactPropTypesSecret) {
@@ -2160,13 +2160,13 @@ function requireFactoryWithTypeCheckers() {
         if (props[propName] == null) {
           if (isRequired) {
             if (props[propName] === null) {
-              return new PropTypeError("The " + location + " `" + propFullName + "` is marked as required " + ("in `" + componentName + "`, but its value is `null`."));
+              return new PropTypeError("The " + location2 + " `" + propFullName + "` is marked as required " + ("in `" + componentName + "`, but its value is `null`."));
             }
-            return new PropTypeError("The " + location + " `" + propFullName + "` is marked as required in " + ("`" + componentName + "`, but its value is `undefined`."));
+            return new PropTypeError("The " + location2 + " `" + propFullName + "` is marked as required in " + ("`" + componentName + "`, but its value is `undefined`."));
           }
           return null;
         } else {
-          return validate(props, propName, componentName, location, propFullName);
+          return validate(props, propName, componentName, location2, propFullName);
         }
       }
       var chainedCheckType = checkType.bind(null, false);
@@ -2174,13 +2174,13 @@ function requireFactoryWithTypeCheckers() {
       return chainedCheckType;
     }
     function createPrimitiveTypeChecker(expectedType) {
-      function validate(props, propName, componentName, location, propFullName, secret) {
+      function validate(props, propName, componentName, location2, propFullName, secret) {
         var propValue = props[propName];
         var propType = getPropType(propValue);
         if (propType !== expectedType) {
           var preciseType = getPreciseType(propValue);
           return new PropTypeError(
-            "Invalid " + location + " `" + propFullName + "` of type " + ("`" + preciseType + "` supplied to `" + componentName + "`, expected ") + ("`" + expectedType + "`."),
+            "Invalid " + location2 + " `" + propFullName + "` of type " + ("`" + preciseType + "` supplied to `" + componentName + "`, expected ") + ("`" + expectedType + "`."),
             { expectedType }
           );
         }
@@ -2192,17 +2192,17 @@ function requireFactoryWithTypeCheckers() {
       return createChainableTypeChecker(emptyFunctionThatReturnsNull);
     }
     function createArrayOfTypeChecker(typeChecker) {
-      function validate(props, propName, componentName, location, propFullName) {
+      function validate(props, propName, componentName, location2, propFullName) {
         if (typeof typeChecker !== "function") {
           return new PropTypeError("Property `" + propFullName + "` of component `" + componentName + "` has invalid PropType notation inside arrayOf.");
         }
         var propValue = props[propName];
         if (!Array.isArray(propValue)) {
           var propType = getPropType(propValue);
-          return new PropTypeError("Invalid " + location + " `" + propFullName + "` of type " + ("`" + propType + "` supplied to `" + componentName + "`, expected an array."));
+          return new PropTypeError("Invalid " + location2 + " `" + propFullName + "` of type " + ("`" + propType + "` supplied to `" + componentName + "`, expected an array."));
         }
         for (var i = 0; i < propValue.length; i++) {
-          var error = typeChecker(propValue, i, componentName, location, propFullName + "[" + i + "]", ReactPropTypesSecret);
+          var error = typeChecker(propValue, i, componentName, location2, propFullName + "[" + i + "]", ReactPropTypesSecret);
           if (error instanceof Error) {
             return error;
           }
@@ -2212,33 +2212,33 @@ function requireFactoryWithTypeCheckers() {
       return createChainableTypeChecker(validate);
     }
     function createElementTypeChecker() {
-      function validate(props, propName, componentName, location, propFullName) {
+      function validate(props, propName, componentName, location2, propFullName) {
         var propValue = props[propName];
         if (!isValidElement2(propValue)) {
           var propType = getPropType(propValue);
-          return new PropTypeError("Invalid " + location + " `" + propFullName + "` of type " + ("`" + propType + "` supplied to `" + componentName + "`, expected a single ReactElement."));
+          return new PropTypeError("Invalid " + location2 + " `" + propFullName + "` of type " + ("`" + propType + "` supplied to `" + componentName + "`, expected a single ReactElement."));
         }
         return null;
       }
       return createChainableTypeChecker(validate);
     }
     function createElementTypeTypeChecker() {
-      function validate(props, propName, componentName, location, propFullName) {
+      function validate(props, propName, componentName, location2, propFullName) {
         var propValue = props[propName];
         if (!ReactIs.isValidElementType(propValue)) {
           var propType = getPropType(propValue);
-          return new PropTypeError("Invalid " + location + " `" + propFullName + "` of type " + ("`" + propType + "` supplied to `" + componentName + "`, expected a single ReactElement type."));
+          return new PropTypeError("Invalid " + location2 + " `" + propFullName + "` of type " + ("`" + propType + "` supplied to `" + componentName + "`, expected a single ReactElement type."));
         }
         return null;
       }
       return createChainableTypeChecker(validate);
     }
     function createInstanceTypeChecker(expectedClass) {
-      function validate(props, propName, componentName, location, propFullName) {
+      function validate(props, propName, componentName, location2, propFullName) {
         if (!(props[propName] instanceof expectedClass)) {
           var expectedClassName = expectedClass.name || ANONYMOUS;
           var actualClassName = getClassName(props[propName]);
-          return new PropTypeError("Invalid " + location + " `" + propFullName + "` of type " + ("`" + actualClassName + "` supplied to `" + componentName + "`, expected ") + ("instance of `" + expectedClassName + "`."));
+          return new PropTypeError("Invalid " + location2 + " `" + propFullName + "` of type " + ("`" + actualClassName + "` supplied to `" + componentName + "`, expected ") + ("instance of `" + expectedClassName + "`."));
         }
         return null;
       }
@@ -2257,7 +2257,7 @@ function requireFactoryWithTypeCheckers() {
         }
         return emptyFunctionThatReturnsNull;
       }
-      function validate(props, propName, componentName, location, propFullName) {
+      function validate(props, propName, componentName, location2, propFullName) {
         var propValue = props[propName];
         for (var i = 0; i < expectedValues.length; i++) {
           if (is(propValue, expectedValues[i])) {
@@ -2271,23 +2271,23 @@ function requireFactoryWithTypeCheckers() {
           }
           return value;
         });
-        return new PropTypeError("Invalid " + location + " `" + propFullName + "` of value `" + String(propValue) + "` " + ("supplied to `" + componentName + "`, expected one of " + valuesString + "."));
+        return new PropTypeError("Invalid " + location2 + " `" + propFullName + "` of value `" + String(propValue) + "` " + ("supplied to `" + componentName + "`, expected one of " + valuesString + "."));
       }
       return createChainableTypeChecker(validate);
     }
     function createObjectOfTypeChecker(typeChecker) {
-      function validate(props, propName, componentName, location, propFullName) {
+      function validate(props, propName, componentName, location2, propFullName) {
         if (typeof typeChecker !== "function") {
           return new PropTypeError("Property `" + propFullName + "` of component `" + componentName + "` has invalid PropType notation inside objectOf.");
         }
         var propValue = props[propName];
         var propType = getPropType(propValue);
         if (propType !== "object") {
-          return new PropTypeError("Invalid " + location + " `" + propFullName + "` of type " + ("`" + propType + "` supplied to `" + componentName + "`, expected an object."));
+          return new PropTypeError("Invalid " + location2 + " `" + propFullName + "` of type " + ("`" + propType + "` supplied to `" + componentName + "`, expected an object."));
         }
         for (var key in propValue) {
           if (has2(propValue, key)) {
-            var error = typeChecker(propValue, key, componentName, location, propFullName + "." + key, ReactPropTypesSecret);
+            var error = typeChecker(propValue, key, componentName, location2, propFullName + "." + key, ReactPropTypesSecret);
             if (error instanceof Error) {
               return error;
             }
@@ -2311,11 +2311,11 @@ function requireFactoryWithTypeCheckers() {
           return emptyFunctionThatReturnsNull;
         }
       }
-      function validate(props, propName, componentName, location, propFullName) {
+      function validate(props, propName, componentName, location2, propFullName) {
         var expectedTypes = [];
         for (var i2 = 0; i2 < arrayOfTypeCheckers.length; i2++) {
           var checker2 = arrayOfTypeCheckers[i2];
-          var checkerResult = checker2(props, propName, componentName, location, propFullName, ReactPropTypesSecret);
+          var checkerResult = checker2(props, propName, componentName, location2, propFullName, ReactPropTypesSecret);
           if (checkerResult == null) {
             return null;
           }
@@ -2324,37 +2324,37 @@ function requireFactoryWithTypeCheckers() {
           }
         }
         var expectedTypesMessage = expectedTypes.length > 0 ? ", expected one of type [" + expectedTypes.join(", ") + "]" : "";
-        return new PropTypeError("Invalid " + location + " `" + propFullName + "` supplied to " + ("`" + componentName + "`" + expectedTypesMessage + "."));
+        return new PropTypeError("Invalid " + location2 + " `" + propFullName + "` supplied to " + ("`" + componentName + "`" + expectedTypesMessage + "."));
       }
       return createChainableTypeChecker(validate);
     }
     function createNodeChecker() {
-      function validate(props, propName, componentName, location, propFullName) {
+      function validate(props, propName, componentName, location2, propFullName) {
         if (!isNode(props[propName])) {
-          return new PropTypeError("Invalid " + location + " `" + propFullName + "` supplied to " + ("`" + componentName + "`, expected a ReactNode."));
+          return new PropTypeError("Invalid " + location2 + " `" + propFullName + "` supplied to " + ("`" + componentName + "`, expected a ReactNode."));
         }
         return null;
       }
       return createChainableTypeChecker(validate);
     }
-    function invalidValidatorError(componentName, location, propFullName, key, type) {
+    function invalidValidatorError(componentName, location2, propFullName, key, type) {
       return new PropTypeError(
-        (componentName || "React class") + ": " + location + " type `" + propFullName + "." + key + "` is invalid; it must be a function, usually from the `prop-types` package, but received `" + type + "`."
+        (componentName || "React class") + ": " + location2 + " type `" + propFullName + "." + key + "` is invalid; it must be a function, usually from the `prop-types` package, but received `" + type + "`."
       );
     }
     function createShapeTypeChecker(shapeTypes) {
-      function validate(props, propName, componentName, location, propFullName) {
+      function validate(props, propName, componentName, location2, propFullName) {
         var propValue = props[propName];
         var propType = getPropType(propValue);
         if (propType !== "object") {
-          return new PropTypeError("Invalid " + location + " `" + propFullName + "` of type `" + propType + "` " + ("supplied to `" + componentName + "`, expected `object`."));
+          return new PropTypeError("Invalid " + location2 + " `" + propFullName + "` of type `" + propType + "` " + ("supplied to `" + componentName + "`, expected `object`."));
         }
         for (var key in shapeTypes) {
           var checker = shapeTypes[key];
           if (typeof checker !== "function") {
-            return invalidValidatorError(componentName, location, propFullName, key, getPreciseType(checker));
+            return invalidValidatorError(componentName, location2, propFullName, key, getPreciseType(checker));
           }
-          var error = checker(propValue, key, componentName, location, propFullName + "." + key, ReactPropTypesSecret);
+          var error = checker(propValue, key, componentName, location2, propFullName + "." + key, ReactPropTypesSecret);
           if (error) {
             return error;
           }
@@ -2364,24 +2364,24 @@ function requireFactoryWithTypeCheckers() {
       return createChainableTypeChecker(validate);
     }
     function createStrictShapeTypeChecker(shapeTypes) {
-      function validate(props, propName, componentName, location, propFullName) {
+      function validate(props, propName, componentName, location2, propFullName) {
         var propValue = props[propName];
         var propType = getPropType(propValue);
         if (propType !== "object") {
-          return new PropTypeError("Invalid " + location + " `" + propFullName + "` of type `" + propType + "` " + ("supplied to `" + componentName + "`, expected `object`."));
+          return new PropTypeError("Invalid " + location2 + " `" + propFullName + "` of type `" + propType + "` " + ("supplied to `" + componentName + "`, expected `object`."));
         }
         var allKeys = assign2({}, props[propName], shapeTypes);
         for (var key in allKeys) {
           var checker = shapeTypes[key];
           if (has2(shapeTypes, key) && typeof checker !== "function") {
-            return invalidValidatorError(componentName, location, propFullName, key, getPreciseType(checker));
+            return invalidValidatorError(componentName, location2, propFullName, key, getPreciseType(checker));
           }
           if (!checker) {
             return new PropTypeError(
-              "Invalid " + location + " `" + propFullName + "` key `" + key + "` supplied to `" + componentName + "`.\nBad object: " + JSON.stringify(props[propName], null, "  ") + "\nValid keys: " + JSON.stringify(Object.keys(shapeTypes), null, "  ")
+              "Invalid " + location2 + " `" + propFullName + "` key `" + key + "` supplied to `" + componentName + "`.\nBad object: " + JSON.stringify(props[propName], null, "  ") + "\nValid keys: " + JSON.stringify(Object.keys(shapeTypes), null, "  ")
             );
           }
-          var error = checker(propValue, key, componentName, location, propFullName + "." + key, ReactPropTypesSecret);
+          var error = checker(propValue, key, componentName, location2, propFullName + "." + key, ReactPropTypesSecret);
           if (error) {
             return error;
           }
@@ -2516,7 +2516,7 @@ function requireFactoryWithThrowingShims() {
   }
   emptyFunctionWithReset.resetWarningCache = emptyFunction;
   factoryWithThrowingShims = function() {
-    function shim(props, propName, componentName, location, propFullName, secret) {
+    function shim(props, propName, componentName, location2, propFullName, secret) {
       if (secret === ReactPropTypesSecret) {
         return;
       }
@@ -2576,7 +2576,7 @@ function isClassComponent$2(elementType) {
   } = elementType;
   return Boolean(prototype.isReactComponent);
 }
-function acceptingRef(props, propName, componentName, location, propFullName) {
+function acceptingRef(props, propName, componentName, location2, propFullName) {
   const element = props[propName];
   const safePropName = propFullName || propName;
   if (element == null || // When server-side rendering React doesn't warn either.
@@ -2592,7 +2592,7 @@ function acceptingRef(props, propName, componentName, location, propFullName) {
     warningHint = "Did you accidentally use a plain function component for an element instead?";
   }
   if (warningHint !== void 0) {
-    return new Error(`Invalid ${location} \`${safePropName}\` supplied to \`${componentName}\`. Expected an element that can hold a ref. ${warningHint} For more information see https://mui.com/r/caveat-with-refs-guide`);
+    return new Error(`Invalid ${location2} \`${safePropName}\` supplied to \`${componentName}\`. Expected an element that can hold a ref. ${warningHint} For more information see https://mui.com/r/caveat-with-refs-guide`);
   }
   return null;
 }
@@ -2604,7 +2604,7 @@ function isClassComponent$1(elementType) {
   } = elementType;
   return Boolean(prototype.isReactComponent);
 }
-function elementTypeAcceptingRef(props, propName, componentName, location, propFullName) {
+function elementTypeAcceptingRef(props, propName, componentName, location2, propFullName) {
   const propValue = props[propName];
   const safePropName = propFullName || propName;
   if (propValue == null || // When server-side rendering React doesn't warn either.
@@ -2619,7 +2619,7 @@ function elementTypeAcceptingRef(props, propName, componentName, location, propF
     warningHint = "Did you accidentally provide a plain function component instead?";
   }
   if (warningHint !== void 0) {
-    return new Error(`Invalid ${location} \`${safePropName}\` supplied to \`${componentName}\`. Expected an element type that can hold a ref. ${warningHint} For more information see https://mui.com/r/caveat-with-refs-guide`);
+    return new Error(`Invalid ${location2} \`${safePropName}\` supplied to \`${componentName}\`. Expected an element type that can hold a ref. ${warningHint} For more information see https://mui.com/r/caveat-with-refs-guide`);
   }
   return null;
 }
@@ -2992,7 +2992,7 @@ function getDisplayName(Component) {
   }
   return void 0;
 }
-function HTMLElementType(props, propName, componentName, location, propFullName) {
+function HTMLElementType(props, propName, componentName, location2, propFullName) {
   if (process.env.NODE_ENV === "production") {
     return null;
   }
@@ -3002,7 +3002,7 @@ function HTMLElementType(props, propName, componentName, location, propFullName)
     return null;
   }
   if (propValue && propValue.nodeType !== 1) {
-    return new Error(`Invalid ${location} \`${safePropName}\` supplied to \`${componentName}\`. Expected an HTMLElement.`);
+    return new Error(`Invalid ${location2} \`${safePropName}\` supplied to \`${componentName}\`. Expected an HTMLElement.`);
   }
   return null;
 }
@@ -3044,11 +3044,11 @@ function deprecatedPropType(validator2, reason) {
   if (process.env.NODE_ENV === "production") {
     return () => null;
   }
-  return (props, propName, componentName, location, propFullName) => {
+  return (props, propName, componentName, location2, propFullName) => {
     const componentNameSafe = componentName || "<<anonymous>>";
     const propFullNameSafe = propFullName || propName;
     if (typeof props[propName] !== "undefined") {
-      return new Error(`The ${location} \`${propFullNameSafe}\` of \`${componentNameSafe}\` is deprecated. ${reason}`);
+      return new Error(`The ${location2} \`${propFullNameSafe}\` of \`${componentNameSafe}\` is deprecated. ${reason}`);
     }
     return null;
   };
@@ -3074,11 +3074,11 @@ function requirePropFactory(componentNameInError, Component) {
     return () => null;
   }
   const prevPropTypes = Component ? _extends$2({}, Component.propTypes) : null;
-  const requireProp = (requiredProp) => (props, propName, componentName, location, propFullName, ...args) => {
+  const requireProp = (requiredProp) => (props, propName, componentName, location2, propFullName, ...args) => {
     const propFullNameSafe = propFullName || propName;
     const defaultTypeChecker = prevPropTypes == null ? void 0 : prevPropTypes[propFullNameSafe];
     if (defaultTypeChecker) {
-      const typeCheckerResult = defaultTypeChecker(props, propName, componentName, location, propFullName, ...args);
+      const typeCheckerResult = defaultTypeChecker(props, propName, componentName, location2, propFullName, ...args);
       if (typeCheckerResult) {
         return typeCheckerResult;
       }
@@ -3122,7 +3122,7 @@ function useId(idOverride) {
   return useGlobalId(idOverride);
 }
 "use client";
-function unsupportedProp(props, propName, componentName, location, propFullName) {
+function unsupportedProp(props, propName, componentName, location2, propFullName) {
   if (process.env.NODE_ENV === "production") {
     return null;
   }
@@ -3400,11 +3400,11 @@ function ponyfillIsInteger(x) {
   return typeof x === "number" && isFinite(x) && Math.floor(x) === x;
 }
 const isInteger = Number.isInteger || ponyfillIsInteger;
-function requiredInteger(props, propName, componentName, location) {
+function requiredInteger(props, propName, componentName, location2) {
   const propValue = props[propName];
   if (propValue == null || !isInteger(propValue)) {
     const propType = getTypeByValue(propValue);
-    return new RangeError(`Invalid ${location} \`${propName}\` of type \`${propType}\` supplied to \`${componentName}\`, expected \`integer\`.`);
+    return new RangeError(`Invalid ${location2} \`${propName}\` of type \`${propType}\` supplied to \`${componentName}\`, expected \`integer\`.`);
   }
   return null;
 }
@@ -20097,7 +20097,7 @@ function BasicHead(props) {
   });
   shape2(spec);
   const navigate = useNavigate();
-  const location = useLocation();
+  const location2 = useLocation();
   const tooldefs = Object.entries(spec.head.tool.def).map((entry) => (entry[1].name = entry[0], entry[1]));
   const user = useSelector((state) => state.main.auth.user);
   const userName = user.name || user.email;
@@ -20123,7 +20123,7 @@ function BasicHead(props) {
   const vxgState = useSelector((state) => state.main.vxg);
   const open = vxgState.cmp.BasicSide.show;
   let led_add = vxgState.trigger.led.add;
-  const viewPath = location.pathname.split("/")[2];
+  const viewPath = location2.pathname.split("/")[2];
   let add = spec.view[viewPath].content.def.add || { active: false };
   let drawerwidth = "16rem";
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -20226,18 +20226,23 @@ function makeIcon(name) {
   const Icon = iconmap[name];
   return /* @__PURE__ */ jsxRuntimeExports.jsx(Icon, {});
 }
+const userRole = "admin";
+function isAuthorized(userRole2, authorizedRoles) {
+  return authorizedRoles.hasOwnProperty(userRole2) && authorizedRoles[userRole2] === true;
+}
 function BasicSideMenuItem(props) {
-  const { spec, sectionKey, isAuthorized: isAuthorized2, onItemSelect } = props;
+  const { spec, sectionKey, onItemSelect } = props;
+  const viewPath = location.pathname.split("/")[2];
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(List$1, { children: [
     Object.entries(spec.section.item).map(([itemKey, item]) => {
       return (
         // TODO: load user from redux store
-        isAuthorized2("admin", item.access) && /* @__PURE__ */ jsxRuntimeExports.jsx(
+        isAuthorized("admin", item.access) && /* @__PURE__ */ jsxRuntimeExports.jsx(
           ListItem,
           {
             disablePadding: true,
             onClick: () => onItemSelect(itemKey, item),
-            children: /* @__PURE__ */ jsxRuntimeExports.jsxs(ListItemButton, { selected: spec.viewPath == itemKey, children: [
+            children: /* @__PURE__ */ jsxRuntimeExports.jsxs(ListItemButton, { selected: viewPath == itemKey, children: [
               /* @__PURE__ */ jsxRuntimeExports.jsx(ListItemIcon$1, { children: makeIcon(item.icon) }),
               /* @__PURE__ */ jsxRuntimeExports.jsx(ListItemText$1, { primary: item.label })
             ] })
@@ -20251,16 +20256,14 @@ function BasicSideMenuItem(props) {
 }
 function BasicSideMenu(props) {
   const {
-    isAuthorized: isAuthorized2,
     onItemSelect,
     spec
   } = props;
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: Object.entries(spec.sections).map(([sectionKey, section]) => {
-    const navListSpec = {
-      section,
-      viewPath: spec.viewPath
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: Object.entries(spec.sectionList).map(([sectionKey, section]) => {
+    const basicSideMenuItemSpec = {
+      section
     };
-    return /* @__PURE__ */ jsxRuntimeExports.jsx(BasicSideMenuItem, { spec: navListSpec, onItemSelect, isAuthorized: isAuthorized2 }, sectionKey);
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(BasicSideMenuItem, { spec: basicSideMenuItemSpec, onItemSelect }, sectionKey);
   }) });
 }
 function _setPrototypeOf(o, p) {
@@ -20554,9 +20557,9 @@ Transition.propTypes = process.env.NODE_ENV !== "production" ? {
    *     [test/CSSTransition-test.js](https://github.com/reactjs/react-transition-group/blob/13435f897b3ab71f6e19d724f145596f5910581c/test/CSSTransition-test.js#L362-L437)).
    */
   nodeRef: PropTypes.shape({
-    current: typeof Element === "undefined" ? PropTypes.any : function(propValue, key, componentName, location, propFullName, secret) {
+    current: typeof Element === "undefined" ? PropTypes.any : function(propValue, key, componentName, location2, propFullName, secret) {
       var value = propValue[key];
-      return PropTypes.instanceOf(value && "ownerDocument" in value ? value.ownerDocument.defaultView.Element : Element)(propValue, key, componentName, location, propFullName, secret);
+      return PropTypes.instanceOf(value && "ownerDocument" in value ? value.ownerDocument.defaultView.Element : Element)(propValue, key, componentName, location2, propFullName, secret);
     }
   }),
   /**
@@ -22731,16 +22734,6 @@ const closedMixin = (theme) => ({
     width: `calc(${theme.spacing(8)} + 1px)`
   }
 });
-function onClose(seneca) {
-  seneca.act("aim:app,set:state", {
-    section: "vxg.cmp.BasicSide.show",
-    content: false
-  });
-}
-const userRole = "admin";
-function isAuthorized(userRole2, authorizedRoles) {
-  return authorizedRoles.hasOwnProperty(userRole2) && authorizedRoles[userRole2] === true;
-}
 const BasicSideSpecShape = gubu_minExports.Gubu(gubu_minExports.Required({
   side: {
     logo: {
@@ -22763,6 +22756,12 @@ const BasicSideSpecShape = gubu_minExports.Gubu(gubu_minExports.Required({
     content: {}
   }))
 }));
+function onClose(seneca) {
+  seneca.act("aim:app,set:state", {
+    section: "vxg.cmp.BasicSide.show",
+    content: false
+  });
+}
 function BasicSide(props) {
   const {
     vxg,
@@ -22773,16 +22772,15 @@ function BasicSide(props) {
   const vxgState = useSelector((state) => state.main.vxg);
   const open = vxgState.cmp.BasicSide.show;
   const navigate = useNavigate();
-  const location = useLocation();
+  const location2 = useLocation();
   BasicSideSpecShape(spec);
-  const viewPath = location.pathname.split("/")[2];
   function handleItemSelect(key, item) {
-    navigate(item.path);
+    if ("resource" === item.kind) {
+      navigate(item.path);
+    }
   }
-  const menuSpec = {
-    sections: spec.side.section,
-    userRole: "admin",
-    viewPath
+  const basicSideMenuSpec = {
+    sectionList: spec.side.section
   };
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(
     BasicDrawer,
@@ -22802,7 +22800,7 @@ function BasicSide(props) {
           /* @__PURE__ */ jsxRuntimeExports.jsx(IconButton$1, { onClick: () => onClose(seneca), children: /* @__PURE__ */ jsxRuntimeExports.jsx(ChevronLeft, { sx: { color: "black" } }) })
         ] }),
         /* @__PURE__ */ jsxRuntimeExports.jsx(Divider$1, {}),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(BasicSideMenu, { spec: menuSpec, isAuthorized, onClose, onItemSelect: handleItemSelect })
+        /* @__PURE__ */ jsxRuntimeExports.jsx(BasicSideMenu, { spec: basicSideMenuSpec, onClose, onItemSelect: handleItemSelect })
       ]
     }
   );
@@ -47493,7 +47491,7 @@ function BasicLed(props) {
   const cmpstate = useSelector((state) => state.main.vxg.cmp);
   const entstate = useSelector((state) => state.main.vxg.ent.meta.main[canon].state);
   const entlist = useSelector((state) => state.main.vxg.ent.list.main[canon]);
-  const location = useLocation();
+  const location2 = useLocation();
   if ("none" === entstate) {
     let q = custom.BasicLed.query(spec, cmpstate);
     seneca.entity(canon).list$(q);
@@ -47517,7 +47515,7 @@ function BasicLed(props) {
   let data = rows;
   useEffect(() => {
     setItem({});
-  }, [location.pathname]);
+  }, [location2.pathname]);
   const led_add = vxgState.trigger.led.add;
   let [triggerLed, setTriggerLed] = useState(0);
   useEffect(() => {

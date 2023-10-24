@@ -2,7 +2,6 @@ import BasicSideMenuItem from './BasicSideMenuItem'
 
 function BasicSideMenu(props: any) {
     const {
-        isAuthorized,
         onItemSelect,
         spec
     } = props
@@ -10,14 +9,13 @@ function BasicSideMenu(props: any) {
     return (
         <>
             {
-                Object.entries(spec.sections).map(([sectionKey, section]: [any, any]) => {
+                Object.entries(spec.sectionList).map(([sectionKey, section]: [any, any]) => {
                     // TODO: do we need to pass viewPath?
-                    const navListSpec = {
-                        section: section,
-                        viewPath: spec.viewPath
+                    const basicSideMenuItemSpec = {
+                        section: section
                     }
                     return (
-                        <BasicSideMenuItem key={sectionKey} spec={navListSpec} onItemSelect={onItemSelect} isAuthorized={isAuthorized} />
+                        <BasicSideMenuItem key={sectionKey} spec={basicSideMenuItemSpec} onItemSelect={onItemSelect} />
                     )
                 })
             }
