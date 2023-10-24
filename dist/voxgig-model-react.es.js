@@ -182,28 +182,28 @@ function requireReactJsxRuntime_development() {
         return null;
       }
       var ReactSharedInternals = React2.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
-      function error(format2) {
+      function error(format) {
         {
           {
             for (var _len2 = arguments.length, args = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
               args[_key2 - 1] = arguments[_key2];
             }
-            printWarning("error", format2, args);
+            printWarning("error", format, args);
           }
         }
       }
-      function printWarning(level, format2, args) {
+      function printWarning(level, format, args) {
         {
           var ReactDebugCurrentFrame2 = ReactSharedInternals.ReactDebugCurrentFrame;
           var stack = ReactDebugCurrentFrame2.getStackAddendum();
           if (stack !== "") {
-            format2 += "%s";
+            format += "%s";
             args = args.concat([stack]);
           }
           var argsWithFormat = args.map(function(item) {
             return String(item);
           });
-          argsWithFormat.unshift("Warning: " + format2);
+          argsWithFormat.unshift("Warning: " + format);
           Function.prototype.apply.call(console[level], console, argsWithFormat);
         }
       }
@@ -1025,22 +1025,15 @@ function requireReactJsxRuntime_development() {
   }
   return reactJsxRuntime_development;
 }
-var jsxRuntime$1 = jsxRuntime$2.exports;
-var hasRequiredJsxRuntime;
-function requireJsxRuntime() {
-  if (hasRequiredJsxRuntime)
-    return jsxRuntime$2.exports;
-  hasRequiredJsxRuntime = 1;
-  "use strict";
-  if (process.env.NODE_ENV === "production") {
-    jsxRuntime$2.exports = requireReactJsxRuntime_production_min();
-  } else {
-    jsxRuntime$2.exports = requireReactJsxRuntime_development();
-  }
-  return jsxRuntime$2.exports;
+var jsxRuntime = jsxRuntime$2.exports;
+"use strict";
+if (process.env.NODE_ENV === "production") {
+  jsxRuntime$2.exports = requireReactJsxRuntime_production_min();
+} else {
+  jsxRuntime$2.exports = requireReactJsxRuntime_development();
 }
-var jsxRuntimeExports = requireJsxRuntime();
-const jsxRuntime = /* @__PURE__ */ getDefaultExportFromCjs(jsxRuntimeExports);
+var jsxRuntimeExports = jsxRuntime$2.exports;
+const jsxRuntime$1 = /* @__PURE__ */ getDefaultExportFromCjs(jsxRuntimeExports);
 var gubu_min$2 = { exports: {} };
 var gubu_min = gubu_min$2.exports;
 (function(module, exports) {
@@ -3359,6 +3352,9 @@ const usePreviousProps = (value) => {
   });
   return ref.current;
 };
+function getValidReactChildren(children2) {
+  return React.Children.toArray(children2).filter((child) => /* @__PURE__ */ React.isValidElement(child));
+}
 const visuallyHidden = {
   border: 0,
   clip: "rect(0 0 0 0)",
@@ -6844,7 +6840,7 @@ var min$1 = Math.min;
 var round$2 = Math.round;
 function getUAString() {
   var uaData = navigator.userAgentData;
-  if (uaData != null && uaData.brands) {
+  if (uaData != null && uaData.brands && Array.isArray(uaData.brands)) {
     return uaData.brands.map(function(item) {
       return item.brand + "/" + item.version;
     }).join(" ");
@@ -7058,15 +7054,7 @@ function effect$1(_ref2) {
       return;
     }
   }
-  if (process.env.NODE_ENV !== "production") {
-    if (!isHTMLElement$2(arrowElement)) {
-      console.error(['Popper: "arrow" element must be an HTMLElement (not an SVGElement).', "To use an SVG arrow, wrap it in an HTMLElement that will be used as", "the arrow."].join(" "));
-    }
-  }
   if (!contains$1(state.elements.popper, arrowElement)) {
-    if (process.env.NODE_ENV !== "production") {
-      console.error(['Popper: "arrow" modifier\'s `element` must be a child of the popper', "element."].join(" "));
-    }
     return;
   }
   state.elements.arrow = arrowElement;
@@ -7089,9 +7077,8 @@ var unsetSides = {
   bottom: "auto",
   left: "auto"
 };
-function roundOffsetsByDPR(_ref) {
+function roundOffsetsByDPR(_ref, win) {
   var x = _ref.x, y = _ref.y;
-  var win = window;
   var dpr = win.devicePixelRatio || 1;
   return {
     x: round$2(x * dpr) / dpr || 0,
@@ -7153,7 +7140,7 @@ function mapToStyles(_ref2) {
   var _ref4 = roundOffsets === true ? roundOffsetsByDPR({
     x,
     y
-  }) : {
+  }, getWindow(popper2)) : {
     x,
     y
   };
@@ -7168,14 +7155,6 @@ function mapToStyles(_ref2) {
 function computeStyles(_ref5) {
   var state = _ref5.state, options = _ref5.options;
   var _options$gpuAccelerat = options.gpuAcceleration, gpuAcceleration = _options$gpuAccelerat === void 0 ? true : _options$gpuAccelerat, _options$adaptive = options.adaptive, adaptive = _options$adaptive === void 0 ? true : _options$adaptive, _options$roundOffsets = options.roundOffsets, roundOffsets = _options$roundOffsets === void 0 ? true : _options$roundOffsets;
-  if (process.env.NODE_ENV !== "production") {
-    var transitionProperty = getComputedStyle(state.elements.popper).transitionProperty || "";
-    if (adaptive && ["transform", "top", "right", "bottom", "left"].some(function(property) {
-      return transitionProperty.indexOf(property) >= 0;
-    })) {
-      console.warn(["Popper: Detected CSS transitions on at least one of the following", 'CSS properties: "transform", "top", "right", "bottom", "left".', "\n\n", 'Disable the "computeStyles" modifier\'s `adaptive` option to allow', "for smooth transitions, or remove these properties from the CSS", "transition declaration on the popper element if only transitioning", "opacity or background-color for example.", "\n\n", "We recommend using the popper element as a wrapper around an inner", "element that can have any CSS property transitioned for animations."].join(" "));
-    }
-  }
   var commonStyles = {
     placement: getBasePlacement(state.placement),
     variation: getVariation(state.placement),
@@ -7505,9 +7484,6 @@ function computeAutoPlacement(state, options) {
   });
   if (allowedPlacements.length === 0) {
     allowedPlacements = placements$1;
-    if (process.env.NODE_ENV !== "production") {
-      console.error(["Popper: The `allowedAutoPlacements` option did not allow any", "placements. Ensure the `placement` option matches the variation", "of the allowed placements.", 'For example, "auto" cannot be used to allow "bottom-start".', 'Use "auto-start" instead.'].join(" "));
-    }
   }
   var overflows = allowedPlacements.reduce(function(acc, placement2) {
     acc[placement2] = detectOverflow(state, {
@@ -7929,86 +7905,6 @@ function debounce(fn2) {
     return pending;
   };
 }
-function format(str) {
-  for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-    args[_key - 1] = arguments[_key];
-  }
-  return [].concat(args).reduce(function(p, c) {
-    return p.replace(/%s/, c);
-  }, str);
-}
-var INVALID_MODIFIER_ERROR = 'Popper: modifier "%s" provided an invalid %s property, expected %s but got %s';
-var MISSING_DEPENDENCY_ERROR = 'Popper: modifier "%s" requires "%s", but "%s" modifier is not available';
-var VALID_PROPERTIES = ["name", "enabled", "phase", "fn", "effect", "requires", "options"];
-function validateModifiers(modifiers) {
-  modifiers.forEach(function(modifier) {
-    [].concat(Object.keys(modifier), VALID_PROPERTIES).filter(function(value, index2, self2) {
-      return self2.indexOf(value) === index2;
-    }).forEach(function(key) {
-      switch (key) {
-        case "name":
-          if (typeof modifier.name !== "string") {
-            console.error(format(INVALID_MODIFIER_ERROR, String(modifier.name), '"name"', '"string"', '"' + String(modifier.name) + '"'));
-          }
-          break;
-        case "enabled":
-          if (typeof modifier.enabled !== "boolean") {
-            console.error(format(INVALID_MODIFIER_ERROR, modifier.name, '"enabled"', '"boolean"', '"' + String(modifier.enabled) + '"'));
-          }
-          break;
-        case "phase":
-          if (modifierPhases.indexOf(modifier.phase) < 0) {
-            console.error(format(INVALID_MODIFIER_ERROR, modifier.name, '"phase"', "either " + modifierPhases.join(", "), '"' + String(modifier.phase) + '"'));
-          }
-          break;
-        case "fn":
-          if (typeof modifier.fn !== "function") {
-            console.error(format(INVALID_MODIFIER_ERROR, modifier.name, '"fn"', '"function"', '"' + String(modifier.fn) + '"'));
-          }
-          break;
-        case "effect":
-          if (modifier.effect != null && typeof modifier.effect !== "function") {
-            console.error(format(INVALID_MODIFIER_ERROR, modifier.name, '"effect"', '"function"', '"' + String(modifier.fn) + '"'));
-          }
-          break;
-        case "requires":
-          if (modifier.requires != null && !Array.isArray(modifier.requires)) {
-            console.error(format(INVALID_MODIFIER_ERROR, modifier.name, '"requires"', '"array"', '"' + String(modifier.requires) + '"'));
-          }
-          break;
-        case "requiresIfExists":
-          if (!Array.isArray(modifier.requiresIfExists)) {
-            console.error(format(INVALID_MODIFIER_ERROR, modifier.name, '"requiresIfExists"', '"array"', '"' + String(modifier.requiresIfExists) + '"'));
-          }
-          break;
-        case "options":
-        case "data":
-          break;
-        default:
-          console.error('PopperJS: an invalid property has been provided to the "' + modifier.name + '" modifier, valid properties are ' + VALID_PROPERTIES.map(function(s) {
-            return '"' + s + '"';
-          }).join(", ") + '; but "' + key + '" was provided.');
-      }
-      modifier.requires && modifier.requires.forEach(function(requirement) {
-        if (modifiers.find(function(mod) {
-          return mod.name === requirement;
-        }) == null) {
-          console.error(format(MISSING_DEPENDENCY_ERROR, String(modifier.name), requirement, requirement));
-        }
-      });
-    });
-  });
-}
-function uniqueBy(arr, fn2) {
-  var identifiers = /* @__PURE__ */ new Set();
-  return arr.filter(function(item) {
-    var identifier2 = fn2(item);
-    if (!identifiers.has(identifier2)) {
-      identifiers.add(identifier2);
-      return true;
-    }
-  });
-}
 function mergeByName(modifiers) {
   var merged = modifiers.reduce(function(merged2, current) {
     var existing = merged2[current.name];
@@ -8022,8 +7918,6 @@ function mergeByName(modifiers) {
     return merged[key];
   });
 }
-var INVALID_ELEMENT_ERROR = "Popper: Invalid reference or popper argument provided. They must be either a DOM element or virtual element.";
-var INFINITE_LOOP_ERROR = "Popper: An infinite loop in the modifiers cycle has been detected! The cycle has been interrupted to prevent a browser crash.";
 var DEFAULT_OPTIONS = {
   placement: "bottom",
   modifiers: [],
@@ -8074,28 +7968,6 @@ function popperGenerator(generatorOptions) {
         state.orderedModifiers = orderedModifiers.filter(function(m) {
           return m.enabled;
         });
-        if (process.env.NODE_ENV !== "production") {
-          var modifiers = uniqueBy([].concat(orderedModifiers, state.options.modifiers), function(_ref) {
-            var name = _ref.name;
-            return name;
-          });
-          validateModifiers(modifiers);
-          if (getBasePlacement(state.options.placement) === auto) {
-            var flipModifier = state.orderedModifiers.find(function(_ref2) {
-              var name = _ref2.name;
-              return name === "flip";
-            });
-            if (!flipModifier) {
-              console.error(['Popper: "auto" placements require the "flip" modifier be', "present and enabled to work."].join(" "));
-            }
-          }
-          var _getComputedStyle = getComputedStyle(popper2), marginTop = _getComputedStyle.marginTop, marginRight = _getComputedStyle.marginRight, marginBottom = _getComputedStyle.marginBottom, marginLeft = _getComputedStyle.marginLeft;
-          if ([marginTop, marginRight, marginBottom, marginLeft].some(function(margin2) {
-            return parseFloat(margin2);
-          })) {
-            console.warn(['Popper: CSS "margin" styles cannot be used to apply padding', "between the popper and its reference element or boundary.", "To replicate margin, use the `offset` modifier, as well as", "the `padding` option in the `preventOverflow` and `flip`", "modifiers."].join(" "));
-          }
-        }
         runModifierEffects();
         return instance.update();
       },
@@ -8110,9 +7982,6 @@ function popperGenerator(generatorOptions) {
         }
         var _state$elements = state.elements, reference3 = _state$elements.reference, popper3 = _state$elements.popper;
         if (!areValidElements(reference3, popper3)) {
-          if (process.env.NODE_ENV !== "production") {
-            console.error(INVALID_ELEMENT_ERROR);
-          }
           return;
         }
         state.rects = {
@@ -8124,15 +7993,7 @@ function popperGenerator(generatorOptions) {
         state.orderedModifiers.forEach(function(modifier) {
           return state.modifiersData[modifier.name] = Object.assign({}, modifier.data);
         });
-        var __debug_loops__ = 0;
         for (var index2 = 0; index2 < state.orderedModifiers.length; index2++) {
-          if (process.env.NODE_ENV !== "production") {
-            __debug_loops__ += 1;
-            if (__debug_loops__ > 100) {
-              console.error(INFINITE_LOOP_ERROR);
-              break;
-            }
-          }
           if (state.reset === true) {
             state.reset = false;
             index2 = -1;
@@ -8163,9 +8024,6 @@ function popperGenerator(generatorOptions) {
       }
     };
     if (!areValidElements(reference2, popper2)) {
-      if (process.env.NODE_ENV !== "production") {
-        console.error(INVALID_ELEMENT_ERROR);
-      }
       return instance;
     }
     instance.setOptions(options).then(function(state2) {
@@ -8174,8 +8032,8 @@ function popperGenerator(generatorOptions) {
       }
     });
     function runModifierEffects() {
-      state.orderedModifiers.forEach(function(_ref3) {
-        var name = _ref3.name, _ref3$options = _ref3.options, options2 = _ref3$options === void 0 ? {} : _ref3$options, effect2 = _ref3.effect;
+      state.orderedModifiers.forEach(function(_ref) {
+        var name = _ref.name, _ref$options = _ref.options, options2 = _ref$options === void 0 ? {} : _ref$options, effect2 = _ref.effect;
         if (typeof effect2 === "function") {
           var cleanupFn = effect2({
             state,
@@ -14634,7 +14492,7 @@ process.env.NODE_ENV !== "production" ? GlobalStyles$2.propTypes = {
 } : void 0;
 "use client";
 /**
- * @mui/styled-engine v5.14.11
+ * @mui/styled-engine v5.14.14
  *
  * @license MIT
  * This source code is licensed under the MIT license found in the
@@ -16123,39 +15981,47 @@ const getStyleOverrides = (name, theme) => {
   }
   return null;
 };
+const transformVariants = (variants) => {
+  const variantsStyles = {};
+  if (variants) {
+    variants.forEach((definition) => {
+      const key = propsToClassKey(definition.props);
+      variantsStyles[key] = definition.style;
+    });
+  }
+  return variantsStyles;
+};
 const getVariantStyles = (name, theme) => {
   let variants = [];
   if (theme && theme.components && theme.components[name] && theme.components[name].variants) {
     variants = theme.components[name].variants;
   }
-  const variantsStyles = {};
-  variants.forEach((definition) => {
-    const key = propsToClassKey(definition.props);
-    variantsStyles[key] = definition.style;
-  });
-  return variantsStyles;
+  return transformVariants(variants);
 };
-const variantsResolver = (props, styles2, theme, name) => {
-  var _theme$components;
+const variantsResolver = (props, styles2, variants) => {
   const {
     ownerState = {}
   } = props;
   const variantsStyles = [];
-  const themeVariants = theme == null || (_theme$components = theme.components) == null || (_theme$components = _theme$components[name]) == null ? void 0 : _theme$components.variants;
-  if (themeVariants) {
-    themeVariants.forEach((themeVariant) => {
+  if (variants) {
+    variants.forEach((variant) => {
       let isMatch = true;
-      Object.keys(themeVariant.props).forEach((key) => {
-        if (ownerState[key] !== themeVariant.props[key] && props[key] !== themeVariant.props[key]) {
+      Object.keys(variant.props).forEach((key) => {
+        if (ownerState[key] !== variant.props[key] && props[key] !== variant.props[key]) {
           isMatch = false;
         }
       });
       if (isMatch) {
-        variantsStyles.push(styles2[propsToClassKey(themeVariant.props)]);
+        variantsStyles.push(styles2[propsToClassKey(variant.props)]);
       }
     });
   }
   return variantsStyles;
+};
+const themeVariantsResolver = (props, styles2, theme, name) => {
+  var _theme$components;
+  const themeVariants = theme == null || (_theme$components = theme.components) == null || (_theme$components = _theme$components[name]) == null ? void 0 : _theme$components.variants;
+  return variantsResolver(props, styles2, themeVariants);
 };
 function shouldForwardProp(prop) {
   return prop !== "ownerState" && prop !== "theme" && prop !== "sx" && prop !== "as";
@@ -16180,6 +16046,29 @@ function defaultOverridesResolver(slot) {
   }
   return (props, styles2) => styles2[slot];
 }
+const muiStyledFunctionResolver = ({
+  styledArg,
+  props,
+  defaultTheme: defaultTheme2,
+  themeId
+}) => {
+  const resolvedStyles = styledArg(_extends$2({}, props, {
+    theme: resolveTheme(_extends$2({}, props, {
+      defaultTheme: defaultTheme2,
+      themeId
+    }))
+  }));
+  let optionalVariants;
+  if (resolvedStyles && resolvedStyles.variants) {
+    optionalVariants = resolvedStyles.variants;
+    delete resolvedStyles.variants;
+  }
+  if (optionalVariants) {
+    const variantsStyles = variantsResolver(props, transformVariants(optionalVariants), optionalVariants);
+    return [resolvedStyles, ...variantsStyles];
+  }
+  return resolvedStyles;
+};
 function createStyled(input = {}) {
   const {
     themeId,
@@ -16233,16 +16122,59 @@ function createStyled(input = {}) {
     }, options));
     const muiStyledResolver = (styleArg, ...expressions) => {
       const expressionsWithDefaultTheme = expressions ? expressions.map((stylesArg) => {
-        return typeof stylesArg === "function" && stylesArg.__emotion_real !== stylesArg ? (props) => {
-          return stylesArg(_extends$2({}, props, {
-            theme: resolveTheme(_extends$2({}, props, {
-              defaultTheme: defaultTheme2,
-              themeId
-            }))
-          }));
-        } : stylesArg;
+        if (typeof stylesArg === "function" && stylesArg.__emotion_real !== stylesArg) {
+          return (props) => muiStyledFunctionResolver({
+            styledArg: stylesArg,
+            props,
+            defaultTheme: defaultTheme2,
+            themeId
+          });
+        }
+        if (isPlainObject$1(stylesArg)) {
+          let transformedStylesArg = stylesArg;
+          let styledArgVariants;
+          if (stylesArg && stylesArg.variants) {
+            styledArgVariants = stylesArg.variants;
+            delete transformedStylesArg.variants;
+            transformedStylesArg = (props) => {
+              let result = stylesArg;
+              const variantStyles = variantsResolver(props, transformVariants(styledArgVariants), styledArgVariants);
+              variantStyles.forEach((variantStyle) => {
+                result = deepmerge(result, variantStyle);
+              });
+              return result;
+            };
+          }
+          return transformedStylesArg;
+        }
+        return stylesArg;
       }) : [];
       let transformedStyleArg = styleArg;
+      if (isPlainObject$1(styleArg)) {
+        let styledArgVariants;
+        if (styleArg && styleArg.variants) {
+          styledArgVariants = styleArg.variants;
+          delete transformedStyleArg.variants;
+          transformedStyleArg = (props) => {
+            let result = styleArg;
+            const variantStyles = variantsResolver(props, transformVariants(styledArgVariants), styledArgVariants);
+            variantStyles.forEach((variantStyle) => {
+              result = deepmerge(result, variantStyle);
+            });
+            return result;
+          };
+        }
+      } else if (typeof styleArg === "function" && // On the server Emotion doesn't use React.forwardRef for creating components, so the created
+      // component stays as a function. This condition makes sure that we do not interpolate functions
+      // which are basically components used as a selectors.
+      styleArg.__emotion_real !== styleArg) {
+        transformedStyleArg = (props) => muiStyledFunctionResolver({
+          styledArg: styleArg,
+          props,
+          defaultTheme: defaultTheme2,
+          themeId
+        });
+      }
       if (componentName && overridesResolver2) {
         expressionsWithDefaultTheme.push((props) => {
           const theme = resolveTheme(_extends$2({}, props, {
@@ -16268,7 +16200,7 @@ function createStyled(input = {}) {
             defaultTheme: defaultTheme2,
             themeId
           }));
-          return variantsResolver(props, getVariantStyles(componentName, theme), theme, componentName);
+          return themeVariantsResolver(props, getVariantStyles(componentName, theme), theme, componentName);
         });
       }
       if (!skipSx) {
@@ -16279,16 +16211,6 @@ function createStyled(input = {}) {
         const placeholders = new Array(numOfCustomFnsApplied).fill("");
         transformedStyleArg = [...styleArg, ...placeholders];
         transformedStyleArg.raw = [...styleArg.raw, ...placeholders];
-      } else if (typeof styleArg === "function" && // On the server Emotion doesn't use React.forwardRef for creating components, so the created
-      // component stays as a function. This condition makes sure that we do not interpolate functions
-      // which are basically components used as a selectors.
-      styleArg.__emotion_real !== styleArg) {
-        transformedStyleArg = (props) => styleArg(_extends$2({}, props, {
-          theme: resolveTheme(_extends$2({}, props, {
-            defaultTheme: defaultTheme2,
-            themeId
-          }))
-        }));
       }
       const Component = defaultStyledResolver(transformedStyleArg, ...expressionsWithDefaultTheme);
       if (process.env.NODE_ENV !== "production") {
@@ -16628,7 +16550,7 @@ if (process.env.NODE_ENV !== "production") {
   process.env.NODE_ENV !== "production" ? ThemeProvider$1.propTypes = exactProp(ThemeProvider$1.propTypes) : void 0;
 }
 /**
- * @mui/private-theming v5.14.11
+ * @mui/private-theming v5.14.14
  *
  * @license MIT
  * This source code is licensed under the MIT license found in the
@@ -19277,7 +19199,7 @@ Object.defineProperty(ChevronRight, "__esModule", {
 });
 var default_1$s = ChevronRight.default = void 0;
 var _createSvgIcon$s = _interopRequireDefault$s(requireCreateSvgIcon());
-var _jsxRuntime$s = requireJsxRuntime();
+var _jsxRuntime$s = jsxRuntimeExports;
 var _default$s = (0, _createSvgIcon$s.default)(/* @__PURE__ */ (0, _jsxRuntime$s.jsx)("path", {
   d: "M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
 }), "ChevronRight");
@@ -22745,18 +22667,18 @@ const closedMixin = (theme) => ({
   }
 });
 const iconmap = {
-  "factory": FactoryOutlined,
-  "key": KeyOutlined,
-  "done": AssignmentTurnedInOutlined,
-  "docs": TextSnippetOutlined,
-  "hightlight": HighlightAlt,
-  "map": Map$1,
-  "account": SupervisorAccount,
-  "tablet": Tablet,
-  "update": Update,
-  "admin": Security,
-  "clipboard": ContentPaste,
-  "fitscreen": FitScreen,
+  factory: FactoryOutlined,
+  key: KeyOutlined,
+  done: AssignmentTurnedInOutlined,
+  docs: TextSnippetOutlined,
+  hightlight: HighlightAlt,
+  map: Map$1,
+  account: SupervisorAccount,
+  tablet: Tablet,
+  update: Update,
+  admin: Security,
+  clipboard: ContentPaste,
+  fitscreen: FitScreen,
   "dots-square": Apps
 };
 function makeIcon(name) {
@@ -25598,7 +25520,7 @@ const createRow = (table, id, original, rowIndex, depth, subRows, parentId) => {
     },
     subRows: subRows != null ? subRows : [],
     getLeafRows: () => flattenBy(row.subRows, (d) => d.subRows),
-    getParentRow: () => row.parentId ? table.getRow(row.parentId) : void 0,
+    getParentRow: () => row.parentId ? table.getRow(row.parentId, true) : void 0,
     getParentRows: () => {
       let parentRows = [];
       let currentRow = row;
@@ -25988,7 +25910,7 @@ function getSortedRowModel() {
       };
     });
     const sortData = (rows) => {
-      const sortedData = [...rows];
+      const sortedData = rows.map((row) => __spreadValues({}, row));
       sortedData.sort((rowA, rowB) => {
         for (let i = 0; i < availableSorting.length; i += 1) {
           var _sortEntry$desc;
@@ -26896,7 +26818,7 @@ Object.defineProperty(ArrowDownward, "__esModule", {
 });
 var default_1$r = ArrowDownward.default = void 0;
 var _createSvgIcon$r = _interopRequireDefault$r(requireCreateSvgIcon());
-var _jsxRuntime$r = requireJsxRuntime();
+var _jsxRuntime$r = jsxRuntimeExports;
 var _default$r = (0, _createSvgIcon$r.default)(/* @__PURE__ */ (0, _jsxRuntime$r.jsx)("path", {
   d: "m20 12-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z"
 }), "ArrowDownward");
@@ -26909,7 +26831,7 @@ Object.defineProperty(ArrowRight, "__esModule", {
 });
 var default_1$q = ArrowRight.default = void 0;
 var _createSvgIcon$q = _interopRequireDefault$q(requireCreateSvgIcon());
-var _jsxRuntime$q = requireJsxRuntime();
+var _jsxRuntime$q = jsxRuntimeExports;
 var _default$q = (0, _createSvgIcon$q.default)(/* @__PURE__ */ (0, _jsxRuntime$q.jsx)("path", {
   d: "m10 17 5-5-5-5v10z"
 }), "ArrowRight");
@@ -26922,7 +26844,7 @@ Object.defineProperty(Cancel, "__esModule", {
 });
 var default_1$p = Cancel.default = void 0;
 var _createSvgIcon$p = _interopRequireDefault$p(requireCreateSvgIcon());
-var _jsxRuntime$p = requireJsxRuntime();
+var _jsxRuntime$p = jsxRuntimeExports;
 var _default$p = (0, _createSvgIcon$p.default)(/* @__PURE__ */ (0, _jsxRuntime$p.jsx)("path", {
   d: "M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"
 }), "Cancel");
@@ -26935,7 +26857,7 @@ Object.defineProperty(ClearAll, "__esModule", {
 });
 var default_1$o = ClearAll.default = void 0;
 var _createSvgIcon$o = _interopRequireDefault$o(requireCreateSvgIcon());
-var _jsxRuntime$o = requireJsxRuntime();
+var _jsxRuntime$o = jsxRuntimeExports;
 var _default$o = (0, _createSvgIcon$o.default)(/* @__PURE__ */ (0, _jsxRuntime$o.jsx)("path", {
   d: "M5 13h14v-2H5v2zm-2 4h14v-2H3v2zM7 7v2h14V7H7z"
 }), "ClearAll");
@@ -26948,7 +26870,7 @@ Object.defineProperty(Close, "__esModule", {
 });
 var default_1$n = Close.default = void 0;
 var _createSvgIcon$n = _interopRequireDefault$n(requireCreateSvgIcon());
-var _jsxRuntime$n = requireJsxRuntime();
+var _jsxRuntime$n = jsxRuntimeExports;
 var _default$n = (0, _createSvgIcon$n.default)(/* @__PURE__ */ (0, _jsxRuntime$n.jsx)("path", {
   d: "M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
 }), "Close");
@@ -26961,7 +26883,7 @@ Object.defineProperty(DensityLarge, "__esModule", {
 });
 var default_1$m = DensityLarge.default = void 0;
 var _createSvgIcon$m = _interopRequireDefault$m(requireCreateSvgIcon());
-var _jsxRuntime$m = requireJsxRuntime();
+var _jsxRuntime$m = jsxRuntimeExports;
 var _default$m = (0, _createSvgIcon$m.default)(/* @__PURE__ */ (0, _jsxRuntime$m.jsx)("path", {
   d: "M3 3h18v2H3zm0 16h18v2H3z"
 }), "DensityLarge");
@@ -26974,7 +26896,7 @@ Object.defineProperty(DensityMedium, "__esModule", {
 });
 var default_1$l = DensityMedium.default = void 0;
 var _createSvgIcon$l = _interopRequireDefault$l(requireCreateSvgIcon());
-var _jsxRuntime$l = requireJsxRuntime();
+var _jsxRuntime$l = jsxRuntimeExports;
 var _default$l = (0, _createSvgIcon$l.default)(/* @__PURE__ */ (0, _jsxRuntime$l.jsx)("path", {
   d: "M3 3h18v2H3zm0 16h18v2H3zm0-8h18v2H3z"
 }), "DensityMedium");
@@ -26987,7 +26909,7 @@ Object.defineProperty(DensitySmall, "__esModule", {
 });
 var default_1$k = DensitySmall.default = void 0;
 var _createSvgIcon$k = _interopRequireDefault$k(requireCreateSvgIcon());
-var _jsxRuntime$k = requireJsxRuntime();
+var _jsxRuntime$k = jsxRuntimeExports;
 var _default$k = (0, _createSvgIcon$k.default)(/* @__PURE__ */ (0, _jsxRuntime$k.jsx)("path", {
   d: "M3 2h18v2H3zm0 18h18v2H3zm0-6h18v2H3zm0-6h18v2H3z"
 }), "DensitySmall");
@@ -27000,7 +26922,7 @@ Object.defineProperty(DragHandle, "__esModule", {
 });
 var default_1$j = DragHandle.default = void 0;
 var _createSvgIcon$j = _interopRequireDefault$j(requireCreateSvgIcon());
-var _jsxRuntime$j = requireJsxRuntime();
+var _jsxRuntime$j = jsxRuntimeExports;
 var _default$j = (0, _createSvgIcon$j.default)(/* @__PURE__ */ (0, _jsxRuntime$j.jsx)("path", {
   d: "M20 9H4v2h16V9zM4 15h16v-2H4v2z"
 }), "DragHandle");
@@ -27013,7 +26935,7 @@ Object.defineProperty(DynamicFeed, "__esModule", {
 });
 var default_1$i = DynamicFeed.default = void 0;
 var _createSvgIcon$i = _interopRequireDefault$i(requireCreateSvgIcon());
-var _jsxRuntime$i = requireJsxRuntime();
+var _jsxRuntime$i = jsxRuntimeExports;
 var _default$i = (0, _createSvgIcon$i.default)([/* @__PURE__ */ (0, _jsxRuntime$i.jsx)("path", {
   d: "M8 8H6v7c0 1.1.9 2 2 2h9v-2H8V8z"
 }, "0"), /* @__PURE__ */ (0, _jsxRuntime$i.jsx)("path", {
@@ -27028,7 +26950,7 @@ Object.defineProperty(Edit, "__esModule", {
 });
 var default_1$h = Edit.default = void 0;
 var _createSvgIcon$h = _interopRequireDefault$h(requireCreateSvgIcon());
-var _jsxRuntime$h = requireJsxRuntime();
+var _jsxRuntime$h = jsxRuntimeExports;
 var _default$h = (0, _createSvgIcon$h.default)(/* @__PURE__ */ (0, _jsxRuntime$h.jsx)("path", {
   d: "M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
 }), "Edit");
@@ -27041,7 +26963,7 @@ Object.defineProperty(ExpandMore, "__esModule", {
 });
 var default_1$g = ExpandMore.default = void 0;
 var _createSvgIcon$g = _interopRequireDefault$g(requireCreateSvgIcon());
-var _jsxRuntime$g = requireJsxRuntime();
+var _jsxRuntime$g = jsxRuntimeExports;
 var _default$g = (0, _createSvgIcon$g.default)(/* @__PURE__ */ (0, _jsxRuntime$g.jsx)("path", {
   d: "M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
 }), "ExpandMore");
@@ -27054,7 +26976,7 @@ Object.defineProperty(FilterAlt, "__esModule", {
 });
 var default_1$f = FilterAlt.default = void 0;
 var _createSvgIcon$f = _interopRequireDefault$f(requireCreateSvgIcon());
-var _jsxRuntime$f = requireJsxRuntime();
+var _jsxRuntime$f = jsxRuntimeExports;
 var _default$f = (0, _createSvgIcon$f.default)(/* @__PURE__ */ (0, _jsxRuntime$f.jsx)("path", {
   d: "M4.25 5.61C6.27 8.2 10 13 10 13v6c0 .55.45 1 1 1h2c.55 0 1-.45 1-1v-6s3.72-4.8 5.74-7.39c.51-.66.04-1.61-.79-1.61H5.04c-.83 0-1.3.95-.79 1.61z"
 }), "FilterAlt");
@@ -27067,7 +26989,7 @@ Object.defineProperty(FilterList, "__esModule", {
 });
 var default_1$e = FilterList.default = void 0;
 var _createSvgIcon$e = _interopRequireDefault$e(requireCreateSvgIcon());
-var _jsxRuntime$e = requireJsxRuntime();
+var _jsxRuntime$e = jsxRuntimeExports;
 var _default$e = (0, _createSvgIcon$e.default)(/* @__PURE__ */ (0, _jsxRuntime$e.jsx)("path", {
   d: "M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z"
 }), "FilterList");
@@ -27080,7 +27002,7 @@ Object.defineProperty(FilterListOff, "__esModule", {
 });
 var default_1$d = FilterListOff.default = void 0;
 var _createSvgIcon$d = _interopRequireDefault$d(requireCreateSvgIcon());
-var _jsxRuntime$d = requireJsxRuntime();
+var _jsxRuntime$d = jsxRuntimeExports;
 var _default$d = (0, _createSvgIcon$d.default)(/* @__PURE__ */ (0, _jsxRuntime$d.jsx)("path", {
   d: "M10.83 8H21V6H8.83l2 2zm5 5H18v-2h-4.17l2 2zM14 16.83V18h-4v-2h3.17l-3-3H6v-2h2.17l-3-3H3V6h.17L1.39 4.22 2.8 2.81l18.38 18.38-1.41 1.41L14 16.83z"
 }), "FilterListOff");
@@ -27093,7 +27015,7 @@ Object.defineProperty(FullscreenExit, "__esModule", {
 });
 var default_1$c = FullscreenExit.default = void 0;
 var _createSvgIcon$c = _interopRequireDefault$c(requireCreateSvgIcon());
-var _jsxRuntime$c = requireJsxRuntime();
+var _jsxRuntime$c = jsxRuntimeExports;
 var _default$c = (0, _createSvgIcon$c.default)(/* @__PURE__ */ (0, _jsxRuntime$c.jsx)("path", {
   d: "M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"
 }), "FullscreenExit");
@@ -27106,7 +27028,7 @@ Object.defineProperty(Fullscreen, "__esModule", {
 });
 var default_1$b = Fullscreen.default = void 0;
 var _createSvgIcon$b = _interopRequireDefault$b(requireCreateSvgIcon());
-var _jsxRuntime$b = requireJsxRuntime();
+var _jsxRuntime$b = jsxRuntimeExports;
 var _default$b = (0, _createSvgIcon$b.default)(/* @__PURE__ */ (0, _jsxRuntime$b.jsx)("path", {
   d: "M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"
 }), "Fullscreen");
@@ -27119,7 +27041,7 @@ Object.defineProperty(KeyboardDoubleArrowDown, "__esModule", {
 });
 var default_1$a = KeyboardDoubleArrowDown.default = void 0;
 var _createSvgIcon$a = _interopRequireDefault$a(requireCreateSvgIcon());
-var _jsxRuntime$a = requireJsxRuntime();
+var _jsxRuntime$a = jsxRuntimeExports;
 var _default$a = (0, _createSvgIcon$a.default)([/* @__PURE__ */ (0, _jsxRuntime$a.jsx)("path", {
   d: "M18 6.41 16.59 5 12 9.58 7.41 5 6 6.41l6 6z"
 }, "0"), /* @__PURE__ */ (0, _jsxRuntime$a.jsx)("path", {
@@ -27134,7 +27056,7 @@ Object.defineProperty(MoreHoriz, "__esModule", {
 });
 var default_1$9 = MoreHoriz.default = void 0;
 var _createSvgIcon$9 = _interopRequireDefault$9(requireCreateSvgIcon());
-var _jsxRuntime$9 = requireJsxRuntime();
+var _jsxRuntime$9 = jsxRuntimeExports;
 var _default$9 = (0, _createSvgIcon$9.default)(/* @__PURE__ */ (0, _jsxRuntime$9.jsx)("path", {
   d: "M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
 }), "MoreHoriz");
@@ -27147,7 +27069,7 @@ Object.defineProperty(MoreVert, "__esModule", {
 });
 var default_1$8 = MoreVert.default = void 0;
 var _createSvgIcon$8 = _interopRequireDefault$8(requireCreateSvgIcon());
-var _jsxRuntime$8 = requireJsxRuntime();
+var _jsxRuntime$8 = jsxRuntimeExports;
 var _default$8 = (0, _createSvgIcon$8.default)(/* @__PURE__ */ (0, _jsxRuntime$8.jsx)("path", {
   d: "M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
 }), "MoreVert");
@@ -27160,7 +27082,7 @@ Object.defineProperty(PushPin, "__esModule", {
 });
 var default_1$7 = PushPin.default = void 0;
 var _createSvgIcon$7 = _interopRequireDefault$7(requireCreateSvgIcon());
-var _jsxRuntime$7 = requireJsxRuntime();
+var _jsxRuntime$7 = jsxRuntimeExports;
 var _default$7 = (0, _createSvgIcon$7.default)(/* @__PURE__ */ (0, _jsxRuntime$7.jsx)("path", {
   fillRule: "evenodd",
   d: "M16 9V4h1c.55 0 1-.45 1-1s-.45-1-1-1H7c-.55 0-1 .45-1 1s.45 1 1 1h1v5c0 1.66-1.34 3-3 3v2h5.97v7l1 1 1-1v-7H19v-2c-1.66 0-3-1.34-3-3z"
@@ -27174,7 +27096,7 @@ Object.defineProperty(RestartAlt, "__esModule", {
 });
 var default_1$6 = RestartAlt.default = void 0;
 var _createSvgIcon$6 = _interopRequireDefault$6(requireCreateSvgIcon());
-var _jsxRuntime$6 = requireJsxRuntime();
+var _jsxRuntime$6 = jsxRuntimeExports;
 var _default$6 = (0, _createSvgIcon$6.default)(/* @__PURE__ */ (0, _jsxRuntime$6.jsx)("path", {
   d: "M12 5V2L8 6l4 4V7c3.31 0 6 2.69 6 6 0 2.97-2.17 5.43-5 5.91v2.02c3.95-.49 7-3.85 7-7.93 0-4.42-3.58-8-8-8zm-6 8c0-1.65.67-3.15 1.76-4.24L6.34 7.34C4.9 8.79 4 10.79 4 13c0 4.08 3.05 7.44 7 7.93v-2.02c-2.83-.48-5-2.94-5-5.91z"
 }), "RestartAlt");
@@ -27187,7 +27109,7 @@ Object.defineProperty(Save, "__esModule", {
 });
 var default_1$5 = Save.default = void 0;
 var _createSvgIcon$5 = _interopRequireDefault$5(requireCreateSvgIcon());
-var _jsxRuntime$5 = requireJsxRuntime();
+var _jsxRuntime$5 = jsxRuntimeExports;
 var _default$5 = (0, _createSvgIcon$5.default)(/* @__PURE__ */ (0, _jsxRuntime$5.jsx)("path", {
   d: "M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"
 }), "Save");
@@ -27200,7 +27122,7 @@ Object.defineProperty(Search, "__esModule", {
 });
 var default_1$4 = Search.default = void 0;
 var _createSvgIcon$4 = _interopRequireDefault$4(requireCreateSvgIcon());
-var _jsxRuntime$4 = requireJsxRuntime();
+var _jsxRuntime$4 = jsxRuntimeExports;
 var _default$4 = (0, _createSvgIcon$4.default)(/* @__PURE__ */ (0, _jsxRuntime$4.jsx)("path", {
   d: "M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
 }), "Search");
@@ -27213,7 +27135,7 @@ Object.defineProperty(SearchOff, "__esModule", {
 });
 var default_1$3 = SearchOff.default = void 0;
 var _createSvgIcon$3 = _interopRequireDefault$3(requireCreateSvgIcon());
-var _jsxRuntime$3 = requireJsxRuntime();
+var _jsxRuntime$3 = jsxRuntimeExports;
 var _default$3 = (0, _createSvgIcon$3.default)([/* @__PURE__ */ (0, _jsxRuntime$3.jsx)("path", {
   d: "M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3 6.08 3 3.28 5.64 3.03 9h2.02C5.3 6.75 7.18 5 9.5 5 11.99 5 14 7.01 14 9.5S11.99 14 9.5 14c-.17 0-.33-.03-.5-.05v2.02c.17.02.33.03.5.03 1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5z"
 }, "0"), /* @__PURE__ */ (0, _jsxRuntime$3.jsx)("path", {
@@ -27228,7 +27150,7 @@ Object.defineProperty(Sort, "__esModule", {
 });
 var default_1$2 = Sort.default = void 0;
 var _createSvgIcon$2 = _interopRequireDefault$2(requireCreateSvgIcon());
-var _jsxRuntime$2 = requireJsxRuntime();
+var _jsxRuntime$2 = jsxRuntimeExports;
 var _default$2 = (0, _createSvgIcon$2.default)(/* @__PURE__ */ (0, _jsxRuntime$2.jsx)("path", {
   d: "M3 18h6v-2H3v2zM3 6v2h18V6H3zm0 7h12v-2H3v2z"
 }), "Sort");
@@ -27241,7 +27163,7 @@ Object.defineProperty(ViewColumn, "__esModule", {
 });
 var default_1$1 = ViewColumn.default = void 0;
 var _createSvgIcon$1 = _interopRequireDefault$1(requireCreateSvgIcon());
-var _jsxRuntime$1 = requireJsxRuntime();
+var _jsxRuntime$1 = jsxRuntimeExports;
 var _default$1 = (0, _createSvgIcon$1.default)(/* @__PURE__ */ (0, _jsxRuntime$1.jsx)("path", {
   d: "M14.67 5v14H9.33V5h5.34zm1 14H21V5h-5.33v14zm-7.34 0V5H3v14h5.33z"
 }), "ViewColumn");
@@ -27254,7 +27176,7 @@ Object.defineProperty(VisibilityOff, "__esModule", {
 });
 var default_1 = VisibilityOff.default = void 0;
 var _createSvgIcon = _interopRequireDefault(requireCreateSvgIcon());
-var _jsxRuntime = requireJsxRuntime();
+var _jsxRuntime = jsxRuntimeExports;
 var _default = (0, _createSvgIcon.default)(/* @__PURE__ */ (0, _jsxRuntime.jsx)("path", {
   d: "M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78 3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z"
 }), "VisibilityOff");
@@ -40185,7 +40107,7 @@ var measureElement = function measureElement2(element, entry, instance) {
 };
 var windowScroll = function windowScroll2(offset2, _ref, instance) {
   var _instance$scrollEleme, _instance$scrollEleme2;
-  var _ref$adjustments = _ref.adjustments, adjustments = _ref$adjustments === void 0 ? window.scrollY : _ref$adjustments, behavior = _ref.behavior;
+  var _ref$adjustments = _ref.adjustments, adjustments = _ref$adjustments === void 0 ? 0 : _ref$adjustments, behavior = _ref.behavior;
   var toOffset = offset2 + adjustments;
   (_instance$scrollEleme = instance.scrollElement) == null ? void 0 : _instance$scrollEleme.scrollTo == null ? void 0 : _instance$scrollEleme.scrollTo((_instance$scrollEleme2 = {}, _instance$scrollEleme2[instance.options.horizontal ? "left" : "top"] = toOffset, _instance$scrollEleme2.behavior = behavior, _instance$scrollEleme2));
 };
@@ -40240,10 +40162,7 @@ var Virtualizer = function Virtualizer2(_opts) {
       }
     };
   }();
-  this.range = {
-    startIndex: 0,
-    endIndex: 0
-  };
+  this.range = null;
   this.setOptions = function(opts) {
     Object.entries(opts).forEach(function(_ref3) {
       var key = _ref3[0], value = _ref3[1];
@@ -40302,11 +40221,8 @@ var Virtualizer = function Virtualizer2(_opts) {
         behavior: void 0
       });
       _this.unsubs.push(_this.options.observeElementRect(_this, function(rect) {
-        var prev2 = _this.scrollRect;
         _this.scrollRect = rect;
-        if (_this.options.horizontal ? rect.width !== prev2.width : rect.height !== prev2.height) {
-          _this.maybeNotify();
-        }
+        _this.maybeNotify();
       }));
       _this.unsubs.push(_this.options.observeElementOffset(_this, function(offset2) {
         _this.scrollAdjustments = 0;
@@ -40403,11 +40319,11 @@ var Virtualizer = function Virtualizer2(_opts) {
   this.calculateRange = memo(function() {
     return [_this.getMeasurements(), _this.getSize(), _this.scrollOffset];
   }, function(measurements, outerSize, scrollOffset) {
-    return _this.range = calculateRange({
+    return _this.range = measurements.length > 0 && outerSize > 0 ? calculateRange({
       measurements,
       outerSize,
       scrollOffset
-    });
+    }) : null;
   }, {
     key: process.env.NODE_ENV !== "production" && "calculateRange",
     debug: function debug() {
@@ -40415,8 +40331,8 @@ var Virtualizer = function Virtualizer2(_opts) {
     }
   });
   this.maybeNotify = memo(function() {
-    var range = _this.calculateRange();
-    return [range.startIndex, range.endIndex, _this.isScrolling];
+    _this.calculateRange();
+    return [_this.range ? _this.range.startIndex : null, _this.range ? _this.range.endIndex : null, _this.isScrolling];
   }, function() {
     _this.notify();
   }, {
@@ -40424,12 +40340,12 @@ var Virtualizer = function Virtualizer2(_opts) {
     debug: function debug() {
       return _this.options.debug;
     },
-    initialDeps: [this.range.startIndex, this.range.endIndex, this.isScrolling]
+    initialDeps: [this.range ? this.range.startIndex : null, this.range ? this.range.endIndex : null, this.isScrolling]
   });
   this.getIndexes = memo(function() {
     return [_this.options.rangeExtractor, _this.calculateRange(), _this.options.overscan, _this.options.count];
   }, function(rangeExtractor, range, overscan, count2) {
-    return rangeExtractor(_extends({}, range, {
+    return range === null ? [] : rangeExtractor(_extends({}, range, {
       overscan,
       count: count2
     }));
@@ -40450,7 +40366,7 @@ var Virtualizer = function Virtualizer2(_opts) {
   };
   this._measureElement = function(node2, entry) {
     var item = _this.measurementsCache[_this.indexFromElement(node2)];
-    if (!item) {
+    if (!item || !node2.isConnected) {
       _this.measureElementCache.forEach(function(cached, key) {
         if (cached === node2) {
           _this.observer.unobserve(node2);
@@ -40460,13 +40376,6 @@ var Virtualizer = function Virtualizer2(_opts) {
       return;
     }
     var prevNode = _this.measureElementCache.get(item.key);
-    if (!node2.isConnected) {
-      if (prevNode) {
-        _this.observer.unobserve(prevNode);
-        _this.measureElementCache["delete"](item.key);
-      }
-      return;
-    }
     if (prevNode !== node2) {
       if (prevNode) {
         _this.observer.unobserve(prevNode);
@@ -40734,7 +40643,8 @@ function useWindowVirtualizer(options) {
     },
     observeElementRect: observeWindowRect,
     observeElementOffset: observeWindowOffset,
-    scrollToFn: windowScroll
+    scrollToFn: windowScroll,
+    initialOffset: typeof document !== "undefined" ? window.scrollY : void 0
   }, options));
 }
 function getTableUtilityClass(slot) {
@@ -43741,7 +43651,7 @@ const MRT_ExpandAllButton = ({ table }) => {
   const { density, isLoading } = getState();
   const iconButtonProps = muiExpandAllButtonProps instanceof Function ? muiExpandAllButtonProps({ table }) : muiExpandAllButtonProps;
   const isAllRowsExpanded = getIsAllRowsExpanded();
-  return jsxRuntimeExports.jsx(Tooltip, { arrow: true, enterDelay: 1e3, enterNextDelay: 1e3, title: ((_a = iconButtonProps === null || iconButtonProps === void 0 ? void 0 : iconButtonProps.title) !== null && _a !== void 0 ? _a : isAllRowsExpanded) ? localization.collapseAll : localization.expandAll, children: jsxRuntimeExports.jsx("span", { children: jsxRuntimeExports.jsx(IconButton, Object.assign({ "aria-label": localization.expandAll, disabled: isLoading || !renderDetailPanel && !getCanSomeRowsExpand(), onClick: () => toggleAllRowsExpanded(!isAllRowsExpanded) }, iconButtonProps, { sx: (theme) => Object.assign({ height: density === "compact" ? "1.75rem" : "2.25rem", width: density === "compact" ? "1.75rem" : "2.25rem", mt: density !== "compact" ? "-0.25rem" : void 0 }, (iconButtonProps === null || iconButtonProps === void 0 ? void 0 : iconButtonProps.sx) instanceof Function ? iconButtonProps === null || iconButtonProps === void 0 ? void 0 : iconButtonProps.sx(theme) : iconButtonProps === null || iconButtonProps === void 0 ? void 0 : iconButtonProps.sx), title: void 0, children: (_b = iconButtonProps === null || iconButtonProps === void 0 ? void 0 : iconButtonProps.children) !== null && _b !== void 0 ? _b : jsxRuntimeExports.jsx(KeyboardDoubleArrowDownIcon, { style: {
+  return jsxRuntimeExports.jsx(Tooltip, { arrow: true, enterDelay: 1e3, enterNextDelay: 1e3, title: (_a = iconButtonProps === null || iconButtonProps === void 0 ? void 0 : iconButtonProps.title) !== null && _a !== void 0 ? _a : isAllRowsExpanded ? localization.collapseAll : localization.expandAll, children: jsxRuntimeExports.jsx("span", { children: jsxRuntimeExports.jsx(IconButton, Object.assign({ "aria-label": localization.expandAll, disabled: isLoading || !renderDetailPanel && !getCanSomeRowsExpand(), onClick: () => toggleAllRowsExpanded(!isAllRowsExpanded) }, iconButtonProps, { sx: (theme) => Object.assign({ height: density === "compact" ? "1.75rem" : "2.25rem", width: density === "compact" ? "1.75rem" : "2.25rem", mt: density !== "compact" ? "-0.25rem" : void 0 }, (iconButtonProps === null || iconButtonProps === void 0 ? void 0 : iconButtonProps.sx) instanceof Function ? iconButtonProps === null || iconButtonProps === void 0 ? void 0 : iconButtonProps.sx(theme) : iconButtonProps === null || iconButtonProps === void 0 ? void 0 : iconButtonProps.sx), title: void 0, children: (_b = iconButtonProps === null || iconButtonProps === void 0 ? void 0 : iconButtonProps.children) !== null && _b !== void 0 ? _b : jsxRuntimeExports.jsx(KeyboardDoubleArrowDownIcon, { style: {
     transform: `rotate(${isAllRowsExpanded ? -180 : getIsSomeRowsExpanded() ? -90 : 0}deg)`,
     transition: "transform 150ms"
   } }) })) }) });
@@ -43759,7 +43669,7 @@ const MRT_ExpandButton = ({ row, table }) => {
     row.toggleExpanded();
     (_a2 = iconButtonProps === null || iconButtonProps === void 0 ? void 0 : iconButtonProps.onClick) === null || _a2 === void 0 ? void 0 : _a2.call(iconButtonProps, event);
   };
-  return jsxRuntimeExports.jsx(Tooltip, { arrow: true, disableHoverListener: !canExpand && !renderDetailPanel, enterDelay: 1e3, enterNextDelay: 1e3, title: ((_a = iconButtonProps === null || iconButtonProps === void 0 ? void 0 : iconButtonProps.title) !== null && _a !== void 0 ? _a : isExpanded) ? localization.collapse : localization.expand, children: jsxRuntimeExports.jsx("span", { children: jsxRuntimeExports.jsx(IconButton, Object.assign({ "aria-label": localization.expand, disabled: !canExpand && !renderDetailPanel }, iconButtonProps, { onClick: handleToggleExpand, sx: (theme) => Object.assign({ height: density === "compact" ? "1.75rem" : "2.25rem", width: density === "compact" ? "1.75rem" : "2.25rem" }, (iconButtonProps === null || iconButtonProps === void 0 ? void 0 : iconButtonProps.sx) instanceof Function ? iconButtonProps.sx(theme) : iconButtonProps === null || iconButtonProps === void 0 ? void 0 : iconButtonProps.sx), title: void 0, children: (_b = iconButtonProps === null || iconButtonProps === void 0 ? void 0 : iconButtonProps.children) !== null && _b !== void 0 ? _b : jsxRuntimeExports.jsx(ExpandMoreIcon, { style: {
+  return jsxRuntimeExports.jsx(Tooltip, { arrow: true, disableHoverListener: !canExpand && !renderDetailPanel, enterDelay: 1e3, enterNextDelay: 1e3, title: (_a = iconButtonProps === null || iconButtonProps === void 0 ? void 0 : iconButtonProps.title) !== null && _a !== void 0 ? _a : isExpanded ? localization.collapse : localization.expand, children: jsxRuntimeExports.jsx("span", { children: jsxRuntimeExports.jsx(IconButton, Object.assign({ "aria-label": localization.expand, disabled: !canExpand && !renderDetailPanel }, iconButtonProps, { onClick: handleToggleExpand, sx: (theme) => Object.assign({ height: density === "compact" ? "1.75rem" : "2.25rem", width: density === "compact" ? "1.75rem" : "2.25rem" }, (iconButtonProps === null || iconButtonProps === void 0 ? void 0 : iconButtonProps.sx) instanceof Function ? iconButtonProps.sx(theme) : iconButtonProps === null || iconButtonProps === void 0 ? void 0 : iconButtonProps.sx), title: void 0, children: (_b = iconButtonProps === null || iconButtonProps === void 0 ? void 0 : iconButtonProps.children) !== null && _b !== void 0 ? _b : jsxRuntimeExports.jsx(ExpandMoreIcon, { style: {
     transform: `rotate(${!canExpand && !renderDetailPanel ? -90 : isExpanded ? -180 : 0}deg)`,
     transition: "transform 150ms"
   } }) })) }) });
@@ -44215,7 +44125,7 @@ const MRT_FullScreenToggleButton = (_a) => {
   const handleToggleFullScreen = () => {
     setIsFullScreen(!isFullScreen);
   };
-  return jsxRuntimeExports.jsx(Tooltip, { arrow: true, title: (_b = rest === null || rest === void 0 ? void 0 : rest.title) !== null && _b !== void 0 ? _b : localization.toggleFullScreen, children: jsxRuntimeExports.jsx(IconButton, Object.assign({ "aria-label": localization.showHideFilters, onClick: handleToggleFullScreen }, rest, { title: void 0, children: isFullScreen ? jsxRuntimeExports.jsx(FullscreenExitIcon, {}) : jsxRuntimeExports.jsx(FullscreenIcon, {}) })) });
+  return jsxRuntimeExports.jsx(Tooltip, { arrow: true, title: (_b = rest === null || rest === void 0 ? void 0 : rest.title) !== null && _b !== void 0 ? _b : localization.toggleFullScreen, children: jsxRuntimeExports.jsx(IconButton, Object.assign({ "aria-label": localization.toggleFullScreen, onClick: handleToggleFullScreen }, rest, { title: void 0, children: isFullScreen ? jsxRuntimeExports.jsx(FullscreenExitIcon, {}) : jsxRuntimeExports.jsx(FullscreenIcon, {}) })) });
 };
 const MRT_ColumnPinningButtons = ({ column: column2, table }) => {
   const { options: { icons: { PushPinIcon }, localization } } = table;
@@ -44863,8 +44773,9 @@ const MRT_TableHeadCellSortLabel = ({ header, table, tableCellProps }) => {
   const { column: column2 } = header;
   const { columnDef } = column2;
   const { sorting } = getState();
-  const sortTooltip = column2.getIsSorted() ? column2.getIsSorted() === "desc" ? localization.sortedByColumnDesc.replace("{column}", columnDef.header) : localization.sortedByColumnAsc.replace("{column}", columnDef.header) : localization.unsorted;
-  return jsxRuntimeExports.jsx(Tooltip, { arrow: true, placement: "top", title: sortTooltip, children: jsxRuntimeExports.jsx(Badge, { badgeContent: sorting.length > 1 ? column2.getSortIndex() + 1 : 0, overlap: "circular", children: jsxRuntimeExports.jsx(TableSortLabel, { "aria-label": sortTooltip, active: !!column2.getIsSorted(), direction: column2.getIsSorted() ? column2.getIsSorted() : void 0, sx: {
+  const sorted = column2.getIsSorted();
+  const sortTooltip = sorted ? sorted === "desc" ? localization.sortedByColumnDesc.replace("{column}", columnDef.header) : localization.sortedByColumnAsc.replace("{column}", columnDef.header) : column2.getNextSortingOrder() === "desc" ? localization.sortByColumnDesc.replace("{column}", columnDef.header) : localization.sortByColumnAsc.replace("{column}", columnDef.header);
+  return jsxRuntimeExports.jsx(Tooltip, { arrow: true, placement: "top", title: sortTooltip, children: jsxRuntimeExports.jsx(Badge, { badgeContent: sorting.length > 1 ? column2.getSortIndex() + 1 : 0, overlap: "circular", children: jsxRuntimeExports.jsx(TableSortLabel, { "aria-label": sortTooltip, active: !!sorted, direction: sorted ? sorted : void 0, sx: {
     flex: "0 0",
     width: "2.4ch",
     transform: (tableCellProps === null || tableCellProps === void 0 ? void 0 : tableCellProps.align) !== "right" ? "translateX(-0.5ch)" : void 0
@@ -44957,7 +44868,7 @@ const MRT_TableHeadRow = ({ headerGroup, table, virtualColumns, virtualPaddingLe
   const tableRowProps = muiTableHeadRowProps instanceof Function ? muiTableHeadRowProps({ headerGroup, table }) : muiTableHeadRowProps;
   return jsxRuntimeExports.jsxs(TableRow, Object.assign({}, tableRowProps, { sx: (theme) => Object.assign({ backgroundColor: lighten(theme.palette.background.default, 0.04), boxShadow: `4px 0 8px ${alpha(theme.palette.common.black, 0.1)}`, display: layoutMode === "grid" ? "flex" : "table-row", top: 0 }, (tableRowProps === null || tableRowProps === void 0 ? void 0 : tableRowProps.sx) instanceof Function ? tableRowProps === null || tableRowProps === void 0 ? void 0 : tableRowProps.sx(theme) : tableRowProps === null || tableRowProps === void 0 ? void 0 : tableRowProps.sx), children: [virtualPaddingLeft ? jsxRuntimeExports.jsx("th", { style: { display: "flex", width: virtualPaddingLeft } }) : null, (virtualColumns !== null && virtualColumns !== void 0 ? virtualColumns : headerGroup.headers).map((headerOrVirtualHeader) => {
     const header = virtualColumns ? headerGroup.headers[headerOrVirtualHeader.index] : headerOrVirtualHeader;
-    return jsxRuntimeExports.jsx(MRT_TableHeadCell, { header, table }, header.id);
+    return header ? jsxRuntimeExports.jsx(MRT_TableHeadCell, { header, table }, header.id) : null;
   }), virtualPaddingRight ? jsxRuntimeExports.jsx("th", { style: { display: "flex", width: virtualPaddingRight } }) : null] }));
 };
 const MRT_TableHead = ({ table, virtualColumns, virtualPaddingLeft, virtualPaddingRight }) => {
@@ -45200,7 +45111,7 @@ const MRT_TableBodyCell = ({ cell, measureElement: measureElement3, numRows, row
     table,
     theme: theme2,
     tableCellProps
-  })), draggingBorders), children: jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [cell.getIsPlaceholder() ? (_b = (_a = columnDef.PlaceholderCell) === null || _a === void 0 ? void 0 : _a.call(columnDef, { cell, column: column2, row, table })) !== null && _b !== void 0 ? _b : null : (isLoading || showSkeletons) && cell.getValue() === null ? jsxRuntimeExports.jsx(Skeleton, Object.assign({ animation: "wave", height: 20, width: skeletonWidth }, skeletonProps)) : enableRowNumbers && rowNumberMode === "static" && column2.id === "mrt-row-numbers" ? rowIndex + 1 : column2.id === "mrt-row-drag" ? jsxRuntimeExports.jsx(MRT_TableBodyRowGrabHandle, { cell, rowRef, table }) : columnDefType === "display" && (column2.id === "mrt-row-select" || column2.id === "mrt-row-expand" || !row.getIsGrouped()) ? (_c = columnDef.Cell) === null || _c === void 0 ? void 0 : _c.call(columnDef, {
+  })), draggingBorders), children: jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [cell.getIsPlaceholder() ? (_b = (_a = columnDef.PlaceholderCell) === null || _a === void 0 ? void 0 : _a.call(columnDef, { cell, column: column2, row, table })) !== null && _b !== void 0 ? _b : null : isLoading || showSkeletons ? jsxRuntimeExports.jsx(Skeleton, Object.assign({ animation: "wave", height: 20, width: skeletonWidth }, skeletonProps)) : enableRowNumbers && rowNumberMode === "static" && column2.id === "mrt-row-numbers" ? rowIndex + 1 : column2.id === "mrt-row-drag" ? jsxRuntimeExports.jsx(MRT_TableBodyRowGrabHandle, { cell, rowRef, table }) : columnDefType === "display" && (column2.id === "mrt-row-select" || column2.id === "mrt-row-expand" || !row.getIsGrouped()) ? (_c = columnDef.Cell) === null || _c === void 0 ? void 0 : _c.call(columnDef, {
     cell,
     renderedCellValue: cell.renderValue(),
     column: column2,
@@ -45252,7 +45163,7 @@ const MRT_TableBodyRow = ({ columnVirtualizer, measureElement: measureElement3, 
       table,
       virtualCell: columnVirtualizer ? cellOrVirtualCell : void 0
     };
-    return memoMode === "cells" && cell.column.columnDef.columnDefType === "data" && !draggingColumn && !draggingRow && (editingCell === null || editingCell === void 0 ? void 0 : editingCell.id) !== cell.id && (editingRow === null || editingRow === void 0 ? void 0 : editingRow.id) !== row.id ? jsxRuntimeExports.jsx(Memo_MRT_TableBodyCell, Object.assign({}, props), cell.id) : jsxRuntimeExports.jsx(MRT_TableBodyCell, Object.assign({}, props), cell.id);
+    return cell ? memoMode === "cells" && cell.column.columnDef.columnDefType === "data" && !draggingColumn && !draggingRow && (editingCell === null || editingCell === void 0 ? void 0 : editingCell.id) !== cell.id && (editingRow === null || editingRow === void 0 ? void 0 : editingRow.id) !== row.id ? jsxRuntimeExports.jsx(Memo_MRT_TableBodyCell, Object.assign({}, props), cell.id) : jsxRuntimeExports.jsx(MRT_TableBodyCell, Object.assign({}, props), cell.id) : null;
   }), virtualPaddingRight ? jsxRuntimeExports.jsx("td", { style: { display: "flex", width: virtualPaddingRight } }) : null] })), renderDetailPanel && !row.getIsGrouped() && jsxRuntimeExports.jsx(MRT_TableDetailPanel, { parentRowRef: rowRef, row, rowIndex, table, virtualRow })] });
 };
 const Memo_MRT_TableBodyRow = memo$2(MRT_TableBodyRow, (prev2, next2) => prev2.row === next2.row && prev2.rowIndex === next2.rowIndex);
@@ -45352,7 +45263,7 @@ const MRT_TableFooterRow = ({ footerGroup, table, virtualColumns, virtualPadding
   const tableRowProps = muiTableFooterRowProps instanceof Function ? muiTableFooterRowProps({ footerGroup, table }) : muiTableFooterRowProps;
   return jsxRuntimeExports.jsxs(TableRow, Object.assign({}, tableRowProps, { sx: (theme) => Object.assign({ backgroundColor: lighten(theme.palette.background.default, 0.04), display: layoutMode === "grid" ? "flex" : "table-row", width: "100%" }, (tableRowProps === null || tableRowProps === void 0 ? void 0 : tableRowProps.sx) instanceof Function ? tableRowProps === null || tableRowProps === void 0 ? void 0 : tableRowProps.sx(theme) : tableRowProps === null || tableRowProps === void 0 ? void 0 : tableRowProps.sx), children: [virtualPaddingLeft ? jsxRuntimeExports.jsx("th", { style: { display: "flex", width: virtualPaddingLeft } }) : null, (virtualColumns !== null && virtualColumns !== void 0 ? virtualColumns : footerGroup.headers).map((footerOrVirtualFooter) => {
     const footer = virtualColumns ? footerGroup.headers[footerOrVirtualFooter.index] : footerOrVirtualFooter;
-    return jsxRuntimeExports.jsx(MRT_TableFooterCell, { footer, table }, footer.id);
+    return footer ? jsxRuntimeExports.jsx(MRT_TableFooterCell, { footer, table }, footer.id) : null;
   }), virtualPaddingRight ? jsxRuntimeExports.jsx("th", { style: { display: "flex", width: virtualPaddingRight } }) : null] }));
 };
 const MRT_TableFooter = ({ table, virtualColumns, virtualPaddingLeft, virtualPaddingRight }) => {
@@ -47444,7 +47355,7 @@ const filter = createFilterOptions$1();
 function resolveOptions(options) {
 }
 function BasicEdit(props) {
-  let {
+  const {
     item,
     itemFields,
     onClose: onClose2 = () => {
@@ -47458,7 +47369,7 @@ function BasicEdit(props) {
   const def = spec.content.def;
   const { ent, cols } = def;
   useEffect(() => {
-    for (let field of itemFields) {
+    for (const field of itemFields) {
       setValue(field.name, item[field.name] || field.defaultValue || "");
     }
   }, [item]);
@@ -47475,8 +47386,8 @@ function BasicEdit(props) {
     {
       className: "vxg-form-field",
       onSubmit: handleSubmit((data) => __async(this, null, function* () {
-        let selitem = __spreadValues({}, item);
-        for (let k in data) {
+        const selitem = __spreadValues({}, item);
+        for (const k in data) {
           selitem[k] = data[k];
         }
         onSubmit(selitem);
@@ -47489,7 +47400,7 @@ function BasicEdit(props) {
               name: field.name,
               control,
               defaultValue: item[field.name] || "",
-              render: ({ field: { onChange, onBlur, value }, fieldState: { error } }) => "selection" === field.type ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+              render: ({ field: { onChange, onBlur, value }, fieldState: { error } }) => field.type === "selection" ? /* @__PURE__ */ jsxRuntimeExports.jsx(
                 Autocomplete,
                 {
                   freeSolo: true,
@@ -47499,8 +47410,8 @@ function BasicEdit(props) {
                   selectOnFocus: true,
                   onBlur,
                   handleHomeEndKeys: true,
-                  disableClearable: "" == value,
-                  disabled: !!!field.edit,
+                  disableClearable: value == "",
+                  disabled: !field.edit,
                   value,
                   getOptionLabel: (option) => option || "",
                   filterOptions: (options, params) => {
@@ -47523,8 +47434,8 @@ function BasicEdit(props) {
                     __spreadProps(__spreadValues({}, params), {
                       label: field.headerName,
                       onBlur,
-                      error: !!error,
-                      helperText: error ? error.message : null
+                      error: !(error == null),
+                      helperText: error != null ? error.message : null
                     })
                   )
                 }
@@ -47533,17 +47444,17 @@ function BasicEdit(props) {
                 {
                   label: field.headerName,
                   fullWidth: true,
-                  select: "status" === field.type,
-                  disabled: !!!field.edit,
+                  select: field.type === "status",
+                  disabled: !field.edit,
                   onChange,
                   value,
                   onBlur,
-                  error: !!error,
-                  helperText: error ? error.message : null,
+                  error: !(error == null),
+                  helperText: error != null ? error.message : null,
                   sx: {
                     textAlign: "left"
                   },
-                  children: "status" === field.type ? Object.keys(field.kind).map(
+                  children: field.type === "status" ? Object.keys(field.kind).map(
                     (option) => {
                       var _a;
                       return /* @__PURE__ */ jsxRuntimeExports.jsx(MenuItem$1, { value: option, children: (_a = field.kind[option]) == null ? void 0 : _a.title }, option);
@@ -47556,7 +47467,7 @@ function BasicEdit(props) {
             }
           ) }, index2);
         }),
-        0 != children2.length ? /* @__PURE__ */ jsxRuntimeExports.jsx(Grid$1, { item: true, xs: 12, children: children2 }) : null,
+        children2.length != 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx(Grid$1, { item: true, xs: 12, children: children2 }) : null,
         /* @__PURE__ */ jsxRuntimeExports.jsx(Grid$1, { item: true, xs: 12, children: /* @__PURE__ */ jsxRuntimeExports.jsxs(Grid$1, { container: true, justifyContent: "space-between", alignItems: "center", marginTop: 2, children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(Grid$1, { item: true, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
             BasicButton,
@@ -47644,7 +47555,7 @@ function BasicLed(props) {
   useEffect(() => {
     setItem({});
   }, [location.pathname]);
-  let led_add = vxgState.trigger.led.add;
+  const led_add = vxgState.trigger.led.add;
   let [triggerLed, setTriggerLed] = useState(0);
   useEffect(() => {
     if (triggerLed >= 2) {
@@ -47713,8 +47624,8 @@ function BasicMain(props) {
   const views = Object.values(spec.view);
   const sideOpen = useSelector((state) => state.main.vxg.cmp.BasicSide.show);
   const divStyle = {
-    "paddingLeft": sideOpen ? "12.0em" : "0em",
-    "paddingRight": 0
+    paddingLeft: sideOpen ? "12.0em" : "0em",
+    paddingRight: 0
   };
   const mainDiv = {
     height: "calc(100vh - 6rem)",
@@ -51014,16 +50925,16 @@ class Vxg {
     this.config.allow = this.config.allow || {};
     this.config.allow.modify = this.config.allow.modify || ((x) => x);
     this.config.allow.match = this.config.allow.match || [];
-    for (let entry of this.config.allow.match) {
+    for (const entry of this.config.allow.match) {
       this.match.allow.add(entry, { allow: true });
     }
   }
   allow(match2) {
-    let mm = Jsonic(match2);
-    let ms = Array.isArray(match2) ? match2 : Object.keys(mm).map((x) => mm[x]);
+    const mm = Jsonic(match2);
+    const ms = Array.isArray(match2) ? match2 : Object.keys(mm).map((x) => mm[x]);
     let found = null;
-    for (let m of ms) {
-      let pat = this.config.allow.modify(__spreadValues({}, m || {}));
+    for (const m of ms) {
+      const pat = this.config.allow.modify(__spreadValues({}, m || {}));
       found = this.match.allow.find(pat);
       if (found) {
         break;

@@ -1,0 +1,69 @@
+app: web: view: {
+  title: string
+  icon: string
+  content: kind: string
+  content: def: {
+      ent: {
+        canon: string
+        primary: {
+          field: {
+            &: {
+              title: string
+              edit: boolean
+            }
+          }
+        }
+      }
+      add: active: boolean
+      edit: {
+        layout: {
+          order: string
+          field: {
+            &: {
+              type: string
+              headerName: string
+              edit: boolean
+            }
+          }
+        }
+      }
+    }
+}
+
+app: web: part: admin: {
+  admin: {}
+}
+
+app: web: part: head: {
+  logo: img: string
+  tool: def: []
+}
+
+app: web: part: side: {
+  logo: img: string
+  style: {
+    &: string
+  }
+  sections: {
+    &: { # section
+      &: { # items
+        &: { # item
+          kind: string
+          label: string
+          icon: string
+          path: string
+          access: {
+            &: boolean
+          }
+        }
+      }
+    }
+  }
+}
+
+app: web: part: main: {}
+
+app: web: part: foot: {
+  title: string
+}
+

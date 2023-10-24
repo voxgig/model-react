@@ -1,0 +1,169 @@
+{
+  "sys": {
+    "app": {
+      "web": {
+        "view": {
+          "content": {
+            "def": {
+              "ent": {
+                "primary": {
+                  "field": {}
+                }
+              },
+              "add": {},
+              "edit": {
+                "layout": {
+                  "field": {}
+                }
+              }
+            }
+          }
+        },
+        "part": {
+          "admin": {
+            "admin": {}
+          },
+          "head": {
+            "logo": {},
+            "tool": {
+              "def": []
+            }
+          },
+          "side": {
+            "logo": {},
+            "style": {},
+            "sections": {}
+          },
+          "main": {},
+          "foot": {}
+        }
+      }
+    }
+  },
+  "app": {
+    "web": {
+      "frame": {
+        "public": {
+          "kind": "basic"
+        },
+        "private": {
+          "kind": "basic",
+          "part": {
+            "admin": {
+              "admin": {}
+            },
+            "head": {
+              "logo": {
+                "img": "/voxgig.png"
+              },
+              "tool": {
+                "def": [
+                  {
+                    "kind": "addbutton",
+                    "title": "Add",
+                    "options": {
+                      "kind": "ent",
+                      "label": {
+                        "field": "title"
+                      },
+                      "ent": "vxg/task"
+                    }
+                  },
+                  {
+                    "kind": "autocomplete",
+                    "title": "Autocomplete",
+                    "options": {
+                      "kind": "ent",
+                      "label": {
+                        "field": "title"
+                      },
+                      "ent": "vxg/task"
+                    }
+                  }
+                ]
+              }
+            },
+            "side": {
+              "logo": {
+                "img": "/voxgig.png"
+              },
+              "style": {
+                "backgroundColor": "#333333",
+                "textColor": "#ffffff"
+              },
+              "sections": {},
+              "section": [
+                {
+                  "kind": "navmenu",
+                  "view": {
+                    "talk": true
+                  },
+                  "button": {
+                    "icon": "done",
+                    "text": "Talks"
+                  }
+                }
+              ]
+            },
+            "main": {
+              "title": ""
+            },
+            "foot": {
+              "title": ""
+            }
+          },
+          "view": {
+            "talk": {
+              "title": "Talk",
+              "icon": "done",
+              "content": {
+                "kind": "led",
+                "def": {
+                  "ent": {
+                    "primary": {
+                      "field": {
+                        "id": {
+                          "title": "ID",
+                          "edit": false
+                        }
+                      }
+                    },
+                    "canon": "vxg/talk"
+                  },
+                  "add": {
+                    "active": true
+                  },
+                  "edit": {
+                    "layout": {
+                      "order": "id,title,status",
+                      "field": {
+                        "title": {
+                          "type": "",
+                          "headerName": "Title",
+                          "edit": true
+                        },
+                        "status": {
+                          "type": "status",
+                          "headerName": "Status",
+                          "edit": true,
+                          "kind": {
+                            "open": {
+                              "title": "Open"
+                            },
+                            "closed": {
+                              "title": "Closed"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

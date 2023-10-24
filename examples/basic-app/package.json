@@ -1,0 +1,47 @@
+{
+  "name": "model-react-basic-app",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "test": "echo no-test",
+    "dev": "vite --force",
+    "build": "npm run model-build && tsc && vite build",
+    "preview": "vite preview",
+    "model": "voxgig-model model/model.jsonic",
+    "model-build": "voxgig-model model/model.jsonic --once",
+    "clean": "rm -rf dist node_modules yarn.lock package-lock.json",
+    "reset": "npm run clean && npm install && npm run build && npm run test",
+    "prep-dev": "npm link @voxgig/model-react"
+  },
+  "dependencies": {
+    "@emotion/react": "11.10.6",
+    "@emotion/styled": "11.10.6",
+    "@fontsource/roboto": "4.5.8",
+    "@mdi/js": "7.1.96",
+    "@mdi/react": "1.6.1",
+    "@mui/icons-material": "5.11.11",
+    "@mui/material": "5.11.13",
+    "@mui/x-data-grid": "6.0.1",
+    "@reduxjs/toolkit": "1.9.3",
+    "@voxgig/model-react": "0.4.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-redux": "8.0.5",
+    "react-router-dom": "6.9.0",
+    "seneca-browser": "5.0.0",
+    "seneca-entity": "24.0.0",
+    "seneca-mem-store": "8.3.0"
+  },
+  "devDependencies": {
+    "@voxgig/model": "0.24.0",
+    "@jsonic/jsonic-next": "2.12.1",
+    "@types/react": "18.0.28",
+    "@types/react-dom": "18.0.11",
+    "@vitejs/plugin-react": "3.1.0",
+    "patrun": "7.2.5",
+    "prettier": "2.8.8",
+    "typescript": "5.1.6",
+    "vite": "4.3.9"
+  }
+}
