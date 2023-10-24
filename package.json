@@ -19,7 +19,7 @@
     "build": "tsc && vite build",
     "watch": "vite build -w",
     "preview": "vite preview",
-    "test": "vitest && npm run lint",
+    "test": "npm run lint && vitest",
     "clean": "rm -rf dist node_modules yarn.lock package-lock.json",
     "reset": "npm run clean && npm install && npm run build",
     "repo-check": "REPO_VERSION=`node -e \"console.log(require('./package').version)\"` && echo TAG: v$REPO_VERSION && [[ '' == `git tag --list v${REPO_VERSION}` ]]",
