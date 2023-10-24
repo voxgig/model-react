@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 
 import { useNavigate, useLocation } from 'react-router-dom'
 
-import { Gubu, Exact } from 'gubu'
+import { Gubu, Exact, Required } from 'gubu'
 
 import {
   Toolbar,
@@ -52,6 +52,31 @@ function addItem(seneca: any, led_add: any) {
   })
 }
 
+// spec schema definition with Gubu
+const BasicHeadSpecShape = Gubu({
+  head: {
+    logo: {
+      img: ""
+    },
+    tool: {
+      def: [
+        {
+          kind: Exact('addbutton', 'autocomplete'),
+          title: String,
+          options: {
+            kind: String,
+            label: {
+              field: String
+            },
+            ent: String
+          },
+        }
+      ]
+    },
+  },
+  view: {}
+})
+
 function BasicHead(props: any) {
   const {
     vxg,
@@ -65,19 +90,10 @@ function BasicHead(props: any) {
     frame
   } = spec
 
-  // console.log('BasicHead.spec', spec)
-
-  // spec schema definition with Gubu
-  const shape = Gubu({
-    head: {
-      logo: { img: "" },
-      tool: { def: [{ kind: Exact('addbutton', 'autocomplete'), title: String, options: {}, name: "" }] },
-    },
-    view: {}
-  })
+  console.log('BasicHead.spec', spec)
 
   // spec schema validation with Gubu
-  shape(spec)
+  BasicHeadSpecShape(spec)
 
   const navigate = useNavigate()
   const location = useLocation()

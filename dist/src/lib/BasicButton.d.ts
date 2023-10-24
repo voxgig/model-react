@@ -1,5 +1,5 @@
 /// <reference types="react" />
-import { ButtonProps as MuiButtonProps } from "@mui/material";
+import { ButtonProps as MuiButtonProps } from '@mui/material';
 import { Theme } from '@mui/material/styles';
 interface BProps extends MuiButtonProps {
     theme?: Theme;
