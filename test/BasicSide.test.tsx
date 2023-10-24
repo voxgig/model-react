@@ -11,7 +11,8 @@ describe('BasicSide', () => {
       side: {
         logo: {
           img: "img.png"
-        }
+        },
+        section: {}
       },
       view: {
         task: {
