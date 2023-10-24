@@ -9,7 +9,7 @@ import { Divider, IconButton } from '@mui/material'
 import { BasicDrawer, BasicDrawerHeader } from './BasicDrawer'
 
 // spec schema definition with Gubu
-const BasicSideSpecShape = Gubu(Required({
+const BasicSideSpecShape = Gubu({
   side: {
     logo: {
       img: String
@@ -21,16 +21,16 @@ const BasicSideSpecShape = Gubu(Required({
         label: Number,
         icon: String,
         path: String,
-        access: Child(Boolean)
+        access: Child(Boolean, {})
       })
     })
   },
-  view: Child(Required({
+  view: Child({
     title: String,
     icon: Number,
     content: {}
-  }))
-}))
+  })
+})
 
 function onClose(seneca: any) {
   seneca.act('aim:app,set:state', {
@@ -53,7 +53,7 @@ function BasicSide(props: any) {
   const navigate = useNavigate()
   const location = useLocation()
 
-  BasicSideSpecShape(spec)
+  const specWithDefaults = BasicSideSpecShape(spec)
 
   function handleItemSelect(key: any, item: any) {
     if ('resource' === item.kind) {
@@ -64,7 +64,7 @@ function BasicSide(props: any) {
 
   // TODO: clean up props shape
   const basicSideMenuSpec = {
-    sectionList: spec.side.section
+    sectionList: specWithDefaults.side.section
   }
 
   return (
@@ -75,7 +75,7 @@ function BasicSide(props: any) {
     >
       <BasicDrawerHeader>
         <img
-          src={spec.side.logo.img}
+          src={specWithDefaults.side.logo.img}
           style={{ width: '5rem' }}
         />
         <IconButton onClick={() => onClose(seneca)}>
@@ -83,7 +83,7 @@ function BasicSide(props: any) {
         </IconButton>
       </BasicDrawerHeader>
       <Divider />
-      <BasicSideMenu spec={basicSideMenuSpec} onClose={onClose} onItemSelect={handleItemSelect} />
+      <BasicSideMenu spec={basicSideMenuSpec} onItemSelect={handleItemSelect} />
     </BasicDrawer>
   )
 
