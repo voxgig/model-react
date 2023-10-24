@@ -1,6 +1,6 @@
 import { describe, expect, it, beforeEach, afterEach } from 'vitest'
 import * as React from 'react'
-import { customRender, ctx, spec, initialState, vxg } from './mocks/test-utils'
+import { customRender, ctx, initialState, vxg } from './mocks/test-utils'
 import { BasicHead } from '../src/lib/index'
 
 describe('BasicHead', () => {
