@@ -194,28 +194,28 @@ var __async = (__this, __arguments, generator) => {
           return null;
         }
         var ReactSharedInternals = React$1.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
-        function error(format2) {
+        function error(format) {
           {
             {
               for (var _len2 = arguments.length, args = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
                 args[_key2 - 1] = arguments[_key2];
               }
-              printWarning("error", format2, args);
+              printWarning("error", format, args);
             }
           }
         }
-        function printWarning(level, format2, args) {
+        function printWarning(level, format, args) {
           {
             var ReactDebugCurrentFrame2 = ReactSharedInternals.ReactDebugCurrentFrame;
             var stack = ReactDebugCurrentFrame2.getStackAddendum();
             if (stack !== "") {
-              format2 += "%s";
+              format += "%s";
               args = args.concat([stack]);
             }
             var argsWithFormat = args.map(function(item) {
               return String(item);
             });
-            argsWithFormat.unshift("Warning: " + format2);
+            argsWithFormat.unshift("Warning: " + format);
             Function.prototype.apply.call(console[level], console, argsWithFormat);
           }
         }
@@ -3371,6 +3371,9 @@ var __async = (__this, __arguments, generator) => {
     });
     return ref.current;
   };
+  function getValidReactChildren(children) {
+    return React__namespace.Children.toArray(children).filter((child) => /* @__PURE__ */ React__namespace.isValidElement(child));
+  }
   const visuallyHidden = {
     border: 0,
     clip: "rect(0 0 0 0)",
@@ -6856,7 +6859,7 @@ var __async = (__this, __arguments, generator) => {
   var round$2 = Math.round;
   function getUAString() {
     var uaData = navigator.userAgentData;
-    if (uaData != null && uaData.brands) {
+    if (uaData != null && uaData.brands && Array.isArray(uaData.brands)) {
       return uaData.brands.map(function(item) {
         return item.brand + "/" + item.version;
       }).join(" ");
@@ -7070,15 +7073,7 @@ var __async = (__this, __arguments, generator) => {
         return;
       }
     }
-    if (process.env.NODE_ENV !== "production") {
-      if (!isHTMLElement$2(arrowElement)) {
-        console.error(['Popper: "arrow" element must be an HTMLElement (not an SVGElement).', "To use an SVG arrow, wrap it in an HTMLElement that will be used as", "the arrow."].join(" "));
-      }
-    }
     if (!contains$1(state.elements.popper, arrowElement)) {
-      if (process.env.NODE_ENV !== "production") {
-        console.error(['Popper: "arrow" modifier\'s `element` must be a child of the popper', "element."].join(" "));
-      }
       return;
     }
     state.elements.arrow = arrowElement;
@@ -7101,9 +7096,8 @@ var __async = (__this, __arguments, generator) => {
     bottom: "auto",
     left: "auto"
   };
-  function roundOffsetsByDPR(_ref) {
+  function roundOffsetsByDPR(_ref, win) {
     var x = _ref.x, y = _ref.y;
-    var win = window;
     var dpr = win.devicePixelRatio || 1;
     return {
       x: round$2(x * dpr) / dpr || 0,
@@ -7165,7 +7159,7 @@ var __async = (__this, __arguments, generator) => {
     var _ref4 = roundOffsets === true ? roundOffsetsByDPR({
       x,
       y
-    }) : {
+    }, getWindow(popper2)) : {
       x,
       y
     };
@@ -7180,14 +7174,6 @@ var __async = (__this, __arguments, generator) => {
   function computeStyles(_ref5) {
     var state = _ref5.state, options = _ref5.options;
     var _options$gpuAccelerat = options.gpuAcceleration, gpuAcceleration = _options$gpuAccelerat === void 0 ? true : _options$gpuAccelerat, _options$adaptive = options.adaptive, adaptive = _options$adaptive === void 0 ? true : _options$adaptive, _options$roundOffsets = options.roundOffsets, roundOffsets = _options$roundOffsets === void 0 ? true : _options$roundOffsets;
-    if (process.env.NODE_ENV !== "production") {
-      var transitionProperty = getComputedStyle(state.elements.popper).transitionProperty || "";
-      if (adaptive && ["transform", "top", "right", "bottom", "left"].some(function(property) {
-        return transitionProperty.indexOf(property) >= 0;
-      })) {
-        console.warn(["Popper: Detected CSS transitions on at least one of the following", 'CSS properties: "transform", "top", "right", "bottom", "left".', "\n\n", 'Disable the "computeStyles" modifier\'s `adaptive` option to allow', "for smooth transitions, or remove these properties from the CSS", "transition declaration on the popper element if only transitioning", "opacity or background-color for example.", "\n\n", "We recommend using the popper element as a wrapper around an inner", "element that can have any CSS property transitioned for animations."].join(" "));
-      }
-    }
     var commonStyles = {
       placement: getBasePlacement(state.placement),
       variation: getVariation(state.placement),
@@ -7517,9 +7503,6 @@ var __async = (__this, __arguments, generator) => {
     });
     if (allowedPlacements.length === 0) {
       allowedPlacements = placements$1;
-      if (process.env.NODE_ENV !== "production") {
-        console.error(["Popper: The `allowedAutoPlacements` option did not allow any", "placements. Ensure the `placement` option matches the variation", "of the allowed placements.", 'For example, "auto" cannot be used to allow "bottom-start".', 'Use "auto-start" instead.'].join(" "));
-      }
     }
     var overflows = allowedPlacements.reduce(function(acc, placement2) {
       acc[placement2] = detectOverflow(state, {
@@ -7941,86 +7924,6 @@ var __async = (__this, __arguments, generator) => {
       return pending;
     };
   }
-  function format(str) {
-    for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-      args[_key - 1] = arguments[_key];
-    }
-    return [].concat(args).reduce(function(p, c) {
-      return p.replace(/%s/, c);
-    }, str);
-  }
-  var INVALID_MODIFIER_ERROR = 'Popper: modifier "%s" provided an invalid %s property, expected %s but got %s';
-  var MISSING_DEPENDENCY_ERROR = 'Popper: modifier "%s" requires "%s", but "%s" modifier is not available';
-  var VALID_PROPERTIES = ["name", "enabled", "phase", "fn", "effect", "requires", "options"];
-  function validateModifiers(modifiers) {
-    modifiers.forEach(function(modifier) {
-      [].concat(Object.keys(modifier), VALID_PROPERTIES).filter(function(value, index2, self2) {
-        return self2.indexOf(value) === index2;
-      }).forEach(function(key) {
-        switch (key) {
-          case "name":
-            if (typeof modifier.name !== "string") {
-              console.error(format(INVALID_MODIFIER_ERROR, String(modifier.name), '"name"', '"string"', '"' + String(modifier.name) + '"'));
-            }
-            break;
-          case "enabled":
-            if (typeof modifier.enabled !== "boolean") {
-              console.error(format(INVALID_MODIFIER_ERROR, modifier.name, '"enabled"', '"boolean"', '"' + String(modifier.enabled) + '"'));
-            }
-            break;
-          case "phase":
-            if (modifierPhases.indexOf(modifier.phase) < 0) {
-              console.error(format(INVALID_MODIFIER_ERROR, modifier.name, '"phase"', "either " + modifierPhases.join(", "), '"' + String(modifier.phase) + '"'));
-            }
-            break;
-          case "fn":
-            if (typeof modifier.fn !== "function") {
-              console.error(format(INVALID_MODIFIER_ERROR, modifier.name, '"fn"', '"function"', '"' + String(modifier.fn) + '"'));
-            }
-            break;
-          case "effect":
-            if (modifier.effect != null && typeof modifier.effect !== "function") {
-              console.error(format(INVALID_MODIFIER_ERROR, modifier.name, '"effect"', '"function"', '"' + String(modifier.fn) + '"'));
-            }
-            break;
-          case "requires":
-            if (modifier.requires != null && !Array.isArray(modifier.requires)) {
-              console.error(format(INVALID_MODIFIER_ERROR, modifier.name, '"requires"', '"array"', '"' + String(modifier.requires) + '"'));
-            }
-            break;
-          case "requiresIfExists":
-            if (!Array.isArray(modifier.requiresIfExists)) {
-              console.error(format(INVALID_MODIFIER_ERROR, modifier.name, '"requiresIfExists"', '"array"', '"' + String(modifier.requiresIfExists) + '"'));
-            }
-            break;
-          case "options":
-          case "data":
-            break;
-          default:
-            console.error('PopperJS: an invalid property has been provided to the "' + modifier.name + '" modifier, valid properties are ' + VALID_PROPERTIES.map(function(s) {
-              return '"' + s + '"';
-            }).join(", ") + '; but "' + key + '" was provided.');
-        }
-        modifier.requires && modifier.requires.forEach(function(requirement) {
-          if (modifiers.find(function(mod) {
-            return mod.name === requirement;
-          }) == null) {
-            console.error(format(MISSING_DEPENDENCY_ERROR, String(modifier.name), requirement, requirement));
-          }
-        });
-      });
-    });
-  }
-  function uniqueBy(arr, fn) {
-    var identifiers = /* @__PURE__ */ new Set();
-    return arr.filter(function(item) {
-      var identifier2 = fn(item);
-      if (!identifiers.has(identifier2)) {
-        identifiers.add(identifier2);
-        return true;
-      }
-    });
-  }
   function mergeByName(modifiers) {
     var merged = modifiers.reduce(function(merged2, current) {
       var existing = merged2[current.name];
@@ -8034,8 +7937,6 @@ var __async = (__this, __arguments, generator) => {
       return merged[key];
     });
   }
-  var INVALID_ELEMENT_ERROR = "Popper: Invalid reference or popper argument provided. They must be either a DOM element or virtual element.";
-  var INFINITE_LOOP_ERROR = "Popper: An infinite loop in the modifiers cycle has been detected! The cycle has been interrupted to prevent a browser crash.";
   var DEFAULT_OPTIONS = {
     placement: "bottom",
     modifiers: [],
@@ -8086,28 +7987,6 @@ var __async = (__this, __arguments, generator) => {
           state.orderedModifiers = orderedModifiers.filter(function(m) {
             return m.enabled;
           });
-          if (process.env.NODE_ENV !== "production") {
-            var modifiers = uniqueBy([].concat(orderedModifiers, state.options.modifiers), function(_ref) {
-              var name = _ref.name;
-              return name;
-            });
-            validateModifiers(modifiers);
-            if (getBasePlacement(state.options.placement) === auto) {
-              var flipModifier = state.orderedModifiers.find(function(_ref2) {
-                var name = _ref2.name;
-                return name === "flip";
-              });
-              if (!flipModifier) {
-                console.error(['Popper: "auto" placements require the "flip" modifier be', "present and enabled to work."].join(" "));
-              }
-            }
-            var _getComputedStyle = getComputedStyle(popper2), marginTop = _getComputedStyle.marginTop, marginRight = _getComputedStyle.marginRight, marginBottom = _getComputedStyle.marginBottom, marginLeft = _getComputedStyle.marginLeft;
-            if ([marginTop, marginRight, marginBottom, marginLeft].some(function(margin2) {
-              return parseFloat(margin2);
-            })) {
-              console.warn(['Popper: CSS "margin" styles cannot be used to apply padding', "between the popper and its reference element or boundary.", "To replicate margin, use the `offset` modifier, as well as", "the `padding` option in the `preventOverflow` and `flip`", "modifiers."].join(" "));
-            }
-          }
           runModifierEffects();
           return instance.update();
         },
@@ -8122,9 +8001,6 @@ var __async = (__this, __arguments, generator) => {
           }
           var _state$elements = state.elements, reference3 = _state$elements.reference, popper3 = _state$elements.popper;
           if (!areValidElements(reference3, popper3)) {
-            if (process.env.NODE_ENV !== "production") {
-              console.error(INVALID_ELEMENT_ERROR);
-            }
             return;
           }
           state.rects = {
@@ -8136,15 +8012,7 @@ var __async = (__this, __arguments, generator) => {
           state.orderedModifiers.forEach(function(modifier) {
             return state.modifiersData[modifier.name] = Object.assign({}, modifier.data);
           });
-          var __debug_loops__ = 0;
           for (var index2 = 0; index2 < state.orderedModifiers.length; index2++) {
-            if (process.env.NODE_ENV !== "production") {
-              __debug_loops__ += 1;
-              if (__debug_loops__ > 100) {
-                console.error(INFINITE_LOOP_ERROR);
-                break;
-              }
-            }
             if (state.reset === true) {
               state.reset = false;
               index2 = -1;
@@ -8175,9 +8043,6 @@ var __async = (__this, __arguments, generator) => {
         }
       };
       if (!areValidElements(reference2, popper2)) {
-        if (process.env.NODE_ENV !== "production") {
-          console.error(INVALID_ELEMENT_ERROR);
-        }
         return instance;
       }
       instance.setOptions(options).then(function(state2) {
@@ -8186,8 +8051,8 @@ var __async = (__this, __arguments, generator) => {
         }
       });
       function runModifierEffects() {
-        state.orderedModifiers.forEach(function(_ref3) {
-          var name = _ref3.name, _ref3$options = _ref3.options, options2 = _ref3$options === void 0 ? {} : _ref3$options, effect2 = _ref3.effect;
+        state.orderedModifiers.forEach(function(_ref) {
+          var name = _ref.name, _ref$options = _ref.options, options2 = _ref$options === void 0 ? {} : _ref$options, effect2 = _ref.effect;
           if (typeof effect2 === "function") {
             var cleanupFn = effect2({
               state,
@@ -14646,7 +14511,7 @@ var __async = (__this, __arguments, generator) => {
   } : void 0;
   "use client";
   /**
-   * @mui/styled-engine v5.14.11
+   * @mui/styled-engine v5.14.14
    *
    * @license MIT
    * This source code is licensed under the MIT license found in the
@@ -16135,39 +16000,47 @@ var __async = (__this, __arguments, generator) => {
     }
     return null;
   };
+  const transformVariants = (variants) => {
+    const variantsStyles = {};
+    if (variants) {
+      variants.forEach((definition) => {
+        const key = propsToClassKey(definition.props);
+        variantsStyles[key] = definition.style;
+      });
+    }
+    return variantsStyles;
+  };
   const getVariantStyles = (name, theme) => {
     let variants = [];
     if (theme && theme.components && theme.components[name] && theme.components[name].variants) {
       variants = theme.components[name].variants;
     }
-    const variantsStyles = {};
-    variants.forEach((definition) => {
-      const key = propsToClassKey(definition.props);
-      variantsStyles[key] = definition.style;
-    });
-    return variantsStyles;
+    return transformVariants(variants);
   };
-  const variantsResolver = (props, styles2, theme, name) => {
-    var _theme$components;
+  const variantsResolver = (props, styles2, variants) => {
     const {
       ownerState = {}
     } = props;
     const variantsStyles = [];
-    const themeVariants = theme == null || (_theme$components = theme.components) == null || (_theme$components = _theme$components[name]) == null ? void 0 : _theme$components.variants;
-    if (themeVariants) {
-      themeVariants.forEach((themeVariant) => {
+    if (variants) {
+      variants.forEach((variant) => {
         let isMatch = true;
-        Object.keys(themeVariant.props).forEach((key) => {
-          if (ownerState[key] !== themeVariant.props[key] && props[key] !== themeVariant.props[key]) {
+        Object.keys(variant.props).forEach((key) => {
+          if (ownerState[key] !== variant.props[key] && props[key] !== variant.props[key]) {
             isMatch = false;
           }
         });
         if (isMatch) {
-          variantsStyles.push(styles2[propsToClassKey(themeVariant.props)]);
+          variantsStyles.push(styles2[propsToClassKey(variant.props)]);
         }
       });
     }
     return variantsStyles;
+  };
+  const themeVariantsResolver = (props, styles2, theme, name) => {
+    var _theme$components;
+    const themeVariants = theme == null || (_theme$components = theme.components) == null || (_theme$components = _theme$components[name]) == null ? void 0 : _theme$components.variants;
+    return variantsResolver(props, styles2, themeVariants);
   };
   function shouldForwardProp(prop) {
     return prop !== "ownerState" && prop !== "theme" && prop !== "sx" && prop !== "as";
@@ -16192,6 +16065,29 @@ var __async = (__this, __arguments, generator) => {
     }
     return (props, styles2) => styles2[slot];
   }
+  const muiStyledFunctionResolver = ({
+    styledArg,
+    props,
+    defaultTheme: defaultTheme2,
+    themeId
+  }) => {
+    const resolvedStyles = styledArg(_extends$2({}, props, {
+      theme: resolveTheme(_extends$2({}, props, {
+        defaultTheme: defaultTheme2,
+        themeId
+      }))
+    }));
+    let optionalVariants;
+    if (resolvedStyles && resolvedStyles.variants) {
+      optionalVariants = resolvedStyles.variants;
+      delete resolvedStyles.variants;
+    }
+    if (optionalVariants) {
+      const variantsStyles = variantsResolver(props, transformVariants(optionalVariants), optionalVariants);
+      return [resolvedStyles, ...variantsStyles];
+    }
+    return resolvedStyles;
+  };
   function createStyled(input = {}) {
     const {
       themeId,
@@ -16245,16 +16141,59 @@ var __async = (__this, __arguments, generator) => {
       }, options));
       const muiStyledResolver = (styleArg, ...expressions) => {
         const expressionsWithDefaultTheme = expressions ? expressions.map((stylesArg) => {
-          return typeof stylesArg === "function" && stylesArg.__emotion_real !== stylesArg ? (props) => {
-            return stylesArg(_extends$2({}, props, {
-              theme: resolveTheme(_extends$2({}, props, {
-                defaultTheme: defaultTheme2,
-                themeId
-              }))
-            }));
-          } : stylesArg;
+          if (typeof stylesArg === "function" && stylesArg.__emotion_real !== stylesArg) {
+            return (props) => muiStyledFunctionResolver({
+              styledArg: stylesArg,
+              props,
+              defaultTheme: defaultTheme2,
+              themeId
+            });
+          }
+          if (isPlainObject$1(stylesArg)) {
+            let transformedStylesArg = stylesArg;
+            let styledArgVariants;
+            if (stylesArg && stylesArg.variants) {
+              styledArgVariants = stylesArg.variants;
+              delete transformedStylesArg.variants;
+              transformedStylesArg = (props) => {
+                let result = stylesArg;
+                const variantStyles = variantsResolver(props, transformVariants(styledArgVariants), styledArgVariants);
+                variantStyles.forEach((variantStyle) => {
+                  result = deepmerge(result, variantStyle);
+                });
+                return result;
+              };
+            }
+            return transformedStylesArg;
+          }
+          return stylesArg;
         }) : [];
         let transformedStyleArg = styleArg;
+        if (isPlainObject$1(styleArg)) {
+          let styledArgVariants;
+          if (styleArg && styleArg.variants) {
+            styledArgVariants = styleArg.variants;
+            delete transformedStyleArg.variants;
+            transformedStyleArg = (props) => {
+              let result = styleArg;
+              const variantStyles = variantsResolver(props, transformVariants(styledArgVariants), styledArgVariants);
+              variantStyles.forEach((variantStyle) => {
+                result = deepmerge(result, variantStyle);
+              });
+              return result;
+            };
+          }
+        } else if (typeof styleArg === "function" && // On the server Emotion doesn't use React.forwardRef for creating components, so the created
+        // component stays as a function. This condition makes sure that we do not interpolate functions
+        // which are basically components used as a selectors.
+        styleArg.__emotion_real !== styleArg) {
+          transformedStyleArg = (props) => muiStyledFunctionResolver({
+            styledArg: styleArg,
+            props,
+            defaultTheme: defaultTheme2,
+            themeId
+          });
+        }
         if (componentName && overridesResolver2) {
           expressionsWithDefaultTheme.push((props) => {
             const theme = resolveTheme(_extends$2({}, props, {
@@ -16280,7 +16219,7 @@ var __async = (__this, __arguments, generator) => {
               defaultTheme: defaultTheme2,
               themeId
             }));
-            return variantsResolver(props, getVariantStyles(componentName, theme), theme, componentName);
+            return themeVariantsResolver(props, getVariantStyles(componentName, theme), theme, componentName);
           });
         }
         if (!skipSx) {
@@ -16291,16 +16230,6 @@ var __async = (__this, __arguments, generator) => {
           const placeholders = new Array(numOfCustomFnsApplied).fill("");
           transformedStyleArg = [...styleArg, ...placeholders];
           transformedStyleArg.raw = [...styleArg.raw, ...placeholders];
-        } else if (typeof styleArg === "function" && // On the server Emotion doesn't use React.forwardRef for creating components, so the created
-        // component stays as a function. This condition makes sure that we do not interpolate functions
-        // which are basically components used as a selectors.
-        styleArg.__emotion_real !== styleArg) {
-          transformedStyleArg = (props) => styleArg(_extends$2({}, props, {
-            theme: resolveTheme(_extends$2({}, props, {
-              defaultTheme: defaultTheme2,
-              themeId
-            }))
-          }));
         }
         const Component = defaultStyledResolver(transformedStyleArg, ...expressionsWithDefaultTheme);
         if (process.env.NODE_ENV !== "production") {
@@ -16640,7 +16569,7 @@ The following color spaces are supported: srgb, display-p3, a98-rgb, prophoto-rg
     process.env.NODE_ENV !== "production" ? ThemeProvider$1.propTypes = exactProp(ThemeProvider$1.propTypes) : void 0;
   }
   /**
-   * @mui/private-theming v5.14.11
+   * @mui/private-theming v5.14.14
    *
    * @license MIT
    * This source code is licensed under the MIT license found in the
@@ -22757,23 +22686,84 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }
   });
   const iconmap = {
-    "factory": iconsMaterial.FactoryOutlined,
-    "key": iconsMaterial.KeyOutlined,
-    "done": iconsMaterial.AssignmentTurnedInOutlined,
-    "docs": iconsMaterial.TextSnippetOutlined,
-    "hightlight": iconsMaterial.HighlightAlt,
-    "map": iconsMaterial.Map,
-    "account": iconsMaterial.SupervisorAccount,
-    "tablet": iconsMaterial.Tablet,
-    "update": iconsMaterial.Update,
-    "admin": iconsMaterial.Security,
-    "clipboard": iconsMaterial.ContentPaste,
-    "fitscreen": iconsMaterial.FitScreen,
-    "dots-square": iconsMaterial.Apps
+    factory: iconsMaterial.FactoryOutlined,
+    key: iconsMaterial.KeyOutlined,
+    done: iconsMaterial.AssignmentTurnedInOutlined,
+    docs: iconsMaterial.TextSnippetOutlined,
+    hightlight: iconsMaterial.HighlightAlt,
+    map: iconsMaterial.Map,
+    account: iconsMaterial.SupervisorAccount,
+    tablet: iconsMaterial.Tablet,
+    update: iconsMaterial.Update,
+    admin: iconsMaterial.Security,
+    clipboard: iconsMaterial.ContentPaste,
+    fitscreen: iconsMaterial.FitScreen,
+    chatBubble: iconsMaterial.ChatBubble,
+    event: iconsMaterial.Event,
+    logout: iconsMaterial.Logout
   };
   function makeIcon(name) {
-    let Icon = iconmap[name];
+    const Icon = iconmap[name];
     return /* @__PURE__ */ jsxRuntimeExports.jsx(Icon, {});
+  }
+  function BasicSideMenuItem(props) {
+    const { spec, sectionKey, isAuthorized: isAuthorized2, onItemSelect } = props;
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(material.List, { children: [
+      Object.entries(spec.section.item).map(([itemKey, item]) => {
+        return (
+          // TODO: load user from redux store
+          isAuthorized2("admin", item.access) && /* @__PURE__ */ jsxRuntimeExports.jsx(
+            material.ListItem,
+            {
+              disablePadding: true,
+              onClick: () => onItemSelect(itemKey, item),
+              children: /* @__PURE__ */ jsxRuntimeExports.jsxs(material.ListItemButton, { selected: spec.viewPath == itemKey, children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx(material.ListItemIcon, { children: makeIcon(item.icon) }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx(material.ListItemText, { primary: item.label })
+              ] })
+            },
+            itemKey
+          )
+        );
+      }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(material.Divider, {})
+    ] }, sectionKey);
+  }
+  function BasicSideMenu(props) {
+    const {
+      isAuthorized: isAuthorized2,
+      onClose: onClose2,
+      onItemSelect,
+      spec
+    } = props;
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+      BasicDrawer,
+      {
+        variant: "permanent",
+        drawerwidth: "16rem",
+        open: spec.open,
+        children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs(BasicDrawerHeader, { children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "img",
+              {
+                src: spec.logo.img,
+                style: { width: "5rem" }
+              }
+            ),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(material.IconButton, { onClick: () => onClose2(spec.seneca), children: /* @__PURE__ */ jsxRuntimeExports.jsx(iconsMaterial.ChevronLeft, { sx: { color: "black" } }) })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(material.Divider, {}),
+          Object.entries(spec.sections).map(([sectionKey, section]) => {
+            const navListSpec = {
+              section,
+              viewPath: spec.viewPath
+            };
+            return /* @__PURE__ */ jsxRuntimeExports.jsx(BasicSideMenuItem, { spec: navListSpec, onItemSelect, isAuthorized: isAuthorized2 }, sectionKey);
+          })
+        ]
+      }
+    );
   }
   function onClose(seneca) {
     seneca.act("aim:app,set:state", {
@@ -22781,9 +22771,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       content: false
     });
   }
-  function allow(vxg, item) {
-    let out = item && item.allow ? vxg.allow(item.allow) : true;
-    return out;
+  const userRole = "admin";
+  function isAuthorized(userRole2, authorizedRoles) {
+    return authorizedRoles.hasOwnProperty(userRole2) && authorizedRoles[userRole2] === true;
   }
   function BasicSide(props) {
     const {
@@ -22796,143 +22786,21 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const open = vxgState.cmp.BasicSide.show;
     const navigate = reactRouterDom.useNavigate();
     const location = reactRouterDom.useLocation();
-    const { frame } = spec;
-    const shape2 = gubu_minExports.Gubu({
-      side: {
-        logo: { img: "" },
-        section: [
-          { name: "", kind: "", view: {}, button: { icon: String, text: String } }
-        ]
-      },
-      view: {}
-    });
+    const shape2 = gubu_minExports.Gubu({});
     shape2(spec);
-    const part = spec.side;
-    const viewmap = spec.view;
-    const viewdefs = Object.entries(viewmap).map((entry) => (entry[1].name = entry[0], entry[1]));
-    const sectiondefs = Object.entries(part.section || []).map((entry) => (entry[1].name = entry[0], entry[1]));
     const viewPath = location.pathname.split("/")[2];
-    const [showViewsData, setShowViewsData] = React.useState(sectiondefs.map((section, sectionNumber) => {
-      return viewPath == section.name || section.view && viewPath in section.view;
-    }));
-    const [toogleSelections, setToogleSelections] = React.useState({ [viewPath]: true });
-    const drawerwidth = "16rem";
-    function selectView(view) {
-      return function(_event) {
-        if (view.default) {
-          navigate("/view/" + view.default);
-          return;
-        }
-        navigate("/view/" + view.name);
-      };
+    function handleItemSelect(key, item) {
+      navigate(item.path);
     }
-    function sortViews(viewdefs2, viewOrder) {
-      const orderedViews = Object.keys(viewOrder).map((viewName) => viewdefs2.filter((viewdef) => viewdef.name === viewName)[0]);
-      return orderedViews.filter((view) => view !== void 0);
-    }
-    function toggle(sectionNumber) {
-      return function(_event) {
-        setShowViewsData((showViewsData2) => {
-          const temp = showViewsData2.map((_2) => false);
-          temp[sectionNumber] = true;
-          return temp;
-        });
-      };
-    }
-    const DefaultNavMenu = (props2) => {
-      const { viewdefs: viewdefs2, viewOrder } = props2;
-      return /* @__PURE__ */ jsxRuntimeExports.jsx(material.Box, { sx: { overflow: "auto" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-        material.ToggleButtonGroup,
-        {
-          orientation: "vertical",
-          "aria-label": "text alignment",
-          sx: { width: "100%" },
-          children: sortViews(viewdefs2, viewOrder).map((view) => allow(vxg, view) ? /* @__PURE__ */ jsxRuntimeExports.jsxs(
-            material.ToggleButton,
-            {
-              value: "check",
-              selected: viewPath == view.name,
-              sx: {
-                width: "100%",
-                display: "flex",
-                justifyContent: "flex-start",
-                marginBottom: "10px",
-                border: 0,
-                "&.MuiToggleButtonGroup-grouped": {
-                  borderRadius: "20px !important"
-                },
-                textTransform: "none"
-              },
-              "aria-label": "centered",
-              onClick: (event) => {
-                selectView(view)(event);
-              },
-              children: [
-                makeIcon(view.icon),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: view.title }) })
-              ]
-            },
-            view.name
-          ) : null)
-        }
-      ) });
+    const menuSpec = {
+      logo: spec.side.logo,
+      sections: spec.side.section,
+      userRole: "admin",
+      viewPath,
+      open,
+      seneca
     };
-    const SectionButtons = (props2) => {
-      const { sections } = props2;
-      if (sections.length === 1) {
-        return null;
-      }
-      return /* @__PURE__ */ jsxRuntimeExports.jsx(material.Box, { sx: { display: "flex", width: "100%" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(material.ButtonGroup, { sx: { width: "100%" }, children: sections.map((section, sectionNumber) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-        material.ToggleButton,
-        {
-          value: "check",
-          selected: showViewsData[sectionNumber],
-          sx: {
-            padding: "0.5em",
-            width: "100%"
-          },
-          onChange: (event) => {
-            toggle(sectionNumber)(event);
-            selectView(section)(event);
-          },
-          children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-            makeIcon(section.button.icon),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "iconText", children: section.button.text })
-          ] })
-        },
-        section.name
-      )) }) });
-    };
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs(
-      BasicDrawer,
-      {
-        variant: "permanent",
-        drawerwidth,
-        open,
-        children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsxs(BasicDrawerHeader, { children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(
-              "img",
-              {
-                src: part.logo.img,
-                style: { width: "11rem" }
-              }
-            ),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(material.IconButton, { onClick: () => onClose(seneca), children: /* @__PURE__ */ jsxRuntimeExports.jsx(iconsMaterial.ChevronLeft, { sx: { color: "black" } }) })
-          ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(SectionButtons, { sections: sectiondefs }),
-          sectiondefs.map((section, sectionNumber) => {
-            if (viewPath == section.name || section.view && viewPath in section.view) {
-              if ("navmenu" === section.kind) {
-                return /* @__PURE__ */ jsxRuntimeExports.jsx(DefaultNavMenu, { viewOrder: section.view, viewdefs }, section.name);
-              }
-              const Cmp = ctx().cmp[section.cmp];
-              return /* @__PURE__ */ jsxRuntimeExports.jsx(Cmp, { ctx, spec }, section.name);
-            }
-          })
-        ]
-      }
-    );
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(BasicSideMenu, { spec: menuSpec, isAuthorized, onClose, onItemSelect: handleItemSelect });
   }
   /**
    * table-core
@@ -25610,7 +25478,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       },
       subRows: subRows != null ? subRows : [],
       getLeafRows: () => flattenBy(row.subRows, (d) => d.subRows),
-      getParentRow: () => row.parentId ? table.getRow(row.parentId) : void 0,
+      getParentRow: () => row.parentId ? table.getRow(row.parentId, true) : void 0,
       getParentRows: () => {
         let parentRows = [];
         let currentRow = row;
@@ -26000,7 +25868,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         };
       });
       const sortData = (rows) => {
-        const sortedData = [...rows];
+        const sortedData = rows.map((row) => __spreadValues({}, row));
         sortedData.sort((rowA, rowB) => {
           for (let i = 0; i < availableSorting.length; i += 1) {
             var _sortEntry$desc;
@@ -40197,7 +40065,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   };
   var windowScroll = function windowScroll2(offset2, _ref, instance) {
     var _instance$scrollEleme, _instance$scrollEleme2;
-    var _ref$adjustments = _ref.adjustments, adjustments = _ref$adjustments === void 0 ? window.scrollY : _ref$adjustments, behavior = _ref.behavior;
+    var _ref$adjustments = _ref.adjustments, adjustments = _ref$adjustments === void 0 ? 0 : _ref$adjustments, behavior = _ref.behavior;
     var toOffset = offset2 + adjustments;
     (_instance$scrollEleme = instance.scrollElement) == null ? void 0 : _instance$scrollEleme.scrollTo == null ? void 0 : _instance$scrollEleme.scrollTo((_instance$scrollEleme2 = {}, _instance$scrollEleme2[instance.options.horizontal ? "left" : "top"] = toOffset, _instance$scrollEleme2.behavior = behavior, _instance$scrollEleme2));
   };
@@ -40252,10 +40120,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         }
       };
     }();
-    this.range = {
-      startIndex: 0,
-      endIndex: 0
-    };
+    this.range = null;
     this.setOptions = function(opts) {
       Object.entries(opts).forEach(function(_ref3) {
         var key = _ref3[0], value = _ref3[1];
@@ -40314,11 +40179,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           behavior: void 0
         });
         _this.unsubs.push(_this.options.observeElementRect(_this, function(rect) {
-          var prev2 = _this.scrollRect;
           _this.scrollRect = rect;
-          if (_this.options.horizontal ? rect.width !== prev2.width : rect.height !== prev2.height) {
-            _this.maybeNotify();
-          }
+          _this.maybeNotify();
         }));
         _this.unsubs.push(_this.options.observeElementOffset(_this, function(offset2) {
           _this.scrollAdjustments = 0;
@@ -40415,11 +40277,11 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     this.calculateRange = memo(function() {
       return [_this.getMeasurements(), _this.getSize(), _this.scrollOffset];
     }, function(measurements, outerSize, scrollOffset) {
-      return _this.range = calculateRange({
+      return _this.range = measurements.length > 0 && outerSize > 0 ? calculateRange({
         measurements,
         outerSize,
         scrollOffset
-      });
+      }) : null;
     }, {
       key: process.env.NODE_ENV !== "production" && "calculateRange",
       debug: function debug() {
@@ -40427,8 +40289,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       }
     });
     this.maybeNotify = memo(function() {
-      var range = _this.calculateRange();
-      return [range.startIndex, range.endIndex, _this.isScrolling];
+      _this.calculateRange();
+      return [_this.range ? _this.range.startIndex : null, _this.range ? _this.range.endIndex : null, _this.isScrolling];
     }, function() {
       _this.notify();
     }, {
@@ -40436,12 +40298,12 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       debug: function debug() {
         return _this.options.debug;
       },
-      initialDeps: [this.range.startIndex, this.range.endIndex, this.isScrolling]
+      initialDeps: [this.range ? this.range.startIndex : null, this.range ? this.range.endIndex : null, this.isScrolling]
     });
     this.getIndexes = memo(function() {
       return [_this.options.rangeExtractor, _this.calculateRange(), _this.options.overscan, _this.options.count];
     }, function(rangeExtractor, range, overscan, count2) {
-      return rangeExtractor(_extends({}, range, {
+      return range === null ? [] : rangeExtractor(_extends({}, range, {
         overscan,
         count: count2
       }));
@@ -40462,7 +40324,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     };
     this._measureElement = function(node2, entry) {
       var item = _this.measurementsCache[_this.indexFromElement(node2)];
-      if (!item) {
+      if (!item || !node2.isConnected) {
         _this.measureElementCache.forEach(function(cached, key) {
           if (cached === node2) {
             _this.observer.unobserve(node2);
@@ -40472,13 +40334,6 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         return;
       }
       var prevNode = _this.measureElementCache.get(item.key);
-      if (!node2.isConnected) {
-        if (prevNode) {
-          _this.observer.unobserve(prevNode);
-          _this.measureElementCache["delete"](item.key);
-        }
-        return;
-      }
       if (prevNode !== node2) {
         if (prevNode) {
           _this.observer.unobserve(prevNode);
@@ -40746,7 +40601,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       },
       observeElementRect: observeWindowRect,
       observeElementOffset: observeWindowOffset,
-      scrollToFn: windowScroll
+      scrollToFn: windowScroll,
+      initialOffset: typeof document !== "undefined" ? window.scrollY : void 0
     }, options));
   }
   function getTableUtilityClass(slot) {
@@ -43753,7 +43609,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const { density, isLoading } = getState();
     const iconButtonProps = muiExpandAllButtonProps instanceof Function ? muiExpandAllButtonProps({ table }) : muiExpandAllButtonProps;
     const isAllRowsExpanded = getIsAllRowsExpanded();
-    return jsxRuntimeExports.jsx(Tooltip, { arrow: true, enterDelay: 1e3, enterNextDelay: 1e3, title: ((_a = iconButtonProps === null || iconButtonProps === void 0 ? void 0 : iconButtonProps.title) !== null && _a !== void 0 ? _a : isAllRowsExpanded) ? localization.collapseAll : localization.expandAll, children: jsxRuntimeExports.jsx("span", { children: jsxRuntimeExports.jsx(IconButton, Object.assign({ "aria-label": localization.expandAll, disabled: isLoading || !renderDetailPanel && !getCanSomeRowsExpand(), onClick: () => toggleAllRowsExpanded(!isAllRowsExpanded) }, iconButtonProps, { sx: (theme) => Object.assign({ height: density === "compact" ? "1.75rem" : "2.25rem", width: density === "compact" ? "1.75rem" : "2.25rem", mt: density !== "compact" ? "-0.25rem" : void 0 }, (iconButtonProps === null || iconButtonProps === void 0 ? void 0 : iconButtonProps.sx) instanceof Function ? iconButtonProps === null || iconButtonProps === void 0 ? void 0 : iconButtonProps.sx(theme) : iconButtonProps === null || iconButtonProps === void 0 ? void 0 : iconButtonProps.sx), title: void 0, children: (_b = iconButtonProps === null || iconButtonProps === void 0 ? void 0 : iconButtonProps.children) !== null && _b !== void 0 ? _b : jsxRuntimeExports.jsx(KeyboardDoubleArrowDownIcon, { style: {
+    return jsxRuntimeExports.jsx(Tooltip, { arrow: true, enterDelay: 1e3, enterNextDelay: 1e3, title: (_a = iconButtonProps === null || iconButtonProps === void 0 ? void 0 : iconButtonProps.title) !== null && _a !== void 0 ? _a : isAllRowsExpanded ? localization.collapseAll : localization.expandAll, children: jsxRuntimeExports.jsx("span", { children: jsxRuntimeExports.jsx(IconButton, Object.assign({ "aria-label": localization.expandAll, disabled: isLoading || !renderDetailPanel && !getCanSomeRowsExpand(), onClick: () => toggleAllRowsExpanded(!isAllRowsExpanded) }, iconButtonProps, { sx: (theme) => Object.assign({ height: density === "compact" ? "1.75rem" : "2.25rem", width: density === "compact" ? "1.75rem" : "2.25rem", mt: density !== "compact" ? "-0.25rem" : void 0 }, (iconButtonProps === null || iconButtonProps === void 0 ? void 0 : iconButtonProps.sx) instanceof Function ? iconButtonProps === null || iconButtonProps === void 0 ? void 0 : iconButtonProps.sx(theme) : iconButtonProps === null || iconButtonProps === void 0 ? void 0 : iconButtonProps.sx), title: void 0, children: (_b = iconButtonProps === null || iconButtonProps === void 0 ? void 0 : iconButtonProps.children) !== null && _b !== void 0 ? _b : jsxRuntimeExports.jsx(KeyboardDoubleArrowDownIcon, { style: {
       transform: `rotate(${isAllRowsExpanded ? -180 : getIsSomeRowsExpanded() ? -90 : 0}deg)`,
       transition: "transform 150ms"
     } }) })) }) });
@@ -43771,7 +43627,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       row.toggleExpanded();
       (_a2 = iconButtonProps === null || iconButtonProps === void 0 ? void 0 : iconButtonProps.onClick) === null || _a2 === void 0 ? void 0 : _a2.call(iconButtonProps, event);
     };
-    return jsxRuntimeExports.jsx(Tooltip, { arrow: true, disableHoverListener: !canExpand && !renderDetailPanel, enterDelay: 1e3, enterNextDelay: 1e3, title: ((_a = iconButtonProps === null || iconButtonProps === void 0 ? void 0 : iconButtonProps.title) !== null && _a !== void 0 ? _a : isExpanded) ? localization.collapse : localization.expand, children: jsxRuntimeExports.jsx("span", { children: jsxRuntimeExports.jsx(IconButton, Object.assign({ "aria-label": localization.expand, disabled: !canExpand && !renderDetailPanel }, iconButtonProps, { onClick: handleToggleExpand, sx: (theme) => Object.assign({ height: density === "compact" ? "1.75rem" : "2.25rem", width: density === "compact" ? "1.75rem" : "2.25rem" }, (iconButtonProps === null || iconButtonProps === void 0 ? void 0 : iconButtonProps.sx) instanceof Function ? iconButtonProps.sx(theme) : iconButtonProps === null || iconButtonProps === void 0 ? void 0 : iconButtonProps.sx), title: void 0, children: (_b = iconButtonProps === null || iconButtonProps === void 0 ? void 0 : iconButtonProps.children) !== null && _b !== void 0 ? _b : jsxRuntimeExports.jsx(ExpandMoreIcon, { style: {
+    return jsxRuntimeExports.jsx(Tooltip, { arrow: true, disableHoverListener: !canExpand && !renderDetailPanel, enterDelay: 1e3, enterNextDelay: 1e3, title: (_a = iconButtonProps === null || iconButtonProps === void 0 ? void 0 : iconButtonProps.title) !== null && _a !== void 0 ? _a : isExpanded ? localization.collapse : localization.expand, children: jsxRuntimeExports.jsx("span", { children: jsxRuntimeExports.jsx(IconButton, Object.assign({ "aria-label": localization.expand, disabled: !canExpand && !renderDetailPanel }, iconButtonProps, { onClick: handleToggleExpand, sx: (theme) => Object.assign({ height: density === "compact" ? "1.75rem" : "2.25rem", width: density === "compact" ? "1.75rem" : "2.25rem" }, (iconButtonProps === null || iconButtonProps === void 0 ? void 0 : iconButtonProps.sx) instanceof Function ? iconButtonProps.sx(theme) : iconButtonProps === null || iconButtonProps === void 0 ? void 0 : iconButtonProps.sx), title: void 0, children: (_b = iconButtonProps === null || iconButtonProps === void 0 ? void 0 : iconButtonProps.children) !== null && _b !== void 0 ? _b : jsxRuntimeExports.jsx(ExpandMoreIcon, { style: {
       transform: `rotate(${!canExpand && !renderDetailPanel ? -90 : isExpanded ? -180 : 0}deg)`,
       transition: "transform 150ms"
     } }) })) }) });
@@ -44227,7 +44083,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const handleToggleFullScreen = () => {
       setIsFullScreen(!isFullScreen);
     };
-    return jsxRuntimeExports.jsx(Tooltip, { arrow: true, title: (_b = rest === null || rest === void 0 ? void 0 : rest.title) !== null && _b !== void 0 ? _b : localization.toggleFullScreen, children: jsxRuntimeExports.jsx(IconButton, Object.assign({ "aria-label": localization.showHideFilters, onClick: handleToggleFullScreen }, rest, { title: void 0, children: isFullScreen ? jsxRuntimeExports.jsx(FullscreenExitIcon, {}) : jsxRuntimeExports.jsx(FullscreenIcon, {}) })) });
+    return jsxRuntimeExports.jsx(Tooltip, { arrow: true, title: (_b = rest === null || rest === void 0 ? void 0 : rest.title) !== null && _b !== void 0 ? _b : localization.toggleFullScreen, children: jsxRuntimeExports.jsx(IconButton, Object.assign({ "aria-label": localization.toggleFullScreen, onClick: handleToggleFullScreen }, rest, { title: void 0, children: isFullScreen ? jsxRuntimeExports.jsx(FullscreenExitIcon, {}) : jsxRuntimeExports.jsx(FullscreenIcon, {}) })) });
   };
   const MRT_ColumnPinningButtons = ({ column: column2, table }) => {
     const { options: { icons: { PushPinIcon }, localization } } = table;
@@ -44875,8 +44731,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const { column: column2 } = header;
     const { columnDef } = column2;
     const { sorting } = getState();
-    const sortTooltip = column2.getIsSorted() ? column2.getIsSorted() === "desc" ? localization.sortedByColumnDesc.replace("{column}", columnDef.header) : localization.sortedByColumnAsc.replace("{column}", columnDef.header) : localization.unsorted;
-    return jsxRuntimeExports.jsx(Tooltip, { arrow: true, placement: "top", title: sortTooltip, children: jsxRuntimeExports.jsx(Badge, { badgeContent: sorting.length > 1 ? column2.getSortIndex() + 1 : 0, overlap: "circular", children: jsxRuntimeExports.jsx(TableSortLabel, { "aria-label": sortTooltip, active: !!column2.getIsSorted(), direction: column2.getIsSorted() ? column2.getIsSorted() : void 0, sx: {
+    const sorted = column2.getIsSorted();
+    const sortTooltip = sorted ? sorted === "desc" ? localization.sortedByColumnDesc.replace("{column}", columnDef.header) : localization.sortedByColumnAsc.replace("{column}", columnDef.header) : column2.getNextSortingOrder() === "desc" ? localization.sortByColumnDesc.replace("{column}", columnDef.header) : localization.sortByColumnAsc.replace("{column}", columnDef.header);
+    return jsxRuntimeExports.jsx(Tooltip, { arrow: true, placement: "top", title: sortTooltip, children: jsxRuntimeExports.jsx(Badge, { badgeContent: sorting.length > 1 ? column2.getSortIndex() + 1 : 0, overlap: "circular", children: jsxRuntimeExports.jsx(TableSortLabel, { "aria-label": sortTooltip, active: !!sorted, direction: sorted ? sorted : void 0, sx: {
       flex: "0 0",
       width: "2.4ch",
       transform: (tableCellProps === null || tableCellProps === void 0 ? void 0 : tableCellProps.align) !== "right" ? "translateX(-0.5ch)" : void 0
@@ -44969,7 +44826,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const tableRowProps = muiTableHeadRowProps instanceof Function ? muiTableHeadRowProps({ headerGroup, table }) : muiTableHeadRowProps;
     return jsxRuntimeExports.jsxs(TableRow, Object.assign({}, tableRowProps, { sx: (theme) => Object.assign({ backgroundColor: lighten(theme.palette.background.default, 0.04), boxShadow: `4px 0 8px ${alpha(theme.palette.common.black, 0.1)}`, display: layoutMode === "grid" ? "flex" : "table-row", top: 0 }, (tableRowProps === null || tableRowProps === void 0 ? void 0 : tableRowProps.sx) instanceof Function ? tableRowProps === null || tableRowProps === void 0 ? void 0 : tableRowProps.sx(theme) : tableRowProps === null || tableRowProps === void 0 ? void 0 : tableRowProps.sx), children: [virtualPaddingLeft ? jsxRuntimeExports.jsx("th", { style: { display: "flex", width: virtualPaddingLeft } }) : null, (virtualColumns !== null && virtualColumns !== void 0 ? virtualColumns : headerGroup.headers).map((headerOrVirtualHeader) => {
       const header = virtualColumns ? headerGroup.headers[headerOrVirtualHeader.index] : headerOrVirtualHeader;
-      return jsxRuntimeExports.jsx(MRT_TableHeadCell, { header, table }, header.id);
+      return header ? jsxRuntimeExports.jsx(MRT_TableHeadCell, { header, table }, header.id) : null;
     }), virtualPaddingRight ? jsxRuntimeExports.jsx("th", { style: { display: "flex", width: virtualPaddingRight } }) : null] }));
   };
   const MRT_TableHead = ({ table, virtualColumns, virtualPaddingLeft, virtualPaddingRight }) => {
@@ -45212,7 +45069,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       table,
       theme: theme2,
       tableCellProps
-    })), draggingBorders), children: jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [cell.getIsPlaceholder() ? (_b = (_a = columnDef.PlaceholderCell) === null || _a === void 0 ? void 0 : _a.call(columnDef, { cell, column: column2, row, table })) !== null && _b !== void 0 ? _b : null : (isLoading || showSkeletons) && cell.getValue() === null ? jsxRuntimeExports.jsx(Skeleton, Object.assign({ animation: "wave", height: 20, width: skeletonWidth }, skeletonProps)) : enableRowNumbers && rowNumberMode === "static" && column2.id === "mrt-row-numbers" ? rowIndex + 1 : column2.id === "mrt-row-drag" ? jsxRuntimeExports.jsx(MRT_TableBodyRowGrabHandle, { cell, rowRef, table }) : columnDefType === "display" && (column2.id === "mrt-row-select" || column2.id === "mrt-row-expand" || !row.getIsGrouped()) ? (_c = columnDef.Cell) === null || _c === void 0 ? void 0 : _c.call(columnDef, {
+    })), draggingBorders), children: jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [cell.getIsPlaceholder() ? (_b = (_a = columnDef.PlaceholderCell) === null || _a === void 0 ? void 0 : _a.call(columnDef, { cell, column: column2, row, table })) !== null && _b !== void 0 ? _b : null : isLoading || showSkeletons ? jsxRuntimeExports.jsx(Skeleton, Object.assign({ animation: "wave", height: 20, width: skeletonWidth }, skeletonProps)) : enableRowNumbers && rowNumberMode === "static" && column2.id === "mrt-row-numbers" ? rowIndex + 1 : column2.id === "mrt-row-drag" ? jsxRuntimeExports.jsx(MRT_TableBodyRowGrabHandle, { cell, rowRef, table }) : columnDefType === "display" && (column2.id === "mrt-row-select" || column2.id === "mrt-row-expand" || !row.getIsGrouped()) ? (_c = columnDef.Cell) === null || _c === void 0 ? void 0 : _c.call(columnDef, {
       cell,
       renderedCellValue: cell.renderValue(),
       column: column2,
@@ -45264,7 +45121,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         table,
         virtualCell: columnVirtualizer ? cellOrVirtualCell : void 0
       };
-      return memoMode === "cells" && cell.column.columnDef.columnDefType === "data" && !draggingColumn && !draggingRow && (editingCell === null || editingCell === void 0 ? void 0 : editingCell.id) !== cell.id && (editingRow === null || editingRow === void 0 ? void 0 : editingRow.id) !== row.id ? jsxRuntimeExports.jsx(Memo_MRT_TableBodyCell, Object.assign({}, props), cell.id) : jsxRuntimeExports.jsx(MRT_TableBodyCell, Object.assign({}, props), cell.id);
+      return cell ? memoMode === "cells" && cell.column.columnDef.columnDefType === "data" && !draggingColumn && !draggingRow && (editingCell === null || editingCell === void 0 ? void 0 : editingCell.id) !== cell.id && (editingRow === null || editingRow === void 0 ? void 0 : editingRow.id) !== row.id ? jsxRuntimeExports.jsx(Memo_MRT_TableBodyCell, Object.assign({}, props), cell.id) : jsxRuntimeExports.jsx(MRT_TableBodyCell, Object.assign({}, props), cell.id) : null;
     }), virtualPaddingRight ? jsxRuntimeExports.jsx("td", { style: { display: "flex", width: virtualPaddingRight } }) : null] })), renderDetailPanel && !row.getIsGrouped() && jsxRuntimeExports.jsx(MRT_TableDetailPanel, { parentRowRef: rowRef, row, rowIndex, table, virtualRow })] });
   };
   const Memo_MRT_TableBodyRow = React.memo(MRT_TableBodyRow, (prev2, next2) => prev2.row === next2.row && prev2.rowIndex === next2.rowIndex);
@@ -45364,7 +45221,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const tableRowProps = muiTableFooterRowProps instanceof Function ? muiTableFooterRowProps({ footerGroup, table }) : muiTableFooterRowProps;
     return jsxRuntimeExports.jsxs(TableRow, Object.assign({}, tableRowProps, { sx: (theme) => Object.assign({ backgroundColor: lighten(theme.palette.background.default, 0.04), display: layoutMode === "grid" ? "flex" : "table-row", width: "100%" }, (tableRowProps === null || tableRowProps === void 0 ? void 0 : tableRowProps.sx) instanceof Function ? tableRowProps === null || tableRowProps === void 0 ? void 0 : tableRowProps.sx(theme) : tableRowProps === null || tableRowProps === void 0 ? void 0 : tableRowProps.sx), children: [virtualPaddingLeft ? jsxRuntimeExports.jsx("th", { style: { display: "flex", width: virtualPaddingLeft } }) : null, (virtualColumns !== null && virtualColumns !== void 0 ? virtualColumns : footerGroup.headers).map((footerOrVirtualFooter) => {
       const footer = virtualColumns ? footerGroup.headers[footerOrVirtualFooter.index] : footerOrVirtualFooter;
-      return jsxRuntimeExports.jsx(MRT_TableFooterCell, { footer, table }, footer.id);
+      return footer ? jsxRuntimeExports.jsx(MRT_TableFooterCell, { footer, table }, footer.id) : null;
     }), virtualPaddingRight ? jsxRuntimeExports.jsx("th", { style: { display: "flex", width: virtualPaddingRight } }) : null] }));
   };
   const MRT_TableFooter = ({ table, virtualColumns, virtualPaddingLeft, virtualPaddingRight }) => {
@@ -47456,7 +47313,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   function resolveOptions(options) {
   }
   function BasicEdit(props) {
-    let {
+    const {
       item,
       itemFields,
       onClose: onClose2 = () => {
@@ -47470,7 +47327,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const def = spec.content.def;
     const { ent, cols } = def;
     React.useEffect(() => {
-      for (let field of itemFields) {
+      for (const field of itemFields) {
         setValue(field.name, item[field.name] || field.defaultValue || "");
       }
     }, [item]);
@@ -47487,8 +47344,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       {
         className: "vxg-form-field",
         onSubmit: handleSubmit((data) => __async(this, null, function* () {
-          let selitem = __spreadValues({}, item);
-          for (let k in data) {
+          const selitem = __spreadValues({}, item);
+          for (const k in data) {
             selitem[k] = data[k];
           }
           onSubmit(selitem);
@@ -47501,7 +47358,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
                 name: field.name,
                 control,
                 defaultValue: item[field.name] || "",
-                render: ({ field: { onChange, onBlur, value }, fieldState: { error } }) => "selection" === field.type ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+                render: ({ field: { onChange, onBlur, value }, fieldState: { error } }) => field.type === "selection" ? /* @__PURE__ */ jsxRuntimeExports.jsx(
                   material.Autocomplete,
                   {
                     freeSolo: true,
@@ -47511,8 +47368,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
                     selectOnFocus: true,
                     onBlur,
                     handleHomeEndKeys: true,
-                    disableClearable: "" == value,
-                    disabled: !!!field.edit,
+                    disableClearable: value == "",
+                    disabled: !field.edit,
                     value,
                     getOptionLabel: (option) => option || "",
                     filterOptions: (options, params) => {
@@ -47535,8 +47392,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
                       __spreadProps(__spreadValues({}, params), {
                         label: field.headerName,
                         onBlur,
-                        error: !!error,
-                        helperText: error ? error.message : null
+                        error: !(error == null),
+                        helperText: error != null ? error.message : null
                       })
                     )
                   }
@@ -47545,17 +47402,17 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
                   {
                     label: field.headerName,
                     fullWidth: true,
-                    select: "status" === field.type,
-                    disabled: !!!field.edit,
+                    select: field.type === "status",
+                    disabled: !field.edit,
                     onChange,
                     value,
                     onBlur,
-                    error: !!error,
-                    helperText: error ? error.message : null,
+                    error: !(error == null),
+                    helperText: error != null ? error.message : null,
                     sx: {
                       textAlign: "left"
                     },
-                    children: "status" === field.type ? Object.keys(field.kind).map(
+                    children: field.type === "status" ? Object.keys(field.kind).map(
                       (option) => {
                         var _a;
                         return /* @__PURE__ */ jsxRuntimeExports.jsx(material.MenuItem, { value: option, children: (_a = field.kind[option]) == null ? void 0 : _a.title }, option);
@@ -47568,7 +47425,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
               }
             ) }, index2);
           }),
-          0 != children.length ? /* @__PURE__ */ jsxRuntimeExports.jsx(material.Grid, { item: true, xs: 12, children }) : null,
+          children.length != 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx(material.Grid, { item: true, xs: 12, children }) : null,
           /* @__PURE__ */ jsxRuntimeExports.jsx(material.Grid, { item: true, xs: 12, children: /* @__PURE__ */ jsxRuntimeExports.jsxs(material.Grid, { container: true, justifyContent: "space-between", alignItems: "center", marginTop: 2, children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx(material.Grid, { item: true, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
               BasicButton,
@@ -47656,7 +47513,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     React.useEffect(() => {
       setItem({});
     }, [location.pathname]);
-    let led_add = vxgState.trigger.led.add;
+    const led_add = vxgState.trigger.led.add;
     let [triggerLed, setTriggerLed] = React.useState(0);
     React.useEffect(() => {
       if (triggerLed >= 2) {
@@ -47725,8 +47582,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const views = Object.values(spec.view);
     const sideOpen = reactRedux.useSelector((state) => state.main.vxg.cmp.BasicSide.show);
     const divStyle = {
-      "paddingLeft": sideOpen ? "12.0em" : "0em",
-      "paddingRight": 0
+      paddingLeft: sideOpen ? "12.0em" : "0em",
+      paddingRight: 0
     };
     const mainDiv = {
       height: "calc(100vh - 6rem)",
@@ -51026,16 +50883,16 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       this.config.allow = this.config.allow || {};
       this.config.allow.modify = this.config.allow.modify || ((x) => x);
       this.config.allow.match = this.config.allow.match || [];
-      for (let entry of this.config.allow.match) {
+      for (const entry of this.config.allow.match) {
         this.match.allow.add(entry, { allow: true });
       }
     }
     allow(match2) {
-      let mm = Jsonic(match2);
-      let ms = Array.isArray(match2) ? match2 : Object.keys(mm).map((x) => mm[x]);
+      const mm = Jsonic(match2);
+      const ms = Array.isArray(match2) ? match2 : Object.keys(mm).map((x) => mm[x]);
       let found = null;
-      for (let m of ms) {
-        let pat = this.config.allow.modify(__spreadValues({}, m || {}));
+      for (const m of ms) {
+        const pat = this.config.allow.modify(__spreadValues({}, m || {}));
         found = this.match.allow.find(pat);
         if (found) {
           break;
