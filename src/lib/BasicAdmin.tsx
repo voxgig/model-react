@@ -5,6 +5,8 @@ import BasicHead from './BasicHead'
 import BasicSide from './BasicSide'
 import BasicMain from './BasicMain'
 import BasicFoot from './BasicFoot'
+import { Gubu } from 'gubu'
+
 
 
 function BasicAdmin(props: any) {
