@@ -20217,6 +20217,64 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       }
     );
   }
+  const iconmap = {
+    factory: iconsMaterial.FactoryOutlined,
+    key: iconsMaterial.KeyOutlined,
+    done: iconsMaterial.AssignmentTurnedInOutlined,
+    docs: iconsMaterial.TextSnippetOutlined,
+    hightlight: iconsMaterial.HighlightAlt,
+    map: iconsMaterial.Map,
+    account: iconsMaterial.SupervisorAccount,
+    tablet: iconsMaterial.Tablet,
+    update: iconsMaterial.Update,
+    admin: iconsMaterial.Security,
+    clipboard: iconsMaterial.ContentPaste,
+    fitscreen: iconsMaterial.FitScreen,
+    chatBubble: iconsMaterial.ChatBubble,
+    event: iconsMaterial.Event,
+    logout: iconsMaterial.Logout
+  };
+  function makeIcon(name) {
+    const Icon = iconmap[name];
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(Icon, {});
+  }
+  function BasicSideMenuItem(props) {
+    const { spec, sectionKey, isAuthorized: isAuthorized2, onItemSelect } = props;
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(material.List, { children: [
+      Object.entries(spec.section.item).map(([itemKey, item]) => {
+        return (
+          // TODO: load user from redux store
+          isAuthorized2("admin", item.access) && /* @__PURE__ */ jsxRuntimeExports.jsx(
+            material.ListItem,
+            {
+              disablePadding: true,
+              onClick: () => onItemSelect(itemKey, item),
+              children: /* @__PURE__ */ jsxRuntimeExports.jsxs(material.ListItemButton, { selected: spec.viewPath == itemKey, children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx(material.ListItemIcon, { children: makeIcon(item.icon) }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx(material.ListItemText, { primary: item.label })
+              ] })
+            },
+            itemKey
+          )
+        );
+      }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(material.Divider, {})
+    ] }, sectionKey);
+  }
+  function BasicSideMenu(props) {
+    const {
+      isAuthorized: isAuthorized2,
+      onItemSelect,
+      spec
+    } = props;
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: Object.entries(spec.sections).map(([sectionKey, section]) => {
+      const navListSpec = {
+        section,
+        viewPath: spec.viewPath
+      };
+      return /* @__PURE__ */ jsxRuntimeExports.jsx(BasicSideMenuItem, { spec: navListSpec, onItemSelect, isAuthorized: isAuthorized2 }, sectionKey);
+    }) });
+  }
   function _setPrototypeOf(o, p) {
     _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf2(o2, p2) {
       o2.__proto__ = p2;
@@ -22685,86 +22743,6 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       width: `calc(${theme.spacing(8)} + 1px)`
     }
   });
-  const iconmap = {
-    factory: iconsMaterial.FactoryOutlined,
-    key: iconsMaterial.KeyOutlined,
-    done: iconsMaterial.AssignmentTurnedInOutlined,
-    docs: iconsMaterial.TextSnippetOutlined,
-    hightlight: iconsMaterial.HighlightAlt,
-    map: iconsMaterial.Map,
-    account: iconsMaterial.SupervisorAccount,
-    tablet: iconsMaterial.Tablet,
-    update: iconsMaterial.Update,
-    admin: iconsMaterial.Security,
-    clipboard: iconsMaterial.ContentPaste,
-    fitscreen: iconsMaterial.FitScreen,
-    chatBubble: iconsMaterial.ChatBubble,
-    event: iconsMaterial.Event,
-    logout: iconsMaterial.Logout
-  };
-  function makeIcon(name) {
-    const Icon = iconmap[name];
-    return /* @__PURE__ */ jsxRuntimeExports.jsx(Icon, {});
-  }
-  function BasicSideMenuItem(props) {
-    const { spec, sectionKey, isAuthorized: isAuthorized2, onItemSelect } = props;
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs(material.List, { children: [
-      Object.entries(spec.section.item).map(([itemKey, item]) => {
-        return (
-          // TODO: load user from redux store
-          isAuthorized2("admin", item.access) && /* @__PURE__ */ jsxRuntimeExports.jsx(
-            material.ListItem,
-            {
-              disablePadding: true,
-              onClick: () => onItemSelect(itemKey, item),
-              children: /* @__PURE__ */ jsxRuntimeExports.jsxs(material.ListItemButton, { selected: spec.viewPath == itemKey, children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx(material.ListItemIcon, { children: makeIcon(item.icon) }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx(material.ListItemText, { primary: item.label })
-              ] })
-            },
-            itemKey
-          )
-        );
-      }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(material.Divider, {})
-    ] }, sectionKey);
-  }
-  function BasicSideMenu(props) {
-    const {
-      isAuthorized: isAuthorized2,
-      onClose: onClose2,
-      onItemSelect,
-      spec
-    } = props;
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs(
-      BasicDrawer,
-      {
-        variant: "permanent",
-        drawerwidth: "16rem",
-        open: spec.open,
-        children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsxs(BasicDrawerHeader, { children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(
-              "img",
-              {
-                src: spec.logo.img,
-                style: { width: "5rem" }
-              }
-            ),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(material.IconButton, { onClick: () => onClose2(spec.seneca), children: /* @__PURE__ */ jsxRuntimeExports.jsx(iconsMaterial.ChevronLeft, { sx: { color: "black" } }) })
-          ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(material.Divider, {}),
-          Object.entries(spec.sections).map(([sectionKey, section]) => {
-            const navListSpec = {
-              section,
-              viewPath: spec.viewPath
-            };
-            return /* @__PURE__ */ jsxRuntimeExports.jsx(BasicSideMenuItem, { spec: navListSpec, onItemSelect, isAuthorized: isAuthorized2 }, sectionKey);
-          })
-        ]
-      }
-    );
-  }
   function onClose(seneca) {
     seneca.act("aim:app,set:state", {
       section: "vxg.cmp.BasicSide.show",
@@ -22814,14 +22792,32 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       navigate(item.path);
     }
     const menuSpec = {
-      logo: spec.side.logo,
       sections: spec.side.section,
       userRole: "admin",
-      viewPath,
-      open,
-      seneca
+      viewPath
     };
-    return /* @__PURE__ */ jsxRuntimeExports.jsx(BasicSideMenu, { spec: menuSpec, isAuthorized, onClose, onItemSelect: handleItemSelect });
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+      BasicDrawer,
+      {
+        variant: "permanent",
+        drawerwidth: "16rem",
+        open,
+        children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs(BasicDrawerHeader, { children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "img",
+              {
+                src: spec.side.logo.img,
+                style: { width: "5rem" }
+              }
+            ),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(material.IconButton, { onClick: () => onClose(seneca), children: /* @__PURE__ */ jsxRuntimeExports.jsx(iconsMaterial.ChevronLeft, { sx: { color: "black" } }) })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(material.Divider, {}),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(BasicSideMenu, { spec: menuSpec, isAuthorized, onClose, onItemSelect: handleItemSelect })
+        ]
+      }
+    );
   }
   /**
    * table-core
