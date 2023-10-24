@@ -20205,6 +20205,64 @@ function BasicHead(props) {
     }
   );
 }
+const iconmap = {
+  factory: FactoryOutlined,
+  key: KeyOutlined,
+  done: AssignmentTurnedInOutlined,
+  docs: TextSnippetOutlined,
+  hightlight: HighlightAlt,
+  map: Map$1,
+  account: SupervisorAccount,
+  tablet: Tablet,
+  update: Update,
+  admin: Security,
+  clipboard: ContentPaste,
+  fitscreen: FitScreen,
+  chatBubble: ChatBubble,
+  event: Event,
+  logout: Logout
+};
+function makeIcon(name) {
+  const Icon = iconmap[name];
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(Icon, {});
+}
+function BasicSideMenuItem(props) {
+  const { spec, sectionKey, isAuthorized: isAuthorized2, onItemSelect } = props;
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(List$1, { children: [
+    Object.entries(spec.section.item).map(([itemKey, item]) => {
+      return (
+        // TODO: load user from redux store
+        isAuthorized2("admin", item.access) && /* @__PURE__ */ jsxRuntimeExports.jsx(
+          ListItem,
+          {
+            disablePadding: true,
+            onClick: () => onItemSelect(itemKey, item),
+            children: /* @__PURE__ */ jsxRuntimeExports.jsxs(ListItemButton, { selected: spec.viewPath == itemKey, children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(ListItemIcon$1, { children: makeIcon(item.icon) }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(ListItemText$1, { primary: item.label })
+            ] })
+          },
+          itemKey
+        )
+      );
+    }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(Divider$1, {})
+  ] }, sectionKey);
+}
+function BasicSideMenu(props) {
+  const {
+    isAuthorized: isAuthorized2,
+    onItemSelect,
+    spec
+  } = props;
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: Object.entries(spec.sections).map(([sectionKey, section]) => {
+    const navListSpec = {
+      section,
+      viewPath: spec.viewPath
+    };
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(BasicSideMenuItem, { spec: navListSpec, onItemSelect, isAuthorized: isAuthorized2 }, sectionKey);
+  }) });
+}
 function _setPrototypeOf(o, p) {
   _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf2(o2, p2) {
     o2.__proto__ = p2;
@@ -22673,86 +22731,6 @@ const closedMixin = (theme) => ({
     width: `calc(${theme.spacing(8)} + 1px)`
   }
 });
-const iconmap = {
-  factory: FactoryOutlined,
-  key: KeyOutlined,
-  done: AssignmentTurnedInOutlined,
-  docs: TextSnippetOutlined,
-  hightlight: HighlightAlt,
-  map: Map$1,
-  account: SupervisorAccount,
-  tablet: Tablet,
-  update: Update,
-  admin: Security,
-  clipboard: ContentPaste,
-  fitscreen: FitScreen,
-  chatBubble: ChatBubble,
-  event: Event,
-  logout: Logout
-};
-function makeIcon(name) {
-  const Icon = iconmap[name];
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(Icon, {});
-}
-function BasicSideMenuItem(props) {
-  const { spec, sectionKey, isAuthorized: isAuthorized2, onItemSelect } = props;
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs(List$1, { children: [
-    Object.entries(spec.section.item).map(([itemKey, item]) => {
-      return (
-        // TODO: load user from redux store
-        isAuthorized2("admin", item.access) && /* @__PURE__ */ jsxRuntimeExports.jsx(
-          ListItem,
-          {
-            disablePadding: true,
-            onClick: () => onItemSelect(itemKey, item),
-            children: /* @__PURE__ */ jsxRuntimeExports.jsxs(ListItemButton, { selected: spec.viewPath == itemKey, children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx(ListItemIcon$1, { children: makeIcon(item.icon) }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx(ListItemText$1, { primary: item.label })
-            ] })
-          },
-          itemKey
-        )
-      );
-    }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx(Divider$1, {})
-  ] }, sectionKey);
-}
-function BasicSideMenu(props) {
-  const {
-    isAuthorized: isAuthorized2,
-    onClose: onClose2,
-    onItemSelect,
-    spec
-  } = props;
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs(
-    BasicDrawer,
-    {
-      variant: "permanent",
-      drawerwidth: "16rem",
-      open: spec.open,
-      children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs(BasicDrawerHeader, { children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(
-            "img",
-            {
-              src: spec.logo.img,
-              style: { width: "5rem" }
-            }
-          ),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(IconButton$1, { onClick: () => onClose2(spec.seneca), children: /* @__PURE__ */ jsxRuntimeExports.jsx(ChevronLeft, { sx: { color: "black" } }) })
-        ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(Divider$1, {}),
-        Object.entries(spec.sections).map(([sectionKey, section]) => {
-          const navListSpec = {
-            section,
-            viewPath: spec.viewPath
-          };
-          return /* @__PURE__ */ jsxRuntimeExports.jsx(BasicSideMenuItem, { spec: navListSpec, onItemSelect, isAuthorized: isAuthorized2 }, sectionKey);
-        })
-      ]
-    }
-  );
-}
 function onClose(seneca) {
   seneca.act("aim:app,set:state", {
     section: "vxg.cmp.BasicSide.show",
@@ -22802,14 +22780,32 @@ function BasicSide(props) {
     navigate(item.path);
   }
   const menuSpec = {
-    logo: spec.side.logo,
     sections: spec.side.section,
     userRole: "admin",
-    viewPath,
-    open,
-    seneca
+    viewPath
   };
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(BasicSideMenu, { spec: menuSpec, isAuthorized, onClose, onItemSelect: handleItemSelect });
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+    BasicDrawer,
+    {
+      variant: "permanent",
+      drawerwidth: "16rem",
+      open,
+      children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(BasicDrawerHeader, { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "img",
+            {
+              src: spec.side.logo.img,
+              style: { width: "5rem" }
+            }
+          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(IconButton$1, { onClick: () => onClose(seneca), children: /* @__PURE__ */ jsxRuntimeExports.jsx(ChevronLeft, { sx: { color: "black" } }) })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Divider$1, {}),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(BasicSideMenu, { spec: menuSpec, isAuthorized, onClose, onItemSelect: handleItemSelect })
+      ]
+    }
+  );
 }
 /**
  * table-core

@@ -4,6 +4,9 @@ import { useNavigate, useLocation } from 'react-router-dom'
 
 import { Child, Gubu, Open, Required } from 'gubu'
 import BasicSideMenu from './BasicSideMenu'
+import { ChevronLeft } from '@mui/icons-material'
+import { Divider, IconButton } from '@mui/material'
+import { BasicDrawer, BasicDrawerHeader } from './BasicDrawer'
 
 function onClose(seneca: any) {
   seneca.act('aim:app,set:state', {
@@ -67,18 +70,31 @@ function BasicSide(props: any) {
     navigate(item.path)
   }
 
-  // TODO: clean up object shape
+  // TODO: clean up props shape
   const menuSpec = {
-    logo: spec.side.logo,
     sections: spec.side.section,
     userRole: 'admin',
-    viewPath,
-    open,
-    seneca
+    viewPath
   }
 
   return (
-    <BasicSideMenu spec={menuSpec} isAuthorized={isAuthorized} onClose={onClose} onItemSelect={handleItemSelect} />
+    <BasicDrawer
+      variant='permanent'
+      drawerwidth='16rem'
+      open={open}
+    >
+      <BasicDrawerHeader>
+        <img
+          src={spec.side.logo.img}
+          style={{ width: '5rem' }}
+        />
+        <IconButton onClick={() => onClose(seneca)}>
+          <ChevronLeft sx={{ color: 'black' }} />
+        </IconButton>
+      </BasicDrawerHeader>
+      <Divider />
+      <BasicSideMenu spec={menuSpec} isAuthorized={isAuthorized} onClose={onClose} onItemSelect={handleItemSelect} />
+    </BasicDrawer>
   )
 
 }
