@@ -1,7 +1,7 @@
 import { describe, it } from 'vitest'
 import * as React from 'react'
 
-import { customRender, ctx, spec, initialState } from './mocks/test-utils'
+import { customRender, ctx, initialState } from './mocks/test-utils'
 import { BasicSide } from '../src/lib/index'
 
 describe('BasicSide', () => {
@@ -12,18 +12,13 @@ describe('BasicSide', () => {
         logo: {
           img: "img.png"
         },
-        section: {}
-      },
-      view: {
-        task: {
-          content: {
-            def: {
-              add: {}
-            }
-          },
-          name: 'task'
+        section: {
+          section1: {
+            title: "Section 1",
+          }
         }
-      }
+      },
+      view: {}
     }
 
     customRender(<BasicSide ctx={ctx} spec={sideSpec} />, {
