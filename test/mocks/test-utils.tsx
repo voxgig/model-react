@@ -94,9 +94,7 @@ export const ctx = () => {
                 head: { logo: { img: '/logo.png' }, tool: { def: [] } },
                 side: {
                   logo: { img: "/logo.png" },
-                  section: [
-                    { kind: 'navmenu', view: { task: true }, button: { icon: 'done', text: 'Default' } },
-                  ]
+                  section: {}
                 }
               },
               view: {
@@ -123,9 +121,6 @@ export const ctx = () => {
 
 export const spec = {
   frame: 'private',
-  // img: { logo: {} },
-  // handle: { signin: () => {} },
-  // content: { def: { ent: { canon: 'canon' } } }
 }
 
 export const initialState = {
