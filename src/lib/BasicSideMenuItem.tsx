@@ -41,8 +41,19 @@ function makeIcon(name: string) {
     return <Icon />
 }
 
+// TODO: Grab the role from the redux store
+const userRole = 'admin'
+
+// TODO: move to utils
+// TODO: allow custom authorization function
+function isAuthorized(userRole: string, authorizedRoles: any): boolean {
+    return authorizedRoles.hasOwnProperty(userRole) && authorizedRoles[userRole] === true
+}
+
 function BasicSideMenuItem(props: any) {
-    const { spec, sectionKey, isAuthorized, onItemSelect } = props
+    const { spec, sectionKey, onItemSelect } = props
+
+    const viewPath: any = location.pathname.split('/')[2]
 
     return (
         <List key={sectionKey}>
@@ -56,7 +67,7 @@ function BasicSideMenuItem(props: any) {
                                 disablePadding
                                 onClick={() => onItemSelect(itemKey, item)}
                             >
-                                <ListItemButton selected={spec.viewPath == itemKey}>
+                                <ListItemButton selected={viewPath == itemKey}>
                                     <ListItemIcon>
                                         {makeIcon(item.icon)}
                                     </ListItemIcon>
