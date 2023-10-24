@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux'
 
 import { useNavigate, useLocation } from 'react-router-dom'
 
-import { Child, Gubu, Open } from 'gubu'
+import { Child, Gubu, Open, Required } from 'gubu'
 import BasicSideMenu from './BasicSideMenu'
 
 function onClose(seneca: any) {
@@ -12,6 +12,7 @@ function onClose(seneca: any) {
   })
 }
 
+// TODO: Grab the role from the redux store
 const userRole = 'admin'
 
 // TODO: move to utils
@@ -19,6 +20,30 @@ const userRole = 'admin'
 function isAuthorized(userRole: string, authorizedRoles: any): boolean {
   return authorizedRoles.hasOwnProperty(userRole) && authorizedRoles[userRole] === true
 }
+
+// spec schema definition with Gubu
+const BasicSideSpecShape = Gubu(Required({
+  side: {
+    logo: {
+      img: String
+    },
+    section: Child({
+      title: String,
+      item: Child({
+        kind: Number,
+        label: Number,
+        icon: String,
+        path: String,
+        access: Child(Boolean)
+      })
+    })
+  },
+  view: Child(Required({
+    title: String,
+    icon: Number,
+    content: {}
+  }))
+}))
 
 function BasicSide(props: any) {
   const {
@@ -34,9 +59,7 @@ function BasicSide(props: any) {
   const navigate = useNavigate()
   const location = useLocation()
 
-  // spec schema definition with Gubu
-  const shape = Gubu({})
-  shape(spec)
+  BasicSideSpecShape(spec)
 
   const viewPath: any = location.pathname.split('/')[2]
 

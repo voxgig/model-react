@@ -22775,6 +22775,28 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   function isAuthorized(userRole2, authorizedRoles) {
     return authorizedRoles.hasOwnProperty(userRole2) && authorizedRoles[userRole2] === true;
   }
+  const BasicSideSpecShape = gubu_minExports.Gubu(gubu_minExports.Required({
+    side: {
+      logo: {
+        img: String
+      },
+      section: gubu_minExports.Child({
+        title: String,
+        item: gubu_minExports.Child({
+          kind: Number,
+          label: Number,
+          icon: String,
+          path: String,
+          access: gubu_minExports.Child(Boolean)
+        })
+      })
+    },
+    view: gubu_minExports.Child(gubu_minExports.Required({
+      title: String,
+      icon: Number,
+      content: {}
+    }))
+  }));
   function BasicSide(props) {
     const {
       vxg,
@@ -22786,8 +22808,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const open = vxgState.cmp.BasicSide.show;
     const navigate = reactRouterDom.useNavigate();
     const location = reactRouterDom.useLocation();
-    const shape2 = gubu_minExports.Gubu({});
-    shape2(spec);
+    BasicSideSpecShape(spec);
     const viewPath = location.pathname.split("/")[2];
     function handleItemSelect(key, item) {
       navigate(item.path);
