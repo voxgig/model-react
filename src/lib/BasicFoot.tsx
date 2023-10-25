@@ -4,7 +4,7 @@ import { Gubu } from 'gubu'
 // Validate spec shape with Gubu
 const BasicFootSpecShape = Gubu({
   foot: {
-    title: String
+    title: ''
   },
   view: {}
 })
