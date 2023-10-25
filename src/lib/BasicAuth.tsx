@@ -35,7 +35,9 @@ function BasicAuth (props: any) {
 
   const { handle } = spec
 
-  { /* <ThemeProvider theme={theme}> */ }
+  {
+    /* <ThemeProvider theme={theme}> */
+  }
   return (
     <Container component='main' maxWidth='xs'>
       <CssBaseline />
@@ -58,7 +60,12 @@ function BasicAuth (props: any) {
         <Typography sx={{ marginTop: 4 }} component='h1' variant='h5'>
           {spec.title}
         </Typography>
-        <Box component='form' onSubmit={handle.signin} noValidate sx={{ mt: 1 }}>
+        <Box
+          component='form'
+          onSubmit={handle.signin}
+          noValidate
+          sx={{ mt: 1 }}
+        >
           <TextField
             margin='normal'
             required
@@ -113,7 +120,9 @@ function BasicAuth (props: any) {
       {/* <Copyright sx={{ mt: 8, mb: 4 }} /> */}
     </Container>
   )
-  { /* </ThemeProvider> */ }
+  {
+    /* </ThemeProvider> */
+  }
 }
 
 export default BasicAuth

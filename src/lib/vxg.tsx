@@ -12,9 +12,9 @@ class Vxg {
   cmp: any
   util: any
   constructor (config: any) {
-    this.match = ({
+    this.match = {
       allow: new (Patrun as any)({ gex: true })
-    } as any)
+    } as any
     this.cmp = {}
     this.config(config)
     this.util = util
@@ -37,7 +37,9 @@ class Vxg {
     const mm = Jsonic(match)
 
     // TODO: handle Aontu array workaround
-    const ms = Array.isArray(match) ? match : Object.keys(mm).map((x: any) => mm[x])
+    const ms = Array.isArray(match)
+      ? match
+      : Object.keys(mm).map((x: any) => mm[x])
     let found = null
 
     for (const m of ms) {

@@ -8,8 +8,8 @@ export default defineConfig({
   plugins: [
     react(),
     dts({
-      insertTypesEntry: true,
-    }),
+      insertTypesEntry: true
+    })
   ],
   build: {
     minify: false,
@@ -18,7 +18,7 @@ export default defineConfig({
       entry: path.resolve(__dirname, 'src/lib/index.ts'),
       name: 'VoxgigModelReact',
       formats: ['es', 'umd'],
-      fileName: (format) => `voxgig-model-react.${format}.js`,
+      fileName: format => `voxgig-model-react.${format}.js`
     },
     emptyOutDir: false,
     rollupOptions: {
@@ -36,20 +36,20 @@ export default defineConfig({
         '@mdi/react',
         '@mui/icons-material',
         '@mui/material',
-        '@mui/x-data-grid',
+        '@mui/x-data-grid'
       ],
       output: {
         globals: {
           react: 'React',
           'react-dom': 'ReactDOM',
-          'styled-components': 'styled',
-        },
-      },
-    },
+          'styled-components': 'styled'
+        }
+      }
+    }
   },
   test: {
     globals: true,
     environment: 'jsdom',
-    setupFiles: './test/setup.ts',
-  },
+    setupFiles: './test/setup.ts'
+  }
 })

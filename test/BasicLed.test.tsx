@@ -10,19 +10,18 @@ describe('BasicLed', () => {
       value: {
         pathname
       }
-    });
+    })
   }
 
   beforeEach(() => {
-    setLocation('/view/task');
-  });
+    setLocation('/view/task')
+  })
 
   afterEach(() => {
-    setLocation(window.location.pathname);
-  });
+    setLocation(window.location.pathname)
+  })
 
   it('happy', () => {
-
     const view = {
       content: {
         kind: 'led',
@@ -38,10 +37,7 @@ describe('BasicLed', () => {
     }
 
     customRender(<BasicLed vxg={vxg} ctx={ctx} spec={view} />, {
-      mockInitialState: initialState,
+      mockInitialState: initialState
     })
   })
-
 })
-
-

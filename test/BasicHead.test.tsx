@@ -9,19 +9,18 @@ describe('BasicHead', () => {
       value: {
         pathname
       }
-    });
+    })
   }
 
   beforeEach(() => {
-    setLocation('/view/task');
-  });
+    setLocation('/view/task')
+  })
 
   afterEach(() => {
-    setLocation(window.location.pathname);
-  });
+    setLocation(window.location.pathname)
+  })
 
   it('happy', () => {
-
     const headSpec = {
       head: {
         logo: { img: 'img.png' },
@@ -39,11 +38,13 @@ describe('BasicHead', () => {
       }
     }
 
-    const { screen } = customRender(<BasicHead vxg={vxg} ctx={ctx} spec={headSpec} />, {
-      mockInitialState: initialState
-    })
+    const { screen } = customRender(
+      <BasicHead vxg={vxg} ctx={ctx} spec={headSpec} />,
+      {
+        mockInitialState: initialState
+      }
+    )
 
     expect(screen.getByText('name')).toBeInTheDocument()
   })
 })
-

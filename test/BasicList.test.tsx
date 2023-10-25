@@ -11,7 +11,7 @@ describe('BasicList', () => {
     customRender(
       <BasicList ctx={ctx} spec={spec} data={data} columns={columns} />,
       {
-        mockInitialState: initialState,
+        mockInitialState: initialState
       }
     )
   })

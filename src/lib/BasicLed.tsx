@@ -9,8 +9,7 @@ import BasicList from './BasicList'
 import BasicEdit from './BasicEdit'
 import { Gubu } from 'gubu'
 
-function fields(spec: any) {
-
+function fields (spec: any) {
   try {
     let fds = []
     let fns = spec.content.def.edit.layout.order.replace(/\s+/g, '').split(/,/)
@@ -33,19 +32,15 @@ function fields(spec: any) {
   return []
 }
 
-function BasicLed(props: any) {
-  const {
-    vxg,
-    ctx,
-    spec
-  } = props
+function BasicLed (props: any) {
+  const { vxg, ctx, spec } = props
 
   // spec schema definition with Gubu
   const shape = Gubu({
-    name: "",
+    name: '',
     title: String,
     icon: String,
-    content: { name: "", kind: String, def: { ent: {}, add: {}, edit: {} } },
+    content: { name: '', kind: String, def: { ent: {}, add: {}, edit: {} } }
   })
 
   // spec schema validation with Gubu
@@ -64,8 +59,12 @@ function BasicLed(props: any) {
   const canon = ent.canon
 
   const cmpstate = useSelector((state: any) => state.main.vxg.cmp)
-  const entstate = useSelector((state: any) => state.main.vxg.ent.meta.main[canon].state)
-  const entlist = useSelector((state: any) => state.main.vxg.ent.list.main[canon])
+  const entstate = useSelector(
+    (state: any) => state.main.vxg.ent.meta.main[canon].state
+  )
+  const entlist = useSelector(
+    (state: any) => state.main.vxg.ent.list.main[canon]
+  )
 
   const location = useLocation()
 
@@ -80,21 +79,18 @@ function BasicLed(props: any) {
   const itemFields: any = fields(spec)
   // console.log('itemFields: ', itemFields)
 
-  const columns =
-    itemFields.map((field: any) =>
-    ({
-      // accessorFn: (row: any) => ('status' === field.type ? field.kind[row[field.name]]?.title : row[field.name]),
-      accessorFn: (row: any) => row[field.name],
-      accessorKey: field.name,
-      header: field.headerName,
-      enableEditing: field.edit,
-      editVariant: ('status' === field.type ? 'select' : 'text'),
-      editSelectOptions: ('status' === field.type ? ['open', 'closed'] : null),
-      Header: () => <span>{field.headerName}</span>,
-      // muiTableHeadCellProps: { sx: { color: 'green' } },
-      Cell: ({ cell }: any) => <span>{cell.getValue()}</span>,
-    })
-    )
+  const columns = itemFields.map((field: any) => ({
+    // accessorFn: (row: any) => ('status' === field.type ? field.kind[row[field.name]]?.title : row[field.name]),
+    accessorFn: (row: any) => row[field.name],
+    accessorKey: field.name,
+    header: field.headerName,
+    enableEditing: field.edit,
+    editVariant: 'status' === field.type ? 'select' : 'text',
+    editSelectOptions: 'status' === field.type ? ['open', 'closed'] : null,
+    Header: () => <span>{field.headerName}</span>,
+    // muiTableHeadCellProps: { sx: { color: 'green' } },
+    Cell: ({ cell }: any) => <span>{cell.getValue()}</span>
+  }))
   // console.log('columns: ', columns)
 
   let data = rows //.slice(0, 10)
@@ -120,45 +116,43 @@ function BasicLed(props: any) {
     setTriggerLed(++triggerLed)
   }, [led_add])
 
-
-
   return (
-    <div className="BasicLed">
-      {
-        '-/' + canon !== item.entity$ ?
-          <BasicList
-            ctx={ctx}
-            spec={spec}
-            data={data}
-            columns={columns}
-            // onRowClick={(event: any, item: any) => {
-            //   console.log('item: ', item)
-            //   setItem(item)
-            // }}
-            onEditingRowSave={async (row: any, values: any) => {
-              let selectedItem = { ...data[row.index] }
-              for (let k in values) {
-                selectedItem[k] = values[k]
-              }
-              console.log('selectedItem: ', selectedItem)
-              await seneca.entity(canon).save$(selectedItem)
-              setItem({})
-            }}
-          /> :
-          <BasicEdit
-            ctx={ctx}
-            spec={spec}
-            onClose={() => {
-              setItem({})
-            }}
-            onSubmit={async (item: any) => {
-              await seneca.entity(canon).save$(item)
-              setItem({})
-            }}
-            item={item}
-            itemFields={itemFields}
-          />
-      }
+    <div className='BasicLed'>
+      {'-/' + canon !== item.entity$ ? (
+        <BasicList
+          ctx={ctx}
+          spec={spec}
+          data={data}
+          columns={columns}
+          // onRowClick={(event: any, item: any) => {
+          //   console.log('item: ', item)
+          //   setItem(item)
+          // }}
+          onEditingRowSave={async (row: any, values: any) => {
+            let selectedItem = { ...data[row.index] }
+            for (let k in values) {
+              selectedItem[k] = values[k]
+            }
+            console.log('selectedItem: ', selectedItem)
+            await seneca.entity(canon).save$(selectedItem)
+            setItem({})
+          }}
+        />
+      ) : (
+        <BasicEdit
+          ctx={ctx}
+          spec={spec}
+          onClose={() => {
+            setItem({})
+          }}
+          onSubmit={async (item: any) => {
+            await seneca.entity(canon).save$(item)
+            setItem({})
+          }}
+          item={item}
+          itemFields={itemFields}
+        />
+      )}
     </div>
   )
 }

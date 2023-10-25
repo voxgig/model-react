@@ -7,7 +7,6 @@ import { ctx, spec } from './mocks/test-utils'
 
 describe('BasicAuth', () => {
   it('happy', () => {
-
     const specAuth: any = {
       auth: {
         frame: 'public',

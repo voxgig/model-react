@@ -20,22 +20,22 @@ interface DrawerProps {
   drawerwidth?: any
 }
 
-const BasicDrawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })<DrawerProps>(
-  ({ theme, open, drawerwidth }) => ({
-    width: drawerwidth,
-    flexShrink: 0,
-    whiteSpace: 'nowrap',
-    boxSizing: 'border-box',
-    ...(open && {
-      ...openedMixin(theme, drawerwidth),
-      '& .MuiDrawer-paper': openedMixin(theme, drawerwidth)
-    }),
-    ...(!open && {
-      ...closedMixin(theme),
-      '& .MuiDrawer-paper': closedMixin(theme)
-    })
+const BasicDrawer = styled(MuiDrawer, {
+  shouldForwardProp: prop => prop !== 'open'
+})<DrawerProps>(({ theme, open, drawerwidth }) => ({
+  width: drawerwidth,
+  flexShrink: 0,
+  whiteSpace: 'nowrap',
+  boxSizing: 'border-box',
+  ...(open && {
+    ...openedMixin(theme, drawerwidth),
+    '& .MuiDrawer-paper': openedMixin(theme, drawerwidth)
+  }),
+  ...(!open && {
+    ...closedMixin(theme),
+    '& .MuiDrawer-paper': closedMixin(theme)
   })
-)
+}))
 
 const openedMixin = (theme: Theme, drawerwidth: any): CSSObject => ({
   // backgroundColor: theme.palette.primary.main,

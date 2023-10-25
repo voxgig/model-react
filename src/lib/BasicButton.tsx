@@ -1,7 +1,4 @@
-import {
-  Button
-  , ButtonProps as MuiButtonProps
-} from '@mui/material'
+import { Button, ButtonProps as MuiButtonProps } from '@mui/material'
 
 import { styled, useTheme, Theme, CSSObject } from '@mui/material/styles'
 

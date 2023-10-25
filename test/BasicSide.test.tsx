@@ -6,11 +6,10 @@ import { BasicSide } from '../src/lib/index'
 
 describe('BasicSide', () => {
   it('happy', () => {
-
     const sideSpec = {
       side: {
         logo: {
-          img: "img.png"
+          img: 'img.png'
         }
       },
       view: {
@@ -26,7 +25,7 @@ describe('BasicSide', () => {
     }
 
     customRender(<BasicSide ctx={ctx} spec={sideSpec} />, {
-      mockInitialState: initialState,
+      mockInitialState: initialState
     })
   })
 })
