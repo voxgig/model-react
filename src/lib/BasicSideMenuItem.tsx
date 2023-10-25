@@ -25,6 +25,7 @@ import {
   Logout as LogoutIcon
 } from '@mui/icons-material'
 import { Child, Gubu } from 'gubu'
+import { useSelector } from 'react-redux'
 
 const iconmap: any = {
   factory: FactoryOutlined,
@@ -49,9 +50,6 @@ function makeIcon (name: string) {
   return <Icon />
 }
 
-// TODO: Grab the role from the redux store
-const userRole = 'admin'
-
 // TODO: move to utils
 // TODO: allow custom authorization function
 function isAuthorized (userRole: string, authorizedRoles: any): boolean {
@@ -61,7 +59,7 @@ function isAuthorized (userRole: string, authorizedRoles: any): boolean {
   )
 }
 
-// spec schema definition with Gubu
+// TODO: Make sure Child() fails properly
 const BasicSideMenuItemSpecShape = Gubu({
   section: Child({
     title: String,
@@ -82,13 +80,17 @@ function BasicSideMenuItem (props: any) {
 
   const basicSideMenuItemSpec = BasicSideMenuItemSpecShape(props.spec)
 
+  // TODO: refactor to use better default
+  const userRole =
+    useSelector((state: any) => state.main.auth.user.role) || 'user'
+
   return (
     <List key={sectionKey}>
       {Object.entries(basicSideMenuItemSpec.section.item).map(
         ([itemKey, item]: [any, any]) => {
           return (
             // TODO: load user from redux store
-            isAuthorized('admin', item.access) && (
+            isAuthorized(userRole, item.access) && (
               <ListItem
                 key={itemKey}
                 disablePadding
