@@ -56,18 +56,19 @@ function BasicMain(props: any) {
 
 
   const divStyle = {
-    paddingLeft: sideOpen ? '12.0em' : '0em',
-    paddingRight: 0
+    marginLeft: '2em',
+    marginRight: '2em',
+    marginTop: '3em'
   }
+
   const mainDiv = {
-    height: 'calc(100vh - 6rem)',
-    width: sideOpen ? 'calc(100vw - 19rem)' : 'calc(100vw - 4rem)',
-    padding: '84px ' + (sideOpen ? '4.5em' : '0') + ' 4.5em ' + (sideOpen ? '4.5em' : '0.5em')
+    width: sideOpen ? 'calc(100% - 16rem)' : '100%',
+    paddingLeft: sideOpen ? '16rem' : '0rem'
   }
 
   return (
-    <div className="BasicMain" style={mainDiv}>
-      <div style={{ width: '100%', height: '100%', ...divStyle }}>
+    <div className='BasicMain' style={mainDiv}>
+      <div style={{ ...divStyle }}>
         <Routes>
           <Route path='/view'>
             {
