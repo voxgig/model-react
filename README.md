@@ -2,9 +2,11 @@
 
 Voxgig Model React Components
 
-## How to run project
+## How to run in dev mode
+
 `npm run watch`
 
-## How to run ts-standard
-1. Make sure `ts-standard` is installed. (with `npm install`)
-2. `npx ts-standard "src/**"`.
+## How to format and/or lint
+
+* You can format by running `npm run format`
+* You can lint and format by running `npm run lint`
