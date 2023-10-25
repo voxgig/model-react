@@ -47597,11 +47597,10 @@ function BasicMain(props) {
     paddingRight: 0
   };
   const mainDiv = {
-    height: "calc(100vh - 6rem)",
-    width: sideOpen ? "calc(100vw - 19rem)" : "calc(100vw - 4rem)",
-    padding: "84px " + (sideOpen ? "4.5em" : "0") + " 4.5em " + (sideOpen ? "4.5em" : "0.5em")
+    width: sideOpen ? "calc(100% - 16rem)" : "100%",
+    paddingLeft: sideOpen ? "16rem" : "0rem"
   };
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "BasicMain", style: mainDiv, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: __spreadValues({ width: "100%", height: "100%" }, divStyle), children: /* @__PURE__ */ jsxRuntimeExports.jsx(Routes, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/view", children: views.map((view) => {
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "BasicMain", style: mainDiv, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: __spreadValues({}, divStyle), children: /* @__PURE__ */ jsxRuntimeExports.jsx(Routes, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/view", children: views.map((view) => {
     const Cmp = makeCmp(view, ctx);
     if (view.paramId) {
       return /* @__PURE__ */ jsxRuntimeExports.jsxs(Fragment, { children: [
