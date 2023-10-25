@@ -15,8 +15,6 @@ function BasicFoot (props: any) {
 
   const basicFootSpec = BasicFootSpecShape(props.spec)
 
-  console.log('basicFootSpec: ', basicFootSpec)
-
   const part = basicFootSpec.foot
 
   return (
