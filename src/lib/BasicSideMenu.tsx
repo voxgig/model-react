@@ -1,7 +1,7 @@
 import { Child, Gubu } from 'gubu'
 import BasicSideMenuItem from './BasicSideMenuItem'
 
-// spec schema definition with Gubu
+// TODO: Make sure Child() fails properly
 const BasicSideMenuSpecShape = Gubu({
   section: Child({
     title: String,

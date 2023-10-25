@@ -8,7 +8,7 @@ import { ChevronLeft } from '@mui/icons-material'
 import { Divider, IconButton } from '@mui/material'
 import { BasicDrawer, BasicDrawerHeader } from './BasicDrawer'
 
-// spec schema definition with Gubu
+// TODO: Make sure Child() fails properly
 const BasicSideSpecShape = Gubu({
   side: {
     logo: {
@@ -56,7 +56,6 @@ function BasicSide (props: any) {
     }
   }
 
-  // TODO: clean up props shape
   const basicSideMenuSpec = {
     section: basicSideSpec.side.section
   }
