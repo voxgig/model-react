@@ -10,38 +10,61 @@ describe('BasicLed', () => {
       value: {
         pathname
       }
-    });
+    })
   }
 
   beforeEach(() => {
-    setLocation('/view/task');
-  });
+    setLocation('/view/task')
+  })
 
   afterEach(() => {
-    setLocation(window.location.pathname);
-  });
+    setLocation(window.location.pathname)
+  })
 
   it('happy', () => {
-
     const view = {
+      title: 'task',
+      icon: 'done',
       content: {
         kind: 'led',
         def: {
           ent: {
-            canon: 'vxg/task'
+            canon: 'vxg/task',
+            primary: {
+              field: {
+                id: {
+                  title: 'ID',
+                  edit: true
+                }
+              }
+            }
           },
-          add: {}
+          add: { active: false },
+          edit: {
+            layout: {
+              order: 'id,title,status',
+              field: {
+                id: {
+                  title: 'ID',
+                  edit: true
+                },
+                title: {
+                  title: 'Title',
+                  edit: true
+                },
+                status: {
+                  title: 'Status',
+                  edit: true
+                }
+              }
+            }
+          }
         }
-      },
-      title: 'task',
-      icon: 'done'
+      }
     }
 
     customRender(<BasicLed vxg={vxg} ctx={ctx} spec={view} />, {
-      mockInitialState: initialState,
+      mockInitialState: initialState
     })
   })
-
 })
-
-
