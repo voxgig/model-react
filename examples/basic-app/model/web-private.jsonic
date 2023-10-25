@@ -1,0 +1,93 @@
+
+
+kind: basic
+
+part: $.sys.app.web.part
+
+part: admin: {}
+
+part: head: {
+  logo: img: '/voxgig.png'
+  tool: def: [
+    { 
+      kind: 'addbutton'
+      title: 'Add'
+      options: { 
+        kind: 'ent' 
+        label: field: 'title'
+        ent: 'vxg/task'
+      }
+    },
+    { 
+      kind: 'autocomplete'
+      title: 'Autocomplete'
+      options: { 
+        kind: 'ent'
+        label: field: 'title'
+        ent: 'vxg/task'
+      }
+    }
+  ]
+}
+
+part: side: {
+  logo: img: '/voxgig.png'
+  style: {
+    backgroundColor: '#333333'
+    textColor: '#ffffff'
+  }
+  section: [
+    { 
+      kind: "navmenu"
+      view: talk: true
+      button: { 
+        icon: 'done', 
+        text: 'Talks' 
+      }
+    }
+  ]
+}
+
+part: main: title: ""
+
+part: foot: title: ""
+
+view: talk: {
+  title: 'Talk'
+  icon: 'done'
+  content: kind: 'led'
+  content: def: {
+    ent: {
+        primary: {
+          field: {
+            id: { 
+              title: 'ID'
+              edit: false 
+            }
+          }
+        },
+        canon: 'vxg/talk'
+    }
+    add: active: true
+    edit: { 
+      layout: {
+        order: "id,title,status"
+        field: {
+          title: { 
+            type: ''
+            headerName: 'Title'
+            edit: true }
+          status: { 
+            type: 'status', 
+            headerName: 'Status', 
+            edit: true, 
+            kind: { 
+              open: title: 'Open'
+              closed: title: 'Closed' 
+            }
+          }
+        }
+      }
+    }
+  }
+}

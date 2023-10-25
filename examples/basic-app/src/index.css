@@ -1,0 +1,35 @@
+html {
+    --vxg-cb0: 255, 255, 255;
+    --vxg-cb1: 39, 50, 73;
+    --vxg-cb2: 100, 166, 206;
+    --vxg-ct0: 50, 64, 103;
+    --vxg-ct1: 255, 255, 255;
+    --vxg-ct2: 162, 207, 250;
+    --vxg-ci0: 46, 122, 193;
+
+}
+
+.BasicSide * {
+    xcolor: white !important;
+    xbackground-color: rgb(var(--vxg-cb1));
+
+}
+
+
+.BasicSide ul {
+    height: 100vh;
+}
+
+
+.BasicMain {
+    background-color: #f4f6fc !important;
+    height: 100vh;
+    margin: 0;
+    padding-top: 4rem;
+    padding-left: 15rem;
+}
+
+
+.MuiDataGrid-columnHeaderTitle {
+    font-weight: bold !important;
+}
