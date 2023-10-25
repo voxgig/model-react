@@ -3059,13 +3059,7 @@ var __async = (__this, __arguments, generator) => {
     };
   }
   function isMuiElement(element, muiNames) {
-    var _muiName, _element$type;
-    return /* @__PURE__ */ React__namespace.isValidElement(element) && muiNames.indexOf(
-      // For server components `muiName` is avaialble in element.type._payload.value.muiName
-      // relevant info - https://github.com/facebook/react/blob/2807d781a08db8e9873687fccc25c0f12b4fb3d4/packages/react/src/ReactLazy.js#L45
-      // eslint-disable-next-line no-underscore-dangle
-      (_muiName = element.type.muiName) != null ? _muiName : (_element$type = element.type) == null || (_element$type = _element$type._payload) == null || (_element$type = _element$type.value) == null ? void 0 : _element$type.muiName
-    ) !== -1;
+    return /* @__PURE__ */ React__namespace.isValidElement(element) && muiNames.indexOf(element.type.muiName) !== -1;
   }
   function ownerDocument(node2) {
     return node2 && node2.ownerDocument || document;
@@ -3178,11 +3172,11 @@ var __async = (__this, __arguments, generator) => {
     useEnhancedEffect(() => {
       ref.current = fn;
     });
-    return React__namespace.useRef((...args) => (
+    return React__namespace.useCallback((...args) => (
       // @ts-expect-error hide `this`
       // tslint:disable-next-line:ban-comma-operator
       (0, ref.current)(...args)
-    )).current;
+    ), []);
   }
   "use client";
   "use client";
@@ -3364,9 +3358,6 @@ var __async = (__this, __arguments, generator) => {
     });
     return ref.current;
   };
-  function getValidReactChildren(children) {
-    return React__namespace.Children.toArray(children).filter((child) => /* @__PURE__ */ React__namespace.isValidElement(child));
-  }
   const visuallyHidden = {
     border: 0,
     clip: "rect(0 0 0 0)",
@@ -14504,7 +14495,7 @@ var __async = (__this, __arguments, generator) => {
   } : void 0;
   "use client";
   /**
-   * @mui/styled-engine v5.14.14
+   * @mui/styled-engine v5.14.8
    *
    * @license MIT
    * This source code is licensed under the MIT license found in the
@@ -15993,47 +15984,39 @@ var __async = (__this, __arguments, generator) => {
     }
     return null;
   };
-  const transformVariants = (variants) => {
-    const variantsStyles = {};
-    if (variants) {
-      variants.forEach((definition) => {
-        const key = propsToClassKey(definition.props);
-        variantsStyles[key] = definition.style;
-      });
-    }
-    return variantsStyles;
-  };
   const getVariantStyles = (name, theme) => {
     let variants = [];
     if (theme && theme.components && theme.components[name] && theme.components[name].variants) {
       variants = theme.components[name].variants;
     }
-    return transformVariants(variants);
+    const variantsStyles = {};
+    variants.forEach((definition) => {
+      const key = propsToClassKey(definition.props);
+      variantsStyles[key] = definition.style;
+    });
+    return variantsStyles;
   };
-  const variantsResolver = (props, styles2, variants) => {
+  const variantsResolver = (props, styles2, theme, name) => {
+    var _theme$components;
     const {
       ownerState = {}
     } = props;
     const variantsStyles = [];
-    if (variants) {
-      variants.forEach((variant) => {
+    const themeVariants = theme == null || (_theme$components = theme.components) == null || (_theme$components = _theme$components[name]) == null ? void 0 : _theme$components.variants;
+    if (themeVariants) {
+      themeVariants.forEach((themeVariant) => {
         let isMatch = true;
-        Object.keys(variant.props).forEach((key) => {
-          if (ownerState[key] !== variant.props[key] && props[key] !== variant.props[key]) {
+        Object.keys(themeVariant.props).forEach((key) => {
+          if (ownerState[key] !== themeVariant.props[key] && props[key] !== themeVariant.props[key]) {
             isMatch = false;
           }
         });
         if (isMatch) {
-          variantsStyles.push(styles2[propsToClassKey(variant.props)]);
+          variantsStyles.push(styles2[propsToClassKey(themeVariant.props)]);
         }
       });
     }
     return variantsStyles;
-  };
-  const themeVariantsResolver = (props, styles2, theme, name) => {
-    var _theme$components;
-    const themeVariants = theme == null || (_theme$components = theme.components) == null || (_theme$components = _theme$components[name]) == null ? void 0 : _theme$components.variants;
-    return variantsResolver(props, styles2, themeVariants);
   };
   function shouldForwardProp(prop) {
     return prop !== "ownerState" && prop !== "theme" && prop !== "sx" && prop !== "as";
@@ -16058,29 +16041,6 @@ var __async = (__this, __arguments, generator) => {
     }
     return (props, styles2) => styles2[slot];
   }
-  const muiStyledFunctionResolver = ({
-    styledArg,
-    props,
-    defaultTheme: defaultTheme2,
-    themeId
-  }) => {
-    const resolvedStyles = styledArg(_extends$2({}, props, {
-      theme: resolveTheme(_extends$2({}, props, {
-        defaultTheme: defaultTheme2,
-        themeId
-      }))
-    }));
-    let optionalVariants;
-    if (resolvedStyles && resolvedStyles.variants) {
-      optionalVariants = resolvedStyles.variants;
-      delete resolvedStyles.variants;
-    }
-    if (optionalVariants) {
-      const variantsStyles = variantsResolver(props, transformVariants(optionalVariants), optionalVariants);
-      return [resolvedStyles, ...variantsStyles];
-    }
-    return resolvedStyles;
-  };
   function createStyled(input = {}) {
     const {
       themeId,
@@ -16134,59 +16094,16 @@ var __async = (__this, __arguments, generator) => {
       }, options));
       const muiStyledResolver = (styleArg, ...expressions) => {
         const expressionsWithDefaultTheme = expressions ? expressions.map((stylesArg) => {
-          if (typeof stylesArg === "function" && stylesArg.__emotion_real !== stylesArg) {
-            return (props) => muiStyledFunctionResolver({
-              styledArg: stylesArg,
-              props,
-              defaultTheme: defaultTheme2,
-              themeId
-            });
-          }
-          if (isPlainObject$1(stylesArg)) {
-            let transformedStylesArg = stylesArg;
-            let styledArgVariants;
-            if (stylesArg && stylesArg.variants) {
-              styledArgVariants = stylesArg.variants;
-              delete transformedStylesArg.variants;
-              transformedStylesArg = (props) => {
-                let result = stylesArg;
-                const variantStyles = variantsResolver(props, transformVariants(styledArgVariants), styledArgVariants);
-                variantStyles.forEach((variantStyle) => {
-                  result = deepmerge(result, variantStyle);
-                });
-                return result;
-              };
-            }
-            return transformedStylesArg;
-          }
-          return stylesArg;
+          return typeof stylesArg === "function" && stylesArg.__emotion_real !== stylesArg ? (props) => {
+            return stylesArg(_extends$2({}, props, {
+              theme: resolveTheme(_extends$2({}, props, {
+                defaultTheme: defaultTheme2,
+                themeId
+              }))
+            }));
+          } : stylesArg;
         }) : [];
         let transformedStyleArg = styleArg;
-        if (isPlainObject$1(styleArg)) {
-          let styledArgVariants;
-          if (styleArg && styleArg.variants) {
-            styledArgVariants = styleArg.variants;
-            delete transformedStyleArg.variants;
-            transformedStyleArg = (props) => {
-              let result = styleArg;
-              const variantStyles = variantsResolver(props, transformVariants(styledArgVariants), styledArgVariants);
-              variantStyles.forEach((variantStyle) => {
-                result = deepmerge(result, variantStyle);
-              });
-              return result;
-            };
-          }
-        } else if (typeof styleArg === "function" && // On the server Emotion doesn't use React.forwardRef for creating components, so the created
-        // component stays as a function. This condition makes sure that we do not interpolate functions
-        // which are basically components used as a selectors.
-        styleArg.__emotion_real !== styleArg) {
-          transformedStyleArg = (props) => muiStyledFunctionResolver({
-            styledArg: styleArg,
-            props,
-            defaultTheme: defaultTheme2,
-            themeId
-          });
-        }
         if (componentName && overridesResolver2) {
           expressionsWithDefaultTheme.push((props) => {
             const theme = resolveTheme(_extends$2({}, props, {
@@ -16212,7 +16129,7 @@ var __async = (__this, __arguments, generator) => {
               defaultTheme: defaultTheme2,
               themeId
             }));
-            return themeVariantsResolver(props, getVariantStyles(componentName, theme), theme, componentName);
+            return variantsResolver(props, getVariantStyles(componentName, theme), theme, componentName);
           });
         }
         if (!skipSx) {
@@ -16223,6 +16140,16 @@ var __async = (__this, __arguments, generator) => {
           const placeholders = new Array(numOfCustomFnsApplied).fill("");
           transformedStyleArg = [...styleArg, ...placeholders];
           transformedStyleArg.raw = [...styleArg.raw, ...placeholders];
+        } else if (typeof styleArg === "function" && // On the server Emotion doesn't use React.forwardRef for creating components, so the created
+        // component stays as a function. This condition makes sure that we do not interpolate functions
+        // which are basically components used as a selectors.
+        styleArg.__emotion_real !== styleArg) {
+          transformedStyleArg = (props) => styleArg(_extends$2({}, props, {
+            theme: resolveTheme(_extends$2({}, props, {
+              defaultTheme: defaultTheme2,
+              themeId
+            }))
+          }));
         }
         const Component = defaultStyledResolver(transformedStyleArg, ...expressionsWithDefaultTheme);
         if (process.env.NODE_ENV !== "production") {
@@ -16562,7 +16489,7 @@ The following color spaces are supported: srgb, display-p3, a98-rgb, prophoto-rg
     process.env.NODE_ENV !== "production" ? ThemeProvider$1.propTypes = exactProp(ThemeProvider$1.propTypes) : void 0;
   }
   /**
-   * @mui/private-theming v5.14.14
+   * @mui/private-theming v5.14.8
    *
    * @license MIT
    * This source code is licensed under the MIT license found in the
@@ -16649,29 +16576,31 @@ The following color spaces are supported: srgb, display-p3, a98-rgb, prophoto-rg
     return /* @__PURE__ */ jsxRuntimeExports.jsx("script", {
       // eslint-disable-next-line react/no-danger
       dangerouslySetInnerHTML: {
-        __html: `(function() {
-try {
-  var mode = localStorage.getItem('${modeStorageKey}') || '${defaultMode}';
-  var colorScheme = '';
-  if (mode === 'system') {
-    // handle system mode
-    var mql = window.matchMedia('(prefers-color-scheme: dark)');
-    if (mql.matches) {
-      colorScheme = localStorage.getItem('${colorSchemeStorageKey}-dark') || '${defaultDarkColorScheme}';
-    } else {
-      colorScheme = localStorage.getItem('${colorSchemeStorageKey}-light') || '${defaultLightColorScheme}';
-    }
-  }
-  if (mode === 'light') {
-    colorScheme = localStorage.getItem('${colorSchemeStorageKey}-light') || '${defaultLightColorScheme}';
-  }
-  if (mode === 'dark') {
-    colorScheme = localStorage.getItem('${colorSchemeStorageKey}-dark') || '${defaultDarkColorScheme}';
-  }
-  if (colorScheme) {
-    ${colorSchemeNode}.setAttribute('${attribute}', colorScheme);
-  }
-} catch(e){}})();`
+        __html: `(function() { try {
+        var mode = localStorage.getItem('${modeStorageKey}') || '${defaultMode}';
+        var cssColorScheme = mode;
+        var colorScheme = '';
+        if (mode === 'system') {
+          // handle system mode
+          var mql = window.matchMedia('(prefers-color-scheme: dark)');
+          if (mql.matches) {
+            cssColorScheme = 'dark';
+            colorScheme = localStorage.getItem('${colorSchemeStorageKey}-dark') || '${defaultDarkColorScheme}';
+          } else {
+            cssColorScheme = 'light';
+            colorScheme = localStorage.getItem('${colorSchemeStorageKey}-light') || '${defaultLightColorScheme}';
+          }
+        }
+        if (mode === 'light') {
+          colorScheme = localStorage.getItem('${colorSchemeStorageKey}-light') || '${defaultLightColorScheme}';
+        }
+        if (mode === 'dark') {
+          colorScheme = localStorage.getItem('${colorSchemeStorageKey}-dark') || '${defaultDarkColorScheme}';
+        }
+        if (colorScheme) {
+          ${colorSchemeNode}.setAttribute('${attribute}', colorScheme);
+        }
+      } catch (e) {} })();`
       }
     }, "mui-color-scheme-init");
   }
@@ -17137,11 +17066,11 @@ try {
        */
       disableStyleSheetGeneration: PropTypes.bool,
       /**
-       * Disable CSS transitions when switching between modes or color schemes.
+       * Disable CSS transitions when switching between modes or color schemes
        */
       disableTransitionOnChange: PropTypes.bool,
       /**
-       * The document to attach the attribute to.
+       * The document to attach the attribute to
        */
       documentNode: PropTypes.any,
       /**
@@ -17149,7 +17078,7 @@ try {
        */
       modeStorageKey: PropTypes.string,
       /**
-       * The window that attaches the 'storage' event listener.
+       * The window that attaches the 'storage' event listener
        * @default window
        */
       storageWindow: PropTypes.any,
@@ -20083,27 +20012,39 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       content: ++led_add
     });
   }
-  function BasicHead(props) {
-    const {
-      vxg,
-      ctx,
-      spec
-    } = props;
-    const { seneca } = ctx();
-    const {
-      frame
-    } = spec;
-    const shape2 = gubu_minExports.Gubu({
-      head: {
-        logo: { img: "" },
-        tool: { def: [{ kind: gubu_minExports.Exact("addbutton", "autocomplete"), title: String, options: {}, name: "" }] }
+  const BasicHeadSpecShape = gubu_minExports.Gubu({
+    head: {
+      logo: {
+        img: String
       },
-      view: {}
-    });
-    shape2(spec);
+      tool: {
+        def: [
+          {
+            kind: gubu_minExports.Exact("addbutton", "autocomplete"),
+            title: String,
+            options: {
+              kind: String,
+              label: {
+                field: String
+              },
+              ent: String
+            },
+            name: ""
+          }
+        ]
+      }
+    },
+    view: {}
+  });
+  function BasicHead(props) {
+    const { vxg, ctx } = props;
+    const { seneca } = ctx();
+    const basicHeadSpec = BasicHeadSpecShape(props.spec);
     const navigate = reactRouterDom.useNavigate();
     const location2 = reactRouterDom.useLocation();
-    const tooldefs = Object.entries(spec.head.tool.def).map((entry) => (entry[1].name = entry[0], entry[1]));
+    const tooldefs = Object.entries(basicHeadSpec.head.tool.def).map(
+      (entry) => (entry[1].name = entry[0], entry[1])
+    );
     const user = reactRedux.useSelector((state) => state.main.auth.user);
     const userName = user.name || user.email;
     let valuemap = {};
@@ -20115,7 +20056,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           tooldata[tooldef.name] = {
             ents: reactRedux.useSelector((state) => state.main.vxg.ent.list.main[canon])
           };
-          let selected = reactRedux.useSelector((state) => state.main.vxg.cmp.BasicHead.tool[tooldef.name].selected);
+          let selected = reactRedux.useSelector(
+            (state) => state.main.vxg.cmp.BasicHead.tool[tooldef.name].selected
+          );
           if (selected) {
             valuemap[tooldef.name] = {
               label: selected[tooldef.options.label.field],
@@ -20129,7 +20072,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const open = vxgState.cmp.BasicSide.show;
     let led_add = vxgState.trigger.led.add;
     const viewPath = location2.pathname.split("/")[2];
-    let add = spec.view[viewPath].content.def.add || { active: false };
+    let add = basicHeadSpec.view[viewPath].content.def.add || { active: false };
     let drawerwidth = "16rem";
     return /* @__PURE__ */ jsxRuntimeExports.jsx(
       BasicAppBar,
@@ -20153,57 +20096,55 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
               children: /* @__PURE__ */ jsxRuntimeExports.jsx(default_1$s, {})
             }
           ),
-          tooldefs.map(
-            (tooldef) => {
-              if ("autocomplete" === tooldef.kind) {
-                return /* @__PURE__ */ jsxRuntimeExports.jsx(
-                  material.Autocomplete,
-                  {
-                    freeSolo: true,
-                    forcePopupIcon: true,
-                    value: valuemap[tooldef.name] || tooldef.defaultvalue || "",
-                    options: resolveOptions$1(tooldef, tooldata),
-                    size: "small",
-                    sx: {
-                      paddingLeft: "1em",
-                      width: "20rem"
-                    },
-                    filterOptions: (options, params) => {
-                      const filtered = filter$1(options, params);
-                      return filtered;
-                    },
-                    renderInput: (params) => /* @__PURE__ */ jsxRuntimeExports.jsx(material.TextField, __spreadProps(__spreadValues({}, params), { label: tooldef.title })),
-                    onChange: (event, newval) => {
-                      seneca.act("aim:app,set:state", {
-                        section: "vxg.cmp.BasicHead.tool." + tooldef.name + ".selected",
-                        content: "search" == tooldef.mode && typeof newval === "string" ? { [tooldef.options.label.field]: newval } : newval == null ? void 0 : newval.ent
-                      });
-                    },
-                    isOptionEqualToValue: (opt, val) => {
-                      var _a, _b;
-                      return opt === val || null != opt && null != val && ((_a = opt.ent) == null ? void 0 : _a.id) === ((_b = val.ent) == null ? void 0 : _b.id);
-                    }
+          tooldefs.map((tooldef) => {
+            if ("autocomplete" === tooldef.kind) {
+              return /* @__PURE__ */ jsxRuntimeExports.jsx(
+                material.Autocomplete,
+                {
+                  freeSolo: true,
+                  forcePopupIcon: true,
+                  value: valuemap[tooldef.name] || tooldef.defaultvalue || "",
+                  options: resolveOptions$1(tooldef, tooldata),
+                  size: "small",
+                  sx: {
+                    paddingLeft: "1em",
+                    width: "20rem"
                   },
-                  tooldef.name
-                );
-              } else if ("addbutton" === tooldef.kind) {
-                return /* @__PURE__ */ jsxRuntimeExports.jsx(
-                  BasicButton,
-                  {
-                    variant: "outlined",
-                    sx: {
-                      display: add.active ? null : "none",
-                      textTransform: "capitalize"
-                    },
-                    size: "large",
-                    onClick: () => addItem(seneca, led_add),
-                    children: tooldef.title + " " + spec.view[viewPath].name
+                  filterOptions: (options, params) => {
+                    const filtered = filter$1(options, params);
+                    return filtered;
                   },
-                  tooldef.name
-                );
-              }
+                  renderInput: (params) => /* @__PURE__ */ jsxRuntimeExports.jsx(material.TextField, __spreadProps(__spreadValues({}, params), { label: tooldef.title })),
+                  onChange: (event, newval) => {
+                    seneca.act("aim:app,set:state", {
+                      section: "vxg.cmp.BasicHead.tool." + tooldef.name + ".selected",
+                      content: "search" == tooldef.mode && typeof newval === "string" ? { [tooldef.options.label.field]: newval } : newval == null ? void 0 : newval.ent
+                    });
+                  },
+                  isOptionEqualToValue: (opt, val) => {
+                    var _a, _b;
+                    return opt === val || null != opt && null != val && ((_a = opt.ent) == null ? void 0 : _a.id) === ((_b = val.ent) == null ? void 0 : _b.id);
+                  }
+                },
+                tooldef.name
+              );
+            } else if ("addbutton" === tooldef.kind) {
+              return /* @__PURE__ */ jsxRuntimeExports.jsx(
+                BasicButton,
+                {
+                  variant: "outlined",
+                  sx: {
+                    display: add.active ? null : "none",
+                    textTransform: "capitalize"
+                  },
+                  size: "large",
+                  onClick: () => addItem(seneca, led_add),
+                  children: tooldef.title + " " + basicHeadSpec.view[viewPath].name
+                },
+                tooldef.name
+              );
             }
-          ),
+          }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { flexGrow: 1 } }),
           /* @__PURE__ */ jsxRuntimeExports.jsx(material.Typography, { variant: "h6", children: userName })
         ] })
@@ -22773,25 +22714,28 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       width: `calc(${theme.spacing(8)} + 1px)`
     }
   });
-  const iconmap = {
-    factory: iconsMaterial.FactoryOutlined,
-    key: iconsMaterial.KeyOutlined,
-    done: iconsMaterial.AssignmentTurnedInOutlined,
-    docs: iconsMaterial.TextSnippetOutlined,
-    hightlight: iconsMaterial.HighlightAlt,
-    map: iconsMaterial.Map,
-    account: iconsMaterial.SupervisorAccount,
-    tablet: iconsMaterial.Tablet,
-    update: iconsMaterial.Update,
-    admin: iconsMaterial.Security,
-    clipboard: iconsMaterial.ContentPaste,
-    fitscreen: iconsMaterial.FitScreen,
-    "dots-square": iconsMaterial.Apps
-  };
-  function makeIcon(name) {
-    let Icon = iconmap[name];
-    return /* @__PURE__ */ jsxRuntimeExports.jsx(Icon, {});
-  }
+  const BasicSideSpecShape = gubu_minExports.Gubu({
+    side: {
+      logo: {
+        img: String
+      },
+      section: gubu_minExports.Child({
+        title: String,
+        item: gubu_minExports.Child({
+          kind: String,
+          label: String,
+          icon: String,
+          path: String,
+          access: gubu_minExports.Child(Boolean, {})
+        })
+      })
+    },
+    view: gubu_minExports.Child({
+      title: String,
+      icon: String,
+      content: {}
+    })
+  });
   function onClose(seneca) {
     seneca.act("aim:app,set:state", {
       section: "vxg.cmp.BasicSide.show",
@@ -47486,53 +47430,51 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }
     return [];
   }
+  const BasicLedSpecShape = gubu_minExports.Gubu({
+    name: "",
+    title: String,
+    icon: String,
+    content: { name: "", kind: String, def: { ent: {}, add: {}, edit: {} } }
+  });
   function BasicLed(props) {
-    const {
-      vxg,
-      ctx,
-      spec
-    } = props;
-    const shape2 = gubu_minExports.Gubu({
-      name: "",
-      title: String,
-      icon: String,
-      content: { name: "", kind: String, def: { ent: {}, add: {}, edit: {} } }
-    });
-    shape2(spec);
+    const { vxg, ctx } = props;
+    const basicLedSpec = BasicLedSpecShape(props.spec);
     const { model, seneca, custom } = ctx();
     const vxgState = reactRedux.useSelector((state) => state.main.vxg);
     const [item, setItem] = React.useState({});
-    const def = spec.content.def;
+    const def = basicLedSpec.content.def;
     const { ent, cols } = def;
     const canon = ent.canon;
     const cmpstate = reactRedux.useSelector((state) => state.main.vxg.cmp);
-    const entstate = reactRedux.useSelector((state) => state.main.vxg.ent.meta.main[canon].state);
-    const entlist = reactRedux.useSelector((state) => state.main.vxg.ent.list.main[canon]);
+    const entstate = reactRedux.useSelector(
+      (state) => state.main.vxg.ent.meta.main[canon].state
+    );
+    const entlist = reactRedux.useSelector(
+      (state) => state.main.vxg.ent.list.main[canon]
+    );
     const location2 = reactRouterDom.useLocation();
     if ("none" === entstate) {
-      let q = custom.BasicLed.query(spec, cmpstate);
+      let q = custom.BasicLed.query(basicLedSpec, cmpstate);
       seneca.entity(canon).list$(q);
     }
     const rows = entlist;
-    const itemFields = fields(spec);
-    const columns = itemFields.map(
-      (field) => ({
-        // accessorFn: (row: any) => ('status' === field.type ? field.kind[row[field.name]]?.title : row[field.name]),
-        accessorFn: (row) => row[field.name],
-        accessorKey: field.name,
-        header: field.headerName,
-        enableEditing: field.edit,
-        editVariant: "status" === field.type ? "select" : "text",
-        editSelectOptions: "status" === field.type ? ["open", "closed"] : null,
-        Header: () => /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: field.headerName }),
-        // muiTableHeadCellProps: { sx: { color: 'green' } },
-        Cell: ({ cell }) => /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: cell.getValue() })
-      })
-    );
+    const itemFields = fields(basicLedSpec);
+    const columns = itemFields.map((field) => ({
+      // accessorFn: (row: any) => ('status' === field.type ? field.kind[row[field.name]]?.title : row[field.name]),
+      accessorFn: (row) => row[field.name],
+      accessorKey: field.name,
+      header: field.headerName,
+      enableEditing: field.edit,
+      editVariant: "status" === field.type ? "select" : "text",
+      editSelectOptions: "status" === field.type ? ["open", "closed"] : null,
+      Header: () => /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: field.headerName }),
+      // muiTableHeadCellProps: { sx: { color: 'green' } },
+      Cell: ({ cell }) => /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: cell.getValue() })
+    }));
     let data = rows;
     React.useEffect(() => {
       setItem({});
-    }, [location.pathname]);
+    }, [location2.pathname]);
     const led_add = vxgState.trigger.led.add;
     let [triggerLed, setTriggerLed] = React.useState(0);
     React.useEffect(() => {
@@ -47545,7 +47487,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       BasicList,
       {
         ctx,
-        spec,
+        spec: basicLedSpec,
         data,
         columns,
         onEditingRowSave: (row, values2) => __async(this, null, function* () {
@@ -47562,7 +47504,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       BasicEdit,
       {
         ctx,
-        spec,
+        spec: basicLedSpec,
         onClose: () => {
           setItem({});
         },
@@ -47585,25 +47527,57 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }
     return cmp;
   }
+  const BasicMainSpecShape = gubu_minExports.Gubu({
+    main: {},
+    view: gubu_minExports.Child({
+      name: String,
+      title: String,
+      icon: String,
+      content: {
+        kind: gubu_minExports.Exact("led", "custom"),
+        def: {
+          ent: {
+            primary: {
+              field: {
+                id: {
+                  title: String,
+                  edit: Boolean
+                }
+              }
+            }
+          },
+          add: {
+            active: Boolean
+          },
+          edit: {
+            layout: {
+              order: String,
+              field: gubu_minExports.Child({
+                type: String,
+                headerName: String,
+                edit: Boolean,
+                kind: gubu_minExports.Child({
+                  title: String
+                })
+              })
+            }
+          }
+        }
+      }
+    })
+  });
   function BasicMain(props) {
-    const {
-      vxg,
-      ctx,
-      spec
-    } = props;
+    const { vxg, ctx } = props;
     const { model, content } = ctx();
-    const { frame } = spec;
-    const shape2 = gubu_minExports.Gubu({
-      main: {},
-      view: {}
-    });
-    shape2(spec);
-    const part = spec.main;
-    const views = Object.values(spec.view);
-    const sideOpen = reactRedux.useSelector((state) => state.main.vxg.cmp.BasicSide.show);
+    const basicMainSpec = BasicMainSpecShape(props.spec);
+    const views = Object.values(basicMainSpec.view);
+    const sideOpen = reactRedux.useSelector(
+      (state) => state.main.vxg.cmp.BasicSide.show
+    );
     const divStyle = {
-      paddingLeft: sideOpen ? "12.0em" : "0em",
-      paddingRight: 0
+      marginLeft: "2em",
+      marginRight: "2em",
+      marginTop: "3em"
     };
     const mainDiv = {
       width: sideOpen ? "calc(100% - 16rem)" : "100%",
@@ -47641,15 +47615,17 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       );
     }) }) }) }) });
   }
+  const BasicFootSpecShape = gubu_minExports.Gubu({
+    foot: {
+      title: ""
+    },
+    view: {}
+  });
   function BasicFoot(props) {
-    const {
-      vxg,
-      ctx,
-      spec
-    } = props;
+    const { vxg, ctx } = props;
     const model = ctx().model;
-    const { frame } = spec;
-    const part = spec.foot;
+    const basicFootSpec = BasicFootSpecShape(props.spec);
+    const part = basicFootSpec.foot;
     return /* @__PURE__ */ jsxRuntimeExports.jsx(
       material.Box,
       {
