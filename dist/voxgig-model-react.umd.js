@@ -3178,11 +3178,11 @@ var __async = (__this, __arguments, generator) => {
     useEnhancedEffect(() => {
       ref.current = fn;
     });
-    return React__namespace.useCallback((...args) => (
+    return React__namespace.useRef((...args) => (
       // @ts-expect-error hide `this`
       // tslint:disable-next-line:ban-comma-operator
       (0, ref.current)(...args)
-    ), []);
+    )).current;
   }
   "use client";
   "use client";
@@ -14504,7 +14504,7 @@ var __async = (__this, __arguments, generator) => {
   } : void 0;
   "use client";
   /**
-   * @mui/styled-engine v5.14.14
+   * @mui/styled-engine v5.14.15
    *
    * @license MIT
    * This source code is licensed under the MIT license found in the
@@ -16562,7 +16562,7 @@ The following color spaces are supported: srgb, display-p3, a98-rgb, prophoto-rg
     process.env.NODE_ENV !== "production" ? ThemeProvider$1.propTypes = exactProp(ThemeProvider$1.propTypes) : void 0;
   }
   /**
-   * @mui/private-theming v5.14.14
+   * @mui/private-theming v5.14.15
    *
    * @license MIT
    * This source code is licensed under the MIT license found in the
@@ -20235,41 +20235,75 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   function isAuthorized(userRole2, authorizedRoles) {
     return authorizedRoles.hasOwnProperty(userRole2) && authorizedRoles[userRole2] === true;
   }
+  const BasicSideMenuItemSpecShape = gubu_minExports.Gubu({
+    section: gubu_minExports.Child({
+      title: String,
+      item: gubu_minExports.Child({
+        kind: String,
+        label: String,
+        icon: String,
+        path: String,
+        access: gubu_minExports.Child(Boolean, {})
+      })
+    })
+  });
   function BasicSideMenuItem(props) {
-    const { spec, sectionKey, onItemSelect } = props;
+    const { sectionKey, onItemSelect } = props;
     const viewPath = location.pathname.split("/")[2];
+    const basicSideMenuItemSpec = BasicSideMenuItemSpecShape(props.spec);
     return /* @__PURE__ */ jsxRuntimeExports.jsxs(material.List, { children: [
-      Object.entries(spec.section.item).map(([itemKey, item]) => {
-        return (
-          // TODO: load user from redux store
-          isAuthorized("admin", item.access) && /* @__PURE__ */ jsxRuntimeExports.jsx(
-            material.ListItem,
-            {
-              disablePadding: true,
-              onClick: () => onItemSelect(itemKey, item),
-              children: /* @__PURE__ */ jsxRuntimeExports.jsxs(material.ListItemButton, { selected: viewPath == itemKey, children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx(material.ListItemIcon, { children: makeIcon(item.icon) }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx(material.ListItemText, { primary: item.label })
-              ] })
-            },
-            itemKey
-          )
-        );
-      }),
+      Object.entries(basicSideMenuItemSpec.section.item).map(
+        ([itemKey, item]) => {
+          return (
+            // TODO: load user from redux store
+            isAuthorized("admin", item.access) && /* @__PURE__ */ jsxRuntimeExports.jsx(
+              material.ListItem,
+              {
+                disablePadding: true,
+                onClick: () => onItemSelect(itemKey, item),
+                children: /* @__PURE__ */ jsxRuntimeExports.jsxs(material.ListItemButton, { selected: viewPath == itemKey, children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(material.ListItemIcon, { children: makeIcon(item.icon) }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(material.ListItemText, { primary: item.label })
+                ] })
+              },
+              itemKey
+            )
+          );
+        }
+      ),
       /* @__PURE__ */ jsxRuntimeExports.jsx(material.Divider, {})
     ] }, sectionKey);
   }
+  const BasicSideMenuSpecShape = gubu_minExports.Gubu({
+    section: gubu_minExports.Child({
+      title: String,
+      item: gubu_minExports.Child({
+        kind: String,
+        label: String,
+        icon: String,
+        path: String,
+        access: gubu_minExports.Child(Boolean, {})
+      })
+    })
+  });
   function BasicSideMenu(props) {
-    const {
-      onItemSelect,
-      spec
-    } = props;
-    return /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: Object.entries(spec.sectionList).map(([sectionKey, section]) => {
-      const basicSideMenuItemSpec = {
-        section
-      };
-      return /* @__PURE__ */ jsxRuntimeExports.jsx(BasicSideMenuItem, { spec: basicSideMenuItemSpec, onItemSelect }, sectionKey);
-    }) });
+    const { onItemSelect } = props;
+    const basicSideMenuSpec = BasicSideMenuSpecShape(props.spec);
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: Object.entries(basicSideMenuSpec.section).map(
+      ([sectionKey, section]) => {
+        const basicSideMenuItemSpec = {
+          section
+        };
+        return /* @__PURE__ */ jsxRuntimeExports.jsx(
+          BasicSideMenuItem,
+          {
+            spec: basicSideMenuItemSpec,
+            onItemSelect
+          },
+          sectionKey
+        );
+      }
+    ) });
   }
   function _setPrototypeOf(o, p) {
     _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf2(o2, p2) {
@@ -22747,8 +22781,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       section: gubu_minExports.Child({
         title: String,
         item: gubu_minExports.Child({
-          kind: Number,
-          label: Number,
+          kind: String,
+          label: String,
           icon: String,
           path: String,
           access: gubu_minExports.Child(Boolean, {})
@@ -22757,7 +22791,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     },
     view: gubu_minExports.Child({
       title: String,
-      icon: Number,
+      icon: String,
       content: {}
     })
   });
@@ -22768,47 +22802,28 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     });
   }
   function BasicSide(props) {
-    const {
-      vxg,
-      ctx,
-      spec
-    } = props;
+    const { vxg, ctx } = props;
     const { model, seneca } = ctx();
     const vxgState = reactRedux.useSelector((state) => state.main.vxg);
     const open = vxgState.cmp.BasicSide.show;
     const navigate = reactRouterDom.useNavigate();
-    const location2 = reactRouterDom.useLocation();
-    const specWithDefaults = BasicSideSpecShape(spec);
+    const basicSideSpec = BasicSideSpecShape(props.spec);
     function handleItemSelect(key, item) {
-      if ("resource" === item.kind) {
+      if (item.kind === "resource") {
         navigate(item.path);
       }
     }
     const basicSideMenuSpec = {
-      sectionList: specWithDefaults.side.section
+      section: basicSideSpec.side.section
     };
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs(
-      BasicDrawer,
-      {
-        variant: "permanent",
-        drawerwidth: "16rem",
-        open,
-        children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsxs(BasicDrawerHeader, { children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(
-              "img",
-              {
-                src: specWithDefaults.side.logo.img,
-                style: { width: "5rem" }
-              }
-            ),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(material.IconButton, { onClick: () => onClose(seneca), children: /* @__PURE__ */ jsxRuntimeExports.jsx(iconsMaterial.ChevronLeft, { sx: { color: "black" } }) })
-          ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(material.Divider, {}),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(BasicSideMenu, { spec: basicSideMenuSpec, onItemSelect: handleItemSelect })
-        ]
-      }
-    );
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(BasicDrawer, { variant: "permanent", drawerwidth: "16rem", open, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs(BasicDrawerHeader, { children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: basicSideSpec.side.logo.img, style: { width: "5rem" } }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(material.IconButton, { onClick: () => onClose(seneca), children: /* @__PURE__ */ jsxRuntimeExports.jsx(iconsMaterial.ChevronLeft, { sx: { color: "black" } }) })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(material.Divider, {}),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(BasicSideMenu, { spec: basicSideMenuSpec, onItemSelect: handleItemSelect })
+    ] });
   }
   /**
    * table-core

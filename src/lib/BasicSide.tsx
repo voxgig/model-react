@@ -1,8 +1,8 @@
 import { useSelector } from 'react-redux'
 
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
-import { Child, Gubu, Open, Required } from 'gubu'
+import { Child, Gubu } from 'gubu'
 import BasicSideMenu from './BasicSideMenu'
 import { ChevronLeft } from '@mui/icons-material'
 import { Divider, IconButton } from '@mui/material'
@@ -17,8 +17,8 @@ const BasicSideSpecShape = Gubu({
     section: Child({
       title: String,
       item: Child({
-        kind: Number,
-        label: Number,
+        kind: String,
+        label: String,
         icon: String,
         path: String,
         access: Child(Boolean, {})
@@ -27,57 +27,44 @@ const BasicSideSpecShape = Gubu({
   },
   view: Child({
     title: String,
-    icon: Number,
+    icon: String,
     content: {}
   })
 })
 
-function onClose(seneca: any) {
+function onClose (seneca: any) {
   seneca.act('aim:app,set:state', {
     section: 'vxg.cmp.BasicSide.show',
     content: false
   })
 }
 
-function BasicSide(props: any) {
-  const {
-    vxg,
-    ctx,
-    spec
-  } = props
+function BasicSide (props: any) {
+  const { vxg, ctx } = props
   const { model, seneca } = ctx()
 
   const vxgState = useSelector((state: any) => state.main.vxg)
   const open = vxgState.cmp.BasicSide.show
 
   const navigate = useNavigate()
-  const location = useLocation()
 
-  const specWithDefaults = BasicSideSpecShape(spec)
+  const basicSideSpec = BasicSideSpecShape(props.spec)
 
-  function handleItemSelect(key: any, item: any) {
-    if ('resource' === item.kind) {
+  function handleItemSelect (key: any, item: any) {
+    if (item.kind === 'resource') {
       navigate(item.path)
     }
-
   }
 
   // TODO: clean up props shape
   const basicSideMenuSpec = {
-    sectionList: specWithDefaults.side.section
+    section: basicSideSpec.side.section
   }
 
   return (
-    <BasicDrawer
-      variant='permanent'
-      drawerwidth='16rem'
-      open={open}
-    >
+    <BasicDrawer variant='permanent' drawerwidth='16rem' open={open}>
       <BasicDrawerHeader>
-        <img
-          src={specWithDefaults.side.logo.img}
-          style={{ width: '5rem' }}
-        />
+        <img src={basicSideSpec.side.logo.img} style={{ width: '5rem' }} />
         <IconButton onClick={() => onClose(seneca)}>
           <ChevronLeft sx={{ color: 'black' }} />
         </IconButton>
@@ -86,7 +73,6 @@ function BasicSide(props: any) {
       <BasicSideMenu spec={basicSideMenuSpec} onItemSelect={handleItemSelect} />
     </BasicDrawer>
   )
-
 }
 
 export default BasicSide
