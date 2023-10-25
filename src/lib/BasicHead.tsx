@@ -76,7 +76,7 @@ const BasicHeadSpecShape = Gubu({
 })
 
 function BasicHead (props: any) {
-  const { vxg, ctx, spec } = props
+  const { vxg, ctx } = props
 
   const { seneca } = ctx()
 
