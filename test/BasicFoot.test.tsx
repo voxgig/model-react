@@ -9,7 +9,7 @@ describe('BasicFoot', () => {
   it('happy', () => {
     const basicFootSpec = {
       foot: {
-        title: 'title'
+        title: ''
       },
       view: {
         task: {
