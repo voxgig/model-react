@@ -1,4 +1,3 @@
-
 import React from 'react'
 
 import BasicHead from './BasicHead'
@@ -7,46 +6,39 @@ import BasicMain from './BasicMain'
 import BasicFoot from './BasicFoot'
 import { Gubu } from 'gubu'
 
+// spec schema definition with Gubu
+const BasicAdminSpecShape = Gubu({
+  frame: String
+})
 
-
-function BasicAdmin(props: any) {
-  const {
-    vxg,
-    ctx,
-    spec
-  } = props
+function BasicAdmin (props: any) {
+  const { vxg, ctx } = props
   const model = ctx().model
 
-  const { frame } = spec
+  const basicAdminSpec = BasicAdminSpecShape(props.spec)
 
-  // spec schema definition with Gubu
-  const shape = Gubu({
-    frame: String
-  })
-
-  // spec schema validation with Gubu
-  shape(spec)
+  const { frame } = basicAdminSpec
 
   const frameModel = model.app.web.frame[frame]
 
   const headSpec: any = {
     head: frameModel.part.head,
-    view: frameModel.view,
+    view: frameModel.view
   }
 
   const sideSpec: any = {
     side: frameModel.part.side,
-    view: frameModel.view,
+    view: frameModel.view
   }
 
   const mainSpec: any = {
     main: frameModel.part.main,
-    view: frameModel.view,
+    view: frameModel.view
   }
 
   const footSpec: any = {
     foot: frameModel.part.foot,
-    view: frameModel.view,
+    view: frameModel.view
   }
 
   return (

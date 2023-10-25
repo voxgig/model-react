@@ -22,7 +22,7 @@ describe('BasicSideMenu', () => {
   })
 
   it('happy', () => {
-    const spec = {
+    const basicSideMenuSpec = {
       section: {
         section1: {
           title: 'Section 1',
@@ -43,7 +43,11 @@ describe('BasicSideMenu', () => {
     }
 
     customRender(
-      <BasicSideMenu spec={spec} onItemSelect={() => {}} onClose={() => {}} />,
+      <BasicSideMenu
+        spec={basicSideMenuSpec}
+        onItemSelect={() => {}}
+        onClose={() => {}}
+      />,
       {
         mockInitialState: initialState
       }

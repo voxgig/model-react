@@ -5,13 +5,11 @@ import { customRender, ctx, initialState, vxg } from './mocks/test-utils'
 import { BasicAdmin } from '../src/lib/index'
 
 describe('BasicAdmin', () => {
-
   it('happy', () => {
+    const basicAdminSpec = { frame: 'private' }
 
-    const spec = { frame: 'private' }
-
-    customRender(<BasicAdmin vxg={vxg} ctx={ctx} spec={spec} />, {
-      mockInitialState: initialState,
+    customRender(<BasicAdmin vxg={vxg} ctx={ctx} spec={basicAdminSpec} />, {
+      mockInitialState: initialState
     })
   })
 })

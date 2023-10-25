@@ -10,27 +10,26 @@ describe('BasicSide', () => {
       value: {
         pathname
       }
-    });
+    })
   }
 
   beforeEach(() => {
-    setLocation('/view/task');
-  });
+    setLocation('/view/task')
+  })
 
   afterEach(() => {
-    setLocation(window.location.pathname);
-  });
+    setLocation(window.location.pathname)
+  })
 
   it('happy', () => {
-
-    const sideSpec = {
+    const basicSideSpec = {
       side: {
         logo: {
-          img: "img.png"
+          img: 'img.png'
         },
         section: {
           section1: {
-            title: "Section 1",
+            title: 'Section 1',
             item: {
               task: {
                 kind: 'resource',
@@ -48,15 +47,15 @@ describe('BasicSide', () => {
       },
       view: {
         task: {
-          title: "Task",
-          icon: "done",
+          title: 'Task',
+          icon: 'done',
           content: {}
         }
       }
     }
 
-    customRender(<BasicSide ctx={ctx} spec={sideSpec} />, {
-      mockInitialState: initialState,
+    customRender(<BasicSide ctx={ctx} spec={basicSideSpec} />, {
+      mockInitialState: initialState
     })
   })
 })

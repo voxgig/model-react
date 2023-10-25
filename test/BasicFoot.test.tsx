@@ -7,7 +7,7 @@ import { ctx, spec } from './mocks/test-utils'
 
 describe('BasicFoot', () => {
   it('happy', () => {
-    const footSpec = {
+    const basicFootSpec = {
       foot: {
         title: 'title'
       },
@@ -23,6 +23,6 @@ describe('BasicFoot', () => {
       }
     }
 
-    render(<BasicFoot ctx={ctx} spec={footSpec} />)
+    render(<BasicFoot ctx={ctx} spec={basicFootSpec} />)
   })
 })

@@ -47663,18 +47663,14 @@ function BasicFoot(props) {
     }
   );
 }
+const BasicAdminSpecShape = gubu_minExports.Gubu({
+  frame: String
+});
 function BasicAdmin(props) {
-  const {
-    vxg,
-    ctx,
-    spec
-  } = props;
+  const { vxg, ctx } = props;
   const model = ctx().model;
-  const { frame } = spec;
-  const shape2 = gubu_minExports.Gubu({
-    frame: String
-  });
-  shape2(spec);
+  const basicAdminSpec = BasicAdminSpecShape(props.spec);
+  const { frame } = basicAdminSpec;
   const frameModel = model.app.web.frame[frame];
   const headSpec = {
     head: frameModel.part.head,
