@@ -6,8 +6,7 @@ import { BasicMain } from '../src/lib/index'
 
 describe('BasicMain', () => {
   it('happy', () => {
-
-    const mainSpec = {
+    const basicMainSpec = {
       main: {},
       view: {
         task: {
@@ -21,8 +20,8 @@ describe('BasicMain', () => {
       }
     }
 
-    customRender(<BasicMain vxg={vxg} ctx={ctx} spec={mainSpec} />, {
-      mockInitialState: initialState,
+    customRender(<BasicMain vxg={vxg} ctx={ctx} spec={basicMainSpec} />, {
+      mockInitialState: initialState
     })
   })
 })

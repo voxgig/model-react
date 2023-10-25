@@ -22,7 +22,7 @@ describe('BasicLed', () => {
   })
 
   it('happy', () => {
-    const view = {
+    const basicLedSpec = {
       title: 'task',
       icon: 'done',
       content: {
@@ -63,7 +63,7 @@ describe('BasicLed', () => {
       }
     }
 
-    customRender(<BasicLed vxg={vxg} ctx={ctx} spec={view} />, {
+    customRender(<BasicLed vxg={vxg} ctx={ctx} spec={basicLedSpec} />, {
       mockInitialState: initialState
     })
   })
