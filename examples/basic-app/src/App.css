@@ -30,22 +30,17 @@
 }
 
 .BasicMainDiv {
-  background-color: red;
   overflow-y: auto;
 }
 
 .BasicLed {
-  background-color: green;
   padding-top: 2rem;
   padding-left: 2rem;
   padding-right: 2rem;
 }
 
 .Chat {
-  padding-bottom: 40px;
-  padding-left: 2em;
-  padding-right: 2em;
-  padding-top: 2em;
+  padding: 2rem;
 }
 
 .logo {
