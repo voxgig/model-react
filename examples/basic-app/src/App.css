@@ -1,13 +1,46 @@
-#root {
-  /* max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center; */
-  width: 100%;
+.Public {
+  margin: auto;
+}
+
+.Private {
+  /* display: flex; */
   height: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
+  width: 100%;
+}
+
+.BasicAdmin {
+  height: 100%;
+  width: 100%;
+}
+
+.BasicSide * {
+  xcolor: white !important;
+  xbackground-color: rgb(var(--vxg-cb1));
+}
+
+.BasicSide ul {
+  height: 100vh;
+}
+
+.BasicMain {
+  flex: 1;
+  background-color: #eee;
+  padding-top: 4rem;
+  height: calc(100% - 4rem);
+}
+
+.BasicMainDiv {
+  overflow-y: auto;
+}
+
+.BasicLed {
+  padding-top: 2rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+.Chat {
+  padding: 2rem;
 }
 
 .logo {

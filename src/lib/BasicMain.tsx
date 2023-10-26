@@ -74,20 +74,18 @@ function BasicMain (props: any) {
     (state: any) => state.main.vxg.cmp.BasicSide.show
   )
 
-  const divStyle = {
-    marginLeft: '2em',
-    marginRight: '2em',
-    marginTop: '3em'
-  }
-
-  const mainDiv = {
+  const basicMainStyle = {
     width: sideOpen ? 'calc(100% - 16rem)' : '100%',
     paddingLeft: sideOpen ? '16rem' : '0rem'
   }
 
+  const divStyle = {
+    height: '100%'
+  }
+
   return (
-    <div className='BasicMain' style={mainDiv}>
-      <div style={{ ...divStyle }}>
+    <div className='BasicMain' style={basicMainStyle}>
+      <div className='BasicMainDiv' style={{ ...divStyle }}>
         <Routes>
           <Route path='/view'>
             {views.map((view: any) => {

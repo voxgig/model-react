@@ -42,7 +42,7 @@ function BasicAdmin (props: any) {
   }
 
   return (
-    <div>
+    <div className='BasicAdmin'>
       <BasicHead vxg={vxg} ctx={ctx} spec={headSpec} />
       <BasicSide vxg={vxg} ctx={ctx} spec={sideSpec} />
       <BasicMain vxg={vxg} ctx={ctx} spec={mainSpec} />

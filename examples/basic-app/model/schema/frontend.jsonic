@@ -41,13 +41,10 @@ app: web: part: head: {
 
 app: web: part: side: {
   logo: img: string
-  style: {
-    &: string
-  }
-  sections: {
-    &: { # section
-      &: { # items
-        &: { # item
+  section: {
+    &: {
+      &: {
+        &: {
           kind: string
           label: string
           icon: string

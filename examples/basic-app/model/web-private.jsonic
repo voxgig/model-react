@@ -32,25 +32,47 @@ part: head: {
 
 part: side: {
   logo: img: '/voxgig.png'
-  style: {
-    backgroundColor: '#333333'
-    textColor: '#ffffff'
-  }
-  section: [
-    { 
-      kind: "navmenu"
-      view: talk: true
-      button: { 
-        icon: 'done', 
-        text: 'Talks' 
+  section: {
+    section1: {
+      item: {
+        item1: {
+          kind: 'resource'
+          label: 'Talks'
+          icon: 'done'
+          path: 'view/talk'
+          access: {
+            admin: true
+            user: true
+          }
+        }
+        item2: {
+          kind: 'resource'
+          label: 'Chat'
+          icon: 'chatBubble'
+          path: 'view/chat'
+          access: {
+            admin: true
+            user: true
+          }
+        }
       }
     }
-  ]
+  }
 }
 
 part: main: title: ""
 
 part: foot: title: ""
+
+view: chat: {
+  title: 'Chat'
+  icon: 'done'
+  content: {
+    kind: 'custom'
+    cmp: 'chat'
+    def: add: { active: false }
+  }
+}
 
 view: talk: {
   title: 'Talk'
