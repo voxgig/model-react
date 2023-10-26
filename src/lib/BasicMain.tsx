@@ -75,7 +75,6 @@ function BasicMain (props: any) {
   )
 
   const basicMainStyle = {
-    width: sideOpen ? 'calc(100% - 16rem)' : '100%',
     paddingLeft: sideOpen ? '16rem' : '0rem'
   }
 

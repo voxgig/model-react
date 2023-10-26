@@ -47648,7 +47648,6 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       (state) => state.main.vxg.cmp.BasicSide.show
     );
     const basicMainStyle = {
-      width: sideOpen ? "calc(100% - 16rem)" : "100%",
       paddingLeft: sideOpen ? "16rem" : "0rem"
     };
     const divStyle = {
