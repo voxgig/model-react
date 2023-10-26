@@ -123,7 +123,8 @@ function BasicHead (props: any) {
   let led_add = vxgState.trigger.led.add
 
   const viewPath: any = location.pathname.split('/')[2]
-  let add = basicHeadSpec.view[viewPath].content.def.add || { active: false }
+
+  let add = basicHeadSpec.view[viewPath]?.content?.def?.add || { active: false }
 
   let drawerwidth = '16rem'
 
@@ -201,7 +202,7 @@ function BasicHead (props: any) {
                 size='large'
                 onClick={() => addItem(seneca, led_add)}
               >
-                {tooldef.title + ' ' + basicHeadSpec.view[viewPath].name}
+                {tooldef.title + ' ' + basicHeadSpec.view[viewPath]?.name}
               </BasicButton>
             )
           }
