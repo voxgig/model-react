@@ -47736,7 +47736,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       foot: frameModel.part.foot,
       view: frameModel.view
     };
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "BasicAdmin", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(BasicHead, { vxg, ctx, spec: headSpec }),
       /* @__PURE__ */ jsxRuntimeExports.jsx(BasicSide, { vxg, ctx, spec: sideSpec }),
       /* @__PURE__ */ jsxRuntimeExports.jsx(BasicMain, { vxg, ctx, spec: mainSpec }),

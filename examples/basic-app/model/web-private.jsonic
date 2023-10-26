@@ -39,17 +39,17 @@ part: side: {
           kind: 'resource'
           label: 'Talks'
           icon: 'done'
-          path: '/view/talk'
+          path: 'view/talk'
           access: {
             admin: true
             user: true
           }
         }
         item2: {
-          kind: 'custom'
+          kind: 'resource'
           label: 'Chat'
           icon: 'chatBubble'
-          path: '/chat'
+          path: 'view/chat'
           access: {
             admin: true
             user: true
@@ -63,6 +63,16 @@ part: side: {
 part: main: title: ""
 
 part: foot: title: ""
+
+view: chat: {
+  title: 'Chat'
+  icon: 'done'
+  content: {
+    kind: 'custom'
+    cmp: 'chat'
+    def: add: { active: false }
+  }
+}
 
 view: talk: {
   title: 'Talk'
