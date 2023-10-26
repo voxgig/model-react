@@ -31,8 +31,7 @@
           },
           "side": {
             "logo": {},
-            "style": {},
-            "sections": {}
+            "section": {}
           },
           "main": {},
           "foot": {}
@@ -87,23 +86,32 @@
               "logo": {
                 "img": "/voxgig.png"
               },
-              "style": {
-                "backgroundColor": "#333333",
-                "textColor": "#ffffff"
-              },
-              "sections": {},
-              "section": [
-                {
-                  "kind": "navmenu",
-                  "view": {
-                    "talk": true
-                  },
-                  "button": {
-                    "icon": "done",
-                    "text": "Talks"
+              "section": {
+                "section1": {
+                  "item": {
+                    "item1": {
+                      "kind": "resource",
+                      "label": "Talks",
+                      "icon": "done",
+                      "path": "/view/talk",
+                      "access": {
+                        "admin": true,
+                        "user": true
+                      }
+                    },
+                    "item2": {
+                      "kind": "custom",
+                      "label": "Chat",
+                      "icon": "chatBubble",
+                      "path": "/chat",
+                      "access": {
+                        "admin": true,
+                        "user": true
+                      }
+                    }
                   }
                 }
-              ]
+              }
             },
             "main": {
               "title": ""
