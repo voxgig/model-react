@@ -22795,7 +22795,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       section: gubu_minExports.Child({
         title: String,
         item: gubu_minExports.Child({
-          kind: String,
+          kind: gubu_minExports.Exact("resource"),
           label: String,
           icon: String,
           path: String,

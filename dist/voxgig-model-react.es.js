@@ -22783,7 +22783,7 @@ const BasicSideSpecShape = gubu_minExports.Gubu({
     section: gubu_minExports.Child({
       title: String,
       item: gubu_minExports.Child({
-        kind: String,
+        kind: gubu_minExports.Exact("resource"),
         label: String,
         icon: String,
         path: String,
