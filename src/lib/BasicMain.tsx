@@ -6,6 +6,7 @@ import { Routes, Route } from 'react-router-dom'
 
 import BasicLed from './BasicLed'
 import { Child, Exact, Gubu } from 'gubu'
+import { Box } from '@mui/material'
 
 function makeCmp (view: any, ctx: any) {
   let cmp: any = () => <div>NONE</div>
@@ -67,24 +68,24 @@ function BasicMain (props: any) {
   const { model, content } = ctx()
 
   const basicMainSpec = BasicMainSpecShape(props.spec)
-
   const views = Object.values(basicMainSpec.view)
-
   const sideOpen = useSelector(
     (state: any) => state.main.vxg.cmp.BasicSide.show
   )
 
-  const basicMainStyle = {
+  const style = {
     paddingLeft: sideOpen ? '16rem' : '0rem'
   }
 
-  const divStyle = {
-    height: '100%'
-  }
-
   return (
-    <div className='BasicMain' style={basicMainStyle}>
-      <div className='BasicMainDiv' style={{ ...divStyle }}>
+    <Box
+      className='basic-main'
+      sx={[
+        ...(Array.isArray(style) ? style : [style]),
+        ...(Array.isArray(model.sx) ? model.sx : [model.sx])
+      ]}
+    >
+      <Box className='content-container' sx={{ height: '100%' }}>
         <Routes>
           <Route path='/view'>
             {views.map((view: any) => {
@@ -115,8 +116,8 @@ function BasicMain (props: any) {
             })}
           </Route>
         </Routes>
-      </div>
-    </div>
+      </Box>
+    </Box>
   )
 }
 
