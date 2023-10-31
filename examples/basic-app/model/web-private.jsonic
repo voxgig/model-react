@@ -18,7 +18,7 @@ part: head: $.sys.app.web.part.head & {
     },
     autocomplete:{ 
       kind: 'autocomplete'
-      title: 'Autocomplete'
+      label: 'Autocomplete'
       options: { 
         kind: 'ent'
         label: field: 'title'

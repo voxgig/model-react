@@ -1,9 +1,31 @@
 import { TextField, Autocomplete, createFilterOptions } from '@mui/material'
+import { Child, Exact, Gubu } from 'gubu'
 
 import { useSelector } from 'react-redux'
 
+const BasicAutocompleteShape = Gubu({
+  tooldef: {
+    kind: Exact('addbutton', 'autocomplete'),
+    label: String,
+    options: {
+      kind: String,
+      label: {
+        field: String
+      },
+      ent: String
+    },
+    name: ''
+  }
+})
+
 function BasicAutocomplete (props: any) {
-  const { seneca, tooldef, tooldata } = props
+  const { ctx } = props
+  const { seneca } = ctx()
+
+  // spec schema validation with Gubu
+  const basicAutocompleteSpec = BasicAutocompleteShape(props.spec)
+
+  const { tooldef } = basicAutocompleteSpec
 
   let data = {}
   let value = {}
@@ -44,7 +66,7 @@ function BasicAutocomplete (props: any) {
         // const { inputValue } = params
         return filtered
       }}
-      renderInput={params => <TextField {...params} label={tooldef.title} />}
+      renderInput={params => <TextField {...params} label={tooldef.label} />}
       onChange={(event: any, newval: any) => {
         seneca.act('aim:app,set:state', {
           section: 'vxg.cmp.BasicHead.tool.' + tooldef.name + '.selected',
