@@ -2,6 +2,7 @@ import { TextField, Autocomplete, createFilterOptions } from '@mui/material'
 import { Exact, Gubu } from 'gubu'
 import { useSelector } from 'react-redux'
 
+// Define spec shape with Gubu
 const BasicAutocompleteShape = Gubu({
   tooldef: {
     kind: Exact('addbutton', 'autocomplete'),
@@ -17,16 +18,21 @@ const BasicAutocompleteShape = Gubu({
   }
 })
 
-function BasicAutocomplete (props: any) {
+interface BasicAutocompleteProps {
+  ctx: any
+  spec: any
+  vxg?: any
+}
+
+function BasicAutocomplete (props: BasicAutocompleteProps) {
   const { ctx } = props
   const { seneca } = ctx()
 
-  // spec schema validation with Gubu
+  // spec shape validation with Gubu
   const basicAutocompleteSpec = BasicAutocompleteShape(props.spec)
 
   const { tooldef } = basicAutocompleteSpec
-
-  let data = {}
+  let options = {}
   let value = {}
 
   // populate options and value for autocomplete
