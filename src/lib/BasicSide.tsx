@@ -17,7 +17,7 @@ const BasicSideSpecShape = Gubu({
     section: Child({
       title: String,
       item: Child({
-        kind: Exact('resource'),
+        kind: Exact('resource', 'page', 'modal'),
         label: String,
         icon: String,
         path: String,
