@@ -59,7 +59,7 @@ import * as React from "react";
 import React__default, { createElement, isValidElement, Children, cloneElement, useMemo, useState, useRef, useCallback, useEffect, Fragment, memo as memo$2, useLayoutEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, useLocation, Routes, Route } from "react-router-dom";
-import { Button as Button$1, createFilterOptions as createFilterOptions$1, Toolbar as Toolbar$1, IconButton as IconButton$1, Autocomplete, TextField as TextField$1, Typography as Typography$1, List as List$1, ListItem, ListItemButton, ListItemIcon as ListItemIcon$1, ListItemText as ListItemText$1, Divider as Divider$1, Grid as Grid$1, MenuItem as MenuItem$1, Box as Box$2, Container as Container$2 } from "@mui/material";
+import { Button as Button$1, Autocomplete, TextField as TextField$1, createFilterOptions as createFilterOptions$1, Toolbar as Toolbar$1, IconButton as IconButton$1, Typography as Typography$1, List as List$1, ListItem, ListItemButton, ListItemIcon as ListItemIcon$1, ListItemText as ListItemText$1, Divider as Divider$1, Grid as Grid$1, MenuItem as MenuItem$1, Box as Box$2, Container as Container$2 } from "@mui/material";
 import * as ReactDOM from "react-dom";
 import ReactDOM__default, { flushSync } from "react-dom";
 import emStyled from "@emotion/styled";
@@ -20054,23 +20054,73 @@ const BasicAppBar = styled(AppBar, {
     duration: theme.transitions.duration.enteringScreen
   })
 }));
-function onOpen(seneca) {
-  seneca.act("aim:app,set:state", {
-    section: "vxg.cmp.BasicSide.show",
-    content: true
-  });
+function BasicAutocomplete(props) {
+  const { seneca, tooldef, tooldata } = props;
+  let data = {};
+  let value = {};
+  if ("ent" === tooldef.options.kind) {
+    let canon = tooldef.options.ent;
+    data = {
+      ents: useSelector((state) => state.main.vxg.ent.list.main[canon])
+    };
+    let selected = useSelector(
+      (state) => state.main.vxg.cmp.BasicHead.tool[tooldef.name].selected
+    );
+    if (selected) {
+      value = {
+        label: selected[tooldef.options.label.field],
+        ent: selected
+      };
+    }
+  }
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(
+    Autocomplete,
+    {
+      freeSolo: true,
+      forcePopupIcon: true,
+      value: value || tooldef.defaultvalue || "",
+      options: resolveOptions$1(tooldef, data),
+      size: "small",
+      sx: {
+        paddingLeft: "1em",
+        width: "20rem"
+      },
+      filterOptions: (options, params) => {
+        const filtered = filter$1(options, params);
+        return filtered;
+      },
+      renderInput: (params) => /* @__PURE__ */ jsxRuntimeExports.jsx(TextField$1, __spreadProps(__spreadValues({}, params), { label: tooldef.title })),
+      onChange: (event, newval) => {
+        seneca.act("aim:app,set:state", {
+          section: "vxg.cmp.BasicHead.tool." + tooldef.name + ".selected",
+          content: "search" == tooldef.mode && typeof newval === "string" ? { [tooldef.options.label.field]: newval } : newval == null ? void 0 : newval.ent
+        });
+      },
+      isOptionEqualToValue: (opt, val) => {
+        var _a, _b;
+        return opt === val || null != opt && null != val && ((_a = opt.ent) == null ? void 0 : _a.id) === ((_b = val.ent) == null ? void 0 : _b.id);
+      }
+    },
+    tooldef.name
+  );
 }
 const filter$1 = createFilterOptions$1();
-function resolveOptions$1(tooldef, tooldata) {
+function resolveOptions$1(tooldef, data) {
   let options = [];
-  if ("ent" === tooldef.options.kind && tooldata[tooldef.name]) {
-    let ents = tooldata[tooldef.name].ents || [];
+  if ("ent" === tooldef.options.kind && data) {
+    let ents = data.ents || [];
     options = ents.map((ent) => ({
       label: ent[tooldef.options.label.field],
       ent
     }));
   }
   return options;
+}
+function onOpen(seneca) {
+  seneca.act("aim:app,set:state", {
+    section: "vxg.cmp.BasicSide.show",
+    content: true
+  });
 }
 function addItem(seneca, led_add) {
   seneca.act("aim:app,set:state", {
@@ -20114,37 +20164,15 @@ function BasicHead(props) {
   );
   const user = useSelector((state) => state.main.auth.user);
   const userName = user.name || user.email;
-  let valuemap = {};
-  let tooldata = {};
-  tooldefs.forEach((tooldef) => {
-    if ("autocomplete" === tooldef.kind) {
-      if ("ent" === tooldef.options.kind) {
-        let canon = tooldef.options.ent;
-        tooldata[tooldef.name] = {
-          ents: useSelector((state) => state.main.vxg.ent.list.main[canon])
-        };
-        let selected = useSelector(
-          (state) => state.main.vxg.cmp.BasicHead.tool[tooldef.name].selected
-        );
-        if (selected) {
-          valuemap[tooldef.name] = {
-            label: selected[tooldef.options.label.field],
-            ent: selected
-          };
-        }
-      }
-    }
-  });
   const vxgState = useSelector((state) => state.main.vxg);
   const open = vxgState.cmp.BasicSide.show;
   let led_add = vxgState.trigger.led.add;
   const viewPath = location2.pathname.split("/")[2];
   let add = ((_c = (_b = (_a = basicHeadSpec.view[viewPath]) == null ? void 0 : _a.content) == null ? void 0 : _b.def) == null ? void 0 : _c.add) || { active: false };
-  let drawerwidth = "16rem";
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
     BasicAppBar,
     {
-      drawerwidth,
+      drawerwidth: "16rem",
       open,
       sx: {
         color: "black",
@@ -20166,36 +20194,7 @@ function BasicHead(props) {
         tooldefs.map((tooldef) => {
           var _a2;
           if ("autocomplete" === tooldef.kind) {
-            return /* @__PURE__ */ jsxRuntimeExports.jsx(
-              Autocomplete,
-              {
-                freeSolo: true,
-                forcePopupIcon: true,
-                value: valuemap[tooldef.name] || tooldef.defaultvalue || "",
-                options: resolveOptions$1(tooldef, tooldata),
-                size: "small",
-                sx: {
-                  paddingLeft: "1em",
-                  width: "20rem"
-                },
-                filterOptions: (options, params) => {
-                  const filtered = filter$1(options, params);
-                  return filtered;
-                },
-                renderInput: (params) => /* @__PURE__ */ jsxRuntimeExports.jsx(TextField$1, __spreadProps(__spreadValues({}, params), { label: tooldef.title })),
-                onChange: (event, newval) => {
-                  seneca.act("aim:app,set:state", {
-                    section: "vxg.cmp.BasicHead.tool." + tooldef.name + ".selected",
-                    content: "search" == tooldef.mode && typeof newval === "string" ? { [tooldef.options.label.field]: newval } : newval == null ? void 0 : newval.ent
-                  });
-                },
-                isOptionEqualToValue: (opt, val) => {
-                  var _a3, _b2;
-                  return opt === val || null != opt && null != val && ((_a3 = opt.ent) == null ? void 0 : _a3.id) === ((_b2 = val.ent) == null ? void 0 : _b2.id);
-                }
-              },
-              tooldef.name
-            );
+            return /* @__PURE__ */ jsxRuntimeExports.jsx(BasicAutocomplete, __spreadValues({}, { seneca, tooldef }), tooldef.name);
           } else if ("addbutton" === tooldef.kind) {
             return /* @__PURE__ */ jsxRuntimeExports.jsx(
               BasicButton,

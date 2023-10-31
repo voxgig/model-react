@@ -13,34 +13,17 @@ import {
   IconButton,
   createFilterOptions
 } from '@mui/material'
-
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 
 import BasicButton from './BasicButton'
-
 import BasicAppBar from './BasicAppBar'
+import BasicAutocomplete from './BasicAutocomplete'
 
 function onOpen (seneca: any) {
   seneca.act('aim:app,set:state', {
     section: 'vxg.cmp.BasicSide.show',
     content: true
   })
-}
-
-const filter = createFilterOptions()
-
-function resolveOptions (tooldef: any, tooldata: any) {
-  let options = []
-
-  if ('ent' === tooldef.options.kind && tooldata[tooldef.name]) {
-    let ents = tooldata[tooldef.name].ents || []
-    options = ents.map((ent: any) => ({
-      label: ent[tooldef.options.label.field],
-      ent
-    }))
-  }
-
-  return options
 }
 
 function addItem (seneca: any, led_add: any) {
@@ -93,45 +76,17 @@ function BasicHead (props: any) {
   const user = useSelector((state: any) => state.main.auth.user)
   const userName = user.name || user.email
 
-  let valuemap: any = {}
-  let tooldata: any = {}
-  tooldefs.forEach(tooldef => {
-    if ('autocomplete' === tooldef.kind) {
-      if ('ent' === tooldef.options.kind) {
-        let canon = tooldef.options.ent
-        tooldata[tooldef.name] = {
-          ents: useSelector((state: any) => state.main.vxg.ent.list.main[canon])
-        }
-
-        let selected = useSelector(
-          (state: any) =>
-            state.main.vxg.cmp.BasicHead.tool[tooldef.name].selected
-        )
-
-        if (selected) {
-          valuemap[tooldef.name] = {
-            label: selected[tooldef.options.label.field],
-            ent: selected
-          }
-        }
-      }
-    }
-  })
-
   const vxgState = useSelector((state: any) => state.main.vxg)
   const open = vxgState.cmp.BasicSide.show
   let led_add = vxgState.trigger.led.add
 
   const viewPath: any = location.pathname.split('/')[2]
-
   let add = basicHeadSpec.view[viewPath]?.content?.def?.add || { active: false }
-
-  let drawerwidth = '16rem'
 
   return (
     <BasicAppBar
       // position="fixed"
-      drawerwidth={drawerwidth}
+      drawerwidth='16rem'
       open={open}
       sx={{
         color: 'black',
@@ -154,41 +109,7 @@ function BasicHead (props: any) {
         {tooldefs.map(tooldef => {
           if ('autocomplete' === tooldef.kind) {
             return (
-              <Autocomplete
-                freeSolo
-                forcePopupIcon
-                value={valuemap[tooldef.name] || tooldef.defaultvalue || ''}
-                key={tooldef.name}
-                options={resolveOptions(tooldef, tooldata)}
-                // disableClearable={ typeof vxg.cmp.BasicHead.tool[tooldef.name].selected != 'object' }
-                size='small'
-                sx={{
-                  paddingLeft: '1em',
-                  width: '20rem'
-                }}
-                filterOptions={(options: any, params: any) => {
-                  const filtered = filter(options, params)
-                  // const { inputValue } = params
-                  return filtered
-                }}
-                renderInput={params => (
-                  <TextField {...params} label={tooldef.title} />
-                )}
-                onChange={(event: any, newval: any) => {
-                  seneca.act('aim:app,set:state', {
-                    section:
-                      'vxg.cmp.BasicHead.tool.' + tooldef.name + '.selected',
-                    content:
-                      'search' == tooldef.mode && typeof newval === 'string'
-                        ? { [tooldef.options.label.field]: newval }
-                        : newval?.ent
-                  })
-                }}
-                isOptionEqualToValue={(opt: any, val: any) =>
-                  opt === val ||
-                  (null != opt && null != val && opt.ent?.id === val.ent?.id)
-                }
-              />
+              <BasicAutocomplete key={tooldef.name} {...{ seneca, tooldef }} />
             )
           } else if ('addbutton' === tooldef.kind) {
             return (
