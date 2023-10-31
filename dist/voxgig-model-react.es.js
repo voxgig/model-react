@@ -47585,16 +47585,6 @@ function BasicLed(props) {
     }
   ) });
 }
-function makeCmp(view, ctx) {
-  let cmp = () => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: "NONE" });
-  const content = view.content || {};
-  if ("custom" === content.kind) {
-    cmp = ctx().cmp[content.cmp];
-  } else if ("led" === content.kind) {
-    cmp = BasicLed;
-  }
-  return cmp;
-}
 const BasicMainSpecShape = gubu_minExports.Gubu({
   main: {},
   view: gubu_minExports.Child({
@@ -47645,47 +47635,47 @@ function BasicMain(props) {
   const style2 = {
     paddingLeft: sideOpen ? "16rem" : "0rem"
   };
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(
-    Box$2,
-    {
-      className: "basic-main",
-      sx: [
-        ...Array.isArray(style2) ? style2 : [style2],
-        ...Array.isArray(model.sx) ? model.sx : [model.sx]
-      ],
-      children: /* @__PURE__ */ jsxRuntimeExports.jsx(Box$2, { className: "content-container", sx: { height: "100%" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Routes, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/view", children: views.map((view) => {
-        const Cmp = makeCmp(view, ctx);
-        if (view.paramId) {
-          return /* @__PURE__ */ jsxRuntimeExports.jsxs(Fragment, { children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(
-              Route,
-              {
-                path: "/view/" + view.name,
-                element: /* @__PURE__ */ jsxRuntimeExports.jsx(Cmp, { vxg, ctx, spec: view })
-              },
-              view.name
-            ),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(
-              Route,
-              {
-                path: "/view/" + view.name + "/:" + view.paramId,
-                element: /* @__PURE__ */ jsxRuntimeExports.jsx(Cmp, { vxg, ctx, spec: view })
-              },
-              view.name
-            )
-          ] }, view.name);
-        }
-        return /* @__PURE__ */ jsxRuntimeExports.jsx(
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(Box$2, { className: "basic-main", sx: style2, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Box$2, { className: "basic-main-container", sx: { height: "100%" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Routes, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/view", children: views.map((view) => {
+    const Cmp = makeCmp(view, ctx);
+    if (view.paramId) {
+      return /* @__PURE__ */ jsxRuntimeExports.jsxs(Fragment, { children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
           Route,
           {
             path: "/view/" + view.name,
             element: /* @__PURE__ */ jsxRuntimeExports.jsx(Cmp, { vxg, ctx, spec: view })
           },
           view.name
-        );
-      }) }) }) })
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          Route,
+          {
+            path: "/view/" + view.name + "/:" + view.paramId,
+            element: /* @__PURE__ */ jsxRuntimeExports.jsx(Cmp, { vxg, ctx, spec: view })
+          },
+          view.name
+        )
+      ] }, view.name);
     }
-  );
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(
+      Route,
+      {
+        path: "/view/" + view.name,
+        element: /* @__PURE__ */ jsxRuntimeExports.jsx(Cmp, { vxg, ctx, spec: view })
+      },
+      view.name
+    );
+  }) }) }) }) });
+}
+function makeCmp(view, ctx) {
+  let cmp = () => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: "NONE" });
+  const content = view.content || {};
+  if ("custom" === content.kind) {
+    cmp = ctx().cmp[content.cmp];
+  } else if ("led" === content.kind) {
+    cmp = BasicLed;
+  }
+  return cmp;
 }
 const BasicFootSpecShape = gubu_minExports.Gubu({
   foot: {

@@ -8,20 +8,6 @@ import BasicLed from './BasicLed'
 import { Child, Exact, Gubu } from 'gubu'
 import { Box } from '@mui/material'
 
-function makeCmp (view: any, ctx: any) {
-  let cmp: any = () => <div>NONE</div>
-
-  const content = view.content || {}
-
-  if ('custom' === content.kind) {
-    cmp = ctx().cmp[content.cmp]
-  } else if ('led' === content.kind) {
-    cmp = BasicLed
-  }
-
-  return cmp
-}
-
 // Validate spec shape with Gubu
 const BasicMainSpecShape = Gubu({
   main: {},
@@ -78,14 +64,8 @@ function BasicMain (props: any) {
   }
 
   return (
-    <Box
-      className='basic-main'
-      sx={[
-        ...(Array.isArray(style) ? style : [style]),
-        ...(Array.isArray(model.sx) ? model.sx : [model.sx])
-      ]}
-    >
-      <Box className='content-container' sx={{ height: '100%' }}>
+    <Box className='basic-main' sx={style}>
+      <Box className='basic-main-container' sx={{ height: '100%' }}>
         <Routes>
           <Route path='/view'>
             {views.map((view: any) => {
@@ -122,3 +102,18 @@ function BasicMain (props: any) {
 }
 
 export default BasicMain
+
+function makeCmp (view: any, ctx: any) {
+  let cmp: any = () => <div>NONE</div>
+
+  const content = view.content || {}
+
+  // TODO: Refactor this
+  if ('custom' === content.kind) {
+    cmp = ctx().cmp[content.cmp]
+  } else if ('led' === content.kind) {
+    cmp = BasicLed
+  }
+
+  return cmp
+}
