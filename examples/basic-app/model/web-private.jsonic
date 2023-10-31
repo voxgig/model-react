@@ -15,7 +15,7 @@ part: head: {
       options: { 
         kind: 'ent' 
         label: field: 'title'
-        ent: 'vxg/task'
+        ent: 'vxg/talk'
       }
     },
     { 
@@ -24,7 +24,7 @@ part: head: {
       options: { 
         kind: 'ent'
         label: field: 'title'
-        ent: 'vxg/task'
+        ent: 'vxg/talk'
       }
     }
   ]

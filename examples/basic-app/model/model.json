@@ -65,7 +65,7 @@
                       "label": {
                         "field": "title"
                       },
-                      "ent": "vxg/task"
+                      "ent": "vxg/talk"
                     }
                   },
                   {
@@ -76,7 +76,7 @@
                       "label": {
                         "field": "title"
                       },
-                      "ent": "vxg/task"
+                      "ent": "vxg/talk"
                     }
                   }
                 ]
