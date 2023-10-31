@@ -59,13 +59,19 @@ function BasicMain (props: any) {
     (state: any) => state.main.vxg.cmp.BasicSide.show
   )
 
-  const style = {
+  // TODO: Refactor this
+  const basicMainStyle = {
     paddingLeft: sideOpen ? '16rem' : '0rem'
   }
 
+  // TODO: Refactor this
+  const basicMainContainerStyle = {
+    height: '100%'
+  }
+
   return (
-    <Box className='basic-main' sx={style}>
-      <Box className='basic-main-container' sx={{ height: '100%' }}>
+    <Box className='basic-main' sx={basicMainStyle}>
+      <Box className='basic-main-container' sx={basicMainContainerStyle}>
         <Routes>
           <Route path='/view'>
             {views.map((view: any) => {
