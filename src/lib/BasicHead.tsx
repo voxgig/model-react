@@ -48,8 +48,6 @@ function BasicHead (props: any) {
 
   const { seneca } = ctx()
 
-  console.log('props.spec', props.spec)
-
   // spec schema validation with Gubu
   const basicHeadSpec = BasicHeadSpecShape(props.spec)
 
@@ -96,7 +94,11 @@ function BasicHead (props: any) {
         {tooldefs.map(tooldef => {
           if ('autocomplete' === tooldef.kind) {
             return (
-              <BasicAutocomplete key={tooldef.name} {...{ seneca, tooldef }} />
+              <BasicAutocomplete
+                spec={{ tooldef: tooldef }}
+                ctx={ctx}
+                key={tooldef.name}
+              />
             )
           } else if ('addbutton' === tooldef.kind) {
             return (
@@ -110,7 +112,7 @@ function BasicHead (props: any) {
                 size='large'
                 onClick={() => addItem(seneca, led_add)}
               >
-                {tooldef.title + ' ' + basicHeadSpec.view[viewPath]?.name}
+                {tooldef.label + ' ' + basicHeadSpec.view[viewPath]?.name}
               </BasicButton>
             )
           }
