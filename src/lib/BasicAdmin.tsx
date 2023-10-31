@@ -1,10 +1,9 @@
-import React from 'react'
-
 import BasicHead from './BasicHead'
 import BasicSide from './BasicSide'
 import BasicMain from './BasicMain'
 import BasicFoot from './BasicFoot'
 import { Gubu } from 'gubu'
+import { Box } from '@mui/material'
 
 // spec schema definition with Gubu
 const BasicAdminSpecShape = Gubu({
@@ -42,12 +41,12 @@ function BasicAdmin (props: any) {
   }
 
   return (
-    <div className='BasicAdmin'>
+    <Box className='BasicAdmin'>
       <BasicHead vxg={vxg} ctx={ctx} spec={headSpec} />
       <BasicSide vxg={vxg} ctx={ctx} spec={sideSpec} />
       <BasicMain vxg={vxg} ctx={ctx} spec={mainSpec} />
       <BasicFoot vxg={vxg} ctx={ctx} spec={footSpec} />
-    </div>
+    </Box>
   )
 }
 

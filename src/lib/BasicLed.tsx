@@ -3,11 +3,10 @@ import { useSelector } from 'react-redux'
 
 import { useLocation } from 'react-router-dom'
 
-import { MaterialReactTable } from 'material-react-table'
-
 import BasicList from './BasicList'
 import BasicEdit from './BasicEdit'
 import { Gubu } from 'gubu'
+import { Box } from '@mui/material'
 
 function fields (spec: any) {
   try {
@@ -116,7 +115,7 @@ function BasicLed (props: any) {
   }, [led_add])
 
   return (
-    <div className='BasicLed'>
+    <Box className='BasicLed'>
       {'-/' + canon !== item.entity$ ? (
         <BasicList
           ctx={ctx}
@@ -152,7 +151,7 @@ function BasicLed (props: any) {
           itemFields={itemFields}
         />
       )}
-    </div>
+    </Box>
   )
 }
 

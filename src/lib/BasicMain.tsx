@@ -1,11 +1,9 @@
-import React, { Fragment } from 'react'
-
+import { Fragment } from 'react'
 import { useSelector } from 'react-redux'
-
 import { Routes, Route } from 'react-router-dom'
-
 import BasicLed from './BasicLed'
 import { Child, Exact, Gubu } from 'gubu'
+import { Box } from '@mui/material'
 
 function makeCmp (view: any, ctx: any) {
   let cmp: any = () => <div>NONE</div>
@@ -83,8 +81,8 @@ function BasicMain (props: any) {
   }
 
   return (
-    <div className='BasicMain' style={basicMainStyle}>
-      <div className='BasicMainDiv' style={{ ...divStyle }}>
+    <Box className='BasicMain' style={basicMainStyle}>
+      <Box className='BasicMainDiv' style={{ ...divStyle }}>
         <Routes>
           <Route path='/view'>
             {views.map((view: any) => {
@@ -115,8 +113,8 @@ function BasicMain (props: any) {
             })}
           </Route>
         </Routes>
-      </div>
-    </div>
+      </Box>
+    </Box>
   )
 }
 
