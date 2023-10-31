@@ -2,23 +2,21 @@
 
 kind: basic
 
-part: $.sys.app.web.part
-
 part: admin: {}
 
-part: head: {
+part: head: $.sys.app.web.part.head & {
   logo: img: '/voxgig.png'
-  tool: def: [
-    { 
+  tool: def: {
+    addbutton:{ 
       kind: 'addbutton'
-      title: 'Add'
+      label: 'Add'
       options: { 
         kind: 'ent' 
         label: field: 'title'
         ent: 'vxg/talk'
       }
     },
-    { 
+    autocomplete:{ 
       kind: 'autocomplete'
       title: 'Autocomplete'
       options: { 
@@ -27,7 +25,7 @@ part: head: {
         ent: 'vxg/talk'
       }
     }
-  ]
+  }
 }
 
 

@@ -51,8 +51,8 @@ export function getMain () {
         cmp: {
           BasicHead: {
             tool: {
-              0: {},
-              1: {
+              addbutton: {},
+              autocomplete: {
                 selected: {
                   title: 'Title'
                 }

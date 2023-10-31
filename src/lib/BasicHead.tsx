@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 
 import { useNavigate, useLocation } from 'react-router-dom'
 
-import { Gubu, Exact } from 'gubu'
+import { Gubu, Exact, Child, Open } from 'gubu'
 
 import {
   Toolbar,
@@ -19,41 +19,26 @@ import BasicButton from './BasicButton'
 import BasicAppBar from './BasicAppBar'
 import BasicAutocomplete from './BasicAutocomplete'
 
-function onOpen (seneca: any) {
-  seneca.act('aim:app,set:state', {
-    section: 'vxg.cmp.BasicSide.show',
-    content: true
-  })
-}
-
-function addItem (seneca: any, led_add: any) {
-  seneca.act('aim:app,set:state', {
-    section: 'vxg.trigger.led.add',
-    content: ++led_add
-  })
-}
-
 const BasicHeadSpecShape = Gubu({
   head: {
     logo: {
       img: String
     },
     tool: {
-      def: [
-        {
-          kind: Exact('addbutton', 'autocomplete'),
-          title: String,
-          options: {
-            kind: String,
-            label: {
-              field: String
-            },
-            ent: String
+      def: Child({
+        kind: Exact('addbutton', 'autocomplete'),
+        label: String,
+        options: {
+          kind: String,
+          label: {
+            field: String
           },
-          name: ''
-        }
-      ]
-    }
+          ent: String
+        },
+        name: ''
+      })
+    },
+    app: {}
   },
   view: {}
 })
@@ -62,6 +47,8 @@ function BasicHead (props: any) {
   const { vxg, ctx } = props
 
   const { seneca } = ctx()
+
+  console.log('props.spec', props.spec)
 
   // spec schema validation with Gubu
   const basicHeadSpec = BasicHeadSpecShape(props.spec)
@@ -138,3 +125,17 @@ function BasicHead (props: any) {
 }
 
 export default BasicHead
+
+function onOpen (seneca: any) {
+  seneca.act('aim:app,set:state', {
+    section: 'vxg.cmp.BasicSide.show',
+    content: true
+  })
+}
+
+function addItem (seneca: any, led_add: any) {
+  seneca.act('aim:app,set:state', {
+    section: 'vxg.trigger.led.add',
+    content: ++led_add
+  })
+}
