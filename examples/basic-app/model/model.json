@@ -46,7 +46,9 @@
         "private": {
           "kind": "basic",
           "part": {
-            "admin": {},
+            "admin": {
+              "admin": {}
+            },
             "head": {
               "logo": {
                 "img": "/voxgig.png"

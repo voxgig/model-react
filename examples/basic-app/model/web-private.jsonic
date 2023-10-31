@@ -2,9 +2,11 @@
 
 kind: basic
 
+part: $.sys.app.web.part
+
 part: admin: {}
 
-part: head: $.sys.app.web.part.head & {
+part: head:  {
   logo: img: '/voxgig.png'
   tool: def: {
     addbutton:{ 
