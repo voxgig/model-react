@@ -2,8 +2,6 @@
 
 kind: basic
 
-part: $.sys.app.web.part
-
 part: admin: {}
 
 part: head:  {
