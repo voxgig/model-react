@@ -1,24 +1,13 @@
-import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
-
-import { useNavigate, useLocation } from 'react-router-dom'
-
+import { useLocation } from 'react-router-dom'
 import { Gubu, Exact, Child, Open } from 'gubu'
-
-import {
-  Toolbar,
-  TextField,
-  Autocomplete,
-  Typography,
-  IconButton,
-  createFilterOptions
-} from '@mui/material'
+import { Toolbar, Typography, IconButton } from '@mui/material'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
-
 import BasicButton from './BasicButton'
 import BasicAppBar from './BasicAppBar'
 import BasicAutocomplete from './BasicAutocomplete'
 
+// Define spec shape with Gubu
 const BasicHeadSpecShape = Gubu({
   head: {
     logo: {
@@ -43,30 +32,38 @@ const BasicHeadSpecShape = Gubu({
   view: {}
 })
 
-function BasicHead (props: any) {
-  const { vxg, ctx } = props
+interface BasicHeadProps {
+  ctx: any
+  spec: any
+  vxg?: any
+}
 
+function BasicHead (props: BasicHeadProps) {
+  const location = useLocation()
+  const { ctx } = props
   const { seneca } = ctx()
 
-  // spec schema validation with Gubu
+  // spec shape validation with Gubu
   const basicHeadSpec = BasicHeadSpecShape(props.spec)
 
-  const navigate = useNavigate()
-  const location = useLocation()
+  // set userName to user.name or user.email
+  const user = useSelector((state: any) => state.main.auth.user)
+  const userName = user.name || user.email
 
+  // add name property to each tool definition
   const tooldefs = Object.entries(basicHeadSpec.head.tool.def).map(
     (entry: any) => ((entry[1].name = entry[0]), entry[1])
   )
 
-  const user = useSelector((state: any) => state.main.auth.user)
-  const userName = user.name || user.email
-
+  //  get open and led_add state from redux
   const vxgState = useSelector((state: any) => state.main.vxg)
   const open = vxgState.cmp.BasicSide.show
   let led_add = vxgState.trigger.led.add
 
+  // get name and add state from spec
   const viewPath: any = location.pathname.split('/')[2]
   let add = basicHeadSpec.view[viewPath]?.content?.def?.add || { active: false }
+  const viewName = basicHeadSpec.view[viewPath]?.name || ''
 
   return (
     <BasicAppBar
@@ -112,7 +109,7 @@ function BasicHead (props: any) {
                 size='large'
                 onClick={() => addItem(seneca, led_add)}
               >
-                {tooldef.label + ' ' + basicHeadSpec.view[viewPath]?.name}
+                {tooldef.label + ' ' + viewName}
               </BasicButton>
             )
           }
@@ -128,6 +125,7 @@ function BasicHead (props: any) {
 
 export default BasicHead
 
+// updates backend when user toggles BasicSide
 function onOpen (seneca: any) {
   seneca.act('aim:app,set:state', {
     section: 'vxg.cmp.BasicSide.show',
@@ -135,6 +133,7 @@ function onOpen (seneca: any) {
   })
 }
 
+// notify BasicLed to switch to add mode
 function addItem (seneca: any, led_add: any) {
   seneca.act('aim:app,set:state', {
     section: 'vxg.trigger.led.add',

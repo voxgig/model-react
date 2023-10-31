@@ -1,8 +1,8 @@
 import { TextField, Autocomplete, createFilterOptions } from '@mui/material'
-import { Child, Exact, Gubu } from 'gubu'
-
+import { Exact, Gubu } from 'gubu'
 import { useSelector } from 'react-redux'
 
+// Define spec shape with Gubu
 const BasicAutocompleteShape = Gubu({
   tooldef: {
     kind: Exact('addbutton', 'autocomplete'),
@@ -18,21 +18,27 @@ const BasicAutocompleteShape = Gubu({
   }
 })
 
-function BasicAutocomplete (props: any) {
+interface BasicAutocompleteProps {
+  ctx: any
+  spec: any
+  vxg?: any
+}
+
+function BasicAutocomplete (props: BasicAutocompleteProps) {
   const { ctx } = props
   const { seneca } = ctx()
 
-  // spec schema validation with Gubu
+  // spec shape validation with Gubu
   const basicAutocompleteSpec = BasicAutocompleteShape(props.spec)
 
   const { tooldef } = basicAutocompleteSpec
-
-  let data = {}
+  let options = {}
   let value = {}
 
+  // populate options and value for autocomplete
   if ('ent' === tooldef.options.kind) {
     let canon = tooldef.options.ent
-    data = {
+    options = {
       ents: useSelector((state: any) => state.main.vxg.ent.list.main[canon])
     }
 
@@ -54,7 +60,7 @@ function BasicAutocomplete (props: any) {
       forcePopupIcon
       value={value || tooldef.defaultvalue || ''}
       key={tooldef.name}
-      options={resolveOptions(tooldef, data)}
+      options={resolveOptions(tooldef, options)}
       // disableClearable={ typeof vxg.cmp.BasicHead.tool[tooldef.name].selected != 'object' }
       size='small'
       sx={{
@@ -67,7 +73,7 @@ function BasicAutocomplete (props: any) {
         return filtered
       }}
       renderInput={params => <TextField {...params} label={tooldef.label} />}
-      onChange={(event: any, newval: any) => {
+      onChange={(newval: any) => {
         seneca.act('aim:app,set:state', {
           section: 'vxg.cmp.BasicHead.tool.' + tooldef.name + '.selected',
           content:
@@ -88,16 +94,16 @@ export default BasicAutocomplete
 
 const filter = createFilterOptions()
 
-function resolveOptions (tooldef: any, data: any) {
-  let options = []
+function resolveOptions (tooldef: any, options: any) {
+  let resolvedOptions = []
 
-  if ('ent' === tooldef.options.kind && data) {
-    let ents = data.ents || []
-    options = ents.map((ent: any) => ({
+  if ('ent' === tooldef.options.kind && options) {
+    let ents = options.ents || []
+    resolvedOptions = ents.map((ent: any) => ({
       label: ent[tooldef.options.label.field],
       ent
     }))
   }
 
-  return options
+  return resolvedOptions
 }
