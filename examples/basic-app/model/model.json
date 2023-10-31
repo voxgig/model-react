@@ -26,15 +26,21 @@
           "head": {
             "logo": {},
             "tool": {
-              "def": []
+              "def": {}
+            },
+            "app": {
+              "web": {
+                "part": {
+                  "side": {
+                    "logo": {},
+                    "section": {}
+                  },
+                  "main": {},
+                  "foot": {}
+                }
+              }
             }
-          },
-          "side": {
-            "logo": {},
-            "section": {}
-          },
-          "main": {},
-          "foot": {}
+          }
         }
       }
     }
@@ -48,18 +54,16 @@
         "private": {
           "kind": "basic",
           "part": {
-            "admin": {
-              "admin": {}
-            },
+            "admin": {},
             "head": {
               "logo": {
                 "img": "/voxgig.png"
               },
               "tool": {
-                "def": [
-                  {
+                "def": {
+                  "addbutton": {
                     "kind": "addbutton",
-                    "title": "Add",
+                    "label": "Add",
                     "options": {
                       "kind": "ent",
                       "label": {
@@ -68,7 +72,7 @@
                       "ent": "vxg/talk"
                     }
                   },
-                  {
+                  "autocomplete": {
                     "kind": "autocomplete",
                     "title": "Autocomplete",
                     "options": {
@@ -79,7 +83,19 @@
                       "ent": "vxg/talk"
                     }
                   }
-                ]
+                }
+              },
+              "app": {
+                "web": {
+                  "part": {
+                    "side": {
+                      "logo": {},
+                      "section": {}
+                    },
+                    "main": {},
+                    "foot": {}
+                  }
+                }
               }
             },
             "side": {
