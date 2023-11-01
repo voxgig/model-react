@@ -45566,8 +45566,6 @@ function BasicList(props) {
     columns,
     sx = {}
   } = props;
-  const { ctx, spec } = props;
-  const { model, seneca, custom } = ctx();
   const vxg = useSelector((state) => state.main.vxg);
   const handleSaveRow = (_0) => __async(this, [_0], function* ({ exitEditingMode, row, values: values2 }) {
     onEditingRowSave(row, values2);
@@ -45959,9 +45957,9 @@ var appendErrors = (name, validateAllFieldCriteria, errors, type, message) => va
     [type]: message || true
   })
 }) : {};
-const focusFieldBy = (fields2, callback, fieldsNames) => {
-  for (const key of fieldsNames || Object.keys(fields2)) {
-    const field = get(fields2, key);
+const focusFieldBy = (fields, callback, fieldsNames) => {
+  for (const key of fieldsNames || Object.keys(fields)) {
+    const field = get(fields, key);
     if (field) {
       const _a = field, { _f } = _a, currentField = __objRest(_a, ["_f"]);
       if (_f && callback(_f.name)) {
@@ -46264,13 +46262,13 @@ var updateAt = (fieldValues, index2, value) => {
 function useFieldArray(props) {
   const methods = useFormContext();
   const { control = methods.control, name, keyName = "id", shouldUnregister } = props;
-  const [fields2, setFields] = React__default.useState(control._getFieldArray(name));
+  const [fields, setFields] = React__default.useState(control._getFieldArray(name));
   const ids = React__default.useRef(control._getFieldArray(name).map(generateId));
-  const _fieldIds = React__default.useRef(fields2);
+  const _fieldIds = React__default.useRef(fields);
   const _name = React__default.useRef(name);
   const _actioned = React__default.useRef(false);
   _name.current = name;
-  _fieldIds.current = fields2;
+  _fieldIds.current = fields;
   control._names.array.add(name);
   props.rules && control.register(name, props.rules);
   useSubscribe({
@@ -46404,7 +46402,7 @@ function useFieldArray(props) {
     control._names.focus = "";
     control._updateValid();
     _actioned.current = false;
-  }, [fields2, name, control]);
+  }, [fields, name, control]);
   React__default.useEffect(() => {
     !get(control._formValues, name) && control._updateFieldArray(name);
     return () => {
@@ -46420,9 +46418,9 @@ function useFieldArray(props) {
     insert: React__default.useCallback(insert$1, [updateValues, name, control]),
     update: React__default.useCallback(update, [updateValues, name, control]),
     replace: React__default.useCallback(replace2, [updateValues, name, control]),
-    fields: React__default.useMemo(() => fields2.map((field, index2) => __spreadProps(__spreadValues({}, field), {
+    fields: React__default.useMemo(() => fields.map((field, index2) => __spreadProps(__spreadValues({}, field), {
       [keyName]: ids.current[index2] || generateId()
-    })), [fields2, keyName])
+    })), [fields, keyName])
   };
 }
 function createSubject() {
@@ -46490,19 +46488,19 @@ var objectHasFunction = (data) => {
   }
   return false;
 };
-function markFieldsDirty(data, fields2 = {}) {
+function markFieldsDirty(data, fields = {}) {
   const isParentNodeArray = Array.isArray(data);
   if (isObject(data) || isParentNodeArray) {
     for (const key in data) {
       if (Array.isArray(data[key]) || isObject(data[key]) && !objectHasFunction(data[key])) {
-        fields2[key] = Array.isArray(data[key]) ? [] : {};
-        markFieldsDirty(data[key], fields2[key]);
+        fields[key] = Array.isArray(data[key]) ? [] : {};
+        markFieldsDirty(data[key], fields[key]);
       } else if (!isNullOrUndefined(data[key])) {
-        fields2[key] = true;
+        fields[key] = true;
       }
     }
   }
-  return fields2;
+  return fields;
 }
 function getDirtyFieldsFromDefaultValues(data, formValues, dirtyFieldsFromValues) {
   const isParentNodeArray = Array.isArray(data);
@@ -46543,15 +46541,15 @@ function getFieldValue(_f) {
   return getFieldValueAs(isUndefined(ref.value) ? _f.ref.value : ref.value, _f);
 }
 var getResolverOptions = (fieldsNames, _fields, criteriaMode, shouldUseNativeValidation) => {
-  const fields2 = {};
+  const fields = {};
   for (const name of fieldsNames) {
     const field = get(_fields, name);
-    field && set(fields2, name, field._f);
+    field && set(fields, name, field._f);
   }
   return {
     criteriaMode,
     names: [...fieldsNames],
-    fields: fields2,
+    fields,
     shouldUseNativeValidation
   };
 };
@@ -46777,11 +46775,11 @@ function createFormControl(props = {}, flushRootRender) {
     }
     return errors;
   });
-  const executeBuiltInValidation = (_0, _1, ..._2) => __async(this, [_0, _1, ..._2], function* (fields2, shouldOnlyCheckValid, context = {
+  const executeBuiltInValidation = (_0, _1, ..._2) => __async(this, [_0, _1, ..._2], function* (fields, shouldOnlyCheckValid, context = {
     valid: true
   }) {
-    for (const name in fields2) {
-      const field = fields2[name];
+    for (const name in fields) {
+      const field = fields[name];
       if (field) {
         const _a = field, { _f } = _a, fieldValue = __objRest(_a, ["_f"]);
         if (_f) {
@@ -47009,9 +47007,9 @@ function createFormControl(props = {}, flushRootRender) {
     _subjects.state.next(__spreadValues(__spreadValues({}, _formState), !options.keepDirty ? {} : { isDirty: _getDirty() }));
     !options.keepIsValid && _updateValid();
   };
-  const _updateDisabledField = ({ disabled, name, field, fields: fields2 }) => {
+  const _updateDisabledField = ({ disabled, name, field, fields }) => {
     if (isBoolean(disabled)) {
-      const value = disabled ? void 0 : get(_formValues, name, getFieldValue(field ? field._f : get(fields2, name)._f));
+      const value = disabled ? void 0 : get(_formValues, name, getFieldValue(field ? field._f : get(fields, name)._f));
       set(_formValues, name, value);
       updateTouchAndDirty(name, value, false, false, true);
     }
@@ -47353,7 +47351,7 @@ function BasicEdit(props) {
     children: children2 = []
   } = props;
   useEffect(() => {
-    for (const field of itemFields) {
+    for (const [key, field] of Object.entries(itemFields)) {
       setValue(field.name, item[field.name] || field.defaultValue || "");
     }
   }, [item]);
@@ -47373,13 +47371,13 @@ function BasicEdit(props) {
         onSubmit(selitem);
       })),
       children: /* @__PURE__ */ jsxRuntimeExports.jsxs(Grid$1, { container: true, spacing: 3, children: [
-        itemFields.map((field, index2) => {
+        Object.entries(itemFields).map(([index2, field]) => {
           return /* @__PURE__ */ jsxRuntimeExports.jsx(Grid$1, { item: true, xs: field.size, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
             Controller,
             {
-              name: field.name,
+              name: index2,
               control,
-              defaultValue: item[field.name] || "",
+              defaultValue: item[index2] || "",
               render: ({
                 field: { onChange, onBlur, value },
                 fieldState: { error }
@@ -47388,13 +47386,13 @@ function BasicEdit(props) {
                 {
                   freeSolo: true,
                   id: "combo-box",
-                  options: field.kind,
+                  options: field.options,
                   fullWidth: true,
                   selectOnFocus: true,
                   onBlur,
                   handleHomeEndKeys: true,
                   disableClearable: value == "",
-                  disabled: !field.edit,
+                  disabled: !field.editable,
                   value,
                   getOptionLabel: (option) => option || "",
                   filterOptions: (options, params) => {
@@ -47417,7 +47415,7 @@ function BasicEdit(props) {
                   renderInput: (params) => /* @__PURE__ */ jsxRuntimeExports.jsx(
                     TextField$1,
                     __spreadProps(__spreadValues({}, params), {
-                      label: field.headerName,
+                      label: field.label,
                       onBlur,
                       error: !(error == null),
                       helperText: error != null ? error.message : null
@@ -47427,10 +47425,10 @@ function BasicEdit(props) {
               ) : /* @__PURE__ */ jsxRuntimeExports.jsx(
                 TextField$1,
                 {
-                  label: field.headerName,
+                  label: field.label,
                   fullWidth: true,
-                  select: field.type === "status",
-                  disabled: !field.edit,
+                  select: field.inputType === "select",
+                  disabled: !field.editable,
                   onChange,
                   value,
                   onBlur,
@@ -47439,12 +47437,12 @@ function BasicEdit(props) {
                   sx: {
                     textAlign: "left"
                   },
-                  children: field.type === "status" ? Object.keys(field.kind).map((option) => {
+                  children: field.inputType === "select" ? Object.keys(field.options).map((option) => {
                     var _a;
-                    return /* @__PURE__ */ jsxRuntimeExports.jsx(MenuItem$1, { value: option, children: (_a = field.kind[option]) == null ? void 0 : _a.title }, option);
+                    return /* @__PURE__ */ jsxRuntimeExports.jsx(MenuItem$1, { value: option, children: (_a = field.options[option]) == null ? void 0 : _a.label }, option);
                   }) : null
                 },
-                field.name
+                index2
               ),
               rules: field.required ? {
                 required: field.required,
@@ -47501,7 +47499,6 @@ function BasicLed(props) {
   const [item, setItem] = useState({});
   const location2 = useLocation();
   const basicLedSpec = BasicLedSpecShape(props.spec);
-  console.log("basicLedSpec: ", basicLedSpec);
   const def = basicLedSpec.content.def;
   const canon = def.ent.canon;
   const entlist = useSelector(
@@ -47516,34 +47513,19 @@ function BasicLed(props) {
     let q = custom.BasicLed.query(basicLedSpec, cmpstate);
     seneca.entity(canon).list$(q);
   }
-  const basicEditFields = fields(basicLedSpec);
-  console.log("basicEditFields: ", basicEditFields);
-  const basicListColumns = basicEditFields.map((field) => ({
-    accessorFn: (row) => row[field.name],
-    accessorKey: field.name,
-    header: field.headerName,
-    enableEditing: field.edit,
-    editVariant: "status" === field.type ? "select" : "text",
-    editSelectOptions: "status" === field.type ? ["open", "closed"] : null,
-    Header: () => /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: field.headerName }),
-    Cell: ({ cell }) => /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: cell.getValue() })
-  }));
-  console.log("basicListColumns: ", basicListColumns);
-  const basicEditFields2 = basicLedSpec.content.def.fields;
-  console.log("basicEditFields2: ", basicEditFields);
-  const basicListColumns2 = Object.entries(basicEditFields2).map(
-    (key, value) => ({
-      accessorFn: (row) => row[value.name],
-      accessorKey: value.name,
-      header: value.headerName,
-      enableEditing: value.edit,
-      editVariant: "status" === value.type ? "select" : "text",
-      editSelectOptions: "status" === value.type ? ["open", "closed"] : null,
-      Header: () => /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: value.headerName }),
+  const basicEditFields = basicLedSpec.content.def.fields;
+  const basicListColumns = Object.entries(basicEditFields).map(
+    ([key, field]) => ({
+      accessorFn: (row) => row[key],
+      accessorKey: key,
+      header: field.label,
+      enableEditing: field.editable,
+      editVariant: field.inputType,
+      editSelectOptions: "select" === field.inputType ? Object.keys(field.options) : null,
+      Header: () => /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: field.label }),
       Cell: ({ cell }) => /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: cell.getValue() })
     })
   );
-  console.log("basicListColumns2: ", basicListColumns2);
   let data = rows;
   useEffect(() => {
     setItem({});
@@ -47589,22 +47571,6 @@ function BasicLed(props) {
       })
     }
   ) });
-}
-function fields(spec) {
-  try {
-    let fds = [];
-    let fns = spec.content.def.edit.layout.order.replace(/\s+/g, "").split(/,/);
-    for (let fn2 of fns) {
-      let fd = __spreadValues({}, spec.content.def.ent.primary.field[fn2]);
-      fd.name = fn2;
-      fd.headerName = fd.title;
-      fd = __spreadValues(__spreadValues({}, fd), spec.content.def.edit.layout.field[fn2] || {});
-      fds.push(fd);
-    }
-    return fds;
-  } catch (err) {
-  }
-  return [];
 }
 function makeCmp(view, ctx) {
   let cmp = () => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: "NONE" });

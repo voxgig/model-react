@@ -3,38 +3,25 @@ import { useSelector } from 'react-redux'
 import { useLocation } from 'react-router-dom'
 import BasicList from './BasicList'
 import BasicEdit from './BasicEdit'
-import { Gubu } from 'gubu'
-
-function fields (spec: any) {
-  try {
-    let fds = []
-    let fns = spec.content.def.edit.layout.order.replace(/\s+/g, '').split(/,/)
-    for (let fn of fns) {
-      let fd = { ...spec.content.def.ent.primary.field[fn] } || {}
-
-      // fd.title = fd.title ? fd.title : fd.name
-      fd.name = fn
-      fd.headerName = fd.title
-      fd = { ...fd, ...(spec.content.def.edit.layout.field[fn] || {}) }
-
-      fds.push(fd)
-    }
-
-    return fds
-  } catch (err) {
-    // console.log(err)
-  }
-
-  return []
-}
+import { Gubu, Open } from 'gubu'
 
 // Validate spec shape with Gubu
-const BasicLedSpecShape = Gubu({
-  name: '',
-  title: String,
-  icon: String,
-  content: { name: '', kind: String, def: { ent: {}, add: {}, edit: {} } }
-})
+const BasicLedSpecShape = Gubu(
+  Open({
+    name: '',
+    content: {
+      name: '',
+      kind: String,
+      def: {
+        canon: String,
+        fields: {},
+        ent: {},
+        add: {},
+        edit: {}
+      }
+    }
+  })
+)
 
 function BasicLed (props: any) {
   const { ctx } = props
@@ -61,18 +48,21 @@ function BasicLed (props: any) {
     seneca.entity(canon).list$(q)
   }
 
-  const itemFields: any = fields(basicLedSpec)
+  const basicEditFields: any = basicLedSpec.content.def.fields
 
-  const columns = itemFields.map((field: any) => ({
-    accessorFn: (row: any) => row[field.name],
-    accessorKey: field.name,
-    header: field.headerName,
-    enableEditing: field.edit,
-    editVariant: 'status' === field.type ? 'select' : 'text',
-    editSelectOptions: 'status' === field.type ? ['open', 'closed'] : null,
-    Header: () => <span>{field.headerName}</span>,
-    Cell: ({ cell }: any) => <span>{cell.getValue()}</span>
-  }))
+  const basicListColumns = Object.entries(basicEditFields).map(
+    ([key, field]: [any, any]) => ({
+      accessorFn: (row: any) => row[key],
+      accessorKey: key,
+      header: field.label,
+      enableEditing: field.editable,
+      editVariant: field.inputType,
+      editSelectOptions:
+        'select' === field.inputType ? Object.keys(field.options) : null,
+      Header: () => <span>{field.label}</span>,
+      Cell: ({ cell }: any) => <span>{cell.getValue()}</span>
+    })
+  )
 
   let data = rows //.slice(0, 10)
 
@@ -102,13 +92,12 @@ function BasicLed (props: any) {
           ctx={ctx}
           spec={basicLedSpec}
           data={data}
-          columns={columns}
+          columns={basicListColumns}
           onEditingRowSave={async (row: any, values: any) => {
             let selectedItem = { ...data[row.index] }
             for (let k in values) {
               selectedItem[k] = values[k]
             }
-            console.log('selectedItem: ', selectedItem)
             await seneca.entity(canon).save$(selectedItem)
             setItem({})
           }}
@@ -117,6 +106,8 @@ function BasicLed (props: any) {
         <BasicEdit
           ctx={ctx}
           spec={basicLedSpec}
+          item={item}
+          itemFields={basicEditFields}
           onClose={() => {
             setItem({})
           }}
@@ -124,8 +115,6 @@ function BasicLed (props: any) {
             await seneca.entity(canon).save$(item)
             setItem({})
           }}
-          item={item}
-          itemFields={itemFields}
         />
       )}
     </div>

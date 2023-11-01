@@ -74,7 +74,7 @@ export function getMain () {
       entityResponse: (state: any, action: any) => {
         let payload: any = action.payload
 
-        console.log('[debug]redux.entityResponse', payload)
+        //console.log('[debug]redux.entityResponse', payload)
 
         let msg = payload.msg
         let res = payload.res
@@ -112,7 +112,7 @@ export function getMain () {
       response: (state: any, action: any) => {
         let payload: any = action.payload
 
-        console.log('[debug]redux.response', payload)
+        //console.log('[debug]redux.response', payload)
 
         let msg = payload.msg
         let res = payload.res
@@ -199,11 +199,11 @@ export function getMain () {
     })
 
     .sub('aim:web,in$:true', function (msg: any, res: any) {
-      console.log('[debug]aim:web,in$:true', msg, res)
+      //console.log('[debug]aim:web,in$:true', msg, res)
     })
 
     .sub('aim:web,out$:true', function (msg: any, res: any) {
-      console.log('[debug]aim:web,out$:true', msg, res)
+      //console.log('[debug]aim:web,out$:true', msg, res)
       let action: any = 'entity' === msg.on ? null : response
       if (action) {
         store.dispatch(action({ msg, res } as any))
@@ -211,7 +211,7 @@ export function getMain () {
     })
 
     .sub('sys:entity,out$:true', function (msg: any, res: any) {
-      console.log('[debug]sys:entity,out$:true', msg, res)
+      //console.log('[debug]sys:entity,out$:true', msg, res)
       store.dispatch(entityResponse({ msg, res } as any))
     })
 
@@ -246,7 +246,7 @@ export function getMain () {
     .add(
       'aim:web,list:entity,canon:-/vxg/task',
       function (msg: any, reply: any) {
-        console.log('[debug]aim:web,list:entity', msg)
+        //console.log('[debug]aim:web,list:entity', msg)
         reply(null, {
           ok: true,
           list: [
@@ -291,7 +291,7 @@ export function getMain () {
 
     // state management
     .add('aim:app,set:state', function (msg: any, reply: any) {
-      console.log('[debug]aim:app,set:state', msg)
+      //console.log('[debug]aim:app,set:state', msg)
       const res = { ...msg, update: undefined }
       store.dispatch(response({ msg, res } as any))
 

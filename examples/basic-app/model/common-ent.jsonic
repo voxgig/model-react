@@ -4,6 +4,7 @@ sys: task: {
   fields: {
     id: {
       label: *'ID' | string
+      inputType: *'text' | string
       required: *true | boolean
       editable: *false | boolean
     }

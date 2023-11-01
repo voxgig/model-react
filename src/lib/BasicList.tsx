@@ -4,33 +4,30 @@ import { useSelector } from 'react-redux'
 import {
   MaterialReactTable,
   type MaterialReactTableProps,
-  type MRT_ColumnDef,
+  type MRT_ColumnDef
 } from 'material-react-table'
 
 // import { DataGrid } from '@mui/x-data-grid'
 
-function BasicList(props: any) {
+function BasicList (props: any) {
   let {
-    onRowClick = () => { },
-    onEditingRowSave = () => { },
+    onRowClick = () => {},
+    onEditingRowSave = () => {},
     data,
     columns,
-    sx = {},
+    sx = {}
   } = props
-
-  const { ctx, spec } = props
-  const { model, seneca, custom } = ctx()
 
   const vxg = useSelector((state: any) => state.main.vxg)
 
   const handleSaveRow: MaterialReactTableProps<any>['onEditingRowSave'] =
     async ({ exitEditingMode, row, values }): Promise<void> => {
       onEditingRowSave(row, values)
-      exitEditingMode(); //required to exit editing mode
-    };
+      exitEditingMode() //required to exit editing mode
+    }
 
   return (
-    <div className="BasicList" style={{ ...sx }} >
+    <div className='BasicList' style={{ ...sx }}>
       <MaterialReactTable
         enableColumnActions={false}
         enableColumnFilters={false}
@@ -51,8 +48,8 @@ function BasicList(props: any) {
           sx: { cursor: 'pointer' }
         })}
       />
-    </div>)
-
+    </div>
+  )
 }
 
 export default BasicList
