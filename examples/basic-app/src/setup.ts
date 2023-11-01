@@ -265,7 +265,7 @@ export function getMain () {
             {
               entity$: '-/vxg/task',
               id: 't03',
-              title: 'TaTasklk 3',
+              title: 'Task 3',
               status: 'open'
             }
           ]
