@@ -1,10 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
-
 import { useLocation } from 'react-router-dom'
-
-import { MaterialReactTable } from 'material-react-table'
-
 import BasicList from './BasicList'
 import BasicEdit from './BasicEdit'
 import { Gubu } from 'gubu'
@@ -41,45 +37,33 @@ const BasicLedSpecShape = Gubu({
 })
 
 function BasicLed (props: any) {
-  const { vxg, ctx } = props
+  const { ctx } = props
+  const { seneca, custom } = ctx()
+  const [item, setItem] = useState({} as any)
+  const location = useLocation()
 
   const basicLedSpec = BasicLedSpecShape(props.spec)
 
-  const { model, seneca, custom } = ctx()
-
-  const vxgState = useSelector((state: any) => state.main.vxg)
-
-  const [item, setItem] = useState({} as any)
-  // console.log('item: ', item)
-
   const def = basicLedSpec.content.def
-  const { ent, cols } = def
+  const canon = def.ent.canon
 
-  const canon = ent.canon
+  const entlist = useSelector(
+    (state: any) => state.main.vxg.ent.list.main[canon]
+  )
+  const rows = entlist
 
   const cmpstate = useSelector((state: any) => state.main.vxg.cmp)
   const entstate = useSelector(
     (state: any) => state.main.vxg.ent.meta.main[canon].state
   )
-  const entlist = useSelector(
-    (state: any) => state.main.vxg.ent.list.main[canon]
-  )
-
-  const location = useLocation()
-
-  // console.log('entlist',entlist)
   if ('none' === entstate) {
     let q = custom.BasicLed.query(basicLedSpec, cmpstate)
     seneca.entity(canon).list$(q)
   }
 
-  const rows = entlist
-
   const itemFields: any = fields(basicLedSpec)
-  // console.log('itemFields: ', itemFields)
 
   const columns = itemFields.map((field: any) => ({
-    // accessorFn: (row: any) => ('status' === field.type ? field.kind[row[field.name]]?.title : row[field.name]),
     accessorFn: (row: any) => row[field.name],
     accessorKey: field.name,
     header: field.headerName,
@@ -87,18 +71,16 @@ function BasicLed (props: any) {
     editVariant: 'status' === field.type ? 'select' : 'text',
     editSelectOptions: 'status' === field.type ? ['open', 'closed'] : null,
     Header: () => <span>{field.headerName}</span>,
-    // muiTableHeadCellProps: { sx: { color: 'green' } },
     Cell: ({ cell }: any) => <span>{cell.getValue()}</span>
   }))
-  // console.log('columns: ', columns)
 
   let data = rows //.slice(0, 10)
-  // console.log('data: ', data)
 
   useEffect(() => {
     setItem({})
   }, [location.pathname])
 
+  const vxgState = useSelector((state: any) => state.main.vxg)
   const led_add = vxgState.trigger.led.add
   let [triggerLed, setTriggerLed] = useState(0)
 
@@ -107,8 +89,6 @@ function BasicLed (props: any) {
     // a workaround to prevent
     // 'useEffect' to trigger when re-rendered
     if (triggerLed >= 2) {
-      // setItem( { entity$: '-/' + def.ent } )
-      // console.log('led_add: ', led_add)
       setItem({ entity$: '-/' + def.ent.canon })
     }
 
@@ -123,10 +103,6 @@ function BasicLed (props: any) {
           spec={basicLedSpec}
           data={data}
           columns={columns}
-          // onRowClick={(event: any, item: any) => {
-          //   console.log('item: ', item)
-          //   setItem(item)
-          // }}
           onEditingRowSave={async (row: any, values: any) => {
             let selectedItem = { ...data[row.index] }
             for (let k in values) {
