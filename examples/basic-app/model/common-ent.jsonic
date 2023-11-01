@@ -1,0 +1,31 @@
+sys: &: $.main.shape.ent
+
+sys: task: {
+  fields: {
+    id: {
+      label: *'ID' | string
+      required: *true | boolean
+      editable: *false | boolean
+    }
+    title: {
+      type: *'String' | string
+      label: *'Title' | string
+      required: *true | boolean
+      editable: *true | boolean
+    }
+    status: {
+      type: *'String' | string
+      label: *'Status' | string
+      required: *true | boolean
+      editable: *true | boolean
+      options: {
+        open: label: *'Open' | string
+        closed: label: *'Closed' | string
+      }
+    }
+  }
+}
+
+sys: chat: {
+
+}

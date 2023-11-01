@@ -1,0 +1,19 @@
+
+sys: @"@voxgig/model/model/sys.jsonic"
+
+main: ent: @'common-ent.jsonic'
+
+main: shape: ent: {
+  id: {
+    field: 'id'
+  }
+  dynamo: {
+    active: *true | boolean
+    prefix: *'' | string
+    suffix: *'' | string
+    # suffix: '.${self:provider.stage}'
+  }
+  fields: {
+    id: type: *'String' | string
+  }
+}

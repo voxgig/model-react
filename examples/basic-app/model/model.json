@@ -37,6 +37,35 @@
           "foot": {}
         }
       }
+    },
+    "shape": {
+      "srv": {
+        "in": {},
+        "deps": {},
+        "api": {
+          "web": {
+            "active": true,
+            "path": {},
+            "method": "POST",
+            "cors": {
+              "active": false
+            }
+          }
+        },
+        "env": {
+          "lambda": {
+            "active": false,
+            "timeout": 30,
+            "handler": {
+              "path": {}
+            }
+          }
+        }
+      },
+      "app": {},
+      "part": {
+        "img": {}
+      }
     }
   },
   "app": {
@@ -89,17 +118,17 @@
               "section": {
                 "section1": {
                   "item": {
-                    "item1": {
+                    "task": {
                       "kind": "resource",
-                      "label": "Talks",
+                      "label": "Tasks",
                       "icon": "done",
-                      "path": "view/talk",
+                      "path": "view/task",
                       "access": {
                         "admin": true,
                         "user": true
                       }
                     },
-                    "item2": {
+                    "chat": {
                       "kind": "resource",
                       "label": "Chat",
                       "icon": "chatBubble",
@@ -122,8 +151,6 @@
           },
           "view": {
             "chat": {
-              "title": "Chat",
-              "icon": "done",
               "content": {
                 "kind": "custom",
                 "cmp": "chat",
@@ -131,15 +158,29 @@
                   "add": {
                     "active": false
                   }
+                },
+                "id": {
+                  "field": "id"
+                },
+                "dynamo": {
+                  "active": true,
+                  "prefix": "",
+                  "suffix": ""
+                },
+                "fields": {
+                  "id": {
+                    "type": "String"
+                  }
                 }
               }
             },
-            "talk": {
-              "title": "Talk",
-              "icon": "done",
+            "task": {
               "content": {
                 "kind": "led",
                 "def": {
+                  "add": {
+                    "active": true
+                  },
                   "ent": {
                     "primary": {
                       "field": {
@@ -149,10 +190,7 @@
                         }
                       }
                     },
-                    "canon": "vxg/talk"
-                  },
-                  "add": {
-                    "active": true
+                    "canon": "vxg/task"
                   },
                   "edit": {
                     "layout": {
@@ -178,10 +216,123 @@
                         }
                       }
                     }
+                  },
+                  "fields": {
+                    "id": {
+                      "label": "ID",
+                      "required": true,
+                      "editable": false,
+                      "type": "String"
+                    },
+                    "title": {
+                      "type": "String",
+                      "label": "Title",
+                      "required": true,
+                      "editable": true
+                    },
+                    "status": {
+                      "type": "String",
+                      "label": "Status",
+                      "required": true,
+                      "editable": true,
+                      "options": {
+                        "open": {
+                          "label": "Open"
+                        },
+                        "closed": {
+                          "label": "Closed"
+                        }
+                      }
+                    }
+                  },
+                  "id": {
+                    "field": "id"
+                  },
+                  "dynamo": {
+                    "active": true,
+                    "prefix": "",
+                    "suffix": ""
                   }
+                }
+              },
+              "canon": "vxg/task"
+            }
+          }
+        }
+      }
+    }
+  },
+  "main": {
+    "ent": {
+      "sys": {
+        "task": {
+          "id": {
+            "field": "id"
+          },
+          "dynamo": {
+            "active": true,
+            "prefix": "",
+            "suffix": ""
+          },
+          "fields": {
+            "id": {
+              "type": "String",
+              "label": "ID",
+              "required": true,
+              "editable": false
+            },
+            "title": {
+              "type": "String",
+              "label": "Title",
+              "required": true,
+              "editable": true
+            },
+            "status": {
+              "type": "String",
+              "label": "Status",
+              "required": true,
+              "editable": true,
+              "options": {
+                "open": {
+                  "label": "Open"
+                },
+                "closed": {
+                  "label": "Closed"
                 }
               }
             }
+          }
+        },
+        "chat": {
+          "id": {
+            "field": "id"
+          },
+          "dynamo": {
+            "active": true,
+            "prefix": "",
+            "suffix": ""
+          },
+          "fields": {
+            "id": {
+              "type": "String"
+            }
+          }
+        }
+      }
+    },
+    "shape": {
+      "ent": {
+        "id": {
+          "field": "id"
+        },
+        "dynamo": {
+          "active": true,
+          "prefix": "",
+          "suffix": ""
+        },
+        "fields": {
+          "id": {
+            "type": "String"
           }
         }
       }

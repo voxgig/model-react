@@ -35,17 +35,17 @@ part: side: {
   section: {
     section1: {
       item: {
-        item1: {
+        task: {
           kind: 'resource'
-          label: 'Talks'
+          label: 'Tasks'
           icon: 'done'
-          path: 'view/talk'
+          path: 'view/task'
           access: {
             admin: true
             user: true
           }
         }
-        item2: {
+        chat: {
           kind: 'resource'
           label: 'Chat'
           icon: 'chatBubble'
@@ -64,21 +64,22 @@ part: main: title: ""
 
 part: foot: title: ""
 
+
 view: chat: {
-  title: 'Chat'
-  icon: 'done'
-  content: {
+  content: $.main.ent.sys.chat &{
     kind: 'custom'
     cmp: 'chat'
     def: add: { active: false }
   }
 }
 
-view: talk: {
-  title: 'Talk'
-  icon: 'done'
+view: task: {
   content: kind: 'led'
-  content: def: {
+  canon: 'vxg/task'
+  content: def: $.main.ent.sys.task & {
+    add: {
+      active: true
+    }
     ent: {
         primary: {
           field: {
@@ -88,9 +89,8 @@ view: talk: {
             }
           }
         },
-        canon: 'vxg/talk'
+        canon: 'vxg/task'
     }
-    add: active: true
     edit: { 
       layout: {
         order: "id,title,status"
@@ -98,7 +98,8 @@ view: talk: {
           title: { 
             type: ''
             headerName: 'Title'
-            edit: true }
+            edit: true 
+          }
           status: { 
             type: 'status', 
             headerName: 'Status', 
