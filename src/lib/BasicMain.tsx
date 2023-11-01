@@ -64,8 +64,6 @@ const BasicMainSpecShape = Gubu({
 
 function BasicMain (props: any) {
   const { vxg, ctx } = props
-  const { model, content } = ctx()
-
   const basicMainSpec = BasicMainSpecShape(props.spec)
 
   const views = Object.values(basicMainSpec.view)
