@@ -75,8 +75,9 @@ view: chat: {
 
 view: task: {
   content: kind: 'led'
-  canon: 'vxg/task'
+  
   content: def: $.main.ent.sys.task & {
+    canon: 'vxg/task'
     add: {
       active: true
     }

@@ -9,12 +9,14 @@ sys: task: {
     }
     title: {
       type: *'String' | string
+      inputType: *'text' | string
       label: *'Title' | string
       required: *true | boolean
       editable: *true | boolean
     }
     status: {
       type: *'String' | string
+      inputType: *'select' | string
       label: *'Status' | string
       required: *true | boolean
       editable: *true | boolean

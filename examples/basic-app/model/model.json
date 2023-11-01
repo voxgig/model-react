@@ -178,6 +178,7 @@
               "content": {
                 "kind": "led",
                 "def": {
+                  "canon": "vxg/task",
                   "add": {
                     "active": true
                   },
@@ -226,12 +227,14 @@
                     },
                     "title": {
                       "type": "String",
+                      "inputType": "text",
                       "label": "Title",
                       "required": true,
                       "editable": true
                     },
                     "status": {
                       "type": "String",
+                      "inputType": "select",
                       "label": "Status",
                       "required": true,
                       "editable": true,
@@ -254,8 +257,7 @@
                     "suffix": ""
                   }
                 }
-              },
-              "canon": "vxg/task"
+              }
             }
           }
         }
@@ -283,12 +285,14 @@
             },
             "title": {
               "type": "String",
+              "inputType": "text",
               "label": "Title",
               "required": true,
               "editable": true
             },
             "status": {
               "type": "String",
+              "inputType": "select",
               "label": "Status",
               "required": true,
               "editable": true,
