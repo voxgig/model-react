@@ -59,12 +59,12 @@ export function getMain () {
         ent: {
           list: {
             main: {
-              'vxg/talk': []
+              'vxg/task': []
             }
           },
           meta: {
             main: {
-              'vxg/talk': { state: 'none' }
+              'vxg/task': { state: 'none' }
             }
           }
         }
@@ -244,28 +244,28 @@ export function getMain () {
     })
 
     .add(
-      'aim:web,list:entity,canon:-/vxg/talk',
+      'aim:web,list:entity,canon:-/vxg/task',
       function (msg: any, reply: any) {
         console.log('[debug]aim:web,list:entity', msg)
         reply(null, {
           ok: true,
           list: [
             {
-              entity$: '-/vxg/talk',
+              entity$: '-/vxg/task',
               id: 't01',
-              title: 'Talk 1',
+              title: 'Task 1',
               status: 'open'
             },
             {
-              entity$: '-/vxg/talk',
+              entity$: '-/vxg/task',
               id: 't02',
-              title: 'Talk 2',
+              title: 'Task 2',
               status: 'closed'
             },
             {
-              entity$: '-/vxg/talk',
+              entity$: '-/vxg/task',
               id: 't03',
-              title: 'Talk 3',
+              title: 'TaTasklk 3',
               status: 'open'
             }
           ]
