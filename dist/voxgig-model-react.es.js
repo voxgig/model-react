@@ -47500,7 +47500,7 @@ function BasicLed(props) {
   const location2 = useLocation();
   const basicLedSpec = BasicLedSpecShape(props.spec);
   const def = basicLedSpec.content.def;
-  const canon = def.ent.canon;
+  const canon = def.canon;
   const entlist = useSelector(
     (state) => state.main.vxg.ent.list.main[canon]
   );
@@ -47535,7 +47535,7 @@ function BasicLed(props) {
   let [triggerLed, setTriggerLed] = useState(0);
   useEffect(() => {
     if (triggerLed >= 2) {
-      setItem({ entity$: "-/" + def.ent.canon });
+      setItem({ entity$: "-/" + def.canon });
     }
     setTriggerLed(++triggerLed);
   }, [led_add]);

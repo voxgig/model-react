@@ -32,7 +32,7 @@ function BasicLed (props: any) {
   const basicLedSpec = BasicLedSpecShape(props.spec)
 
   const def = basicLedSpec.content.def
-  const canon = def.ent.canon
+  const canon = def.canon
 
   const entlist = useSelector(
     (state: any) => state.main.vxg.ent.list.main[canon]
@@ -79,7 +79,7 @@ function BasicLed (props: any) {
     // a workaround to prevent
     // 'useEffect' to trigger when re-rendered
     if (triggerLed >= 2) {
-      setItem({ entity$: '-/' + def.ent.canon })
+      setItem({ entity$: '-/' + def.canon })
     }
 
     setTriggerLed(++triggerLed)

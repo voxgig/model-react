@@ -66,52 +66,21 @@ part: foot: title: ""
 
 
 view: chat: {
-  content: $.main.ent.sys.chat &{
+  content: {
     kind: 'custom'
     cmp: 'chat'
-    def: add: { active: false }
+    def: $.main.ent.sys.chat & {
+      add: active: false
+    }
   }
 }
 
 view: task: {
-  content: kind: 'led'
-  
-  content: def: $.main.ent.sys.task & {
-    canon: 'vxg/task'
-    add: {
-      active: true
-    }
-    ent: {
-        primary: {
-          field: {
-            id: { 
-              title: 'ID'
-              edit: false 
-            }
-          }
-        },
-        canon: 'vxg/task'
-    }
-    edit: { 
-      layout: {
-        order: "id,title,status"
-        field: {
-          title: { 
-            type: ''
-            headerName: 'Title'
-            edit: true 
-          }
-          status: { 
-            type: 'status', 
-            headerName: 'Status', 
-            edit: true, 
-            kind: { 
-              open: title: 'Open'
-              closed: title: 'Closed' 
-            }
-          }
-        }
-      }
+  content: {
+    kind: 'led'
+    def: $.main.ent.sys.task & {
+      canon: 'vxg/task'
+      add: active: false
     }
   }
 }

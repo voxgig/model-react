@@ -47512,7 +47512,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const location2 = reactRouterDom.useLocation();
     const basicLedSpec = BasicLedSpecShape(props.spec);
     const def = basicLedSpec.content.def;
-    const canon = def.ent.canon;
+    const canon = def.canon;
     const entlist = reactRedux.useSelector(
       (state) => state.main.vxg.ent.list.main[canon]
     );
@@ -47547,7 +47547,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     let [triggerLed, setTriggerLed] = React.useState(0);
     React.useEffect(() => {
       if (triggerLed >= 2) {
-        setItem({ entity$: "-/" + def.ent.canon });
+        setItem({ entity$: "-/" + def.canon });
       }
       setTriggerLed(++triggerLed);
     }, [led_add]);
