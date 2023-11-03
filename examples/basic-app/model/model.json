@@ -161,11 +161,6 @@
                   "id": {
                     "field": "id"
                   },
-                  "dynamo": {
-                    "active": true,
-                    "prefix": "",
-                    "suffix": ""
-                  },
                   "fields": {
                     "id": {
                       "type": "String"
@@ -215,11 +210,6 @@
                   },
                   "id": {
                     "field": "id"
-                  },
-                  "dynamo": {
-                    "active": true,
-                    "prefix": "",
-                    "suffix": ""
                   }
                 }
               }
@@ -235,11 +225,6 @@
         "task": {
           "id": {
             "field": "id"
-          },
-          "dynamo": {
-            "active": true,
-            "prefix": "",
-            "suffix": ""
           },
           "fields": {
             "id": {
@@ -277,11 +262,6 @@
           "id": {
             "field": "id"
           },
-          "dynamo": {
-            "active": true,
-            "prefix": "",
-            "suffix": ""
-          },
           "fields": {
             "id": {
               "type": "String"
@@ -294,11 +274,6 @@
       "ent": {
         "id": {
           "field": "id"
-        },
-        "dynamo": {
-          "active": true,
-          "prefix": "",
-          "suffix": ""
         },
         "fields": {
           "id": {
