@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux'
 
 import { useNavigate } from 'react-router-dom'
 
-import { Child, Gubu } from 'gubu'
+import { Child, Exact, Gubu } from 'gubu'
 import BasicSideMenu from './BasicSideMenu'
 import { ChevronLeft } from '@mui/icons-material'
 import { Divider, IconButton } from '@mui/material'
@@ -17,7 +17,7 @@ const BasicSideSpecShape = Gubu({
     section: Child({
       title: String,
       item: Child({
-        kind: String,
+        kind: Exact('resource', 'page', 'modal'),
         label: String,
         icon: String,
         path: String,
@@ -41,7 +41,7 @@ function onClose (seneca: any) {
 
 function BasicSide (props: any) {
   const { vxg, ctx } = props
-  const { model, seneca } = ctx()
+  const { seneca } = ctx()
 
   const vxgState = useSelector((state: any) => state.main.vxg)
   const open = vxgState.cmp.BasicSide.show

@@ -30,12 +30,14 @@ part: head:  {
   }
 }
 
+
+
 part: side: {
   logo: img: '/voxgig.png'
   section: {
     section1: {
       item: {
-        item1: {
+        talk: {
           kind: 'resource'
           label: 'Talks'
           icon: 'done'
@@ -45,7 +47,7 @@ part: side: {
             user: true
           }
         }
-        item2: {
+        chat: {
           kind: 'resource'
           label: 'Chat'
           icon: 'chatBubble'
@@ -60,9 +62,11 @@ part: side: {
   }
 }
 
-part: main: title: ""
+part: main: title: "Main"
 
-part: foot: title: ""
+part: foot: title: "Footer"
+
+view: &: $.sys.app.web.view
 
 view: chat: {
   title: 'Chat'
@@ -73,6 +77,8 @@ view: chat: {
     def: add: { active: false }
   }
 }
+
+# view: talk: $.app.web.frame.private.part.side.section.section1.item.talk
 
 view: talk: {
   title: 'Talk'
@@ -98,7 +104,8 @@ view: talk: {
           title: { 
             type: ''
             headerName: 'Title'
-            edit: true }
+            edit: true 
+          }
           status: { 
             type: 'status', 
             headerName: 'Status', 

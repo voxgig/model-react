@@ -1,38 +1,4 @@
-app: web: view: {
-  title: string
-  icon: string
-  content: kind: string
-  content: def: {
-      ent: {
-        canon: string
-        primary: {
-          field: {
-            &: {
-              title: string
-              edit: boolean
-            }
-          }
-        }
-      }
-      add: active: boolean
-      edit: {
-        layout: {
-          order: string
-          field: {
-            &: {
-              type: string
-              headerName: string
-              edit: boolean
-            }
-          }
-        }
-      }
-    }
-}
-
-app: web: part: admin: {
-  admin: {}
-}
+app: web: part: admin: {}
 
 app: web: part: head: {
   logo: img: string
@@ -65,9 +31,48 @@ app: web: part: side: {
   }
 }
 
-app: web: part: main: {}
+app: web: part: main: {
+  title: string
+}
 
 app: web: part: foot: {
   title: string
 }
 
+app: web: view: {
+  title: string,
+  icon: string,
+  content: {
+    kind: string
+    cmp: string
+  }
+  content: def: {
+      ent: {
+        canon: string
+        primary: {
+          field: {
+            &: {
+              title: string
+              edit: boolean
+            }
+          }
+        }
+      }
+      add: active: boolean
+      edit: {
+        layout: {
+          order: string
+          field: {
+            &: {
+              type: string
+              headerName: string
+              edit: boolean
+              kind: {
+                &: title: string
+              }
+            }
+          }
+        }
+      }
+    }
+}
