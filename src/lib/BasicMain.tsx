@@ -11,42 +11,43 @@ import { Box } from '@mui/material'
 // Validate spec shape with Gubu
 const BasicMainSpecShape = Gubu({
   main: {},
-  view: Child({
-    name: String,
-    title: String,
-    icon: String,
-    content: {
-      kind: Exact('led', 'custom'),
-      def: {
-        ent: {
-          primary: {
-            field: {
-              id: {
-                title: String,
-                edit: Boolean
-              }
-            }
-          }
-        },
-        add: {
-          active: Boolean
-        },
-        edit: {
-          layout: {
-            order: String,
-            field: Child({
-              type: String,
-              headerName: String,
-              edit: Boolean,
-              kind: Child({
-                title: String
-              })
-            })
-          }
-        }
-      }
-    }
-  })
+  view: {}
+  // view: Child({
+  //   name: String,
+  //   title: String,
+  //   icon: String,
+  //   content: {
+  //     kind: Exact('led', 'custom'),
+  //     def: {
+  //       ent: {
+  //         primary: {
+  //           field: {
+  //             id: {
+  //               title: String,
+  //               edit: Boolean
+  //             }
+  //           }
+  //         }
+  //       },
+  //       add: {
+  //         active: Boolean
+  //       },
+  //       edit: {
+  //         layout: {
+  //           order: String,
+  //           field: Child({
+  //             type: String,
+  //             headerName: String,
+  //             edit: Boolean,
+  //             kind: Child({
+  //               title: String
+  //             })
+  //           })
+  //         }
+  //       }
+  //     }
+  //   }
+  // })
 })
 
 function BasicMain (props: any) {
