@@ -45605,7 +45605,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       onEditingRowSave(row, values2);
       exitEditingMode();
     });
-    return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "BasicList", style: __spreadValues({}, sx), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(material.Box, { className: "BasicList", style: __spreadValues({}, sx), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
       MaterialReactTable,
       {
         enableColumnActions: false,
@@ -47393,7 +47393,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       defaultValues: {}
     });
     const { handleSubmit, setValue, control } = forms;
-    return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "BasicEdit", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(material.Box, { className: "BasicEdit", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
       "form",
       {
         className: "vxg-form-field",
@@ -47411,7 +47411,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
               {
                 name: index2,
                 control,
-                defaultValue: item[index2] || "",
+                defaultValue: item[field.name] || "",
                 render: ({
                   field: { onChange, onBlur, value },
                   fieldState: { error }
@@ -47471,9 +47471,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
                     sx: {
                       textAlign: "left"
                     },
-                    children: field.inputType === "select" ? Object.keys(field.options).map((option) => {
+                    children: field.type === "status" ? Object.keys(field.kind).map((option) => {
                       var _a;
-                      return /* @__PURE__ */ jsxRuntimeExports.jsx(material.MenuItem, { value: option, children: (_a = field.options[option]) == null ? void 0 : _a.label }, option);
+                      return /* @__PURE__ */ jsxRuntimeExports.jsx(material.MenuItem, { value: option, children: (_a = field.kind[option]) == null ? void 0 : _a.title }, option);
                     }) : null
                   },
                   index2
@@ -47573,7 +47573,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       }
       setTriggerLed(++triggerLed);
     }, [led_add]);
-    return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "BasicLed", children: "-/" + canon !== item.entity$ ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(material.Box, { className: "BasicLed", children: "-/" + canon !== item.entity$ ? /* @__PURE__ */ jsxRuntimeExports.jsx(
       BasicList,
       {
         ctx,
@@ -47748,7 +47748,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       foot: frameModel.part.foot,
       view: frameModel.view
     };
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "BasicAdmin", children: [
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(material.Box, { className: "BasicAdmin", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(BasicHead, { vxg, ctx, spec: headSpec }),
       /* @__PURE__ */ jsxRuntimeExports.jsx(BasicSide, { vxg, ctx, spec: sideSpec }),
       /* @__PURE__ */ jsxRuntimeExports.jsx(BasicMain, { vxg, ctx, spec: mainSpec }),

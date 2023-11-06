@@ -6,6 +6,7 @@ import {
   type MaterialReactTableProps,
   type MRT_ColumnDef
 } from 'material-react-table'
+import { Box } from '@mui/material'
 
 // import { DataGrid } from '@mui/x-data-grid'
 
@@ -27,7 +28,7 @@ function BasicList (props: any) {
     }
 
   return (
-    <div className='BasicList' style={{ ...sx }}>
+    <Box className='BasicList' style={{ ...sx }}>
       <MaterialReactTable
         enableColumnActions={false}
         enableColumnFilters={false}
@@ -48,7 +49,7 @@ function BasicList (props: any) {
           sx: { cursor: 'pointer' }
         })}
       />
-    </div>
+    </Box>
   )
 }
 

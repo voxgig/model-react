@@ -1,9 +1,34 @@
 import { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { useLocation } from 'react-router-dom'
+
 import BasicList from './BasicList'
 import BasicEdit from './BasicEdit'
 import { Gubu } from 'gubu'
+import { Box } from '@mui/material'
+
+function fields (spec: any) {
+  try {
+    let fds = []
+    let fns = spec.content.def.edit.layout.order.replace(/\s+/g, '').split(/,/)
+    for (let fn of fns) {
+      let fd = { ...spec.content.def.ent.primary.field[fn] } || {}
+
+      // fd.title = fd.title ? fd.title : fd.name
+      fd.name = fn
+      fd.headerName = fd.title
+      fd = { ...fd, ...(spec.content.def.edit.layout.field[fn] || {}) }
+
+      fds.push(fd)
+    }
+
+    return fds
+  } catch (err) {
+    // console.log(err)
+  }
+
+  return []
+}
 
 // Validate spec shape with Gubu
 const BasicLedSpecShape = Gubu({
@@ -85,7 +110,7 @@ function BasicLed (props: any) {
   }, [led_add])
 
   return (
-    <div className='BasicLed'>
+    <Box className='BasicLed'>
       {'-/' + canon !== item.entity$ ? (
         <BasicList
           ctx={ctx}
@@ -116,7 +141,7 @@ function BasicLed (props: any) {
           }}
         />
       )}
-    </div>
+    </Box>
   )
 }
 

@@ -59,7 +59,7 @@ import * as React from "react";
 import React__default, { createElement, isValidElement, Children, cloneElement, useMemo, useState, useRef, useCallback, useEffect, Fragment, memo as memo$2, useLayoutEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, useLocation, Routes, Route } from "react-router-dom";
-import { Button as Button$1, Autocomplete, TextField as TextField$1, createFilterOptions as createFilterOptions$1, Toolbar as Toolbar$1, IconButton as IconButton$1, Typography as Typography$1, List as List$1, ListItem, ListItemButton, ListItemIcon as ListItemIcon$1, ListItemText as ListItemText$1, Divider as Divider$1, Grid as Grid$1, MenuItem as MenuItem$1, Box as Box$2, Container as Container$2 } from "@mui/material";
+import { Button as Button$1, createFilterOptions as createFilterOptions$1, Toolbar as Toolbar$1, IconButton as IconButton$1, Autocomplete, TextField as TextField$1, Typography as Typography$1, List as List$1, ListItem, ListItemButton, ListItemIcon as ListItemIcon$1, ListItemText as ListItemText$1, Divider as Divider$1, Box as Box$2, Grid as Grid$1, MenuItem as MenuItem$1, Container as Container$2 } from "@mui/material";
 import * as ReactDOM from "react-dom";
 import ReactDOM__default, { flushSync } from "react-dom";
 import emStyled from "@emotion/styled";
@@ -45593,7 +45593,7 @@ function BasicList(props) {
     onEditingRowSave(row, values2);
     exitEditingMode();
   });
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "BasicList", style: __spreadValues({}, sx), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(Box$2, { className: "BasicList", style: __spreadValues({}, sx), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
     MaterialReactTable,
     {
       enableColumnActions: false,
@@ -47381,7 +47381,7 @@ function BasicEdit(props) {
     defaultValues: {}
   });
   const { handleSubmit, setValue, control } = forms;
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "BasicEdit", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(Box$2, { className: "BasicEdit", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
     "form",
     {
       className: "vxg-form-field",
@@ -47399,7 +47399,7 @@ function BasicEdit(props) {
             {
               name: index2,
               control,
-              defaultValue: item[index2] || "",
+              defaultValue: item[field.name] || "",
               render: ({
                 field: { onChange, onBlur, value },
                 fieldState: { error }
@@ -47459,9 +47459,9 @@ function BasicEdit(props) {
                   sx: {
                     textAlign: "left"
                   },
-                  children: field.inputType === "select" ? Object.keys(field.options).map((option) => {
+                  children: field.type === "status" ? Object.keys(field.kind).map((option) => {
                     var _a;
-                    return /* @__PURE__ */ jsxRuntimeExports.jsx(MenuItem$1, { value: option, children: (_a = field.options[option]) == null ? void 0 : _a.label }, option);
+                    return /* @__PURE__ */ jsxRuntimeExports.jsx(MenuItem$1, { value: option, children: (_a = field.kind[option]) == null ? void 0 : _a.title }, option);
                   }) : null
                 },
                 index2
@@ -47561,7 +47561,7 @@ function BasicLed(props) {
     }
     setTriggerLed(++triggerLed);
   }, [led_add]);
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "BasicLed", children: "-/" + canon !== item.entity$ ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(Box$2, { className: "BasicLed", children: "-/" + canon !== item.entity$ ? /* @__PURE__ */ jsxRuntimeExports.jsx(
     BasicList,
     {
       ctx,
@@ -47736,7 +47736,7 @@ function BasicAdmin(props) {
     foot: frameModel.part.foot,
     view: frameModel.view
   };
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "BasicAdmin", children: [
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(Box$2, { className: "BasicAdmin", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx(BasicHead, { vxg, ctx, spec: headSpec }),
     /* @__PURE__ */ jsxRuntimeExports.jsx(BasicSide, { vxg, ctx, spec: sideSpec }),
     /* @__PURE__ */ jsxRuntimeExports.jsx(BasicMain, { vxg, ctx, spec: mainSpec }),

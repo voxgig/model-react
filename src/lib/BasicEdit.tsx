@@ -5,7 +5,8 @@ import {
   TextField,
   Autocomplete,
   createFilterOptions,
-  MenuItem
+  MenuItem,
+  Box
 } from '@mui/material'
 
 import { useForm, Controller } from 'react-hook-form'
@@ -36,7 +37,7 @@ function BasicEdit (props: any) {
   const { handleSubmit, setValue, control } = forms
 
   return (
-    <div className='BasicEdit'>
+    <Box className='BasicEdit'>
       <form
         className='vxg-form-field'
         onSubmit={handleSubmit(async (data: any) => {
@@ -172,7 +173,7 @@ function BasicEdit (props: any) {
           </Grid>
         </Grid>
       </form>
-    </div>
+    </Box>
   )
 }
 
