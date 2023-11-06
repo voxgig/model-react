@@ -20276,7 +20276,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       Object.entries(basicSideMenuItemSpec.section.item).map(
         ([itemKey, item]) => {
           return (
-            // TODO: load user from redux store
+            // TODO: Load user role from redux store
             isAuthorized(userRole, item.access) && /* @__PURE__ */ jsxRuntimeExports.jsx(
               material.ListItem,
               {

@@ -20264,7 +20264,7 @@ function BasicSideMenuItem(props) {
     Object.entries(basicSideMenuItemSpec.section.item).map(
       ([itemKey, item]) => {
         return (
-          // TODO: load user from redux store
+          // TODO: Load user role from redux store
           isAuthorized(userRole, item.access) && /* @__PURE__ */ jsxRuntimeExports.jsx(
             ListItem,
             {

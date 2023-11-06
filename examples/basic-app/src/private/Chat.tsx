@@ -5,7 +5,6 @@ interface ChatProps {
 }
 
 function Chat (props: any) {
-  // TODO: Implement chat component logic
   return (
     <div className='Chat'>
       <h1>Chat Component</h1>
