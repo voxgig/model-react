@@ -110,16 +110,7 @@ function BasicMain (props: any) {
 export default BasicMain
 
 function makeCmp (view: any, ctx: any) {
-  let cmp: any = () => <div>NONE</div>
-
   const content = view.content || {}
-
-  // TODO: Refactor this
-  if ('custom' === content.kind) {
-    cmp = ctx().cmp[content.cmp]
-  } else if ('led' === content.kind) {
-    cmp = BasicLed
-  }
-
+  const cmp = content.kind === 'custom' ? ctx().cmp[content.cmp] : BasicLed
   return cmp
 }
