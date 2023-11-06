@@ -14,22 +14,24 @@ const BasicSideSpecShape = Gubu({
     logo: {
       img: String
     },
-    section: Child({
-      title: String,
-      item: Child({
-        kind: Exact('resource', 'page', 'modal'),
-        label: String,
-        icon: String,
-        path: String,
-        access: Child(Boolean, {})
-      })
-    })
+    section: {}
+    // section: Child({
+    //   title: String,
+    //   item: Child({
+    //     kind: Exact('resource', 'page', 'modal'),
+    //     label: String,
+    //     icon: String,
+    //     path: String,
+    //     access: Child(Boolean, {})
+    //   })
+    // })
   },
-  view: Child({
-    title: String,
-    icon: String,
-    content: {}
-  })
+  view: {}
+  // view: Child({
+  //   title: String,
+  //   icon: String,
+  //   content: {}
+  // })
 })
 
 function onClose (seneca: any) {

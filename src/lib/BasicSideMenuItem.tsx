@@ -60,16 +60,17 @@ function isAuthorized (userRole: string, authorizedRoles: any): boolean {
 }
 
 const BasicSideMenuItemSpecShape = Gubu({
-  section: Child({
-    title: String,
-    item: Child({
-      kind: String,
-      label: String,
-      icon: String,
-      path: String,
-      access: Child(Boolean, {})
-    })
-  })
+  section: {}
+  // section: Child({
+  //   title: String,
+  //   item: Child({
+  //     kind: String,
+  //     label: String,
+  //     icon: String,
+  //     path: String,
+  //     access: Child(Boolean, {})
+  //   })
+  // })
 })
 
 function BasicSideMenuItem (props: any) {
