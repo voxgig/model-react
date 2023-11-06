@@ -41,7 +41,7 @@ function onClose (seneca: any) {
 
 function BasicSide (props: any) {
   const { vxg, ctx } = props
-  const { model, seneca } = ctx()
+  const { seneca } = ctx()
 
   const vxgState = useSelector((state: any) => state.main.vxg)
   const open = vxgState.cmp.BasicSide.show

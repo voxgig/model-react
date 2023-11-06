@@ -11,7 +11,6 @@ const BasicFootSpecShape = Gubu({
 
 function BasicFoot (props: any) {
   const { vxg, ctx } = props
-  const model = ctx().model
 
   const basicFootSpec = BasicFootSpecShape(props.spec)
 
