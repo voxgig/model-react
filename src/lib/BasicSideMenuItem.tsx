@@ -50,8 +50,8 @@ function makeIcon (name: string) {
   return <Icon />
 }
 
-// TODO: move to utils
-// TODO: allow custom authorization function
+// TODO: Move isAuthorized to utils
+// TODO: Allow custom authorization function
 function isAuthorized (userRole: string, authorizedRoles: any): boolean {
   return (
     authorizedRoles.hasOwnProperty(userRole) &&
@@ -59,7 +59,6 @@ function isAuthorized (userRole: string, authorizedRoles: any): boolean {
   )
 }
 
-// TODO: Make sure Child() fails properly
 const BasicSideMenuItemSpecShape = Gubu({
   section: Child({
     title: String,
@@ -80,7 +79,7 @@ function BasicSideMenuItem (props: any) {
 
   const basicSideMenuItemSpec = BasicSideMenuItemSpecShape(props.spec)
 
-  // TODO: refactor to use better default
+  // TODO: Refactor to use better default
   const userRole =
     useSelector((state: any) => state.main.auth.user.role) || 'user'
 
@@ -89,7 +88,7 @@ function BasicSideMenuItem (props: any) {
       {Object.entries(basicSideMenuItemSpec.section.item).map(
         ([itemKey, item]: [any, any]) => {
           return (
-            // TODO: load user from redux store
+            // TODO: Load user role from redux store
             isAuthorized(userRole, item.access) && (
               <ListItem
                 key={itemKey}

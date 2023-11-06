@@ -1,7 +1,6 @@
 import { Child, Gubu } from 'gubu'
 import BasicSideMenuItem from './BasicSideMenuItem'
 
-// TODO: Make sure Child() fails properly
 const BasicSideMenuSpecShape = Gubu({
   section: Child({
     title: String,
@@ -24,7 +23,6 @@ function BasicSideMenu (props: any) {
     <>
       {Object.entries(basicSideMenuSpec.section).map(
         ([sectionKey, section]: [any, any]) => {
-          // TODO: do we need to pass viewPath?
           const basicSideMenuItemSpec = {
             section
           }

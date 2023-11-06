@@ -44,7 +44,7 @@ function BasicLed (props: any) {
 
   const basicLedSpec = BasicLedSpecShape(props.spec)
 
-  const { model, seneca, custom } = ctx()
+  const { seneca, custom } = ctx()
 
   const vxgState = useSelector((state: any) => state.main.vxg)
 

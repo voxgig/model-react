@@ -20276,7 +20276,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       Object.entries(basicSideMenuItemSpec.section.item).map(
         ([itemKey, item]) => {
           return (
-            // TODO: load user from redux store
+            // TODO: Load user role from redux store
             isAuthorized(userRole, item.access) && /* @__PURE__ */ jsxRuntimeExports.jsx(
               material.ListItem,
               {
@@ -47600,16 +47600,6 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       }
     ) });
   }
-  function makeCmp(view, ctx) {
-    let cmp = () => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: "NONE" });
-    const content = view.content || {};
-    if ("custom" === content.kind) {
-      cmp = ctx().cmp[content.cmp];
-    } else if ("led" === content.kind) {
-      cmp = BasicLed;
-    }
-    return cmp;
-  }
   const BasicMainSpecShape = gubu_minExports.Gubu({
     main: {},
     view: gubu_minExports.Child({
@@ -47657,13 +47647,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const sideOpen = reactRedux.useSelector(
       (state) => state.main.vxg.cmp.BasicSide.show
     );
-    const basicMainStyle = {
+    const style2 = {
       paddingLeft: sideOpen ? "16rem" : "0rem"
     };
-    const divStyle = {
-      height: "100%"
-    };
-    return /* @__PURE__ */ jsxRuntimeExports.jsx(material.Box, { className: "BasicMain", style: basicMainStyle, children: /* @__PURE__ */ jsxRuntimeExports.jsx(material.Box, { className: "BasicMainDiv", style: __spreadValues({}, divStyle), children: /* @__PURE__ */ jsxRuntimeExports.jsx(reactRouterDom.Routes, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(reactRouterDom.Route, { path: "/view", children: views.map((view) => {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(material.Box, { className: "basic-main", sx: style2, children: /* @__PURE__ */ jsxRuntimeExports.jsx(material.Box, { className: "basic-main-container", sx: { height: "100%" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(reactRouterDom.Routes, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(reactRouterDom.Route, { path: "/view", children: views.map((view) => {
       const Cmp = makeCmp(view, ctx);
       if (view.paramId) {
         return /* @__PURE__ */ jsxRuntimeExports.jsxs(React.Fragment, { children: [
@@ -47694,6 +47681,16 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         view.name
       );
     }) }) }) }) });
+  }
+  function makeCmp(view, ctx) {
+    let cmp = () => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: "NONE" });
+    const content = view.content || {};
+    if ("custom" === content.kind) {
+      cmp = ctx().cmp[content.cmp];
+    } else if ("led" === content.kind) {
+      cmp = BasicLed;
+    }
+    return cmp;
   }
   const BasicFootSpecShape = gubu_minExports.Gubu({
     foot: {

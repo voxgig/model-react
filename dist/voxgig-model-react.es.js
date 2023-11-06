@@ -20264,7 +20264,7 @@ function BasicSideMenuItem(props) {
     Object.entries(basicSideMenuItemSpec.section.item).map(
       ([itemKey, item]) => {
         return (
-          // TODO: load user from redux store
+          // TODO: Load user role from redux store
           isAuthorized(userRole, item.access) && /* @__PURE__ */ jsxRuntimeExports.jsx(
             ListItem,
             {
@@ -47588,16 +47588,6 @@ function BasicLed(props) {
     }
   ) });
 }
-function makeCmp(view, ctx) {
-  let cmp = () => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: "NONE" });
-  const content = view.content || {};
-  if ("custom" === content.kind) {
-    cmp = ctx().cmp[content.cmp];
-  } else if ("led" === content.kind) {
-    cmp = BasicLed;
-  }
-  return cmp;
-}
 const BasicMainSpecShape = gubu_minExports.Gubu({
   main: {},
   view: gubu_minExports.Child({
@@ -47645,13 +47635,10 @@ function BasicMain(props) {
   const sideOpen = useSelector(
     (state) => state.main.vxg.cmp.BasicSide.show
   );
-  const basicMainStyle = {
+  const style2 = {
     paddingLeft: sideOpen ? "16rem" : "0rem"
   };
-  const divStyle = {
-    height: "100%"
-  };
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(Box$2, { className: "BasicMain", style: basicMainStyle, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Box$2, { className: "BasicMainDiv", style: __spreadValues({}, divStyle), children: /* @__PURE__ */ jsxRuntimeExports.jsx(Routes, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/view", children: views.map((view) => {
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(Box$2, { className: "basic-main", sx: style2, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Box$2, { className: "basic-main-container", sx: { height: "100%" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Routes, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/view", children: views.map((view) => {
     const Cmp = makeCmp(view, ctx);
     if (view.paramId) {
       return /* @__PURE__ */ jsxRuntimeExports.jsxs(Fragment, { children: [
@@ -47682,6 +47669,16 @@ function BasicMain(props) {
       view.name
     );
   }) }) }) }) });
+}
+function makeCmp(view, ctx) {
+  let cmp = () => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: "NONE" });
+  const content = view.content || {};
+  if ("custom" === content.kind) {
+    cmp = ctx().cmp[content.cmp];
+  } else if ("led" === content.kind) {
+    cmp = BasicLed;
+  }
+  return cmp;
 }
 const BasicFootSpecShape = gubu_minExports.Gubu({
   foot: {

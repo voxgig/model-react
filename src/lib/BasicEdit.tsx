@@ -27,7 +27,7 @@ function BasicEdit (props: any) {
   } = props
 
   const { ctx, spec } = props
-  const { model, seneca, custom } = ctx()
+  const { seneca, custom } = ctx()
 
   const def = spec.content.def
   const { ent, cols } = def

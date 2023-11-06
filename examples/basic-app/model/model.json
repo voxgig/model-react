@@ -2,6 +2,21 @@
   "sys": {
     "app": {
       "web": {
+        "part": {
+          "admin": {},
+          "head": {
+            "logo": {},
+            "tool": {
+              "def": []
+            }
+          },
+          "side": {
+            "logo": {},
+            "section": {}
+          },
+          "main": {},
+          "foot": {}
+        },
         "view": {
           "content": {
             "def": {
@@ -18,23 +33,6 @@
               }
             }
           }
-        },
-        "part": {
-          "admin": {
-            "admin": {}
-          },
-          "head": {
-            "logo": {},
-            "tool": {
-              "def": []
-            }
-          },
-          "side": {
-            "logo": {},
-            "section": {}
-          },
-          "main": {},
-          "foot": {}
         }
       }
     }
@@ -48,9 +46,7 @@
         "private": {
           "kind": "basic",
           "part": {
-            "admin": {
-              "admin": {}
-            },
+            "admin": {},
             "head": {
               "logo": {
                 "img": "/voxgig.png"
@@ -89,7 +85,7 @@
               "section": {
                 "section1": {
                   "item": {
-                    "item1": {
+                    "talk": {
                       "kind": "resource",
                       "label": "Talks",
                       "icon": "done",
@@ -99,7 +95,7 @@
                         "user": true
                       }
                     },
-                    "item2": {
+                    "chat": {
                       "kind": "resource",
                       "label": "Chat",
                       "icon": "chatBubble",
@@ -114,10 +110,10 @@
               }
             },
             "main": {
-              "title": ""
+              "title": "Main"
             },
             "foot": {
-              "title": ""
+              "title": "Footer"
             }
           },
           "view": {
@@ -128,8 +124,18 @@
                 "kind": "custom",
                 "cmp": "chat",
                 "def": {
+                  "ent": {
+                    "primary": {
+                      "field": {}
+                    }
+                  },
                   "add": {
                     "active": false
+                  },
+                  "edit": {
+                    "layout": {
+                      "field": {}
+                    }
                   }
                 }
               }
@@ -141,6 +147,7 @@
                 "kind": "led",
                 "def": {
                   "ent": {
+                    "canon": "vxg/talk",
                     "primary": {
                       "field": {
                         "id": {
@@ -148,8 +155,7 @@
                           "edit": false
                         }
                       }
-                    },
-                    "canon": "vxg/talk"
+                    }
                   },
                   "add": {
                     "active": true
@@ -161,7 +167,8 @@
                         "title": {
                           "type": "",
                           "headerName": "Title",
-                          "edit": true
+                          "edit": true,
+                          "kind": {}
                         },
                         "status": {
                           "type": "status",
