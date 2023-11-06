@@ -1,11 +1,10 @@
 import React from 'react'
-import { render, screen } from '@testing-library/react'
+import { render, screen, RenderOptions } from '@testing-library/react'
+import '@testing-library/jest-dom'
 import { Provider } from 'react-redux'
 import { BrowserRouter } from 'react-router-dom'
 import thunk from 'redux-thunk'
 import configureStore from 'redux-mock-store'
-import '@testing-library/jest-dom'
-import type { RenderOptions } from '@testing-library/react'
 
 interface IExtendedRenderOptions extends RenderOptions {
   withRouter?: boolean
