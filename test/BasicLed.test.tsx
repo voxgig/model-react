@@ -1,4 +1,4 @@
-import { describe, it, beforeEach, afterEach } from 'vitest'
+import { describe, it, beforeEach, afterEach, expect } from 'vitest'
 import * as React from 'react'
 
 import { customRender, ctx, spec, initialState, vxg } from './mocks/test-utils'
@@ -22,49 +22,20 @@ describe('BasicLed', () => {
   })
 
   it('happy', () => {
-    const basicLedSpec = {
-      title: 'task',
-      icon: 'done',
-      content: {
-        kind: 'led',
-        def: {
-          ent: {
-            canon: 'vxg/task',
-            primary: {
-              field: {
-                id: {
-                  title: 'ID',
-                  edit: true
-                }
-              }
-            }
-          },
-          add: { active: false },
-          edit: {
-            layout: {
-              order: 'id,title,status',
-              field: {
-                id: {
-                  title: 'ID',
-                  edit: true
-                },
-                title: {
-                  title: 'Title',
-                  edit: true
-                },
-                status: {
-                  title: 'Status',
-                  edit: true
-                }
-              }
-            }
-          }
-        }
-      }
-    }
+    const frame = spec.frame
+    const basicLedSpec = ctx().model.app.web.frame[frame].view.task
 
-    customRender(<BasicLed vxg={vxg} ctx={ctx} spec={basicLedSpec} />, {
-      mockInitialState: initialState
-    })
+    const { debug, screen } = customRender(
+      <BasicLed vxg={vxg} ctx={ctx} spec={basicLedSpec} />,
+      {
+        mockInitialState: initialState
+      }
+    )
+
+    // expect component to have a table
+    expect(screen.getByRole('table')).toBeInTheDocument()
+
+    // expect component to have a task named Task 1
+    expect(screen.getByText('Task 1')).toBeInTheDocument()
   })
 })

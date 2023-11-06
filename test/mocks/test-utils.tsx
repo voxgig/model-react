@@ -35,7 +35,7 @@ const setupComponent = (
   return componentTree
 }
 
-export function customRender(
+export function customRender (
   ui: JSX.Element,
   renderOptions?: IExtendedRenderOptions
 ) {
@@ -72,33 +72,117 @@ export const ctx = () => {
         web: {
           frame: {
             public: {
+              kind: 'basic'
+            },
+            private: {
+              kind: 'basic',
               part: {
-                foot: {},
+                admin: {},
                 head: {
+                  logo: {
+                    img: '/voxgig.png'
+                  },
                   tool: {
                     def: [
-                      { kind: 'addbutton', title: 'Add', options: { kind: 'ent', label: { field: 'title' }, ent: 'vxg/task' } },
-                      { kind: 'autocomplete', title: 'Autocomplete', options: { kind: 'ent', label: { field: 'title' }, ent: 'vxg/task' } }
+                      {
+                        kind: 'addbutton',
+                        title: 'Add',
+                        options: {
+                          kind: 'ent',
+                          label: {
+                            field: 'title'
+                          },
+                          ent: 'vxg/task'
+                        }
+                      },
+                      {
+                        kind: 'autocomplete',
+                        title: 'Autocomplete',
+                        options: {
+                          kind: 'ent',
+                          label: {
+                            field: 'title'
+                          },
+                          ent: 'vxg/task'
+                        }
+                      }
                     ]
                   }
                 },
                 side: {
-                  logo: { img: "/logo.png" }
-                }
-              },
-              view: {}
-            },
-            private: {
-              part: {
-                foot: {},
-                head: { logo: { img: '/logo.png' }, tool: { def: [] } },
-                side: {
-                  logo: { img: "/logo.png" },
-                  section: {}
+                  logo: {
+                    img: '/voxgig.png'
+                  },
+                  section: {
+                    section1: {
+                      item: {
+                        task: {
+                          kind: 'resource',
+                          label: 'Tasks',
+                          icon: 'done',
+                          path: 'view/task',
+                          access: {
+                            admin: true,
+                            user: true
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                main: {
+                  title: 'Main'
+                },
+                foot: {
+                  title: 'Footer'
                 }
               },
               view: {
-                undefined: { content: { kind: 'led', def: { add: {} } }, title: 'Task' }
+                task: {
+                  content: {
+                    kind: 'led',
+                    def: {
+                      canon: 'vxg/task',
+                      add: {
+                        active: false
+                      },
+                      fields: {
+                        id: {
+                          label: 'ID',
+                          inputType: 'text',
+                          required: true,
+                          editable: false,
+                          type: 'String'
+                        },
+                        title: {
+                          type: 'String',
+                          inputType: 'text',
+                          label: 'Title',
+                          required: true,
+                          editable: true
+                        },
+                        status: {
+                          type: 'String',
+                          inputType: 'select',
+                          label: 'Status',
+                          required: true,
+                          editable: true,
+                          options: {
+                            open: {
+                              label: 'Open'
+                            },
+                            closed: {
+                              label: 'Closed'
+                            }
+                          }
+                        }
+                      },
+                      id: {
+                        field: 'id'
+                      }
+                    }
+                  }
+                }
               }
             }
           }
@@ -108,19 +192,19 @@ export const ctx = () => {
     content: {},
     seneca: {
       entity: () => ({
-        list$: (q) => Promise.resolve([]), // Mock the list$ function to return an empty array
-      }),
+        list$: q => Promise.resolve([]) // Mock the list$ function to return an empty array
+      })
     },
     custom: {
       BasicLed: {
-        query: (view: any, cmpstate: any) => { }
+        query: (view: any, cmpstate: any) => {}
       }
     }
   }
 }
 
 export const spec = {
-  frame: 'private',
+  frame: 'private'
 }
 
 export const initialState = {
@@ -129,10 +213,7 @@ export const initialState = {
     vxg: {
       cmp: {
         BasicHead: {
-          tool: [
-            { selected: true },
-            { selected: false },
-          ]
+          tool: [{ selected: true }, { selected: false }]
         },
         BasicSide: {
           show: true
@@ -142,14 +223,21 @@ export const initialState = {
       ent: {
         list: {
           main: {
-            'vxg/task': []
-          },
+            'vxg/task': [
+              {
+                entity$: '-/vxg/task',
+                id: 't01',
+                title: 'Task 1',
+                status: 'open'
+              }
+            ]
+          }
         },
         meta: {
           main: {
             'vxg/task': { state: 'none' }
-          },
-        },
+          }
+        }
       }
     }
   }

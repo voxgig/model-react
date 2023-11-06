@@ -3,25 +3,24 @@ import { useSelector } from 'react-redux'
 import { useLocation } from 'react-router-dom'
 import BasicList from './BasicList'
 import BasicEdit from './BasicEdit'
-import { Gubu, Open } from 'gubu'
+import { Gubu } from 'gubu'
 
 // Validate spec shape with Gubu
-const BasicLedSpecShape = Gubu(
-  Open({
-    name: '',
-    content: {
-      name: '',
-      kind: String,
-      def: {
-        canon: String,
-        fields: {},
-        ent: {},
-        add: {},
-        edit: {}
+const BasicLedSpecShape = Gubu({
+  content: {
+    kind: String,
+    def: {
+      canon: String,
+      fields: {},
+      add: {
+        active: Boolean
+      },
+      id: {
+        field: String
       }
     }
-  })
-)
+  }
+})
 
 function BasicLed (props: any) {
   const { ctx } = props
