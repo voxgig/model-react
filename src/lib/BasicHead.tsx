@@ -14,18 +14,19 @@ const BasicHeadSpecShape = Gubu({
       img: String
     },
     tool: {
-      def: Child({
-        kind: Exact('addbutton', 'autocomplete'),
-        label: String,
-        options: {
-          kind: String,
-          label: {
-            field: String
-          },
-          ent: String
-        },
-        name: ''
-      })
+      def: {}
+      // def: Child({
+      //   kind: Exact('addbutton', 'autocomplete'),
+      //   label: String,
+      //   options: {
+      //     kind: String,
+      //     label: {
+      //       field: String
+      //     },
+      //     ent: String
+      //   },
+      //   name: ''
+      // })
     },
     app: {}
   },

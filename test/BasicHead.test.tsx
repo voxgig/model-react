@@ -1,6 +1,6 @@
 import { describe, expect, it, beforeEach, afterEach } from 'vitest'
 import * as React from 'react'
-import { customRender, ctx, initialState, vxg } from './mocks/test-utils'
+import { customRender, ctx, initialState, vxg, spec } from './mocks/test-utils'
 import { BasicHead } from '../src/lib/index'
 
 describe('BasicHead', () => {
@@ -21,21 +21,10 @@ describe('BasicHead', () => {
   })
 
   it('happy', () => {
+    const frame = spec.frame
     const basicHeadSpec = {
-      head: {
-        logo: { img: 'img.png' },
-        tool: { def: [] }
-      },
-      view: {
-        task: {
-          content: {
-            def: {
-              add: {}
-            }
-          },
-          name: 'task'
-        }
-      }
+      head: ctx().model.app.web.frame[frame].part.head,
+      view: {}
     }
 
     const { screen } = customRender(
