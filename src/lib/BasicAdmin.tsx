@@ -18,28 +18,14 @@ function BasicAdmin (props: any) {
   const basicAdminSpec = BasicAdminSpecShape(props.spec)
 
   const { frame } = basicAdminSpec
-
   const frameModel = model.app.web.frame[frame]
 
-  const headSpec: any = {
-    head: frameModel.part.head,
-    view: frameModel.view
-  }
+  const view = frameModel.view
 
-  const sideSpec: any = {
-    side: frameModel.part.side,
-    view: frameModel.view
-  }
-
-  const mainSpec: any = {
-    main: frameModel.part.main,
-    view: frameModel.view
-  }
-
-  const footSpec: any = {
-    foot: frameModel.part.foot,
-    view: frameModel.view
-  }
+  const headSpec = { head: frameModel.part.head, view }
+  const sideSpec = { side: frameModel.part.side, view }
+  const mainSpec = { main: frameModel.part.main, view }
+  const footSpec = { foot: frameModel.part.foot, view }
 
   return (
     <div className='BasicAdmin'>

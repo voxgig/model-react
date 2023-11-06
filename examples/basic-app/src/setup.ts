@@ -236,7 +236,8 @@ export function getMain () {
             id: 'u01',
             email: 'alice@example.com',
             name: 'Alice',
-            handle: 'alice'
+            handle: 'alice',
+            role: 'guest'
           }
         }
       }
@@ -283,8 +284,7 @@ export function getMain () {
           handle: 'alice',
           id: 'u01',
           name: 'Alice',
-          pass: 'alice',
-          salt: 'alice'
+          role: 'guest'
         }
       })
     })

@@ -30,6 +30,8 @@ part: head: {
   ]
 }
 
+
+
 part: side: {
   logo: img: '/voxgig.png'
   section: {
@@ -60,10 +62,11 @@ part: side: {
   }
 }
 
-part: main: title: ""
+part: main: title: "Main"
 
-part: foot: title: ""
+part: foot: title: "Footer"
 
+view: &: $.sys.app.web.view
 
 view: chat: {
   content: {

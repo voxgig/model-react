@@ -2,6 +2,21 @@
   "sys": {
     "app": {
       "web": {
+        "part": {
+          "admin": {},
+          "head": {
+            "logo": {},
+            "tool": {
+              "def": []
+            }
+          },
+          "side": {
+            "logo": {},
+            "section": {}
+          },
+          "main": {},
+          "foot": {}
+        },
         "view": {
           "content": {
             "def": {
@@ -18,23 +33,6 @@
               }
             }
           }
-        },
-        "part": {
-          "admin": {
-            "admin": {}
-          },
-          "head": {
-            "logo": {},
-            "tool": {
-              "def": []
-            }
-          },
-          "side": {
-            "logo": {},
-            "section": {}
-          },
-          "main": {},
-          "foot": {}
         }
       }
     },
@@ -77,9 +75,7 @@
         "private": {
           "kind": "basic",
           "part": {
-            "admin": {
-              "admin": {}
-            },
+            "admin": {},
             "head": {
               "logo": {
                 "img": "/voxgig.png"
@@ -143,10 +139,10 @@
               }
             },
             "main": {
-              "title": ""
+              "title": "Main"
             },
             "foot": {
-              "title": ""
+              "title": "Footer"
             }
           },
           "view": {
@@ -155,6 +151,11 @@
                 "kind": "custom",
                 "cmp": "chat",
                 "def": {
+                  "ent": {
+                    "primary": {
+                      "field": {}
+                    }
+                  },
                   "add": {
                     "active": false
                   },
