@@ -82,10 +82,10 @@ export const ctx = () => {
                     img: '/voxgig.png'
                   },
                   tool: {
-                    def: [
-                      {
+                    def: {
+                      addbutton: {
                         kind: 'addbutton',
-                        title: 'Add',
+                        label: 'Add',
                         options: {
                           kind: 'ent',
                           label: {
@@ -94,9 +94,9 @@ export const ctx = () => {
                           ent: 'vxg/task'
                         }
                       },
-                      {
+                      autocomplete: {
                         kind: 'autocomplete',
-                        title: 'Autocomplete',
+                        label: 'Autocomplete',
                         options: {
                           kind: 'ent',
                           label: {
@@ -105,7 +105,7 @@ export const ctx = () => {
                           ent: 'vxg/task'
                         }
                       }
-                    ]
+                    }
                   }
                 },
                 side: {
@@ -212,7 +212,14 @@ export const initialState = {
     vxg: {
       cmp: {
         BasicHead: {
-          tool: [{ selected: true }, { selected: false }]
+          tool: {
+            addbutton: {},
+            autocomplete: {
+              selected: {
+                title: 'Title'
+              }
+            }
+          }
         },
         BasicSide: {
           show: true

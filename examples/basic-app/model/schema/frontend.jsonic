@@ -2,7 +2,14 @@ app: web: part: admin: {}
 
 app: web: part: head: {
   logo: img: string
-  tool: def: []
+  tool: def: &: {
+    kind: string
+    label: string
+    options: {
+      kind: string
+      label: field: string
+      ent: string
+  }
 }
 
 app: web: part: side: {

@@ -75,36 +75,50 @@
         "private": {
           "kind": "basic",
           "part": {
-            "admin": {},
+            "admin": {
+              "admin": {}
+            },
             "head": {
               "logo": {
                 "img": "/voxgig.png"
               },
               "tool": {
-                "def": [
-                  {
+                "def": {
+                  "addbutton": {
                     "kind": "addbutton",
-                    "title": "Add",
+                    "label": "Add",
                     "options": {
                       "kind": "ent",
                       "label": {
                         "field": "title"
                       },
-                      "ent": "vxg/task"
+                      "ent": "vxg/talk"
                     }
                   },
-                  {
+                  "autocomplete": {
                     "kind": "autocomplete",
-                    "title": "Autocomplete",
+                    "label": "Autocomplete",
                     "options": {
                       "kind": "ent",
                       "label": {
                         "field": "title"
                       },
-                      "ent": "vxg/task"
+                      "ent": "vxg/talk"
                     }
                   }
-                ]
+                }
+              },
+              "app": {
+                "web": {
+                  "part": {
+                    "side": {
+                      "logo": {},
+                      "section": {}
+                    },
+                    "main": {},
+                    "foot": {}
+                  }
+                }
               }
             },
             "side": {

@@ -20066,17 +20066,78 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       duration: theme.transitions.duration.enteringScreen
     })
   }));
-  function onOpen(seneca) {
-    seneca.act("aim:app,set:state", {
-      section: "vxg.cmp.BasicSide.show",
-      content: true
-    });
+  const BasicAutocompleteShape = gubu_minExports.Gubu({
+    tooldef: {
+      kind: gubu_minExports.Exact("addbutton", "autocomplete"),
+      label: String,
+      options: {
+        kind: String,
+        label: {
+          field: String
+        },
+        ent: String
+      },
+      name: ""
+    }
+  });
+  function BasicAutocomplete(props) {
+    const { ctx } = props;
+    const { seneca } = ctx();
+    const basicAutocompleteSpec = BasicAutocompleteShape(props.spec);
+    const { tooldef } = basicAutocompleteSpec;
+    let data = {};
+    let value = {};
+    if ("ent" === tooldef.options.kind) {
+      let canon = tooldef.options.ent;
+      data = {
+        ents: reactRedux.useSelector((state) => state.main.vxg.ent.list.main[canon])
+      };
+      let selected = reactRedux.useSelector(
+        (state) => state.main.vxg.cmp.BasicHead.tool[tooldef.name].selected
+      );
+      if (selected) {
+        value = {
+          label: selected[tooldef.options.label.field],
+          ent: selected
+        };
+      }
+    }
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(
+      material.Autocomplete,
+      {
+        freeSolo: true,
+        forcePopupIcon: true,
+        value: value || tooldef.defaultvalue || "",
+        options: resolveOptions$1(tooldef, data),
+        size: "small",
+        sx: {
+          paddingLeft: "1em",
+          width: "20rem"
+        },
+        filterOptions: (options, params) => {
+          const filtered = filter$1(options, params);
+          return filtered;
+        },
+        renderInput: (params) => /* @__PURE__ */ jsxRuntimeExports.jsx(material.TextField, __spreadProps(__spreadValues({}, params), { label: tooldef.label })),
+        onChange: (event, newval) => {
+          seneca.act("aim:app,set:state", {
+            section: "vxg.cmp.BasicHead.tool." + tooldef.name + ".selected",
+            content: "search" == tooldef.mode && typeof newval === "string" ? { [tooldef.options.label.field]: newval } : newval == null ? void 0 : newval.ent
+          });
+        },
+        isOptionEqualToValue: (opt, val) => {
+          var _a, _b;
+          return opt === val || null != opt && null != val && ((_a = opt.ent) == null ? void 0 : _a.id) === ((_b = val.ent) == null ? void 0 : _b.id);
+        }
+      },
+      tooldef.name
+    );
   }
   const filter$1 = material.createFilterOptions();
-  function resolveOptions(tooldef, tooldata) {
+  function resolveOptions$1(tooldef, data) {
     let options = [];
-    if ("ent" === tooldef.options.kind && tooldata[tooldef.name]) {
-      let ents = tooldata[tooldef.name].ents || [];
+    if ("ent" === tooldef.options.kind && data) {
+      let ents = data.ents || [];
       options = ents.map((ent) => ({
         label: ent[tooldef.options.label.field],
         ent
@@ -20084,33 +20145,26 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }
     return options;
   }
-  function addItem(seneca, led_add) {
-    seneca.act("aim:app,set:state", {
-      section: "vxg.trigger.led.add",
-      content: ++led_add
-    });
-  }
   const BasicHeadSpecShape = gubu_minExports.Gubu({
     head: {
       logo: {
         img: String
       },
       tool: {
-        def: [
-          {
-            kind: gubu_minExports.Exact("addbutton", "autocomplete"),
-            title: String,
-            options: {
-              kind: String,
-              label: {
-                field: String
-              },
-              ent: String
+        def: gubu_minExports.Child({
+          kind: gubu_minExports.Exact("addbutton", "autocomplete"),
+          label: String,
+          options: {
+            kind: String,
+            label: {
+              field: String
             },
-            name: ""
-          }
-        ]
-      }
+            ent: String
+          },
+          name: ""
+        })
+      },
+      app: {}
     },
     view: {}
   });
@@ -20126,37 +20180,15 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     );
     const user = reactRedux.useSelector((state) => state.main.auth.user);
     const userName = user.name || user.email;
-    let valuemap = {};
-    let tooldata = {};
-    tooldefs.forEach((tooldef) => {
-      if ("autocomplete" === tooldef.kind) {
-        if ("ent" === tooldef.options.kind) {
-          let canon = tooldef.options.ent;
-          tooldata[tooldef.name] = {
-            ents: reactRedux.useSelector((state) => state.main.vxg.ent.list.main[canon])
-          };
-          let selected = reactRedux.useSelector(
-            (state) => state.main.vxg.cmp.BasicHead.tool[tooldef.name].selected
-          );
-          if (selected) {
-            valuemap[tooldef.name] = {
-              label: selected[tooldef.options.label.field],
-              ent: selected
-            };
-          }
-        }
-      }
-    });
     const vxgState = reactRedux.useSelector((state) => state.main.vxg);
     const open = vxgState.cmp.BasicSide.show;
     let led_add = vxgState.trigger.led.add;
     const viewPath = location2.pathname.split("/")[2];
     let add = ((_c = (_b = (_a = basicHeadSpec.view[viewPath]) == null ? void 0 : _a.content) == null ? void 0 : _b.def) == null ? void 0 : _c.add) || { active: false };
-    let drawerwidth = "16rem";
     return /* @__PURE__ */ jsxRuntimeExports.jsx(
       BasicAppBar,
       {
-        drawerwidth,
+        drawerwidth: "16rem",
         open,
         sx: {
           color: "black",
@@ -20179,32 +20211,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
             var _a2;
             if ("autocomplete" === tooldef.kind) {
               return /* @__PURE__ */ jsxRuntimeExports.jsx(
-                material.Autocomplete,
+                BasicAutocomplete,
                 {
-                  freeSolo: true,
-                  forcePopupIcon: true,
-                  value: valuemap[tooldef.name] || tooldef.defaultvalue || "",
-                  options: resolveOptions(tooldef, tooldata),
-                  size: "small",
-                  sx: {
-                    paddingLeft: "1em",
-                    width: "20rem"
-                  },
-                  filterOptions: (options, params) => {
-                    const filtered = filter$1(options, params);
-                    return filtered;
-                  },
-                  renderInput: (params) => /* @__PURE__ */ jsxRuntimeExports.jsx(material.TextField, __spreadProps(__spreadValues({}, params), { label: tooldef.title })),
-                  onChange: (event, newval) => {
-                    seneca.act("aim:app,set:state", {
-                      section: "vxg.cmp.BasicHead.tool." + tooldef.name + ".selected",
-                      content: "search" == tooldef.mode && typeof newval === "string" ? { [tooldef.options.label.field]: newval } : newval == null ? void 0 : newval.ent
-                    });
-                  },
-                  isOptionEqualToValue: (opt, val) => {
-                    var _a3, _b2;
-                    return opt === val || null != opt && null != val && ((_a3 = opt.ent) == null ? void 0 : _a3.id) === ((_b2 = val.ent) == null ? void 0 : _b2.id);
-                  }
+                  spec: { tooldef },
+                  ctx
                 },
                 tooldef.name
               );
@@ -20219,7 +20229,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
                   },
                   size: "large",
                   onClick: () => addItem(seneca, led_add),
-                  children: tooldef.title + " " + ((_a2 = basicHeadSpec.view[viewPath]) == null ? void 0 : _a2.name)
+                  children: tooldef.label + " " + ((_a2 = basicHeadSpec.view[viewPath]) == null ? void 0 : _a2.name)
                 },
                 tooldef.name
               );
@@ -20230,6 +20240,18 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         ] })
       }
     );
+  }
+  function onOpen(seneca) {
+    seneca.act("aim:app,set:state", {
+      section: "vxg.cmp.BasicSide.show",
+      content: true
+    });
+  }
+  function addItem(seneca, led_add) {
+    seneca.act("aim:app,set:state", {
+      section: "vxg.trigger.led.add",
+      content: ++led_add
+    });
   }
   const iconmap = {
     factory: iconsMaterial.FactoryOutlined,
