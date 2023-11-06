@@ -6,20 +6,7 @@ import { Routes, Route } from 'react-router-dom'
 
 import BasicLed from './BasicLed'
 import { Child, Exact, Gubu } from 'gubu'
-
-function makeCmp (view: any, ctx: any) {
-  let cmp: any = () => <div>NONE</div>
-
-  const content = view.content || {}
-
-  if ('custom' === content.kind) {
-    cmp = ctx().cmp[content.cmp]
-  } else if ('led' === content.kind) {
-    cmp = BasicLed
-  }
-
-  return cmp
-}
+import { Box } from '@mui/material'
 
 // Validate spec shape with Gubu
 const BasicMainSpecShape = Gubu({
@@ -67,24 +54,24 @@ function BasicMain (props: any) {
   const { model, content } = ctx()
 
   const basicMainSpec = BasicMainSpecShape(props.spec)
-
   const views = Object.values(basicMainSpec.view)
-
   const sideOpen = useSelector(
     (state: any) => state.main.vxg.cmp.BasicSide.show
   )
 
+  // TODO: Refactor this
   const basicMainStyle = {
     paddingLeft: sideOpen ? '16rem' : '0rem'
   }
 
-  const divStyle = {
+  // TODO: Refactor this
+  const basicMainContainerStyle = {
     height: '100%'
   }
 
   return (
-    <div className='BasicMain' style={basicMainStyle}>
-      <div className='BasicMainDiv' style={{ ...divStyle }}>
+    <Box className='basic-main' sx={basicMainStyle}>
+      <Box className='basic-main-container' sx={basicMainContainerStyle}>
         <Routes>
           <Route path='/view'>
             {views.map((view: any) => {
@@ -115,9 +102,15 @@ function BasicMain (props: any) {
             })}
           </Route>
         </Routes>
-      </div>
-    </div>
+      </Box>
+    </Box>
   )
 }
 
 export default BasicMain
+
+function makeCmp (view: any, ctx: any) {
+  const content = view.content || {}
+  const cmp = content.kind === 'custom' ? ctx().cmp[content.cmp] : BasicLed
+  return cmp
+}
