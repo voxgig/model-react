@@ -2,49 +2,32 @@ import { Fragment } from 'react'
 import { useSelector } from 'react-redux'
 import { Routes, Route } from 'react-router-dom'
 import BasicLed from './BasicLed'
-import { Child, Exact, Gubu } from 'gubu'
+import { Exact, Gubu } from 'gubu'
 import { Box } from '@mui/material'
+
+const { Child } = Gubu
 
 // Validate spec shape with Gubu
 const BasicMainSpecShape = Gubu({
-  main: {},
-  view: {}
-  // view: Child({
-  //   name: String,
-  //   title: String,
-  //   icon: String,
-  //   content: {
-  //     kind: Exact('led', 'custom'),
-  //     def: {
-  //       ent: {
-  //         primary: {
-  //           field: {
-  //             id: {
-  //               title: String,
-  //               edit: Boolean
-  //             }
-  //           }
-  //         }
-  //       },
-  //       add: {
-  //         active: Boolean
-  //       },
-  //       edit: {
-  //         layout: {
-  //           order: String,
-  //           field: Child({
-  //             type: String,
-  //             headerName: String,
-  //             edit: Boolean,
-  //             kind: Child({
-  //               title: String
-  //             })
-  //           })
-  //         }
-  //       }
-  //     }
-  //   }
-  // })
+  main: {
+    title: String
+  },
+  view: Child({
+    name: String,
+    content: {
+      kind: Exact('led', 'custom'),
+      def: {
+        canon: String,
+        add: {
+          active: Boolean
+        },
+        id: {
+          field: String
+        },
+        fields: {}
+      }
+    }
+  })
 })
 
 function BasicMain (props: any) {

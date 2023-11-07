@@ -114,6 +114,7 @@ export const ctx = () => {
                   },
                   section: {
                     section1: {
+                      title: 'Section 1',
                       item: {
                         task: {
                           kind: 'resource',
@@ -138,6 +139,7 @@ export const ctx = () => {
               },
               view: {
                 task: {
+                  name: 'task',
                   content: {
                     kind: 'led',
                     def: {

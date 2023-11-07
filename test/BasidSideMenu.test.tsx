@@ -1,7 +1,7 @@
 import { afterEach, beforeEach, describe, it } from 'vitest'
 import * as React from 'react'
 
-import { customRender, ctx, initialState } from './mocks/test-utils'
+import { customRender, spec, ctx, initialState } from './mocks/test-utils'
 import { BasicSideMenu } from '../src/lib/index'
 
 describe('BasicSideMenu', () => {
@@ -22,29 +22,13 @@ describe('BasicSideMenu', () => {
   })
 
   it('happy', () => {
-    const basicSideMenuSpec = {
-      section: {
-        section1: {
-          title: 'Section 1',
-          item: {
-            task: {
-              kind: 'resource',
-              label: 'Tasks',
-              icon: 'done',
-              path: '/view/tasks',
-              access: {
-                admin: true,
-                user: true
-              }
-            }
-          }
-        }
-      }
-    }
-
+    const frame = spec.frame
+    const basicSideSpec = ctx().model.app.web.frame[frame].part.side
+    const basicSideMenuSpec = {}
+    console.log('basicSideMenuSpec', basicSideMenuSpec)
     customRender(
       <BasicSideMenu
-        spec={basicSideMenuSpec}
+        spec={{ section: basicSideSpec.section }}
         onItemSelect={() => {}}
         onClose={() => {}}
       />,

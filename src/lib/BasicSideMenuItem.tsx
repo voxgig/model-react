@@ -24,7 +24,7 @@ import {
   Event as EventIcon,
   Logout as LogoutIcon
 } from '@mui/icons-material'
-import { Child, Gubu } from 'gubu'
+import { Gubu } from 'gubu'
 import { useSelector } from 'react-redux'
 
 const iconmap: any = {
@@ -59,18 +59,19 @@ function isAuthorized (userRole: string, authorizedRoles: any): boolean {
   )
 }
 
+const { Child } = Gubu
+
 const BasicSideMenuItemSpecShape = Gubu({
-  section: {}
-  // section: Child({
-  //   title: String,
-  //   item: Child({
-  //     kind: String,
-  //     label: String,
-  //     icon: String,
-  //     path: String,
-  //     access: Child(Boolean, {})
-  //   })
-  // })
+  section: {
+    title: String,
+    item: Child({
+      kind: String,
+      label: String,
+      icon: String,
+      path: String,
+      access: Child(Boolean, {})
+    })
+  }
 })
 
 function BasicSideMenuItem (props: any) {

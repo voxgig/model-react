@@ -32,6 +32,7 @@ function fields (spec: any) {
 
 // Validate spec shape with Gubu
 const BasicLedSpecShape = Gubu({
+  name: String,
   content: {
     kind: String,
     def: {

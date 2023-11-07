@@ -1,11 +1,13 @@
 import { useSelector } from 'react-redux'
 import { useLocation } from 'react-router-dom'
-import { Gubu, Exact, Child, Open } from 'gubu'
+import { Gubu, Exact } from 'gubu'
 import { Toolbar, Typography, IconButton } from '@mui/material'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import BasicButton from './BasicButton'
 import BasicAppBar from './BasicAppBar'
 import BasicAutocomplete from './BasicAutocomplete'
+
+const { Child } = Gubu
 
 // Define spec shape with Gubu
 const BasicHeadSpecShape = Gubu({
@@ -14,19 +16,18 @@ const BasicHeadSpecShape = Gubu({
       img: String
     },
     tool: {
-      def: {}
-      // def: Child({
-      //   kind: Exact('addbutton', 'autocomplete'),
-      //   label: String,
-      //   options: {
-      //     kind: String,
-      //     label: {
-      //       field: String
-      //     },
-      //     ent: String
-      //   },
-      //   name: ''
-      // })
+      def: Child({
+        kind: Exact('addbutton', 'autocomplete'),
+        label: String,
+        options: {
+          kind: String,
+          label: {
+            field: String
+          },
+          ent: String
+        },
+        name: ''
+      })
     },
     app: {}
   },

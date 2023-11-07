@@ -1,18 +1,19 @@
-import { Child, Gubu } from 'gubu'
+import { Gubu } from 'gubu'
 import BasicSideMenuItem from './BasicSideMenuItem'
 
+const { Child } = Gubu
+
 const BasicSideMenuSpecShape = Gubu({
-  section: {}
-  // section: Child({
-  //   title: String,
-  //   item: Child({
-  //     kind: String,
-  //     label: String,
-  //     icon: String,
-  //     path: String,
-  //     access: Child(Boolean, {})
-  //   })
-  // })
+  section: Child({
+    title: String,
+    item: Child({
+      kind: String,
+      label: String,
+      icon: String,
+      path: String,
+      access: Child(Boolean, {})
+    })
+  })
 })
 
 function BasicSideMenu (props: any) {

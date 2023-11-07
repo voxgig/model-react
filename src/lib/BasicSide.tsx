@@ -2,11 +2,13 @@ import { useSelector } from 'react-redux'
 
 import { useNavigate } from 'react-router-dom'
 
-import { Child, Exact, Gubu } from 'gubu'
+import { Exact, Gubu } from 'gubu'
 import BasicSideMenu from './BasicSideMenu'
 import { ChevronLeft } from '@mui/icons-material'
 import { Divider, IconButton } from '@mui/material'
 import { BasicDrawer, BasicDrawerHeader } from './BasicDrawer'
+
+const { Child } = Gubu
 
 // TODO: Make sure Child() fails properly
 const BasicSideSpecShape = Gubu({
@@ -14,24 +16,18 @@ const BasicSideSpecShape = Gubu({
     logo: {
       img: String
     },
-    section: {}
-    // section: Child({
-    //   title: String,
-    //   item: Child({
-    //     kind: Exact('resource', 'page', 'modal'),
-    //     label: String,
-    //     icon: String,
-    //     path: String,
-    //     access: Child(Boolean, {})
-    //   })
-    // })
+    section: Child({
+      title: String,
+      item: Child({
+        kind: String,
+        label: String,
+        icon: String,
+        path: String,
+        access: Child(Boolean, {})
+      })
+    })
   },
   view: {}
-  // view: Child({
-  //   title: String,
-  //   icon: String,
-  //   content: {}
-  // })
 })
 
 function onClose (seneca: any) {
