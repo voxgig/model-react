@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom'
 
 import BasicList from './BasicList'
 import BasicEdit from './BasicEdit'
-import { Gubu } from 'gubu'
+import { Exact, Gubu, Skip } from 'gubu'
 import { Box } from '@mui/material'
 
 function fields (spec: any) {
@@ -34,16 +34,17 @@ function fields (spec: any) {
 const BasicLedSpecShape = Gubu({
   name: String,
   content: {
-    kind: String,
+    kind: Exact('led', 'custom'),
+    cmp: Skip(String),
     def: {
       canon: String,
-      fields: {},
+      fields: Skip({}),
       add: {
         active: Boolean
       },
-      id: {
+      id: Skip({
         field: String
-      }
+      })
     }
   }
 })

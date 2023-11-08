@@ -58,8 +58,8 @@ var __async = (__this, __arguments, generator) => {
 import * as React from "react";
 import React__default, { createElement, isValidElement, Children, cloneElement, useMemo, useState, useRef, useCallback, useEffect, Fragment, memo as memo$2, useLayoutEffect } from "react";
 import { useSelector } from "react-redux";
-import { useNavigate, useLocation, Routes, Route } from "react-router-dom";
-import { Button as Button$1, createFilterOptions as createFilterOptions$1, Toolbar as Toolbar$1, IconButton as IconButton$1, Autocomplete, TextField as TextField$1, Typography as Typography$1, List as List$1, ListItem, ListItemButton, ListItemIcon as ListItemIcon$1, ListItemText as ListItemText$1, Divider as Divider$1, Box as Box$2, Grid as Grid$1, MenuItem as MenuItem$1, Container as Container$2 } from "@mui/material";
+import { useLocation, useNavigate, Routes, Route } from "react-router-dom";
+import { Button as Button$1, Autocomplete, TextField as TextField$1, createFilterOptions as createFilterOptions$1, Toolbar as Toolbar$1, IconButton as IconButton$1, Typography as Typography$1, List as List$1, ListItem, ListItemButton, ListItemIcon as ListItemIcon$1, ListItemText as ListItemText$1, Divider as Divider$1, Box as Box$2, Grid as Grid$1, MenuItem as MenuItem$1, Container as Container$2 } from "@mui/material";
 import * as ReactDOM from "react-dom";
 import ReactDOM__default, { flushSync } from "react-dom";
 import emStyled from "@emotion/styled";
@@ -20073,11 +20073,11 @@ function BasicAutocomplete(props) {
   const { seneca } = ctx();
   const basicAutocompleteSpec = BasicAutocompleteShape(props.spec);
   const { tooldef } = basicAutocompleteSpec;
-  let data = {};
+  let options = {};
   let value = {};
   if ("ent" === tooldef.options.kind) {
     let canon = tooldef.options.ent;
-    data = {
+    options = {
       ents: useSelector((state) => state.main.vxg.ent.list.main[canon])
     };
     let selected = useSelector(
@@ -20096,18 +20096,18 @@ function BasicAutocomplete(props) {
       freeSolo: true,
       forcePopupIcon: true,
       value: value || tooldef.defaultvalue || "",
-      options: resolveOptions$1(tooldef, data),
+      options: resolveOptions(tooldef, options),
       size: "small",
       sx: {
         paddingLeft: "1em",
         width: "20rem"
       },
-      filterOptions: (options, params) => {
-        const filtered = filter$1(options, params);
+      filterOptions: (options2, params) => {
+        const filtered = filter$1(options2, params);
         return filtered;
       },
       renderInput: (params) => /* @__PURE__ */ jsxRuntimeExports.jsx(TextField$1, __spreadProps(__spreadValues({}, params), { label: tooldef.label })),
-      onChange: (event, newval) => {
+      onChange: (newval) => {
         seneca.act("aim:app,set:state", {
           section: "vxg.cmp.BasicHead.tool." + tooldef.name + ".selected",
           content: "search" == tooldef.mode && typeof newval === "string" ? { [tooldef.options.label.field]: newval } : newval == null ? void 0 : newval.ent
@@ -20122,24 +20122,25 @@ function BasicAutocomplete(props) {
   );
 }
 const filter$1 = createFilterOptions$1();
-function resolveOptions$1(tooldef, data) {
-  let options = [];
-  if ("ent" === tooldef.options.kind && data) {
-    let ents = data.ents || [];
-    options = ents.map((ent) => ({
+function resolveOptions(tooldef, options) {
+  let resolvedOptions = [];
+  if ("ent" === tooldef.options.kind && options) {
+    let ents = options.ents || [];
+    resolvedOptions = ents.map((ent) => ({
       label: ent[tooldef.options.label.field],
       ent
     }));
   }
-  return options;
+  return resolvedOptions;
 }
+const { Child: Child$4 } = gubu_minExports.Gubu;
 const BasicHeadSpecShape = gubu_minExports.Gubu({
   head: {
     logo: {
       img: String
     },
     tool: {
-      def: gubu_minExports.Child({
+      def: Child$4({
         kind: gubu_minExports.Exact("addbutton", "autocomplete"),
         label: String,
         options: {
@@ -20157,22 +20158,22 @@ const BasicHeadSpecShape = gubu_minExports.Gubu({
   view: {}
 });
 function BasicHead(props) {
-  var _a, _b, _c;
-  const { vxg, ctx } = props;
+  var _a, _b, _c, _d;
+  const location2 = useLocation();
+  const { ctx } = props;
   const { seneca } = ctx();
   const basicHeadSpec = BasicHeadSpecShape(props.spec);
-  const navigate = useNavigate();
-  const location2 = useLocation();
+  const user = useSelector((state) => state.main.auth.user);
+  const userName = user.name || user.email;
   const tooldefs = Object.entries(basicHeadSpec.head.tool.def).map(
     (entry) => (entry[1].name = entry[0], entry[1])
   );
-  const user = useSelector((state) => state.main.auth.user);
-  const userName = user.name || user.email;
   const vxgState = useSelector((state) => state.main.vxg);
   const open = vxgState.cmp.BasicSide.show;
   let led_add = vxgState.trigger.led.add;
   const viewPath = location2.pathname.split("/")[2];
   let add = ((_c = (_b = (_a = basicHeadSpec.view[viewPath]) == null ? void 0 : _a.content) == null ? void 0 : _b.def) == null ? void 0 : _c.add) || { active: false };
+  const viewName = ((_d = basicHeadSpec.view[viewPath]) == null ? void 0 : _d.name) || "";
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
     BasicAppBar,
     {
@@ -20196,7 +20197,6 @@ function BasicHead(props) {
           }
         ),
         tooldefs.map((tooldef) => {
-          var _a2;
           if ("autocomplete" === tooldef.kind) {
             return /* @__PURE__ */ jsxRuntimeExports.jsx(
               BasicAutocomplete,
@@ -20217,7 +20217,7 @@ function BasicHead(props) {
                 },
                 size: "large",
                 onClick: () => addItem(seneca, led_add),
-                children: tooldef.label + " " + ((_a2 = basicHeadSpec.view[viewPath]) == null ? void 0 : _a2.name)
+                children: tooldef.label + " " + viewName
               },
               tooldef.name
             );
@@ -20265,17 +20265,18 @@ function makeIcon(name) {
 function isAuthorized(userRole, authorizedRoles) {
   return authorizedRoles.hasOwnProperty(userRole) && authorizedRoles[userRole] === true;
 }
+const { Child: Child$3 } = gubu_minExports.Gubu;
 const BasicSideMenuItemSpecShape = gubu_minExports.Gubu({
-  section: gubu_minExports.Child({
+  section: {
     title: String,
-    item: gubu_minExports.Child({
+    item: Child$3({
       kind: String,
       label: String,
       icon: String,
       path: String,
-      access: gubu_minExports.Child(Boolean, {})
+      access: Child$3(Boolean, {})
     })
-  })
+  }
 });
 function BasicSideMenuItem(props) {
   const { sectionKey, onItemSelect } = props;
@@ -20305,15 +20306,16 @@ function BasicSideMenuItem(props) {
     /* @__PURE__ */ jsxRuntimeExports.jsx(Divider$1, {})
   ] }, sectionKey);
 }
+const { Child: Child$2 } = gubu_minExports.Gubu;
 const BasicSideMenuSpecShape = gubu_minExports.Gubu({
-  section: gubu_minExports.Child({
+  section: Child$2({
     title: String,
-    item: gubu_minExports.Child({
+    item: Child$2({
       kind: String,
       label: String,
       icon: String,
       path: String,
-      access: gubu_minExports.Child(Boolean, {})
+      access: Child$2(Boolean, {})
     })
   })
 });
@@ -22804,27 +22806,24 @@ const closedMixin = (theme) => ({
     width: `calc(${theme.spacing(8)} + 1px)`
   }
 });
+const { Child: Child$1 } = gubu_minExports.Gubu;
 const BasicSideSpecShape = gubu_minExports.Gubu({
   side: {
     logo: {
       img: String
     },
-    section: gubu_minExports.Child({
+    section: Child$1({
       title: String,
-      item: gubu_minExports.Child({
+      item: Child$1({
         kind: String,
         label: String,
         icon: String,
         path: String,
-        access: gubu_minExports.Child(Boolean, {})
+        access: Child$1(Boolean, {})
       })
     })
   },
-  view: gubu_minExports.Child({
-    title: String,
-    icon: String,
-    content: {}
-  })
+  view: {}
 });
 function onClose(seneca) {
   seneca.act("aim:app,set:state", {
@@ -22834,7 +22833,7 @@ function onClose(seneca) {
 }
 function BasicSide(props) {
   const { vxg, ctx } = props;
-  const { model, seneca } = ctx();
+  const { seneca } = ctx();
   const vxgState = useSelector((state) => state.main.vxg);
   const open = vxgState.cmp.BasicSide.show;
   const navigate = useNavigate();
@@ -45979,9 +45978,9 @@ var appendErrors = (name, validateAllFieldCriteria, errors, type, message) => va
     [type]: message || true
   })
 }) : {};
-const focusFieldBy = (fields, callback, fieldsNames) => {
-  for (const key of fieldsNames || Object.keys(fields)) {
-    const field = get(fields, key);
+const focusFieldBy = (fields2, callback, fieldsNames) => {
+  for (const key of fieldsNames || Object.keys(fields2)) {
+    const field = get(fields2, key);
     if (field) {
       const _a = field, { _f } = _a, currentField = __objRest(_a, ["_f"]);
       if (_f && callback(_f.name)) {
@@ -46284,13 +46283,13 @@ var updateAt = (fieldValues, index2, value) => {
 function useFieldArray(props) {
   const methods = useFormContext();
   const { control = methods.control, name, keyName = "id", shouldUnregister } = props;
-  const [fields, setFields] = React__default.useState(control._getFieldArray(name));
+  const [fields2, setFields] = React__default.useState(control._getFieldArray(name));
   const ids = React__default.useRef(control._getFieldArray(name).map(generateId));
-  const _fieldIds = React__default.useRef(fields);
+  const _fieldIds = React__default.useRef(fields2);
   const _name = React__default.useRef(name);
   const _actioned = React__default.useRef(false);
   _name.current = name;
-  _fieldIds.current = fields;
+  _fieldIds.current = fields2;
   control._names.array.add(name);
   props.rules && control.register(name, props.rules);
   useSubscribe({
@@ -46424,7 +46423,7 @@ function useFieldArray(props) {
     control._names.focus = "";
     control._updateValid();
     _actioned.current = false;
-  }, [fields, name, control]);
+  }, [fields2, name, control]);
   React__default.useEffect(() => {
     !get(control._formValues, name) && control._updateFieldArray(name);
     return () => {
@@ -46440,9 +46439,9 @@ function useFieldArray(props) {
     insert: React__default.useCallback(insert$1, [updateValues, name, control]),
     update: React__default.useCallback(update, [updateValues, name, control]),
     replace: React__default.useCallback(replace2, [updateValues, name, control]),
-    fields: React__default.useMemo(() => fields.map((field, index2) => __spreadProps(__spreadValues({}, field), {
+    fields: React__default.useMemo(() => fields2.map((field, index2) => __spreadProps(__spreadValues({}, field), {
       [keyName]: ids.current[index2] || generateId()
-    })), [fields, keyName])
+    })), [fields2, keyName])
   };
 }
 function createSubject() {
@@ -46510,19 +46509,19 @@ var objectHasFunction = (data) => {
   }
   return false;
 };
-function markFieldsDirty(data, fields = {}) {
+function markFieldsDirty(data, fields2 = {}) {
   const isParentNodeArray = Array.isArray(data);
   if (isObject(data) || isParentNodeArray) {
     for (const key in data) {
       if (Array.isArray(data[key]) || isObject(data[key]) && !objectHasFunction(data[key])) {
-        fields[key] = Array.isArray(data[key]) ? [] : {};
-        markFieldsDirty(data[key], fields[key]);
+        fields2[key] = Array.isArray(data[key]) ? [] : {};
+        markFieldsDirty(data[key], fields2[key]);
       } else if (!isNullOrUndefined(data[key])) {
-        fields[key] = true;
+        fields2[key] = true;
       }
     }
   }
-  return fields;
+  return fields2;
 }
 function getDirtyFieldsFromDefaultValues(data, formValues, dirtyFieldsFromValues) {
   const isParentNodeArray = Array.isArray(data);
@@ -46563,15 +46562,15 @@ function getFieldValue(_f) {
   return getFieldValueAs(isUndefined(ref.value) ? _f.ref.value : ref.value, _f);
 }
 var getResolverOptions = (fieldsNames, _fields, criteriaMode, shouldUseNativeValidation) => {
-  const fields = {};
+  const fields2 = {};
   for (const name of fieldsNames) {
     const field = get(_fields, name);
-    field && set(fields, name, field._f);
+    field && set(fields2, name, field._f);
   }
   return {
     criteriaMode,
     names: [...fieldsNames],
-    fields,
+    fields: fields2,
     shouldUseNativeValidation
   };
 };
@@ -46797,11 +46796,11 @@ function createFormControl(props = {}, flushRootRender) {
     }
     return errors;
   });
-  const executeBuiltInValidation = (_0, _1, ..._2) => __async(this, [_0, _1, ..._2], function* (fields, shouldOnlyCheckValid, context = {
+  const executeBuiltInValidation = (_0, _1, ..._2) => __async(this, [_0, _1, ..._2], function* (fields2, shouldOnlyCheckValid, context = {
     valid: true
   }) {
-    for (const name in fields) {
-      const field = fields[name];
+    for (const name in fields2) {
+      const field = fields2[name];
       if (field) {
         const _a = field, { _f } = _a, fieldValue = __objRest(_a, ["_f"]);
         if (_f) {
@@ -47029,9 +47028,9 @@ function createFormControl(props = {}, flushRootRender) {
     _subjects.state.next(__spreadValues(__spreadValues({}, _formState), !options.keepDirty ? {} : { isDirty: _getDirty() }));
     !options.keepIsValid && _updateValid();
   };
-  const _updateDisabledField = ({ disabled, name, field, fields }) => {
+  const _updateDisabledField = ({ disabled, name, field, fields: fields2 }) => {
     if (isBoolean(disabled)) {
-      const value = disabled ? void 0 : get(_formValues, name, getFieldValue(field ? field._f : get(fields, name)._f));
+      const value = disabled ? void 0 : get(_formValues, name, getFieldValue(field ? field._f : get(fields2, name)._f));
       set(_formValues, name, value);
       updateTouchAndDirty(name, value, false, false, true);
     }
@@ -47399,7 +47398,7 @@ function BasicEdit(props) {
             {
               name: index2,
               control,
-              defaultValue: item[field.name] || "",
+              defaultValue: item[index2] || "",
               render: ({
                 field: { onChange, onBlur, value },
                 fieldState: { error }
@@ -47459,9 +47458,9 @@ function BasicEdit(props) {
                   sx: {
                     textAlign: "left"
                   },
-                  children: field.type === "status" ? Object.keys(field.kind).map((option) => {
+                  children: field.inputType === "select" ? Object.keys(field.options).map((option) => {
                     var _a;
-                    return /* @__PURE__ */ jsxRuntimeExports.jsx(MenuItem$1, { value: option, children: (_a = field.kind[option]) == null ? void 0 : _a.title }, option);
+                    return /* @__PURE__ */ jsxRuntimeExports.jsx(MenuItem$1, { value: option, children: (_a = field.options[option]) == null ? void 0 : _a.label }, option);
                   }) : null
                 },
                 index2
@@ -47499,22 +47498,39 @@ function BasicEdit(props) {
     }
   ) });
 }
-const BasicLedSpecShape = gubu_minExports.Gubu(
-  gubu_minExports.Open({
-    name: "",
-    content: {
-      name: "",
-      kind: String,
-      def: {
-        canon: String,
-        fields: {},
-        ent: {},
-        add: {},
-        edit: {}
-      }
+function fields(spec) {
+  try {
+    let fds = [];
+    let fns = spec.content.def.edit.layout.order.replace(/\s+/g, "").split(/,/);
+    for (let fn2 of fns) {
+      let fd = __spreadValues({}, spec.content.def.ent.primary.field[fn2]);
+      fd.name = fn2;
+      fd.headerName = fd.title;
+      fd = __spreadValues(__spreadValues({}, fd), spec.content.def.edit.layout.field[fn2] || {});
+      fds.push(fd);
     }
-  })
-);
+    return fds;
+  } catch (err) {
+  }
+  return [];
+}
+const BasicLedSpecShape = gubu_minExports.Gubu({
+  name: String,
+  content: {
+    kind: gubu_minExports.Exact("led", "custom"),
+    cmp: gubu_minExports.Skip(String),
+    def: {
+      canon: String,
+      fields: gubu_minExports.Skip({}),
+      add: {
+        active: Boolean
+      },
+      id: gubu_minExports.Skip({
+        field: String
+      })
+    }
+  }
+});
 function BasicLed(props) {
   const { ctx } = props;
   const { seneca, custom } = ctx();
@@ -47594,57 +47610,43 @@ function BasicLed(props) {
     }
   ) });
 }
+const { Child, Optional, Skip } = gubu_minExports.Gubu;
 const BasicMainSpecShape = gubu_minExports.Gubu({
-  main: {},
-  view: gubu_minExports.Child({
+  main: {
+    title: String
+  },
+  view: Child({
     name: String,
-    title: String,
-    icon: String,
     content: {
       kind: gubu_minExports.Exact("led", "custom"),
+      cmp: "",
       def: {
-        ent: {
-          primary: {
-            field: {
-              id: {
-                title: String,
-                edit: Boolean
-              }
-            }
-          }
-        },
+        canon: Skip(String),
         add: {
           active: Boolean
         },
-        edit: {
-          layout: {
-            order: String,
-            field: gubu_minExports.Child({
-              type: String,
-              headerName: String,
-              edit: Boolean,
-              kind: gubu_minExports.Child({
-                title: String
-              })
-            })
-          }
-        }
+        id: Skip({
+          field: String
+        }),
+        fields: Skip({})
       }
     }
   })
 });
 function BasicMain(props) {
   const { vxg, ctx } = props;
-  const { model, content } = ctx();
   const basicMainSpec = BasicMainSpecShape(props.spec);
   const views = Object.values(basicMainSpec.view);
   const sideOpen = useSelector(
     (state) => state.main.vxg.cmp.BasicSide.show
   );
-  const style2 = {
+  const basicMainStyle = {
     paddingLeft: sideOpen ? "16rem" : "0rem"
   };
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(Box$2, { className: "basic-main", sx: style2, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Box$2, { className: "basic-main-container", sx: { height: "100%" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Routes, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/view", children: views.map((view) => {
+  const basicMainContainerStyle = {
+    height: "100%"
+  };
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(Box$2, { className: "basic-main", sx: basicMainStyle, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Box$2, { className: "basic-main-container", sx: basicMainContainerStyle, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Routes, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/view", children: views.map((view) => {
     const Cmp = makeCmp(view, ctx);
     if (view.paramId) {
       return /* @__PURE__ */ jsxRuntimeExports.jsxs(Fragment, { children: [
@@ -47677,13 +47679,8 @@ function BasicMain(props) {
   }) }) }) }) });
 }
 function makeCmp(view, ctx) {
-  let cmp = () => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: "NONE" });
   const content = view.content || {};
-  if ("custom" === content.kind) {
-    cmp = ctx().cmp[content.cmp];
-  } else if ("led" === content.kind) {
-    cmp = BasicLed;
-  }
+  const cmp = content.kind === "custom" ? ctx().cmp[content.cmp] : BasicLed;
   return cmp;
 }
 const BasicFootSpecShape = gubu_minExports.Gubu({
@@ -47694,7 +47691,6 @@ const BasicFootSpecShape = gubu_minExports.Gubu({
 });
 function BasicFoot(props) {
   const { vxg, ctx } = props;
-  const model = ctx().model;
   const basicFootSpec = BasicFootSpecShape(props.spec);
   const part = basicFootSpec.foot;
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -47720,22 +47716,11 @@ function BasicAdmin(props) {
   const basicAdminSpec = BasicAdminSpecShape(props.spec);
   const { frame } = basicAdminSpec;
   const frameModel = model.app.web.frame[frame];
-  const headSpec = {
-    head: frameModel.part.head,
-    view: frameModel.view
-  };
-  const sideSpec = {
-    side: frameModel.part.side,
-    view: frameModel.view
-  };
-  const mainSpec = {
-    main: frameModel.part.main,
-    view: frameModel.view
-  };
-  const footSpec = {
-    foot: frameModel.part.foot,
-    view: frameModel.view
-  };
+  const view = frameModel.view;
+  const headSpec = { head: frameModel.part.head, view };
+  const sideSpec = { side: frameModel.part.side, view };
+  const mainSpec = { main: frameModel.part.main, view };
+  const footSpec = { foot: frameModel.part.foot, view };
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(Box$2, { className: "BasicAdmin", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx(BasicHead, { vxg, ctx, spec: headSpec }),
     /* @__PURE__ */ jsxRuntimeExports.jsx(BasicSide, { vxg, ctx, spec: sideSpec }),
