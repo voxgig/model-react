@@ -7,35 +7,12 @@ import BasicEdit from './BasicEdit'
 import { Exact, Gubu, Skip } from 'gubu'
 import { Box } from '@mui/material'
 
-function fields (spec: any) {
-  try {
-    let fds = []
-    let fns = spec.content.def.edit.layout.order.replace(/\s+/g, '').split(/,/)
-    for (let fn of fns) {
-      let fd = { ...spec.content.def.ent.primary.field[fn] } || {}
-
-      // fd.title = fd.title ? fd.title : fd.name
-      fd.name = fn
-      fd.headerName = fd.title
-      fd = { ...fd, ...(spec.content.def.edit.layout.field[fn] || {}) }
-
-      fds.push(fd)
-    }
-
-    return fds
-  } catch (err) {
-    // console.log(err)
-  }
-
-  return []
-}
-
 // Validate spec shape with Gubu
 const BasicLedSpecShape = Gubu({
   name: String,
   content: {
-    kind: Exact('led', 'custom'),
-    cmp: Skip(String),
+    kind: String,
+    editingMode: Exact('inline', 'form'),
     def: {
       canon: String,
       fields: Skip({}),
@@ -119,6 +96,10 @@ function BasicLed (props: any) {
           spec={basicLedSpec}
           data={data}
           columns={basicListColumns}
+          onRowClick={(event: any, item: any) => {
+            console.log('item: ', item)
+            setItem(item)
+          }}
           onEditingRowSave={async (row: any, values: any) => {
             let selectedItem = { ...data[row.index] }
             for (let k in values) {

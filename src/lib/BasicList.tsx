@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { useSelector } from 'react-redux'
 
 import {
@@ -16,16 +16,28 @@ function BasicList (props: any) {
     onEditingRowSave = () => {},
     data,
     columns,
-    sx = {}
+    sx = {},
+    spec
   } = props
-
-  const vxg = useSelector((state: any) => state.main.vxg)
 
   const handleSaveRow: MaterialReactTableProps<any>['onEditingRowSave'] =
     async ({ exitEditingMode, row, values }): Promise<void> => {
       onEditingRowSave(row, values)
-      exitEditingMode() //required to exit editing mode
+      exitEditingMode()
     }
+
+  const handleRowClick = ({ row }: { row: { id: string } }) => ({
+    onClick: (event: any) => {
+      let selitem = { ...data[Number(row.id)] }
+      onRowClick(event, selitem)
+    },
+    sx: { cursor: 'pointer' }
+  })
+
+  console.log('BasicList.spec: ', spec)
+  const editingMode = spec.content.editingMode
+  const enableEditing = spec.content.editingMode === 'inline'
+  const editingRowSave = enableEditing ? handleSaveRow : undefined
 
   return (
     <Box className='BasicList' style={{ ...sx }}>
@@ -36,36 +48,15 @@ function BasicList (props: any) {
         enableSorting={false}
         enableBottomToolbar
         enableTopToolbar={false}
-        editingMode='row'
-        enableEditing
+        editingMode={editingMode}
+        enableEditing={enableEditing}
         columns={columns}
         data={data}
-        onEditingRowSave={handleSaveRow}
-        muiTableBodyRowProps={({ row }) => ({
-          // onClick: (event: any) => {
-          //   let selitem = { ...data[Number(row.id)] }
-          //   onRowClick(event, selitem)
-          // },
-          sx: { cursor: 'pointer' }
-        })}
+        onEditingRowSave={editingRowSave}
+        muiTableBodyRowProps={handleRowClick}
       />
     </Box>
   )
 }
 
 export default BasicList
-
-/*
-  <DataGrid
-    rows={rows}
-    columns={cols}
-    onRowClick={ (params) => {
-      let selitem = { ...params.row }
-      // console.log('item: ', selitem)
-      onRowClick({}, selitem)
-      
-    }}
-
-    checkboxSelection={false}
-  />
-*/

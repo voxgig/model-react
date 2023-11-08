@@ -45585,13 +45585,24 @@ function BasicList(props) {
     },
     data,
     columns,
-    sx = {}
+    sx = {},
+    spec
   } = props;
-  const vxg = useSelector((state) => state.main.vxg);
   const handleSaveRow = (_0) => __async(this, [_0], function* ({ exitEditingMode, row, values: values2 }) {
     onEditingRowSave(row, values2);
     exitEditingMode();
   });
+  const handleRowClick = ({ row }) => ({
+    onClick: (event) => {
+      let selitem = __spreadValues({}, data[Number(row.id)]);
+      onRowClick(event, selitem);
+    },
+    sx: { cursor: "pointer" }
+  });
+  console.log("BasicList.spec: ", spec);
+  const editingMode = spec.content.editingMode;
+  const enableEditing = spec.content.editingMode === "inline";
+  const editingRowSave = enableEditing ? handleSaveRow : void 0;
   return /* @__PURE__ */ jsxRuntimeExports.jsx(Box$2, { className: "BasicList", style: __spreadValues({}, sx), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
     MaterialReactTable,
     {
@@ -45601,18 +45612,12 @@ function BasicList(props) {
       enableSorting: false,
       enableBottomToolbar: true,
       enableTopToolbar: false,
-      editingMode: "row",
-      enableEditing: true,
+      editingMode,
+      enableEditing,
       columns,
       data,
-      onEditingRowSave: handleSaveRow,
-      muiTableBodyRowProps: ({ row }) => ({
-        // onClick: (event: any) => {
-        //   let selitem = { ...data[Number(row.id)] }
-        //   onRowClick(event, selitem)
-        // },
-        sx: { cursor: "pointer" }
-      })
+      onEditingRowSave: editingRowSave,
+      muiTableBodyRowProps: handleRowClick
     }
   ) });
 }
@@ -45978,9 +45983,9 @@ var appendErrors = (name, validateAllFieldCriteria, errors, type, message) => va
     [type]: message || true
   })
 }) : {};
-const focusFieldBy = (fields2, callback, fieldsNames) => {
-  for (const key of fieldsNames || Object.keys(fields2)) {
-    const field = get(fields2, key);
+const focusFieldBy = (fields, callback, fieldsNames) => {
+  for (const key of fieldsNames || Object.keys(fields)) {
+    const field = get(fields, key);
     if (field) {
       const _a = field, { _f } = _a, currentField = __objRest(_a, ["_f"]);
       if (_f && callback(_f.name)) {
@@ -46283,13 +46288,13 @@ var updateAt = (fieldValues, index2, value) => {
 function useFieldArray(props) {
   const methods = useFormContext();
   const { control = methods.control, name, keyName = "id", shouldUnregister } = props;
-  const [fields2, setFields] = React__default.useState(control._getFieldArray(name));
+  const [fields, setFields] = React__default.useState(control._getFieldArray(name));
   const ids = React__default.useRef(control._getFieldArray(name).map(generateId));
-  const _fieldIds = React__default.useRef(fields2);
+  const _fieldIds = React__default.useRef(fields);
   const _name = React__default.useRef(name);
   const _actioned = React__default.useRef(false);
   _name.current = name;
-  _fieldIds.current = fields2;
+  _fieldIds.current = fields;
   control._names.array.add(name);
   props.rules && control.register(name, props.rules);
   useSubscribe({
@@ -46423,7 +46428,7 @@ function useFieldArray(props) {
     control._names.focus = "";
     control._updateValid();
     _actioned.current = false;
-  }, [fields2, name, control]);
+  }, [fields, name, control]);
   React__default.useEffect(() => {
     !get(control._formValues, name) && control._updateFieldArray(name);
     return () => {
@@ -46439,9 +46444,9 @@ function useFieldArray(props) {
     insert: React__default.useCallback(insert$1, [updateValues, name, control]),
     update: React__default.useCallback(update, [updateValues, name, control]),
     replace: React__default.useCallback(replace2, [updateValues, name, control]),
-    fields: React__default.useMemo(() => fields2.map((field, index2) => __spreadProps(__spreadValues({}, field), {
+    fields: React__default.useMemo(() => fields.map((field, index2) => __spreadProps(__spreadValues({}, field), {
       [keyName]: ids.current[index2] || generateId()
-    })), [fields2, keyName])
+    })), [fields, keyName])
   };
 }
 function createSubject() {
@@ -46509,19 +46514,19 @@ var objectHasFunction = (data) => {
   }
   return false;
 };
-function markFieldsDirty(data, fields2 = {}) {
+function markFieldsDirty(data, fields = {}) {
   const isParentNodeArray = Array.isArray(data);
   if (isObject(data) || isParentNodeArray) {
     for (const key in data) {
       if (Array.isArray(data[key]) || isObject(data[key]) && !objectHasFunction(data[key])) {
-        fields2[key] = Array.isArray(data[key]) ? [] : {};
-        markFieldsDirty(data[key], fields2[key]);
+        fields[key] = Array.isArray(data[key]) ? [] : {};
+        markFieldsDirty(data[key], fields[key]);
       } else if (!isNullOrUndefined(data[key])) {
-        fields2[key] = true;
+        fields[key] = true;
       }
     }
   }
-  return fields2;
+  return fields;
 }
 function getDirtyFieldsFromDefaultValues(data, formValues, dirtyFieldsFromValues) {
   const isParentNodeArray = Array.isArray(data);
@@ -46562,15 +46567,15 @@ function getFieldValue(_f) {
   return getFieldValueAs(isUndefined(ref.value) ? _f.ref.value : ref.value, _f);
 }
 var getResolverOptions = (fieldsNames, _fields, criteriaMode, shouldUseNativeValidation) => {
-  const fields2 = {};
+  const fields = {};
   for (const name of fieldsNames) {
     const field = get(_fields, name);
-    field && set(fields2, name, field._f);
+    field && set(fields, name, field._f);
   }
   return {
     criteriaMode,
     names: [...fieldsNames],
-    fields: fields2,
+    fields,
     shouldUseNativeValidation
   };
 };
@@ -46796,11 +46801,11 @@ function createFormControl(props = {}, flushRootRender) {
     }
     return errors;
   });
-  const executeBuiltInValidation = (_0, _1, ..._2) => __async(this, [_0, _1, ..._2], function* (fields2, shouldOnlyCheckValid, context = {
+  const executeBuiltInValidation = (_0, _1, ..._2) => __async(this, [_0, _1, ..._2], function* (fields, shouldOnlyCheckValid, context = {
     valid: true
   }) {
-    for (const name in fields2) {
-      const field = fields2[name];
+    for (const name in fields) {
+      const field = fields[name];
       if (field) {
         const _a = field, { _f } = _a, fieldValue = __objRest(_a, ["_f"]);
         if (_f) {
@@ -47028,9 +47033,9 @@ function createFormControl(props = {}, flushRootRender) {
     _subjects.state.next(__spreadValues(__spreadValues({}, _formState), !options.keepDirty ? {} : { isDirty: _getDirty() }));
     !options.keepIsValid && _updateValid();
   };
-  const _updateDisabledField = ({ disabled, name, field, fields: fields2 }) => {
+  const _updateDisabledField = ({ disabled, name, field, fields }) => {
     if (isBoolean(disabled)) {
-      const value = disabled ? void 0 : get(_formValues, name, getFieldValue(field ? field._f : get(fields2, name)._f));
+      const value = disabled ? void 0 : get(_formValues, name, getFieldValue(field ? field._f : get(fields, name)._f));
       set(_formValues, name, value);
       updateTouchAndDirty(name, value, false, false, true);
     }
@@ -47498,27 +47503,11 @@ function BasicEdit(props) {
     }
   ) });
 }
-function fields(spec) {
-  try {
-    let fds = [];
-    let fns = spec.content.def.edit.layout.order.replace(/\s+/g, "").split(/,/);
-    for (let fn2 of fns) {
-      let fd = __spreadValues({}, spec.content.def.ent.primary.field[fn2]);
-      fd.name = fn2;
-      fd.headerName = fd.title;
-      fd = __spreadValues(__spreadValues({}, fd), spec.content.def.edit.layout.field[fn2] || {});
-      fds.push(fd);
-    }
-    return fds;
-  } catch (err) {
-  }
-  return [];
-}
 const BasicLedSpecShape = gubu_minExports.Gubu({
   name: String,
   content: {
-    kind: gubu_minExports.Exact("led", "custom"),
-    cmp: gubu_minExports.Skip(String),
+    kind: String,
+    editingMode: gubu_minExports.Exact("inline", "form"),
     def: {
       canon: String,
       fields: gubu_minExports.Skip({}),
@@ -47584,6 +47573,10 @@ function BasicLed(props) {
       spec: basicLedSpec,
       data,
       columns: basicListColumns,
+      onRowClick: (event, item2) => {
+        console.log("item: ", item2);
+        setItem(item2);
+      },
       onEditingRowSave: (row, values2) => __async(this, null, function* () {
         let selectedItem = __spreadValues({}, data[row.index]);
         for (let k in values2) {
@@ -47619,7 +47612,7 @@ const BasicMainSpecShape = gubu_minExports.Gubu({
     name: String,
     content: {
       kind: gubu_minExports.Exact("led", "custom"),
-      cmp: "",
+      editingMode: gubu_minExports.Exact("inline", "form"),
       def: {
         canon: Skip(String),
         add: {
