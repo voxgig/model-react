@@ -12,7 +12,7 @@ const BasicLedSpecShape = Gubu({
   name: String,
   content: {
     kind: String,
-    editingMode: Exact('inline', 'form'),
+    editingMode: Exact('form', 'row'),
     def: {
       canon: String,
       fields: Skip({}),

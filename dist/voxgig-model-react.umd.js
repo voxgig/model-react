@@ -45611,11 +45611,22 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       },
       sx: { cursor: "pointer" }
     });
-    console.log("BasicList.spec: ", spec);
     const editingMode = spec.content.editingMode;
-    const enableEditing = spec.content.editingMode === "inline";
-    const editingRowSave = enableEditing ? handleSaveRow : void 0;
-    return /* @__PURE__ */ jsxRuntimeExports.jsx(material.Box, { className: "BasicList", style: __spreadValues({}, sx), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(material.Box, { className: "BasicList", style: __spreadValues({}, sx), children: editingMode === "form" ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+      MaterialReactTable,
+      {
+        enableColumnActions: false,
+        enableColumnFilters: false,
+        enablePagination: true,
+        enableSorting: false,
+        enableBottomToolbar: true,
+        enableTopToolbar: false,
+        columns,
+        data,
+        muiTableBodyRowProps: handleRowClick
+      },
+      editingMode
+    ) : /* @__PURE__ */ jsxRuntimeExports.jsx(
       MaterialReactTable,
       {
         enableColumnActions: false,
@@ -45625,12 +45636,12 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         enableBottomToolbar: true,
         enableTopToolbar: false,
         editingMode,
-        enableEditing,
+        enableEditing: true,
         columns,
         data,
-        onEditingRowSave: editingRowSave,
-        muiTableBodyRowProps: handleRowClick
-      }
+        onEditingRowSave: handleSaveRow
+      },
+      editingMode
     ) });
   }
   var isCheckBoxInput = (element) => element.type === "checkbox";
@@ -47519,7 +47530,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     name: String,
     content: {
       kind: String,
-      editingMode: gubu_minExports.Exact("inline", "form"),
+      editingMode: gubu_minExports.Exact("form", "row"),
       def: {
         canon: String,
         fields: gubu_minExports.Skip({}),
@@ -47624,7 +47635,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       name: String,
       content: {
         kind: gubu_minExports.Exact("led", "custom"),
-        editingMode: gubu_minExports.Exact("inline", "form"),
+        editingMode: gubu_minExports.Exact("form", "row"),
         def: {
           canon: Skip(String),
           add: {

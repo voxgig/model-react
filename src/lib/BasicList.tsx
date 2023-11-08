@@ -34,27 +34,39 @@ function BasicList (props: any) {
     sx: { cursor: 'pointer' }
   })
 
-  console.log('BasicList.spec: ', spec)
   const editingMode = spec.content.editingMode
-  const enableEditing = spec.content.editingMode === 'inline'
-  const editingRowSave = enableEditing ? handleSaveRow : undefined
 
   return (
     <Box className='BasicList' style={{ ...sx }}>
-      <MaterialReactTable
-        enableColumnActions={false}
-        enableColumnFilters={false}
-        enablePagination
-        enableSorting={false}
-        enableBottomToolbar
-        enableTopToolbar={false}
-        editingMode={editingMode}
-        enableEditing={enableEditing}
-        columns={columns}
-        data={data}
-        onEditingRowSave={editingRowSave}
-        muiTableBodyRowProps={handleRowClick}
-      />
+      {editingMode === 'form' ? (
+        <MaterialReactTable
+          key={editingMode}
+          enableColumnActions={false}
+          enableColumnFilters={false}
+          enablePagination
+          enableSorting={false}
+          enableBottomToolbar
+          enableTopToolbar={false}
+          columns={columns}
+          data={data}
+          muiTableBodyRowProps={handleRowClick}
+        />
+      ) : (
+        <MaterialReactTable
+          key={editingMode}
+          enableColumnActions={false}
+          enableColumnFilters={false}
+          enablePagination
+          enableSorting={false}
+          enableBottomToolbar
+          enableTopToolbar={false}
+          editingMode={editingMode}
+          enableEditing
+          columns={columns}
+          data={data}
+          onEditingRowSave={handleSaveRow}
+        />
+      )}
     </Box>
   )
 }
