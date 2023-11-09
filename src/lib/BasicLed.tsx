@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom'
 
 import BasicList from './BasicList'
 import BasicEdit from './BasicEdit'
-import { Exact, Gubu, Skip } from 'gubu'
+import { Exact, Gubu, Optional, Skip } from 'gubu'
 import { Box } from '@mui/material'
 
 // Validate spec shape with Gubu
@@ -12,7 +12,10 @@ const BasicLedSpecShape = Gubu({
   name: String,
   content: {
     kind: String,
-    editingMode: Exact('form', 'row'),
+    editingMode: 'form',
+    foot: {},
+    head: {},
+    cmp: Skip(String),
     def: {
       canon: String,
       fields: Skip({}),
@@ -88,27 +91,39 @@ function BasicLed (props: any) {
     setTriggerLed(++triggerLed)
   }, [led_add])
 
+  console.log('basicLedSpec', basicLedSpec)
+  const headCmpId = basicLedSpec.content.head?.cmp
+  const footCmpId = basicLedSpec.content.foot?.cmp
+  console.log('headCmpId', headCmpId)
+  console.log('footCmpId', footCmpId)
+  const HeadCmp = ctx().cmp[headCmpId]
+  const FootCmp = ctx().cmp[footCmpId]
+
   return (
     <Box className='BasicLed'>
       {'-/' + canon !== item.entity$ ? (
-        <BasicList
-          ctx={ctx}
-          spec={basicLedSpec}
-          data={data}
-          columns={basicListColumns}
-          onRowClick={(event: any, item: any) => {
-            console.log('item: ', item)
-            setItem(item)
-          }}
-          onEditingRowSave={async (row: any, values: any) => {
-            let selectedItem = { ...data[row.index] }
-            for (let k in values) {
-              selectedItem[k] = values[k]
-            }
-            await seneca.entity(canon).save$(selectedItem)
-            setItem({})
-          }}
-        />
+        <>
+          {HeadCmp ? <HeadCmp /> : null}
+          <BasicList
+            ctx={ctx}
+            spec={basicLedSpec}
+            data={data}
+            columns={basicListColumns}
+            onRowClick={(event: any, item: any) => {
+              console.log('item: ', item)
+              setItem(item)
+            }}
+            onEditingRowSave={async (row: any, values: any) => {
+              let selectedItem = { ...data[row.index] }
+              for (let k in values) {
+                selectedItem[k] = values[k]
+              }
+              await seneca.entity(canon).save$(selectedItem)
+              setItem({})
+            }}
+          />
+          {FootCmp ? <FootCmp /> : null}
+        </>
       ) : (
         <BasicEdit
           ctx={ctx}

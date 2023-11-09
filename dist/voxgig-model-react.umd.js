@@ -47530,7 +47530,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     name: String,
     content: {
       kind: String,
-      editingMode: gubu_minExports.Exact("form", "row"),
+      editingMode: "form",
+      foot: {},
+      head: {},
+      cmp: gubu_minExports.Skip(String),
       def: {
         canon: String,
         fields: gubu_minExports.Skip({}),
@@ -47544,6 +47547,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }
   });
   function BasicLed(props) {
+    var _a, _b;
     const { ctx } = props;
     const { seneca, custom } = ctx();
     const [item, setItem] = React.useState({});
@@ -47589,27 +47593,38 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       }
       setTriggerLed(++triggerLed);
     }, [led_add]);
-    return /* @__PURE__ */ jsxRuntimeExports.jsx(material.Box, { className: "BasicLed", children: "-/" + canon !== item.entity$ ? /* @__PURE__ */ jsxRuntimeExports.jsx(
-      BasicList,
-      {
-        ctx,
-        spec: basicLedSpec,
-        data,
-        columns: basicListColumns,
-        onRowClick: (event, item2) => {
-          console.log("item: ", item2);
-          setItem(item2);
-        },
-        onEditingRowSave: (row, values2) => __async(this, null, function* () {
-          let selectedItem = __spreadValues({}, data[row.index]);
-          for (let k in values2) {
-            selectedItem[k] = values2[k];
-          }
-          yield seneca.entity(canon).save$(selectedItem);
-          setItem({});
-        })
-      }
-    ) : /* @__PURE__ */ jsxRuntimeExports.jsx(
+    console.log("basicLedSpec", basicLedSpec);
+    const headCmpId = (_a = basicLedSpec.content.head) == null ? void 0 : _a.cmp;
+    const footCmpId = (_b = basicLedSpec.content.foot) == null ? void 0 : _b.cmp;
+    console.log("headCmpId", headCmpId);
+    console.log("footCmpId", footCmpId);
+    const HeadCmp = ctx().cmp[headCmpId];
+    const FootCmp = ctx().cmp[footCmpId];
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(material.Box, { className: "BasicLed", children: "-/" + canon !== item.entity$ ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+      HeadCmp ? /* @__PURE__ */ jsxRuntimeExports.jsx(HeadCmp, {}) : null,
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        BasicList,
+        {
+          ctx,
+          spec: basicLedSpec,
+          data,
+          columns: basicListColumns,
+          onRowClick: (event, item2) => {
+            console.log("item: ", item2);
+            setItem(item2);
+          },
+          onEditingRowSave: (row, values2) => __async(this, null, function* () {
+            let selectedItem = __spreadValues({}, data[row.index]);
+            for (let k in values2) {
+              selectedItem[k] = values2[k];
+            }
+            yield seneca.entity(canon).save$(selectedItem);
+            setItem({});
+          })
+        }
+      ),
+      FootCmp ? /* @__PURE__ */ jsxRuntimeExports.jsx(FootCmp, {}) : null
+    ] }) : /* @__PURE__ */ jsxRuntimeExports.jsx(
       BasicEdit,
       {
         ctx,
@@ -47635,7 +47650,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       name: String,
       content: {
         kind: gubu_minExports.Exact("led", "custom"),
-        editingMode: gubu_minExports.Exact("form", "row"),
+        editingMode: "form",
+        foot: {},
+        head: {},
+        cmp: Skip(String),
         def: {
           canon: Skip(String),
           add: {

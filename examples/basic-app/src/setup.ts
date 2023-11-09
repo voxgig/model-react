@@ -263,7 +263,7 @@ export function getMain () {
             email: 'alice@example.com',
             name: 'Alice',
             handle: 'alice',
-            role: 'guest'
+            role: 'user'
           }
         }
       }
@@ -310,7 +310,7 @@ export function getMain () {
           handle: 'alice',
           id: 'u01',
           name: 'Alice',
-          role: 'guest'
+          role: 'user'
         }
       })
     })

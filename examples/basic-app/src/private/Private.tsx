@@ -6,6 +6,8 @@ import { BasicAdmin } from '@voxgig/model-react'
 
 import { getMain } from '../setup'
 import Chat from './Chat'
+import BasicLedHead from './BasicLedHead'
+import BasicLedFoot from './BasicLedFoot'
 
 const main = getMain()
 
@@ -15,7 +17,9 @@ const ctx = () => ({
   seneca: main.seneca,
   store: main.store,
   cmp: {
-    chat: Chat
+    Chat: Chat,
+    BasicLedHead: BasicLedHead,
+    BasicLedFoot: BasicLedFoot
   },
   custom: {
     BasicLed: {

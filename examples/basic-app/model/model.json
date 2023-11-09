@@ -2,33 +2,31 @@
   "sys": {
     "app": {
       "web": {
+        "view": {
+          "content": {
+            "head": {},
+            "foot": {},
+            "def": {
+              "add": {}
+            }
+          }
+        },
         "part": {
           "admin": {},
           "head": {
             "logo": {},
             "tool": {
-              "def": []
-            }
-          },
-          "side": {
-            "logo": {},
-            "section": {}
-          },
-          "main": {},
-          "foot": {}
-        },
-        "view": {
-          "content": {
-            "def": {
-              "ent": {
-                "primary": {
-                  "field": {}
-                }
-              },
-              "add": {},
-              "edit": {
-                "layout": {
-                  "field": {}
+              "def": {}
+            },
+            "app": {
+              "web": {
+                "part": {
+                  "side": {
+                    "logo": {},
+                    "section": {}
+                  },
+                  "main": {},
+                  "foot": {}
                 }
               }
             }
@@ -75,9 +73,7 @@
         "private": {
           "kind": "basic",
           "part": {
-            "admin": {
-              "admin": {}
-            },
+            "admin": {},
             "head": {
               "logo": {
                 "img": "/voxgig.png"
@@ -107,18 +103,6 @@
                     }
                   }
                 }
-              },
-              "app": {
-                "web": {
-                  "part": {
-                    "side": {
-                      "logo": {},
-                      "section": {}
-                    },
-                    "main": {},
-                    "foot": {}
-                  }
-                }
               }
             },
             "side": {
@@ -127,6 +111,7 @@
               },
               "section": {
                 "section1": {
+                  "title": "Section 1",
                   "item": {
                     "task": {
                       "kind": "resource",
@@ -163,13 +148,10 @@
             "chat": {
               "content": {
                 "kind": "custom",
-                "cmp": "chat",
+                "cmp": "Chat",
+                "head": {},
+                "foot": {},
                 "def": {
-                  "ent": {
-                    "primary": {
-                      "field": {}
-                    }
-                  },
                   "add": {
                     "active": false
                   },
@@ -187,6 +169,12 @@
             "task": {
               "content": {
                 "kind": "led",
+                "head": {
+                  "cmp": "BasicLedHead"
+                },
+                "foot": {
+                  "cmp": "BasicLedFoot"
+                },
                 "def": {
                   "canon": "vxg/task",
                   "add": {

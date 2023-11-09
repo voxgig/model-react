@@ -16,7 +16,10 @@ const BasicMainSpecShape = Gubu({
     name: String,
     content: {
       kind: Exact('led', 'custom'),
-      editingMode: Exact('form', 'row'),
+      editingMode: 'form',
+      foot: {},
+      head: {},
+      cmp: Skip(String),
       def: {
         canon: Skip(String),
         add: {
