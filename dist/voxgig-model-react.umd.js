@@ -45597,14 +45597,22 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       },
       data,
       columns,
-      sx = {}
+      sx = {},
+      spec
     } = props;
-    const vxg = reactRedux.useSelector((state) => state.main.vxg);
     const handleSaveRow = (_0) => __async(this, [_0], function* ({ exitEditingMode, row, values: values2 }) {
       onEditingRowSave(row, values2);
       exitEditingMode();
     });
-    return /* @__PURE__ */ jsxRuntimeExports.jsx(material.Box, { className: "BasicList", style: __spreadValues({}, sx), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+    const handleRowClick = ({ row }) => ({
+      onClick: (event) => {
+        let selitem = __spreadValues({}, data[Number(row.id)]);
+        onRowClick(event, selitem);
+      },
+      sx: { cursor: "pointer" }
+    });
+    const editingMode = spec.content.editingMode;
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(material.Box, { className: "BasicList", style: __spreadValues({}, sx), children: editingMode === "form" ? /* @__PURE__ */ jsxRuntimeExports.jsx(
       MaterialReactTable,
       {
         enableColumnActions: false,
@@ -45613,19 +45621,27 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         enableSorting: false,
         enableBottomToolbar: true,
         enableTopToolbar: false,
-        editingMode: "row",
+        columns,
+        data,
+        muiTableBodyRowProps: handleRowClick
+      },
+      editingMode
+    ) : /* @__PURE__ */ jsxRuntimeExports.jsx(
+      MaterialReactTable,
+      {
+        enableColumnActions: false,
+        enableColumnFilters: false,
+        enablePagination: true,
+        enableSorting: false,
+        enableBottomToolbar: true,
+        enableTopToolbar: false,
+        editingMode,
         enableEditing: true,
         columns,
         data,
-        onEditingRowSave: handleSaveRow,
-        muiTableBodyRowProps: ({ row }) => ({
-          // onClick: (event: any) => {
-          //   let selitem = { ...data[Number(row.id)] }
-          //   onRowClick(event, selitem)
-          // },
-          sx: { cursor: "pointer" }
-        })
-      }
+        onEditingRowSave: handleSaveRow
+      },
+      editingMode
     ) });
   }
   var isCheckBoxInput = (element) => element.type === "checkbox";
@@ -47510,39 +47526,28 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       }
     ) });
   }
-  function fields(spec) {
-    try {
-      let fds = [];
-      let fns = spec.content.def.edit.layout.order.replace(/\s+/g, "").split(/,/);
-      for (let fn of fns) {
-        let fd = __spreadValues({}, spec.content.def.ent.primary.field[fn]);
-        fd.name = fn;
-        fd.headerName = fd.title;
-        fd = __spreadValues(__spreadValues({}, fd), spec.content.def.edit.layout.field[fn] || {});
-        fds.push(fd);
-      }
-      return fds;
-    } catch (err) {
-    }
-    return [];
-  }
   const BasicLedSpecShape = gubu_minExports.Gubu({
     name: String,
     content: {
       kind: String,
+      editingMode: "form",
+      foot: {},
+      head: {},
+      cmp: gubu_minExports.Skip(String),
       def: {
         canon: String,
-        fields: {},
+        fields: gubu_minExports.Skip({}),
         add: {
           active: Boolean
         },
-        id: {
+        id: gubu_minExports.Skip({
           field: String
-        }
+        })
       }
     }
   });
   function BasicLed(props) {
+    var _a, _b;
     const { ctx } = props;
     const { seneca, custom } = ctx();
     const [item, setItem] = React.useState({});
@@ -47588,23 +47593,38 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       }
       setTriggerLed(++triggerLed);
     }, [led_add]);
-    return /* @__PURE__ */ jsxRuntimeExports.jsx(material.Box, { className: "BasicLed", children: "-/" + canon !== item.entity$ ? /* @__PURE__ */ jsxRuntimeExports.jsx(
-      BasicList,
-      {
-        ctx,
-        spec: basicLedSpec,
-        data,
-        columns: basicListColumns,
-        onEditingRowSave: (row, values2) => __async(this, null, function* () {
-          let selectedItem = __spreadValues({}, data[row.index]);
-          for (let k in values2) {
-            selectedItem[k] = values2[k];
-          }
-          yield seneca.entity(canon).save$(selectedItem);
-          setItem({});
-        })
-      }
-    ) : /* @__PURE__ */ jsxRuntimeExports.jsx(
+    console.log("basicLedSpec", basicLedSpec);
+    const headCmpId = (_a = basicLedSpec.content.head) == null ? void 0 : _a.cmp;
+    const footCmpId = (_b = basicLedSpec.content.foot) == null ? void 0 : _b.cmp;
+    console.log("headCmpId", headCmpId);
+    console.log("footCmpId", footCmpId);
+    const HeadCmp = ctx().cmp[headCmpId];
+    const FootCmp = ctx().cmp[footCmpId];
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(material.Box, { className: "BasicLed", children: "-/" + canon !== item.entity$ ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+      HeadCmp ? /* @__PURE__ */ jsxRuntimeExports.jsx(HeadCmp, {}) : null,
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        BasicList,
+        {
+          ctx,
+          spec: basicLedSpec,
+          data,
+          columns: basicListColumns,
+          onRowClick: (event, item2) => {
+            console.log("item: ", item2);
+            setItem(item2);
+          },
+          onEditingRowSave: (row, values2) => __async(this, null, function* () {
+            let selectedItem = __spreadValues({}, data[row.index]);
+            for (let k in values2) {
+              selectedItem[k] = values2[k];
+            }
+            yield seneca.entity(canon).save$(selectedItem);
+            setItem({});
+          })
+        }
+      ),
+      FootCmp ? /* @__PURE__ */ jsxRuntimeExports.jsx(FootCmp, {}) : null
+    ] }) : /* @__PURE__ */ jsxRuntimeExports.jsx(
       BasicEdit,
       {
         ctx,
@@ -47621,7 +47641,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       }
     ) });
   }
-  const { Child } = gubu_minExports.Gubu;
+  const { Child, Optional, Skip } = gubu_minExports.Gubu;
   const BasicMainSpecShape = gubu_minExports.Gubu({
     main: {
       title: String
@@ -47630,15 +47650,19 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       name: String,
       content: {
         kind: gubu_minExports.Exact("led", "custom"),
+        editingMode: "form",
+        foot: {},
+        head: {},
+        cmp: Skip(String),
         def: {
-          canon: String,
+          canon: Skip(String),
           add: {
             active: Boolean
           },
-          id: {
+          id: Skip({
             field: String
-          },
-          fields: {}
+          }),
+          fields: Skip({})
         }
       }
     })

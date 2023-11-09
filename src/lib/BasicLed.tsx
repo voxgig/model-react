@@ -4,46 +4,27 @@ import { useLocation } from 'react-router-dom'
 
 import BasicList from './BasicList'
 import BasicEdit from './BasicEdit'
-import { Gubu } from 'gubu'
+import { Exact, Gubu, Optional, Skip } from 'gubu'
 import { Box } from '@mui/material'
-
-function fields (spec: any) {
-  try {
-    let fds = []
-    let fns = spec.content.def.edit.layout.order.replace(/\s+/g, '').split(/,/)
-    for (let fn of fns) {
-      let fd = { ...spec.content.def.ent.primary.field[fn] } || {}
-
-      // fd.title = fd.title ? fd.title : fd.name
-      fd.name = fn
-      fd.headerName = fd.title
-      fd = { ...fd, ...(spec.content.def.edit.layout.field[fn] || {}) }
-
-      fds.push(fd)
-    }
-
-    return fds
-  } catch (err) {
-    // console.log(err)
-  }
-
-  return []
-}
 
 // Validate spec shape with Gubu
 const BasicLedSpecShape = Gubu({
   name: String,
   content: {
     kind: String,
+    editingMode: 'form',
+    foot: {},
+    head: {},
+    cmp: Skip(String),
     def: {
       canon: String,
-      fields: {},
+      fields: Skip({}),
       add: {
         active: Boolean
       },
-      id: {
+      id: Skip({
         field: String
-      }
+      })
     }
   }
 })
@@ -110,23 +91,39 @@ function BasicLed (props: any) {
     setTriggerLed(++triggerLed)
   }, [led_add])
 
+  console.log('basicLedSpec', basicLedSpec)
+  const headCmpId = basicLedSpec.content.head?.cmp
+  const footCmpId = basicLedSpec.content.foot?.cmp
+  console.log('headCmpId', headCmpId)
+  console.log('footCmpId', footCmpId)
+  const HeadCmp = ctx().cmp[headCmpId]
+  const FootCmp = ctx().cmp[footCmpId]
+
   return (
     <Box className='BasicLed'>
       {'-/' + canon !== item.entity$ ? (
-        <BasicList
-          ctx={ctx}
-          spec={basicLedSpec}
-          data={data}
-          columns={basicListColumns}
-          onEditingRowSave={async (row: any, values: any) => {
-            let selectedItem = { ...data[row.index] }
-            for (let k in values) {
-              selectedItem[k] = values[k]
-            }
-            await seneca.entity(canon).save$(selectedItem)
-            setItem({})
-          }}
-        />
+        <>
+          {HeadCmp ? <HeadCmp /> : null}
+          <BasicList
+            ctx={ctx}
+            spec={basicLedSpec}
+            data={data}
+            columns={basicListColumns}
+            onRowClick={(event: any, item: any) => {
+              console.log('item: ', item)
+              setItem(item)
+            }}
+            onEditingRowSave={async (row: any, values: any) => {
+              let selectedItem = { ...data[row.index] }
+              for (let k in values) {
+                selectedItem[k] = values[k]
+              }
+              await seneca.entity(canon).save$(selectedItem)
+              setItem({})
+            }}
+          />
+          {FootCmp ? <FootCmp /> : null}
+        </>
       ) : (
         <BasicEdit
           ctx={ctx}

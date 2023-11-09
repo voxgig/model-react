@@ -5,7 +5,7 @@ import BasicLed from './BasicLed'
 import { Exact, Gubu } from 'gubu'
 import { Box } from '@mui/material'
 
-const { Child } = Gubu
+const { Child, Optional, Skip } = Gubu
 
 // Validate spec shape with Gubu
 const BasicMainSpecShape = Gubu({
@@ -16,15 +16,19 @@ const BasicMainSpecShape = Gubu({
     name: String,
     content: {
       kind: Exact('led', 'custom'),
+      editingMode: 'form',
+      foot: {},
+      head: {},
+      cmp: Skip(String),
       def: {
-        canon: String,
+        canon: Skip(String),
         add: {
           active: Boolean
         },
-        id: {
+        id: Skip({
           field: String
-        },
-        fields: {}
+        }),
+        fields: Skip({})
       }
     }
   })

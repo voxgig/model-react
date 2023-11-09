@@ -2,7 +2,7 @@
 
 kind: basic
 
-part: $.sys.app.web.part
+# part: $.sys.app.web.part
 
 part: admin: {}
 
@@ -30,12 +30,11 @@ part: head:  {
   }
 }
 
-
-
 part: side: {
   logo: img: '/voxgig.png'
   section: {
     section1: {
+      title: 'Section 1'
       item: {
         task: {
           kind: 'resource'
@@ -71,7 +70,7 @@ view: &: $.sys.app.web.view
 view: chat: {
   content: {
     kind: 'custom'
-    cmp: 'chat'
+    cmp: 'Chat'
     def: $.main.ent.sys.chat & {
       add: active: false
     }
@@ -81,6 +80,12 @@ view: chat: {
 view: task: {
   content: {
     kind: 'led'
+    head: {
+      cmp: 'BasicLedHead'
+    }
+    foot: {
+      cmp: 'BasicLedFoot'
+    }
     def: $.main.ent.sys.task & {
       canon: 'vxg/task'
       add: active: false
