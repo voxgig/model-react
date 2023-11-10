@@ -1,4 +1,9 @@
-import { TextField, Autocomplete, createFilterOptions } from '@mui/material'
+import {
+  TextField,
+  Autocomplete,
+  createFilterOptions,
+  ThemeProvider
+} from '@mui/material'
 import { Exact, Gubu } from 'gubu'
 import { useSelector } from 'react-redux'
 
@@ -54,39 +59,39 @@ function BasicAutocomplete (props: BasicAutocompleteProps) {
     }
   }
 
+  const theme = ctx().theme
+
   return (
-    <Autocomplete
-      freeSolo
-      forcePopupIcon
-      value={value || tooldef.defaultvalue || ''}
-      key={tooldef.name}
-      options={resolveOptions(tooldef, options)}
-      // disableClearable={ typeof vxg.cmp.BasicHead.tool[tooldef.name].selected != 'object' }
-      size='small'
-      sx={{
-        paddingLeft: '1em',
-        width: '20rem'
-      }}
-      filterOptions={(options: any, params: any) => {
-        const filtered = filter(options, params)
-        // const { inputValue } = params
-        return filtered
-      }}
-      renderInput={params => <TextField {...params} label={tooldef.label} />}
-      onChange={(newval: any) => {
-        seneca.act('aim:app,set:state', {
-          section: 'vxg.cmp.BasicHead.tool.' + tooldef.name + '.selected',
-          content:
-            'search' == tooldef.mode && typeof newval === 'string'
-              ? { [tooldef.options.label.field]: newval }
-              : newval?.ent
-        })
-      }}
-      isOptionEqualToValue={(opt: any, val: any) =>
-        opt === val ||
-        (null != opt && null != val && opt.ent?.id === val.ent?.id)
-      }
-    />
+    <ThemeProvider theme={theme}>
+      <Autocomplete
+        freeSolo
+        forcePopupIcon
+        value={value || tooldef.defaultvalue || ''}
+        key={tooldef.name}
+        options={resolveOptions(tooldef, options)}
+        // disableClearable={ typeof vxg.cmp.BasicHead.tool[tooldef.name].selected != 'object' }
+        size='small'
+        filterOptions={(options: any, params: any) => {
+          const filtered = filter(options, params)
+          // const { inputValue } = params
+          return filtered
+        }}
+        renderInput={params => <TextField {...params} label={tooldef.label} />}
+        onChange={(newval: any) => {
+          seneca.act('aim:app,set:state', {
+            section: 'vxg.cmp.BasicHead.tool.' + tooldef.name + '.selected',
+            content:
+              'search' == tooldef.mode && typeof newval === 'string'
+                ? { [tooldef.options.label.field]: newval }
+                : newval?.ent
+          })
+        }}
+        isOptionEqualToValue={(opt: any, val: any) =>
+          opt === val ||
+          (null != opt && null != val && opt.ent?.id === val.ent?.id)
+        }
+      />
+    </ThemeProvider>
   )
 }
 

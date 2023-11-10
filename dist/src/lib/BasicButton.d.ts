@@ -7,7 +7,7 @@ interface BProps extends MuiButtonProps {
 declare const BasicButton: import("@emotion/styled").StyledComponent<{
     children?: import("react").ReactNode;
     classes?: Partial<import("@mui/material").ButtonClasses> | undefined;
-    color?: import("@mui/types").OverridableStringUnion<"inherit" | "primary" | "secondary" | "error" | "info" | "success" | "warning", import("@mui/material").ButtonPropsColorOverrides> | undefined;
+    color?: import("@mui/types").OverridableStringUnion<"inherit" | "primary" | "secondary" | "success" | "error" | "info" | "warning", import("@mui/material").ButtonPropsColorOverrides> | undefined;
     disabled?: boolean | undefined;
     disableElevation?: boolean | undefined;
     disableFocusRipple?: boolean | undefined;

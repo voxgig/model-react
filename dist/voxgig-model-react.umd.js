@@ -19212,17 +19212,17 @@ Please use another name.` : formatMuiErrorMessage(18));
     return createSvgIcon$1;
   }
   "use strict";
-  var _interopRequireDefault$s = interopRequireDefaultExports;
+  var _interopRequireDefault$t = interopRequireDefaultExports;
   Object.defineProperty(ChevronRight, "__esModule", {
     value: true
   });
-  var default_1$s = ChevronRight.default = void 0;
-  var _createSvgIcon$s = _interopRequireDefault$s(requireCreateSvgIcon());
-  var _jsxRuntime$s = requireJsxRuntime();
-  var _default$s = (0, _createSvgIcon$s.default)(/* @__PURE__ */ (0, _jsxRuntime$s.jsx)("path", {
+  var default_1$t = ChevronRight.default = void 0;
+  var _createSvgIcon$t = _interopRequireDefault$t(requireCreateSvgIcon());
+  var _jsxRuntime$t = requireJsxRuntime();
+  var _default$t = (0, _createSvgIcon$t.default)(/* @__PURE__ */ (0, _jsxRuntime$t.jsx)("path", {
     d: "M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
   }), "ChevronRight");
-  default_1$s = ChevronRight.default = _default$s;
+  default_1$t = ChevronRight.default = _default$t;
   const _excluded$13 = ["defaultProps", "mixins", "overrides", "palette", "props", "styleOverrides"], _excluded2$4 = ["type", "mode"];
   function adaptV4Theme(inputTheme) {
     if (process.env.NODE_ENV !== "production") {
@@ -19753,8 +19753,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   const BasicButton = styled(material.Button, {
     shouldForwardProp: (prop) => prop !== "theme"
   })(({ theme }) => ({
-    color: theme.palette.primary.main,
-    border: "1px solid " + theme.palette.primary.main
+    // color: theme.palette.primary.main
+    // border: '1px solid ' + theme.palette.primary.main
   }));
   function getPaperUtilityClass(slot) {
     return generateUtilityClass("MuiPaper", slot);
@@ -20102,7 +20102,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         };
       }
     }
-    return /* @__PURE__ */ jsxRuntimeExports.jsx(
+    const theme = ctx().theme;
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(material.ThemeProvider, { theme, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
       material.Autocomplete,
       {
         freeSolo: true,
@@ -20110,10 +20111,6 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         value: value || tooldef.defaultvalue || "",
         options: resolveOptions(tooldef, options),
         size: "small",
-        sx: {
-          paddingLeft: "1em",
-          width: "20rem"
-        },
         filterOptions: (options2, params) => {
           const filtered = filter$1(options2, params);
           return filtered;
@@ -20131,7 +20128,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         }
       },
       tooldef.name
-    );
+    ) });
   }
   const filter$1 = material.createFilterOptions();
   function resolveOptions(tooldef, options) {
@@ -20186,14 +20183,14 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const viewPath = location2.pathname.split("/")[2];
     let add = ((_c = (_b = (_a = basicHeadSpec.view[viewPath]) == null ? void 0 : _a.content) == null ? void 0 : _b.def) == null ? void 0 : _c.add) || { active: false };
     const viewName = ((_d = basicHeadSpec.view[viewPath]) == null ? void 0 : _d.name) || "";
+    const theme = ctx().theme;
     return /* @__PURE__ */ jsxRuntimeExports.jsx(
       BasicAppBar,
       {
         drawerwidth: "16rem",
         open,
         sx: {
-          color: "black",
-          bgcolor: "white"
+          backgroundColor: theme.palette.background.paper
         },
         children: /* @__PURE__ */ jsxRuntimeExports.jsxs(material.Toolbar, { children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -20205,7 +20202,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
               sx: __spreadValues({
                 marginRight: 2
               }, open && { display: "none" }),
-              children: /* @__PURE__ */ jsxRuntimeExports.jsx(default_1$s, {})
+              children: /* @__PURE__ */ jsxRuntimeExports.jsx(default_1$t, {})
             }
           ),
           tooldefs.map((tooldef) => {
@@ -20350,6 +20347,19 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       }
     ) });
   }
+  var ChevronLeft = {};
+  "use strict";
+  var _interopRequireDefault$s = interopRequireDefaultExports;
+  Object.defineProperty(ChevronLeft, "__esModule", {
+    value: true
+  });
+  var default_1$s = ChevronLeft.default = void 0;
+  var _createSvgIcon$s = _interopRequireDefault$s(requireCreateSvgIcon());
+  var _jsxRuntime$s = requireJsxRuntime();
+  var _default$s = (0, _createSvgIcon$s.default)(/* @__PURE__ */ (0, _jsxRuntime$s.jsx)("path", {
+    d: "M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"
+  }), "ChevronLeft");
+  default_1$s = ChevronLeft.default = _default$s;
   function _setPrototypeOf(o, p) {
     _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf2(o2, p2) {
       o2.__proto__ = p2;
@@ -22846,6 +22856,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   function BasicSide(props) {
     const { vxg, ctx } = props;
     const { seneca } = ctx();
+    const theme = material.useTheme();
     const vxgState = reactRedux.useSelector((state) => state.main.vxg);
     const open = vxgState.cmp.BasicSide.show;
     const navigate = reactRouterDom.useNavigate();
@@ -22858,15 +22869,35 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const basicSideMenuSpec = {
       section: basicSideSpec.side.section
     };
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs(BasicDrawer, { variant: "permanent", drawerwidth: "16rem", open, children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsxs(BasicDrawerHeader, { children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: basicSideSpec.side.logo.img, style: { width: "5rem" } }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(material.IconButton, { onClick: () => onClose(seneca), children: /* @__PURE__ */ jsxRuntimeExports.jsx(iconsMaterial.ChevronLeft, { sx: { color: "black" } }) })
-      ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(material.Divider, {}),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(BasicSideMenu, { spec: basicSideMenuSpec, onItemSelect: handleItemSelect })
-    ] });
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+      BasicDrawer,
+      {
+        sx: {
+          "& .MuiDrawer-paper": {
+            backgroundColor: theme.palette.background.paper
+          }
+        },
+        variant: "permanent",
+        drawerwidth: "16rem",
+        open,
+        children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs(BasicDrawerHeader, { children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: basicSideSpec.side.logo.img, style: { width: "5rem" } }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(material.IconButton, { onClick: () => onClose(seneca), children: /* @__PURE__ */ jsxRuntimeExports.jsx(default_1$s, { sx: { color: theme.palette.primary.main } }) })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(material.Divider, {}),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(BasicSideMenu, { spec: basicSideMenuSpec, onItemSelect: handleItemSelect })
+        ]
+      }
+    );
   }
+  const DrawerHeader = material.styled("div")(({ theme }) => __spreadProps(__spreadValues({
+    display: "flex",
+    alignItems: "center",
+    padding: theme.spacing(0, 1)
+  }, theme.mixins.toolbar), {
+    justifyContent: "flex-end"
+  }));
   /**
    * table-core
    *
@@ -45590,7 +45621,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     return jsxRuntimeExports.jsx(MRT_TableRoot, Object.assign({ aggregationFns: _aggregationFns, autoResetExpanded, columnResizeMode, defaultColumn: _defaultColumn, defaultDisplayColumn: _defaultDisplayColumn, editingMode, enableBottomToolbar, enableColumnActions, enableColumnFilters, enableColumnOrdering, enableColumnResizing, enableDensityToggle, enableExpandAll, enableExpanding, enableFilterMatchHighlighting, enableFilters, enableFullScreenToggle, enableGlobalFilter, enableGlobalFilterRankedResults, enableGrouping, enableHiding, enableMultiRowSelection, enableMultiSort, enablePagination, enablePinning, enableRowSelection, enableSelectAll, enableSorting, enableStickyHeader, enableTableFooter, enableTableHead, enableToolbarInternalActions, enableTopToolbar, filterFns: _filterFns, icons: _icons, layoutMode, localization: _localization, manualFiltering, manualGrouping, manualPagination, manualSorting, positionActionsColumn, positionExpandColumn, positionGlobalFilter, positionPagination, positionToolbarAlertBanner, positionToolbarDropZone, rowNumberMode, selectAllMode, sortingFns: _sortingFns }, rest));
   };
   function BasicList(props) {
-    let {
+    const {
+      ctx,
       onRowClick = () => {
       },
       onEditingRowSave = () => {
@@ -45600,6 +45632,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       sx = {},
       spec
     } = props;
+    const theme = ctx().theme;
+    const editingMode = spec.content.editingMode;
     const handleSaveRow = (_0) => __async(this, [_0], function* ({ exitEditingMode, row, values: values2 }) {
       onEditingRowSave(row, values2);
       exitEditingMode();
@@ -45611,8 +45645,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       },
       sx: { cursor: "pointer" }
     });
-    const editingMode = spec.content.editingMode;
-    return /* @__PURE__ */ jsxRuntimeExports.jsx(material.Box, { className: "BasicList", style: __spreadValues({}, sx), children: editingMode === "form" ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(ThemeProvider, { theme, children: /* @__PURE__ */ jsxRuntimeExports.jsx(material.Box, { className: "BasicList", style: __spreadValues({}, sx), children: editingMode === "form" ? /* @__PURE__ */ jsxRuntimeExports.jsx(
       MaterialReactTable,
       {
         enableColumnActions: false,
@@ -45642,7 +45675,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         onEditingRowSave: handleSaveRow
       },
       editingMode
-    ) });
+    ) }) });
   }
   var isCheckBoxInput = (element) => element.type === "checkbox";
   var isDateObject = (value) => value instanceof Date;
@@ -47553,6 +47586,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const [item, setItem] = React.useState({});
     const location2 = reactRouterDom.useLocation();
     const basicLedSpec = BasicLedSpecShape(props.spec);
+    const globalTheme = useTheme();
+    console.log("BasicLed.palette.mode", globalTheme.palette.mode);
     const def = basicLedSpec.content.def;
     const canon = def.canon;
     const entlist = reactRedux.useSelector(
@@ -47593,11 +47628,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       }
       setTriggerLed(++triggerLed);
     }, [led_add]);
-    console.log("basicLedSpec", basicLedSpec);
     const headCmpId = (_a = basicLedSpec.content.head) == null ? void 0 : _a.cmp;
     const footCmpId = (_b = basicLedSpec.content.foot) == null ? void 0 : _b.cmp;
-    console.log("headCmpId", headCmpId);
-    console.log("footCmpId", footCmpId);
     const HeadCmp = ctx().cmp[headCmpId];
     const FootCmp = ctx().cmp[footCmpId];
     return /* @__PURE__ */ jsxRuntimeExports.jsx(material.Box, { className: "BasicLed", children: "-/" + canon !== item.entity$ ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
@@ -47641,7 +47673,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       }
     ) });
   }
-  const { Child, Optional, Skip } = gubu_minExports.Gubu;
+  const { Child, Skip } = gubu_minExports.Gubu;
   const BasicMainSpecShape = gubu_minExports.Gubu({
     main: {
       title: String
@@ -47669,13 +47701,17 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   });
   function BasicMain(props) {
     const { vxg, ctx } = props;
+    const theme = material.useTheme();
     const basicMainSpec = BasicMainSpecShape(props.spec);
     const views = Object.values(basicMainSpec.view);
     const sideOpen = reactRedux.useSelector(
       (state) => state.main.vxg.cmp.BasicSide.show
     );
+    const globalTheme = material.useTheme();
+    console.log("BasicMain.palette.mode", globalTheme.palette.mode);
     const basicMainStyle = {
-      paddingLeft: sideOpen ? "16rem" : "0rem"
+      paddingLeft: sideOpen ? "16rem" : "0rem",
+      backgroundColor: theme.palette.background.default
     };
     const basicMainContainerStyle = {
       height: "100%"
@@ -47688,7 +47724,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
             reactRouterDom.Route,
             {
               path: "/view/" + view.name,
-              element: /* @__PURE__ */ jsxRuntimeExports.jsx(Cmp, { vxg, ctx, spec: view })
+              element: /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(material.ThemeProvider, { theme: globalTheme, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Cmp, { vxg, ctx, spec: view }) }) })
             },
             view.name
           ),
@@ -47706,7 +47742,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         reactRouterDom.Route,
         {
           path: "/view/" + view.name,
-          element: /* @__PURE__ */ jsxRuntimeExports.jsx(Cmp, { vxg, ctx, spec: view })
+          element: /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(material.ThemeProvider, { theme: globalTheme, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Cmp, { vxg, ctx, spec: view }) }) })
         },
         view.name
       );

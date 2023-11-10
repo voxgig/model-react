@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import { Routes, Route } from 'react-router-dom'
 import BasicLed from './BasicLed'
 import { Exact, Gubu } from 'gubu'
-import { Box, useTheme } from '@mui/material'
+import { Box, ThemeProvider, useTheme } from '@mui/material'
 
 const { Child, Optional, Skip } = Gubu
 
@@ -67,7 +67,13 @@ function BasicMain (props: any) {
                     <Route
                       key={view.name}
                       path={'/view/' + view.name}
-                      element={<Cmp vxg={vxg} ctx={ctx} spec={view} />}
+                      element={
+                        <>
+                          <ThemeProvider theme={theme}>
+                            <Cmp vxg={vxg} ctx={ctx} spec={view} />
+                          </ThemeProvider>
+                        </>
+                      }
                     />
                     <Route
                       key={view.name}
@@ -81,7 +87,13 @@ function BasicMain (props: any) {
                 <Route
                   key={view.name}
                   path={'/view/' + view.name}
-                  element={<Cmp vxg={vxg} ctx={ctx} spec={view} />}
+                  element={
+                    <>
+                      <ThemeProvider theme={theme}>
+                        <Cmp vxg={vxg} ctx={ctx} spec={view} />
+                      </ThemeProvider>
+                    </>
+                  }
                 />
               )
             })}

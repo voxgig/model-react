@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from 'react'
-import { useSelector } from 'react-redux'
+import { useMemo } from 'react'
+import { useTheme, createTheme, ThemeProvider } from '@mui/material/styles'
 
 import {
   MaterialReactTable,
@@ -11,7 +11,8 @@ import { Box } from '@mui/material'
 // import { DataGrid } from '@mui/x-data-grid'
 
 function BasicList (props: any) {
-  let {
+  const {
+    ctx,
     onRowClick = () => {},
     onEditingRowSave = () => {},
     data,
@@ -20,6 +21,10 @@ function BasicList (props: any) {
     spec
   } = props
 
+  const theme = ctx().theme
+  const editingMode = spec.content.editingMode
+
+  // callbacks for MaterialReactTable
   const handleSaveRow: MaterialReactTableProps<any>['onEditingRowSave'] =
     async ({ exitEditingMode, row, values }): Promise<void> => {
       onEditingRowSave(row, values)
@@ -34,40 +39,40 @@ function BasicList (props: any) {
     sx: { cursor: 'pointer' }
   })
 
-  const editingMode = spec.content.editingMode
-
   return (
-    <Box className='BasicList' style={{ ...sx }}>
-      {editingMode === 'form' ? (
-        <MaterialReactTable
-          key={editingMode}
-          enableColumnActions={false}
-          enableColumnFilters={false}
-          enablePagination
-          enableSorting={false}
-          enableBottomToolbar
-          enableTopToolbar={false}
-          columns={columns}
-          data={data}
-          muiTableBodyRowProps={handleRowClick}
-        />
-      ) : (
-        <MaterialReactTable
-          key={editingMode}
-          enableColumnActions={false}
-          enableColumnFilters={false}
-          enablePagination
-          enableSorting={false}
-          enableBottomToolbar
-          enableTopToolbar={false}
-          editingMode={editingMode}
-          enableEditing
-          columns={columns}
-          data={data}
-          onEditingRowSave={handleSaveRow}
-        />
-      )}
-    </Box>
+    <ThemeProvider theme={theme}>
+      <Box className='BasicList' style={{ ...sx }}>
+        {editingMode === 'form' ? (
+          <MaterialReactTable
+            key={editingMode}
+            enableColumnActions={false}
+            enableColumnFilters={false}
+            enablePagination
+            enableSorting={false}
+            enableBottomToolbar
+            enableTopToolbar={false}
+            columns={columns}
+            data={data}
+            muiTableBodyRowProps={handleRowClick}
+          />
+        ) : (
+          <MaterialReactTable
+            key={editingMode}
+            enableColumnActions={false}
+            enableColumnFilters={false}
+            enablePagination
+            enableSorting={false}
+            enableBottomToolbar
+            enableTopToolbar={false}
+            editingMode={editingMode}
+            enableEditing
+            columns={columns}
+            data={data}
+            onEditingRowSave={handleSaveRow}
+          />
+        )}
+      </Box>
+    </ThemeProvider>
   )
 }
 
