@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import { Routes, Route } from 'react-router-dom'
 import BasicLed from './BasicLed'
 import { Exact, Gubu } from 'gubu'
-import { Box } from '@mui/material'
+import { Box, useTheme } from '@mui/material'
 
 const { Child, Optional, Skip } = Gubu
 
@@ -36,6 +36,7 @@ const BasicMainSpecShape = Gubu({
 
 function BasicMain (props: any) {
   const { vxg, ctx } = props
+  const theme = useTheme()
   const basicMainSpec = BasicMainSpecShape(props.spec)
   const views = Object.values(basicMainSpec.view)
   const sideOpen = useSelector(
@@ -44,7 +45,8 @@ function BasicMain (props: any) {
 
   // TODO: Refactor this
   const basicMainStyle = {
-    paddingLeft: sideOpen ? '16rem' : '0rem'
+    paddingLeft: sideOpen ? '16rem' : '0rem',
+    backgroundColor: theme.palette.background.default
   }
 
   // TODO: Refactor this

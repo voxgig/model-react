@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux'
 import { useLocation } from 'react-router-dom'
 import { Gubu, Exact } from 'gubu'
-import { Toolbar, Typography, IconButton } from '@mui/material'
+import { Toolbar, Typography, IconButton, useTheme } from '@mui/material'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import BasicButton from './BasicButton'
 import BasicAppBar from './BasicAppBar'
@@ -67,14 +67,15 @@ function BasicHead (props: BasicHeadProps) {
   let add = basicHeadSpec.view[viewPath]?.content?.def?.add || { active: false }
   const viewName = basicHeadSpec.view[viewPath]?.name || ''
 
+  const theme = useTheme()
+
   return (
     <BasicAppBar
       // position="fixed"
       drawerwidth='16rem'
       open={open}
       sx={{
-        color: 'black',
-        bgcolor: 'white'
+        backgroundColor: theme.palette.background.paper
       }}
     >
       <Toolbar>

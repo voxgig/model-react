@@ -4,8 +4,21 @@ import { useNavigate } from 'react-router-dom'
 
 import { Exact, Gubu } from 'gubu'
 import BasicSideMenu from './BasicSideMenu'
-import { ChevronLeft } from '@mui/icons-material'
-import { Divider, IconButton } from '@mui/material'
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
+import ChevronRightIcon from '@mui/icons-material/ChevronRight'
+
+import {
+  Divider,
+  Drawer,
+  IconButton,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  styled,
+  useTheme
+} from '@mui/material'
 import { BasicDrawer, BasicDrawerHeader } from './BasicDrawer'
 
 const { Child } = Gubu
@@ -40,6 +53,7 @@ function onClose (seneca: any) {
 function BasicSide (props: any) {
   const { vxg, ctx } = props
   const { seneca } = ctx()
+  const theme = useTheme()
 
   const vxgState = useSelector((state: any) => state.main.vxg)
   const open = vxgState.cmp.BasicSide.show
@@ -59,11 +73,20 @@ function BasicSide (props: any) {
   }
 
   return (
-    <BasicDrawer variant='permanent' drawerwidth='16rem' open={open}>
+    <BasicDrawer
+      sx={{
+        '& .MuiDrawer-paper': {
+          backgroundColor: theme.palette.background.paper
+        }
+      }}
+      variant='permanent'
+      drawerwidth='16rem'
+      open={open}
+    >
       <BasicDrawerHeader>
         <img src={basicSideSpec.side.logo.img} style={{ width: '5rem' }} />
         <IconButton onClick={() => onClose(seneca)}>
-          <ChevronLeft sx={{ color: 'black' }} />
+          <ChevronLeftIcon sx={{ color: theme.palette.primary.main }} />
         </IconButton>
       </BasicDrawerHeader>
       <Divider />
@@ -73,3 +96,11 @@ function BasicSide (props: any) {
 }
 
 export default BasicSide
+
+const DrawerHeader = styled('div')(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  padding: theme.spacing(0, 1),
+  ...theme.mixins.toolbar,
+  justifyContent: 'flex-end'
+}))
