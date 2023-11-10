@@ -1,13 +1,11 @@
-import React from 'react'
-
-import { useSelector } from 'react-redux'
-
 import { BasicAdmin } from '@voxgig/model-react'
 
 import { getMain } from '../setup'
 import Chat from './Chat'
 import BasicLedHead from './BasicLedHead'
 import BasicLedFoot from './BasicLedFoot'
+import { ThemeProvider, createTheme } from '@mui/material'
+import { green, red } from '@mui/material/colors'
 
 const main = getMain()
 
@@ -33,10 +31,74 @@ const spec = {
 }
 
 function Private (props: any) {
+  const darkTheme = createTheme({
+    components: {
+      MuiDrawer: {
+        defaultProps: {
+          variant: 'persistent'
+        },
+        styleOverrides: {
+          root: {
+            width: '16rem',
+            flexShrink: 0
+          },
+          paper: {
+            width: '16rem',
+            boxSizing: 'border-box'
+          }
+        }
+      }
+    },
+    palette: {
+      mode: 'dark',
+      background: {
+        default: '#191c29',
+        paper: '#262937'
+      }
+    },
+    typography: {
+      body1: {
+        color: 'white'
+      },
+      h2: {
+        color: 'white'
+      }
+    }
+  })
+
+  const lightTheme = createTheme({
+    components: {
+      MuiDrawer: {
+        defaultProps: {
+          variant: 'persistent'
+        },
+        styleOverrides: {
+          root: {
+            width: '16rem',
+            flexShrink: 0
+          },
+          paper: {
+            width: '16rem',
+            boxSizing: 'border-box'
+          }
+        }
+      }
+    },
+    palette: {
+      mode: 'light',
+      background: {
+        default: '#eee',
+        paper: '#ffffff'
+      }
+    }
+  })
+
   return (
-    <div className='Private'>
-      <BasicAdmin ctx={ctx} spec={spec} />
-    </div>
+    <ThemeProvider theme={darkTheme}>
+      <div className='Private'>
+        <BasicAdmin ctx={ctx} spec={spec} />
+      </div>
+    </ThemeProvider>
   )
 }
 

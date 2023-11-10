@@ -178,7 +178,7 @@
                 "def": {
                   "canon": "vxg/task",
                   "add": {
-                    "active": false
+                    "active": true
                   },
                   "fields": {
                     "id": {
