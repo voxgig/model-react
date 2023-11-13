@@ -20153,7 +20153,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       },
       tool: {
         def: Child$4({
-          kind: gubu_minExports.Exact("addbutton", "autocomplete"),
+          kind: gubu_minExports.Exact("add", "autocomplete"),
           label: String,
           options: {
             kind: String,
@@ -20218,7 +20218,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
                 },
                 tooldef.name
               );
-            } else if ("addbutton" === tooldef.kind) {
+            } else if ("add" === tooldef.kind) {
               return /* @__PURE__ */ jsxRuntimeExports.jsx(
                 BasicButton,
                 {

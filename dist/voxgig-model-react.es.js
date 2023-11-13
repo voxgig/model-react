@@ -20141,7 +20141,7 @@ const BasicHeadSpecShape = gubu_minExports.Gubu({
     },
     tool: {
       def: Child$4({
-        kind: gubu_minExports.Exact("addbutton", "autocomplete"),
+        kind: gubu_minExports.Exact("add", "autocomplete"),
         label: String,
         options: {
           kind: String,
@@ -20206,7 +20206,7 @@ function BasicHead(props) {
               },
               tooldef.name
             );
-          } else if ("addbutton" === tooldef.kind) {
+          } else if ("add" === tooldef.kind) {
             return /* @__PURE__ */ jsxRuntimeExports.jsx(
               BasicButton,
               {

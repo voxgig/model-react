@@ -17,7 +17,7 @@ const BasicHeadSpecShape = Gubu({
     },
     tool: {
       def: Child({
-        kind: Exact('addbutton', 'autocomplete'),
+        kind: Exact('add', 'autocomplete'),
         label: String,
         options: {
           kind: String,
@@ -99,7 +99,7 @@ function BasicHead (props: BasicHeadProps) {
                 key={tooldef.name}
               />
             )
-          } else if ('addbutton' === tooldef.kind) {
+          } else if ('add' === tooldef.kind) {
             return (
               <BasicButton
                 variant='outlined'
