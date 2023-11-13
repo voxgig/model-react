@@ -59,12 +59,12 @@ import * as React from "react";
 import React__default, { createElement, isValidElement, Children, cloneElement, useMemo, useState, useRef, useCallback, useEffect, Fragment, memo as memo$2, useLayoutEffect } from "react";
 import { useSelector } from "react-redux";
 import { useLocation, useNavigate, Routes, Route } from "react-router-dom";
-import { Button as Button$1, Autocomplete, TextField as TextField$1, createFilterOptions as createFilterOptions$1, Toolbar as Toolbar$1, IconButton as IconButton$1, Typography as Typography$1, List as List$1, ListItem, ListItemButton, ListItemIcon as ListItemIcon$1, ListItemText as ListItemText$1, Divider as Divider$1, Box as Box$2, Grid as Grid$1, MenuItem as MenuItem$1, Container as Container$2 } from "@mui/material";
+import { Button as Button$1, ThemeProvider as ThemeProvider$2, Autocomplete, TextField as TextField$1, createFilterOptions as createFilterOptions$1, Toolbar as Toolbar$1, IconButton as IconButton$1, Typography as Typography$1, List as List$1, ListItem, ListItemButton, ListItemIcon as ListItemIcon$1, ListItemText as ListItemText$1, Divider as Divider$1, useTheme as useTheme$4, styled as styled$3, Box as Box$2, Grid as Grid$1, MenuItem as MenuItem$1, Container as Container$2 } from "@mui/material";
 import * as ReactDOM from "react-dom";
 import ReactDOM__default, { flushSync } from "react-dom";
 import emStyled from "@emotion/styled";
 import { CacheProvider, Global, ThemeContext as ThemeContext$1, keyframes, css } from "@emotion/react";
-import { FactoryOutlined, KeyOutlined, AssignmentTurnedInOutlined, TextSnippetOutlined, HighlightAlt, Map as Map$1, SupervisorAccount, Tablet, Update, Security, ContentPaste, FitScreen, ChatBubble, Event, Logout, ChevronLeft } from "@mui/icons-material";
+import { FactoryOutlined, KeyOutlined, AssignmentTurnedInOutlined, TextSnippetOutlined, HighlightAlt, Map as Map$1, SupervisorAccount, Tablet, Update, Security, ContentPaste, FitScreen, ChatBubble, Event, Logout } from "@mui/icons-material";
 var commonjsGlobal = typeof globalThis !== "undefined" ? globalThis : typeof window !== "undefined" ? window : typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : {};
 function getDefaultExportFromCjs(x) {
   return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, "default") ? x["default"] : x;
@@ -19200,17 +19200,17 @@ function requireCreateSvgIcon() {
   return createSvgIcon$1;
 }
 "use strict";
-var _interopRequireDefault$s = interopRequireDefaultExports;
+var _interopRequireDefault$t = interopRequireDefaultExports;
 Object.defineProperty(ChevronRight, "__esModule", {
   value: true
 });
-var default_1$s = ChevronRight.default = void 0;
-var _createSvgIcon$s = _interopRequireDefault$s(requireCreateSvgIcon());
-var _jsxRuntime$s = requireJsxRuntime();
-var _default$s = (0, _createSvgIcon$s.default)(/* @__PURE__ */ (0, _jsxRuntime$s.jsx)("path", {
+var default_1$t = ChevronRight.default = void 0;
+var _createSvgIcon$t = _interopRequireDefault$t(requireCreateSvgIcon());
+var _jsxRuntime$t = requireJsxRuntime();
+var _default$t = (0, _createSvgIcon$t.default)(/* @__PURE__ */ (0, _jsxRuntime$t.jsx)("path", {
   d: "M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
 }), "ChevronRight");
-default_1$s = ChevronRight.default = _default$s;
+default_1$t = ChevronRight.default = _default$t;
 const _excluded$13 = ["defaultProps", "mixins", "overrides", "palette", "props", "styleOverrides"], _excluded2$4 = ["type", "mode"];
 function adaptV4Theme(inputTheme) {
   if (process.env.NODE_ENV !== "production") {
@@ -19741,8 +19741,8 @@ function experimental_sx() {
 const BasicButton = styled(Button$1, {
   shouldForwardProp: (prop) => prop !== "theme"
 })(({ theme }) => ({
-  color: theme.palette.primary.main,
-  border: "1px solid " + theme.palette.primary.main
+  // color: theme.palette.primary.main
+  // border: '1px solid ' + theme.palette.primary.main
 }));
 function getPaperUtilityClass(slot) {
   return generateUtilityClass("MuiPaper", slot);
@@ -20090,7 +20090,8 @@ function BasicAutocomplete(props) {
       };
     }
   }
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(
+  const theme = ctx().theme;
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(ThemeProvider$2, { theme, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
     Autocomplete,
     {
       freeSolo: true,
@@ -20098,10 +20099,6 @@ function BasicAutocomplete(props) {
       value: value || tooldef.defaultvalue || "",
       options: resolveOptions(tooldef, options),
       size: "small",
-      sx: {
-        paddingLeft: "1em",
-        width: "20rem"
-      },
       filterOptions: (options2, params) => {
         const filtered = filter$1(options2, params);
         return filtered;
@@ -20119,7 +20116,7 @@ function BasicAutocomplete(props) {
       }
     },
     tooldef.name
-  );
+  ) });
 }
 const filter$1 = createFilterOptions$1();
 function resolveOptions(tooldef, options) {
@@ -20174,14 +20171,14 @@ function BasicHead(props) {
   const viewPath = location2.pathname.split("/")[2];
   let add = ((_c = (_b = (_a = basicHeadSpec.view[viewPath]) == null ? void 0 : _a.content) == null ? void 0 : _b.def) == null ? void 0 : _c.add) || { active: false };
   const viewName = ((_d = basicHeadSpec.view[viewPath]) == null ? void 0 : _d.name) || "";
+  const theme = ctx().theme;
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
     BasicAppBar,
     {
       drawerwidth: "16rem",
       open,
       sx: {
-        color: "black",
-        bgcolor: "white"
+        backgroundColor: theme.palette.background.paper
       },
       children: /* @__PURE__ */ jsxRuntimeExports.jsxs(Toolbar$1, { children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -20193,7 +20190,7 @@ function BasicHead(props) {
             sx: __spreadValues({
               marginRight: 2
             }, open && { display: "none" }),
-            children: /* @__PURE__ */ jsxRuntimeExports.jsx(default_1$s, {})
+            children: /* @__PURE__ */ jsxRuntimeExports.jsx(default_1$t, {})
           }
         ),
         tooldefs.map((tooldef) => {
@@ -20338,6 +20335,19 @@ function BasicSideMenu(props) {
     }
   ) });
 }
+var ChevronLeft = {};
+"use strict";
+var _interopRequireDefault$s = interopRequireDefaultExports;
+Object.defineProperty(ChevronLeft, "__esModule", {
+  value: true
+});
+var default_1$s = ChevronLeft.default = void 0;
+var _createSvgIcon$s = _interopRequireDefault$s(requireCreateSvgIcon());
+var _jsxRuntime$s = requireJsxRuntime();
+var _default$s = (0, _createSvgIcon$s.default)(/* @__PURE__ */ (0, _jsxRuntime$s.jsx)("path", {
+  d: "M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"
+}), "ChevronLeft");
+default_1$s = ChevronLeft.default = _default$s;
 function _setPrototypeOf(o, p) {
   _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf2(o2, p2) {
     o2.__proto__ = p2;
@@ -22834,6 +22844,7 @@ function onClose(seneca) {
 function BasicSide(props) {
   const { vxg, ctx } = props;
   const { seneca } = ctx();
+  const theme = useTheme$4();
   const vxgState = useSelector((state) => state.main.vxg);
   const open = vxgState.cmp.BasicSide.show;
   const navigate = useNavigate();
@@ -22846,15 +22857,35 @@ function BasicSide(props) {
   const basicSideMenuSpec = {
     section: basicSideSpec.side.section
   };
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs(BasicDrawer, { variant: "permanent", drawerwidth: "16rem", open, children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsxs(BasicDrawerHeader, { children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: basicSideSpec.side.logo.img, style: { width: "5rem" } }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(IconButton$1, { onClick: () => onClose(seneca), children: /* @__PURE__ */ jsxRuntimeExports.jsx(ChevronLeft, { sx: { color: "black" } }) })
-    ] }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx(Divider$1, {}),
-    /* @__PURE__ */ jsxRuntimeExports.jsx(BasicSideMenu, { spec: basicSideMenuSpec, onItemSelect: handleItemSelect })
-  ] });
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+    BasicDrawer,
+    {
+      sx: {
+        "& .MuiDrawer-paper": {
+          backgroundColor: theme.palette.background.paper
+        }
+      },
+      variant: "permanent",
+      drawerwidth: "16rem",
+      open,
+      children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(BasicDrawerHeader, { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: basicSideSpec.side.logo.img, style: { width: "5rem" } }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(IconButton$1, { onClick: () => onClose(seneca), children: /* @__PURE__ */ jsxRuntimeExports.jsx(default_1$s, { sx: { color: theme.palette.primary.main } }) })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Divider$1, {}),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(BasicSideMenu, { spec: basicSideMenuSpec, onItemSelect: handleItemSelect })
+      ]
+    }
+  );
 }
+const DrawerHeader = styled$3("div")(({ theme }) => __spreadProps(__spreadValues({
+  display: "flex",
+  alignItems: "center",
+  padding: theme.spacing(0, 1)
+}, theme.mixins.toolbar), {
+  justifyContent: "flex-end"
+}));
 /**
  * table-core
  *
@@ -45578,7 +45609,8 @@ const MaterialReactTable = (_a) => {
   return jsxRuntimeExports.jsx(MRT_TableRoot, Object.assign({ aggregationFns: _aggregationFns, autoResetExpanded, columnResizeMode, defaultColumn: _defaultColumn, defaultDisplayColumn: _defaultDisplayColumn, editingMode, enableBottomToolbar, enableColumnActions, enableColumnFilters, enableColumnOrdering, enableColumnResizing, enableDensityToggle, enableExpandAll, enableExpanding, enableFilterMatchHighlighting, enableFilters, enableFullScreenToggle, enableGlobalFilter, enableGlobalFilterRankedResults, enableGrouping, enableHiding, enableMultiRowSelection, enableMultiSort, enablePagination, enablePinning, enableRowSelection, enableSelectAll, enableSorting, enableStickyHeader, enableTableFooter, enableTableHead, enableToolbarInternalActions, enableTopToolbar, filterFns: _filterFns, icons: _icons, layoutMode, localization: _localization, manualFiltering, manualGrouping, manualPagination, manualSorting, positionActionsColumn, positionExpandColumn, positionGlobalFilter, positionPagination, positionToolbarAlertBanner, positionToolbarDropZone, rowNumberMode, selectAllMode, sortingFns: _sortingFns }, rest));
 };
 function BasicList(props) {
-  let {
+  const {
+    ctx,
     onRowClick = () => {
     },
     onEditingRowSave = () => {
@@ -45588,6 +45620,8 @@ function BasicList(props) {
     sx = {},
     spec
   } = props;
+  const theme = ctx().theme;
+  const editingMode = spec.content.editingMode;
   const handleSaveRow = (_0) => __async(this, [_0], function* ({ exitEditingMode, row, values: values2 }) {
     onEditingRowSave(row, values2);
     exitEditingMode();
@@ -45599,8 +45633,7 @@ function BasicList(props) {
     },
     sx: { cursor: "pointer" }
   });
-  const editingMode = spec.content.editingMode;
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(Box$2, { className: "BasicList", style: __spreadValues({}, sx), children: editingMode === "form" ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(ThemeProvider, { theme, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Box$2, { className: "BasicList", style: __spreadValues({}, sx), children: editingMode === "form" ? /* @__PURE__ */ jsxRuntimeExports.jsx(
     MaterialReactTable,
     {
       enableColumnActions: false,
@@ -45630,7 +45663,7 @@ function BasicList(props) {
       onEditingRowSave: handleSaveRow
     },
     editingMode
-  ) });
+  ) }) });
 }
 var isCheckBoxInput = (element) => element.type === "checkbox";
 var isDateObject = (value) => value instanceof Date;
@@ -47541,6 +47574,8 @@ function BasicLed(props) {
   const [item, setItem] = useState({});
   const location2 = useLocation();
   const basicLedSpec = BasicLedSpecShape(props.spec);
+  const globalTheme = useTheme();
+  console.log("BasicLed.palette.mode", globalTheme.palette.mode);
   const def = basicLedSpec.content.def;
   const canon = def.canon;
   const entlist = useSelector(
@@ -47626,7 +47661,7 @@ function BasicLed(props) {
     }
   ) });
 }
-const { Child, Optional, Skip } = gubu_minExports.Gubu;
+const { Child, Skip } = gubu_minExports.Gubu;
 const BasicMainSpecShape = gubu_minExports.Gubu({
   main: {
     title: String
@@ -47654,13 +47689,17 @@ const BasicMainSpecShape = gubu_minExports.Gubu({
 });
 function BasicMain(props) {
   const { vxg, ctx } = props;
+  const theme = useTheme$4();
   const basicMainSpec = BasicMainSpecShape(props.spec);
   const views = Object.values(basicMainSpec.view);
   const sideOpen = useSelector(
     (state) => state.main.vxg.cmp.BasicSide.show
   );
+  const globalTheme = useTheme$4();
+  console.log("BasicMain.palette.mode", globalTheme.palette.mode);
   const basicMainStyle = {
-    paddingLeft: sideOpen ? "16rem" : "0rem"
+    paddingLeft: sideOpen ? "16rem" : "0rem",
+    backgroundColor: theme.palette.background.default
   };
   const basicMainContainerStyle = {
     height: "100%"
@@ -47673,7 +47712,7 @@ function BasicMain(props) {
           Route,
           {
             path: "/view/" + view.name,
-            element: /* @__PURE__ */ jsxRuntimeExports.jsx(Cmp, { vxg, ctx, spec: view })
+            element: /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(ThemeProvider$2, { theme: globalTheme, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Cmp, { vxg, ctx, spec: view }) }) })
           },
           view.name
         ),
@@ -47691,7 +47730,7 @@ function BasicMain(props) {
       Route,
       {
         path: "/view/" + view.name,
-        element: /* @__PURE__ */ jsxRuntimeExports.jsx(Cmp, { vxg, ctx, spec: view })
+        element: /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(ThemeProvider$2, { theme: globalTheme, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Cmp, { vxg, ctx, spec: view }) }) })
       },
       view.name
     );

@@ -13,10 +13,10 @@
   width: 100%;
 }
 
-.BasicSide * {
+/* .BasicSide * {
   xcolor: white !important;
   xbackground-color: rgb(var(--vxg-cb1));
-}
+} */
 
 .BasicSide ul {
   height: 100vh;
@@ -24,7 +24,7 @@
 
 .BasicMain {
   flex: 1;
-  background-color: #eee;
+  /* background-color: #eee; */
   padding-top: 4rem;
   height: calc(100% - 4rem);
 }
