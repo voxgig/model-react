@@ -81,10 +81,10 @@ view: task: {
   content: {
     kind: 'led'
     head: {
-      cmp: 'BasicLedHead'
+      cmp: 'ExampleLedHead'
     }
     foot: {
-      cmp: 'BasicLedFoot'
+      cmp: 'ExampleLedFoot'
     }
     def: $.main.ent.sys.task & {
       canon: 'vxg/task'

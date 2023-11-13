@@ -6,8 +6,8 @@ import { BasicAdmin } from '@voxgig/model-react'
 
 import { getMain } from '../setup'
 import Chat from './Chat'
-import BasicLedHead from './BasicLedHead'
-import BasicLedFoot from './BasicLedFoot'
+import ExampleLedHead from './ExampleLedHead'
+import ExampleLedFoot from './ExampleLedFoot'
 
 const main = getMain()
 
@@ -18,8 +18,8 @@ const ctx = () => ({
   store: main.store,
   cmp: {
     Chat: Chat,
-    BasicLedHead: BasicLedHead,
-    BasicLedFoot: BasicLedFoot
+    ExampleLedHead: ExampleLedHead,
+    ExampleLedFoot: ExampleLedFoot
   },
   custom: {
     BasicLed: {

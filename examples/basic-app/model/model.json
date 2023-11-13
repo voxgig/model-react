@@ -174,10 +174,10 @@
               "content": {
                 "kind": "led",
                 "head": {
-                  "cmp": "BasicLedHead"
+                  "cmp": "ExampleLedHead"
                 },
                 "foot": {
-                  "cmp": "BasicLedFoot"
+                  "cmp": "ExampleLedFoot"
                 },
                 "def": {
                   "canon": "vxg/task",
