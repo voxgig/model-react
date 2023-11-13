@@ -47665,7 +47665,7 @@ function BasicMain(props) {
   const basicMainContainerStyle = {
     height: "100%"
   };
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(Box$2, { className: "basic-main", sx: basicMainStyle, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Box$2, { className: "basic-main-container", sx: basicMainContainerStyle, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Routes, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/view", children: views.map((view) => {
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(Box$2, { className: "BasicMain", sx: basicMainStyle, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Box$2, { className: "BasicMain-container", sx: basicMainContainerStyle, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Routes, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/view", children: views.map((view) => {
     const Cmp = makeCmp(view, ctx);
     if (view.paramId) {
       return /* @__PURE__ */ jsxRuntimeExports.jsxs(Fragment, { children: [

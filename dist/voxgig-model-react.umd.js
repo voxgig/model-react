@@ -47677,7 +47677,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const basicMainContainerStyle = {
       height: "100%"
     };
-    return /* @__PURE__ */ jsxRuntimeExports.jsx(material.Box, { className: "basic-main", sx: basicMainStyle, children: /* @__PURE__ */ jsxRuntimeExports.jsx(material.Box, { className: "basic-main-container", sx: basicMainContainerStyle, children: /* @__PURE__ */ jsxRuntimeExports.jsx(reactRouterDom.Routes, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(reactRouterDom.Route, { path: "/view", children: views.map((view) => {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(material.Box, { className: "BasicMain", sx: basicMainStyle, children: /* @__PURE__ */ jsxRuntimeExports.jsx(material.Box, { className: "BasicMain-container", sx: basicMainContainerStyle, children: /* @__PURE__ */ jsxRuntimeExports.jsx(reactRouterDom.Routes, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(reactRouterDom.Route, { path: "/view", children: views.map((view) => {
       const Cmp = makeCmp(view, ctx);
       if (view.paramId) {
         return /* @__PURE__ */ jsxRuntimeExports.jsxs(React.Fragment, { children: [
