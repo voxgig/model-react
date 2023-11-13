@@ -28,7 +28,7 @@ const BasicMainSpecShape = Gubu({
         id: Skip({
           field: String
         }),
-        fields: Skip({})
+        field: Skip({})
       }
     }
   })

@@ -47536,7 +47536,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       cmp: gubu_minExports.Skip(String),
       def: {
         canon: String,
-        fields: gubu_minExports.Skip({}),
+        field: gubu_minExports.Skip({}),
         add: {
           active: Boolean
         },
@@ -47567,7 +47567,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       let q = custom.BasicLed.query(basicLedSpec, cmpstate);
       seneca.entity(canon).list$(q);
     }
-    const basicEditFields = basicLedSpec.content.def.fields;
+    const basicEditFields = basicLedSpec.content.def.field;
     const basicListColumns = Object.entries(basicEditFields).map(
       ([key, field]) => ({
         accessorFn: (row) => row[key],
@@ -47593,11 +47593,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       }
       setTriggerLed(++triggerLed);
     }, [led_add]);
-    console.log("basicLedSpec", basicLedSpec);
     const headCmpId = (_a = basicLedSpec.content.head) == null ? void 0 : _a.cmp;
     const footCmpId = (_b = basicLedSpec.content.foot) == null ? void 0 : _b.cmp;
-    console.log("headCmpId", headCmpId);
-    console.log("footCmpId", footCmpId);
     const HeadCmp = ctx().cmp[headCmpId];
     const FootCmp = ctx().cmp[footCmpId];
     return /* @__PURE__ */ jsxRuntimeExports.jsx(material.Box, { className: "BasicLed", children: "-/" + canon !== item.entity$ ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
@@ -47662,7 +47659,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           id: Skip({
             field: String
           }),
-          fields: Skip({})
+          field: Skip({})
         }
       }
     })

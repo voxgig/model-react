@@ -158,9 +158,13 @@
                   "id": {
                     "field": "id"
                   },
-                  "fields": {
+                  "field": {
                     "id": {
-                      "type": "String"
+                      "type": "String",
+                      "inputType": "text",
+                      "required": true,
+                      "editable": true,
+                      "options": {}
                     }
                   }
                 }
@@ -180,27 +184,26 @@
                   "add": {
                     "active": false
                   },
-                  "fields": {
+                  "field": {
                     "id": {
                       "label": "ID",
+                      "editable": false,
+                      "type": "String",
                       "inputType": "text",
                       "required": true,
-                      "editable": false,
-                      "type": "String"
+                      "options": {}
                     },
                     "title": {
+                      "label": "Title",
                       "type": "String",
                       "inputType": "text",
-                      "label": "Title",
-                      "required": true,
-                      "editable": true
-                    },
-                    "status": {
-                      "type": "String",
-                      "inputType": "select",
-                      "label": "Status",
                       "required": true,
                       "editable": true,
+                      "options": {}
+                    },
+                    "status": {
+                      "inputType": "select",
+                      "label": "Status",
                       "options": {
                         "open": {
                           "label": "Open"
@@ -208,7 +211,10 @@
                         "closed": {
                           "label": "Closed"
                         }
-                      }
+                      },
+                      "type": "String",
+                      "required": true,
+                      "editable": true
                     }
                   },
                   "id": {
@@ -229,27 +235,26 @@
           "id": {
             "field": "id"
           },
-          "fields": {
+          "field": {
             "id": {
               "type": "String",
               "label": "ID",
               "inputType": "text",
               "required": true,
-              "editable": false
+              "editable": false,
+              "options": {}
             },
             "title": {
+              "label": "Title",
               "type": "String",
               "inputType": "text",
-              "label": "Title",
-              "required": true,
-              "editable": true
-            },
-            "status": {
-              "type": "String",
-              "inputType": "select",
-              "label": "Status",
               "required": true,
               "editable": true,
+              "options": {}
+            },
+            "status": {
+              "inputType": "select",
+              "label": "Status",
               "options": {
                 "open": {
                   "label": "Open"
@@ -257,7 +262,10 @@
                 "closed": {
                   "label": "Closed"
                 }
-              }
+              },
+              "type": "String",
+              "required": true,
+              "editable": true
             }
           }
         },
@@ -265,9 +273,13 @@
           "id": {
             "field": "id"
           },
-          "fields": {
+          "field": {
             "id": {
-              "type": "String"
+              "type": "String",
+              "inputType": "text",
+              "required": true,
+              "editable": true,
+              "options": {}
             }
           }
         }
@@ -278,9 +290,13 @@
         "id": {
           "field": "id"
         },
-        "fields": {
+        "field": {
           "id": {
-            "type": "String"
+            "type": "String",
+            "inputType": "text",
+            "required": true,
+            "editable": true,
+            "options": {}
           }
         }
       }

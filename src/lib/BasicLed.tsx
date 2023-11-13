@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom'
 
 import BasicList from './BasicList'
 import BasicEdit from './BasicEdit'
-import { Exact, Gubu, Optional, Skip } from 'gubu'
+import { Gubu, Skip } from 'gubu'
 import { Box } from '@mui/material'
 
 // Validate spec shape with Gubu
@@ -18,7 +18,7 @@ const BasicLedSpecShape = Gubu({
     cmp: Skip(String),
     def: {
       canon: String,
-      fields: Skip({}),
+      field: Skip({}),
       add: {
         active: Boolean
       },
@@ -54,7 +54,7 @@ function BasicLed (props: any) {
     seneca.entity(canon).list$(q)
   }
 
-  const basicEditFields: any = basicLedSpec.content.def.fields
+  const basicEditFields: any = basicLedSpec.content.def.field
 
   const basicListColumns = Object.entries(basicEditFields).map(
     ([key, field]: [any, any]) => ({
@@ -91,11 +91,8 @@ function BasicLed (props: any) {
     setTriggerLed(++triggerLed)
   }, [led_add])
 
-  console.log('basicLedSpec', basicLedSpec)
   const headCmpId = basicLedSpec.content.head?.cmp
   const footCmpId = basicLedSpec.content.foot?.cmp
-  console.log('headCmpId', headCmpId)
-  console.log('footCmpId', footCmpId)
   const HeadCmp = ctx().cmp[headCmpId]
   const FootCmp = ctx().cmp[footCmpId]
 

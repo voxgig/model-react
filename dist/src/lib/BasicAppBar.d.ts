@@ -7,7 +7,7 @@ interface AppBarProps extends MuiAppBarProps {
 }
 declare const BasicAppBar: import("@emotion/styled").StyledComponent<Omit<import("@mui/material").PaperProps, "classes" | "color" | "position"> & {
     classes?: Partial<import("@mui/material/AppBar").AppBarClasses> | undefined;
-    color?: import("@mui/types").OverridableStringUnion<"transparent" | import("@mui/material").PropTypes.Color, import("@mui/material/AppBar").AppBarPropsColorOverrides> | undefined;
+    color?: import("@mui/types").OverridableStringUnion<import("@mui/material").PropTypes.Color | "transparent", import("@mui/material/AppBar").AppBarPropsColorOverrides> | undefined;
     enableColorOnDark?: boolean | undefined;
     position?: "fixed" | "absolute" | "relative" | "static" | "sticky" | undefined;
     sx?: import("@mui/material/styles").SxProps<Theme> | undefined;
