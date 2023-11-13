@@ -1,34 +1,23 @@
 sys: &: $.main.shape.ent
 
 sys: task: {
-  fields: {
+  field: {
     id: {
-      label: *'ID' | string
-      inputType: *'text' | string
-      required: *true | boolean
-      editable: *false | boolean
+      label: 'ID'
+      editable: false
     }
     title: {
-      type: *'String' | string
-      inputType: *'text' | string
-      label: *'Title' | string
-      required: *true | boolean
-      editable: *true | boolean
+      label: 'Title'
     }
     status: {
-      type: *'String' | string
-      inputType: *'select' | string
-      label: *'Status' | string
-      required: *true | boolean
-      editable: *true | boolean
+      inputType: 'select'
+      label: 'Status'
       options: {
-        open: label: *'Open' | string
-        closed: label: *'Closed' | string
+        open: label: 'Open'
+        closed: label: 'Closed'
       }
     }
   }
 }
 
-sys: chat: {
-
-}
+sys: chat: {}

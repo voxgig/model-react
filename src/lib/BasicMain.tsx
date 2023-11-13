@@ -28,7 +28,7 @@ const BasicMainSpecShape = Gubu({
         id: Skip({
           field: String
         }),
-        fields: Skip({})
+        field: Skip({})
       }
     }
   })
@@ -53,8 +53,8 @@ function BasicMain (props: any) {
   }
 
   return (
-    <Box className='basic-main' sx={basicMainStyle}>
-      <Box className='basic-main-container' sx={basicMainContainerStyle}>
+    <Box className='BasicMain' sx={basicMainStyle}>
+      <Box className='BasicMain-container' sx={basicMainContainerStyle}>
         <Routes>
           <Route path='/view'>
             {views.map((view: any) => {

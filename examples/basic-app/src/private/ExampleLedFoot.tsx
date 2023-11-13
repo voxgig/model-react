@@ -1,17 +1,15 @@
 import { Box, Stack } from '@mui/material'
-import BasicCard from './BasicCard'
+import ExampleCard from './ExampleCard'
 import { Padding } from '@mui/icons-material'
 
-const BasicLedHead = () => {
+const ExampleLedFoot = () => {
   return (
-    <Box sx={{ marginBottom: '2rem' }}>
+    <Box sx={{ marginY: '2rem' }}>
       <Stack direction='row' justifyContent='space-between' spacing={2}>
-        <BasicCard />
-        <BasicCard />
-        <BasicCard />
+        <ExampleCard />
       </Stack>
     </Box>
   )
 }
 
-export default BasicLedHead
+export default ExampleLedFoot

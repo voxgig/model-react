@@ -5,7 +5,7 @@ import CardContent from '@mui/material/CardContent'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 
-function BasicCard () {
+function ExampleCard () {
   return (
     <Card sx={{ width: '100%' }}>
       <CardContent>
@@ -31,7 +31,7 @@ function BasicCard () {
   )
 }
 
-export default BasicCard
+export default ExampleCard
 
 const bull = (
   <Box

@@ -22,14 +22,14 @@
   height: 100vh;
 }
 
-.basic-main {
+.BasicMain {
   flex: 1;
   background-color: #eee;
   padding-top: 4rem;
   height: calc(100% - 4rem);
 }
 
-.basic-main-container {
+.BasicMain-container {
   overflow-y: auto;
 }
 

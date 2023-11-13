@@ -84,7 +84,7 @@ export const ctx = () => {
                   tool: {
                     def: {
                       addbutton: {
-                        kind: 'addbutton',
+                        kind: 'add',
                         label: 'Add',
                         options: {
                           kind: 'ent',

@@ -7,7 +7,18 @@ main: shape: ent: {
   id: {
     field: 'id'
   }
-  fields: {
+  field: {
     id: type: *'String' | string
   }
 }
+
+main: shape: ent: field: &: {
+  type: *'String' | string  
+  label: string  
+  inputType: *'text' | string
+  required: *true | boolean  
+  editable: *true | boolean
+  options: &: {
+    label: string
+  }
+} 
