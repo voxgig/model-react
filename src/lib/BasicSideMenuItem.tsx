@@ -9,11 +9,12 @@ import {
 
 import {
   ChatBubble as ChatBubbleIcon,
-  FactoryOutlined,
-  KeyOutlined,
-  AssignmentTurnedInOutlined,
-  TextSnippetOutlined,
-  HighlightAlt,
+  FactoryOutlined as FactoryOutlinedIcon,
+  KeyOutlined as KeyOutlinedIcon,
+  AssignmentTurnedInOutlined as AssignmentTurnedInOutlinedIcon,
+  UploadFileOutlined as UploadFileOutlinedIcon,
+  TextSnippetOutlined as TextSnippetOutlinedIcon,
+  HighlightAlt as HighlightAltIcon,
   SupervisorAccount as AccountIcon,
   Map as MapIcon,
   Tablet as TabletIcon,
@@ -22,17 +23,30 @@ import {
   ContentPaste as ClipBoardIcon,
   FitScreen,
   Event as EventIcon,
-  Logout as LogoutIcon
+  Logout as LogoutIcon,
+  HomeOutlined as HomeOutlinedIcon,
+  WarehouseOutlined as WarehouseOutlinedIcon,
+  TuneOutlined as TuneOutlinedIcon,
+  FactCheckOutlined as FactCheckOutlinedIcon,
+  WidgetsOutlined as WidgetsOutlinedIcon,
+  AltRoute as AltRouteIcon
 } from '@mui/icons-material'
 import { Gubu } from 'gubu'
 import { useSelector } from 'react-redux'
 
 const iconmap: any = {
-  factory: FactoryOutlined,
-  key: KeyOutlined,
-  done: AssignmentTurnedInOutlined,
-  docs: TextSnippetOutlined,
-  hightlight: HighlightAlt,
+  home: HomeOutlinedIcon,
+  warehouse: WarehouseOutlinedIcon,
+  tune: TuneOutlinedIcon,
+  widget: WidgetsOutlinedIcon,
+  factCheck: FactCheckOutlinedIcon,
+  uploadFile: UploadFileOutlinedIcon,
+  altRoute: AltRouteIcon,
+  factory: FactoryOutlinedIcon,
+  key: KeyOutlinedIcon,
+  done: AssignmentTurnedInOutlinedIcon,
+  docs: TextSnippetOutlinedIcon,
+  hightlight: HighlightAltIcon,
   map: MapIcon,
   account: AccountIcon,
   tablet: TabletIcon,
@@ -43,20 +57,6 @@ const iconmap: any = {
   chatBubble: ChatBubbleIcon,
   event: EventIcon,
   logout: LogoutIcon
-}
-
-function makeIcon (name: string) {
-  const Icon = iconmap[name]
-  return <Icon />
-}
-
-// TODO: Move isAuthorized to utils
-// TODO: Allow custom authorization function
-function isAuthorized (userRole: string, authorizedRoles: any): boolean {
-  return (
-    authorizedRoles.hasOwnProperty(userRole) &&
-    authorizedRoles[userRole] === true
-  )
 }
 
 const { Child } = Gubu
@@ -94,16 +94,19 @@ function BasicSideMenuItem (props: any) {
         return (
           // TODO: Load user role from redux store
           isAuthorized(userRole, item.access) && (
-            <ListItem
-              key={itemKey}
-              disablePadding
-              onClick={() => onItemSelect(itemKey, item)}
-            >
-              <ListItemButton selected={viewPath == itemKey}>
-                <ListItemIcon>{makeIcon(item.icon)}</ListItemIcon>
-                <ListItemText primary={item.label} />
-              </ListItemButton>
-            </ListItem>
+            <>
+              <ListItem
+                key={itemKey}
+                disablePadding
+                onClick={() => onItemSelect(itemKey, item)}
+              >
+                <ListItemButton selected={viewPath == itemKey}>
+                  <ListItemIcon>{makeIcon(item.icon)}</ListItemIcon>
+                  <ListItemText primary={item.label} />
+                </ListItemButton>
+              </ListItem>
+              <Divider sx={{ width: '164px', marginLeft: '12px' }} />
+            </>
           )
         )
       })}
@@ -113,3 +116,17 @@ function BasicSideMenuItem (props: any) {
 }
 
 export default BasicSideMenuItem
+
+function makeIcon (name: string) {
+  const Icon = iconmap[name]
+  return <Icon />
+}
+
+// TODO: Move isAuthorized to utils
+// TODO: Allow custom authorization function
+function isAuthorized (userRole: string, authorizedRoles: any): boolean {
+  return (
+    authorizedRoles.hasOwnProperty(userRole) &&
+    authorizedRoles[userRole] === true
+  )
+}

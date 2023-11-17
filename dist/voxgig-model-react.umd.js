@@ -7279,10 +7279,10 @@ var __async = (__this, __arguments, generator) => {
   }
   function getViewportRect(element, strategy) {
     var win = getWindow(element);
-    var html2 = getDocumentElement(element);
+    var html = getDocumentElement(element);
     var visualViewport = win.visualViewport;
-    var width2 = html2.clientWidth;
-    var height2 = html2.clientHeight;
+    var width2 = html.clientWidth;
+    var height2 = html.clientHeight;
     var x = 0;
     var y = 0;
     if (visualViewport) {
@@ -7303,15 +7303,15 @@ var __async = (__this, __arguments, generator) => {
   }
   function getDocumentRect(element) {
     var _element$ownerDocumen;
-    var html2 = getDocumentElement(element);
+    var html = getDocumentElement(element);
     var winScroll = getWindowScroll(element);
-    var body2 = (_element$ownerDocumen = element.ownerDocument) == null ? void 0 : _element$ownerDocumen.body;
-    var width2 = max$1(html2.scrollWidth, html2.clientWidth, body2 ? body2.scrollWidth : 0, body2 ? body2.clientWidth : 0);
-    var height2 = max$1(html2.scrollHeight, html2.clientHeight, body2 ? body2.scrollHeight : 0, body2 ? body2.clientHeight : 0);
+    var body = (_element$ownerDocumen = element.ownerDocument) == null ? void 0 : _element$ownerDocumen.body;
+    var width2 = max$1(html.scrollWidth, html.clientWidth, body ? body.scrollWidth : 0, body ? body.clientWidth : 0);
+    var height2 = max$1(html.scrollHeight, html.clientHeight, body ? body.scrollHeight : 0, body ? body.clientHeight : 0);
     var x = -winScroll.scrollLeft + getWindowScrollBarX(element);
     var y = -winScroll.scrollTop;
-    if (getComputedStyle(body2 || html2).direction === "rtl") {
-      x += max$1(html2.clientWidth, body2 ? body2.clientWidth : 0) - width2;
+    if (getComputedStyle(body || html).direction === "rtl") {
+      x += max$1(html.clientWidth, body ? body.clientWidth : 0) - width2;
     }
     return {
       width: width2,
@@ -13162,7 +13162,7 @@ var __async = (__this, __arguments, generator) => {
   function getStyleValue$1(computedStyle, property) {
     return parseInt(computedStyle[property], 10) || 0;
   }
-  const styles$3 = {
+  const styles$2 = {
     shadow: {
       // Visibility needed to hide the extra text area on iPads
       visibility: "hidden",
@@ -13324,7 +13324,7 @@ var __async = (__this, __arguments, generator) => {
         readOnly: true,
         ref: shadowRef,
         tabIndex: -1,
-        style: _extends$2({}, styles$3.shadow, style2, {
+        style: _extends$2({}, styles$2.shadow, style2, {
           padding: 0
         })
       })]
@@ -20142,6 +20142,198 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }
     return resolvedOptions;
   }
+  const pink = {
+    50: "#fce4ec",
+    100: "#f8bbd0",
+    200: "#f48fb1",
+    300: "#f06292",
+    400: "#ec407a",
+    500: "#e91e63",
+    600: "#d81b60",
+    700: "#c2185b",
+    800: "#ad1457",
+    900: "#880e4f",
+    A100: "#ff80ab",
+    A200: "#ff4081",
+    A400: "#f50057",
+    A700: "#c51162"
+  };
+  const deepPurple = {
+    50: "#ede7f6",
+    100: "#d1c4e9",
+    200: "#b39ddb",
+    300: "#9575cd",
+    400: "#7e57c2",
+    500: "#673ab7",
+    600: "#5e35b1",
+    700: "#512da8",
+    800: "#4527a0",
+    900: "#311b92",
+    A100: "#b388ff",
+    A200: "#7c4dff",
+    A400: "#651fff",
+    A700: "#6200ea"
+  };
+  const indigo = {
+    50: "#e8eaf6",
+    100: "#c5cae9",
+    200: "#9fa8da",
+    300: "#7986cb",
+    400: "#5c6bc0",
+    500: "#3f51b5",
+    600: "#3949ab",
+    700: "#303f9f",
+    800: "#283593",
+    900: "#1a237e",
+    A100: "#8c9eff",
+    A200: "#536dfe",
+    A400: "#3d5afe",
+    A700: "#304ffe"
+  };
+  const cyan = {
+    50: "#e0f7fa",
+    100: "#b2ebf2",
+    200: "#80deea",
+    300: "#4dd0e1",
+    400: "#26c6da",
+    500: "#00bcd4",
+    600: "#00acc1",
+    700: "#0097a7",
+    800: "#00838f",
+    900: "#006064",
+    A100: "#84ffff",
+    A200: "#18ffff",
+    A400: "#00e5ff",
+    A700: "#00b8d4"
+  };
+  const teal = {
+    50: "#e0f2f1",
+    100: "#b2dfdb",
+    200: "#80cbc4",
+    300: "#4db6ac",
+    400: "#26a69a",
+    500: "#009688",
+    600: "#00897b",
+    700: "#00796b",
+    800: "#00695c",
+    900: "#004d40",
+    A100: "#a7ffeb",
+    A200: "#64ffda",
+    A400: "#1de9b6",
+    A700: "#00bfa5"
+  };
+  const lightGreen = {
+    50: "#f1f8e9",
+    100: "#dcedc8",
+    200: "#c5e1a5",
+    300: "#aed581",
+    400: "#9ccc65",
+    500: "#8bc34a",
+    600: "#7cb342",
+    700: "#689f38",
+    800: "#558b2f",
+    900: "#33691e",
+    A100: "#ccff90",
+    A200: "#b2ff59",
+    A400: "#76ff03",
+    A700: "#64dd17"
+  };
+  const lime = {
+    50: "#f9fbe7",
+    100: "#f0f4c3",
+    200: "#e6ee9c",
+    300: "#dce775",
+    400: "#d4e157",
+    500: "#cddc39",
+    600: "#c0ca33",
+    700: "#afb42b",
+    800: "#9e9d24",
+    900: "#827717",
+    A100: "#f4ff81",
+    A200: "#eeff41",
+    A400: "#c6ff00",
+    A700: "#aeea00"
+  };
+  const yellow = {
+    50: "#fffde7",
+    100: "#fff9c4",
+    200: "#fff59d",
+    300: "#fff176",
+    400: "#ffee58",
+    500: "#ffeb3b",
+    600: "#fdd835",
+    700: "#fbc02d",
+    800: "#f9a825",
+    900: "#f57f17",
+    A100: "#ffff8d",
+    A200: "#ffff00",
+    A400: "#ffea00",
+    A700: "#ffd600"
+  };
+  const amber = {
+    50: "#fff8e1",
+    100: "#ffecb3",
+    200: "#ffe082",
+    300: "#ffd54f",
+    400: "#ffca28",
+    500: "#ffc107",
+    600: "#ffb300",
+    700: "#ffa000",
+    800: "#ff8f00",
+    900: "#ff6f00",
+    A100: "#ffe57f",
+    A200: "#ffd740",
+    A400: "#ffc400",
+    A700: "#ffab00"
+  };
+  const deepOrange = {
+    50: "#fbe9e7",
+    100: "#ffccbc",
+    200: "#ffab91",
+    300: "#ff8a65",
+    400: "#ff7043",
+    500: "#ff5722",
+    600: "#f4511e",
+    700: "#e64a19",
+    800: "#d84315",
+    900: "#bf360c",
+    A100: "#ff9e80",
+    A200: "#ff6e40",
+    A400: "#ff3d00",
+    A700: "#dd2c00"
+  };
+  const brown = {
+    50: "#efebe9",
+    100: "#d7ccc8",
+    200: "#bcaaa4",
+    300: "#a1887f",
+    400: "#8d6e63",
+    500: "#795548",
+    600: "#6d4c41",
+    700: "#5d4037",
+    800: "#4e342e",
+    900: "#3e2723",
+    A100: "#d7ccc8",
+    A200: "#bcaaa4",
+    A400: "#8d6e63",
+    A700: "#5d4037"
+  };
+  const blueGrey = {
+    50: "#eceff1",
+    100: "#cfd8dc",
+    200: "#b0bec5",
+    300: "#90a4ae",
+    400: "#78909c",
+    500: "#607d8b",
+    600: "#546e7a",
+    700: "#455a64",
+    800: "#37474f",
+    900: "#263238",
+    A100: "#cfd8dc",
+    A200: "#b0bec5",
+    A400: "#78909c",
+    A700: "#455a64"
+  };
   const { Child: Child$4 } = gubu_minExports.Gubu;
   const BasicHeadSpecShape = gubu_minExports.Gubu({
     head: {
@@ -20196,7 +20388,13 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           children: /* @__PURE__ */ jsxRuntimeExports.jsxs(material.Toolbar, { children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: basicHeadSpec.head.logo.img, style: { width: "5rem" } }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { flexGrow: 1 } }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(material.Typography, { variant: "h6", children: userName })
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              material.Avatar,
+              {
+                sx: { bgcolor: purple[300], color: "white", fontWeight: 100 },
+                children: "JD"
+              }
+            )
           ] })
         }
       );
@@ -20269,6 +20467,13 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     });
   }
   const iconmap = {
+    home: iconsMaterial.HomeOutlined,
+    warehouse: iconsMaterial.WarehouseOutlined,
+    tune: iconsMaterial.TuneOutlined,
+    widget: iconsMaterial.WidgetsOutlined,
+    factCheck: iconsMaterial.FactCheckOutlined,
+    uploadFile: iconsMaterial.UploadFileOutlined,
+    altRoute: iconsMaterial.AltRoute,
     factory: iconsMaterial.FactoryOutlined,
     key: iconsMaterial.KeyOutlined,
     done: iconsMaterial.AssignmentTurnedInOutlined,
@@ -20285,13 +20490,6 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     event: iconsMaterial.Event,
     logout: iconsMaterial.Logout
   };
-  function makeIcon(name) {
-    const Icon = iconmap[name];
-    return /* @__PURE__ */ jsxRuntimeExports.jsx(Icon, {});
-  }
-  function isAuthorized(userRole, authorizedRoles) {
-    return authorizedRoles.hasOwnProperty(userRole) && authorizedRoles[userRole] === true;
-  }
   const { Child: Child$3 } = gubu_minExports.Gubu;
   const BasicSideMenuItemSpecShape = gubu_minExports.Gubu({
     section: {
@@ -20316,22 +20514,32 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       Object.entries(section.item).map(([itemKey, item]) => {
         return (
           // TODO: Load user role from redux store
-          isAuthorized(userRole, item.access) && /* @__PURE__ */ jsxRuntimeExports.jsx(
-            material.ListItem,
-            {
-              disablePadding: true,
-              onClick: () => onItemSelect(itemKey, item),
-              children: /* @__PURE__ */ jsxRuntimeExports.jsxs(material.ListItemButton, { selected: viewPath == itemKey, children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx(material.ListItemIcon, { children: makeIcon(item.icon) }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx(material.ListItemText, { primary: item.label })
-              ] })
-            },
-            itemKey
-          )
+          isAuthorized(userRole, item.access) && /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              material.ListItem,
+              {
+                disablePadding: true,
+                onClick: () => onItemSelect(itemKey, item),
+                children: /* @__PURE__ */ jsxRuntimeExports.jsxs(material.ListItemButton, { selected: viewPath == itemKey, children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(material.ListItemIcon, { children: makeIcon(item.icon) }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(material.ListItemText, { primary: item.label })
+                ] })
+              },
+              itemKey
+            ),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(material.Divider, { sx: { width: "164px", marginLeft: "12px" } })
+          ] })
         );
       }),
       section.divider && /* @__PURE__ */ jsxRuntimeExports.jsx(material.Divider, {})
     ] }, sectionKey);
+  }
+  function makeIcon(name) {
+    const Icon = iconmap[name];
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(Icon, {});
+  }
+  function isAuthorized(userRole, authorizedRoles) {
+    return authorizedRoles.hasOwnProperty(userRole) && authorizedRoles[userRole] === true;
   }
   const { Child: Child$2 } = gubu_minExports.Gubu;
   const BasicSideMenuSpecShape = gubu_minExports.Gubu({
@@ -21600,7 +21808,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     };
   }
   const _excluded$$ = ["addEndListener", "appear", "children", "easing", "in", "onEnter", "onEntered", "onEntering", "onExit", "onExited", "onExiting", "style", "timeout", "TransitionComponent"];
-  const styles$2 = {
+  const styles$1 = {
     entering: {
       opacity: 1
     },
@@ -21700,7 +21908,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           style: _extends$2({
             opacity: 0,
             visibility: state === "exited" && !inProp ? "hidden" : void 0
-          }, styles$2[state], style2, children.props.style),
+          }, styles$1[state], style2, children.props.style),
           ref: handleRef
         }, childProps));
       }
@@ -22897,14 +23105,16 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         /* @__PURE__ */ jsxRuntimeExports.jsx(
           material.Box,
           {
+            className: "DrawerContainer",
             sx: {
               backgroundColor: "#2a2d49",
               overflow: "auto",
-              marginLeft: "30px",
+              marginLeft: "23px",
               marginBottom: "20px",
-              marginTop: "20px",
-              width: "200px",
-              height: "100%"
+              marginTop: "15px",
+              width: "189px",
+              height: "100%",
+              borderRadius: "4px"
             },
             children: /* @__PURE__ */ jsxRuntimeExports.jsx(
               BasicSideMenu,
@@ -22933,13 +23143,6 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       ] }) });
     }
   }
-  const DrawerHeader = material.styled("div")(({ theme }) => __spreadProps(__spreadValues({
-    display: "flex",
-    alignItems: "center",
-    padding: theme.spacing(0, 1)
-  }, theme.mixins.toolbar), {
-    justifyContent: "flex-end"
-  }));
   /**
    * table-core
    *
@@ -27678,7 +27881,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   function getScale(value) {
     return `scale(${value}, ${__pow(value, 2)})`;
   }
-  const styles$1 = {
+  const styles = {
     entering: {
       opacity: 1,
       transform: getScale(1)
@@ -27823,7 +28026,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
             opacity: 0,
             transform: getScale(0.75),
             visibility: state === "exited" && !inProp ? "hidden" : void 0
-          }, styles$1[state], style2, children.props.style),
+          }, styles[state], style2, children.props.style),
           ref: handleRef
         }, childProps));
       }
@@ -51056,95 +51259,6 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       return found ? !!found.allow : false;
     }
   }
-  const html = (theme, enableColorScheme) => _extends$2({
-    WebkitFontSmoothing: "antialiased",
-    // Antialiasing.
-    MozOsxFontSmoothing: "grayscale",
-    // Antialiasing.
-    // Change from `box-sizing: content-box` so that `width`
-    // is not affected by `padding` or `border`.
-    boxSizing: "border-box",
-    // Fix font resize problem in iOS
-    WebkitTextSizeAdjust: "100%"
-  }, enableColorScheme && !theme.vars && {
-    colorScheme: theme.palette.mode
-  });
-  const body = (theme) => _extends$2({
-    color: (theme.vars || theme).palette.text.primary
-  }, theme.typography.body1, {
-    backgroundColor: (theme.vars || theme).palette.background.default,
-    "@media print": {
-      // Save printer ink.
-      backgroundColor: (theme.vars || theme).palette.common.white
-    }
-  });
-  const styles = (theme, enableColorScheme = false) => {
-    var _theme$components, _theme$components$Mui;
-    const colorSchemeStyles = {};
-    if (enableColorScheme && theme.colorSchemes) {
-      Object.entries(theme.colorSchemes).forEach(([key, scheme]) => {
-        var _scheme$palette;
-        colorSchemeStyles[theme.getColorSchemeSelector(key).replace(/\s*&/, "")] = {
-          colorScheme: (_scheme$palette = scheme.palette) == null ? void 0 : _scheme$palette.mode
-        };
-      });
-    }
-    let defaultStyles = _extends$2({
-      html: html(theme, enableColorScheme),
-      "*, *::before, *::after": {
-        boxSizing: "inherit"
-      },
-      "strong, b": {
-        fontWeight: theme.typography.fontWeightBold
-      },
-      body: _extends$2({
-        margin: 0
-      }, body(theme), {
-        // Add support for document.body.requestFullScreen().
-        // Other elements, if background transparent, are not supported.
-        "&::backdrop": {
-          backgroundColor: (theme.vars || theme).palette.background.default
-        }
-      })
-    }, colorSchemeStyles);
-    const themeOverrides = (_theme$components = theme.components) == null ? void 0 : (_theme$components$Mui = _theme$components.MuiCssBaseline) == null ? void 0 : _theme$components$Mui.styleOverrides;
-    if (themeOverrides) {
-      defaultStyles = [defaultStyles, themeOverrides];
-    }
-    return defaultStyles;
-  };
-  function CssBaseline(inProps) {
-    const props = useThemeProps({
-      props: inProps,
-      name: "MuiCssBaseline"
-    });
-    const {
-      children,
-      enableColorScheme = false
-    } = props;
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs(React__namespace.Fragment, {
-      children: [/* @__PURE__ */ jsxRuntimeExports.jsx(GlobalStyles, {
-        styles: (theme) => styles(theme, enableColorScheme)
-      }), children]
-    });
-  }
-  process.env.NODE_ENV !== "production" ? CssBaseline.propTypes = {
-    // ----------------------------- Warning --------------------------------
-    // | These PropTypes are generated from the TypeScript type definitions |
-    // |     To update them edit the d.ts file and run "yarn proptypes"     |
-    // ----------------------------------------------------------------------
-    /**
-     * You can wrap a node.
-     */
-    children: PropTypes.node,
-    /**
-     * Enable `color-scheme` CSS property to use `theme.palette.mode`.
-     * For more details, check out https://developer.mozilla.org/en-US/docs/Web/CSS/color-scheme
-     * For browser support, check out https://caniuse.com/?search=color-scheme
-     * @default false
-     */
-    enableColorScheme: PropTypes.bool
-  } : void 0;
   const Container = createContainer({
     createStyledComponent: styled("div", {
       name: "MuiContainer",
@@ -51211,64 +51325,68 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   function BasicAuth(props) {
     const { ctx, spec } = props;
     const { handle } = spec;
-    {
-    }
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs(Container, { component: "main", maxWidth: "xs", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx(CssBaseline, {}),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs(
-        Box,
-        {
-          sx: {
-            marginTop: 8,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center"
-          },
-          children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("img", { style: { width: 400 }, src: spec.img.logo }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(Typography, { sx: { marginTop: 4 }, component: "h1", variant: "h5", children: spec.title }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs(Box, { component: "form", onSubmit: handle.signin, noValidate: true, sx: { mt: 1 }, children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx(
-                TextField,
-                {
-                  margin: "normal",
-                  required: true,
-                  fullWidth: true,
-                  id: "email",
-                  label: "Email Address",
-                  name: "email",
-                  autoComplete: "email",
-                  autoFocus: true
-                }
-              ),
-              /* @__PURE__ */ jsxRuntimeExports.jsx(
-                TextField,
-                {
-                  margin: "normal",
-                  required: true,
-                  fullWidth: true,
-                  name: "password",
-                  label: "Password",
-                  type: "password",
-                  id: "password",
-                  autoComplete: "current-password"
-                }
-              ),
-              /* @__PURE__ */ jsxRuntimeExports.jsx(
-                Button,
-                {
-                  type: "submit",
-                  fullWidth: true,
-                  variant: "contained",
-                  sx: { mt: 3, mb: 2 },
-                  children: "Sign In"
-                }
-              )
-            ] })
-          ]
-        }
-      )
-    ] });
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(Container, { component: "main", maxWidth: "xs", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
+      Box,
+      {
+        sx: {
+          marginTop: 8,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center"
+        },
+        children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("img", { style: { width: 400 }, src: spec.img.logo }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(Typography, { sx: { marginTop: 4 }, component: "h1", variant: "h5", children: spec.title }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs(
+            Box,
+            {
+              component: "form",
+              onSubmit: handle.signin,
+              noValidate: true,
+              sx: { mt: 1 },
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  TextField,
+                  {
+                    margin: "normal",
+                    required: true,
+                    fullWidth: true,
+                    id: "email",
+                    label: "Email Address",
+                    name: "email",
+                    autoComplete: "email",
+                    autoFocus: true
+                  }
+                ),
+                /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  TextField,
+                  {
+                    margin: "normal",
+                    required: true,
+                    fullWidth: true,
+                    name: "password",
+                    label: "Password",
+                    type: "password",
+                    id: "password",
+                    autoComplete: "current-password"
+                  }
+                ),
+                /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  Button,
+                  {
+                    type: "submit",
+                    fullWidth: true,
+                    variant: "contained",
+                    sx: { mt: 3, mb: 2 },
+                    children: "Sign In"
+                  }
+                )
+              ]
+            }
+          )
+        ]
+      }
+    ) });
     {
     }
   }
