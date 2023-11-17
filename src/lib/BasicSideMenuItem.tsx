@@ -64,6 +64,7 @@ const { Child } = Gubu
 const BasicSideMenuItemSpecShape = Gubu({
   section: {
     title: String,
+    divider: Boolean,
     item: Child({
       kind: String,
       label: String,
@@ -85,28 +86,28 @@ function BasicSideMenuItem (props: any) {
   const userRole =
     useSelector((state: any) => state.main.auth.user.role) || 'user'
 
+  const section = basicSideMenuItemSpec.section
+
   return (
     <List key={sectionKey}>
-      {Object.entries(basicSideMenuItemSpec.section.item).map(
-        ([itemKey, item]: [any, any]) => {
-          return (
-            // TODO: Load user role from redux store
-            isAuthorized(userRole, item.access) && (
-              <ListItem
-                key={itemKey}
-                disablePadding
-                onClick={() => onItemSelect(itemKey, item)}
-              >
-                <ListItemButton selected={viewPath == itemKey}>
-                  <ListItemIcon>{makeIcon(item.icon)}</ListItemIcon>
-                  <ListItemText primary={item.label} />
-                </ListItemButton>
-              </ListItem>
-            )
+      {Object.entries(section.item).map(([itemKey, item]: [any, any]) => {
+        return (
+          // TODO: Load user role from redux store
+          isAuthorized(userRole, item.access) && (
+            <ListItem
+              key={itemKey}
+              disablePadding
+              onClick={() => onItemSelect(itemKey, item)}
+            >
+              <ListItemButton selected={viewPath == itemKey}>
+                <ListItemIcon>{makeIcon(item.icon)}</ListItemIcon>
+                <ListItemText primary={item.label} />
+              </ListItemButton>
+            </ListItem>
           )
-        }
-      )}
-      <Divider />
+        )
+      })}
+      {section.divider && <Divider />}
     </List>
   )
 }

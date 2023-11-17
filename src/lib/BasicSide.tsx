@@ -1,13 +1,12 @@
 import { useSelector } from 'react-redux'
-
 import { useNavigate } from 'react-router-dom'
-
 import { Exact, Gubu } from 'gubu'
 import BasicSideMenu from './BasicSideMenu'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 
 import {
+  Box,
   Divider,
   Drawer,
   IconButton,
@@ -16,6 +15,7 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  Toolbar,
   styled,
   useTheme
 } from '@mui/material'
@@ -29,8 +29,10 @@ const BasicSideSpecShape = Gubu({
     logo: {
       img: String
     },
+    variant: String,
     section: Child({
       title: String,
+      divider: Boolean,
       item: Child({
         kind: String,
         label: String,
@@ -72,27 +74,51 @@ function BasicSide (props: any) {
     section: basicSideSpec.side.section
   }
 
-  return (
-    <BasicDrawer
-      sx={{
-        '& .MuiDrawer-paper': {
-          backgroundColor: theme.palette.background.paper
-        }
-      }}
-      variant='permanent'
-      drawerwidth='16rem'
-      open={open}
-    >
-      <BasicDrawerHeader>
-        <img src={basicSideSpec.side.logo.img} style={{ width: '5rem' }} />
-        <IconButton onClick={() => onClose(seneca)}>
-          <ChevronLeftIcon sx={{ color: theme.palette.primary.main }} />
-        </IconButton>
-      </BasicDrawerHeader>
-      <Divider />
-      <BasicSideMenu spec={basicSideMenuSpec} onItemSelect={handleItemSelect} />
-    </BasicDrawer>
-  )
+  const drawerVariant = basicSideSpec.side.variant
+
+  // TODO: refactor and DRY
+  if (drawerVariant === 'permanent') {
+    // TODO: Extract Box sx={} to theme
+    return (
+      <Drawer open={open}>
+        <Toolbar />
+        <Box
+          sx={{
+            backgroundColor: '#2a2d49',
+            overflow: 'auto',
+            marginLeft: '30px',
+            marginBottom: '20px',
+            marginTop: '20px',
+            width: '200px',
+            height: '100%'
+          }}
+        >
+          <BasicSideMenu
+            spec={basicSideMenuSpec}
+            onItemSelect={handleItemSelect}
+          />
+        </Box>
+      </Drawer>
+    )
+  } else {
+    return (
+      <Drawer open={open}>
+        <Box>
+          <BasicDrawerHeader>
+            <img src={basicSideSpec.side.logo.img} style={{ width: '5rem' }} />
+            <IconButton onClick={() => onClose(seneca)}>
+              <ChevronLeftIcon sx={{ color: theme.palette.primary.main }} />
+            </IconButton>
+          </BasicDrawerHeader>
+          <Divider />
+          <BasicSideMenu
+            spec={basicSideMenuSpec}
+            onItemSelect={handleItemSelect}
+          />
+        </Box>
+      </Drawer>
+    )
+  }
 }
 
 export default BasicSide
@@ -101,6 +127,30 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   padding: theme.spacing(0, 1),
+  // necessary for content to be below app bar
   ...theme.mixins.toolbar,
   justifyContent: 'flex-end'
 }))
+
+// <Drawer open={open}>
+//   {/* <Toolbar /> */}
+//   <Box
+//     sx={{
+//       backgroundColor: '#2a2d49',
+//       overflow: 'auto',
+//       marginLeft: '30px',
+//       marginBottom: '20px',
+//       width: '200px',
+//       height: '100%'
+//     }}
+//   >
+//     <BasicDrawerHeader>
+//       <img src={basicSideSpec.side.logo.img} style={{ width: '5rem' }} />
+//       <IconButton onClick={() => onClose(seneca)}>
+//         <ChevronLeftIcon sx={{ color: theme.palette.primary.main }} />
+//       </IconButton>
+//     </BasicDrawerHeader>
+//     <Divider />
+//     <BasicSideMenu spec={basicSideMenuSpec} onItemSelect={handleItemSelect} />
+//   </Box>
+// </Drawer>

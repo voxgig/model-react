@@ -20148,6 +20148,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       logo: {
         img: String
       },
+      variant: String,
       tool: {
         def: Child$4({
           kind: gubu_minExports.Exact("add", "autocomplete"),
@@ -20183,60 +20184,77 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const viewPath = location2.pathname.split("/")[2];
     let add = ((_c = (_b = (_a = basicHeadSpec.view[viewPath]) == null ? void 0 : _a.content) == null ? void 0 : _b.def) == null ? void 0 : _c.add) || { active: false };
     const viewName = ((_d = basicHeadSpec.view[viewPath]) == null ? void 0 : _d.name) || "";
-    const theme = ctx().theme;
-    return /* @__PURE__ */ jsxRuntimeExports.jsx(
-      BasicAppBar,
-      {
-        drawerwidth: "16rem",
-        open,
-        sx: {
-          backgroundColor: theme.palette.background.paper
-        },
-        children: /* @__PURE__ */ jsxRuntimeExports.jsxs(material.Toolbar, { children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(
-            material.IconButton,
-            {
-              "aria-label": "open drawer",
-              onClick: () => onOpen(seneca),
-              edge: "start",
-              sx: __spreadValues({
-                marginRight: 2
-              }, open && { display: "none" }),
-              children: /* @__PURE__ */ jsxRuntimeExports.jsx(default_1$t, {})
-            }
-          ),
-          tooldefs.map((tooldef) => {
-            if ("autocomplete" === tooldef.kind) {
-              return /* @__PURE__ */ jsxRuntimeExports.jsx(
-                BasicAutocomplete,
-                {
-                  spec: { tooldef },
-                  ctx
-                },
-                tooldef.name
-              );
-            } else if ("add" === tooldef.kind) {
-              return /* @__PURE__ */ jsxRuntimeExports.jsx(
-                BasicButton,
-                {
-                  variant: "outlined",
-                  sx: {
-                    display: add.active ? null : "none",
-                    textTransform: "capitalize"
+    const theme = material.useTheme();
+    if (basicHeadSpec.head.variant === "permanent") {
+      return /* @__PURE__ */ jsxRuntimeExports.jsx(
+        BasicAppBar,
+        {
+          open: false,
+          sx: {
+            backgroundColor: theme.palette.background.paper
+          },
+          children: /* @__PURE__ */ jsxRuntimeExports.jsxs(material.Toolbar, { children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: basicHeadSpec.head.logo.img, style: { width: "5rem" } }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { flexGrow: 1 } }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(material.Typography, { variant: "h6", children: userName })
+          ] })
+        }
+      );
+    } else {
+      return /* @__PURE__ */ jsxRuntimeExports.jsx(
+        BasicAppBar,
+        {
+          drawerwidth: "16rem",
+          open,
+          sx: {
+            backgroundColor: theme.palette.background.paper
+          },
+          children: /* @__PURE__ */ jsxRuntimeExports.jsxs(material.Toolbar, { children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              material.IconButton,
+              {
+                "aria-label": "open drawer",
+                onClick: () => onOpen(seneca),
+                edge: "start",
+                sx: __spreadValues({
+                  marginRight: 2
+                }, open && { display: "none" }),
+                children: /* @__PURE__ */ jsxRuntimeExports.jsx(default_1$t, {})
+              }
+            ),
+            tooldefs.map((tooldef) => {
+              if ("autocomplete" === tooldef.kind) {
+                return /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  BasicAutocomplete,
+                  {
+                    spec: { tooldef },
+                    ctx
                   },
-                  size: "large",
-                  onClick: () => addItem(seneca, led_add),
-                  children: tooldef.label + " " + viewName
-                },
-                tooldef.name
-              );
-            }
-          }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { flexGrow: 1 } }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(material.Typography, { variant: "h6", children: userName })
-        ] })
-      }
-    );
+                  tooldef.name
+                );
+              } else if ("add" === tooldef.kind) {
+                return /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  BasicButton,
+                  {
+                    variant: "outlined",
+                    sx: {
+                      display: add.active ? null : "none",
+                      textTransform: "capitalize"
+                    },
+                    size: "large",
+                    onClick: () => addItem(seneca, led_add),
+                    children: tooldef.label + " " + viewName
+                  },
+                  tooldef.name
+                );
+              }
+            }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { flexGrow: 1 } }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(material.Typography, { variant: "h6", children: userName })
+          ] })
+        }
+      );
+    }
   }
   function onOpen(seneca) {
     seneca.act("aim:app,set:state", {
@@ -20278,6 +20296,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   const BasicSideMenuItemSpecShape = gubu_minExports.Gubu({
     section: {
       title: String,
+      divider: Boolean,
       item: Child$3({
         kind: String,
         label: String,
@@ -20292,33 +20311,33 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const viewPath = location.pathname.split("/")[2];
     const basicSideMenuItemSpec = BasicSideMenuItemSpecShape(props.spec);
     const userRole = reactRedux.useSelector((state) => state.main.auth.user.role) || "user";
+    const section = basicSideMenuItemSpec.section;
     return /* @__PURE__ */ jsxRuntimeExports.jsxs(material.List, { children: [
-      Object.entries(basicSideMenuItemSpec.section.item).map(
-        ([itemKey, item]) => {
-          return (
-            // TODO: Load user role from redux store
-            isAuthorized(userRole, item.access) && /* @__PURE__ */ jsxRuntimeExports.jsx(
-              material.ListItem,
-              {
-                disablePadding: true,
-                onClick: () => onItemSelect(itemKey, item),
-                children: /* @__PURE__ */ jsxRuntimeExports.jsxs(material.ListItemButton, { selected: viewPath == itemKey, children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsx(material.ListItemIcon, { children: makeIcon(item.icon) }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx(material.ListItemText, { primary: item.label })
-                ] })
-              },
-              itemKey
-            )
-          );
-        }
-      ),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(material.Divider, {})
+      Object.entries(section.item).map(([itemKey, item]) => {
+        return (
+          // TODO: Load user role from redux store
+          isAuthorized(userRole, item.access) && /* @__PURE__ */ jsxRuntimeExports.jsx(
+            material.ListItem,
+            {
+              disablePadding: true,
+              onClick: () => onItemSelect(itemKey, item),
+              children: /* @__PURE__ */ jsxRuntimeExports.jsxs(material.ListItemButton, { selected: viewPath == itemKey, children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx(material.ListItemIcon, { children: makeIcon(item.icon) }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx(material.ListItemText, { primary: item.label })
+              ] })
+            },
+            itemKey
+          )
+        );
+      }),
+      section.divider && /* @__PURE__ */ jsxRuntimeExports.jsx(material.Divider, {})
     ] }, sectionKey);
   }
   const { Child: Child$2 } = gubu_minExports.Gubu;
   const BasicSideMenuSpecShape = gubu_minExports.Gubu({
     section: Child$2({
       title: String,
+      divider: Boolean,
       item: Child$2({
         kind: String,
         label: String,
@@ -22834,8 +22853,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       logo: {
         img: String
       },
+      variant: String,
       section: Child$1({
         title: String,
+        divider: Boolean,
         item: Child$1({
           kind: String,
           label: String,
@@ -22869,27 +22890,48 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const basicSideMenuSpec = {
       section: basicSideSpec.side.section
     };
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs(
-      BasicDrawer,
-      {
-        sx: {
-          "& .MuiDrawer-paper": {
-            backgroundColor: theme.palette.background.paper
+    const drawerVariant = basicSideSpec.side.variant;
+    if (drawerVariant === "permanent") {
+      return /* @__PURE__ */ jsxRuntimeExports.jsxs(material.Drawer, { open, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(material.Toolbar, {}),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          material.Box,
+          {
+            sx: {
+              backgroundColor: "#2a2d49",
+              overflow: "auto",
+              marginLeft: "30px",
+              marginBottom: "20px",
+              marginTop: "20px",
+              width: "200px",
+              height: "100%"
+            },
+            children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+              BasicSideMenu,
+              {
+                spec: basicSideMenuSpec,
+                onItemSelect: handleItemSelect
+              }
+            )
           }
-        },
-        variant: "permanent",
-        drawerwidth: "16rem",
-        open,
-        children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsxs(BasicDrawerHeader, { children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: basicSideSpec.side.logo.img, style: { width: "5rem" } }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(material.IconButton, { onClick: () => onClose(seneca), children: /* @__PURE__ */ jsxRuntimeExports.jsx(default_1$s, { sx: { color: theme.palette.primary.main } }) })
-          ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(material.Divider, {}),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(BasicSideMenu, { spec: basicSideMenuSpec, onItemSelect: handleItemSelect })
-        ]
-      }
-    );
+        )
+      ] });
+    } else {
+      return /* @__PURE__ */ jsxRuntimeExports.jsx(material.Drawer, { open, children: /* @__PURE__ */ jsxRuntimeExports.jsxs(material.Box, { children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(BasicDrawerHeader, { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: basicSideSpec.side.logo.img, style: { width: "5rem" } }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(material.IconButton, { onClick: () => onClose(seneca), children: /* @__PURE__ */ jsxRuntimeExports.jsx(default_1$s, { sx: { color: theme.palette.primary.main } }) })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(material.Divider, {}),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          BasicSideMenu,
+          {
+            spec: basicSideMenuSpec,
+            onItemSelect: handleItemSelect
+          }
+        )
+      ] }) });
+    }
   }
   const DrawerHeader = material.styled("div")(({ theme }) => __spreadProps(__spreadValues({
     display: "flex",
@@ -46039,9 +46081,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       [type]: message || true
     })
   }) : {};
-  const focusFieldBy = (fields2, callback, fieldsNames) => {
-    for (const key of fieldsNames || Object.keys(fields2)) {
-      const field = get(fields2, key);
+  const focusFieldBy = (fields, callback, fieldsNames) => {
+    for (const key of fieldsNames || Object.keys(fields)) {
+      const field = get(fields, key);
       if (field) {
         const _a = field, { _f } = _a, currentField = __objRest(_a, ["_f"]);
         if (_f && callback(_f.name)) {
@@ -46344,13 +46386,13 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   function useFieldArray(props) {
     const methods = useFormContext();
     const { control = methods.control, name, keyName = "id", shouldUnregister } = props;
-    const [fields2, setFields] = React.useState(control._getFieldArray(name));
+    const [fields, setFields] = React.useState(control._getFieldArray(name));
     const ids = React.useRef(control._getFieldArray(name).map(generateId));
-    const _fieldIds = React.useRef(fields2);
+    const _fieldIds = React.useRef(fields);
     const _name = React.useRef(name);
     const _actioned = React.useRef(false);
     _name.current = name;
-    _fieldIds.current = fields2;
+    _fieldIds.current = fields;
     control._names.array.add(name);
     props.rules && control.register(name, props.rules);
     useSubscribe({
@@ -46484,7 +46526,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       control._names.focus = "";
       control._updateValid();
       _actioned.current = false;
-    }, [fields2, name, control]);
+    }, [fields, name, control]);
     React.useEffect(() => {
       !get(control._formValues, name) && control._updateFieldArray(name);
       return () => {
@@ -46500,9 +46542,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       insert: React.useCallback(insert$1, [updateValues, name, control]),
       update: React.useCallback(update, [updateValues, name, control]),
       replace: React.useCallback(replace2, [updateValues, name, control]),
-      fields: React.useMemo(() => fields2.map((field, index2) => __spreadProps(__spreadValues({}, field), {
+      fields: React.useMemo(() => fields.map((field, index2) => __spreadProps(__spreadValues({}, field), {
         [keyName]: ids.current[index2] || generateId()
-      })), [fields2, keyName])
+      })), [fields, keyName])
     };
   }
   function createSubject() {
@@ -46570,19 +46612,19 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }
     return false;
   };
-  function markFieldsDirty(data, fields2 = {}) {
+  function markFieldsDirty(data, fields = {}) {
     const isParentNodeArray = Array.isArray(data);
     if (isObject(data) || isParentNodeArray) {
       for (const key in data) {
         if (Array.isArray(data[key]) || isObject(data[key]) && !objectHasFunction(data[key])) {
-          fields2[key] = Array.isArray(data[key]) ? [] : {};
-          markFieldsDirty(data[key], fields2[key]);
+          fields[key] = Array.isArray(data[key]) ? [] : {};
+          markFieldsDirty(data[key], fields[key]);
         } else if (!isNullOrUndefined(data[key])) {
-          fields2[key] = true;
+          fields[key] = true;
         }
       }
     }
-    return fields2;
+    return fields;
   }
   function getDirtyFieldsFromDefaultValues(data, formValues, dirtyFieldsFromValues) {
     const isParentNodeArray = Array.isArray(data);
@@ -46623,15 +46665,15 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     return getFieldValueAs(isUndefined(ref.value) ? _f.ref.value : ref.value, _f);
   }
   var getResolverOptions = (fieldsNames, _fields, criteriaMode, shouldUseNativeValidation) => {
-    const fields2 = {};
+    const fields = {};
     for (const name of fieldsNames) {
       const field = get(_fields, name);
-      field && set(fields2, name, field._f);
+      field && set(fields, name, field._f);
     }
     return {
       criteriaMode,
       names: [...fieldsNames],
-      fields: fields2,
+      fields,
       shouldUseNativeValidation
     };
   };
@@ -46857,11 +46899,11 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       }
       return errors;
     });
-    const executeBuiltInValidation = (_0, _1, ..._2) => __async(this, [_0, _1, ..._2], function* (fields2, shouldOnlyCheckValid, context = {
+    const executeBuiltInValidation = (_0, _1, ..._2) => __async(this, [_0, _1, ..._2], function* (fields, shouldOnlyCheckValid, context = {
       valid: true
     }) {
-      for (const name in fields2) {
-        const field = fields2[name];
+      for (const name in fields) {
+        const field = fields[name];
         if (field) {
           const _a = field, { _f } = _a, fieldValue = __objRest(_a, ["_f"]);
           if (_f) {
@@ -47089,9 +47131,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       _subjects.state.next(__spreadValues(__spreadValues({}, _formState), !options.keepDirty ? {} : { isDirty: _getDirty() }));
       !options.keepIsValid && _updateValid();
     };
-    const _updateDisabledField = ({ disabled, name, field, fields: fields2 }) => {
+    const _updateDisabledField = ({ disabled, name, field, fields }) => {
       if (isBoolean(disabled)) {
-        const value = disabled ? void 0 : get(_formValues, name, getFieldValue(field ? field._f : get(fields2, name)._f));
+        const value = disabled ? void 0 : get(_formValues, name, getFieldValue(field ? field._f : get(fields, name)._f));
         set(_formValues, name, value);
         updateTouchAndDirty(name, value, false, false, true);
       }
@@ -47586,8 +47628,6 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const [item, setItem] = React.useState({});
     const location2 = reactRouterDom.useLocation();
     const basicLedSpec = BasicLedSpecShape(props.spec);
-    const globalTheme = useTheme();
-    console.log("BasicLed.palette.mode", globalTheme.palette.mode);
     const def = basicLedSpec.content.def;
     const canon = def.canon;
     const entlist = reactRedux.useSelector(
@@ -47639,7 +47679,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         {
           ctx,
           spec: basicLedSpec,
-          data,
+          data: data || [],
           columns: basicListColumns,
           onRowClick: (event, item2) => {
             console.log("item: ", item2);
@@ -47673,7 +47713,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       }
     ) });
   }
-  const { Child, Skip } = gubu_minExports.Gubu;
+  const { Child, Optional, Skip } = gubu_minExports.Gubu;
   const BasicMainSpecShape = gubu_minExports.Gubu({
     main: {
       title: String
@@ -47707,8 +47747,6 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const sideOpen = reactRedux.useSelector(
       (state) => state.main.vxg.cmp.BasicSide.show
     );
-    const globalTheme = material.useTheme();
-    console.log("BasicMain.palette.mode", globalTheme.palette.mode);
     const basicMainStyle = {
       paddingLeft: sideOpen ? "16rem" : "0rem",
       backgroundColor: theme.palette.background.default
@@ -47724,7 +47762,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
             reactRouterDom.Route,
             {
               path: "/view/" + view.name,
-              element: /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(material.ThemeProvider, { theme: globalTheme, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Cmp, { vxg, ctx, spec: view }) }) })
+              element: /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(material.ThemeProvider, { theme, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Cmp, { vxg, ctx, spec: view }) }) })
             },
             view.name
           ),
@@ -47742,7 +47780,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         reactRouterDom.Route,
         {
           path: "/view/" + view.name,
-          element: /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(material.ThemeProvider, { theme: globalTheme, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Cmp, { vxg, ctx, spec: view }) }) })
+          element: /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(material.ThemeProvider, { theme, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Cmp, { vxg, ctx, spec: view }) }) })
         },
         view.name
       );

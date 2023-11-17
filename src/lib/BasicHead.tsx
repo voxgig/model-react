@@ -15,6 +15,7 @@ const BasicHeadSpecShape = Gubu({
     logo: {
       img: String
     },
+    variant: String,
     tool: {
       def: Child({
         kind: Exact('add', 'autocomplete'),
@@ -69,61 +70,78 @@ function BasicHead (props: BasicHeadProps) {
 
   const theme = useTheme()
 
-  return (
-    <BasicAppBar
-      // position="fixed"
-      drawerwidth='16rem'
-      open={open}
-      sx={{
-        backgroundColor: theme.palette.background.paper
-      }}
-    >
-      <Toolbar>
-        <IconButton
-          aria-label='open drawer'
-          onClick={() => onOpen(seneca)}
-          edge='start'
-          sx={{
-            marginRight: 2,
-            ...(open && { display: 'none' })
-          }}
-        >
-          <ChevronRightIcon />
-        </IconButton>
+  if (basicHeadSpec.head.variant === 'permanent') {
+    return (
+      <BasicAppBar
+        open={false}
+        sx={{
+          backgroundColor: theme.palette.background.paper
+        }}
+      >
+        <Toolbar>
+          <img src={basicHeadSpec.head.logo.img} style={{ width: '5rem' }} />
+          <div style={{ flexGrow: 1 }}></div>
+          <Typography variant='h6'>{userName}</Typography>
+        </Toolbar>
+      </BasicAppBar>
+    )
+  } else {
+    return (
+      <BasicAppBar
+        // position="fixed"
+        drawerwidth='16rem'
+        open={open}
+        sx={{
+          backgroundColor: theme.palette.background.paper
+        }}
+      >
+        <Toolbar>
+          <IconButton
+            aria-label='open drawer'
+            onClick={() => onOpen(seneca)}
+            edge='start'
+            sx={{
+              marginRight: 2,
+              ...(open && { display: 'none' })
+            }}
+          >
+            <ChevronRightIcon />
+          </IconButton>
 
-        {tooldefs.map(tooldef => {
-          if ('autocomplete' === tooldef.kind) {
-            return (
-              <BasicAutocomplete
-                spec={{ tooldef: tooldef }}
-                ctx={ctx}
-                key={tooldef.name}
-              />
-            )
-          } else if ('add' === tooldef.kind) {
-            return (
-              <BasicButton
-                variant='outlined'
-                key={tooldef.name}
-                sx={{
-                  display: add.active ? null : 'none',
-                  textTransform: 'capitalize'
-                }}
-                size='large'
-                onClick={() => addItem(seneca, led_add)}
-              >
-                {tooldef.label + ' ' + viewName}
-              </BasicButton>
-            )
-          }
-        })}
+          {tooldefs.map(tooldef => {
+            if ('autocomplete' === tooldef.kind) {
+              return (
+                <BasicAutocomplete
+                  spec={{ tooldef: tooldef }}
+                  ctx={ctx}
+                  key={tooldef.name}
+                />
+              )
+            } else if ('add' === tooldef.kind) {
+              return (
+                <BasicButton
+                  variant='outlined'
+                  key={tooldef.name}
+                  sx={{
+                    display: add.active ? null : 'none',
+                    textTransform: 'capitalize'
+                  }}
+                  size='large'
+                  onClick={() => addItem(seneca, led_add)}
+                >
+                  {tooldef.label + ' ' + viewName}
+                </BasicButton>
+              )
+            }
+          })}
 
-        <div style={{ flexGrow: 1 }}></div>
+          <div style={{ flexGrow: 1 }}></div>
 
-        <Typography variant='h6'>{userName}</Typography>
-      </Toolbar>
-    </BasicAppBar>
-  )
+          <Typography variant='h6'>{userName}</Typography>
+        </Toolbar>
+      </BasicAppBar>
+    )
+  }
 }
 
 export default BasicHead

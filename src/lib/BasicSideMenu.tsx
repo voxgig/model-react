@@ -6,6 +6,7 @@ const { Child } = Gubu
 const BasicSideMenuSpecShape = Gubu({
   section: Child({
     title: String,
+    divider: Boolean,
     item: Child({
       kind: String,
       label: String,

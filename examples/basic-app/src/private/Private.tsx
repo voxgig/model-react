@@ -76,9 +76,6 @@ const darkTheme = createTheme({
     }
   },
   typography: {
-    body1: {
-      color: 'white'
-    },
     h2: {
       color: 'white'
     }

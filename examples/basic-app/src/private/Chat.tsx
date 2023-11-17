@@ -5,7 +5,7 @@ function Chat (props: any) {
     <Box className='Chat'>
       <Typography variant='h2'>Chat Component</Typography>
       <Box>
-        <Typography component='body1'>
+        <Typography>
           Eu do do ea ipsum adipisicing magna commodo anim cillum aute esse
           voluptate nulla. Irure anim esse in proident labore. Enim qui dolor
           magna elit cupidatat ea deserunt in qui ad pariatur. Exercitation

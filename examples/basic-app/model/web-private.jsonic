@@ -18,15 +18,15 @@ part: head:  {
         ent: 'vxg/talk'
       }
     },
-    autocomplete:{ 
-      kind: 'autocomplete'
-      label: 'Autocomplete'
-      options: { 
-        kind: 'ent'
-        label: field: 'title'
-        ent: 'vxg/talk'
-      }
-    }
+    # autocomplete:{ 
+    #   kind: 'autocomplete'
+    #   label: 'Autocomplete'
+    #   options: { 
+    #     kind: 'ent'
+    #     label: field: 'title'
+    #     ent: 'vxg/talk'
+    #   }
+    # }
   }
 }
 
