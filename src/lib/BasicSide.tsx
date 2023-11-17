@@ -1,22 +1,15 @@
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { Exact, Gubu } from 'gubu'
+import { Gubu } from 'gubu'
 import BasicSideMenu from './BasicSideMenu'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
-import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 
 import {
   Box,
   Divider,
   Drawer,
   IconButton,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
   Toolbar,
-  styled,
   useTheme
 } from '@mui/material'
 import { BasicDrawer, BasicDrawerHeader } from './BasicDrawer'
@@ -83,14 +76,16 @@ function BasicSide (props: any) {
       <Drawer open={open}>
         <Toolbar />
         <Box
+          className='DrawerContainer'
           sx={{
             backgroundColor: '#2a2d49',
             overflow: 'auto',
-            marginLeft: '30px',
+            marginLeft: '23px',
             marginBottom: '20px',
-            marginTop: '20px',
-            width: '200px',
-            height: '100%'
+            marginTop: '15px',
+            width: '189px',
+            height: '100%',
+            borderRadius: '4px'
           }}
         >
           <BasicSideMenu
@@ -122,35 +117,3 @@ function BasicSide (props: any) {
 }
 
 export default BasicSide
-
-const DrawerHeader = styled('div')(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
-  ...theme.mixins.toolbar,
-  justifyContent: 'flex-end'
-}))
-
-// <Drawer open={open}>
-//   {/* <Toolbar /> */}
-//   <Box
-//     sx={{
-//       backgroundColor: '#2a2d49',
-//       overflow: 'auto',
-//       marginLeft: '30px',
-//       marginBottom: '20px',
-//       width: '200px',
-//       height: '100%'
-//     }}
-//   >
-//     <BasicDrawerHeader>
-//       <img src={basicSideSpec.side.logo.img} style={{ width: '5rem' }} />
-//       <IconButton onClick={() => onClose(seneca)}>
-//         <ChevronLeftIcon sx={{ color: theme.palette.primary.main }} />
-//       </IconButton>
-//     </BasicDrawerHeader>
-//     <Divider />
-//     <BasicSideMenu spec={basicSideMenuSpec} onItemSelect={handleItemSelect} />
-//   </Box>
-// </Drawer>
