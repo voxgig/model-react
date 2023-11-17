@@ -1,11 +1,18 @@
 import { useSelector } from 'react-redux'
 import { useLocation } from 'react-router-dom'
 import { Gubu, Exact } from 'gubu'
-import { Toolbar, Typography, IconButton, useTheme } from '@mui/material'
+import {
+  Toolbar,
+  Typography,
+  IconButton,
+  useTheme,
+  Avatar
+} from '@mui/material'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import BasicButton from './BasicButton'
 import BasicAppBar from './BasicAppBar'
 import BasicAutocomplete from './BasicAutocomplete'
+import { deepPurple, purple } from '@mui/material/colors'
 
 const { Child } = Gubu
 
@@ -81,7 +88,11 @@ function BasicHead (props: BasicHeadProps) {
         <Toolbar>
           <img src={basicHeadSpec.head.logo.img} style={{ width: '5rem' }} />
           <div style={{ flexGrow: 1 }}></div>
-          <Typography variant='h6'>{userName}</Typography>
+          <Avatar
+            sx={{ bgcolor: purple[300], color: 'white', fontWeight: 100 }}
+          >
+            JD
+          </Avatar>
         </Toolbar>
       </BasicAppBar>
     )
