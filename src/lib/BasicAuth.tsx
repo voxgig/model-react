@@ -11,6 +11,8 @@ import Box from '@mui/material/Box'
 // import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
+import { ThemeProvider } from '@emotion/react'
+import { useTheme } from 'styled-components'
 // import { createTheme, ThemeProvider } from '@mui/material/styles'
 
 /*
@@ -31,11 +33,10 @@ function Copyright(props: any) {
 // const theme = createTheme()
 
 function BasicAuth (props: any) {
-  const { ctx, spec } = props
+  const { spec } = props
 
   const { handle } = spec
 
-  { /* <ThemeProvider theme={theme}> */ }
   return (
     <Container component='main' maxWidth='xs'>
       <CssBaseline />
@@ -55,10 +56,19 @@ function BasicAuth (props: any) {
 
         <img style={{ width: 400 }} src={spec.img.logo} />
 
-        <Typography sx={{ marginTop: 4 }} component='h1' variant='h5'>
+        <Typography
+          sx={{ marginTop: 4, color: '#5EB6F1' }}
+          component='h1'
+          variant='h5'
+        >
           {spec.title}
         </Typography>
-        <Box component='form' onSubmit={handle.signin} noValidate sx={{ mt: 1 }}>
+        <Box
+          component='form'
+          onSubmit={handle.signin}
+          noValidate
+          sx={{ mt: 1 }}
+        >
           <TextField
             margin='normal'
             required
@@ -113,7 +123,6 @@ function BasicAuth (props: any) {
       {/* <Copyright sx={{ mt: 8, mb: 4 }} /> */}
     </Container>
   )
-  { /* </ThemeProvider> */ }
 }
 
 export default BasicAuth

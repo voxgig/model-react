@@ -153,17 +153,17 @@ export const ctx = () => {
                           inputType: 'text',
                           required: true,
                           editable: false,
-                          type: 'String'
+                          kind: 'String'
                         },
                         title: {
-                          type: 'String',
+                          kind: 'String',
                           inputType: 'text',
                           label: 'Title',
                           required: true,
                           editable: true
                         },
                         status: {
-                          type: 'String',
+                          kind: 'String',
                           inputType: 'select',
                           label: 'Status',
                           required: true,

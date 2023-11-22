@@ -13,22 +13,21 @@ const BasicMainSpecShape = Gubu({
     title: String
   },
   view: Child({
+    title: String,
+    paramId: Skip(String),
     name: String,
     content: {
-      kind: Exact('led', 'custom'),
-      editingMode: 'form',
-      foot: {},
-      head: {},
-      cmp: Skip(String),
       def: {
         canon: Skip(String),
         add: {
           active: Boolean
         },
+        state: {},
         id: Skip({
           field: String
         }),
-        field: Skip({})
+        field: Skip({}),
+        columnVisibility: Skip({})
       }
     }
   })
@@ -45,7 +44,7 @@ function BasicMain (props: any) {
 
   // TODO: Refactor this
   const basicMainStyle = {
-    paddingLeft: sideOpen ? '16rem' : '0rem',
+    paddingLeft: sideOpen ? '14rem' : '0rem',
     backgroundColor: theme.palette.background.default
   }
 
@@ -58,46 +57,7 @@ function BasicMain (props: any) {
     <Box className='BasicMain' sx={basicMainStyle}>
       <Box className='BasicMain-container' sx={basicMainContainerStyle}>
         <Routes>
-          <Route path='/view'>
-            {views.map((view: any) => {
-              const Cmp: any = makeCmp(view, ctx)
-              if (view.paramId) {
-                return (
-                  <Fragment key={view.name}>
-                    <Route
-                      key={view.name}
-                      path={'/view/' + view.name}
-                      element={
-                        <>
-                          <ThemeProvider theme={theme}>
-                            <Cmp vxg={vxg} ctx={ctx} spec={view} />
-                          </ThemeProvider>
-                        </>
-                      }
-                    />
-                    <Route
-                      key={view.name}
-                      path={'/view/' + view.name + '/:' + view.paramId}
-                      element={<Cmp vxg={vxg} ctx={ctx} spec={view} />}
-                    />
-                  </Fragment>
-                )
-              }
-              return (
-                <Route
-                  key={view.name}
-                  path={'/view/' + view.name}
-                  element={
-                    <>
-                      <ThemeProvider theme={theme}>
-                        <Cmp vxg={vxg} ctx={ctx} spec={view} />
-                      </ThemeProvider>
-                    </>
-                  }
-                />
-              )
-            })}
-          </Route>
+          <Route path='/view'>{renderRoutes(views, vxg, ctx, theme)}</Route>
         </Routes>
       </Box>
     </Box>
@@ -106,8 +66,34 @@ function BasicMain (props: any) {
 
 export default BasicMain
 
-function makeCmp (view: any, ctx: any) {
-  const content = view.content || {}
-  const cmp = content.kind === 'custom' ? ctx().cmp[content.cmp] : BasicLed
-  return cmp
+const renderRoutes = (views: any[], vxg: any, ctx: any, theme: any) => {
+  return views.map((view: any) => (
+    <Fragment key={view.name}>
+      {Object.entries(view.content.def.state).map(([key, state]: any) => {
+        const Cmp = state.kind === 'custom' ? ctx().cmp[state.cmp] : BasicLed
+
+        let routePath
+        if (state.render === 'member') {
+          routePath = `/view/${view.name}/:${view.paramId}/${key}`
+        } else {
+          routePath = `/view/${view.name}/${key}`
+        }
+
+        console.log('routePath', routePath)
+
+        return (
+          <Fragment key={key}>
+            <Route
+              path={routePath}
+              element={
+                <ThemeProvider theme={theme}>
+                  <Cmp vxg={vxg} ctx={ctx} spec={view} />
+                </ThemeProvider>
+              }
+            />
+          </Fragment>
+        )
+      })}
+    </Fragment>
+  ))
 }

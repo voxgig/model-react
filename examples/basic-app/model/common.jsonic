@@ -8,12 +8,12 @@ main: shape: ent: {
     field: 'id'
   }
   field: {
-    id: type: *'String' | string
+    id: kind: *'String' | string
   }
 }
 
 main: shape: ent: field: &: {
-  type: *'String' | string  
+  kind: *'String' | string  
   label: string  
   inputType: *'text' | string
   required: *true | boolean  

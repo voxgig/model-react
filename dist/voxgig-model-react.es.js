@@ -58,7 +58,7 @@ var __async = (__this, __arguments, generator) => {
 import * as React from "react";
 import React__default, { createElement, isValidElement, Children, cloneElement, useMemo, useState, useRef, useCallback, useEffect, Fragment, memo as memo$2, useLayoutEffect } from "react";
 import { useSelector } from "react-redux";
-import { useLocation, useNavigate, Routes, Route } from "react-router-dom";
+import { useLocation, useNavigate, Link, Routes, Route } from "react-router-dom";
 import { Button as Button$1, ThemeProvider as ThemeProvider$2, Autocomplete, TextField as TextField$1, createFilterOptions as createFilterOptions$1, useTheme as useTheme$4, Toolbar as Toolbar$1, Avatar, IconButton as IconButton$1, Typography as Typography$1, List as List$1, ListItem, ListItemButton, ListItemIcon as ListItemIcon$1, ListItemText as ListItemText$1, Divider as Divider$1, Drawer as Drawer$1, Box as Box$2, Grid as Grid$1, MenuItem as MenuItem$1, Container as Container$2 } from "@mui/material";
 import * as ReactDOM from "react-dom";
 import ReactDOM__default, { flushSync } from "react-dom";
@@ -7267,10 +7267,10 @@ function getWindowScrollBarX(element) {
 }
 function getViewportRect(element, strategy) {
   var win = getWindow(element);
-  var html = getDocumentElement(element);
+  var html2 = getDocumentElement(element);
   var visualViewport = win.visualViewport;
-  var width2 = html.clientWidth;
-  var height2 = html.clientHeight;
+  var width2 = html2.clientWidth;
+  var height2 = html2.clientHeight;
   var x = 0;
   var y = 0;
   if (visualViewport) {
@@ -7291,15 +7291,15 @@ function getViewportRect(element, strategy) {
 }
 function getDocumentRect(element) {
   var _element$ownerDocumen;
-  var html = getDocumentElement(element);
+  var html2 = getDocumentElement(element);
   var winScroll = getWindowScroll(element);
-  var body = (_element$ownerDocumen = element.ownerDocument) == null ? void 0 : _element$ownerDocumen.body;
-  var width2 = max$1(html.scrollWidth, html.clientWidth, body ? body.scrollWidth : 0, body ? body.clientWidth : 0);
-  var height2 = max$1(html.scrollHeight, html.clientHeight, body ? body.scrollHeight : 0, body ? body.clientHeight : 0);
+  var body2 = (_element$ownerDocumen = element.ownerDocument) == null ? void 0 : _element$ownerDocumen.body;
+  var width2 = max$1(html2.scrollWidth, html2.clientWidth, body2 ? body2.scrollWidth : 0, body2 ? body2.clientWidth : 0);
+  var height2 = max$1(html2.scrollHeight, html2.clientHeight, body2 ? body2.scrollHeight : 0, body2 ? body2.clientHeight : 0);
   var x = -winScroll.scrollLeft + getWindowScrollBarX(element);
   var y = -winScroll.scrollTop;
-  if (getComputedStyle(body || html).direction === "rtl") {
-    x += max$1(html.clientWidth, body ? body.clientWidth : 0) - width2;
+  if (getComputedStyle(body2 || html2).direction === "rtl") {
+    x += max$1(html2.clientWidth, body2 ? body2.clientWidth : 0) - width2;
   }
   return {
     width: width2,
@@ -13150,7 +13150,7 @@ const _excluded$1l = ["onChange", "maxRows", "minRows", "style", "value"];
 function getStyleValue$1(computedStyle, property) {
   return parseInt(computedStyle[property], 10) || 0;
 }
-const styles$2 = {
+const styles$3 = {
   shadow: {
     // Visibility needed to hide the extra text area on iPads
     visibility: "hidden",
@@ -13312,7 +13312,7 @@ const TextareaAutosize = /* @__PURE__ */ React.forwardRef(function TextareaAutos
       readOnly: true,
       ref: shadowRef,
       tabIndex: -1,
-      style: _extends$2({}, styles$2.shadow, style2, {
+      style: _extends$2({}, styles$3.shadow, style2, {
         padding: 0
       })
     })]
@@ -21796,7 +21796,7 @@ function getTransitionProps(props, options) {
   };
 }
 const _excluded$$ = ["addEndListener", "appear", "children", "easing", "in", "onEnter", "onEntered", "onEntering", "onExit", "onExited", "onExiting", "style", "timeout", "TransitionComponent"];
-const styles$1 = {
+const styles$2 = {
   entering: {
     opacity: 1
   },
@@ -21896,7 +21896,7 @@ const Fade = /* @__PURE__ */ React.forwardRef(function Fade2(props, ref) {
         style: _extends$2({
           opacity: 0,
           visibility: state === "exited" && !inProp ? "hidden" : void 0
-        }, styles$1[state], style2, children2.props.style),
+        }, styles$2[state], style2, children2.props.style),
         ref: handleRef
       }, childProps));
     }
@@ -27869,7 +27869,7 @@ const _excluded$V = ["addEndListener", "appear", "children", "easing", "in", "on
 function getScale(value) {
   return `scale(${value}, ${__pow(value, 2)})`;
 }
-const styles = {
+const styles$1 = {
   entering: {
     opacity: 1,
     transform: getScale(1)
@@ -28014,7 +28014,7 @@ const Grow = /* @__PURE__ */ React.forwardRef(function Grow2(props, ref) {
           opacity: 0,
           transform: getScale(0.75),
           visibility: state === "exited" && !inProp ? "hidden" : void 0
-        }, styles[state], style2, children2.props.style),
+        }, styles$1[state], style2, children2.props.style),
         ref: handleRef
       }, childProps));
     }
@@ -45867,6 +45867,7 @@ function BasicList(props) {
   } = props;
   const theme = ctx().theme;
   const editingMode = spec.content.editingMode;
+  const cmpKey = spec.content.key;
   const handleSaveRow = (_0) => __async(this, [_0], function* ({ exitEditingMode, row, values: values2 }) {
     onEditingRowSave(row, values2);
     exitEditingMode();
@@ -45878,36 +45879,42 @@ function BasicList(props) {
     },
     sx: { cursor: "pointer" }
   });
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(ThemeProvider, { theme, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Box$2, { className: "BasicList", style: __spreadValues({}, sx), children: editingMode === "form" ? /* @__PURE__ */ jsxRuntimeExports.jsx(
-    MaterialReactTable,
-    {
-      enableColumnActions: false,
-      enableColumnFilters: false,
-      enablePagination: true,
-      enableSorting: false,
-      enableBottomToolbar: true,
-      enableTopToolbar: false,
-      columns,
-      data,
-      muiTableBodyRowProps: handleRowClick
-    },
-    editingMode
-  ) : /* @__PURE__ */ jsxRuntimeExports.jsx(
-    MaterialReactTable,
-    {
-      enableColumnActions: false,
-      enableColumnFilters: false,
-      enablePagination: true,
-      enableSorting: false,
-      enableBottomToolbar: true,
-      enableTopToolbar: false,
-      editingMode,
+  const commonTableProps = {
+    enableColumnActions: false,
+    enableColumnFilters: false,
+    enableSorting: false,
+    enableBottomToolbar: true,
+    enableTopToolbar: false,
+    columns,
+    data,
+    initialState: {
+      columnVisibility: spec.content.def.columnVisibility
+    }
+  };
+  let specificProps = {};
+  if (editingMode === "row") {
+    specificProps = {
+      editingMode: "row",
       enableEditing: true,
-      columns,
-      data,
+      enablePagination: true,
       onEditingRowSave: handleSaveRow
-    },
-    editingMode
+    };
+  } else if (editingMode === "form") {
+    specificProps = {
+      editingMode: "custom",
+      enablePagination: true,
+      muiTableBodyRowProps: handleRowClick
+    };
+  } else {
+    specificProps = {
+      enablePagination: false
+    };
+  }
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(ThemeProvider, { theme, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Box$2, { className: "BasicList", style: __spreadValues({}, sx), children: /* @__PURE__ */ createElement(
+    MaterialReactTable,
+    __spreadProps(__spreadValues(__spreadValues({}, commonTableProps), specificProps), {
+      key: cmpKey
+    })
   ) }) });
 }
 var isCheckBoxInput = (element) => element.type === "checkbox";
@@ -47792,28 +47799,29 @@ function BasicEdit(props) {
     }
   ) });
 }
+const { Skip: Skip$1 } = gubu_minExports.Gubu;
 const BasicLedSpecShape = gubu_minExports.Gubu({
+  title: String,
   name: String,
+  paramId: Skip$1(String),
   content: {
-    kind: String,
-    editingMode: "form",
-    foot: {},
-    head: {},
-    cmp: gubu_minExports.Skip(String),
+    cmp: Skip$1(String),
     def: {
       canon: String,
-      field: gubu_minExports.Skip({}),
       add: {
         active: Boolean
       },
-      id: gubu_minExports.Skip({
+      state: {},
+      id: Skip$1({
         field: String
-      })
+      }),
+      field: {},
+      columnVisibility: Skip$1({})
     }
   }
 });
 function BasicLed(props) {
-  var _a, _b;
+  var _a, _b, _c, _d, _e, _f, _g, _h;
   const { ctx } = props;
   const { seneca, custom } = ctx();
   const [item, setItem] = useState({});
@@ -47833,8 +47841,8 @@ function BasicLed(props) {
     let q = custom.BasicLed.query(basicLedSpec, cmpstate);
     seneca.entity(canon).list$(q);
   }
-  const basicEditFields = basicLedSpec.content.def.field;
-  const basicListColumns = Object.entries(basicEditFields).map(
+  const fields = basicLedSpec.content.def.field;
+  const basicListColumns = Object.entries(fields).map(
     ([key, field]) => ({
       accessorFn: (row) => row[key],
       accessorKey: key,
@@ -47843,9 +47851,29 @@ function BasicLed(props) {
       editVariant: field.inputType,
       editSelectOptions: "select" === field.inputType ? Object.keys(field.options) : null,
       Header: () => /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: field.label }),
-      Cell: ({ cell }) => /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: cell.getValue() })
+      Cell: ({ cell, row }) => renderCell({ cell, field, row }),
+      size: 40
     })
   );
+  const renderCell = ({ cell, field, row }) => {
+    const cellValue = cell.getValue();
+    var entityId, entityName, action;
+    switch (field.displayType) {
+      case "link":
+        entityId = row.original.id;
+        entityName = row.original.entity$.split("/").pop() || "undefined";
+        return /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: `/view/${entityName}/${entityId}/show`, children: cellValue });
+      case "image":
+        return /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: cellValue, alt: "Cell Content" });
+      case "action":
+        entityId = row.original.id;
+        entityName = row.original.entity$.split("/").pop() || "undefined";
+        action = field.action;
+        return /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: `/view/${entityName}/${entityId}/${action}`, children: field.actionLabel });
+      default:
+        return /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: cellValue });
+    }
+  };
   let data = rows;
   useEffect(() => {
     setItem({});
@@ -47859,10 +47887,10 @@ function BasicLed(props) {
     }
     setTriggerLed(++triggerLed);
   }, [led_add]);
-  const headCmpId = (_a = basicLedSpec.content.head) == null ? void 0 : _a.cmp;
-  const footCmpId = (_b = basicLedSpec.content.foot) == null ? void 0 : _b.cmp;
-  const HeadCmp = ctx().cmp[headCmpId];
-  const FootCmp = ctx().cmp[footCmpId];
+  const headComponent = (_d = (_c = (_b = (_a = basicLedSpec.content.def) == null ? void 0 : _a.state) == null ? void 0 : _b.index) == null ? void 0 : _c.head) == null ? void 0 : _d.cmp;
+  const footComponent = (_h = (_g = (_f = (_e = basicLedSpec.content.def) == null ? void 0 : _e.state) == null ? void 0 : _f.index) == null ? void 0 : _g.foot) == null ? void 0 : _h.cmp;
+  const HeadCmp = ctx().cmp[headComponent];
+  const FootCmp = ctx().cmp[footComponent];
   return /* @__PURE__ */ jsxRuntimeExports.jsx(Box$2, { className: "BasicLed", children: "-/" + canon !== item.entity$ ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
     HeadCmp ? /* @__PURE__ */ jsxRuntimeExports.jsx(HeadCmp, {}) : null,
     /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -47884,7 +47912,8 @@ function BasicLed(props) {
           yield seneca.entity(canon).save$(selectedItem);
           setItem({});
         })
-      }
+      },
+      canon
     ),
     FootCmp ? /* @__PURE__ */ jsxRuntimeExports.jsx(FootCmp, {}) : null
   ] }) : /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -47893,7 +47922,7 @@ function BasicLed(props) {
       ctx,
       spec: basicLedSpec,
       item,
-      itemFields: basicEditFields,
+      itemFields: fields,
       onClose: () => {
         setItem({});
       },
@@ -47910,22 +47939,21 @@ const BasicMainSpecShape = gubu_minExports.Gubu({
     title: String
   },
   view: Child({
+    title: String,
+    paramId: Skip(String),
     name: String,
     content: {
-      kind: gubu_minExports.Exact("led", "custom"),
-      editingMode: "form",
-      foot: {},
-      head: {},
-      cmp: Skip(String),
       def: {
         canon: Skip(String),
         add: {
           active: Boolean
         },
+        state: {},
         id: Skip({
           field: String
         }),
-        field: Skip({})
+        field: Skip({}),
+        columnVisibility: Skip({})
       }
     }
   })
@@ -47939,49 +47967,33 @@ function BasicMain(props) {
     (state) => state.main.vxg.cmp.BasicSide.show
   );
   const basicMainStyle = {
-    paddingLeft: sideOpen ? "16rem" : "0rem",
+    paddingLeft: sideOpen ? "14rem" : "0rem",
     backgroundColor: theme.palette.background.default
   };
   const basicMainContainerStyle = {
     height: "100%"
   };
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(Box$2, { className: "BasicMain", sx: basicMainStyle, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Box$2, { className: "BasicMain-container", sx: basicMainContainerStyle, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Routes, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/view", children: views.map((view) => {
-    const Cmp = makeCmp(view, ctx);
-    if (view.paramId) {
-      return /* @__PURE__ */ jsxRuntimeExports.jsxs(Fragment, { children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          Route,
-          {
-            path: "/view/" + view.name,
-            element: /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(ThemeProvider$2, { theme, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Cmp, { vxg, ctx, spec: view }) }) })
-          },
-          view.name
-        ),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          Route,
-          {
-            path: "/view/" + view.name + "/:" + view.paramId,
-            element: /* @__PURE__ */ jsxRuntimeExports.jsx(Cmp, { vxg, ctx, spec: view })
-          },
-          view.name
-        )
-      ] }, view.name);
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(Box$2, { className: "BasicMain", sx: basicMainStyle, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Box$2, { className: "BasicMain-container", sx: basicMainContainerStyle, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Routes, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/view", children: renderRoutes(views, vxg, ctx, theme) }) }) }) });
+}
+const renderRoutes = (views, vxg, ctx, theme) => {
+  return views.map((view) => /* @__PURE__ */ jsxRuntimeExports.jsx(Fragment, { children: Object.entries(view.content.def.state).map(([key, state]) => {
+    const Cmp = state.kind === "custom" ? ctx().cmp[state.cmp] : BasicLed;
+    let routePath;
+    if (state.render === "member") {
+      routePath = `/view/${view.name}/:${view.paramId}/${key}`;
+    } else {
+      routePath = `/view/${view.name}/${key}`;
     }
-    return /* @__PURE__ */ jsxRuntimeExports.jsx(
+    console.log("routePath", routePath);
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(Fragment, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
       Route,
       {
-        path: "/view/" + view.name,
-        element: /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(ThemeProvider$2, { theme, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Cmp, { vxg, ctx, spec: view }) }) })
-      },
-      view.name
-    );
-  }) }) }) }) });
-}
-function makeCmp(view, ctx) {
-  const content = view.content || {};
-  const cmp = content.kind === "custom" ? ctx().cmp[content.cmp] : BasicLed;
-  return cmp;
-}
+        path: routePath,
+        element: /* @__PURE__ */ jsxRuntimeExports.jsx(ThemeProvider$2, { theme, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Cmp, { vxg, ctx, spec: view }) })
+      }
+    ) }, key);
+  }) }, view.name));
+};
 const BasicFootSpecShape = gubu_minExports.Gubu({
   foot: {
     title: ""
@@ -48002,6 +48014,7 @@ function BasicFoot(props) {
         paddingBottom: "0.5rem",
         borderTop: "1px solid #CCC"
       },
+      className: "BasicFoot",
       children: /* @__PURE__ */ jsxRuntimeExports.jsx(Container$2, { maxWidth: "lg", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Grid$1, { container: true, direction: "column", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Grid$1, { item: true, xs: 12, sx: { textAlign: "right" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Typography$1, { color: "#CCC", variant: "body2", children: part.title }) }) }) })
     }
   );
@@ -51247,6 +51260,95 @@ class Vxg {
     return found ? !!found.allow : false;
   }
 }
+const html = (theme, enableColorScheme) => _extends$2({
+  WebkitFontSmoothing: "antialiased",
+  // Antialiasing.
+  MozOsxFontSmoothing: "grayscale",
+  // Antialiasing.
+  // Change from `box-sizing: content-box` so that `width`
+  // is not affected by `padding` or `border`.
+  boxSizing: "border-box",
+  // Fix font resize problem in iOS
+  WebkitTextSizeAdjust: "100%"
+}, enableColorScheme && !theme.vars && {
+  colorScheme: theme.palette.mode
+});
+const body = (theme) => _extends$2({
+  color: (theme.vars || theme).palette.text.primary
+}, theme.typography.body1, {
+  backgroundColor: (theme.vars || theme).palette.background.default,
+  "@media print": {
+    // Save printer ink.
+    backgroundColor: (theme.vars || theme).palette.common.white
+  }
+});
+const styles = (theme, enableColorScheme = false) => {
+  var _theme$components, _theme$components$Mui;
+  const colorSchemeStyles = {};
+  if (enableColorScheme && theme.colorSchemes) {
+    Object.entries(theme.colorSchemes).forEach(([key, scheme]) => {
+      var _scheme$palette;
+      colorSchemeStyles[theme.getColorSchemeSelector(key).replace(/\s*&/, "")] = {
+        colorScheme: (_scheme$palette = scheme.palette) == null ? void 0 : _scheme$palette.mode
+      };
+    });
+  }
+  let defaultStyles = _extends$2({
+    html: html(theme, enableColorScheme),
+    "*, *::before, *::after": {
+      boxSizing: "inherit"
+    },
+    "strong, b": {
+      fontWeight: theme.typography.fontWeightBold
+    },
+    body: _extends$2({
+      margin: 0
+    }, body(theme), {
+      // Add support for document.body.requestFullScreen().
+      // Other elements, if background transparent, are not supported.
+      "&::backdrop": {
+        backgroundColor: (theme.vars || theme).palette.background.default
+      }
+    })
+  }, colorSchemeStyles);
+  const themeOverrides = (_theme$components = theme.components) == null ? void 0 : (_theme$components$Mui = _theme$components.MuiCssBaseline) == null ? void 0 : _theme$components$Mui.styleOverrides;
+  if (themeOverrides) {
+    defaultStyles = [defaultStyles, themeOverrides];
+  }
+  return defaultStyles;
+};
+function CssBaseline(inProps) {
+  const props = useThemeProps({
+    props: inProps,
+    name: "MuiCssBaseline"
+  });
+  const {
+    children: children2,
+    enableColorScheme = false
+  } = props;
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(React.Fragment, {
+    children: [/* @__PURE__ */ jsxRuntimeExports.jsx(GlobalStyles, {
+      styles: (theme) => styles(theme, enableColorScheme)
+    }), children2]
+  });
+}
+process.env.NODE_ENV !== "production" ? CssBaseline.propTypes = {
+  // ----------------------------- Warning --------------------------------
+  // | These PropTypes are generated from the TypeScript type definitions |
+  // |     To update them edit the d.ts file and run "yarn proptypes"     |
+  // ----------------------------------------------------------------------
+  /**
+   * You can wrap a node.
+   */
+  children: PropTypes.node,
+  /**
+   * Enable `color-scheme` CSS property to use `theme.palette.mode`.
+   * For more details, check out https://developer.mozilla.org/en-US/docs/Web/CSS/color-scheme
+   * For browser support, check out https://caniuse.com/?search=color-scheme
+   * @default false
+   */
+  enableColorScheme: PropTypes.bool
+} : void 0;
 const Container = createContainer({
   createStyledComponent: styled("div", {
     name: "MuiContainer",
@@ -51311,72 +51413,81 @@ function getContainerUtilityClass(slot) {
 }
 const containerClasses = generateUtilityClasses("MuiContainer", ["root", "disableGutters", "fixed", "maxWidthXs", "maxWidthSm", "maxWidthMd", "maxWidthLg", "maxWidthXl"]);
 function BasicAuth(props) {
-  const { ctx, spec } = props;
+  const { spec } = props;
   const { handle } = spec;
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(Container, { component: "main", maxWidth: "xs", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
-    Box,
-    {
-      sx: {
-        marginTop: 8,
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center"
-      },
-      children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("img", { style: { width: 400 }, src: spec.img.logo }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(Typography, { sx: { marginTop: 4 }, component: "h1", variant: "h5", children: spec.title }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs(
-          Box,
-          {
-            component: "form",
-            onSubmit: handle.signin,
-            noValidate: true,
-            sx: { mt: 1 },
-            children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx(
-                TextField,
-                {
-                  margin: "normal",
-                  required: true,
-                  fullWidth: true,
-                  id: "email",
-                  label: "Email Address",
-                  name: "email",
-                  autoComplete: "email",
-                  autoFocus: true
-                }
-              ),
-              /* @__PURE__ */ jsxRuntimeExports.jsx(
-                TextField,
-                {
-                  margin: "normal",
-                  required: true,
-                  fullWidth: true,
-                  name: "password",
-                  label: "Password",
-                  type: "password",
-                  id: "password",
-                  autoComplete: "current-password"
-                }
-              ),
-              /* @__PURE__ */ jsxRuntimeExports.jsx(
-                Button,
-                {
-                  type: "submit",
-                  fullWidth: true,
-                  variant: "contained",
-                  sx: { mt: 3, mb: 2 },
-                  children: "Sign In"
-                }
-              )
-            ]
-          }
-        )
-      ]
-    }
-  ) });
-  {
-  }
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(Container, { component: "main", maxWidth: "xs", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(CssBaseline, {}),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(
+      Box,
+      {
+        sx: {
+          marginTop: 8,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center"
+        },
+        children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("img", { style: { width: 400 }, src: spec.img.logo }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            Typography,
+            {
+              sx: { marginTop: 4, color: "#5EB6F1" },
+              component: "h1",
+              variant: "h5",
+              children: spec.title
+            }
+          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs(
+            Box,
+            {
+              component: "form",
+              onSubmit: handle.signin,
+              noValidate: true,
+              sx: { mt: 1 },
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  TextField,
+                  {
+                    margin: "normal",
+                    required: true,
+                    fullWidth: true,
+                    id: "email",
+                    label: "Email Address",
+                    name: "email",
+                    autoComplete: "email",
+                    autoFocus: true
+                  }
+                ),
+                /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  TextField,
+                  {
+                    margin: "normal",
+                    required: true,
+                    fullWidth: true,
+                    name: "password",
+                    label: "Password",
+                    type: "password",
+                    id: "password",
+                    autoComplete: "current-password"
+                  }
+                ),
+                /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  Button,
+                  {
+                    type: "submit",
+                    fullWidth: true,
+                    variant: "contained",
+                    sx: { mt: 3, mb: 2 },
+                    children: "Sign In"
+                  }
+                )
+              ]
+            }
+          )
+        ]
+      }
+    )
+  ] });
 }
 export {
   BasicAdmin,

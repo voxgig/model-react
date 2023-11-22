@@ -25,6 +25,7 @@ function BasicFoot (props: any) {
         paddingBottom: '0.5rem',
         borderTop: '1px solid #CCC'
       }}
+      className='BasicFoot'
     >
       <Container maxWidth='lg'>
         <Grid container direction='column'>

@@ -23,6 +23,7 @@ function BasicList (props: any) {
 
   const theme = ctx().theme
   const editingMode = spec.content.editingMode
+  const cmpKey = spec.content.key
 
   // callbacks for MaterialReactTable
   const handleSaveRow: MaterialReactTableProps<any>['onEditingRowSave'] =
@@ -39,38 +40,48 @@ function BasicList (props: any) {
     sx: { cursor: 'pointer' }
   })
 
+  const commonTableProps = {
+    enableColumnActions: false,
+    enableColumnFilters: false,
+    enableSorting: false,
+    enableBottomToolbar: true,
+    enableTopToolbar: false,
+    columns: columns,
+    data: data,
+    initialState: {
+      columnVisibility: spec.content.def.columnVisibility
+    }
+  }
+
+  let specificProps = {}
+
+  if (editingMode === 'row') {
+    specificProps = {
+      editingMode: 'row',
+      enableEditing: true,
+      enablePagination: true,
+      onEditingRowSave: handleSaveRow
+    }
+  } else if (editingMode === 'form') {
+    specificProps = {
+      editingMode: 'custom',
+      enablePagination: true,
+      muiTableBodyRowProps: handleRowClick
+    }
+  } else {
+    specificProps = {
+      enablePagination: false
+    }
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <Box className='BasicList' style={{ ...sx }}>
-        {editingMode === 'form' ? (
-          <MaterialReactTable
-            key={editingMode}
-            enableColumnActions={false}
-            enableColumnFilters={false}
-            enablePagination
-            enableSorting={false}
-            enableBottomToolbar
-            enableTopToolbar={false}
-            columns={columns}
-            data={data}
-            muiTableBodyRowProps={handleRowClick}
-          />
-        ) : (
-          <MaterialReactTable
-            key={editingMode}
-            enableColumnActions={false}
-            enableColumnFilters={false}
-            enablePagination
-            enableSorting={false}
-            enableBottomToolbar
-            enableTopToolbar={false}
-            editingMode={editingMode}
-            enableEditing
-            columns={columns}
-            data={data}
-            onEditingRowSave={handleSaveRow}
-          />
-        )}
+        <MaterialReactTable
+          {...commonTableProps}
+          {...specificProps}
+          key={cmpKey}
+        />
       </Box>
     </ThemeProvider>
   )
