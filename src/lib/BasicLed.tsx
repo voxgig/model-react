@@ -21,7 +21,7 @@ const BasicLedSpecShape = Gubu({
       add: {
         active: Boolean
       },
-      state: {},
+      subview: {},
       id: Skip({
         field: String
       }),
@@ -126,8 +126,8 @@ function BasicLed (props: any) {
   }, [led_add])
 
   // Grab head and foot components
-  const headComponent = basicLedSpec.content.def?.state?.index?.head?.cmp
-  const footComponent = basicLedSpec.content.def?.state?.index?.foot?.cmp
+  const headComponent = basicLedSpec.content.def?.subview?.index?.head?.cmp
+  const footComponent = basicLedSpec.content.def?.subview?.index?.foot?.cmp
   const HeadCmp = ctx().cmp[headComponent]
   const FootCmp = ctx().cmp[footComponent]
 

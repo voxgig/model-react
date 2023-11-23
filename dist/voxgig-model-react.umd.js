@@ -47823,7 +47823,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         add: {
           active: Boolean
         },
-        state: {},
+        subview: {},
         id: Skip$1({
           field: String
         }),
@@ -47899,8 +47899,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       }
       setTriggerLed(++triggerLed);
     }, [led_add]);
-    const headComponent = (_d = (_c = (_b = (_a = basicLedSpec.content.def) == null ? void 0 : _a.state) == null ? void 0 : _b.index) == null ? void 0 : _c.head) == null ? void 0 : _d.cmp;
-    const footComponent = (_h = (_g = (_f = (_e = basicLedSpec.content.def) == null ? void 0 : _e.state) == null ? void 0 : _f.index) == null ? void 0 : _g.foot) == null ? void 0 : _h.cmp;
+    const headComponent = (_d = (_c = (_b = (_a = basicLedSpec.content.def) == null ? void 0 : _a.subview) == null ? void 0 : _b.index) == null ? void 0 : _c.head) == null ? void 0 : _d.cmp;
+    const footComponent = (_h = (_g = (_f = (_e = basicLedSpec.content.def) == null ? void 0 : _e.subview) == null ? void 0 : _f.index) == null ? void 0 : _g.foot) == null ? void 0 : _h.cmp;
     const HeadCmp = ctx().cmp[headComponent];
     const FootCmp = ctx().cmp[footComponent];
     return /* @__PURE__ */ jsxRuntimeExports.jsx(material.Box, { className: "BasicLed", children: "-/" + canon !== item.entity$ ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
@@ -47958,9 +47958,21 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         def: {
           canon: Skip(String),
           add: {
-            active: Boolean
+            active: true
           },
-          state: {},
+          subview: Child({
+            render: "collection",
+            kind: "led",
+            active: Skip(Boolean),
+            cmp: Skip(String),
+            editingMode: "none",
+            head: {
+              cmp: Skip(String)
+            },
+            foot: {
+              cmp: Skip(String)
+            }
+          }),
           id: Skip({
             field: String
           }),
@@ -47988,10 +48000,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     return /* @__PURE__ */ jsxRuntimeExports.jsx(material.Box, { className: "BasicMain", sx: basicMainStyle, children: /* @__PURE__ */ jsxRuntimeExports.jsx(material.Box, { className: "BasicMain-container", sx: basicMainContainerStyle, children: /* @__PURE__ */ jsxRuntimeExports.jsx(reactRouterDom.Routes, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(reactRouterDom.Route, { path: "/view", children: renderRoutes(views, vxg, ctx, theme) }) }) }) });
   }
   const renderRoutes = (views, vxg, ctx, theme) => {
-    return views.map((view) => /* @__PURE__ */ jsxRuntimeExports.jsx(React.Fragment, { children: Object.entries(view.content.def.state).map(([key, state]) => {
-      const Cmp = state.kind === "custom" ? ctx().cmp[state.cmp] : BasicLed;
+    return views.map((view) => /* @__PURE__ */ jsxRuntimeExports.jsx(React.Fragment, { children: Object.entries(view.content.def.subview).map(([key, subview]) => {
+      const Cmp = subview.kind === "custom" ? ctx().cmp[subview.cmp] : BasicLed;
       let routePath;
-      if (state.render === "member") {
+      if (subview.render === "member") {
         routePath = `/view/${view.name}/:${view.paramId}/${key}`;
       } else {
         routePath = `/view/${view.name}/${key}`;

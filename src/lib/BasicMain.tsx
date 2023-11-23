@@ -20,9 +20,21 @@ const BasicMainSpecShape = Gubu({
       def: {
         canon: Skip(String),
         add: {
-          active: Boolean
+          active: true
         },
-        state: {},
+        subview: Child({
+          render: 'collection',
+          kind: 'led',
+          active: Skip(Boolean),
+          cmp: Skip(String),
+          editingMode: 'none',
+          head: {
+            cmp: Skip(String)
+          },
+          foot: {
+            cmp: Skip(String)
+          }
+        }),
         id: Skip({
           field: String
         }),
@@ -69,11 +81,12 @@ export default BasicMain
 const renderRoutes = (views: any[], vxg: any, ctx: any, theme: any) => {
   return views.map((view: any) => (
     <Fragment key={view.name}>
-      {Object.entries(view.content.def.state).map(([key, state]: any) => {
-        const Cmp = state.kind === 'custom' ? ctx().cmp[state.cmp] : BasicLed
+      {Object.entries(view.content.def.subview).map(([key, subview]: any) => {
+        const Cmp =
+          subview.kind === 'custom' ? ctx().cmp[subview.cmp] : BasicLed
 
         let routePath
-        if (state.render === 'member') {
+        if (subview.render === 'member') {
           routePath = `/view/${view.name}/:${view.paramId}/${key}`
         } else {
           routePath = `/view/${view.name}/${key}`
