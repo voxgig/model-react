@@ -92,8 +92,6 @@ const renderRoutes = (views: any[], vxg: any, ctx: any, theme: any) => {
           routePath = `/view/${view.name}/${key}`
         }
 
-        console.log('routePath', routePath)
-
         return (
           <Fragment key={key}>
             <Route

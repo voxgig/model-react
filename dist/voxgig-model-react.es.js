@@ -47996,7 +47996,6 @@ const renderRoutes = (views, vxg, ctx, theme) => {
     } else {
       routePath = `/view/${view.name}/${key}`;
     }
-    console.log("routePath", routePath);
     return /* @__PURE__ */ jsxRuntimeExports.jsx(Fragment, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
       Route,
       {

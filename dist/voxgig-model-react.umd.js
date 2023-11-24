@@ -48008,7 +48008,6 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       } else {
         routePath = `/view/${view.name}/${key}`;
       }
-      console.log("routePath", routePath);
       return /* @__PURE__ */ jsxRuntimeExports.jsx(React.Fragment, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
         reactRouterDom.Route,
         {
