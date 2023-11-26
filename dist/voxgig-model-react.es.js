@@ -47855,21 +47855,21 @@ function BasicLed(props) {
       size: 40
     })
   );
+  const viewName = basicLedSpec.name;
   const renderCell = ({ cell, field, row }) => {
     const cellValue = cell.getValue();
     var entityId, entityName, action;
     switch (field.displayType) {
       case "link":
         entityId = row.original.id;
-        entityName = row.original.entity$.split("/").pop() || "undefined";
-        return /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: `/view/${entityName}/${entityId}/show`, children: cellValue });
+        return /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: `/view/${viewName}/${entityId}/show`, children: cellValue });
       case "image":
         return /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: cellValue, alt: "Cell Content" });
       case "action":
         entityId = row.original.id;
         entityName = row.original.entity$.split("/").pop() || "undefined";
         action = field.action;
-        return /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: `/view/${entityName}/${entityId}/${action}`, children: field.actionLabel });
+        return /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: `/view/${viewName}/${entityId}/${action}`, children: field.actionLabel });
       default:
         return /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: cellValue });
     }

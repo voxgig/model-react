@@ -76,6 +76,8 @@ function BasicLed (props: any) {
     })
   )
 
+  const viewName = basicLedSpec.name
+
   // Define how cells are rendered
   const renderCell = ({ cell, field, row }: any) => {
     const cellValue = cell.getValue()
@@ -84,9 +86,8 @@ function BasicLed (props: any) {
     switch (field.displayType) {
       case 'link':
         entityId = row.original.id
-        entityName = row.original.entity$.split('/').pop() || 'undefined'
         return (
-          <Link to={`/view/${entityName}/${entityId}/show`}>{cellValue}</Link>
+          <Link to={`/view/${viewName}/${entityId}/show`}>{cellValue}</Link>
         )
       case 'image':
         return <img src={cellValue} alt='Cell Content' />
@@ -95,7 +96,7 @@ function BasicLed (props: any) {
         entityName = row.original.entity$.split('/').pop() || 'undefined'
         action = field.action
         return (
-          <Link to={`/view/${entityName}/${entityId}/${action}`}>
+          <Link to={`/view/${viewName}/${entityId}/${action}`}>
             {field.actionLabel}
           </Link>
         )
