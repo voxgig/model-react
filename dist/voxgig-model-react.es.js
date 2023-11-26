@@ -47858,7 +47858,7 @@ function BasicLed(props) {
   const viewName = basicLedSpec.name;
   const renderCell = ({ cell, field, row }) => {
     const cellValue = cell.getValue();
-    var entityId, entityName, action;
+    var entityId, action;
     switch (field.displayType) {
       case "link":
         entityId = row.original.id;
@@ -47867,7 +47867,6 @@ function BasicLed(props) {
         return /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: cellValue, alt: "Cell Content" });
       case "action":
         entityId = row.original.id;
-        entityName = row.original.entity$.split("/").pop() || "undefined";
         action = field.action;
         return /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: `/view/${viewName}/${entityId}/${action}`, children: field.actionLabel });
       default:
