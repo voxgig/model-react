@@ -47881,6 +47881,14 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           entityId = row.original.id;
           action = field.action;
           return /* @__PURE__ */ jsxRuntimeExports.jsx(reactRouterDom.Link, { to: `/view/${viewName}/${entityId}/${action}`, children: field.actionLabel });
+        case "chip":
+          if (cellValue === "Low") {
+            return /* @__PURE__ */ jsxRuntimeExports.jsx(material.Chip, { sx: { color: "white" }, label: cellValue, color: "success" });
+          } else if (cellValue === "Med") {
+            return /* @__PURE__ */ jsxRuntimeExports.jsx(material.Chip, { sx: { color: "white" }, label: cellValue, color: "warning" });
+          } else if (cellValue === "High") {
+            return /* @__PURE__ */ jsxRuntimeExports.jsx(material.Chip, { sx: { color: "white" }, label: cellValue, color: "error" });
+          }
         default:
           return /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: cellValue });
       }

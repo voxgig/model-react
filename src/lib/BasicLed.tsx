@@ -5,7 +5,7 @@ import { Link, useLocation, useParams } from 'react-router-dom'
 import BasicList from './BasicList'
 import BasicEdit from './BasicEdit'
 import { Exact, Gubu } from 'gubu'
-import { Box } from '@mui/material'
+import { Box, Chip } from '@mui/material'
 
 const { Skip } = Gubu
 
@@ -61,6 +61,7 @@ function BasicLed (props: any) {
   const fields: any = basicLedSpec.content.def.field
 
   // Define columns
+  // TODO: move to BasicList
   const basicListColumns = Object.entries(fields).map(
     ([key, field]: [any, any]) => ({
       accessorFn: (row: any) => row[key],
@@ -79,6 +80,7 @@ function BasicLed (props: any) {
   const viewName = basicLedSpec.name
 
   // Define how cells are rendered
+  // TODO: move to BasicList
   const renderCell = ({ cell, field, row }: any) => {
     const cellValue = cell.getValue()
     var entityId, action
@@ -99,6 +101,22 @@ function BasicLed (props: any) {
             {field.actionLabel}
           </Link>
         )
+      case 'chip':
+        // TODO: refactor this to handle any color
+        if (cellValue === 'Low') {
+          return (
+            <Chip sx={{ color: 'white' }} label={cellValue} color='success' />
+          )
+        } else if (cellValue === 'Med') {
+          return (
+            <Chip sx={{ color: 'white' }} label={cellValue} color='warning' />
+          )
+        } else if (cellValue === 'High') {
+          return (
+            <Chip sx={{ color: 'white' }} label={cellValue} color='error' />
+          )
+        }
+
       default:
         return <span>{cellValue}</span>
     }

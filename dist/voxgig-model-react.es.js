@@ -59,7 +59,7 @@ import * as React from "react";
 import React__default, { createElement, isValidElement, Children, cloneElement, useMemo, useState, useRef, useCallback, useEffect, Fragment, memo as memo$2, useLayoutEffect } from "react";
 import { useSelector } from "react-redux";
 import { useLocation, useNavigate, Link, Routes, Route } from "react-router-dom";
-import { Button as Button$1, ThemeProvider as ThemeProvider$2, Autocomplete, TextField as TextField$1, createFilterOptions as createFilterOptions$1, useTheme as useTheme$4, Toolbar as Toolbar$1, Avatar, IconButton as IconButton$1, Typography as Typography$1, List as List$1, ListItem, ListItemButton, ListItemIcon as ListItemIcon$1, ListItemText as ListItemText$1, Divider as Divider$1, Drawer as Drawer$1, Box as Box$2, Grid as Grid$1, MenuItem as MenuItem$1, Container as Container$2 } from "@mui/material";
+import { Button as Button$1, ThemeProvider as ThemeProvider$2, Autocomplete, TextField as TextField$1, createFilterOptions as createFilterOptions$1, useTheme as useTheme$4, Toolbar as Toolbar$1, Avatar, IconButton as IconButton$1, Typography as Typography$1, List as List$1, ListItem, ListItemButton, ListItemIcon as ListItemIcon$1, ListItemText as ListItemText$1, Divider as Divider$1, Drawer as Drawer$1, Box as Box$2, Grid as Grid$1, MenuItem as MenuItem$1, Chip as Chip$1, Container as Container$2 } from "@mui/material";
 import * as ReactDOM from "react-dom";
 import ReactDOM__default, { flushSync } from "react-dom";
 import emStyled from "@emotion/styled";
@@ -47869,6 +47869,14 @@ function BasicLed(props) {
         entityId = row.original.id;
         action = field.action;
         return /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: `/view/${viewName}/${entityId}/${action}`, children: field.actionLabel });
+      case "chip":
+        if (cellValue === "Low") {
+          return /* @__PURE__ */ jsxRuntimeExports.jsx(Chip$1, { sx: { color: "white" }, label: cellValue, color: "success" });
+        } else if (cellValue === "Med") {
+          return /* @__PURE__ */ jsxRuntimeExports.jsx(Chip$1, { sx: { color: "white" }, label: cellValue, color: "warning" });
+        } else if (cellValue === "High") {
+          return /* @__PURE__ */ jsxRuntimeExports.jsx(Chip$1, { sx: { color: "white" }, label: cellValue, color: "error" });
+        }
       default:
         return /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: cellValue });
     }
