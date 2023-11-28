@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import { Routes, Route } from 'react-router-dom'
 import BasicLed from './BasicLed'
 import { Exact, Gubu } from 'gubu'
-import { Box, ThemeProvider, useTheme } from '@mui/material'
+import { Box, CSSObject, ThemeProvider, useTheme } from '@mui/material'
 
 const { Child, Optional, Skip } = Gubu
 
@@ -55,7 +55,8 @@ function BasicMain (props: any) {
   )
 
   const paddingLeft =
-    theme.components?.MuiDrawer?.styleOverrides?.paper?.width || '16rem'
+    (theme.components?.MuiDrawer?.styleOverrides?.paper as CSSObject)?.width ||
+    '16rem'
 
   // TODO: Refactor this
   const basicMainStyle = {
