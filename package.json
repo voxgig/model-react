@@ -40,6 +40,7 @@
     "@mui/material": ">=5",
     "@mui/x-data-grid": ">=5",
     "@seneca/search-mini": "0.1.6",
+    "gubu": "^5.0.1",
     "material-react-table": "^1.15.1",
     "patrun": "7.2.5",
     "react": ">=18",
@@ -47,8 +48,7 @@
     "react-hook-form": "^7.47.0",
     "react-redux": ">=8",
     "react-router-dom": ">=6",
-    "styled-components": ">=5",
-    "gubu": "^5.0.1"
+    "styled-components": ">=5"
   },
   "devDependencies": {
     "@babel/core": "7.23.2",

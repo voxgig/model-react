@@ -22,7 +22,7 @@ function BasicList (props: any) {
   } = props
 
   const theme = ctx().theme
-  const editingMode = spec.content.editingMode
+  const editingMode = spec.content.def.subview.index.editingMode
   const cmpKey = spec.content.key
 
   // callbacks for MaterialReactTable

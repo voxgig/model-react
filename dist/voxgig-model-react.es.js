@@ -1025,15 +1025,22 @@ function requireReactJsxRuntime_development() {
   }
   return reactJsxRuntime_development;
 }
-var jsxRuntime = jsxRuntime$2.exports;
-"use strict";
-if (process.env.NODE_ENV === "production") {
-  jsxRuntime$2.exports = requireReactJsxRuntime_production_min();
-} else {
-  jsxRuntime$2.exports = requireReactJsxRuntime_development();
+var jsxRuntime$1 = jsxRuntime$2.exports;
+var hasRequiredJsxRuntime;
+function requireJsxRuntime() {
+  if (hasRequiredJsxRuntime)
+    return jsxRuntime$2.exports;
+  hasRequiredJsxRuntime = 1;
+  "use strict";
+  if (process.env.NODE_ENV === "production") {
+    jsxRuntime$2.exports = requireReactJsxRuntime_production_min();
+  } else {
+    jsxRuntime$2.exports = requireReactJsxRuntime_development();
+  }
+  return jsxRuntime$2.exports;
 }
-var jsxRuntimeExports = jsxRuntime$2.exports;
-const jsxRuntime$1 = /* @__PURE__ */ getDefaultExportFromCjs(jsxRuntimeExports);
+var jsxRuntimeExports = requireJsxRuntime();
+const jsxRuntime = /* @__PURE__ */ getDefaultExportFromCjs(jsxRuntimeExports);
 var gubu_min$2 = { exports: {} };
 var gubu_min = gubu_min$2.exports;
 (function(module, exports) {
@@ -14492,7 +14499,7 @@ process.env.NODE_ENV !== "production" ? GlobalStyles$2.propTypes = {
 } : void 0;
 "use client";
 /**
- * @mui/styled-engine v5.14.15
+ * @mui/styled-engine v5.14.18
  *
  * @license MIT
  * This source code is licensed under the MIT license found in the
@@ -16550,7 +16557,7 @@ if (process.env.NODE_ENV !== "production") {
   process.env.NODE_ENV !== "production" ? ThemeProvider$1.propTypes = exactProp(ThemeProvider$1.propTypes) : void 0;
 }
 /**
- * @mui/private-theming v5.14.15
+ * @mui/private-theming v5.14.18
  *
  * @license MIT
  * This source code is licensed under the MIT license found in the
@@ -19199,7 +19206,7 @@ Object.defineProperty(ChevronRight, "__esModule", {
 });
 var default_1$t = ChevronRight.default = void 0;
 var _createSvgIcon$t = _interopRequireDefault$t(requireCreateSvgIcon());
-var _jsxRuntime$t = jsxRuntimeExports;
+var _jsxRuntime$t = requireJsxRuntime();
 var _default$t = (0, _createSvgIcon$t.default)(/* @__PURE__ */ (0, _jsxRuntime$t.jsx)("path", {
   d: "M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
 }), "ChevronRight");
@@ -20508,7 +20515,7 @@ function BasicSideMenuItem(props) {
             },
             itemKey
           ),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(Divider$1, { sx: { width: "164px", marginLeft: "12px" } })
+          /* @__PURE__ */ jsxRuntimeExports.jsx(Divider$1, { className: "BasicSideMenuItem-itemDivider" })
         ] })
       );
     }),
@@ -20563,7 +20570,7 @@ Object.defineProperty(ChevronLeft, "__esModule", {
 });
 var default_1$s = ChevronLeft.default = void 0;
 var _createSvgIcon$s = _interopRequireDefault$s(requireCreateSvgIcon());
-var _jsxRuntime$s = jsxRuntimeExports;
+var _jsxRuntime$s = requireJsxRuntime();
 var _default$s = (0, _createSvgIcon$s.default)(/* @__PURE__ */ (0, _jsxRuntime$s.jsx)("path", {
   d: "M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"
 }), "ChevronLeft");
@@ -27098,7 +27105,7 @@ Object.defineProperty(ArrowDownward, "__esModule", {
 });
 var default_1$r = ArrowDownward.default = void 0;
 var _createSvgIcon$r = _interopRequireDefault$r(requireCreateSvgIcon());
-var _jsxRuntime$r = jsxRuntimeExports;
+var _jsxRuntime$r = requireJsxRuntime();
 var _default$r = (0, _createSvgIcon$r.default)(/* @__PURE__ */ (0, _jsxRuntime$r.jsx)("path", {
   d: "m20 12-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z"
 }), "ArrowDownward");
@@ -27111,7 +27118,7 @@ Object.defineProperty(ArrowRight, "__esModule", {
 });
 var default_1$q = ArrowRight.default = void 0;
 var _createSvgIcon$q = _interopRequireDefault$q(requireCreateSvgIcon());
-var _jsxRuntime$q = jsxRuntimeExports;
+var _jsxRuntime$q = requireJsxRuntime();
 var _default$q = (0, _createSvgIcon$q.default)(/* @__PURE__ */ (0, _jsxRuntime$q.jsx)("path", {
   d: "m10 17 5-5-5-5v10z"
 }), "ArrowRight");
@@ -27124,7 +27131,7 @@ Object.defineProperty(Cancel, "__esModule", {
 });
 var default_1$p = Cancel.default = void 0;
 var _createSvgIcon$p = _interopRequireDefault$p(requireCreateSvgIcon());
-var _jsxRuntime$p = jsxRuntimeExports;
+var _jsxRuntime$p = requireJsxRuntime();
 var _default$p = (0, _createSvgIcon$p.default)(/* @__PURE__ */ (0, _jsxRuntime$p.jsx)("path", {
   d: "M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"
 }), "Cancel");
@@ -27137,7 +27144,7 @@ Object.defineProperty(ClearAll, "__esModule", {
 });
 var default_1$o = ClearAll.default = void 0;
 var _createSvgIcon$o = _interopRequireDefault$o(requireCreateSvgIcon());
-var _jsxRuntime$o = jsxRuntimeExports;
+var _jsxRuntime$o = requireJsxRuntime();
 var _default$o = (0, _createSvgIcon$o.default)(/* @__PURE__ */ (0, _jsxRuntime$o.jsx)("path", {
   d: "M5 13h14v-2H5v2zm-2 4h14v-2H3v2zM7 7v2h14V7H7z"
 }), "ClearAll");
@@ -27150,7 +27157,7 @@ Object.defineProperty(Close, "__esModule", {
 });
 var default_1$n = Close.default = void 0;
 var _createSvgIcon$n = _interopRequireDefault$n(requireCreateSvgIcon());
-var _jsxRuntime$n = jsxRuntimeExports;
+var _jsxRuntime$n = requireJsxRuntime();
 var _default$n = (0, _createSvgIcon$n.default)(/* @__PURE__ */ (0, _jsxRuntime$n.jsx)("path", {
   d: "M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
 }), "Close");
@@ -27163,7 +27170,7 @@ Object.defineProperty(DensityLarge, "__esModule", {
 });
 var default_1$m = DensityLarge.default = void 0;
 var _createSvgIcon$m = _interopRequireDefault$m(requireCreateSvgIcon());
-var _jsxRuntime$m = jsxRuntimeExports;
+var _jsxRuntime$m = requireJsxRuntime();
 var _default$m = (0, _createSvgIcon$m.default)(/* @__PURE__ */ (0, _jsxRuntime$m.jsx)("path", {
   d: "M3 3h18v2H3zm0 16h18v2H3z"
 }), "DensityLarge");
@@ -27176,7 +27183,7 @@ Object.defineProperty(DensityMedium, "__esModule", {
 });
 var default_1$l = DensityMedium.default = void 0;
 var _createSvgIcon$l = _interopRequireDefault$l(requireCreateSvgIcon());
-var _jsxRuntime$l = jsxRuntimeExports;
+var _jsxRuntime$l = requireJsxRuntime();
 var _default$l = (0, _createSvgIcon$l.default)(/* @__PURE__ */ (0, _jsxRuntime$l.jsx)("path", {
   d: "M3 3h18v2H3zm0 16h18v2H3zm0-8h18v2H3z"
 }), "DensityMedium");
@@ -27189,7 +27196,7 @@ Object.defineProperty(DensitySmall, "__esModule", {
 });
 var default_1$k = DensitySmall.default = void 0;
 var _createSvgIcon$k = _interopRequireDefault$k(requireCreateSvgIcon());
-var _jsxRuntime$k = jsxRuntimeExports;
+var _jsxRuntime$k = requireJsxRuntime();
 var _default$k = (0, _createSvgIcon$k.default)(/* @__PURE__ */ (0, _jsxRuntime$k.jsx)("path", {
   d: "M3 2h18v2H3zm0 18h18v2H3zm0-6h18v2H3zm0-6h18v2H3z"
 }), "DensitySmall");
@@ -27202,7 +27209,7 @@ Object.defineProperty(DragHandle, "__esModule", {
 });
 var default_1$j = DragHandle.default = void 0;
 var _createSvgIcon$j = _interopRequireDefault$j(requireCreateSvgIcon());
-var _jsxRuntime$j = jsxRuntimeExports;
+var _jsxRuntime$j = requireJsxRuntime();
 var _default$j = (0, _createSvgIcon$j.default)(/* @__PURE__ */ (0, _jsxRuntime$j.jsx)("path", {
   d: "M20 9H4v2h16V9zM4 15h16v-2H4v2z"
 }), "DragHandle");
@@ -27215,7 +27222,7 @@ Object.defineProperty(DynamicFeed, "__esModule", {
 });
 var default_1$i = DynamicFeed.default = void 0;
 var _createSvgIcon$i = _interopRequireDefault$i(requireCreateSvgIcon());
-var _jsxRuntime$i = jsxRuntimeExports;
+var _jsxRuntime$i = requireJsxRuntime();
 var _default$i = (0, _createSvgIcon$i.default)([/* @__PURE__ */ (0, _jsxRuntime$i.jsx)("path", {
   d: "M8 8H6v7c0 1.1.9 2 2 2h9v-2H8V8z"
 }, "0"), /* @__PURE__ */ (0, _jsxRuntime$i.jsx)("path", {
@@ -27230,7 +27237,7 @@ Object.defineProperty(Edit, "__esModule", {
 });
 var default_1$h = Edit.default = void 0;
 var _createSvgIcon$h = _interopRequireDefault$h(requireCreateSvgIcon());
-var _jsxRuntime$h = jsxRuntimeExports;
+var _jsxRuntime$h = requireJsxRuntime();
 var _default$h = (0, _createSvgIcon$h.default)(/* @__PURE__ */ (0, _jsxRuntime$h.jsx)("path", {
   d: "M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
 }), "Edit");
@@ -27243,7 +27250,7 @@ Object.defineProperty(ExpandMore, "__esModule", {
 });
 var default_1$g = ExpandMore.default = void 0;
 var _createSvgIcon$g = _interopRequireDefault$g(requireCreateSvgIcon());
-var _jsxRuntime$g = jsxRuntimeExports;
+var _jsxRuntime$g = requireJsxRuntime();
 var _default$g = (0, _createSvgIcon$g.default)(/* @__PURE__ */ (0, _jsxRuntime$g.jsx)("path", {
   d: "M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
 }), "ExpandMore");
@@ -27256,7 +27263,7 @@ Object.defineProperty(FilterAlt, "__esModule", {
 });
 var default_1$f = FilterAlt.default = void 0;
 var _createSvgIcon$f = _interopRequireDefault$f(requireCreateSvgIcon());
-var _jsxRuntime$f = jsxRuntimeExports;
+var _jsxRuntime$f = requireJsxRuntime();
 var _default$f = (0, _createSvgIcon$f.default)(/* @__PURE__ */ (0, _jsxRuntime$f.jsx)("path", {
   d: "M4.25 5.61C6.27 8.2 10 13 10 13v6c0 .55.45 1 1 1h2c.55 0 1-.45 1-1v-6s3.72-4.8 5.74-7.39c.51-.66.04-1.61-.79-1.61H5.04c-.83 0-1.3.95-.79 1.61z"
 }), "FilterAlt");
@@ -27269,7 +27276,7 @@ Object.defineProperty(FilterList, "__esModule", {
 });
 var default_1$e = FilterList.default = void 0;
 var _createSvgIcon$e = _interopRequireDefault$e(requireCreateSvgIcon());
-var _jsxRuntime$e = jsxRuntimeExports;
+var _jsxRuntime$e = requireJsxRuntime();
 var _default$e = (0, _createSvgIcon$e.default)(/* @__PURE__ */ (0, _jsxRuntime$e.jsx)("path", {
   d: "M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z"
 }), "FilterList");
@@ -27282,7 +27289,7 @@ Object.defineProperty(FilterListOff, "__esModule", {
 });
 var default_1$d = FilterListOff.default = void 0;
 var _createSvgIcon$d = _interopRequireDefault$d(requireCreateSvgIcon());
-var _jsxRuntime$d = jsxRuntimeExports;
+var _jsxRuntime$d = requireJsxRuntime();
 var _default$d = (0, _createSvgIcon$d.default)(/* @__PURE__ */ (0, _jsxRuntime$d.jsx)("path", {
   d: "M10.83 8H21V6H8.83l2 2zm5 5H18v-2h-4.17l2 2zM14 16.83V18h-4v-2h3.17l-3-3H6v-2h2.17l-3-3H3V6h.17L1.39 4.22 2.8 2.81l18.38 18.38-1.41 1.41L14 16.83z"
 }), "FilterListOff");
@@ -27295,7 +27302,7 @@ Object.defineProperty(FullscreenExit, "__esModule", {
 });
 var default_1$c = FullscreenExit.default = void 0;
 var _createSvgIcon$c = _interopRequireDefault$c(requireCreateSvgIcon());
-var _jsxRuntime$c = jsxRuntimeExports;
+var _jsxRuntime$c = requireJsxRuntime();
 var _default$c = (0, _createSvgIcon$c.default)(/* @__PURE__ */ (0, _jsxRuntime$c.jsx)("path", {
   d: "M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"
 }), "FullscreenExit");
@@ -27308,7 +27315,7 @@ Object.defineProperty(Fullscreen, "__esModule", {
 });
 var default_1$b = Fullscreen.default = void 0;
 var _createSvgIcon$b = _interopRequireDefault$b(requireCreateSvgIcon());
-var _jsxRuntime$b = jsxRuntimeExports;
+var _jsxRuntime$b = requireJsxRuntime();
 var _default$b = (0, _createSvgIcon$b.default)(/* @__PURE__ */ (0, _jsxRuntime$b.jsx)("path", {
   d: "M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"
 }), "Fullscreen");
@@ -27321,7 +27328,7 @@ Object.defineProperty(KeyboardDoubleArrowDown, "__esModule", {
 });
 var default_1$a = KeyboardDoubleArrowDown.default = void 0;
 var _createSvgIcon$a = _interopRequireDefault$a(requireCreateSvgIcon());
-var _jsxRuntime$a = jsxRuntimeExports;
+var _jsxRuntime$a = requireJsxRuntime();
 var _default$a = (0, _createSvgIcon$a.default)([/* @__PURE__ */ (0, _jsxRuntime$a.jsx)("path", {
   d: "M18 6.41 16.59 5 12 9.58 7.41 5 6 6.41l6 6z"
 }, "0"), /* @__PURE__ */ (0, _jsxRuntime$a.jsx)("path", {
@@ -27336,7 +27343,7 @@ Object.defineProperty(MoreHoriz, "__esModule", {
 });
 var default_1$9 = MoreHoriz.default = void 0;
 var _createSvgIcon$9 = _interopRequireDefault$9(requireCreateSvgIcon());
-var _jsxRuntime$9 = jsxRuntimeExports;
+var _jsxRuntime$9 = requireJsxRuntime();
 var _default$9 = (0, _createSvgIcon$9.default)(/* @__PURE__ */ (0, _jsxRuntime$9.jsx)("path", {
   d: "M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
 }), "MoreHoriz");
@@ -27349,7 +27356,7 @@ Object.defineProperty(MoreVert, "__esModule", {
 });
 var default_1$8 = MoreVert.default = void 0;
 var _createSvgIcon$8 = _interopRequireDefault$8(requireCreateSvgIcon());
-var _jsxRuntime$8 = jsxRuntimeExports;
+var _jsxRuntime$8 = requireJsxRuntime();
 var _default$8 = (0, _createSvgIcon$8.default)(/* @__PURE__ */ (0, _jsxRuntime$8.jsx)("path", {
   d: "M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
 }), "MoreVert");
@@ -27362,7 +27369,7 @@ Object.defineProperty(PushPin, "__esModule", {
 });
 var default_1$7 = PushPin.default = void 0;
 var _createSvgIcon$7 = _interopRequireDefault$7(requireCreateSvgIcon());
-var _jsxRuntime$7 = jsxRuntimeExports;
+var _jsxRuntime$7 = requireJsxRuntime();
 var _default$7 = (0, _createSvgIcon$7.default)(/* @__PURE__ */ (0, _jsxRuntime$7.jsx)("path", {
   fillRule: "evenodd",
   d: "M16 9V4h1c.55 0 1-.45 1-1s-.45-1-1-1H7c-.55 0-1 .45-1 1s.45 1 1 1h1v5c0 1.66-1.34 3-3 3v2h5.97v7l1 1 1-1v-7H19v-2c-1.66 0-3-1.34-3-3z"
@@ -27376,7 +27383,7 @@ Object.defineProperty(RestartAlt, "__esModule", {
 });
 var default_1$6 = RestartAlt.default = void 0;
 var _createSvgIcon$6 = _interopRequireDefault$6(requireCreateSvgIcon());
-var _jsxRuntime$6 = jsxRuntimeExports;
+var _jsxRuntime$6 = requireJsxRuntime();
 var _default$6 = (0, _createSvgIcon$6.default)(/* @__PURE__ */ (0, _jsxRuntime$6.jsx)("path", {
   d: "M12 5V2L8 6l4 4V7c3.31 0 6 2.69 6 6 0 2.97-2.17 5.43-5 5.91v2.02c3.95-.49 7-3.85 7-7.93 0-4.42-3.58-8-8-8zm-6 8c0-1.65.67-3.15 1.76-4.24L6.34 7.34C4.9 8.79 4 10.79 4 13c0 4.08 3.05 7.44 7 7.93v-2.02c-2.83-.48-5-2.94-5-5.91z"
 }), "RestartAlt");
@@ -27389,7 +27396,7 @@ Object.defineProperty(Save, "__esModule", {
 });
 var default_1$5 = Save.default = void 0;
 var _createSvgIcon$5 = _interopRequireDefault$5(requireCreateSvgIcon());
-var _jsxRuntime$5 = jsxRuntimeExports;
+var _jsxRuntime$5 = requireJsxRuntime();
 var _default$5 = (0, _createSvgIcon$5.default)(/* @__PURE__ */ (0, _jsxRuntime$5.jsx)("path", {
   d: "M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"
 }), "Save");
@@ -27402,7 +27409,7 @@ Object.defineProperty(Search, "__esModule", {
 });
 var default_1$4 = Search.default = void 0;
 var _createSvgIcon$4 = _interopRequireDefault$4(requireCreateSvgIcon());
-var _jsxRuntime$4 = jsxRuntimeExports;
+var _jsxRuntime$4 = requireJsxRuntime();
 var _default$4 = (0, _createSvgIcon$4.default)(/* @__PURE__ */ (0, _jsxRuntime$4.jsx)("path", {
   d: "M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
 }), "Search");
@@ -27415,7 +27422,7 @@ Object.defineProperty(SearchOff, "__esModule", {
 });
 var default_1$3 = SearchOff.default = void 0;
 var _createSvgIcon$3 = _interopRequireDefault$3(requireCreateSvgIcon());
-var _jsxRuntime$3 = jsxRuntimeExports;
+var _jsxRuntime$3 = requireJsxRuntime();
 var _default$3 = (0, _createSvgIcon$3.default)([/* @__PURE__ */ (0, _jsxRuntime$3.jsx)("path", {
   d: "M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3 6.08 3 3.28 5.64 3.03 9h2.02C5.3 6.75 7.18 5 9.5 5 11.99 5 14 7.01 14 9.5S11.99 14 9.5 14c-.17 0-.33-.03-.5-.05v2.02c.17.02.33.03.5.03 1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5z"
 }, "0"), /* @__PURE__ */ (0, _jsxRuntime$3.jsx)("path", {
@@ -27430,7 +27437,7 @@ Object.defineProperty(Sort, "__esModule", {
 });
 var default_1$2 = Sort.default = void 0;
 var _createSvgIcon$2 = _interopRequireDefault$2(requireCreateSvgIcon());
-var _jsxRuntime$2 = jsxRuntimeExports;
+var _jsxRuntime$2 = requireJsxRuntime();
 var _default$2 = (0, _createSvgIcon$2.default)(/* @__PURE__ */ (0, _jsxRuntime$2.jsx)("path", {
   d: "M3 18h6v-2H3v2zM3 6v2h18V6H3zm0 7h12v-2H3v2z"
 }), "Sort");
@@ -27443,7 +27450,7 @@ Object.defineProperty(ViewColumn, "__esModule", {
 });
 var default_1$1 = ViewColumn.default = void 0;
 var _createSvgIcon$1 = _interopRequireDefault$1(requireCreateSvgIcon());
-var _jsxRuntime$1 = jsxRuntimeExports;
+var _jsxRuntime$1 = requireJsxRuntime();
 var _default$1 = (0, _createSvgIcon$1.default)(/* @__PURE__ */ (0, _jsxRuntime$1.jsx)("path", {
   d: "M14.67 5v14H9.33V5h5.34zm1 14H21V5h-5.33v14zm-7.34 0V5H3v14h5.33z"
 }), "ViewColumn");
@@ -27456,7 +27463,7 @@ Object.defineProperty(VisibilityOff, "__esModule", {
 });
 var default_1 = VisibilityOff.default = void 0;
 var _createSvgIcon = _interopRequireDefault(requireCreateSvgIcon());
-var _jsxRuntime = jsxRuntimeExports;
+var _jsxRuntime = requireJsxRuntime();
 var _default = (0, _createSvgIcon.default)(/* @__PURE__ */ (0, _jsxRuntime.jsx)("path", {
   d: "M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78 3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z"
 }), "VisibilityOff");
@@ -45859,7 +45866,7 @@ function BasicList(props) {
     spec
   } = props;
   const theme = ctx().theme;
-  const editingMode = spec.content.editingMode;
+  const editingMode = spec.content.def.subview.index.editingMode;
   const cmpKey = spec.content.key;
   const handleSaveRow = (_0) => __async(this, [_0], function* ({ exitEditingMode, row, values: values2 }) {
     onEditingRowSave(row, values2);
@@ -46143,7 +46150,8 @@ function useController(props) {
       control._updateDisabledField({
         disabled,
         fields: control._fields,
-        name
+        name,
+        value: get(control._fields, name)._f.value
       });
     }
   }, [disabled, name, control]);
@@ -46151,7 +46159,7 @@ function useController(props) {
     field: __spreadProps(__spreadValues({
       name,
       value
-    }, isBoolean(disabled) ? { disabled } : {}), {
+    }, isBoolean(disabled) || isBoolean(formState.disabled) ? { disabled: formState.disabled || disabled } : {}), {
       onChange: React__default.useCallback((event) => _registerProps.current.onChange({
         target: {
           value: getEventValue(event),
@@ -46272,25 +46280,6 @@ var appendErrors = (name, validateAllFieldCriteria, errors, type, message) => va
     [type]: message || true
   })
 }) : {};
-const focusFieldBy = (fields, callback, fieldsNames) => {
-  for (const key of fieldsNames || Object.keys(fields)) {
-    const field = get(fields, key);
-    if (field) {
-      const _a = field, { _f } = _a, currentField = __objRest(_a, ["_f"]);
-      if (_f && callback(_f.name)) {
-        if (_f.ref.focus) {
-          _f.ref.focus();
-          break;
-        } else if (_f.refs && _f.refs[0].focus) {
-          _f.refs[0].focus();
-          break;
-        }
-      } else if (isObject(currentField)) {
-        focusFieldBy(currentField, callback);
-      }
-    }
-  }
-};
 var generateId = () => {
   const d = typeof performance === "undefined" ? Date.now() : performance.now() * 1e3;
   return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
@@ -46307,6 +46296,23 @@ var getValidationModes = (mode) => ({
   isOnTouch: mode === VALIDATION_MODE.onTouched
 });
 var isWatched = (name, _names, isBlurEvent) => !isBlurEvent && (_names.watchAll || _names.watch.has(name) || [..._names.watch].some((watchName) => name.startsWith(watchName) && /^\.\w+/.test(name.slice(watchName.length))));
+const iterateFieldsByAction = (fields, action, fieldsNames, abortEarly) => {
+  for (const key of fieldsNames || Object.keys(fields)) {
+    const field = get(fields, key);
+    if (field) {
+      const _a = field, { _f } = _a, currentField = __objRest(_a, ["_f"]);
+      if (_f) {
+        if (_f.refs && _f.refs[0] && action(_f.refs[0], key) && !abortEarly) {
+          break;
+        } else if (_f.ref && action(_f.ref, _f.name) && !abortEarly) {
+          break;
+        }
+      } else if (isObject(currentField)) {
+        iterateFieldsByAction(currentField, action);
+      }
+    }
+  }
+};
 var updateFieldArrayRootError = (errors, error, name) => {
   const fieldArrayErrors = compact(get(errors, name));
   set(fieldArrayErrors, "root", error[name]);
@@ -46713,7 +46719,13 @@ function useFieldArray(props) {
       name,
       values: __spreadValues({}, control._formValues)
     });
-    control._names.focus && focusFieldBy(control._fields, (key) => !!key && key.startsWith(control._names.focus || ""));
+    control._names.focus && iterateFieldsByAction(control._fields, (ref, key) => {
+      if (control._names.focus && key.startsWith(control._names.focus) && ref.focus) {
+        ref.focus();
+        return 1;
+      }
+      return;
+    });
     control._names.focus = "";
     control._updateValid();
     _actioned.current = false;
@@ -46929,7 +46941,8 @@ function createFormControl(props = {}, flushRootRender) {
     isValid: false,
     touchedFields: {},
     dirtyFields: {},
-    errors: {}
+    errors: {},
+    disabled: false
   };
   let _fields = {};
   let _defaultValues = isObject(_options.defaultValues) || isObject(_options.values) ? cloneObject(_options.defaultValues || _options.values) || {} : {};
@@ -47196,6 +47209,9 @@ function createFormControl(props = {}, flushRootRender) {
     let isFieldValueUpdated = true;
     const field = get(_fields, name);
     const getCurrentFieldValue = () => target.type ? getFieldValue(field._f) : getEventValue(event);
+    const _updateIsFieldValueUpdated = (fieldValue) => {
+      isFieldValueUpdated = Number.isNaN(fieldValue) || fieldValue === get(_formValues, name, fieldValue);
+    };
     if (field) {
       let error;
       let isValid;
@@ -47225,14 +47241,17 @@ function createFormControl(props = {}, flushRootRender) {
       _updateIsValidating(true);
       if (_options.resolver) {
         const { errors } = yield _executeSchema([name]);
-        const previousErrorLookupResult = schemaErrorLookup(_formState.errors, _fields, name);
-        const errorLookupResult = schemaErrorLookup(errors, _fields, previousErrorLookupResult.name || name);
-        error = errorLookupResult.error;
-        name = errorLookupResult.name;
-        isValid = isEmptyObject(errors);
+        _updateIsFieldValueUpdated(fieldValue);
+        if (isFieldValueUpdated) {
+          const previousErrorLookupResult = schemaErrorLookup(_formState.errors, _fields, name);
+          const errorLookupResult = schemaErrorLookup(errors, _fields, previousErrorLookupResult.name || name);
+          error = errorLookupResult.error;
+          name = errorLookupResult.name;
+          isValid = isEmptyObject(errors);
+        }
       } else {
         error = (yield validateField(field, _formValues, shouldDisplayAllAssociatedErrors, _options.shouldUseNativeValidation))[name];
-        isFieldValueUpdated = Number.isNaN(fieldValue) || fieldValue === get(_formValues, name, fieldValue);
+        _updateIsFieldValueUpdated(fieldValue);
         if (isFieldValueUpdated) {
           if (error) {
             isValid = false;
@@ -47247,6 +47266,13 @@ function createFormControl(props = {}, flushRootRender) {
       }
     }
   });
+  const _focusInput = (ref, key) => {
+    if (get(_formState.errors, key) && ref.focus) {
+      ref.focus();
+      return 1;
+    }
+    return;
+  };
   const trigger = (_0, ..._1) => __async(this, [_0, ..._1], function* (name, options = {}) {
     let isValid;
     let validationResult;
@@ -47269,7 +47295,7 @@ function createFormControl(props = {}, flushRootRender) {
       errors: _formState.errors,
       isValidating: false
     }));
-    options.shouldFocus && !validationResult && focusFieldBy(_fields, (key) => key && get(_formState.errors, key), name ? fieldNames : _names.mount);
+    options.shouldFocus && !validationResult && iterateFieldsByAction(_fields, _focusInput, name ? fieldNames : _names.mount);
     return validationResult;
   });
   const getValues = (fieldNames) => {
@@ -47322,11 +47348,11 @@ function createFormControl(props = {}, flushRootRender) {
     _subjects.state.next(__spreadValues(__spreadValues({}, _formState), !options.keepDirty ? {} : { isDirty: _getDirty() }));
     !options.keepIsValid && _updateValid();
   };
-  const _updateDisabledField = ({ disabled, name, field, fields }) => {
+  const _updateDisabledField = ({ disabled, name, field, fields, value }) => {
     if (isBoolean(disabled)) {
-      const value = disabled ? void 0 : get(_formValues, name, getFieldValue(field ? field._f : get(fields, name)._f));
-      set(_formValues, name, value);
-      updateTouchAndDirty(name, value, false, false, true);
+      const inputValue = disabled ? void 0 : isUndefined(value) ? getFieldValue(field ? field._f : get(fields, name)._f) : value;
+      set(_formValues, name, inputValue);
+      updateTouchAndDirty(name, inputValue, false, false, true);
     }
   };
   const register = (name, options = {}) => {
@@ -47390,7 +47416,15 @@ function createFormControl(props = {}, flushRootRender) {
       }
     });
   };
-  const _focusError = () => _options.shouldFocusError && focusFieldBy(_fields, (key) => key && get(_formState.errors, key), _names.mount);
+  const _focusError = () => _options.shouldFocusError && iterateFieldsByAction(_fields, _focusInput, _names.mount);
+  const _disableForm = (disabled) => {
+    if (isBoolean(disabled)) {
+      _subjects.state.next({ disabled });
+      iterateFieldsByAction(_fields, (ref) => {
+        ref.disabled = disabled;
+      }, 0, false);
+    }
+  };
   const handleSubmit = (onValid, onInvalid) => (e) => __async(this, null, function* () {
     if (e) {
       e.preventDefault && e.preventDefault();
@@ -47549,6 +47583,7 @@ function createFormControl(props = {}, flushRootRender) {
       _reset,
       _resetDefaultValues,
       _updateFormState,
+      _disableForm,
       _subjects,
       _proxyFormState,
       get _fields() {
@@ -47615,6 +47650,7 @@ function useForm(props = {}) {
     dirtyFields: {},
     touchedFields: {},
     errors: {},
+    disabled: false,
     defaultValues: isFunction(props.defaultValues) ? void 0 : props.defaultValues
   });
   if (!_formControl.current) {
@@ -47632,6 +47668,17 @@ function useForm(props = {}) {
       }
     }
   });
+  React__default.useEffect(() => control._disableForm(props.disabled), [control, props.disabled]);
+  React__default.useEffect(() => {
+    if (control._proxyFormState.isDirty) {
+      const isDirty = control._getDirty();
+      if (isDirty !== formState.isDirty) {
+        control._subjects.state.next({
+          isDirty
+        });
+      }
+    }
+  }, [control, formState.isDirty]);
   React__default.useEffect(() => {
     if (props.values && !deepEqual(props.values, _values.current)) {
       control._reset(props.values, control._options.resetOptions);
@@ -47971,6 +48018,7 @@ const BasicMainSpecShape = gubu_minExports.Gubu({
   })
 });
 function BasicMain(props) {
+  var _a, _b, _c, _d;
   const { vxg, ctx } = props;
   const theme = useTheme$4();
   const basicMainSpec = BasicMainSpecShape(props.spec);
@@ -47978,8 +48026,9 @@ function BasicMain(props) {
   const sideOpen = useSelector(
     (state) => state.main.vxg.cmp.BasicSide.show
   );
+  const paddingLeft = (_d = (_c = (_b = (_a = theme.components) == null ? void 0 : _a.MuiDrawer) == null ? void 0 : _b.styleOverrides) == null ? void 0 : _c.paper) == null ? void 0 : _d.width;
   const basicMainStyle = {
-    paddingLeft: sideOpen ? "14rem" : "0rem",
+    paddingLeft: sideOpen ? paddingLeft : "0rem",
     backgroundColor: theme.palette.background.default
   };
   const basicMainContainerStyle = {
