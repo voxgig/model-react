@@ -1,12 +1,38 @@
 # @voxgig/model-react
 
-Voxgig Model React Components
+Voxgig Model React is a library of model-driven React Enterprise UI components.
+
+
+## Installation 
+
+```
+npm install @voxgig/model-react
+```
+
+## Quickstart
+The best place to start would be to run (and experiment with) the example app in [`examples/basic-app`](https://github.com/voxgig/model-react/tree/main/examples/basic-app).
+
+```
+git clone git@github.com:voxgig/model-react.git
+cd model-react/examples/basic-app 
+```
+
+Install it and run: 
+
+```
+npm install
+npm run dev
+```
+
+
 
 ## How-to guides
 
-### Customizing components
+### Customize Model React with your theme
 
-Since model-react is using Material UI under the hood, it should fairly easy to customize model-react components. Here's an example of how achieve that: 
+Model React components are built on top of Material UI, so it should be fairly easy to customize it with your theme. 
+
+Here's an example of how to change the color palette of your app:
 
 1. First create your custom theme:
 
@@ -16,17 +42,17 @@ Since model-react is using Material UI under the hood, it should fairly easy to 
         palette: {
             mode: 'dark',
             background: {
-            default: '#191c29',
-            paper: '#262937'
+                default: '#191c29',
+                paper: '#262937'
             },
             primary: {
-            main: red[500]
+                main: red[500]
             }
         }
     })
     ```
 
-2. Add your theme to `ctx` and wrap your components in `ThemeProvider`:
+2. Pass your theme to the context variable, make sure to wrap your components in `ThemeProvider`:
 
     ```javascript
     const ctx = () => ({
@@ -44,15 +70,19 @@ Since model-react is using Material UI under the hood, it should fairly easy to 
     </ThemeProvider>
     ```
 
-That's it.
+You can see a full example of this in [`examples/basic-app/src/private/Private.tsx`](https://github.com/voxgig/model-react/blob/main/examples/basic-app/src/private/Private.tsx)
 
 ## Contributing
 
-### How to run in dev mode
+### Run in dev mode
 
-`npm run watch`
+```
+git clone git@github.com:voxgig/model-react.git
+cd model-react
+npm run watch
+```
 
-### How to format and/or lint
+### Format and/or lint
 
 * You can format by running `npm run format`
 * You can lint and format by running `npm run lint`
