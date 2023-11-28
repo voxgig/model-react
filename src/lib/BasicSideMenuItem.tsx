@@ -105,7 +105,7 @@ function BasicSideMenuItem (props: any) {
                   <ListItemText primary={item.label} />
                 </ListItemButton>
               </ListItem>
-              <Divider sx={{ width: '164px', marginLeft: '12px' }} />
+              <Divider className='BasicSideMenuItem-itemDivider' />
             </>
           )
         )
