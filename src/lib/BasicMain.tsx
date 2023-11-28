@@ -54,7 +54,8 @@ function BasicMain (props: any) {
     (state: any) => state.main.vxg.cmp.BasicSide.show
   )
 
-  const paddingLeft = theme.components?.MuiDrawer?.styleOverrides?.paper?.width
+  const paddingLeft =
+    theme.components?.MuiDrawer?.styleOverrides?.paper?.width || '16rem'
 
   // TODO: Refactor this
   const basicMainStyle = {

@@ -18,9 +18,9 @@ const BasicLedSpecShape = Gubu({
     cmp: Skip(String),
     def: {
       canon: String,
-      add: {
+      add: Skip({
         active: Boolean
-      },
+      }),
       subview: {},
       id: Skip({
         field: String

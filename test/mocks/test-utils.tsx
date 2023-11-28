@@ -5,6 +5,7 @@ import { Provider } from 'react-redux'
 import { BrowserRouter } from 'react-router-dom'
 import thunk from 'redux-thunk'
 import configureStore from 'redux-mock-store'
+import { createTheme } from '@mui/material'
 
 interface IExtendedRenderOptions extends RenderOptions {
   withRouter?: boolean
@@ -64,6 +65,81 @@ export const vxg = {
   }
 }
 
+const lightTheme = createTheme({
+  components: {
+    MuiDrawer: {
+      defaultProps: {
+        variant: 'persistent'
+      },
+      styleOverrides: {
+        root: {
+          // persistent sidebar
+          width: '16rem',
+          flexShrink: 0,
+          '& .MuiDrawer-paper': {
+            width: '16rem',
+            boxSizing: 'border-box'
+          },
+          anchor: 'left'
+        },
+        // permanent sidebar
+        paper: {
+          width: '16rem',
+          boxSizing: 'border-box'
+        }
+      }
+    },
+    MuiPaper: {
+      styleOverrides: {
+        root: {
+          '& .MuiToolbar-root': {
+            backgroundColor: '#ffffff'
+          }
+        }
+      }
+    },
+    MuiTable: {
+      styleOverrides: {
+        root: {
+          color: 'red',
+          backgroundColor: 'white',
+          '& .MuiTableRow-root': {
+            color: 'red',
+            backgroundColor: '#ffffff'
+          },
+          '& .MuiToolbar-root': {
+            color: 'red',
+            backgroundColor: '#ffffff'
+          }
+        }
+      }
+    },
+    MuiAutocomplete: {
+      defaultProps: {
+        popupIcon: true
+      },
+      styleOverrides: {
+        root: {
+          marginLeft: '1em',
+          width: '20rem'
+        }
+      }
+    }
+  },
+  palette: {
+    mode: 'light',
+    background: {
+      default: '#eee',
+      paper: '#ffffff'
+    }
+  },
+  typography: {
+    h6: {
+      color: 'black'
+    }
+  }
+})
+
 export const ctx = () => {
   return {
     model: {
@@ -81,6 +157,7 @@ export const ctx = () => {
                   logo: {
                     img: '/voxgig.png'
                   },
+                  variant: 'persistent',
                   tool: {
                     def: {
                       addbutton: {
@@ -112,9 +189,11 @@ export const ctx = () => {
                   logo: {
                     img: '/voxgig.png'
                   },
+                  variant: 'persistent',
                   section: {
                     section1: {
                       title: 'Section 1',
+                      divider: true,
                       item: {
                         task: {
                           kind: 'resource',
@@ -139,15 +218,20 @@ export const ctx = () => {
               },
               view: {
                 task: {
+                  title: 'Task',
                   name: 'task',
                   content: {
-                    kind: 'led',
                     def: {
                       canon: 'vxg/task',
-                      add: {
-                        active: false
+                      subview: {
+                        index: {
+                          kind: 'led',
+                          editingMode: 'row'
+                        },
+                        edit: {},
+                        show: {}
                       },
-                      fields: {
+                      field: {
                         id: {
                           label: 'ID',
                           inputType: 'text',
@@ -200,7 +284,9 @@ export const ctx = () => {
       BasicLed: {
         query: (view: any, cmpstate: any) => {}
       }
-    }
+    },
+    cmp: {},
+    theme: lightTheme
   }
 }
 

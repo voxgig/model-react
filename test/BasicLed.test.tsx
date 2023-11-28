@@ -13,7 +13,7 @@ describe('BasicLed', () => {
   }
 
   beforeEach(() => {
-    setLocation('/view/task')
+    setLocation('/view/task/index')
   })
 
   afterEach(() => {
