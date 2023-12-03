@@ -1,8 +1,28 @@
+app: web: view: {
+  content: {
+    kind: string
+    cmp: string
+    head: {}
+    foot: {}
+    def: {
+      canon: string
+      add: active: boolean
+    }
+  }
+}
+
 app: web: part: admin: {}
 
 app: web: part: head: {
   logo: img: string
-  tool: def: []
+  tool: def: &: {
+    kind: string
+    label: string
+    options: {
+      kind: string
+      label: field: string
+      ent: string
+  }
 }
 
 app: web: part: side: {
@@ -32,40 +52,3 @@ app: web: part: foot: {
   title: string
 }
 
-app: web: view: {
-  title: string,
-  icon: string,
-  content: {
-    kind: string
-    cmp: string
-  }
-  content: def: {
-      ent: {
-        canon: string
-        primary: {
-          field: {
-            &: {
-              title: string
-              edit: boolean
-            }
-          }
-        }
-      }
-      add: active: boolean
-      edit: {
-        layout: {
-          order: string
-          field: {
-            &: {
-              type: string
-              headerName: string
-              edit: boolean
-              kind: {
-                &: title: string
-              }
-            }
-          }
-        }
-      }
-    }
-}

@@ -1,9 +1,12 @@
-import { Child, Gubu } from 'gubu'
+import { Gubu } from 'gubu'
 import BasicSideMenuItem from './BasicSideMenuItem'
+
+const { Child } = Gubu
 
 const BasicSideMenuSpecShape = Gubu({
   section: Child({
     title: String,
+    divider: Boolean,
     item: Child({
       kind: String,
       label: String,

@@ -1,11 +1,10 @@
 # Copyright (c) Voxgig Ltd. USED UNDER LICENSE.
 
 # sys: @'@voxgig/model-react/frontend.jsonic'
+@'common.jsonic'
 
 sys: @'schema/frontend.jsonic'
 
 app: web: frame: public: @"web-public.jsonic"
 
 app: web: frame: private: @"web-private.jsonic"
-
-

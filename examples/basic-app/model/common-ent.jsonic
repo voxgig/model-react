@@ -1,0 +1,23 @@
+sys: &: $.main.shape.ent
+
+sys: task: {
+  field: {
+    id: {
+      label: 'ID'
+      editable: false
+    }
+    title: {
+      label: 'Title'
+    }
+    status: {
+      inputType: 'select'
+      label: 'Status'
+      options: {
+        open: label: 'Open'
+        closed: label: 'Closed'
+      }
+    }
+  }
+}
+
+sys: chat: {}

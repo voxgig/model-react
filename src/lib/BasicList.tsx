@@ -1,73 +1,90 @@
-import React, { useEffect } from 'react'
-import { useSelector } from 'react-redux'
+import { useMemo } from 'react'
+import { useTheme, createTheme, ThemeProvider } from '@mui/material/styles'
 
 import {
   MaterialReactTable,
   type MaterialReactTableProps,
   type MRT_ColumnDef
 } from 'material-react-table'
+import { Box } from '@mui/material'
 
 // import { DataGrid } from '@mui/x-data-grid'
 
 function BasicList (props: any) {
-  let {
+  const {
+    ctx,
     onRowClick = () => {},
     onEditingRowSave = () => {},
     data,
     columns,
-    sx = {}
+    sx = {},
+    spec
   } = props
 
-  const { ctx, spec } = props
-  const { model, seneca, custom } = ctx()
+  const theme = ctx().theme
+  const editingMode = spec.content.def.subview.index.editingMode
+  const cmpKey = spec.content.key
 
-  const vxg = useSelector((state: any) => state.main.vxg)
-
+  // callbacks for MaterialReactTable
   const handleSaveRow: MaterialReactTableProps<any>['onEditingRowSave'] =
     async ({ exitEditingMode, row, values }): Promise<void> => {
       onEditingRowSave(row, values)
-      exitEditingMode() //required to exit editing mode
+      exitEditingMode()
     }
 
+  const handleRowClick = ({ row }: { row: { id: string } }) => ({
+    onClick: (event: any) => {
+      let selitem = { ...data[Number(row.id)] }
+      onRowClick(event, selitem)
+    },
+    sx: { cursor: 'pointer' }
+  })
+
+  const commonTableProps = {
+    enableColumnActions: false,
+    enableColumnFilters: false,
+    enableSorting: false,
+    enableBottomToolbar: true,
+    enableTopToolbar: false,
+    columns: columns,
+    data: data,
+    initialState: {
+      columnVisibility: spec.content.def.columnVisibility
+    }
+  }
+
+  let specificProps = {}
+
+  if (editingMode === 'row') {
+    specificProps = {
+      editingMode: 'row',
+      enableEditing: true,
+      enablePagination: true,
+      onEditingRowSave: handleSaveRow
+    }
+  } else if (editingMode === 'form') {
+    specificProps = {
+      editingMode: 'custom',
+      enablePagination: true,
+      muiTableBodyRowProps: handleRowClick
+    }
+  } else {
+    specificProps = {
+      enablePagination: false
+    }
+  }
+
   return (
-    <div className='BasicList' style={{ ...sx }}>
-      <MaterialReactTable
-        enableColumnActions={false}
-        enableColumnFilters={false}
-        enablePagination
-        enableSorting={false}
-        enableBottomToolbar
-        enableTopToolbar={false}
-        editingMode='row'
-        enableEditing
-        columns={columns}
-        data={data}
-        onEditingRowSave={handleSaveRow}
-        muiTableBodyRowProps={({ row }) => ({
-          // onClick: (event: any) => {
-          //   let selitem = { ...data[Number(row.id)] }
-          //   onRowClick(event, selitem)
-          // },
-          sx: { cursor: 'pointer' }
-        })}
-      />
-    </div>
+    <ThemeProvider theme={theme}>
+      <Box className='BasicList' style={{ ...sx }}>
+        <MaterialReactTable
+          {...commonTableProps}
+          {...specificProps}
+          key={cmpKey}
+        />
+      </Box>
+    </ThemeProvider>
   )
 }
 
 export default BasicList
-
-/*
-  <DataGrid
-    rows={rows}
-    columns={cols}
-    onRowClick={ (params) => {
-      let selitem = { ...params.row }
-      // console.log('item: ', selitem)
-      onRowClick({}, selitem)
-      
-    }}
-
-    checkboxSelection={false}
-  />
-*/

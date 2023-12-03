@@ -6,19 +6,15 @@ import { BasicMain } from '../src/lib/index'
 
 describe('BasicMain', () => {
   it('happy', () => {
+    const frame = spec.frame
+    const partMain = ctx().model.app.web.frame[frame].part.main
+    const view = ctx().model.app.web.frame[frame].view
     const basicMainSpec = {
-      main: {},
-      view: {
-        task: {
-          content: {
-            def: {
-              add: {}
-            }
-          },
-          name: 'task'
-        }
-      }
+      main: partMain,
+      view: view
     }
+
+    console.log('basicMainSpec', basicMainSpec)
 
     customRender(<BasicMain vxg={vxg} ctx={ctx} spec={basicMainSpec} />, {
       mockInitialState: initialState

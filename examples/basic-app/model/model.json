@@ -2,38 +2,65 @@
   "sys": {
     "app": {
       "web": {
+        "view": {
+          "content": {
+            "head": {},
+            "foot": {},
+            "def": {
+              "add": {}
+            }
+          }
+        },
         "part": {
           "admin": {},
           "head": {
             "logo": {},
             "tool": {
-              "def": []
-            }
-          },
-          "side": {
-            "logo": {},
-            "section": {}
-          },
-          "main": {},
-          "foot": {}
-        },
-        "view": {
-          "content": {
-            "def": {
-              "ent": {
-                "primary": {
-                  "field": {}
-                }
-              },
-              "add": {},
-              "edit": {
-                "layout": {
-                  "field": {}
+              "def": {}
+            },
+            "app": {
+              "web": {
+                "part": {
+                  "side": {
+                    "logo": {},
+                    "section": {}
+                  },
+                  "main": {},
+                  "foot": {}
                 }
               }
             }
           }
         }
+      }
+    },
+    "shape": {
+      "srv": {
+        "in": {},
+        "deps": {},
+        "api": {
+          "web": {
+            "active": true,
+            "path": {},
+            "method": "POST",
+            "cors": {
+              "active": false
+            }
+          }
+        },
+        "env": {
+          "lambda": {
+            "active": false,
+            "timeout": 30,
+            "handler": {
+              "path": {}
+            }
+          }
+        }
+      },
+      "app": {},
+      "part": {
+        "img": {}
       }
     }
   },
@@ -52,30 +79,19 @@
                 "img": "/voxgig.png"
               },
               "tool": {
-                "def": [
-                  {
-                    "kind": "addbutton",
-                    "title": "Add",
+                "def": {
+                  "addbutton": {
+                    "kind": "add",
+                    "label": "Add",
                     "options": {
                       "kind": "ent",
                       "label": {
                         "field": "title"
                       },
-                      "ent": "vxg/task"
-                    }
-                  },
-                  {
-                    "kind": "autocomplete",
-                    "title": "Autocomplete",
-                    "options": {
-                      "kind": "ent",
-                      "label": {
-                        "field": "title"
-                      },
-                      "ent": "vxg/task"
+                      "ent": "vxg/talk"
                     }
                   }
-                ]
+                }
               }
             },
             "side": {
@@ -84,12 +100,13 @@
               },
               "section": {
                 "section1": {
+                  "title": "Section 1",
                   "item": {
-                    "talk": {
+                    "task": {
                       "kind": "resource",
-                      "label": "Talks",
+                      "label": "Tasks",
                       "icon": "done",
-                      "path": "view/talk",
+                      "path": "view/task",
                       "access": {
                         "admin": true,
                         "user": true
@@ -118,77 +135,157 @@
           },
           "view": {
             "chat": {
-              "title": "Chat",
-              "icon": "done",
               "content": {
                 "kind": "custom",
-                "cmp": "chat",
+                "cmp": "Chat",
+                "head": {},
+                "foot": {},
                 "def": {
-                  "ent": {
-                    "primary": {
-                      "field": {}
-                    }
-                  },
                   "add": {
                     "active": false
                   },
-                  "edit": {
-                    "layout": {
-                      "field": {}
+                  "id": {
+                    "field": "id"
+                  },
+                  "field": {
+                    "id": {
+                      "type": "String",
+                      "inputType": "text",
+                      "required": true,
+                      "editable": true,
+                      "options": {}
                     }
                   }
                 }
               }
             },
-            "talk": {
-              "title": "Talk",
-              "icon": "done",
+            "task": {
               "content": {
                 "kind": "led",
+                "head": {
+                  "cmp": "ExampleLedHead"
+                },
+                "foot": {
+                  "cmp": "ExampleLedFoot"
+                },
                 "def": {
-                  "ent": {
-                    "canon": "vxg/talk",
-                    "primary": {
-                      "field": {
-                        "id": {
-                          "title": "ID",
-                          "edit": false
-                        }
-                      }
-                    }
-                  },
+                  "canon": "vxg/task",
                   "add": {
                     "active": true
                   },
-                  "edit": {
-                    "layout": {
-                      "order": "id,title,status",
-                      "field": {
-                        "title": {
-                          "type": "",
-                          "headerName": "Title",
-                          "edit": true,
-                          "kind": {}
+                  "field": {
+                    "id": {
+                      "label": "ID",
+                      "editable": false,
+                      "type": "String",
+                      "inputType": "text",
+                      "required": true,
+                      "options": {}
+                    },
+                    "title": {
+                      "label": "Title",
+                      "type": "String",
+                      "inputType": "text",
+                      "required": true,
+                      "editable": true,
+                      "options": {}
+                    },
+                    "status": {
+                      "inputType": "select",
+                      "label": "Status",
+                      "options": {
+                        "open": {
+                          "label": "Open"
                         },
-                        "status": {
-                          "type": "status",
-                          "headerName": "Status",
-                          "edit": true,
-                          "kind": {
-                            "open": {
-                              "title": "Open"
-                            },
-                            "closed": {
-                              "title": "Closed"
-                            }
-                          }
+                        "closed": {
+                          "label": "Closed"
                         }
-                      }
+                      },
+                      "type": "String",
+                      "required": true,
+                      "editable": true
                     }
+                  },
+                  "id": {
+                    "field": "id"
                   }
                 }
               }
             }
+          }
+        }
+      }
+    }
+  },
+  "main": {
+    "ent": {
+      "sys": {
+        "task": {
+          "id": {
+            "field": "id"
+          },
+          "field": {
+            "id": {
+              "type": "String",
+              "label": "ID",
+              "inputType": "text",
+              "required": true,
+              "editable": false,
+              "options": {}
+            },
+            "title": {
+              "label": "Title",
+              "type": "String",
+              "inputType": "text",
+              "required": true,
+              "editable": true,
+              "options": {}
+            },
+            "status": {
+              "inputType": "select",
+              "label": "Status",
+              "options": {
+                "open": {
+                  "label": "Open"
+                },
+                "closed": {
+                  "label": "Closed"
+                }
+              },
+              "type": "String",
+              "required": true,
+              "editable": true
+            }
+          }
+        },
+        "chat": {
+          "id": {
+            "field": "id"
+          },
+          "field": {
+            "id": {
+              "type": "String",
+              "inputType": "text",
+              "required": true,
+              "editable": true,
+              "options": {}
+            }
+          }
+        }
+      }
+    },
+    "shape": {
+      "ent": {
+        "id": {
+          "field": "id"
+        },
+        "field": {
+          "id": {
+            "type": "String",
+            "inputType": "text",
+            "required": true,
+            "editable": true,
+            "options": {}
           }
         }
       }

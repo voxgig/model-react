@@ -2,46 +2,45 @@
 
 kind: basic
 
-part: $.sys.app.web.part
+# part: $.sys.app.web.part
 
 part: admin: {}
 
-part: head: {
+part: head:  {
   logo: img: '/voxgig.png'
-  tool: def: [
-    { 
-      kind: 'addbutton'
-      title: 'Add'
+  tool: def: {
+    addbutton:{ 
+      kind: 'add'
+      label: 'Add'
       options: { 
         kind: 'ent' 
         label: field: 'title'
-        ent: 'vxg/task'
+        ent: 'vxg/talk'
       }
     },
-    { 
-      kind: 'autocomplete'
-      title: 'Autocomplete'
-      options: { 
-        kind: 'ent'
-        label: field: 'title'
-        ent: 'vxg/task'
-      }
-    }
-  ]
+    # autocomplete:{ 
+    #   kind: 'autocomplete'
+    #   label: 'Autocomplete'
+    #   options: { 
+    #     kind: 'ent'
+    #     label: field: 'title'
+    #     ent: 'vxg/talk'
+    #   }
+    # }
+  }
 }
-
-
 
 part: side: {
   logo: img: '/voxgig.png'
   section: {
     section1: {
+      title: 'Section 1'
       item: {
-        talk: {
+        task: {
           kind: 'resource'
-          label: 'Talks'
+          label: 'Tasks'
           icon: 'done'
-          path: 'view/talk'
+          path: 'view/task'
           access: {
             admin: true
             user: true
@@ -69,54 +68,27 @@ part: foot: title: "Footer"
 view: &: $.sys.app.web.view
 
 view: chat: {
-  title: 'Chat'
-  icon: 'done'
   content: {
     kind: 'custom'
-    cmp: 'chat'
-    def: add: { active: false }
+    cmp: 'Chat'
+    def: $.main.ent.sys.chat & {
+      add: active: false
+    }
   }
 }
 
-# view: talk: $.app.web.frame.private.part.side.section.section1.item.talk
-
-view: talk: {
-  title: 'Talk'
-  icon: 'done'
-  content: kind: 'led'
-  content: def: {
-    ent: {
-        primary: {
-          field: {
-            id: { 
-              title: 'ID'
-              edit: false 
-            }
-          }
-        },
-        canon: 'vxg/talk'
+view: task: {
+  content: {
+    kind: 'led'
+    head: {
+      cmp: 'ExampleLedHead'
     }
-    add: active: true
-    edit: { 
-      layout: {
-        order: "id,title,status"
-        field: {
-          title: { 
-            type: ''
-            headerName: 'Title'
-            edit: true 
-          }
-          status: { 
-            type: 'status', 
-            headerName: 'Status', 
-            edit: true, 
-            kind: { 
-              open: title: 'Open'
-              closed: title: 'Closed' 
-            }
-          }
-        }
-      }
+    foot: {
+      cmp: 'ExampleLedFoot'
+    }
+    def: $.main.ent.sys.task & {
+      canon: 'vxg/task'
+      add: active: true
     }
   }
 }

@@ -1,11 +1,11 @@
 import React from 'react'
-import { render, screen } from '@testing-library/react'
+import { render, screen, RenderOptions } from '@testing-library/react'
+import '@testing-library/jest-dom'
 import { Provider } from 'react-redux'
 import { BrowserRouter } from 'react-router-dom'
 import thunk from 'redux-thunk'
 import configureStore from 'redux-mock-store'
-import '@testing-library/jest-dom'
-import type { RenderOptions } from '@testing-library/react'
+import { createTheme } from '@mui/material'
 
 interface IExtendedRenderOptions extends RenderOptions {
   withRouter?: boolean
@@ -35,7 +35,7 @@ const setupComponent = (
   return componentTree
 }
 
-export function customRender(
+export function customRender (
   ui: JSX.Element,
   renderOptions?: IExtendedRenderOptions
 ) {
@@ -65,6 +65,81 @@ export const vxg = {
   }
 }
 
+const lightTheme = createTheme({
+  components: {
+    MuiDrawer: {
+      defaultProps: {
+        variant: 'persistent'
+      },
+      styleOverrides: {
+        root: {
+          // persistent sidebar
+          width: '16rem',
+          flexShrink: 0,
+          '& .MuiDrawer-paper': {
+            width: '16rem',
+            boxSizing: 'border-box'
+          },
+          anchor: 'left'
+        },
+        // permanent sidebar
+        paper: {
+          width: '16rem',
+          boxSizing: 'border-box'
+        }
+      }
+    },
+    MuiPaper: {
+      styleOverrides: {
+        root: {
+          '& .MuiToolbar-root': {
+            backgroundColor: '#ffffff'
+          }
+        }
+      }
+    },
+    MuiTable: {
+      styleOverrides: {
+        root: {
+          color: 'red',
+          backgroundColor: 'white',
+          '& .MuiTableRow-root': {
+            color: 'red',
+            backgroundColor: '#ffffff'
+          },
+          '& .MuiToolbar-root': {
+            color: 'red',
+            backgroundColor: '#ffffff'
+          }
+        }
+      }
+    },
+    MuiAutocomplete: {
+      defaultProps: {
+        popupIcon: true
+      },
+      styleOverrides: {
+        root: {
+          marginLeft: '1em',
+          width: '20rem'
+        }
+      }
+    }
+  },
+  palette: {
+    mode: 'light',
+    background: {
+      default: '#eee',
+      paper: '#ffffff'
+    }
+  },
+  typography: {
+    h6: {
+      color: 'black'
+    }
+  }
+})
+
 export const ctx = () => {
   return {
     model: {
@@ -72,33 +147,127 @@ export const ctx = () => {
         web: {
           frame: {
             public: {
+              kind: 'basic'
+            },
+            private: {
+              kind: 'basic',
               part: {
-                foot: {},
+                admin: {},
                 head: {
+                  logo: {
+                    img: '/voxgig.png'
+                  },
+                  variant: 'persistent',
                   tool: {
-                    def: [
-                      { kind: 'addbutton', title: 'Add', options: { kind: 'ent', label: { field: 'title' }, ent: 'vxg/task' } },
-                      { kind: 'autocomplete', title: 'Autocomplete', options: { kind: 'ent', label: { field: 'title' }, ent: 'vxg/task' } }
-                    ]
+                    def: {
+                      addbutton: {
+                        kind: 'add',
+                        label: 'Add',
+                        options: {
+                          kind: 'ent',
+                          label: {
+                            field: 'title'
+                          },
+                          ent: 'vxg/task'
+                        }
+                      },
+                      autocomplete: {
+                        kind: 'autocomplete',
+                        label: 'Autocomplete',
+                        options: {
+                          kind: 'ent',
+                          label: {
+                            field: 'title'
+                          },
+                          ent: 'vxg/task'
+                        }
+                      }
+                    }
                   }
                 },
                 side: {
-                  logo: { img: "/logo.png" }
-                }
-              },
-              view: {}
-            },
-            private: {
-              part: {
-                foot: {},
-                head: { logo: { img: '/logo.png' }, tool: { def: [] } },
-                side: {
-                  logo: { img: "/logo.png" },
-                  section: {}
+                  logo: {
+                    img: '/voxgig.png'
+                  },
+                  variant: 'persistent',
+                  section: {
+                    section1: {
+                      title: 'Section 1',
+                      divider: true,
+                      item: {
+                        task: {
+                          kind: 'resource',
+                          label: 'Tasks',
+                          icon: 'done',
+                          path: 'view/task',
+                          access: {
+                            admin: true,
+                            user: true
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                main: {
+                  title: 'Main'
+                },
+                foot: {
+                  title: 'Footer'
                 }
               },
               view: {
-                undefined: { content: { kind: 'led', def: { add: {} } }, title: 'Task' }
+                task: {
+                  title: 'Task',
+                  name: 'task',
+                  content: {
+                    def: {
+                      canon: 'vxg/task',
+                      subview: {
+                        index: {
+                          kind: 'led',
+                          editingMode: 'row'
+                        },
+                        edit: {},
+                        show: {}
+                      },
+                      field: {
+                        id: {
+                          label: 'ID',
+                          inputType: 'text',
+                          required: true,
+                          editable: false,
+                          kind: 'String'
+                        },
+                        title: {
+                          kind: 'String',
+                          inputType: 'text',
+                          label: 'Title',
+                          required: true,
+                          editable: true
+                        },
+                        status: {
+                          kind: 'String',
+                          inputType: 'select',
+                          label: 'Status',
+                          required: true,
+                          editable: true,
+                          options: {
+                            open: {
+                              label: 'Open'
+                            },
+                            closed: {
+                              label: 'Closed'
+                            }
+                          }
+                        }
+                      },
+                      id: {
+                        field: 'id'
+                      }
+                    }
+                  }
+                }
               }
             }
           }
@@ -108,19 +277,21 @@ export const ctx = () => {
     content: {},
     seneca: {
       entity: () => ({
-        list$: (q) => Promise.resolve([]), // Mock the list$ function to return an empty array
-      }),
+        list$: q => Promise.resolve([]) // Mock the list$ function to return an empty array
+      })
     },
     custom: {
       BasicLed: {
-        query: (view: any, cmpstate: any) => { }
+        query: (view: any, cmpstate: any) => {}
       }
-    }
+    },
+    cmp: {},
+    theme: lightTheme
   }
 }
 
 export const spec = {
-  frame: 'private',
+  frame: 'private'
 }
 
 export const initialState = {
@@ -129,10 +300,14 @@ export const initialState = {
     vxg: {
       cmp: {
         BasicHead: {
-          tool: [
-            { selected: true },
-            { selected: false },
-          ]
+          tool: {
+            addbutton: {},
+            autocomplete: {
+              selected: {
+                title: 'Title'
+              }
+            }
+          }
         },
         BasicSide: {
           show: true
@@ -142,14 +317,21 @@ export const initialState = {
       ent: {
         list: {
           main: {
-            'vxg/task': []
-          },
+            'vxg/task': [
+              {
+                entity$: '-/vxg/task',
+                id: 't01',
+                title: 'Task 1',
+                status: 'open'
+              }
+            ]
+          }
         },
         meta: {
           main: {
             'vxg/task': { state: 'none' }
-          },
-        },
+          }
+        }
       }
     }
   }

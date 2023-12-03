@@ -5,7 +5,8 @@ import {
   TextField,
   Autocomplete,
   createFilterOptions,
-  MenuItem
+  MenuItem,
+  Box
 } from '@mui/material'
 
 import { useForm, Controller } from 'react-hook-form'
@@ -13,8 +14,6 @@ import { useForm, Controller } from 'react-hook-form'
 import BasicButton from './BasicButton'
 
 const filter = createFilterOptions()
-
-function resolveOptions (options: any) {}
 
 function BasicEdit (props: any) {
   const {
@@ -25,14 +24,8 @@ function BasicEdit (props: any) {
     children = []
   } = props
 
-  const { ctx, spec } = props
-  const { seneca, custom } = ctx()
-
-  const def = spec.content.def
-  const { ent, cols } = def
-
   useEffect(() => {
-    for (const field of itemFields) {
+    for (const [key, field] of Object.entries<any>(itemFields)) {
       setValue(field.name, item[field.name] || field.defaultValue || '')
     }
   }, [item])
@@ -44,7 +37,7 @@ function BasicEdit (props: any) {
   const { handleSubmit, setValue, control } = forms
 
   return (
-    <div className='BasicEdit'>
+    <Box className='BasicEdit'>
       <form
         className='vxg-form-field'
         onSubmit={handleSubmit(async (data: any) => {
@@ -56,14 +49,13 @@ function BasicEdit (props: any) {
         })}
       >
         <Grid container spacing={3}>
-          {itemFields.map((field: any, index: any) => {
-            // console.log('register: ', item )
+          {Object.entries(itemFields).map(([index, field]: [any, any]) => {
             return (
               <Grid item xs={field.size} key={index}>
                 <Controller
-                  name={field.name}
+                  name={index}
                   control={control}
-                  defaultValue={item[field.name] || ''}
+                  defaultValue={item[index] || ''}
                   render={({
                     field: { onChange, onBlur, value },
                     fieldState: { error }
@@ -72,13 +64,13 @@ function BasicEdit (props: any) {
                       <Autocomplete
                         freeSolo
                         id='combo-box'
-                        options={field.kind}
+                        options={field.options}
                         fullWidth
                         selectOnFocus
                         onBlur={onBlur}
                         handleHomeEndKeys
                         disableClearable={value == ''}
-                        disabled={!field.edit}
+                        disabled={!field.editable}
                         value={value}
                         getOptionLabel={(option: any) => option || ''}
                         filterOptions={(options: any, params: any) => {
@@ -104,7 +96,7 @@ function BasicEdit (props: any) {
                         renderInput={params => (
                           <TextField
                             {...params}
-                            label={field.headerName}
+                            label={field.label}
                             onBlur={onBlur}
                             error={!(error == null)}
                             helperText={error != null ? error.message : null}
@@ -113,11 +105,11 @@ function BasicEdit (props: any) {
                       />
                     ) : (
                       <TextField
-                        key={field.name}
-                        label={field.headerName}
+                        key={index}
+                        label={field.label}
                         fullWidth
-                        select={field.type === 'status'}
-                        disabled={!field.edit}
+                        select={field.inputType === 'select'}
+                        disabled={!field.editable}
                         onChange={onChange}
                         value={value}
                         onBlur={onBlur}
@@ -127,10 +119,10 @@ function BasicEdit (props: any) {
                           textAlign: 'left'
                         }}
                       >
-                        {field.type === 'status'
-                          ? Object.keys(field.kind).map(option => (
+                        {field.inputType === 'select'
+                          ? Object.keys(field.options).map(option => (
                               <MenuItem key={option} value={option}>
-                                {field.kind[option]?.title}
+                                {field.options[option]?.label}
                               </MenuItem>
                             ))
                           : null}
@@ -181,7 +173,7 @@ function BasicEdit (props: any) {
           </Grid>
         </Grid>
       </form>
-    </div>
+    </Box>
   )
 }
 

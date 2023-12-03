@@ -1,12 +1,20 @@
 import { useSelector } from 'react-redux'
-
 import { useNavigate } from 'react-router-dom'
-
-import { Child, Exact, Gubu } from 'gubu'
+import { Gubu } from 'gubu'
 import BasicSideMenu from './BasicSideMenu'
-import { ChevronLeft } from '@mui/icons-material'
-import { Divider, IconButton } from '@mui/material'
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
+
+import {
+  Box,
+  Divider,
+  Drawer,
+  IconButton,
+  Toolbar,
+  useTheme
+} from '@mui/material'
 import { BasicDrawer, BasicDrawerHeader } from './BasicDrawer'
+
+const { Child } = Gubu
 
 // TODO: Make sure Child() fails properly
 const BasicSideSpecShape = Gubu({
@@ -14,10 +22,12 @@ const BasicSideSpecShape = Gubu({
     logo: {
       img: String
     },
+    variant: String,
     section: Child({
       title: String,
+      divider: Boolean,
       item: Child({
-        kind: Exact('resource', 'page', 'modal'),
+        kind: String,
         label: String,
         icon: String,
         path: String,
@@ -25,11 +35,7 @@ const BasicSideSpecShape = Gubu({
       })
     })
   },
-  view: Child({
-    title: String,
-    icon: String,
-    content: {}
-  })
+  view: {}
 })
 
 function onClose (seneca: any) {
@@ -42,6 +48,7 @@ function onClose (seneca: any) {
 function BasicSide (props: any) {
   const { vxg, ctx } = props
   const { seneca } = ctx()
+  const theme = useTheme()
 
   const vxgState = useSelector((state: any) => state.main.vxg)
   const open = vxgState.cmp.BasicSide.show
@@ -60,18 +67,53 @@ function BasicSide (props: any) {
     section: basicSideSpec.side.section
   }
 
-  return (
-    <BasicDrawer variant='permanent' drawerwidth='16rem' open={open}>
-      <BasicDrawerHeader>
-        <img src={basicSideSpec.side.logo.img} style={{ width: '5rem' }} />
-        <IconButton onClick={() => onClose(seneca)}>
-          <ChevronLeft sx={{ color: 'black' }} />
-        </IconButton>
-      </BasicDrawerHeader>
-      <Divider />
-      <BasicSideMenu spec={basicSideMenuSpec} onItemSelect={handleItemSelect} />
-    </BasicDrawer>
-  )
+  const drawerVariant = basicSideSpec.side.variant
+
+  // TODO: refactor and DRY
+  if (drawerVariant === 'permanent') {
+    // TODO: Extract Box sx={} to theme
+    return (
+      <Drawer open={open}>
+        <Toolbar />
+        <Box
+          className='DrawerContainer'
+          sx={{
+            backgroundColor: '#2a2d49',
+            overflow: 'auto',
+            marginLeft: '23px',
+            marginBottom: '20px',
+            marginTop: '15px',
+            width: '189px',
+            height: '100%',
+            borderRadius: '4px'
+          }}
+        >
+          <BasicSideMenu
+            spec={basicSideMenuSpec}
+            onItemSelect={handleItemSelect}
+          />
+        </Box>
+      </Drawer>
+    )
+  } else {
+    return (
+      <Drawer open={open}>
+        <Box>
+          <BasicDrawerHeader>
+            <img src={basicSideSpec.side.logo.img} style={{ width: '5rem' }} />
+            <IconButton onClick={() => onClose(seneca)}>
+              <ChevronLeftIcon sx={{ color: theme.palette.primary.main }} />
+            </IconButton>
+          </BasicDrawerHeader>
+          <Divider />
+          <BasicSideMenu
+            spec={basicSideMenuSpec}
+            onItemSelect={handleItemSelect}
+          />
+        </Box>
+      </Drawer>
+    )
+  }
 }
 
 export default BasicSide
