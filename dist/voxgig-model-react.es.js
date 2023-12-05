@@ -59,7 +59,7 @@ import * as React from "react";
 import React__default, { createElement, isValidElement, Children, cloneElement, useMemo, useState, useRef, useCallback, useEffect, Fragment, memo as memo$2, useLayoutEffect } from "react";
 import { useSelector } from "react-redux";
 import { useLocation, useNavigate, Link, Routes, Route } from "react-router-dom";
-import { Button as Button$1, ThemeProvider as ThemeProvider$2, Autocomplete, TextField as TextField$1, createFilterOptions as createFilterOptions$1, useTheme as useTheme$4, Toolbar as Toolbar$1, Avatar, IconButton as IconButton$1, Typography as Typography$1, List as List$1, ListItem, ListItemButton, ListItemIcon as ListItemIcon$1, ListItemText as ListItemText$1, Divider as Divider$1, Drawer as Drawer$1, Box as Box$2, Grid as Grid$1, MenuItem as MenuItem$1, Chip as Chip$1, Container as Container$2 } from "@mui/material";
+import { Button as Button$1, ThemeProvider as ThemeProvider$2, Autocomplete, TextField as TextField$1, createFilterOptions as createFilterOptions$1, useTheme as useTheme$4, Toolbar as Toolbar$1, Avatar, IconButton as IconButton$1, Typography as Typography$1, List as List$1, ListItem, ListItemButton, ListItemIcon as ListItemIcon$1, ListItemText as ListItemText$1, Divider as Divider$1, Drawer as Drawer$1, Box as Box$2, Grid as Grid$1, MenuItem as MenuItem$1, LinearProgress as LinearProgress$1, Chip as Chip$1, Container as Container$2 } from "@mui/material";
 import * as ReactDOM from "react-dom";
 import ReactDOM__default, { flushSync } from "react-dom";
 import emStyled from "@emotion/styled";
@@ -47859,22 +47859,25 @@ function BasicLed(props) {
   const { seneca, custom } = ctx();
   const [item, setItem] = useState({});
   const location2 = useLocation();
+  const navigate = useNavigate();
   const basicLedSpec = BasicLedSpecShape(props.spec);
+  const viewName = basicLedSpec.name;
   const def = basicLedSpec.content.def;
   const canon = def.canon;
+  const cmpState = useSelector((state) => state.main.vxg.cmp);
+  const entState = useSelector(
+    (state) => state.main.vxg.ent.meta.main[canon].state
+  );
+  if ("none" === entState) {
+    let q = custom.BasicLed.query(basicLedSpec, cmpState);
+    seneca.entity(canon).list$(q);
+  }
+  const fields = basicLedSpec.content.def.field;
   const entlist = useSelector(
     (state) => state.main.vxg.ent.list.main[canon]
   );
   const rows = entlist;
-  const cmpstate = useSelector((state) => state.main.vxg.cmp);
-  const entstate = useSelector(
-    (state) => state.main.vxg.ent.meta.main[canon].state
-  );
-  if ("none" === entstate) {
-    let q = custom.BasicLed.query(basicLedSpec, cmpstate);
-    seneca.entity(canon).list$(q);
-  }
-  const fields = basicLedSpec.content.def.field;
+  let data = rows;
   const basicListColumns = Object.entries(fields).map(
     ([key, field]) => ({
       accessorFn: (row) => row[key],
@@ -47888,7 +47891,6 @@ function BasicLed(props) {
       size: 40
     })
   );
-  const viewName = basicLedSpec.name;
   const renderCell = ({ cell, field, row }) => {
     const cellValue = cell.getValue();
     var entityId, action;
@@ -47898,7 +47900,20 @@ function BasicLed(props) {
         return /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: `/view/${viewName}/${entityId}/show`, children: cellValue });
       case "image":
         return /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: cellValue, alt: "Cell Content" });
-      case "action":
+      case "button":
+        return /* @__PURE__ */ jsxRuntimeExports.jsx(
+          BasicButton,
+          {
+            type: "submit",
+            variant: "outlined",
+            size: "medium",
+            onClick: () => {
+              navigate(`/view/${viewName}/${row.original.id}/${field.action}`);
+            },
+            children: field.actionLabel
+          }
+        );
+      case "link":
         entityId = row.original.id;
         action = field.action;
         return /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: `/view/${viewName}/${entityId}/${action}`, children: field.actionLabel });
@@ -47910,11 +47925,20 @@ function BasicLed(props) {
         } else if (cellValue === "High") {
           return /* @__PURE__ */ jsxRuntimeExports.jsx(Chip$1, { sx: { color: "white" }, label: cellValue, color: "error" });
         }
+      case "progressBar":
+        return /* @__PURE__ */ jsxRuntimeExports.jsx(
+          LinearProgress$1,
+          {
+            variant: "determinate",
+            value: 50,
+            color: "success",
+            sx: { height: "9px", border: "2px solid #ccc", width: "80%" }
+          }
+        );
       default:
         return /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: cellValue });
     }
   };
-  let data = rows;
   useEffect(() => {
     setItem({});
   }, [location2.pathname]);
@@ -47932,7 +47956,7 @@ function BasicLed(props) {
   const HeadCmp = ctx().cmp[headComponent];
   const FootCmp = ctx().cmp[footComponent];
   return /* @__PURE__ */ jsxRuntimeExports.jsx(Box$2, { className: "BasicLed", children: "-/" + canon !== item.entity$ ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-    HeadCmp ? /* @__PURE__ */ jsxRuntimeExports.jsx(HeadCmp, {}) : null,
+    HeadCmp ? /* @__PURE__ */ jsxRuntimeExports.jsx(HeadCmp, { ctx }) : null,
     /* @__PURE__ */ jsxRuntimeExports.jsx(
       BasicList,
       {
@@ -47955,7 +47979,7 @@ function BasicLed(props) {
       },
       canon
     ),
-    FootCmp ? /* @__PURE__ */ jsxRuntimeExports.jsx(FootCmp, {}) : null
+    FootCmp ? /* @__PURE__ */ jsxRuntimeExports.jsx(FootCmp, { ctx }) : null
   ] }) : /* @__PURE__ */ jsxRuntimeExports.jsx(
     BasicEdit,
     {
@@ -48042,7 +48066,7 @@ const renderRoutes = (views, vxg, ctx, theme) => {
       Route,
       {
         path: routePath,
-        element: /* @__PURE__ */ jsxRuntimeExports.jsx(ThemeProvider$2, { theme, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Cmp, { vxg, ctx, spec: view }) })
+        element: /* @__PURE__ */ jsxRuntimeExports.jsx(ThemeProvider$2, { theme, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Cmp, { vxg, ctx, spec: view }, key) })
       }
     ) }, key);
   }) }, view.name));

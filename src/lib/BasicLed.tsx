@@ -1,15 +1,16 @@
 import { useState, useEffect, useId } from 'react'
 import { useSelector } from 'react-redux'
-import { Link, useLocation, useParams } from 'react-router-dom'
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
 
 import BasicList from './BasicList'
 import BasicEdit from './BasicEdit'
 import { Exact, Gubu } from 'gubu'
-import { Box, Chip } from '@mui/material'
+import { Box, Chip, LinearProgress } from '@mui/material'
+import { Height } from '@mui/icons-material'
+import BasicButton from './BasicButton'
 
+// Define the shape of props.spec
 const { Skip } = Gubu
-
-// Validate spec shape with Gubu
 const BasicLedSpecShape = Gubu({
   title: String,
   name: String,
@@ -31,37 +32,51 @@ const BasicLedSpecShape = Gubu({
   }
 })
 
+// BasicLed renders a list of entities (with BasicList) or a form to edit them (with BasicEdit)
 function BasicLed (props: any) {
   const { ctx } = props
   const { seneca, custom } = ctx()
   const [item, setItem] = useState({} as any)
   const location = useLocation()
+  const navigate = useNavigate()
 
+  // Validate props.spec shape
   const basicLedSpec = BasicLedSpecShape(props.spec)
 
+  // Define few variables from spec
+  const viewName = basicLedSpec.name
   const def = basicLedSpec.content.def
   const canon = def.canon
 
+  // Fetch entity data if not already fetched
+  const cmpState = useSelector((state: any) => state.main.vxg.cmp)
+  const entState = useSelector(
+    (state: any) => state.main.vxg.ent.meta.main[canon].state
+  )
+  if ('none' === entState) {
+    let q = custom.BasicLed.query(basicLedSpec, cmpState)
+    seneca.entity(canon).list$(q)
+  }
+
+  //
+  // Common
+  //
+  // Define entity fields from spec
+  const fields: any = basicLedSpec.content.def.field
+
+  //
+  // BasicList related
+  //
+
+  // Define data we'll use to render the list
   const entlist = useSelector(
     (state: any) => state.main.vxg.ent.list.main[canon]
   )
   const rows = entlist
+  let data = rows //.slice(0, 10)
 
-  const cmpstate = useSelector((state: any) => state.main.vxg.cmp)
-  const entstate = useSelector(
-    (state: any) => state.main.vxg.ent.meta.main[canon].state
-  )
-
-  // Fetch data if not already fetched
-  if ('none' === entstate) {
-    let q = custom.BasicLed.query(basicLedSpec, cmpstate)
-    seneca.entity(canon).list$(q)
-  }
-
-  const fields: any = basicLedSpec.content.def.field
-
-  // Define columns
   // TODO: move to BasicList
+  // Define BasicList columns from fields
   const basicListColumns = Object.entries(fields).map(
     ([key, field]: [any, any]) => ({
       accessorFn: (row: any) => row[key],
@@ -77,10 +92,8 @@ function BasicLed (props: any) {
     })
   )
 
-  const viewName = basicLedSpec.name
-
-  // Define how cells are rendered
   // TODO: move to BasicList
+  // Define how cells are rendered
   const renderCell = ({ cell, field, row }: any) => {
     const cellValue = cell.getValue()
     var entityId, action
@@ -93,7 +106,20 @@ function BasicLed (props: any) {
         )
       case 'image':
         return <img src={cellValue} alt='Cell Content' />
-      case 'action':
+      case 'button':
+        return (
+          <BasicButton
+            type='submit'
+            variant='outlined'
+            size='medium'
+            onClick={() => {
+              navigate(`/view/${viewName}/${row.original.id}/${field.action}`)
+            }}
+          >
+            {field.actionLabel}
+          </BasicButton>
+        )
+      case 'link':
         entityId = row.original.id
         action = field.action
         return (
@@ -102,7 +128,7 @@ function BasicLed (props: any) {
           </Link>
         )
       case 'chip':
-        // TODO: refactor this to handle any color
+        // FIXME: refactor this to handle any color
         if (cellValue === 'Low') {
           return (
             <Chip sx={{ color: 'white' }} label={cellValue} color='success' />
@@ -116,26 +142,37 @@ function BasicLed (props: any) {
             <Chip sx={{ color: 'white' }} label={cellValue} color='error' />
           )
         }
+      case 'progressBar':
+        // FIXME: Accept dynamic width, border, height, etc.
+        return (
+          <LinearProgress
+            variant='determinate'
+            value={50}
+            color='success'
+            sx={{ height: '9px', border: '2px solid #ccc', width: '80%' }}
+          />
+        )
 
       default:
         return <span>{cellValue}</span>
     }
   }
 
-  let data = rows //.slice(0, 10)
+  //
+  // BasicEdit related
+  //
 
+  // Reset item when location changes
   useEffect(() => {
     setItem({})
   }, [location.pathname])
 
+  // Handle when the add button (in BasicHead) is clicked
   const vxgState = useSelector((state: any) => state.main.vxg)
   const led_add = vxgState.trigger.led.add
   let [triggerLed, setTriggerLed] = useState(0)
-
-  // Triggered on add item button
   useEffect(() => {
-    // a workaround to prevent
-    // 'useEffect' to trigger when re-rendered
+    // a workaround to prevent 'useEffect' to trigger when re-rendered
     if (triggerLed >= 2) {
       setItem({ entity$: '-/' + def.canon })
     }
@@ -143,17 +180,22 @@ function BasicLed (props: any) {
     setTriggerLed(++triggerLed)
   }, [led_add])
 
-  // Grab head and foot components
+  //
+  // Component rendering
+  //
+
+  // Grab custom header and footer components (if any)
   const headComponent = basicLedSpec.content.def?.subview?.index?.head?.cmp
   const footComponent = basicLedSpec.content.def?.subview?.index?.foot?.cmp
   const HeadCmp = ctx().cmp[headComponent]
   const FootCmp = ctx().cmp[footComponent]
 
+  // Render BasicLed (list entities) or BasicEdit (edit single entity) depending on item.entity$
   return (
     <Box className='BasicLed'>
       {'-/' + canon !== item.entity$ ? (
         <>
-          {HeadCmp ? <HeadCmp /> : null}
+          {HeadCmp ? <HeadCmp ctx={ctx} /> : null}
           <BasicList
             key={canon}
             ctx={ctx}
@@ -173,7 +215,7 @@ function BasicLed (props: any) {
               setItem({})
             }}
           />
-          {FootCmp ? <FootCmp /> : null}
+          {FootCmp ? <FootCmp ctx={ctx} /> : null}
         </>
       ) : (
         <BasicEdit

@@ -102,7 +102,7 @@ const renderRoutes = (views: any[], vxg: any, ctx: any, theme: any) => {
               path={routePath}
               element={
                 <ThemeProvider theme={theme}>
-                  <Cmp vxg={vxg} ctx={ctx} spec={view} />
+                  <Cmp key={key} vxg={vxg} ctx={ctx} spec={view} />
                 </ThemeProvider>
               }
             />

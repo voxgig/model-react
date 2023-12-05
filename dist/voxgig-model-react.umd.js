@@ -47871,22 +47871,25 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const { seneca, custom } = ctx();
     const [item, setItem] = React.useState({});
     const location2 = reactRouterDom.useLocation();
+    const navigate = reactRouterDom.useNavigate();
     const basicLedSpec = BasicLedSpecShape(props.spec);
+    const viewName = basicLedSpec.name;
     const def = basicLedSpec.content.def;
     const canon = def.canon;
+    const cmpState = reactRedux.useSelector((state) => state.main.vxg.cmp);
+    const entState = reactRedux.useSelector(
+      (state) => state.main.vxg.ent.meta.main[canon].state
+    );
+    if ("none" === entState) {
+      let q = custom.BasicLed.query(basicLedSpec, cmpState);
+      seneca.entity(canon).list$(q);
+    }
+    const fields = basicLedSpec.content.def.field;
     const entlist = reactRedux.useSelector(
       (state) => state.main.vxg.ent.list.main[canon]
     );
     const rows = entlist;
-    const cmpstate = reactRedux.useSelector((state) => state.main.vxg.cmp);
-    const entstate = reactRedux.useSelector(
-      (state) => state.main.vxg.ent.meta.main[canon].state
-    );
-    if ("none" === entstate) {
-      let q = custom.BasicLed.query(basicLedSpec, cmpstate);
-      seneca.entity(canon).list$(q);
-    }
-    const fields = basicLedSpec.content.def.field;
+    let data = rows;
     const basicListColumns = Object.entries(fields).map(
       ([key, field]) => ({
         accessorFn: (row) => row[key],
@@ -47900,7 +47903,6 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         size: 40
       })
     );
-    const viewName = basicLedSpec.name;
     const renderCell = ({ cell, field, row }) => {
       const cellValue = cell.getValue();
       var entityId, action;
@@ -47910,7 +47912,20 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           return /* @__PURE__ */ jsxRuntimeExports.jsx(reactRouterDom.Link, { to: `/view/${viewName}/${entityId}/show`, children: cellValue });
         case "image":
           return /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: cellValue, alt: "Cell Content" });
-        case "action":
+        case "button":
+          return /* @__PURE__ */ jsxRuntimeExports.jsx(
+            BasicButton,
+            {
+              type: "submit",
+              variant: "outlined",
+              size: "medium",
+              onClick: () => {
+                navigate(`/view/${viewName}/${row.original.id}/${field.action}`);
+              },
+              children: field.actionLabel
+            }
+          );
+        case "link":
           entityId = row.original.id;
           action = field.action;
           return /* @__PURE__ */ jsxRuntimeExports.jsx(reactRouterDom.Link, { to: `/view/${viewName}/${entityId}/${action}`, children: field.actionLabel });
@@ -47922,11 +47937,20 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           } else if (cellValue === "High") {
             return /* @__PURE__ */ jsxRuntimeExports.jsx(material.Chip, { sx: { color: "white" }, label: cellValue, color: "error" });
           }
+        case "progressBar":
+          return /* @__PURE__ */ jsxRuntimeExports.jsx(
+            material.LinearProgress,
+            {
+              variant: "determinate",
+              value: 50,
+              color: "success",
+              sx: { height: "9px", border: "2px solid #ccc", width: "80%" }
+            }
+          );
         default:
           return /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: cellValue });
       }
     };
-    let data = rows;
     React.useEffect(() => {
       setItem({});
     }, [location2.pathname]);
@@ -47944,7 +47968,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const HeadCmp = ctx().cmp[headComponent];
     const FootCmp = ctx().cmp[footComponent];
     return /* @__PURE__ */ jsxRuntimeExports.jsx(material.Box, { className: "BasicLed", children: "-/" + canon !== item.entity$ ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-      HeadCmp ? /* @__PURE__ */ jsxRuntimeExports.jsx(HeadCmp, {}) : null,
+      HeadCmp ? /* @__PURE__ */ jsxRuntimeExports.jsx(HeadCmp, { ctx }) : null,
       /* @__PURE__ */ jsxRuntimeExports.jsx(
         BasicList,
         {
@@ -47967,7 +47991,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         },
         canon
       ),
-      FootCmp ? /* @__PURE__ */ jsxRuntimeExports.jsx(FootCmp, {}) : null
+      FootCmp ? /* @__PURE__ */ jsxRuntimeExports.jsx(FootCmp, { ctx }) : null
     ] }) : /* @__PURE__ */ jsxRuntimeExports.jsx(
       BasicEdit,
       {
@@ -48054,7 +48078,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         reactRouterDom.Route,
         {
           path: routePath,
-          element: /* @__PURE__ */ jsxRuntimeExports.jsx(material.ThemeProvider, { theme, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Cmp, { vxg, ctx, spec: view }) })
+          element: /* @__PURE__ */ jsxRuntimeExports.jsx(material.ThemeProvider, { theme, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Cmp, { vxg, ctx, spec: view }, key) })
         }
       ) }, key);
     }) }, view.name));
