@@ -99,11 +99,6 @@ function BasicLed (props: any) {
     var entityId, action
 
     switch (field.displayType) {
-      case 'link':
-        entityId = row.original.id
-        return (
-          <Link to={`/view/${viewName}/${entityId}/show`}>{cellValue}</Link>
-        )
       case 'image':
         return <img src={cellValue} alt='Cell Content' />
       case 'button':

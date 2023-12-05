@@ -47907,9 +47907,6 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       const cellValue = cell.getValue();
       var entityId, action;
       switch (field.displayType) {
-        case "link":
-          entityId = row.original.id;
-          return /* @__PURE__ */ jsxRuntimeExports.jsx(reactRouterDom.Link, { to: `/view/${viewName}/${entityId}/show`, children: cellValue });
         case "image":
           return /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: cellValue, alt: "Cell Content" });
         case "button":
