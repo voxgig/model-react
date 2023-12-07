@@ -147,7 +147,7 @@ function BasicLed (props: any) {
         return (
           <LinearProgress
             variant='determinate'
-            value={50}
+            value={cellValue}
             color='success'
             sx={{ height: '9px', border: '2px solid #ccc', width: '80%' }}
           />
