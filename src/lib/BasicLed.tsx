@@ -58,15 +58,16 @@ function BasicLed (props: any) {
     seneca.entity(canon).list$(q)
   }
 
-  //
+  // --------------------------------------------------
   // Common
-  //
+  // --------------------------------------------------
+
   // Define entity fields from spec
   const fields: any = basicLedSpec.content.def.field
 
-  //
+  // --------------------------------------------------
   // BasicList related
-  //
+  // --------------------------------------------------
 
   // Define data we'll use to render the list
   const entlist = useSelector(
@@ -86,9 +87,9 @@ function BasicLed (props: any) {
       editVariant: field.inputType,
       editSelectOptions:
         'select' === field.inputType ? Object.keys(field.options) : null,
-      Header: () => <span>{field.label}</span>,
+      Header: () => <Box sx={{ textAlign: 'center' }}>{field.label}</Box>,
       Cell: ({ cell, row }: any) => renderCell({ cell, field, row }),
-      size: 40
+      size: field.size || 40
     })
   )
 
@@ -96,7 +97,7 @@ function BasicLed (props: any) {
   // Define how cells are rendered
   const renderCell = ({ cell, field, row }: any) => {
     const cellValue = cell.getValue()
-    var entityId, action
+    let entityId, action, textAlign
 
     switch (field.displayType) {
       case 'link':
@@ -106,7 +107,7 @@ function BasicLed (props: any) {
         )
       case 'image':
         return <img src={cellValue} alt='Cell Content' />
-      case 'button':
+      case 'navbutton':
         return (
           <BasicButton
             type='submit'
@@ -119,6 +120,14 @@ function BasicLed (props: any) {
             {field.actionLabel}
           </BasicButton>
         )
+      // TODO: merge this case with 'navbutton'
+      case 'button':
+        return (
+          <BasicButton type='submit' variant='outlined' size='medium'>
+            {field.actionLabel}
+          </BasicButton>
+        )
+      // TODO: remove this case
       case 'action':
         entityId = row.original.id
         action = field.action
@@ -152,15 +161,34 @@ function BasicLed (props: any) {
             sx={{ height: '9px', border: '2px solid #ccc', width: '80%' }}
           />
         )
-
+      case 'currency':
+        // TODO: apply currency symbol
+        const currency = field.currency || 'EUR'
+        textAlign = field.textAlign || 'right'
+        // check if cellValue is a number
+        if (isNaN(cellValue)) {
+          return <Box sx={{ textAlign: textAlign }}>{field.defaultValue}</Box>
+        } else {
+          const valueCurrency = Number(cellValue).toLocaleString()
+          return <Box sx={{ textAlign: textAlign }}>€{valueCurrency}</Box>
+        }
+      case 'number':
+        textAlign = field.textAlign || 'right'
+        const valueNumber = Number(cellValue)
+        return (
+          <Box sx={{ textAlign: textAlign }}>
+            {valueNumber.toLocaleString()}
+          </Box>
+        )
       default:
-        return <span>{cellValue}</span>
+        textAlign = field.textAlign || 'left'
+        return <Box sx={{ textAlign: textAlign }}>{cellValue}</Box>
     }
   }
 
-  //
+  // --------------------------------------------------
   // BasicEdit related
-  //
+  // --------------------------------------------------
 
   // Reset item when location changes
   useEffect(() => {
