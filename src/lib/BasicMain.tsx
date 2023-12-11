@@ -33,7 +33,8 @@ const BasicMainSpecShape = Gubu({
           },
           foot: {
             cmp: Skip(String)
-          }
+          },
+          linkPath: Skip(String)
         }),
         id: Skip({
           field: String
@@ -102,7 +103,7 @@ const renderRoutes = (views: any[], vxg: any, ctx: any, theme: any) => {
               path={routePath}
               element={
                 <ThemeProvider theme={theme}>
-                  <Cmp key={key} vxg={vxg} ctx={ctx} spec={view} />
+                  <Cmp key={key} action={key} vxg={vxg} ctx={ctx} spec={view} />
                 </ThemeProvider>
               }
             />

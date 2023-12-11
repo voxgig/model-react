@@ -47851,13 +47851,14 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }
   });
   function BasicLed(props) {
-    var _a, _b, _c, _d, _e, _f, _g, _h;
-    const { ctx } = props;
+    var _a, _b, _c;
+    const { ctx, action } = props;
     const { seneca, custom } = ctx();
     const [item, setItem] = React.useState({});
     const location2 = reactRouterDom.useLocation();
     const navigate = reactRouterDom.useNavigate();
     const basicLedSpec = BasicLedSpecShape(props.spec);
+    console.log("spec: ", basicLedSpec);
     const viewName = basicLedSpec.name;
     const def = basicLedSpec.content.def;
     const canon = def.canon;
@@ -47870,11 +47871,13 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       seneca.entity(canon).list$(q);
     }
     const fields = basicLedSpec.content.def.field;
+    console.log("fields: ", fields);
     const entlist = reactRedux.useSelector(
       (state) => state.main.vxg.ent.list.main[canon]
     );
     const rows = entlist;
     let data = rows;
+    console.log("data: ", data);
     const basicListColumns = Object.entries(fields).map(
       ([key, field]) => ({
         accessorFn: (row) => row[key],
@@ -47900,11 +47903,13 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     );
     const renderCell = ({ cell, field, row }) => {
       const cellValue = cell.getValue();
-      let entityId, action, textAlign2;
+      let entityId, action2, textAlign2;
       switch (field.displayType) {
         case "link":
-          entityId = row.original.id;
-          return /* @__PURE__ */ jsxRuntimeExports.jsx(reactRouterDom.Link, { to: `/view/${viewName}/${entityId}/show`, children: cellValue });
+          const target = field.target;
+          entityId = row.original[(target == null ? void 0 : target.idName) || "id"];
+          const entityName = (target == null ? void 0 : target.entity) || viewName;
+          return /* @__PURE__ */ jsxRuntimeExports.jsx(reactRouterDom.Link, { to: `/view/${entityName}/${entityId}/show`, children: cellValue });
         case "image":
           return /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: cellValue, alt: "Cell Content" });
         case "navbutton":
@@ -47921,20 +47926,35 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
             }
           );
         case "button":
-          return /* @__PURE__ */ jsxRuntimeExports.jsx(
-            material.Box,
-            {
-              sx: {
-                display: "flex",
-                justifyContent: field.justifyContent || "center"
-              },
-              children: /* @__PURE__ */ jsxRuntimeExports.jsx(BasicButton, { type: "submit", variant: "outlined", size: "medium", children: field.actionLabel })
-            }
-          );
+          if (field.action === "approve") {
+            return /* @__PURE__ */ jsxRuntimeExports.jsx(
+              BasicButton,
+              {
+                type: "submit",
+                variant: "outlined",
+                size: "medium",
+                onClick: () => {
+                  console.log("approve");
+                },
+                children: field.actionLabel
+              }
+            );
+          } else {
+            return /* @__PURE__ */ jsxRuntimeExports.jsx(
+              material.Box,
+              {
+                sx: {
+                  display: "flex",
+                  justifyContent: field.justifyContent || "center"
+                },
+                children: /* @__PURE__ */ jsxRuntimeExports.jsx(BasicButton, { type: "submit", variant: "outlined", size: "medium", children: field.actionLabel })
+              }
+            );
+          }
         case "action":
           entityId = row.original.id;
-          action = field.action;
-          return /* @__PURE__ */ jsxRuntimeExports.jsx(reactRouterDom.Link, { to: `/view/${viewName}/${entityId}/${action}`, children: field.actionLabel });
+          action2 = field.action;
+          return /* @__PURE__ */ jsxRuntimeExports.jsx(reactRouterDom.Link, { to: `/view/${viewName}/${entityId}/${action2}`, children: field.actionLabel });
         case "chip":
           if (cellValue === "Low") {
             return /* @__PURE__ */ jsxRuntimeExports.jsx(material.Chip, { sx: { color: "white" }, label: cellValue, color: "success" });
@@ -48003,8 +48023,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       }
       setTriggerLed(++triggerLed);
     }, [led_add]);
-    const headComponent = (_d = (_c = (_b = (_a = basicLedSpec.content.def) == null ? void 0 : _a.subview) == null ? void 0 : _b.index) == null ? void 0 : _c.head) == null ? void 0 : _d.cmp;
-    const footComponent = (_h = (_g = (_f = (_e = basicLedSpec.content.def) == null ? void 0 : _e.subview) == null ? void 0 : _f.index) == null ? void 0 : _g.foot) == null ? void 0 : _h.cmp;
+    const currentSubview = (_a = basicLedSpec.content.def) == null ? void 0 : _a.subview[action];
+    const headComponent = (_b = currentSubview.head) == null ? void 0 : _b.cmp;
+    const footComponent = (_c = currentSubview.foot) == null ? void 0 : _c.cmp;
     const HeadCmp = ctx().cmp[headComponent];
     const FootCmp = ctx().cmp[footComponent];
     return /* @__PURE__ */ jsxRuntimeExports.jsx(material.Box, { className: "BasicLed", children: "-/" + canon !== item.entity$ ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
@@ -48075,7 +48096,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
             },
             foot: {
               cmp: Skip(String)
-            }
+            },
+            linkPath: Skip(String)
           }),
           id: Skip({
             field: String
@@ -48118,7 +48140,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         reactRouterDom.Route,
         {
           path: routePath,
-          element: /* @__PURE__ */ jsxRuntimeExports.jsx(material.ThemeProvider, { theme, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Cmp, { vxg, ctx, spec: view }, key) })
+          element: /* @__PURE__ */ jsxRuntimeExports.jsx(material.ThemeProvider, { theme, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Cmp, { action: key, vxg, ctx, spec: view }, key) })
         }
       ) }, key);
     }) }, view.name));

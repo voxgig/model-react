@@ -1,12 +1,10 @@
-import { useState, useEffect, useId } from 'react'
+import { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
-
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import BasicList from './BasicList'
 import BasicEdit from './BasicEdit'
-import { Exact, Gubu } from 'gubu'
+import { Gubu } from 'gubu'
 import { Box, Chip, LinearProgress, Typography } from '@mui/material'
-import { Height } from '@mui/icons-material'
 import BasicButton from './BasicButton'
 
 // Define the shape of props.spec
@@ -34,7 +32,7 @@ const BasicLedSpecShape = Gubu({
 
 // BasicLed renders a list of entities (with BasicList) or a form to edit them (with BasicEdit)
 function BasicLed (props: any) {
-  const { ctx } = props
+  const { ctx, action } = props
   const { seneca, custom } = ctx()
   const [item, setItem] = useState({} as any)
   const location = useLocation()
@@ -42,6 +40,8 @@ function BasicLed (props: any) {
 
   // Validate props.spec shape
   const basicLedSpec = BasicLedSpecShape(props.spec)
+
+  console.log('spec: ', basicLedSpec)
 
   // Define few variables from spec
   const viewName = basicLedSpec.name
@@ -65,6 +65,8 @@ function BasicLed (props: any) {
   // Define entity fields from spec
   const fields: any = basicLedSpec.content.def.field
 
+  console.log('fields: ', fields)
+
   // --------------------------------------------------
   // BasicList related
   // --------------------------------------------------
@@ -75,6 +77,8 @@ function BasicLed (props: any) {
   )
   const rows = entlist
   let data = rows //.slice(0, 10)
+
+  console.log('data: ', data)
 
   // TODO: move to BasicList
   // Define BasicList columns from fields
@@ -111,9 +115,12 @@ function BasicLed (props: any) {
 
     switch (field.displayType) {
       case 'link':
-        entityId = row.original.id
+        const target = field.target
+        entityId = row.original[target?.idName || 'id']
+        const entityName = target?.entity || viewName
+
         return (
-          <Link to={`/view/${viewName}/${entityId}/show`}>{cellValue}</Link>
+          <Link to={`/view/${entityName}/${entityId}/show`}>{cellValue}</Link>
         )
       case 'image':
         return <img src={cellValue} alt='Cell Content' />
@@ -132,18 +139,33 @@ function BasicLed (props: any) {
         )
       // TODO: merge this case with 'navbutton'
       case 'button':
-        return (
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: field.justifyContent || 'center'
-            }}
-          >
-            <BasicButton type='submit' variant='outlined' size='medium'>
+        if (field.action === 'approve') {
+          return (
+            <BasicButton
+              type='submit'
+              variant='outlined'
+              size='medium'
+              onClick={() => {
+                console.log('approve')
+              }}
+            >
               {field.actionLabel}
             </BasicButton>
-          </Box>
-        )
+          )
+        } else {
+          return (
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: field.justifyContent || 'center'
+              }}
+            >
+              <BasicButton type='submit' variant='outlined' size='medium'>
+                {field.actionLabel}
+              </BasicButton>
+            </Box>
+          )
+        }
       // TODO: remove this case
       case 'action':
         entityId = row.original.id
@@ -242,9 +264,12 @@ function BasicLed (props: any) {
   // Component rendering
   //
 
-  // Grab custom header and footer components (if any)
-  const headComponent = basicLedSpec.content.def?.subview?.index?.head?.cmp
-  const footComponent = basicLedSpec.content.def?.subview?.index?.foot?.cmp
+  // Define names of custom header and footer components
+  const currentSubview = basicLedSpec.content.def?.subview[action]
+  const headComponent = currentSubview.head?.cmp
+  const footComponent = currentSubview.foot?.cmp
+
+  // Grab custom header and footer from ctx
   const HeadCmp = ctx().cmp[headComponent]
   const FootCmp = ctx().cmp[footComponent]
 
