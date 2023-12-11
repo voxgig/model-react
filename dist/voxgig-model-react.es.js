@@ -47877,7 +47877,7 @@ function BasicLed(props) {
           sx: {
             display: "flex",
             width: "100%",
-            justifyContent: field.headerAlign || "center"
+            justifyContent: field.headerAlign || "left"
           },
           children: field.label
         }

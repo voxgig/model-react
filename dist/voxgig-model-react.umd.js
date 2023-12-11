@@ -47889,7 +47889,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
             sx: {
               display: "flex",
               width: "100%",
-              justifyContent: field.headerAlign || "center"
+              justifyContent: field.headerAlign || "left"
             },
             children: field.label
           }
