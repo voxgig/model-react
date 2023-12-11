@@ -266,8 +266,8 @@ function BasicLed (props: any) {
 
   // Define names of custom header and footer components
   const currentSubview = basicLedSpec.content.def?.subview[action]
-  const headComponent = currentSubview.head?.cmp
-  const footComponent = currentSubview.foot?.cmp
+  const headComponent = currentSubview?.head?.cmp
+  const footComponent = currentSubview?.foot?.cmp
 
   // Grab custom header and footer from ctx
   const HeadCmp = ctx().cmp[headComponent]
