@@ -92,7 +92,7 @@ function BasicLed (props: any) {
           sx={{
             display: 'flex',
             width: '100%',
-            justifyContent: field.headerAlign || 'center'
+            justifyContent: field.headerAlign || 'left'
           }}
         >
           {field.label}
