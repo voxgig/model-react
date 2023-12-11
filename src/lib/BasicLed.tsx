@@ -5,7 +5,7 @@ import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
 import BasicList from './BasicList'
 import BasicEdit from './BasicEdit'
 import { Exact, Gubu } from 'gubu'
-import { Box, Chip, LinearProgress } from '@mui/material'
+import { Box, Chip, LinearProgress, Typography } from '@mui/material'
 import { Height } from '@mui/icons-material'
 import BasicButton from './BasicButton'
 
@@ -87,7 +87,17 @@ function BasicLed (props: any) {
       editVariant: field.inputType,
       editSelectOptions:
         'select' === field.inputType ? Object.keys(field.options) : null,
-      Header: () => <Box sx={{ textAlign: 'center' }}>{field.label}</Box>,
+      Header: () => (
+        <Box
+          sx={{
+            display: 'flex',
+            width: '100%',
+            justifyContent: field.headerAlign || 'center'
+          }}
+        >
+          {field.label}
+        </Box>
+      ),
       Cell: ({ cell, row }: any) => renderCell({ cell, field, row }),
       size: field.size || 40
     })
@@ -123,9 +133,16 @@ function BasicLed (props: any) {
       // TODO: merge this case with 'navbutton'
       case 'button':
         return (
-          <BasicButton type='submit' variant='outlined' size='medium'>
-            {field.actionLabel}
-          </BasicButton>
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: field.justifyContent || 'center'
+            }}
+          >
+            <BasicButton type='submit' variant='outlined' size='medium'>
+              {field.actionLabel}
+            </BasicButton>
+          </Box>
         )
       // TODO: remove this case
       case 'action':
@@ -176,8 +193,21 @@ function BasicLed (props: any) {
         textAlign = field.textAlign || 'right'
         const valueNumber = Number(cellValue)
         return (
-          <Box sx={{ textAlign: textAlign }}>
-            {valueNumber.toLocaleString()}
+          // <Box sx={{ textAlign: textAlign, backgroundColor: 'red' }}>
+          //   {valueNumber.toLocaleString()}
+          // </Box>
+          <Box
+            display='flex'
+            justifyContent='flex-end'
+            width='100%'
+            sx={{
+              // backgroundColor: 'red',
+              textAlign: textAlign
+            }}
+          >
+            <Typography variant='body1'>
+              {valueNumber.toLocaleString()}
+            </Typography>
           </Box>
         )
       default:
