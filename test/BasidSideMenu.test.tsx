@@ -25,7 +25,6 @@ describe('BasicSideMenu', () => {
     const frame = spec.frame
     const basicSideSpec = ctx().model.app.web.frame[frame].part.side
     const basicSideMenuSpec = {}
-    console.log('basicSideMenuSpec', basicSideMenuSpec)
     customRender(
       <BasicSideMenu
         spec={{ section: basicSideSpec.section }}

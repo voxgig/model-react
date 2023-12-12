@@ -6,6 +6,7 @@ import BasicEdit from './BasicEdit'
 import { Gubu } from 'gubu'
 import { Box, Chip, LinearProgress, Typography } from '@mui/material'
 import BasicButton from './BasicButton'
+import Dinero from 'dinero.js'
 
 // Define the shape of props.spec
 const { Skip } = Gubu
@@ -41,8 +42,6 @@ function BasicLed (props: any) {
   // Validate props.spec shape
   const basicLedSpec = BasicLedSpecShape(props.spec)
 
-  console.log('spec: ', basicLedSpec)
-
   // Define few variables from spec
   const viewName = basicLedSpec.name
   const def = basicLedSpec.content.def
@@ -65,7 +64,7 @@ function BasicLed (props: any) {
   // Define entity fields from spec
   const fields: any = basicLedSpec.content.def.field
 
-  console.log('fields: ', fields)
+  // console.log('fields: ', fields)
 
   // --------------------------------------------------
   // BasicList related
@@ -78,7 +77,7 @@ function BasicLed (props: any) {
   const rows = entlist
   let data = rows //.slice(0, 10)
 
-  console.log('data: ', data)
+  // console.log('data: ', data)
 
   // TODO: move to BasicList
   // Define BasicList columns from fields
@@ -99,7 +98,9 @@ function BasicLed (props: any) {
             justifyContent: field.headerAlign || 'left'
           }}
         >
-          {field.label}
+          <Typography variant='body2' fontWeight='bold'>
+            {field.label}
+          </Typography>
         </Box>
       ),
       Cell: ({ cell, row }: any) => renderCell({ cell, field, row }),
@@ -120,7 +121,9 @@ function BasicLed (props: any) {
         const entityName = target?.entity || viewName
 
         return (
-          <Link to={`/view/${entityName}/${entityId}/show`}>{cellValue}</Link>
+          <Link to={`/view/${entityName}/${entityId}/show`}>
+            <Typography variant='body2'>{cellValue}</Typography>
+          </Link>
         )
       case 'image':
         return <img src={cellValue} alt='Cell Content' />
@@ -208,33 +211,47 @@ function BasicLed (props: any) {
         if (isNaN(cellValue)) {
           return <Box sx={{ textAlign: textAlign }}>{field.defaultValue}</Box>
         } else {
-          const valueCurrency = Number(cellValue).toLocaleString()
-          return <Box sx={{ textAlign: textAlign }}>€{valueCurrency}</Box>
+          const valueCurrency = Number(cellValue)
+          const dineroObject = Dinero({
+            amount: Math.round(valueCurrency * 100),
+            currency: 'EUR'
+          })
+          const formattedValue = dineroObject.toFormat('$0,0.00')
+          return (
+            <Box sx={{ textAlign: textAlign }}>
+              <Typography variant='body2'>{formattedValue}</Typography>
+            </Box>
+          )
         }
       case 'number':
         textAlign = field.textAlign || 'right'
         const valueNumber = Number(cellValue)
+        // handle NaN case
+        if (isNaN(valueNumber)) {
+          return <Box sx={{ textAlign: textAlign }}>{field.defaultValue}</Box>
+        }
+
         return (
-          // <Box sx={{ textAlign: textAlign, backgroundColor: 'red' }}>
-          //   {valueNumber.toLocaleString()}
-          // </Box>
           <Box
             display='flex'
             justifyContent='flex-end'
             width='100%'
             sx={{
-              // backgroundColor: 'red',
               textAlign: textAlign
             }}
           >
-            <Typography variant='body1'>
+            <Typography variant='body2'>
               {valueNumber.toLocaleString()}
             </Typography>
           </Box>
         )
       default:
         textAlign = field.textAlign || 'left'
-        return <Box sx={{ textAlign: textAlign }}>{cellValue}</Box>
+        return (
+          <Box sx={{ textAlign: textAlign }}>
+            <Typography variant='body2'>{cellValue}</Typography>
+          </Box>
+        )
     }
   }
 
@@ -286,7 +303,6 @@ function BasicLed (props: any) {
             data={data || []}
             columns={basicListColumns}
             onRowClick={(event: any, item: any) => {
-              console.log('item: ', item)
               setItem(item)
             }}
             onEditingRowSave={async (row: any, values: any) => {
