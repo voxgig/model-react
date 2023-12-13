@@ -154,37 +154,34 @@ function BasicLed (props: any) {
               disabled={
                 row.original.approvedAmount === row.original.amountOrdered
               }
-              onClick={() => {
-                // get the id of the entity
-                entityId = row.original.id
-                // make a true copy of data
+              onClick={async () => {
+                // make a copy of data
                 let dataCopy: any = []
-
                 for (let item in data) {
                   let copy = { ...data[item] }
                   dataCopy.push(copy)
                 }
 
-                // find entity in data
-                let entity = dataCopy.find((entity: any) => {
+                // find current fox/supplierorder
+                entityId = row.original.id
+                let supplier = dataCopy.find((entity: any) => {
                   return entity.id === entityId
                 })
 
-                console.log('entity.pre: ', entity)
-
                 // update entity approve amount in dataCopy
-                entity.approvedAmount = entity.amountOrdered
+                supplier.approvedAmount = supplier.amountOrdered
 
-                console.log('entity.post: ', entity)
-                // update data
-                setData(dataCopy)
-
-                seneca.post('role:basic,cmd:submitApprovalsState', {
-                  data: dataCopy
-                })
-
-                // const approve = custom.BasicLed.approve(basicLedSpec, cmpState)
-                // approve(row.original.id)
+                // call approve function
+                const callbacks = custom.BasicLed
+                const approve = callbacks.approve
+                const approved = await approve(supplier, seneca)
+                if (approved) {
+                  console.log('approved?: ', approved)
+                  // update the data table
+                  setData(dataCopy)
+                } else {
+                  console.log('approving failed: ', approved)
+                }
               }}
             >
               {field.actionLabel}
