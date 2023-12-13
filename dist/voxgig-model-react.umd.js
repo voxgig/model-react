@@ -49205,6 +49205,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const [item, setItem] = React.useState({});
     const location2 = reactRouterDom.useLocation();
     const navigate = reactRouterDom.useNavigate();
+    const [data, setData] = React.useState([]);
     const basicLedSpec = BasicLedSpecShape(props.spec);
     const viewName = basicLedSpec.name;
     const def = basicLedSpec.content.def;
@@ -49221,8 +49222,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const entlist = reactRedux.useSelector(
       (state) => state.main.vxg.ent.list.main[canon]
     );
-    const rows = entlist;
-    let data = rows;
+    React.useEffect(() => {
+      setData(entlist);
+    }, [entlist]);
     const basicListColumns = Object.entries(fields).map(
       ([key, field]) => ({
         accessorFn: (row) => row[key],
@@ -49278,8 +49280,24 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
                 type: "submit",
                 variant: "outlined",
                 size: "medium",
+                disabled: row.original.approvedAmount === row.original.amountOrdered,
                 onClick: () => {
-                  console.log("approve");
+                  entityId = row.original.id;
+                  let dataCopy = [];
+                  for (let item2 in data) {
+                    let copy2 = __spreadValues({}, data[item2]);
+                    dataCopy.push(copy2);
+                  }
+                  let entity = dataCopy.find((entity2) => {
+                    return entity2.id === entityId;
+                  });
+                  console.log("entity.pre: ", entity);
+                  entity.approvedAmount = entity.amountOrdered;
+                  console.log("entity.post: ", entity);
+                  setData(dataCopy);
+                  seneca.post("role:basic,cmd:submitApprovalsState", {
+                    data: dataCopy
+                  });
                 },
                 children: field.actionLabel
               }
@@ -49348,6 +49366,21 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
                 textAlign: textAlign2
               },
               children: /* @__PURE__ */ jsxRuntimeExports.jsx(material.Typography, { variant: "body2", children: valueNumber.toLocaleString() })
+            }
+          );
+        case "percentage":
+          return /* @__PURE__ */ jsxRuntimeExports.jsx(
+            material.Box,
+            {
+              display: "flex",
+              justifyContent: "flex-end",
+              sx: {
+                textAlign: "right"
+              },
+              children: /* @__PURE__ */ jsxRuntimeExports.jsxs(material.Typography, { variant: "body2", children: [
+                cellValue,
+                "%"
+              ] })
             }
           );
         default:

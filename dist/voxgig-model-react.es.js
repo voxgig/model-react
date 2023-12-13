@@ -49193,6 +49193,7 @@ function BasicLed(props) {
   const [item, setItem] = useState({});
   const location2 = useLocation();
   const navigate = useNavigate();
+  const [data, setData] = useState([]);
   const basicLedSpec = BasicLedSpecShape(props.spec);
   const viewName = basicLedSpec.name;
   const def = basicLedSpec.content.def;
@@ -49209,8 +49210,9 @@ function BasicLed(props) {
   const entlist = useSelector(
     (state) => state.main.vxg.ent.list.main[canon]
   );
-  const rows = entlist;
-  let data = rows;
+  useEffect(() => {
+    setData(entlist);
+  }, [entlist]);
   const basicListColumns = Object.entries(fields).map(
     ([key, field]) => ({
       accessorFn: (row) => row[key],
@@ -49266,8 +49268,24 @@ function BasicLed(props) {
               type: "submit",
               variant: "outlined",
               size: "medium",
+              disabled: row.original.approvedAmount === row.original.amountOrdered,
               onClick: () => {
-                console.log("approve");
+                entityId = row.original.id;
+                let dataCopy = [];
+                for (let item2 in data) {
+                  let copy2 = __spreadValues({}, data[item2]);
+                  dataCopy.push(copy2);
+                }
+                let entity = dataCopy.find((entity2) => {
+                  return entity2.id === entityId;
+                });
+                console.log("entity.pre: ", entity);
+                entity.approvedAmount = entity.amountOrdered;
+                console.log("entity.post: ", entity);
+                setData(dataCopy);
+                seneca.post("role:basic,cmd:submitApprovalsState", {
+                  data: dataCopy
+                });
               },
               children: field.actionLabel
             }
@@ -49336,6 +49354,21 @@ function BasicLed(props) {
               textAlign: textAlign2
             },
             children: /* @__PURE__ */ jsxRuntimeExports.jsx(Typography$1, { variant: "body2", children: valueNumber.toLocaleString() })
+          }
+        );
+      case "percentage":
+        return /* @__PURE__ */ jsxRuntimeExports.jsx(
+          Box$2,
+          {
+            display: "flex",
+            justifyContent: "flex-end",
+            sx: {
+              textAlign: "right"
+            },
+            children: /* @__PURE__ */ jsxRuntimeExports.jsxs(Typography$1, { variant: "body2", children: [
+              cellValue,
+              "%"
+            ] })
           }
         );
       default:

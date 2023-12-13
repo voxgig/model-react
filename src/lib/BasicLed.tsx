@@ -38,6 +38,7 @@ function BasicLed (props: any) {
   const [item, setItem] = useState({} as any)
   const location = useLocation()
   const navigate = useNavigate()
+  const [data, setData] = useState([] as any)
 
   // Validate props.spec shape
   const basicLedSpec = BasicLedSpecShape(props.spec)
@@ -74,10 +75,12 @@ function BasicLed (props: any) {
   const entlist = useSelector(
     (state: any) => state.main.vxg.ent.list.main[canon]
   )
-  const rows = entlist
-  let data = rows //.slice(0, 10)
+  // const rows = entlist
+  // let data = rows //.slice(0, 10)
 
-  // console.log('data: ', data)
+  useEffect(() => {
+    setData(entlist)
+  }, [entlist])
 
   // TODO: move to BasicList
   // Define BasicList columns from fields
@@ -112,7 +115,7 @@ function BasicLed (props: any) {
   // Define how cells are rendered
   const renderCell = ({ cell, field, row }: any) => {
     const cellValue = cell.getValue()
-    let entityId, action, textAlign
+    let entityId: any, action, textAlign
 
     switch (field.displayType) {
       case 'link':
@@ -148,8 +151,40 @@ function BasicLed (props: any) {
               type='submit'
               variant='outlined'
               size='medium'
+              disabled={
+                row.original.approvedAmount === row.original.amountOrdered
+              }
               onClick={() => {
-                console.log('approve')
+                // get the id of the entity
+                entityId = row.original.id
+                // make a true copy of data
+                let dataCopy: any = []
+
+                for (let item in data) {
+                  let copy = { ...data[item] }
+                  dataCopy.push(copy)
+                }
+
+                // find entity in data
+                let entity = dataCopy.find((entity: any) => {
+                  return entity.id === entityId
+                })
+
+                console.log('entity.pre: ', entity)
+
+                // update entity approve amount in dataCopy
+                entity.approvedAmount = entity.amountOrdered
+
+                console.log('entity.post: ', entity)
+                // update data
+                setData(dataCopy)
+
+                seneca.post('role:basic,cmd:submitApprovalsState', {
+                  data: dataCopy
+                })
+
+                // const approve = custom.BasicLed.approve(basicLedSpec, cmpState)
+                // approve(row.original.id)
               }}
             >
               {field.actionLabel}
@@ -243,6 +278,18 @@ function BasicLed (props: any) {
             <Typography variant='body2'>
               {valueNumber.toLocaleString()}
             </Typography>
+          </Box>
+        )
+      case 'percentage':
+        return (
+          <Box
+            display='flex'
+            justifyContent='flex-end'
+            sx={{
+              textAlign: 'right'
+            }}
+          >
+            <Typography variant='body2'>{cellValue}%</Typography>
           </Box>
         )
       default:
