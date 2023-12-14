@@ -18,6 +18,7 @@ const BasicMainSpecShape = Gubu({
     name: String,
     content: {
       def: {
+        fetchOnMount: false,
         canon: Skip(String),
         add: {
           active: true

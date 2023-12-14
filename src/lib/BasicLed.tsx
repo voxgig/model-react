@@ -17,6 +17,7 @@ const BasicLedSpecShape = Gubu({
   content: {
     cmp: Skip(String),
     def: {
+      fetchOnMount: false,
       canon: String,
       add: Skip({
         active: Boolean
@@ -48,12 +49,14 @@ function BasicLed (props: any) {
   const def = basicLedSpec.content.def
   const canon = def.canon
 
+  const fetchOnMount = def.fetchOnMount
+
   // Fetch entity data if not already fetched
   const cmpState = useSelector((state: any) => state.main.vxg.cmp)
   const entState = useSelector(
     (state: any) => state.main.vxg.ent.meta.main[canon].state
   )
-  if ('none' === entState) {
+  if ('none' === entState || fetchOnMount) {
     let q = custom.BasicLed.query(basicLedSpec, cmpState)
     seneca.entity(canon).list$(q)
   }
