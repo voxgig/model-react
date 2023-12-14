@@ -49,14 +49,14 @@ function BasicLed (props: any) {
   const def = basicLedSpec.content.def
   const canon = def.canon
 
-  const fetchOnMount = def.fetchOnMount
+  const fetchOnMount = def.fetchOnMount || false
 
   // Fetch entity data if not already fetched
   const cmpState = useSelector((state: any) => state.main.vxg.cmp)
   const entState = useSelector(
     (state: any) => state.main.vxg.ent.meta.main[canon].state
   )
-  if ('none' === entState || fetchOnMount) {
+  if ('none' === entState) {
     let q = custom.BasicLed.query(basicLedSpec, cmpState)
     seneca.entity(canon).list$(q)
   }
@@ -83,7 +83,7 @@ function BasicLed (props: any) {
 
   useEffect(() => {
     setData(entlist)
-  }, [entlist])
+  }, [entlist, entState])
 
   // TODO: move to BasicList
   // Define BasicList columns from fields
@@ -315,6 +315,7 @@ function BasicLed (props: any) {
   const vxgState = useSelector((state: any) => state.main.vxg)
   const led_add = vxgState.trigger.led.add
   let [triggerLed, setTriggerLed] = useState(0)
+
   useEffect(() => {
     // a workaround to prevent 'useEffect' to trigger when re-rendered
     if (triggerLed >= 2) {
