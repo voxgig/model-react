@@ -17,7 +17,6 @@ const BasicLedSpecShape = Gubu({
   content: {
     cmp: Skip(String),
     def: {
-      fetchOnMount: false,
       canon: String,
       add: Skip({
         active: Boolean
@@ -49,17 +48,8 @@ function BasicLed (props: any) {
   const def = basicLedSpec.content.def
   const canon = def.canon
 
-  const fetchOnMount = def.fetchOnMount || false
-
   // Fetch entity data if not already fetched
   const cmpState = useSelector((state: any) => state.main.vxg.cmp)
-  const entState = useSelector(
-    (state: any) => state.main.vxg.ent.meta.main[canon].state
-  )
-  if ('none' === entState) {
-    let q = custom.BasicLed.query(basicLedSpec, cmpState)
-    seneca.entity(canon).list$(q)
-  }
 
   // --------------------------------------------------
   // Common
@@ -68,22 +58,32 @@ function BasicLed (props: any) {
   // Define entity fields from spec
   const fields: any = basicLedSpec.content.def.field
 
-  // console.log('fields: ', fields)
+  console.log('fields: ', fields)
 
   // --------------------------------------------------
   // BasicList related
   // --------------------------------------------------
 
+  // Move the useSelector hook to the top level of your component
+  const entState = useSelector(
+    (state: any) => state.main.vxg.ent.meta.main[canon].state
+  )
+
+  useEffect(() => {
+    if ('none' === entState) {
+      let q = custom.BasicLed.query(basicLedSpec, cmpState)
+      seneca.entity(canon).list$(q)
+    }
+  }, [entState])
+
   // Define data we'll use to render the list
   const entlist = useSelector(
     (state: any) => state.main.vxg.ent.list.main[canon]
   )
-  // const rows = entlist
-  // let data = rows //.slice(0, 10)
 
   useEffect(() => {
     setData(entlist)
-  }, [entlist, entState])
+  }, [entlist])
 
   // TODO: move to BasicList
   // Define BasicList columns from fields

@@ -49173,7 +49173,6 @@ const BasicLedSpecShape = gubu_minExports.Gubu({
   content: {
     cmp: Skip$1(String),
     def: {
-      fetchOnMount: false,
       canon: String,
       add: Skip$1({
         active: Boolean
@@ -49199,22 +49198,24 @@ function BasicLed(props) {
   const viewName = basicLedSpec.name;
   const def = basicLedSpec.content.def;
   const canon = def.canon;
-  const fetchOnMount = def.fetchOnMount || false;
   const cmpState = useSelector((state) => state.main.vxg.cmp);
+  const fields = basicLedSpec.content.def.field;
+  console.log("fields: ", fields);
   const entState = useSelector(
     (state) => state.main.vxg.ent.meta.main[canon].state
   );
-  if ("none" === entState) {
-    let q = custom.BasicLed.query(basicLedSpec, cmpState);
-    seneca.entity(canon).list$(q);
-  }
-  const fields = basicLedSpec.content.def.field;
+  useEffect(() => {
+    if ("none" === entState) {
+      let q = custom.BasicLed.query(basicLedSpec, cmpState);
+      seneca.entity(canon).list$(q);
+    }
+  }, [entState]);
   const entlist = useSelector(
     (state) => state.main.vxg.ent.list.main[canon]
   );
   useEffect(() => {
     setData(entlist);
-  }, [entlist, entState]);
+  }, [entlist]);
   const basicListColumns = Object.entries(fields).map(
     ([key, field]) => ({
       accessorFn: (row) => row[key],
@@ -49450,7 +49451,6 @@ const BasicMainSpecShape = gubu_minExports.Gubu({
     name: String,
     content: {
       def: {
-        fetchOnMount: false,
         canon: Skip(String),
         add: {
           active: true

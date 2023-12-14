@@ -49185,7 +49185,6 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     content: {
       cmp: Skip$1(String),
       def: {
-        fetchOnMount: false,
         canon: String,
         add: Skip$1({
           active: Boolean
@@ -49211,22 +49210,24 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const viewName = basicLedSpec.name;
     const def = basicLedSpec.content.def;
     const canon = def.canon;
-    const fetchOnMount = def.fetchOnMount || false;
     const cmpState = reactRedux.useSelector((state) => state.main.vxg.cmp);
+    const fields = basicLedSpec.content.def.field;
+    console.log("fields: ", fields);
     const entState = reactRedux.useSelector(
       (state) => state.main.vxg.ent.meta.main[canon].state
     );
-    if ("none" === entState) {
-      let q = custom.BasicLed.query(basicLedSpec, cmpState);
-      seneca.entity(canon).list$(q);
-    }
-    const fields = basicLedSpec.content.def.field;
+    React.useEffect(() => {
+      if ("none" === entState) {
+        let q = custom.BasicLed.query(basicLedSpec, cmpState);
+        seneca.entity(canon).list$(q);
+      }
+    }, [entState]);
     const entlist = reactRedux.useSelector(
       (state) => state.main.vxg.ent.list.main[canon]
     );
     React.useEffect(() => {
       setData(entlist);
-    }, [entlist, entState]);
+    }, [entlist]);
     const basicListColumns = Object.entries(fields).map(
       ([key, field]) => ({
         accessorFn: (row) => row[key],
@@ -49462,7 +49463,6 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       name: String,
       content: {
         def: {
-          fetchOnMount: false,
           canon: Skip(String),
           add: {
             active: true
