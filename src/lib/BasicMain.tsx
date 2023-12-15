@@ -60,7 +60,7 @@ function BasicMain (props: any) {
   const navigate = useNavigate()
 
   useEffect(() => {
-    if (location.pathname === '/') {
+    if (location.pathname === '/' && defaultRoute !== undefined) {
       navigate(defaultRoute)
     }
   }, [location, navigate])
