@@ -36,7 +36,8 @@ const BasicMainSpecShape = Gubu({
           foot: {
             cmp: Skip(String)
           },
-          linkPath: Skip(String)
+          linkPath: Skip(String),
+          enableColumnFilters: false
         }),
         id: Skip({
           field: String

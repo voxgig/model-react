@@ -39,6 +39,7 @@ function BasicLed (props: any) {
   const location = useLocation()
   const navigate = useNavigate()
   const [data, setData] = useState([] as any)
+  const [isLoading, setIsLoading] = useState(true)
 
   // Validate props.spec shape
   const basicLedSpec = BasicLedSpecShape(props.spec)
@@ -82,6 +83,8 @@ function BasicLed (props: any) {
   )
 
   useEffect(() => {
+    // sleep for 1 second to show loading
+    setIsLoading(false)
     setData(entlist)
   }, [entlist])
 
@@ -350,6 +353,8 @@ function BasicLed (props: any) {
             spec={basicLedSpec}
             data={data || []}
             columns={basicListColumns}
+            isLoading={isLoading}
+            action={action}
             onRowClick={(event: any, item: any) => {
               setItem(item)
             }}

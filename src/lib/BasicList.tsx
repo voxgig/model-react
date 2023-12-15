@@ -18,12 +18,19 @@ function BasicList (props: any) {
     data,
     columns,
     sx = {},
-    spec
+    spec,
+    isLoading,
+    action
   } = props
 
   const theme = ctx().theme
-  const editingMode = spec.content.def.subview.index.editingMode
+  const editingMode = spec.content.def.subview[action]?.editingMode || 'none'
+  const enableColumnFilters =
+    spec.content.def.subview[action]?.enableColumnFilters || false
   const cmpKey = spec.content.key
+
+  console.log('action', action)
+  console.log('enablecolumnfilters', enableColumnFilters)
 
   // callbacks for MaterialReactTable
   const handleSaveRow: MaterialReactTableProps<any>['onEditingRowSave'] =
@@ -42,7 +49,7 @@ function BasicList (props: any) {
 
   const commonTableProps = {
     enableColumnActions: false,
-    enableColumnFilters: false,
+    enableColumnFilters: enableColumnFilters,
     enableSorting: false,
     enableBottomToolbar: true,
     enableTopToolbar: false,
@@ -80,6 +87,7 @@ function BasicList (props: any) {
         <MaterialReactTable
           {...commonTableProps}
           {...specificProps}
+          state={{ isLoading: isLoading }}
           key={cmpKey}
         />
       </Box>
