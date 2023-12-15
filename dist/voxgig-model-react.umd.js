@@ -49455,7 +49455,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   const { Child, Optional, Skip } = gubu_minExports.Gubu;
   const BasicMainSpecShape = gubu_minExports.Gubu({
     main: {
-      title: String
+      title: String,
+      default: String
     },
     view: Child({
       title: String,
@@ -49469,6 +49470,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           },
           subview: Child({
             render: "collection",
+            default: false,
             kind: "led",
             active: Skip(Boolean),
             cmp: Skip(String),
@@ -49496,9 +49498,16 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const theme = material.useTheme();
     const basicMainSpec = BasicMainSpecShape(props.spec);
     const views = Object.values(basicMainSpec.view);
+    const defaultRoute = basicMainSpec.main.default;
     const sideOpen = reactRedux.useSelector(
       (state) => state.main.vxg.cmp.BasicSide.show
     );
+    const navigate = reactRouterDom.useNavigate();
+    React.useEffect(() => {
+      if (location.pathname === "/") {
+        navigate(defaultRoute);
+      }
+    }, [location, navigate]);
     const paddingLeft = ((_d = (_c = (_b = (_a = theme.components) == null ? void 0 : _a.MuiDrawer) == null ? void 0 : _b.styleOverrides) == null ? void 0 : _c.paper) == null ? void 0 : _d.width) || "16rem";
     const basicMainStyle = {
       paddingLeft: sideOpen ? paddingLeft : "0rem",
@@ -49507,7 +49516,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const basicMainContainerStyle = {
       height: "100%"
     };
-    return /* @__PURE__ */ jsxRuntimeExports.jsx(material.Box, { className: "BasicMain", sx: basicMainStyle, children: /* @__PURE__ */ jsxRuntimeExports.jsx(material.Box, { className: "BasicMain-container", sx: basicMainContainerStyle, children: /* @__PURE__ */ jsxRuntimeExports.jsx(reactRouterDom.Routes, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(reactRouterDom.Route, { path: "/view", children: renderRoutes(views, vxg, ctx, theme) }) }) }) });
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(material.Box, { className: "BasicMain", sx: basicMainStyle, children: /* @__PURE__ */ jsxRuntimeExports.jsx(material.Box, { className: "BasicMain-container", sx: basicMainContainerStyle, children: /* @__PURE__ */ jsxRuntimeExports.jsx(reactRouterDom.Routes, { children: renderRoutes(views, vxg, ctx, theme) }) }) });
   }
   const renderRoutes = (views, vxg, ctx, theme) => {
     return views.map((view) => /* @__PURE__ */ jsxRuntimeExports.jsx(React.Fragment, { children: Object.entries(view.content.def.subview).map(([key, subview]) => {
