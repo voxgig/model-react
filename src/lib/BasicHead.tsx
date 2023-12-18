@@ -6,7 +6,9 @@ import {
   Typography,
   IconButton,
   useTheme,
-  Avatar
+  Avatar,
+  Menu,
+  MenuItem
 } from '@mui/material'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import BasicButton from './BasicButton'
@@ -54,6 +56,15 @@ function BasicHead (props: BasicHeadProps) {
   const { ctx } = props
   const { seneca } = ctx()
   const [initials, setInitials] = useState('')
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+
+  const menuOpen = Boolean(anchorEl)
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget)
+  }
+  const handleClose = () => {
+    setAnchorEl(null)
+  }
 
   // spec shape validation with Gubu
   const basicHeadSpec = BasicHeadSpecShape(props.spec)
@@ -100,11 +111,24 @@ function BasicHead (props: BasicHeadProps) {
         <Toolbar>
           <img src={basicHeadSpec.head.logo.img} style={{ width: '5rem' }} />
           <div style={{ flexGrow: 1 }}></div>
-          <Avatar
-            sx={{ bgcolor: purple[300], color: 'white', fontWeight: 100 }}
+          <BasicButton onClick={handleClick}>
+            <Avatar
+              sx={{ bgcolor: purple[300], color: 'white', fontWeight: 100 }}
+            >
+              {initials}
+            </Avatar>
+          </BasicButton>
+          <Menu
+            id='basic-menu'
+            anchorEl={anchorEl}
+            open={menuOpen}
+            onClose={handleClose}
+            MenuListProps={{
+              'aria-labelledby': 'basic-button'
+            }}
           >
-            {initials}
-          </Avatar>
+            <MenuItem onClick={handleClose}>Logout</MenuItem>
+          </Menu>
         </Toolbar>
       </BasicAppBar>
     )

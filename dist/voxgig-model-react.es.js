@@ -59,7 +59,7 @@ import * as React from "react";
 import React__default, { createElement, useState, useEffect, isValidElement, Children, cloneElement, useMemo, useRef, useCallback, Fragment, memo as memo$2, useLayoutEffect } from "react";
 import { useSelector } from "react-redux";
 import { useLocation, useNavigate, Link, Routes, Route } from "react-router-dom";
-import { Button as Button$1, ThemeProvider as ThemeProvider$2, Autocomplete, TextField as TextField$1, createFilterOptions as createFilterOptions$1, useTheme as useTheme$4, Toolbar as Toolbar$1, Avatar, IconButton as IconButton$1, Typography as Typography$1, List as List$1, ListItem, ListItemButton, ListItemIcon as ListItemIcon$1, ListItemText as ListItemText$1, Divider as Divider$1, Drawer as Drawer$1, Box as Box$2, Grid as Grid$1, MenuItem as MenuItem$1, LinearProgress as LinearProgress$1, Chip as Chip$1, Container as Container$2 } from "@mui/material";
+import { Button as Button$1, ThemeProvider as ThemeProvider$2, Autocomplete, TextField as TextField$1, createFilterOptions as createFilterOptions$1, useTheme as useTheme$4, Toolbar as Toolbar$1, Avatar, Menu as Menu$1, MenuItem as MenuItem$1, IconButton as IconButton$1, Typography as Typography$1, List as List$1, ListItem, ListItemButton, ListItemIcon as ListItemIcon$1, ListItemText as ListItemText$1, Divider as Divider$1, Drawer as Drawer$1, Box as Box$2, Grid as Grid$1, LinearProgress as LinearProgress$1, Chip as Chip$1, Container as Container$2 } from "@mui/material";
 import * as ReactDOM from "react-dom";
 import ReactDOM__default, { flushSync } from "react-dom";
 import emStyled from "@emotion/styled";
@@ -20331,6 +20331,14 @@ function BasicHead(props) {
   const { ctx } = props;
   const { seneca } = ctx();
   const [initials, setInitials] = useState("");
+  const [anchorEl, setAnchorEl] = useState(null);
+  const menuOpen = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   const basicHeadSpec = BasicHeadSpecShape(props.spec);
   const user = useSelector((state) => state.main.auth.user);
   const userName = user.name || user.email;
@@ -20363,11 +20371,24 @@ function BasicHead(props) {
         children: /* @__PURE__ */ jsxRuntimeExports.jsxs(Toolbar$1, { children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: basicHeadSpec.head.logo.img, style: { width: "5rem" } }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { flexGrow: 1 } }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(
+          /* @__PURE__ */ jsxRuntimeExports.jsx(BasicButton, { onClick: handleClick, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
             Avatar,
             {
               sx: { bgcolor: purple[300], color: "white", fontWeight: 100 },
               children: initials
+            }
+          ) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            Menu$1,
+            {
+              id: "basic-menu",
+              anchorEl,
+              open: menuOpen,
+              onClose: handleClose,
+              MenuListProps: {
+                "aria-labelledby": "basic-button"
+              },
+              children: /* @__PURE__ */ jsxRuntimeExports.jsx(MenuItem$1, { onClick: handleClose, children: "Logout" })
             }
           )
         ] })

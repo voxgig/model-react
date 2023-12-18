@@ -20343,6 +20343,14 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const { ctx } = props;
     const { seneca } = ctx();
     const [initials, setInitials] = React.useState("");
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const menuOpen = Boolean(anchorEl);
+    const handleClick = (event) => {
+      setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+      setAnchorEl(null);
+    };
     const basicHeadSpec = BasicHeadSpecShape(props.spec);
     const user = reactRedux.useSelector((state) => state.main.auth.user);
     const userName = user.name || user.email;
@@ -20375,11 +20383,24 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           children: /* @__PURE__ */ jsxRuntimeExports.jsxs(material.Toolbar, { children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: basicHeadSpec.head.logo.img, style: { width: "5rem" } }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { flexGrow: 1 } }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(
+            /* @__PURE__ */ jsxRuntimeExports.jsx(BasicButton, { onClick: handleClick, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
               material.Avatar,
               {
                 sx: { bgcolor: purple[300], color: "white", fontWeight: 100 },
                 children: initials
+              }
+            ) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              material.Menu,
+              {
+                id: "basic-menu",
+                anchorEl,
+                open: menuOpen,
+                onClose: handleClose,
+                MenuListProps: {
+                  "aria-labelledby": "basic-button"
+                },
+                children: /* @__PURE__ */ jsxRuntimeExports.jsx(material.MenuItem, { onClick: handleClose, children: "Logout" })
               }
             )
           ] })
