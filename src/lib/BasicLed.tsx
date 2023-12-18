@@ -59,7 +59,7 @@ function BasicLed (props: any) {
   // Define entity fields from spec
   const fields: any = basicLedSpec.content.def.field
 
-  console.log('fields: ', fields)
+  // console.log('fields: ', fields)
 
   // --------------------------------------------------
   // BasicList related

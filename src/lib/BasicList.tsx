@@ -29,9 +29,6 @@ function BasicList (props: any) {
     spec.content.def.subview[action]?.enableColumnFilters || false
   const cmpKey = spec.content.key
 
-  console.log('action', action)
-  console.log('enablecolumnfilters', enableColumnFilters)
-
   // callbacks for MaterialReactTable
   const handleSaveRow: MaterialReactTableProps<any>['onEditingRowSave'] =
     async ({ exitEditingMode, row, values }): Promise<void> => {
