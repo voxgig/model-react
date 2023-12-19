@@ -1,11 +1,21 @@
-import { useMemo } from 'react'
-import { useTheme, createTheme, ThemeProvider } from '@mui/material/styles'
+
+
+import React, {
+  // useMemo
+} from 'react'
+
+import {
+  // useTheme,
+  // createTheme,
+  ThemeProvider
+} from '@mui/material/styles'
+
 
 import {
   MaterialReactTable,
-  type MaterialReactTableProps,
-  type MRT_ColumnDef
+  // type MRT_ColumnDef
 } from 'material-react-table'
+
 import { Box } from '@mui/material'
 
 // import { DataGrid } from '@mui/x-data-grid'
@@ -30,8 +40,9 @@ function BasicList (props: any) {
   const cmpKey = spec.content.key
 
   // callbacks for MaterialReactTable
-  const handleSaveRow: MaterialReactTableProps<any>['onEditingRowSave'] =
-    async ({ exitEditingMode, row, values }): Promise<void> => {
+  const handleSaveRow =
+    async (args: any): Promise<void> => {
+      let { exitEditingMode, row, values } = args
       onEditingRowSave(row, values)
       exitEditingMode()
     }

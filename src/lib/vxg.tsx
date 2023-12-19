@@ -1,3 +1,5 @@
+// Copyright (c) 2020-2023 Voxgig Ltd and other contributors.
+
 import Patrun from 'patrun'
 import Jsonic from '@jsonic/jsonic-next'
 
