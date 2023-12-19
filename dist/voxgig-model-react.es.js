@@ -56,10 +56,10 @@ var __async = (__this, __arguments, generator) => {
   });
 };
 import * as React from "react";
-import React__default, { createElement, isValidElement, Children, cloneElement, useMemo, useState, useRef, useCallback, useEffect, Fragment, memo as memo$2, useLayoutEffect } from "react";
+import React__default, { createElement, useState, useEffect, isValidElement, Children, cloneElement, useMemo, useRef, useCallback, Fragment, memo as memo$2, useLayoutEffect } from "react";
 import { useSelector } from "react-redux";
 import { useLocation, useNavigate, Link, Routes, Route } from "react-router-dom";
-import { Button as Button$1, ThemeProvider as ThemeProvider$2, Autocomplete, TextField as TextField$1, createFilterOptions as createFilterOptions$1, useTheme as useTheme$4, Toolbar as Toolbar$1, Avatar, IconButton as IconButton$1, Typography as Typography$1, List as List$1, ListItem, ListItemButton, ListItemIcon as ListItemIcon$1, ListItemText as ListItemText$1, Divider as Divider$1, Drawer as Drawer$1, Box as Box$2, Grid as Grid$1, MenuItem as MenuItem$1, Chip as Chip$1, Container as Container$2 } from "@mui/material";
+import { Button as Button$1, ThemeProvider as ThemeProvider$2, Autocomplete, TextField as TextField$1, createFilterOptions as createFilterOptions$1, useTheme as useTheme$4, Toolbar as Toolbar$1, Avatar, Menu as Menu$1, MenuItem as MenuItem$1, IconButton as IconButton$1, Typography as Typography$1, List as List$1, ListItem, ListItemButton, ListItemIcon as ListItemIcon$1, ListItemText as ListItemText$1, Divider as Divider$1, Drawer as Drawer$1, Box as Box$2, Grid as Grid$1, LinearProgress as LinearProgress$1, Chip as Chip$1, Container as Container$2 } from "@mui/material";
 import * as ReactDOM from "react-dom";
 import ReactDOM__default, { flushSync } from "react-dom";
 import emStyled from "@emotion/styled";
@@ -13493,7 +13493,7 @@ function strlen(value) {
 function sizeof(value) {
   return value.length;
 }
-function append$1(value, array) {
+function append(value, array) {
   return array.push(value), value;
 }
 function combine(array, callback) {
@@ -13591,13 +13591,13 @@ function tokenizer(children2) {
   while (next())
     switch (token(character)) {
       case 0:
-        append$1(identifier(position$1 - 1), children2);
+        append(identifier(position$1 - 1), children2);
         break;
       case 2:
-        append$1(delimit(character), children2);
+        append(delimit(character), children2);
         break;
       default:
-        append$1(from(character), children2);
+        append(from(character), children2);
     }
   return children2;
 }
@@ -13685,7 +13685,7 @@ function parse(value, root, parent, rule, rules2, rulesets, pseudo, points, decl
         switch (peek()) {
           case 42:
           case 47:
-            append$1(comment(commenter(next(), caret()), root, parent), declarations);
+            append(comment(commenter(next(), caret()), root, parent), declarations);
             break;
           default:
             characters2 += "/";
@@ -13704,12 +13704,12 @@ function parse(value, root, parent, rule, rules2, rulesets, pseudo, points, decl
             if (ampersand == -1)
               characters2 = replace(characters2, /\f/g, "");
             if (property > 0 && strlen(characters2) - length2)
-              append$1(property > 32 ? declaration(characters2 + ";", rule, parent, length2 - 1) : declaration(replace(characters2, " ", "") + ";", rule, parent, length2 - 2), declarations);
+              append(property > 32 ? declaration(characters2 + ";", rule, parent, length2 - 1) : declaration(replace(characters2, " ", "") + ";", rule, parent, length2 - 2), declarations);
             break;
           case 59:
             characters2 += ";";
           default:
-            append$1(reference2 = ruleset(characters2, root, parent, index2, offset2, rules2, points, type, props = [], children2 = [], length2), rulesets);
+            append(reference2 = ruleset(characters2, root, parent, index2, offset2, rules2, points, type, props = [], children2 = [], length2), rulesets);
             if (character2 === 123)
               if (offset2 === 0)
                 parse(characters2, root, reference2, reference2, props, rulesets, length2, points, children2);
@@ -13719,7 +13719,7 @@ function parse(value, root, parent, rule, rules2, rulesets, pseudo, points, decl
                   case 108:
                   case 109:
                   case 115:
-                    parse(value, reference2, reference2, rule && append$1(ruleset(value, reference2, reference2, 0, 0, rules2, points, type, rules2, props = [], length2), children2), rules2, children2, length2, points, rule ? props : children2);
+                    parse(value, reference2, reference2, rule && append(ruleset(value, reference2, reference2, 0, 0, rules2, points, type, rules2, props = [], length2), children2), rules2, children2, length2, points, rule ? props : children2);
                     break;
                   default:
                     parse(characters2, reference2, reference2, reference2, [""], children2, 0, points, children2);
@@ -14492,7 +14492,7 @@ process.env.NODE_ENV !== "production" ? GlobalStyles$2.propTypes = {
 } : void 0;
 "use client";
 /**
- * @mui/styled-engine v5.14.18
+ * @mui/styled-engine v5.14.20
  *
  * @license MIT
  * This source code is licensed under the MIT license found in the
@@ -14998,51 +14998,25 @@ function borderTransform(value) {
   }
   return `${value}px solid`;
 }
-const border = style$3({
-  prop: "border",
-  themeKey: "borders",
-  transform: borderTransform
-});
-const borderTop = style$3({
-  prop: "borderTop",
-  themeKey: "borders",
-  transform: borderTransform
-});
-const borderRight = style$3({
-  prop: "borderRight",
-  themeKey: "borders",
-  transform: borderTransform
-});
-const borderBottom = style$3({
-  prop: "borderBottom",
-  themeKey: "borders",
-  transform: borderTransform
-});
-const borderLeft = style$3({
-  prop: "borderLeft",
-  themeKey: "borders",
-  transform: borderTransform
-});
-const borderColor = style$3({
-  prop: "borderColor",
-  themeKey: "palette"
-});
-const borderTopColor = style$3({
-  prop: "borderTopColor",
-  themeKey: "palette"
-});
-const borderRightColor = style$3({
-  prop: "borderRightColor",
-  themeKey: "palette"
-});
-const borderBottomColor = style$3({
-  prop: "borderBottomColor",
-  themeKey: "palette"
-});
-const borderLeftColor = style$3({
-  prop: "borderLeftColor",
-  themeKey: "palette"
-});
+function createBorderStyle(prop, transform) {
+  return style$3({
+    prop,
+    themeKey: "borders",
+    transform
+  });
+}
+const border = createBorderStyle("border", borderTransform);
+const borderTop = createBorderStyle("borderTop", borderTransform);
+const borderRight = createBorderStyle("borderRight", borderTransform);
+const borderBottom = createBorderStyle("borderBottom", borderTransform);
+const borderLeft = createBorderStyle("borderLeft", borderTransform);
+const borderColor = createBorderStyle("borderColor");
+const borderTopColor = createBorderStyle("borderTopColor");
+const borderRightColor = createBorderStyle("borderRightColor");
+const borderBottomColor = createBorderStyle("borderBottomColor");
+const borderLeftColor = createBorderStyle("borderLeftColor");
+const outline = createBorderStyle("outline", borderTransform);
+const outlineColor = createBorderStyle("outlineColor");
 const borderRadius = (props) => {
   if (props.borderRadius !== void 0 && props.borderRadius !== null) {
     const transformer = createUnaryUnit(props.theme, "shape.borderRadius", 4, "borderRadius");
@@ -15057,7 +15031,7 @@ borderRadius.propTypes = process.env.NODE_ENV !== "production" ? {
   borderRadius: responsivePropType
 } : {};
 borderRadius.filterProps = ["borderRadius"];
-const borders = compose(border, borderTop, borderRight, borderBottom, borderLeft, borderColor, borderTopColor, borderRightColor, borderBottomColor, borderLeftColor, borderRadius);
+const borders = compose(border, borderTop, borderRight, borderBottom, borderLeft, borderColor, borderTopColor, borderRightColor, borderBottomColor, borderLeftColor, borderRadius, outline, outlineColor);
 const gap = (props) => {
   if (props.gap !== void 0 && props.gap !== null) {
     const transformer = createUnaryUnit(props.theme, "spacing", 8, "gap");
@@ -15247,6 +15221,13 @@ const defaultSxConfig = {
     themeKey: "palette"
   },
   borderLeftColor: {
+    themeKey: "palette"
+  },
+  outline: {
+    themeKey: "borders",
+    transform: borderTransform
+  },
+  outlineColor: {
     themeKey: "palette"
   },
   borderRadius: {
@@ -15925,8 +15906,12 @@ function createBox(options = {}) {
   });
   return Box2;
 }
+const boxClasses = generateUtilityClasses("MuiBox", ["root"]);
 "use client";
-const Box$1 = createBox();
+const Box$1 = createBox({
+  defaultClassName: boxClasses.root,
+  generateClassName: ClassNameGenerator.generate
+});
 process.env.NODE_ENV !== "production" ? Box$1.propTypes = {
   // ----------------------------- Warning --------------------------------
   // | These PropTypes are generated from the TypeScript type definitions |
@@ -16550,7 +16535,7 @@ if (process.env.NODE_ENV !== "production") {
   process.env.NODE_ENV !== "production" ? ThemeProvider$1.propTypes = exactProp(ThemeProvider$1.propTypes) : void 0;
 }
 /**
- * @mui/private-theming v5.14.18
+ * @mui/private-theming v5.14.20
  *
  * @license MIT
  * This source code is licensed under the MIT license found in the
@@ -20345,9 +20330,26 @@ function BasicHead(props) {
   const location2 = useLocation();
   const { ctx } = props;
   const { seneca } = ctx();
+  const [initials, setInitials] = useState("");
+  const [anchorEl, setAnchorEl] = useState(null);
+  const menuOpen = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   const basicHeadSpec = BasicHeadSpecShape(props.spec);
   const user = useSelector((state) => state.main.auth.user);
   const userName = user.name || user.email;
+  console.log("model-react.user", user);
+  useEffect(() => {
+    const name = user.name ? user.name : "A";
+    const acronyms = name.match(/\b(\w)/g) || [];
+    const initials2 = acronyms.join("");
+    console.log("initials", initials2);
+    setInitials(initials2);
+  }, [user]);
   const tooldefs = Object.entries(basicHeadSpec.head.tool.def).map(
     (entry) => (entry[1].name = entry[0], entry[1])
   );
@@ -20369,11 +20371,24 @@ function BasicHead(props) {
         children: /* @__PURE__ */ jsxRuntimeExports.jsxs(Toolbar$1, { children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: basicHeadSpec.head.logo.img, style: { width: "5rem" } }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { flexGrow: 1 } }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(
+          /* @__PURE__ */ jsxRuntimeExports.jsx(BasicButton, { onClick: handleClick, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
             Avatar,
             {
               sx: { bgcolor: purple[300], color: "white", fontWeight: 100 },
-              children: "JD"
+              children: initials
+            }
+          ) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            Menu$1,
+            {
+              id: "basic-menu",
+              anchorEl,
+              open: menuOpen,
+              onClose: handleClose,
+              MenuListProps: {
+                "aria-labelledby": "basic-button"
+              },
+              children: /* @__PURE__ */ jsxRuntimeExports.jsx(MenuItem$1, { onClick: handleClose, children: "Logout" })
             }
           )
         ] })
@@ -45847,6 +45862,7 @@ const MaterialReactTable = (_a) => {
   return jsxRuntimeExports.jsx(MRT_TableRoot, Object.assign({ aggregationFns: _aggregationFns, autoResetExpanded, columnResizeMode, defaultColumn: _defaultColumn, defaultDisplayColumn: _defaultDisplayColumn, editingMode, enableBottomToolbar, enableColumnActions, enableColumnFilters, enableColumnOrdering, enableColumnResizing, enableDensityToggle, enableExpandAll, enableExpanding, enableFilterMatchHighlighting, enableFilters, enableFullScreenToggle, enableGlobalFilter, enableGlobalFilterRankedResults, enableGrouping, enableHiding, enableMultiRowSelection, enableMultiSort, enablePagination, enablePinning, enableRowSelection, enableSelectAll, enableSorting, enableStickyHeader, enableTableFooter, enableTableHead, enableToolbarInternalActions, enableTopToolbar, filterFns: _filterFns, icons: _icons, layoutMode, localization: _localization, manualFiltering, manualGrouping, manualPagination, manualSorting, positionActionsColumn, positionExpandColumn, positionGlobalFilter, positionPagination, positionToolbarAlertBanner, positionToolbarDropZone, rowNumberMode, selectAllMode, sortingFns: _sortingFns }, rest));
 };
 function BasicList(props) {
+  var _a, _b;
   const {
     ctx,
     onRowClick = () => {
@@ -45856,10 +45872,13 @@ function BasicList(props) {
     data,
     columns,
     sx = {},
-    spec
+    spec,
+    isLoading,
+    action
   } = props;
   const theme = ctx().theme;
-  const editingMode = spec.content.def.subview.index.editingMode;
+  const editingMode = ((_a = spec.content.def.subview[action]) == null ? void 0 : _a.editingMode) || "none";
+  const enableColumnFilters = ((_b = spec.content.def.subview[action]) == null ? void 0 : _b.enableColumnFilters) || false;
   const cmpKey = spec.content.key;
   const handleSaveRow = (_0) => __async(this, [_0], function* ({ exitEditingMode, row, values: values2 }) {
     onEditingRowSave(row, values2);
@@ -45874,7 +45893,7 @@ function BasicList(props) {
   });
   const commonTableProps = {
     enableColumnActions: false,
-    enableColumnFilters: false,
+    enableColumnFilters,
     enableSorting: false,
     enableBottomToolbar: true,
     enableTopToolbar: false,
@@ -45906,6 +45925,7 @@ function BasicList(props) {
   return /* @__PURE__ */ jsxRuntimeExports.jsx(ThemeProvider, { theme, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Box$2, { className: "BasicList", style: __spreadValues({}, sx), children: /* @__PURE__ */ createElement(
     MaterialReactTable,
     __spreadProps(__spreadValues(__spreadValues({}, commonTableProps), specificProps), {
+      state: { isLoading },
       key: cmpKey
     })
   ) }) });
@@ -45947,13 +45967,13 @@ function cloneObject(data) {
   return copy2;
 }
 var compact = (value) => Array.isArray(value) ? value.filter(Boolean) : [];
-var isUndefined = (val) => val === void 0;
-var get = (obj, path, defaultValue) => {
-  if (!path || !isObject(obj)) {
+var isUndefined$1 = (val) => val === void 0;
+var get = (object, path, defaultValue) => {
+  if (!path || !isObject(object)) {
     return defaultValue;
   }
-  const result = compact(path.split(/[,[\].]+?/)).reduce((result2, key) => isNullOrUndefined(result2) ? result2 : result2[key], obj);
-  return isUndefined(result) || result === obj ? isUndefined(obj[path]) ? defaultValue : obj[path] : result;
+  const result = compact(path.split(/[,[\].]+?/)).reduce((result2, key) => isNullOrUndefined(result2) ? result2 : result2[key], object);
+  return isUndefined$1(result) || result === object ? isUndefined$1(object[path]) ? defaultValue : object[path] : result;
 };
 var isBoolean = (value) => typeof value === "boolean";
 const EVENTS = {
@@ -46083,7 +46103,7 @@ function useWatch(props) {
 }
 var isKey = (value) => /^\w*$/.test(value);
 var stringToPath = (input) => compact(input.replace(/["|']|\]/g, "").split(/\.|\[/));
-function set(object, path, value) {
+var set = (object, path, value) => {
   let index2 = -1;
   const tempPath = isKey(path) ? [path] : stringToPath(path);
   const length2 = tempPath.length;
@@ -46099,7 +46119,7 @@ function set(object, path, value) {
     object = object[key];
   }
   return object;
-}
+};
 function useController(props) {
   const methods = useFormContext();
   const { name, disabled, control = methods.control, shouldUnregister } = props;
@@ -46115,7 +46135,8 @@ function useController(props) {
     name
   });
   const _registerProps = React__default.useRef(control.register(name, __spreadProps(__spreadValues({}, props.rules), {
-    value
+    value,
+    disabled: props.disabled
   })));
   _registerProps.current = control.register(name, props.rules);
   React__default.useEffect(() => {
@@ -46130,7 +46151,7 @@ function useController(props) {
     if (_shouldUnregisterField) {
       const value2 = cloneObject(get(control._options.defaultValues, name));
       set(control._defaultValues, name, value2);
-      if (isUndefined(get(control._formValues, name))) {
+      if (isUndefined$1(get(control._formValues, name))) {
         set(control._formValues, name, value2);
       }
     }
@@ -46280,7 +46301,7 @@ var generateId = () => {
     return (c == "x" ? r2 : r2 & 3 | 8).toString(16);
   });
 };
-var getFocusFieldName = (name, index2, options = {}) => options.shouldFocus || isUndefined(options.shouldFocus) ? options.focusName || `${name}.${isUndefined(options.focusIndex) ? index2 : options.focusIndex}.` : "";
+var getFocusFieldName = (name, index2, options = {}) => options.shouldFocus || isUndefined$1(options.shouldFocus) ? options.focusName || `${name}.${isUndefined$1(options.focusIndex) ? index2 : options.focusIndex}.` : "";
 var getValidationModes = (mode) => ({
   isOnSubmit: !mode || mode === VALIDATION_MODE.onSubmit,
   isOnBlur: mode === VALIDATION_MODE.onBlur,
@@ -46299,6 +46320,8 @@ const iterateFieldsByAction = (fields, action, fieldsNames, abortEarly) => {
           break;
         } else if (_f.ref && action(_f.ref, _f.name) && !abortEarly) {
           break;
+        } else {
+          iterateFieldsByAction(currentField, action);
         }
       } else if (isObject(currentField)) {
         iterateFieldsByAction(currentField, action);
@@ -46337,7 +46360,7 @@ var getCheckboxValue = (options) => {
     }
     return options[0].checked && !options[0].disabled ? (
       // @ts-expect-error expected to work in the browser
-      options[0].attributes && !isUndefined(options[0].attributes.value) ? isUndefined(options[0].value) || options[0].value === "" ? validResult : { value: options[0].value, isValid: true } : validResult
+      options[0].attributes && !isUndefined$1(options[0].attributes.value) ? isUndefined$1(options[0].value) || options[0].value === "" ? validResult : { value: options[0].value, isValid: true } : validResult
     ) : defaultResult;
   }
   return defaultResult;
@@ -46380,7 +46403,7 @@ var validateField = (field, formValues, validateAllFieldCriteria, shouldUseNativ
   const isRadio = isRadioInput(ref);
   const isCheckBox = isCheckBoxInput(ref);
   const isRadioOrCheckbox2 = isRadio || isCheckBox;
-  const isEmpty2 = (valueAsNumber || isFileInput(ref)) && isUndefined(ref.value) && isUndefined(inputValue) || isHTMLElement(ref) && ref.value === "" || inputValue === "" || Array.isArray(inputValue) && !inputValue.length;
+  const isEmpty2 = (valueAsNumber || isFileInput(ref)) && isUndefined$1(ref.value) && isUndefined$1(inputValue) || isHTMLElement(ref) && ref.value === "" || inputValue === "" || Array.isArray(inputValue) && !inputValue.length;
   const appendErrorsCurry = appendErrors.bind(null, name, validateAllFieldCriteria, error);
   const getMinMaxMessage = (exceedMax, maxLengthMessage, minLengthMessage, maxType = INPUT_VALIDATION_RULES.maxLength, minType = INPUT_VALIDATION_RULES.minLength) => {
     const message = exceedMax ? maxLengthMessage : minLengthMessage;
@@ -46503,9 +46526,10 @@ var validateField = (field, formValues, validateAllFieldCriteria, shouldUseNativ
   setCustomValidity(true);
   return error;
 });
-function append(data, value) {
-  return [...data, ...convertToArrayPayload(value)];
-}
+var appendAt = (data, value) => [
+  ...data,
+  ...convertToArrayPayload(value)
+];
 var fillEmptyArray = (value) => Array.isArray(value) ? value.map(() => void 0) : void 0;
 function insert(data, index2, value) {
   return [
@@ -46518,15 +46542,16 @@ var moveArrayAt = (data, from2, to) => {
   if (!Array.isArray(data)) {
     return [];
   }
-  if (isUndefined(data[to])) {
+  if (isUndefined$1(data[to])) {
     data[to] = void 0;
   }
   data.splice(to, 0, data.splice(from2, 1)[0]);
   return data;
 };
-function prepend(data, value) {
-  return [...convertToArrayPayload(value), ...convertToArrayPayload(data)];
-}
+var prependAt = (data, value) => [
+  ...convertToArrayPayload(value),
+  ...convertToArrayPayload(data)
+];
 function removeAtIndexes(data, indexes) {
   let i = 0;
   const temp = [...data];
@@ -46536,21 +46561,21 @@ function removeAtIndexes(data, indexes) {
   }
   return compact(temp).length ? temp : [];
 }
-var removeArrayAt = (data, index2) => isUndefined(index2) ? [] : removeAtIndexes(data, convertToArrayPayload(index2).sort((a, b) => a - b));
+var removeArrayAt = (data, index2) => isUndefined$1(index2) ? [] : removeAtIndexes(data, convertToArrayPayload(index2).sort((a, b) => a - b));
 var swapArrayAt = (data, indexA, indexB) => {
-  data[indexA] = [data[indexB], data[indexB] = data[indexA]][0];
+  [data[indexA], data[indexB]] = [data[indexB], data[indexA]];
 };
 function baseGet(object, updatePath) {
   const length2 = updatePath.slice(0, -1).length;
   let index2 = 0;
   while (index2 < length2) {
-    object = isUndefined(object) ? index2++ : object[updatePath[index2++]];
+    object = isUndefined$1(object) ? index2++ : object[updatePath[index2++]];
   }
   return object;
 }
 function isEmptyArray(obj) {
   for (const key in obj) {
-    if (obj.hasOwnProperty(key) && !isUndefined(obj[key])) {
+    if (obj.hasOwnProperty(key) && !isUndefined$1(obj[key])) {
       return false;
     }
   }
@@ -46601,25 +46626,25 @@ function useFieldArray(props) {
     _actioned.current = true;
     control._updateFieldArray(name, updatedFieldArrayValues);
   }, [control, name]);
-  const append$12 = (value, options) => {
+  const append2 = (value, options) => {
     const appendValue = convertToArrayPayload(cloneObject(value));
-    const updatedFieldArrayValues = append(control._getFieldArray(name), appendValue);
+    const updatedFieldArrayValues = appendAt(control._getFieldArray(name), appendValue);
     control._names.focus = getFocusFieldName(name, updatedFieldArrayValues.length - 1, options);
-    ids.current = append(ids.current, appendValue.map(generateId));
+    ids.current = appendAt(ids.current, appendValue.map(generateId));
     updateValues(updatedFieldArrayValues);
     setFields(updatedFieldArrayValues);
-    control._updateFieldArray(name, updatedFieldArrayValues, append, {
+    control._updateFieldArray(name, updatedFieldArrayValues, appendAt, {
       argA: fillEmptyArray(value)
     });
   };
-  const prepend$1 = (value, options) => {
+  const prepend = (value, options) => {
     const prependValue = convertToArrayPayload(cloneObject(value));
-    const updatedFieldArrayValues = prepend(control._getFieldArray(name), prependValue);
+    const updatedFieldArrayValues = prependAt(control._getFieldArray(name), prependValue);
     control._names.focus = getFocusFieldName(name, 0, options);
-    ids.current = prepend(ids.current, prependValue.map(generateId));
+    ids.current = prependAt(ids.current, prependValue.map(generateId));
     updateValues(updatedFieldArrayValues);
     setFields(updatedFieldArrayValues);
-    control._updateFieldArray(name, updatedFieldArrayValues, prepend, {
+    control._updateFieldArray(name, updatedFieldArrayValues, prependAt, {
       argA: fillEmptyArray(value)
     });
   };
@@ -46732,8 +46757,8 @@ function useFieldArray(props) {
   return {
     swap: React__default.useCallback(swap, [updateValues, name, control]),
     move: React__default.useCallback(move, [updateValues, name, control]),
-    prepend: React__default.useCallback(prepend$1, [updateValues, name, control]),
-    append: React__default.useCallback(append$12, [updateValues, name, control]),
+    prepend: React__default.useCallback(prepend, [updateValues, name, control]),
+    append: React__default.useCallback(append2, [updateValues, name, control]),
     remove: React__default.useCallback(remove, [updateValues, name, control]),
     insert: React__default.useCallback(insert$1, [updateValues, name, control]),
     update: React__default.useCallback(update, [updateValues, name, control]),
@@ -46743,7 +46768,7 @@ function useFieldArray(props) {
     })), [fields, keyName])
   };
 }
-function createSubject() {
+var createSubject = () => {
   let _observers = [];
   const next2 = (value) => {
     for (const observer of _observers) {
@@ -46769,7 +46794,7 @@ function createSubject() {
     subscribe,
     unsubscribe
   };
-}
+};
 var isPrimitive = (value) => isNullOrUndefined(value) || !isObjectType(value);
 function deepEqual(object1, object2) {
   if (isPrimitive(object1) || isPrimitive(object2)) {
@@ -46827,7 +46852,7 @@ function getDirtyFieldsFromDefaultValues(data, formValues, dirtyFieldsFromValues
   if (isObject(data) || isParentNodeArray) {
     for (const key in data) {
       if (Array.isArray(data[key]) || isObject(data[key]) && !objectHasFunction(data[key])) {
-        if (isUndefined(formValues) || isPrimitive(dirtyFieldsFromValues[key])) {
+        if (isUndefined$1(formValues) || isPrimitive(dirtyFieldsFromValues[key])) {
           dirtyFieldsFromValues[key] = Array.isArray(data[key]) ? markFieldsDirty(data[key], []) : __spreadValues({}, markFieldsDirty(data[key]));
         } else {
           getDirtyFieldsFromDefaultValues(data[key], isNullOrUndefined(formValues) ? {} : formValues[key], dirtyFieldsFromValues[key]);
@@ -46840,7 +46865,7 @@ function getDirtyFieldsFromDefaultValues(data, formValues, dirtyFieldsFromValues
   return dirtyFieldsFromValues;
 }
 var getDirtyFields = (defaultValues, formValues) => getDirtyFieldsFromDefaultValues(defaultValues, formValues, markFieldsDirty(formValues));
-var getFieldValueAs = (value, { valueAsNumber, valueAsDate, setValueAs }) => isUndefined(value) ? value : valueAsNumber ? value === "" ? NaN : value ? +value : value : valueAsDate && isString(value) ? new Date(value) : setValueAs ? setValueAs(value) : value;
+var getFieldValueAs = (value, { valueAsNumber, valueAsDate, setValueAs }) => isUndefined$1(value) ? value : valueAsNumber ? value === "" ? NaN : value ? +value : value : valueAsDate && isString(value) ? new Date(value) : setValueAs ? setValueAs(value) : value;
 function getFieldValue(_f) {
   const ref = _f.ref;
   if (_f.refs ? _f.refs.every((ref2) => ref2.disabled) : ref.disabled) {
@@ -46858,7 +46883,7 @@ function getFieldValue(_f) {
   if (isCheckBoxInput(ref)) {
     return getCheckboxValue(_f.refs).value;
   }
-  return getFieldValueAs(isUndefined(ref.value) ? _f.ref.value : ref.value, _f);
+  return getFieldValueAs(isUndefined$1(ref.value) ? _f.ref.value : ref.value, _f);
 }
 var getResolverOptions = (fieldsNames, _fields, criteriaMode, shouldUseNativeValidation) => {
   const fields = {};
@@ -46873,7 +46898,7 @@ var getResolverOptions = (fieldsNames, _fields, criteriaMode, shouldUseNativeVal
     shouldUseNativeValidation
   };
 };
-var getRuleValue = (rule) => isUndefined(rule) ? rule : isRegex(rule) ? rule.source : isObject(rule) ? isRegex(rule.value) ? rule.value.source : rule.value : rule;
+var getRuleValue = (rule) => isUndefined$1(rule) ? rule : isRegex(rule) ? rule.source : isObject(rule) ? isRegex(rule.value) ? rule.value.source : rule.value : rule;
 var hasValidation = (options) => options.mount && (options.required || options.min || options.max || options.maxLength || options.minLength || options.pattern || options.validate);
 function schemaErrorLookup(errors, _fields, name) {
   const error = get(errors, name);
@@ -46934,7 +46959,7 @@ function createFormControl(props = {}, flushRootRender) {
     isValid: false,
     touchedFields: {},
     dirtyFields: {},
-    errors: {},
+    errors: _options.errors || {},
     disabled: false
   };
   let _fields = {};
@@ -47023,11 +47048,18 @@ function createFormControl(props = {}, flushRootRender) {
       errors: _formState.errors
     });
   };
+  const _setErrors = (errors) => {
+    _formState.errors = errors;
+    _subjects.state.next({
+      errors: _formState.errors,
+      isValid: false
+    });
+  };
   const updateValidAndValue = (name, shouldSkipSetValueAs, value, ref) => {
     const field = get(_fields, name);
     if (field) {
-      const defaultValue = get(_formValues, name, isUndefined(value) ? get(_defaultValues, name) : value);
-      isUndefined(defaultValue) || ref && ref.defaultChecked || shouldSkipSetValueAs ? set(_formValues, name, shouldSkipSetValueAs ? defaultValue : getFieldValue(field._f)) : setFieldValue(name, defaultValue);
+      const defaultValue = get(_formValues, name, isUndefined$1(value) ? get(_defaultValues, name) : value);
+      isUndefined$1(defaultValue) || ref && ref.defaultChecked || shouldSkipSetValueAs ? set(_formValues, name, shouldSkipSetValueAs ? defaultValue : getFieldValue(field._f)) : setFieldValue(name, defaultValue);
       _state.mount && _updateValid();
     }
   };
@@ -47127,7 +47159,7 @@ function createFormControl(props = {}, flushRootRender) {
     _names.unMount = /* @__PURE__ */ new Set();
   };
   const _getDirty = (name, data) => (name && data && set(_formValues, name, data), !deepEqual(getValues(), _defaultValues));
-  const _getWatch = (names, defaultValue, isGlobal) => generateWatchOutput(names, _names, __spreadValues({}, _state.mount ? _formValues : isUndefined(defaultValue) ? _defaultValues : isString(names) ? { [names]: defaultValue } : defaultValue), isGlobal, defaultValue);
+  const _getWatch = (names, defaultValue, isGlobal) => generateWatchOutput(names, _names, __spreadValues({}, _state.mount ? _formValues : isUndefined$1(defaultValue) ? _defaultValues : isString(names) ? { [names]: defaultValue } : defaultValue), isGlobal, defaultValue);
   const _getFieldArray = (name) => compact(get(_state.mount ? _formValues : _defaultValues, name, props.shouldUnregister ? get(_defaultValues, name, []) : []));
   const setFieldValue = (name, value, options = {}) => {
     const field = get(_fields, name);
@@ -47272,7 +47304,7 @@ function createFormControl(props = {}, flushRootRender) {
     const fieldNames = convertToArrayPayload(name);
     _updateIsValidating(true);
     if (_options.resolver) {
-      const errors = yield executeSchemaAndUpdateState(isUndefined(name) ? name : fieldNames);
+      const errors = yield executeSchemaAndUpdateState(isUndefined$1(name) ? name : fieldNames);
       isValid = isEmptyObject(errors);
       validationResult = name ? !fieldNames.some((name2) => get(errors, name2)) : isValid;
     } else if (name) {
@@ -47293,7 +47325,7 @@ function createFormControl(props = {}, flushRootRender) {
   });
   const getValues = (fieldNames) => {
     const values2 = __spreadValues(__spreadValues({}, _defaultValues), _state.mount ? _formValues : {});
-    return isUndefined(fieldNames) ? values2 : isString(fieldNames) ? get(values2, fieldNames) : fieldNames.map((name) => get(values2, name));
+    return isUndefined$1(fieldNames) ? values2 : isString(fieldNames) ? get(values2, fieldNames) : fieldNames.map((name) => get(values2, name));
   };
   const getFieldState = (name, formState) => ({
     invalid: !!get((formState || _formState).errors, name),
@@ -47343,7 +47375,7 @@ function createFormControl(props = {}, flushRootRender) {
   };
   const _updateDisabledField = ({ disabled, name, field, fields, value }) => {
     if (isBoolean(disabled)) {
-      const inputValue = disabled ? void 0 : isUndefined(value) ? getFieldValue(field ? field._f : get(fields, name)._f) : value;
+      const inputValue = disabled ? void 0 : isUndefined$1(value) ? getFieldValue(field ? field._f : get(fields, name)._f) : value;
       set(_formValues, name, inputValue);
       updateTouchAndDirty(name, inputValue, false, false, true);
     }
@@ -47382,7 +47414,7 @@ function createFormControl(props = {}, flushRootRender) {
         if (ref) {
           register(name, options);
           field = get(_fields, name);
-          const fieldRef = isUndefined(ref.value) ? ref.querySelectorAll ? ref.querySelectorAll("input,select,textarea")[0] || ref : ref : ref;
+          const fieldRef = isUndefined$1(ref.value) ? ref.querySelectorAll ? ref.querySelectorAll("input,select,textarea")[0] || ref : ref : ref;
           const radioOrCheckbox = isRadioOrCheckbox(fieldRef);
           const refs = field._f.refs || [];
           if (radioOrCheckbox ? refs.find((option) => option === fieldRef) : fieldRef === field._f.ref) {
@@ -47413,8 +47445,13 @@ function createFormControl(props = {}, flushRootRender) {
   const _disableForm = (disabled) => {
     if (isBoolean(disabled)) {
       _subjects.state.next({ disabled });
-      iterateFieldsByAction(_fields, (ref) => {
-        ref.disabled = disabled;
+      iterateFieldsByAction(_fields, (ref, name) => {
+        let requiredDisabledState = disabled;
+        const currentField = get(_fields, name);
+        if (currentField && isBoolean(currentField._f.disabled)) {
+          requiredDisabledState || (requiredDisabledState = currentField._f.disabled);
+        }
+        ref.disabled = requiredDisabledState;
       }, 0, false);
     }
   };
@@ -47457,7 +47494,7 @@ function createFormControl(props = {}, flushRootRender) {
   });
   const resetField = (name, options = {}) => {
     if (get(_fields, name)) {
-      if (isUndefined(options.defaultValue)) {
+      if (isUndefined$1(options.defaultValue)) {
         setValue(name, get(_defaultValues, name));
       } else {
         setValue(name, options.defaultValue);
@@ -47490,7 +47527,7 @@ function createFormControl(props = {}, flushRootRender) {
           get(_formState.dirtyFields, fieldName) ? set(values2, fieldName, get(_formValues, fieldName)) : setValue(fieldName, get(values2, fieldName));
         }
       } else {
-        if (isWeb && isUndefined(formValues)) {
+        if (isWeb && isUndefined$1(formValues)) {
           for (const name of _names.mount) {
             const field = get(_fields, name);
             if (field && field._f) {
@@ -47579,6 +47616,7 @@ function createFormControl(props = {}, flushRootRender) {
       _disableForm,
       _subjects,
       _proxyFormState,
+      _setErrors,
       get _fields() {
         return _fields;
       },
@@ -47642,7 +47680,7 @@ function useForm(props = {}) {
     submitCount: 0,
     dirtyFields: {},
     touchedFields: {},
-    errors: {},
+    errors: props.errors || {},
     disabled: false,
     defaultValues: isFunction(props.defaultValues) ? void 0 : props.defaultValues
   });
@@ -47676,10 +47714,16 @@ function useForm(props = {}) {
     if (props.values && !deepEqual(props.values, _values.current)) {
       control._reset(props.values, control._options.resetOptions);
       _values.current = props.values;
+      updateFormState((state) => __spreadValues({}, state));
     } else {
       control._resetDefaultValues();
     }
   }, [props.values, control]);
+  React__default.useEffect(() => {
+    if (props.errors) {
+      control._setErrors(props.errors);
+    }
+  }, [props.errors, control]);
   React__default.useEffect(() => {
     if (!control._state.mount) {
       control._updateValid();
@@ -47832,6 +47876,1323 @@ function BasicEdit(props) {
     }
   ) });
 }
+var Defaults = {
+  defaultAmount: 0,
+  defaultCurrency: "USD",
+  defaultPrecision: 2
+};
+var Globals = {
+  globalLocale: "en-US",
+  globalFormat: "$0,0.00",
+  globalRoundingMode: "HALF_EVEN",
+  globalFormatRoundingMode: "HALF_AWAY_FROM_ZERO",
+  globalExchangeRatesApi: {
+    endpoint: void 0,
+    headers: void 0,
+    propertyPath: void 0
+  }
+};
+function _typeof(obj) {
+  "@babel/helpers - typeof";
+  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+    _typeof = function(obj2) {
+      return typeof obj2;
+    };
+  } else {
+    _typeof = function(obj2) {
+      return obj2 && typeof Symbol === "function" && obj2.constructor === Symbol && obj2 !== Symbol.prototype ? "symbol" : typeof obj2;
+    };
+  }
+  return _typeof(obj);
+}
+function _toArray(arr) {
+  return _arrayWithHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableRest();
+}
+function _arrayWithHoles(arr) {
+  if (Array.isArray(arr))
+    return arr;
+}
+function _iterableToArray(iter) {
+  if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter))
+    return Array.from(iter);
+}
+function _unsupportedIterableToArray(o, minLen) {
+  if (!o)
+    return;
+  if (typeof o === "string")
+    return _arrayLikeToArray(o, minLen);
+  var n = Object.prototype.toString.call(o).slice(8, -1);
+  if (n === "Object" && o.constructor)
+    n = o.constructor.name;
+  if (n === "Map" || n === "Set")
+    return Array.from(o);
+  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n))
+    return _arrayLikeToArray(o, minLen);
+}
+function _arrayLikeToArray(arr, len) {
+  if (len == null || len > arr.length)
+    len = arr.length;
+  for (var i = 0, arr2 = new Array(len); i < len; i++)
+    arr2[i] = arr[i];
+  return arr2;
+}
+function _nonIterableRest() {
+  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+var Static = {
+  /**
+   * Returns an array of Dinero objects, normalized to the same precision (the highest).
+   *
+   * @memberof module:Dinero
+   * @method
+   *
+   * @param {Dinero[]} objects - An array of Dinero objects
+   *
+   * @example
+   * // returns an array of Dinero objects
+   * // both with a precision of 3
+   * // and an amount of 1000
+   * Dinero.normalizePrecision([
+   *   Dinero({ amount: 100, precision: 2 }),
+   *   Dinero({ amount: 1000, precision: 3 })
+   * ])
+   *
+   * @return {Dinero[]}
+   */
+  normalizePrecision: function normalizePrecision(objects) {
+    var highestPrecision = objects.reduce(function(a, b) {
+      return Math.max(a.getPrecision(), b.getPrecision());
+    });
+    return objects.map(function(object) {
+      return object.getPrecision() !== highestPrecision ? object.convertPrecision(highestPrecision) : object;
+    });
+  },
+  /**
+   * Returns the smallest Dinero object from an array of Dinero objects
+   *
+   * @memberof module:Dinero
+   * @method
+   *
+   * @param {Dinero[]} objects - An array of Dinero objects
+   *
+   * @example
+   * // returns the smallest Dinero object with amount of 500 from an array of Dinero objects with different precisions
+   * Dinero.minimum([
+   *   Dinero({ amount: 500, precision: 3 }),
+   *   Dinero({ amount: 100, precision: 2 })
+   * ])
+   * @example
+   * // returns the smallest Dinero object with amount of 50 from an array of Dinero objects
+   * Dinero.minimum([
+   *   Dinero({ amount: 50 }),
+   *   Dinero({ amount: 100 })
+   * ])
+   *
+   * @return {Dinero[]}
+   */
+  minimum: function minimum(objects) {
+    var _objects = _toArray(objects), firstObject = _objects[0], tailObjects = _objects.slice(1);
+    var currentMinimum = firstObject;
+    tailObjects.forEach(function(obj) {
+      currentMinimum = currentMinimum.lessThan(obj) ? currentMinimum : obj;
+    });
+    return currentMinimum;
+  },
+  /**
+   * Returns the biggest Dinero object from an array of Dinero objects
+   *
+   * @memberof module:Dinero
+   * @method
+   *
+   * @param {Dinero[]} objects - An array of Dinero objects
+   *
+   * @example
+   * // returns the biggest Dinero object with amount of 20, from an array of Dinero objects with different precisions
+   * Dinero.maximum([
+   *   Dinero({ amount: 20, precision: 2 }),
+   *   Dinero({ amount: 150, precision: 3 })
+   * ])
+   * @example
+   * // returns the biggest Dinero object with amount of 100, from an array of Dinero objects
+   * Dinero.maximum([
+   *   Dinero({ amount: 100 }),
+   *   Dinero({ amount: 50 })
+   * ])
+   *
+   * @return {Dinero[]}
+   */
+  maximum: function maximum(objects) {
+    var _objects2 = _toArray(objects), firstObject = _objects2[0], tailObjects = _objects2.slice(1);
+    var currentMaximum = firstObject;
+    tailObjects.forEach(function(obj) {
+      currentMaximum = currentMaximum.greaterThan(obj) ? currentMaximum : obj;
+    });
+    return currentMaximum;
+  }
+};
+function isNumeric(value) {
+  return !isNaN(parseInt(value)) && isFinite(value);
+}
+function isPercentage(percentage) {
+  return isNumeric(percentage) && percentage <= 100 && percentage >= 0;
+}
+function areValidRatios(ratios) {
+  return ratios.length > 0 && ratios.every(function(ratio) {
+    return ratio >= 0;
+  }) && ratios.some(function(ratio) {
+    return ratio > 0;
+  });
+}
+function isEven(value) {
+  return value % 2 === 0;
+}
+function isFloat(value) {
+  return isNumeric(value) && !Number.isInteger(value);
+}
+function countFractionDigits() {
+  var number = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : 0;
+  var stringRepresentation = number.toString();
+  if (stringRepresentation.indexOf("e-") > 0) {
+    return parseInt(stringRepresentation.split("e-")[1]);
+  } else {
+    var fractionDigits = stringRepresentation.split(".")[1];
+    return fractionDigits ? fractionDigits.length : 0;
+  }
+}
+function isHalf(number) {
+  return Math.abs(number) % 1 === 0.5;
+}
+function getJSON(url) {
+  var options = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {};
+  return new Promise(function(resolve, reject) {
+    var request = Object.assign(new XMLHttpRequest(), {
+      onreadystatechange: function onreadystatechange() {
+        if (request.readyState === 4) {
+          if (request.status >= 200 && request.status < 400)
+            resolve(JSON.parse(request.responseText));
+          else
+            reject(new Error(request.statusText));
+        }
+      },
+      onerror: function onerror() {
+        reject(new Error("Network error"));
+      }
+    });
+    request.open("GET", url, true);
+    setXHRHeaders(request, options.headers);
+    request.send();
+  });
+}
+function setXHRHeaders(xhr) {
+  var headers = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {};
+  for (var header in headers) {
+    xhr.setRequestHeader(header, headers[header]);
+  }
+  return xhr;
+}
+function isUndefined(value) {
+  return typeof value === "undefined";
+}
+function flattenObject(object) {
+  var separator = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : ".";
+  var finalObject = {};
+  Object.entries(object).forEach(function(item) {
+    if (_typeof(item[1]) === "object") {
+      var flatObject = flattenObject(item[1]);
+      Object.entries(flatObject).forEach(function(node2) {
+        finalObject[item[0] + separator + node2[0]] = node2[1];
+      });
+    } else {
+      finalObject[item[0]] = item[1];
+    }
+  });
+  return finalObject;
+}
+function isThenable(value) {
+  return Boolean(value) && (_typeof(value) === "object" || typeof value === "function") && typeof value.then === "function";
+}
+function Calculator() {
+  var floatMultiply = function floatMultiply2(a, b) {
+    var getFactor = function getFactor2(number) {
+      return Math.pow(10, countFractionDigits(number));
+    };
+    var factor = Math.max(getFactor(a), getFactor(b));
+    return Math.round(a * factor) * Math.round(b * factor) / (factor * factor);
+  };
+  var roundingModes = {
+    HALF_ODD: function HALF_ODD(number) {
+      var rounded = Math.round(number);
+      return isHalf(number) ? isEven(rounded) ? rounded - 1 : rounded : rounded;
+    },
+    HALF_EVEN: function HALF_EVEN(number) {
+      var rounded = Math.round(number);
+      return isHalf(number) ? isEven(rounded) ? rounded : rounded - 1 : rounded;
+    },
+    HALF_UP: function HALF_UP(number) {
+      return Math.round(number);
+    },
+    HALF_DOWN: function HALF_DOWN(number) {
+      return isHalf(number) ? Math.floor(number) : Math.round(number);
+    },
+    HALF_TOWARDS_ZERO: function HALF_TOWARDS_ZERO(number) {
+      return isHalf(number) ? Math.sign(number) * Math.floor(Math.abs(number)) : Math.round(number);
+    },
+    HALF_AWAY_FROM_ZERO: function HALF_AWAY_FROM_ZERO(number) {
+      return isHalf(number) ? Math.sign(number) * Math.ceil(Math.abs(number)) : Math.round(number);
+    },
+    DOWN: function DOWN(number) {
+      return Math.floor(number);
+    }
+  };
+  return {
+    /**
+     * Returns the sum of two numbers.
+     * @ignore
+     *
+     * @param {Number} a - The first number to add.
+     * @param {Number} b - The second number to add.
+     *
+     * @return {Number}
+     */
+    add: function add(a, b) {
+      return a + b;
+    },
+    /**
+     * Returns the difference of two numbers.
+     * @ignore
+     *
+     * @param {Number} a - The first number to subtract.
+     * @param {Number} b - The second number to subtract.
+     *
+     * @return {Number}
+     */
+    subtract: function subtract(a, b) {
+      return a - b;
+    },
+    /**
+     * Returns the product of two numbers.
+     * @ignore
+     *
+     * @param {Number} a - The first number to multiply.
+     * @param {Number} b - The second number to multiply.
+     *
+     * @return {Number}
+     */
+    multiply: function multiply(a, b) {
+      return isFloat(a) || isFloat(b) ? floatMultiply(a, b) : a * b;
+    },
+    /**
+     * Returns the quotient of two numbers.
+     * @ignore
+     *
+     * @param {Number} a - The first number to divide.
+     * @param {Number} b - The second number to divide.
+     *
+     * @return {Number}
+     */
+    divide: function divide(a, b) {
+      return a / b;
+    },
+    /**
+     * Returns the remainder of two numbers.
+     * @ignore
+     *
+     * @param  {Number} a - The first number to divide.
+     * @param  {Number} b - The second number to divide.
+     *
+     * @return {Number}
+     */
+    modulo: function modulo(a, b) {
+      return a % b;
+    },
+    /**
+     * Returns a rounded number based off a specific rounding mode.
+     * @ignore
+     *
+     * @param {Number} number - The number to round.
+     * @param {String} [roundingMode='HALF_EVEN'] - The rounding mode to use.
+     *
+     * @returns {Number}
+     */
+    round: function round2(number) {
+      var roundingMode = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : "HALF_EVEN";
+      return roundingModes[roundingMode](number);
+    }
+  };
+}
+var calculator = Calculator();
+function Format(format) {
+  var matches = /^(?:(\$|USD)?0(?:(,)0)?(\.)?(0+)?|0(?:(,)0)?(\.)?(0+)?\s?(dollar)?)$/gm.exec(format);
+  return {
+    /**
+     * Returns the matches.
+     * @ignore
+     *
+     * @return {Array}
+     */
+    getMatches: function getMatches() {
+      return matches !== null ? matches.slice(1).filter(function(match2) {
+        return !isUndefined(match2);
+      }) : [];
+    },
+    /**
+     * Returns the amount of fraction digits to display.
+     * @ignore
+     *
+     * @return {Number}
+     */
+    getMinimumFractionDigits: function getMinimumFractionDigits() {
+      var decimalPosition = function decimalPosition2(match2) {
+        return match2 === ".";
+      };
+      return !isUndefined(this.getMatches().find(decimalPosition)) ? this.getMatches()[calculator.add(this.getMatches().findIndex(decimalPosition), 1)].split("").length : 0;
+    },
+    /**
+     * Returns the currency display mode.
+     * @ignore
+     *
+     * @return {String}
+     */
+    getCurrencyDisplay: function getCurrencyDisplay() {
+      var modes2 = {
+        USD: "code",
+        dollar: "name",
+        $: "symbol"
+      };
+      return modes2[this.getMatches().find(function(match2) {
+        return match2 === "USD" || match2 === "dollar" || match2 === "$";
+      })];
+    },
+    /**
+     * Returns the formatting style.
+     * @ignore
+     *
+     * @return {String}
+     */
+    getStyle: function getStyle() {
+      return !isUndefined(this.getCurrencyDisplay(this.getMatches())) ? "currency" : "decimal";
+    },
+    /**
+     * Returns whether grouping should be used or not.
+     * @ignore
+     *
+     * @return {Boolean}
+     */
+    getUseGrouping: function getUseGrouping() {
+      return !isUndefined(this.getMatches().find(function(match2) {
+        return match2 === ",";
+      }));
+    }
+  };
+}
+function CurrencyConverter(options) {
+  var mergeTags = function mergeTags2() {
+    var string = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : "";
+    var tags = arguments.length > 1 ? arguments[1] : void 0;
+    for (var tag in tags) {
+      string = string.replace("{{".concat(tag, "}}"), tags[tag]);
+    }
+    return string;
+  };
+  var getRatesFromRestApi = function getRatesFromRestApi2(from2, to) {
+    return getJSON(mergeTags(options.endpoint, {
+      from: from2,
+      to
+    }), {
+      headers: options.headers
+    });
+  };
+  return {
+    /**
+     * Returns the exchange rate.
+     * @ignore
+     *
+     * @param  {String} from - The base currency.
+     * @param  {String} to   - The destination currency.
+     *
+     * @return {Promise}
+     */
+    getExchangeRate: function getExchangeRate(from2, to) {
+      return (isThenable(options.endpoint) ? options.endpoint : getRatesFromRestApi(from2, to)).then(function(data) {
+        return flattenObject(data)[mergeTags(options.propertyPath, {
+          from: from2,
+          to
+        })];
+      });
+    }
+  };
+}
+function assert(condition, errorMessage) {
+  var ErrorType = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : Error;
+  if (!condition)
+    throw new ErrorType(errorMessage);
+}
+function assertPercentage(percentage) {
+  assert(isPercentage(percentage), "You must provide a numeric value between 0 and 100.", RangeError);
+}
+function assertValidRatios(ratios) {
+  assert(areValidRatios(ratios), "You must provide a non-empty array of numeric values greater than 0.", TypeError);
+}
+function assertInteger(number) {
+  assert(Number.isInteger(number), "You must provide an integer.", TypeError);
+}
+var calculator$1 = Calculator();
+var Dinero = function Dinero2(options) {
+  var _Object$assign = Object.assign({}, {
+    amount: Dinero2.defaultAmount,
+    currency: Dinero2.defaultCurrency,
+    precision: Dinero2.defaultPrecision
+  }, options), amount = _Object$assign.amount, currency = _Object$assign.currency, precision = _Object$assign.precision;
+  assertInteger(amount);
+  assertInteger(precision);
+  var globalLocale = Dinero2.globalLocale, globalFormat = Dinero2.globalFormat, globalRoundingMode = Dinero2.globalRoundingMode, globalFormatRoundingMode = Dinero2.globalFormatRoundingMode;
+  var globalExchangeRatesApi = Object.assign({}, Dinero2.globalExchangeRatesApi);
+  var create = function create2(options2) {
+    var obj = Object.assign({}, Object.assign({}, {
+      amount,
+      currency,
+      precision
+    }, options2), Object.assign({}, {
+      locale: this.locale
+    }, options2));
+    return Object.assign(Dinero2({
+      amount: obj.amount,
+      currency: obj.currency,
+      precision: obj.precision
+    }), {
+      locale: obj.locale
+    });
+  };
+  var assertSameCurrency = function assertSameCurrency2(comparator) {
+    assert(this.hasSameCurrency(comparator), "You must provide a Dinero instance with the same currency.", TypeError);
+  };
+  return {
+    /**
+     * Returns the amount.
+     *
+     * @example
+     * // returns 500
+     * Dinero({ amount: 500 }).getAmount()
+     *
+     * @return {Number}
+     */
+    getAmount: function getAmount() {
+      return amount;
+    },
+    /**
+     * Returns the currency.
+     *
+     * @example
+     * // returns 'EUR'
+     * Dinero({ currency: 'EUR' }).getCurrency()
+     *
+     * @return {String}
+     */
+    getCurrency: function getCurrency() {
+      return currency;
+    },
+    /**
+     * Returns the locale.
+     *
+     * @example
+     * // returns 'fr-FR'
+     * Dinero().setLocale('fr-FR').getLocale()
+     *
+     * @return {String}
+     */
+    getLocale: function getLocale() {
+      return this.locale || globalLocale;
+    },
+    /**
+     * Returns a new Dinero object with an embedded locale.
+     *
+     * @param {String} newLocale - The new locale as an {@link http://tools.ietf.org/html/rfc5646 BCP 47 language tag}.
+     *
+     * @example
+     * // Returns a Dinero object with locale 'ja-JP'
+     * Dinero().setLocale('ja-JP')
+     *
+     * @return {Dinero}
+     */
+    setLocale: function setLocale(newLocale) {
+      return create.call(this, {
+        locale: newLocale
+      });
+    },
+    /**
+     * Returns the precision.
+     *
+     * @example
+     * // returns 3
+     * Dinero({ precision: 3 }).getPrecision()
+     *
+     * @return {Number}
+     */
+    getPrecision: function getPrecision() {
+      return precision;
+    },
+    /**
+     * Returns a new Dinero object with a new precision and a converted amount.
+     *
+     * By default, fractional minor currency units are rounded using the **half to even** rule ([banker's rounding](http://wiki.c2.com/?BankersRounding)).
+     * This can be necessary when you need to convert objects to a smaller precision.
+     *
+     * Rounding *can* lead to accuracy issues as you chain many times. Consider a minimal amount of subsequent conversions for safer results.
+     * You can also specify a different `roundingMode` to better fit your needs.
+     *
+     * @param {Number} newPrecision - The new precision.
+     * @param {String} [roundingMode='HALF_EVEN'] - The rounding mode to use: `'HALF_ODD'`, `'HALF_EVEN'`, `'HALF_UP'`, `'HALF_DOWN'`, `'HALF_TOWARDS_ZERO'`, `'HALF_AWAY_FROM_ZERO'` or `'DOWN'`.
+     *
+     * @example
+     * // Returns a Dinero object with precision 3 and amount 1000
+     * Dinero({ amount: 100, precision: 2 }).convertPrecision(3)
+     *
+     * @throws {TypeError} If `newPrecision` is invalid.
+     *
+     * @return {Dinero}
+     */
+    convertPrecision: function convertPrecision(newPrecision) {
+      var roundingMode = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : globalFormatRoundingMode;
+      assertInteger(newPrecision);
+      var precision2 = this.getPrecision();
+      var isNewPrecisionLarger = newPrecision > precision2;
+      var operation = isNewPrecisionLarger ? calculator$1.multiply : calculator$1.divide;
+      var terms = isNewPrecisionLarger ? [newPrecision, precision2] : [precision2, newPrecision];
+      var factor = Math.pow(10, calculator$1.subtract.apply(calculator$1, terms));
+      return create.call(this, {
+        amount: calculator$1.round(operation(this.getAmount(), factor), roundingMode),
+        precision: newPrecision
+      });
+    },
+    /**
+     * Returns a new Dinero object that represents the sum of this and an other Dinero object.
+     *
+     * If Dinero objects have a different `precision`, they will be first converted to the highest.
+     *
+     * @param {Dinero} addend - The Dinero object to add.
+     *
+     * @example
+     * // returns a Dinero object with amount 600
+     * Dinero({ amount: 400 }).add(Dinero({ amount: 200 }))
+     * @example
+     * // returns a Dinero object with amount 144545 and precision 4
+     * Dinero({ amount: 400 }).add(Dinero({ amount: 104545, precision: 4 }))
+     *
+     * @throws {TypeError} If `addend` has a different currency.
+     *
+     * @return {Dinero}
+     */
+    add: function add(addend) {
+      assertSameCurrency.call(this, addend);
+      var addends = Dinero2.normalizePrecision([this, addend]);
+      return create.call(this, {
+        amount: calculator$1.add(addends[0].getAmount(), addends[1].getAmount()),
+        precision: addends[0].getPrecision()
+      });
+    },
+    /**
+     * Returns a new Dinero object that represents the difference of this and an other Dinero object.
+     *
+     * If Dinero objects have a different `precision`, they will be first converted to the highest.
+     *
+     * @param  {Dinero} subtrahend - The Dinero object to subtract.
+     *
+     * @example
+     * // returns a Dinero object with amount 200
+     * Dinero({ amount: 400 }).subtract(Dinero({ amount: 200 }))
+     * @example
+     * // returns a Dinero object with amount 64545 and precision 4
+     * Dinero({ amount: 104545, precision: 4 }).subtract(Dinero({ amount: 400 }))
+     *
+     * @throws {TypeError} If `subtrahend` has a different currency.
+     *
+     * @return {Dinero}
+     */
+    subtract: function subtract(subtrahend) {
+      assertSameCurrency.call(this, subtrahend);
+      var subtrahends = Dinero2.normalizePrecision([this, subtrahend]);
+      return create.call(this, {
+        amount: calculator$1.subtract(subtrahends[0].getAmount(), subtrahends[1].getAmount()),
+        precision: subtrahends[0].getPrecision()
+      });
+    },
+    /**
+     * Returns a new Dinero object that represents the multiplied value by the given factor.
+     *
+     * By default, fractional minor currency units are rounded using the **half to even** rule ([banker's rounding](http://wiki.c2.com/?BankersRounding)).
+     *
+     * Rounding *can* lead to accuracy issues as you chain many times. Consider a minimal amount of subsequent calculations for safer results.
+     * You can also specify a different `roundingMode` to better fit your needs.
+     *
+     * @param  {Number} multiplier - The factor to multiply by.
+     * @param  {String} [roundingMode='HALF_EVEN'] - The rounding mode to use: `'HALF_ODD'`, `'HALF_EVEN'`, `'HALF_UP'`, `'HALF_DOWN'`, `'HALF_TOWARDS_ZERO'`, `'HALF_AWAY_FROM_ZERO'` or `'DOWN'`.
+     *
+     * @example
+     * // returns a Dinero object with amount 1600
+     * Dinero({ amount: 400 }).multiply(4)
+     * @example
+     * // returns a Dinero object with amount 800
+     * Dinero({ amount: 400 }).multiply(2.001)
+     * @example
+     * // returns a Dinero object with amount 801
+     * Dinero({ amount: 400 }).multiply(2.00125, 'HALF_UP')
+     *
+     * @return {Dinero}
+     */
+    multiply: function multiply(multiplier) {
+      var roundingMode = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : globalRoundingMode;
+      return create.call(this, {
+        amount: calculator$1.round(calculator$1.multiply(this.getAmount(), multiplier), roundingMode)
+      });
+    },
+    /**
+     * Returns a new Dinero object that represents the divided value by the given factor.
+     *
+     * By default, fractional minor currency units are rounded using the **half to even** rule ([banker's rounding](http://wiki.c2.com/?BankersRounding)).
+     *
+     * Rounding *can* lead to accuracy issues as you chain many times. Consider a minimal amount of subsequent calculations for safer results.
+     * You can also specify a different `roundingMode` to better fit your needs.
+     *
+     * As rounding is applied, precision may be lost in the process. If you want to accurately split a Dinero object, use {@link module:Dinero~allocate allocate} instead.
+     *
+     * @param  {Number} divisor - The factor to divide by.
+     * @param  {String} [roundingMode='HALF_EVEN'] - The rounding mode to use: `'HALF_ODD'`, `'HALF_EVEN'`, `'HALF_UP'`, `'HALF_DOWN'`, `'HALF_TOWARDS_ZERO'`, `'HALF_AWAY_FROM_ZERO'` or `'DOWN'`.
+     *
+     * @example
+     * // returns a Dinero object with amount 100
+     * Dinero({ amount: 400 }).divide(4)
+     * @example
+     * // returns a Dinero object with amount 52
+     * Dinero({ amount: 105 }).divide(2)
+     * @example
+     * // returns a Dinero object with amount 53
+     * Dinero({ amount: 105 }).divide(2, 'HALF_UP')
+     *
+     * @return {Dinero}
+     */
+    divide: function divide(divisor) {
+      var roundingMode = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : globalRoundingMode;
+      return create.call(this, {
+        amount: calculator$1.round(calculator$1.divide(this.getAmount(), divisor), roundingMode)
+      });
+    },
+    /**
+     * Returns a new Dinero object that represents a percentage of this.
+     *
+     * As rounding is applied, precision may be lost in the process. If you want to accurately split a Dinero object, use {@link module:Dinero~allocate allocate} instead.
+     *
+     * @param  {Number} percentage - The percentage to extract (between 0 and 100).
+     * @param  {String} [roundingMode='HALF_EVEN'] - The rounding mode to use: `'HALF_ODD'`, `'HALF_EVEN'`, `'HALF_UP'`, `'HALF_DOWN'`, `'HALF_TOWARDS_ZERO'`, `'HALF_AWAY_FROM_ZERO'` or `'DOWN'`.
+     *
+     * @example
+     * // returns a Dinero object with amount 5000
+     * Dinero({ amount: 10000 }).percentage(50)
+     * @example
+     * // returns a Dinero object with amount 29
+     * Dinero({ amount: 57 }).percentage(50, "HALF_ODD")
+     *
+     * @throws {RangeError} If `percentage` is out of range.
+     *
+     * @return {Dinero}
+     */
+    percentage: function percentage(_percentage) {
+      var roundingMode = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : globalRoundingMode;
+      assertPercentage(_percentage);
+      return this.multiply(calculator$1.divide(_percentage, 100), roundingMode);
+    },
+    /**
+     * Allocates the amount of a Dinero object according to a list of ratios.
+     *
+     * Sometimes you need to split monetary values but percentages can't cut it without adding or losing pennies.
+     * A good example is invoicing: let's say you need to bill $1,000.03 and you want a 50% downpayment.
+     * If you use {@link module:Dinero~percentage percentage}, you'll get an accurate Dinero object but the amount won't be billable: you can't split a penny.
+     * If you round it, you'll bill a penny extra.
+     * With {@link module:Dinero~allocate allocate}, you can split a monetary amount then distribute the remainder as evenly as possible.
+     *
+     * You can use percentage style or ratio style for `ratios`: `[25, 75]` and `[1, 3]` will do the same thing.
+     *
+     * Since v1.8.0, you can use zero ratios (such as [0, 50, 50]). If there's a remainder to distribute, zero ratios are skipped and return a Dinero object with amount zero.
+     *
+     * @param  {Number[]} ratios - The ratios to allocate the money to.
+     *
+     * @example
+     * // returns an array of two Dinero objects
+     * // the first one with an amount of 502
+     * // the second one with an amount of 501
+     * Dinero({ amount: 1003 }).allocate([50, 50])
+     * @example
+     * // returns an array of two Dinero objects
+     * // the first one with an amount of 25
+     * // the second one with an amount of 75
+     * Dinero({ amount: 100 }).allocate([1, 3])
+     * @example
+     * // since version 1.8.0
+     * // returns an array of three Dinero objects
+     * // the first one with an amount of 0
+     * // the second one with an amount of 502
+     * // the third one with an amount of 501
+     * Dinero({ amount: 1003 }).allocate([0, 50, 50])
+     *
+     * @throws {TypeError} If ratios are invalid.
+     *
+     * @return {Dinero[]}
+     */
+    allocate: function allocate(ratios) {
+      var _this = this;
+      assertValidRatios(ratios);
+      var total = ratios.reduce(function(a, b) {
+        return calculator$1.add(a, b);
+      });
+      var remainder = this.getAmount();
+      var shares = ratios.map(function(ratio) {
+        var share = Math.floor(calculator$1.divide(calculator$1.multiply(_this.getAmount(), ratio), total));
+        remainder = calculator$1.subtract(remainder, share);
+        return create.call(_this, {
+          amount: share
+        });
+      });
+      var i = 0;
+      while (remainder > 0) {
+        if (ratios[i] > 0) {
+          shares[i] = shares[i].add(create.call(this, {
+            amount: 1
+          }));
+          remainder = calculator$1.subtract(remainder, 1);
+        }
+        i += 1;
+      }
+      return shares;
+    },
+    /**
+     * Returns a Promise containing a new Dinero object converted to another currency.
+     *
+     * You have two options to provide the exchange rates:
+     *
+     * 1. **Use an exchange rate REST API, and let Dinero handle the fetching and conversion.**
+     *   This is a simple option if you have access to an exchange rate REST API and want Dinero to do the rest.
+     * 2. **Fetch the exchange rates on your own and provide them directly.**
+     *   This is useful if you're fetching your rates from somewhere else (a file, a database), use a different protocol or query language than REST (SOAP, GraphQL) or want to fetch rates once and cache them instead of making new requests every time.
+     *
+     * **If you want to use a REST API**, you must provide a third-party endpoint yourself. Dinero doesn't come bundled with an exchange rates endpoint.
+     *
+     * Here are some exchange rate APIs you can use:
+     *
+     * * [Fixer](https://fixer.io)
+     * * [Open Exchange Rates](https://openexchangerates.org)
+     * * [Coinbase](https://api.coinbase.com/v2/exchange-rates)
+     * * More [foreign](https://github.com/toddmotto/public-apis#currency-exchange) and [crypto](https://github.com/toddmotto/public-apis#cryptocurrency) exchange rate APIs.
+     *
+     * **If you want to fetch your own rates and provide them directly**, you need to pass a promise that resolves to the exchanges rates.
+     *
+     * In both cases, you need to specify at least:
+     *
+     * * a **destination currency**: the currency in which you want to convert your Dinero object. You can specify it with `currency`.
+     * * an **endpoint**: the API URL to query exchange rates, with parameters, or a promise that resolves to the exchange rates. You can specify it with `options.endpoint`.
+     * * a **property path**: the path to access the wanted rate in your API's JSON response (or the custom promise's payload). For example, with a response of:
+     * ```json
+     * {
+     *     "data": {
+     *       "base": "USD",
+     *       "destination": "EUR",
+     *       "rate": "0.827728919"
+     *     }
+     * }
+     * ```
+     * Then the property path is `'data.rate'`. You can specify it with `options.propertyPath`.
+     *
+     * The base currency (the one of your Dinero object) and the destination currency can be used as "merge tags" with the mustache syntax, respectively `{{from}}` and `{{to}}`.
+     * You can use these tags to refer to these values in `options.endpoint` and `options.propertyPath`.
+     *
+     * For example, if you need to specify the base currency as a query parameter, you can do the following:
+     *
+     * ```js
+     * {
+     *   endpoint: 'https://yourexchangerates.api/latest?base={{from}}'
+     * }
+     * ```
+     *
+     * @param  {String} currency - The destination currency, expressed as an {@link https://en.wikipedia.org/wiki/ISO_4217#Active_codes ISO 4217 currency code}.
+     * @param  {(String|Promise)} options.endpoint - The API endpoint to retrieve exchange rates. You can substitute this with a promise that resolves to the exchanges rates if you already have them.
+     * @param  {String} [options.propertyPath='rates.{{to}}'] - The property path to the rate.
+     * @param  {Object} [options.headers] - The HTTP headers to provide, if needed.
+     * @param  {String} [options.roundingMode='HALF_EVEN'] - The rounding mode to use: `'HALF_ODD'`, `'HALF_EVEN'`, `'HALF_UP'`, `'HALF_DOWN'`, `'HALF_TOWARDS_ZERO'`, `'HALF_AWAY_FROM_ZERO'` or `'DOWN'`.
+     *
+     * @example
+     * // your global API parameters
+     * Dinero.globalExchangeRatesApi = { ... }
+     *
+     * // returns a Promise containing a Dinero object with the destination currency
+     * // and the initial amount converted to the new currency.
+     * Dinero({ amount: 500 }).convert('EUR')
+     * @example
+     * // returns a Promise containing a Dinero object,
+     * // with specific API parameters and rounding mode for this specific instance.
+     * Dinero({ amount: 500 })
+     *   .convert('XBT', {
+     *     endpoint: 'https://yourexchangerates.api/latest?base={{from}}',
+     *     propertyPath: 'data.rates.{{to}}',
+     *     headers: {
+     *       'user-key': 'xxxxxxxxx'
+     *     },
+     *     roundingMode: 'HALF_UP'
+     *   })
+     * @example
+     * // usage with exchange rates provided as a custom promise
+     * // using the default `propertyPath` format (so it doesn't have to be specified)
+     * const rates = {
+     *   rates: {
+     *     EUR: 0.81162
+     *   }
+     * }
+     *
+     * Dinero({ amount: 500 })
+     *   .convert('EUR', {
+     *     endpoint: new Promise(resolve => resolve(rates))
+     *   })
+     * @example
+     * // usage with Promise.prototype.then and Promise.prototype.catch
+     * Dinero({ amount: 500 })
+     *   .convert('EUR')
+     *   .then(dinero => {
+     *     dinero.getCurrency() // returns 'EUR'
+     *   })
+     *   .catch(err => {
+     *     // handle errors
+     *   })
+     * @example
+     * // usage with async/await
+     * (async () => {
+     *   const price = await Dinero({ amount: 500 }).convert('EUR')
+     *   price.getCurrency() // returns 'EUR'
+     * })()
+     *
+     * @return {Promise}
+     */
+    convert: function convert(currency2) {
+      var _this2 = this;
+      var _ref = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {}, _ref$endpoint = _ref.endpoint, endpoint = _ref$endpoint === void 0 ? globalExchangeRatesApi.endpoint : _ref$endpoint, _ref$propertyPath = _ref.propertyPath, propertyPath = _ref$propertyPath === void 0 ? globalExchangeRatesApi.propertyPath || "rates.{{to}}" : _ref$propertyPath, _ref$headers = _ref.headers, headers = _ref$headers === void 0 ? globalExchangeRatesApi.headers : _ref$headers, _ref$roundingMode = _ref.roundingMode, roundingMode = _ref$roundingMode === void 0 ? globalRoundingMode : _ref$roundingMode;
+      var options2 = Object.assign({}, {
+        endpoint,
+        propertyPath,
+        headers,
+        roundingMode
+      });
+      return CurrencyConverter(options2).getExchangeRate(this.getCurrency(), currency2).then(function(rate) {
+        assert(!isUndefined(rate), 'No rate was found for the destination currency "'.concat(currency2, '".'), TypeError);
+        return create.call(_this2, {
+          amount: calculator$1.round(calculator$1.multiply(_this2.getAmount(), parseFloat(rate)), options2.roundingMode),
+          currency: currency2
+        });
+      });
+    },
+    /**
+     * Checks whether the value represented by this object equals to the other.
+     *
+     * @param  {Dinero} comparator - The Dinero object to compare to.
+     *
+     * @example
+     * // returns true
+     * Dinero({ amount: 500, currency: 'EUR' }).equalsTo(Dinero({ amount: 500, currency: 'EUR' }))
+     * @example
+     * // returns false
+     * Dinero({ amount: 500, currency: 'EUR' }).equalsTo(Dinero({ amount: 800, currency: 'EUR' }))
+     * @example
+     * // returns false
+     * Dinero({ amount: 500, currency: 'USD' }).equalsTo(Dinero({ amount: 500, currency: 'EUR' }))
+     * @example
+     * // returns false
+     * Dinero({ amount: 500, currency: 'USD' }).equalsTo(Dinero({ amount: 800, currency: 'EUR' }))
+     * @example
+     * // returns true
+     * Dinero({ amount: 1000, currency: 'EUR', precision: 2 }).equalsTo(Dinero({ amount: 10000, currency: 'EUR', precision: 3 }))
+     * @example
+     * // returns false
+     * Dinero({ amount: 10000, currency: 'EUR', precision: 2 }).equalsTo(Dinero({ amount: 10000, currency: 'EUR', precision: 3 }))
+     *
+     * @return {Boolean}
+     */
+    equalsTo: function equalsTo(comparator) {
+      return this.hasSameAmount(comparator) && this.hasSameCurrency(comparator);
+    },
+    /**
+     * Checks whether the value represented by this object is less than the other.
+     *
+     * @param  {Dinero} comparator - The Dinero object to compare to.
+     *
+     * @example
+     * // returns true
+     * Dinero({ amount: 500 }).lessThan(Dinero({ amount: 800 }))
+     * @example
+     * // returns false
+     * Dinero({ amount: 800 }).lessThan(Dinero({ amount: 500 }))
+     * @example
+     * // returns true
+     * Dinero({ amount: 5000, precision: 3 }).lessThan(Dinero({ amount: 800 }))
+     * @example
+     * // returns false
+     * Dinero({ amount: 800 }).lessThan(Dinero({ amount: 5000, precision: 3 }))
+     *
+     * @throws {TypeError} If `comparator` has a different currency.
+     *
+     * @return {Boolean}
+     */
+    lessThan: function lessThan2(comparator) {
+      assertSameCurrency.call(this, comparator);
+      var comparators = Dinero2.normalizePrecision([this, comparator]);
+      return comparators[0].getAmount() < comparators[1].getAmount();
+    },
+    /**
+     * Checks whether the value represented by this object is less than or equal to the other.
+     *
+     * @param  {Dinero} comparator - The Dinero object to compare to.
+     *
+     * @example
+     * // returns true
+     * Dinero({ amount: 500 }).lessThanOrEqual(Dinero({ amount: 800 }))
+     * @example
+     * // returns true
+     * Dinero({ amount: 500 }).lessThanOrEqual(Dinero({ amount: 500 }))
+     * @example
+     * // returns false
+     * Dinero({ amount: 500 }).lessThanOrEqual(Dinero({ amount: 300 }))
+     * @example
+     * // returns true
+     * Dinero({ amount: 5000, precision: 3 }).lessThanOrEqual(Dinero({ amount: 800 }))
+     * @example
+     * // returns true
+     * Dinero({ amount: 5000, precision: 3 }).lessThanOrEqual(Dinero({ amount: 500 }))
+     * @example
+     * // returns false
+     * Dinero({ amount: 800 }).lessThanOrEqual(Dinero({ amount: 5000, precision: 3 }))
+     *
+     * @throws {TypeError} If `comparator` has a different currency.
+     *
+     * @return {Boolean}
+     */
+    lessThanOrEqual: function lessThanOrEqual(comparator) {
+      assertSameCurrency.call(this, comparator);
+      var comparators = Dinero2.normalizePrecision([this, comparator]);
+      return comparators[0].getAmount() <= comparators[1].getAmount();
+    },
+    /**
+     * Checks whether the value represented by this object is greater than the other.
+     *
+     * @param  {Dinero} comparator - The Dinero object to compare to.
+     *
+     * @example
+     * // returns false
+     * Dinero({ amount: 500 }).greaterThan(Dinero({ amount: 800 }))
+     * @example
+     * // returns true
+     * Dinero({ amount: 800 }).greaterThan(Dinero({ amount: 500 }))
+     * @example
+     * // returns true
+     * Dinero({ amount: 800 }).greaterThan(Dinero({ amount: 5000, precision: 3 }))
+     * @example
+     * // returns false
+     * Dinero({ amount: 5000, precision: 3 }).greaterThan(Dinero({ amount: 800 }))
+     *
+     * @throws {TypeError} If `comparator` has a different currency.
+     *
+     * @return {Boolean}
+     */
+    greaterThan: function greaterThan2(comparator) {
+      assertSameCurrency.call(this, comparator);
+      var comparators = Dinero2.normalizePrecision([this, comparator]);
+      return comparators[0].getAmount() > comparators[1].getAmount();
+    },
+    /**
+     * Checks whether the value represented by this object is greater than or equal to the other.
+     *
+     * @param  {Dinero} comparator - The Dinero object to compare to.
+     *
+     * @example
+     * // returns true
+     * Dinero({ amount: 500 }).greaterThanOrEqual(Dinero({ amount: 300 }))
+     * @example
+     * // returns true
+     * Dinero({ amount: 500 }).greaterThanOrEqual(Dinero({ amount: 500 }))
+     * @example
+     * // returns false
+     * Dinero({ amount: 500 }).greaterThanOrEqual(Dinero({ amount: 800 }))
+     * @example
+     * // returns true
+     * Dinero({ amount: 800 }).greaterThanOrEqual(Dinero({ amount: 5000, precision: 3 }))
+     * @example
+     * // returns true
+     * Dinero({ amount: 500 }).greaterThanOrEqual(Dinero({ amount: 5000, precision: 3 }))
+     * @example
+     * // returns false
+     * Dinero({ amount: 5000, precision: 3 }).greaterThanOrEqual(Dinero({ amount: 800 }))
+     *
+     * @throws {TypeError} If `comparator` has a different currency.
+     *
+     * @return {Boolean}
+     */
+    greaterThanOrEqual: function greaterThanOrEqual(comparator) {
+      assertSameCurrency.call(this, comparator);
+      var comparators = Dinero2.normalizePrecision([this, comparator]);
+      return comparators[0].getAmount() >= comparators[1].getAmount();
+    },
+    /**
+     * Checks if the value represented by this object is zero.
+     *
+     * @example
+     * // returns true
+     * Dinero({ amount: 0 }).isZero()
+     * @example
+     * // returns false
+     * Dinero({ amount: 100 }).isZero()
+     *
+     * @return {Boolean}
+     */
+    isZero: function isZero() {
+      return this.getAmount() === 0;
+    },
+    /**
+     * Checks if the value represented by this object is positive.
+     *
+     * @example
+     * // returns false
+     * Dinero({ amount: -10 }).isPositive()
+     * @example
+     * // returns true
+     * Dinero({ amount: 10 }).isPositive()
+     * @example
+     * // returns true
+     * Dinero({ amount: 0 }).isPositive()
+     *
+     * @return {Boolean}
+     */
+    isPositive: function isPositive() {
+      return this.getAmount() >= 0;
+    },
+    /**
+     * Checks if the value represented by this object is negative.
+     *
+     * @example
+     * // returns true
+     * Dinero({ amount: -10 }).isNegative()
+     * @example
+     * // returns false
+     * Dinero({ amount: 10 }).isNegative()
+     * @example
+     * // returns false
+     * Dinero({ amount: 0 }).isNegative()
+     *
+     * @return {Boolean}
+     */
+    isNegative: function isNegative() {
+      return this.getAmount() < 0;
+    },
+    /**
+     * Checks if this has minor currency units.
+     * Deprecates {@link module:Dinero~hasCents hasCents}.
+     *
+     * @example
+     * // returns false
+     * Dinero({ amount: 1100 }).hasSubUnits()
+     * @example
+     * // returns true
+     * Dinero({ amount: 1150 }).hasSubUnits()
+     *
+     * @return {Boolean}
+     */
+    hasSubUnits: function hasSubUnits() {
+      return calculator$1.modulo(this.getAmount(), Math.pow(10, precision)) !== 0;
+    },
+    /**
+     * Checks if this has minor currency units.
+     *
+     * @deprecated since version 1.4.0, will be removed in 2.0.0
+     * Use {@link module:Dinero~hasSubUnits hasSubUnits} instead.
+     *
+     * @example
+     * // returns false
+     * Dinero({ amount: 1100 }).hasCents()
+     * @example
+     * // returns true
+     * Dinero({ amount: 1150 }).hasCents()
+     *
+     * @return {Boolean}
+     */
+    hasCents: function hasCents() {
+      return calculator$1.modulo(this.getAmount(), Math.pow(10, precision)) !== 0;
+    },
+    /**
+     * Checks whether the currency represented by this object equals to the other.
+     *
+     * @param  {Dinero}  comparator - The Dinero object to compare to.
+     *
+     * @example
+     * // returns true
+     * Dinero({ amount: 2000, currency: 'EUR' }).hasSameCurrency(Dinero({ amount: 1000, currency: 'EUR' }))
+     * @example
+     * // returns false
+     * Dinero({ amount: 1000, currency: 'EUR' }).hasSameCurrency(Dinero({ amount: 1000, currency: 'USD' }))
+     *
+     * @return {Boolean}
+     */
+    hasSameCurrency: function hasSameCurrency(comparator) {
+      return this.getCurrency() === comparator.getCurrency();
+    },
+    /**
+     * Checks whether the amount represented by this object equals to the other.
+     *
+     * @param  {Dinero}  comparator - The Dinero object to compare to.
+     *
+     * @example
+     * // returns true
+     * Dinero({ amount: 1000, currency: 'EUR' }).hasSameAmount(Dinero({ amount: 1000 }))
+     * @example
+     * // returns false
+     * Dinero({ amount: 2000, currency: 'EUR' }).hasSameAmount(Dinero({ amount: 1000, currency: 'EUR' }))
+     * @example
+     * // returns true
+     * Dinero({ amount: 1000, currency: 'EUR', precision: 2 }).hasSameAmount(Dinero({ amount: 10000, precision: 3 }))
+     * @example
+     * // returns false
+     * Dinero({ amount: 10000, currency: 'EUR', precision: 2 }).hasSameAmount(Dinero({ amount: 10000, precision: 3 }))
+     *
+     * @return {Boolean}
+     */
+    hasSameAmount: function hasSameAmount(comparator) {
+      var comparators = Dinero2.normalizePrecision([this, comparator]);
+      return comparators[0].getAmount() === comparators[1].getAmount();
+    },
+    /**
+     * Returns this object formatted as a string.
+     *
+     * The format is a mask which defines how the output string will be formatted.
+     * It defines whether to display a currency, in what format, how many fraction digits to display and whether to use grouping separators.
+     * The output is formatted according to the applying locale.
+     *
+     * Object                       | Format            | String
+     * :--------------------------- | :---------------- | :---
+     * `Dinero({ amount: 500050 })` | `'$0,0.00'`       | $5,000.50
+     * `Dinero({ amount: 500050 })` | `'$0,0'`          | $5,001
+     * `Dinero({ amount: 500050 })` | `'$0'`            | $5001
+     * `Dinero({ amount: 500050 })` | `'$0.0'`          | $5000.5
+     * `Dinero({ amount: 500050 })` | `'USD0,0.0'`      | USD5,000.5
+     * `Dinero({ amount: 500050 })` | `'0,0.0 dollar'`  | 5,000.5 dollars
+     *
+     * Don't try to substitute the `$` sign or the `USD` code with your target currency, nor adapt the format string to the exact format you want.
+     * The format is a mask which defines a pattern and returns a valid, localized currency string.
+     * If you want to display the object in a custom way, either use {@link module:Dinero~getAmount getAmount}, {@link module:Dinero~toUnit toUnit} or {@link module:Dinero~toRoundedUnit toRoundedUnit} and manipulate the output string as you wish.
+     *
+     * {@link module:Dinero~toFormat toFormat} wraps around `Number.prototype.toLocaleString`. For that reason, **format will vary depending on how it's implemented in the end user's environment**.
+     *
+     * You can also use `toLocaleString` directly:
+     * `Dinero().toRoundedUnit(digits, roundingMode).toLocaleString(locale, options)`.
+     *
+     * By default, amounts are rounded using the **half away from zero** rule ([commercial rounding](https://en.wikipedia.org/wiki/Rounding#Round_half_away_from_zero)).
+     * You can also specify a different `roundingMode` to better fit your needs.
+     *
+     * @param  {String} [format='$0,0.00'] - The format mask to format to.
+     * @param  {String} [roundingMode='HALF_AWAY_FROM_ZERO'] - The rounding mode to use: `'HALF_ODD'`, `'HALF_EVEN'`, `'HALF_UP'`, `'HALF_DOWN'`, `'HALF_TOWARDS_ZERO'`, `'HALF_AWAY_FROM_ZERO'` or `'DOWN'`.
+     *
+     * @example
+     * // returns $2,000
+     * Dinero({ amount: 200000 }).toFormat('$0,0')
+     * @example
+     * // returns €50.5
+     * Dinero({ amount: 5050, currency: 'EUR' }).toFormat('$0,0.0')
+     * @example
+     * // returns 100 euros
+     * Dinero({ amount: 10000, currency: 'EUR' }).setLocale('fr-FR').toFormat('0,0 dollar')
+     * @example
+     * // returns 2000
+     * Dinero({ amount: 200000, currency: 'EUR' }).toFormat()
+     * @example
+     * // returns $10
+     * Dinero({ amount: 1050 }).toFormat('$0', 'HALF_EVEN')
+     *
+     * @return {String}
+     */
+    toFormat: function toFormat() {
+      var format = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : globalFormat;
+      var roundingMode = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : globalFormatRoundingMode;
+      var formatter = Format(format);
+      return this.toRoundedUnit(formatter.getMinimumFractionDigits(), roundingMode).toLocaleString(this.getLocale(), {
+        currencyDisplay: formatter.getCurrencyDisplay(),
+        useGrouping: formatter.getUseGrouping(),
+        minimumFractionDigits: formatter.getMinimumFractionDigits(),
+        style: formatter.getStyle(),
+        currency: this.getCurrency()
+      });
+    },
+    /**
+     * Returns the amount represented by this object in units.
+     *
+     * @example
+     * // returns 10.5
+     * Dinero({ amount: 1050 }).toUnit()
+     * @example
+     * // returns 10.545
+     * Dinero({ amount: 10545, precision: 3 }).toUnit()
+     *
+     * @return {Number}
+     */
+    toUnit: function toUnit() {
+      return calculator$1.divide(this.getAmount(), Math.pow(10, precision));
+    },
+    /**
+     * Returns the amount represented by this object in rounded units.
+     *
+     * By default, the method uses the **half away from zero** rule ([commercial rounding](https://en.wikipedia.org/wiki/Rounding#Round_half_away_from_zero)).
+     * You can also specify a different `roundingMode` to better fit your needs.
+     *
+     * @example
+     * // returns 10.6
+     * Dinero({ amount: 1055 }).toRoundedUnit(1)
+     * @example
+     * // returns 10
+     * Dinero({ amount: 1050 }).toRoundedUnit(0, 'HALF_EVEN')
+     *
+     * @param  {Number} digits - The number of fraction digits to round to.
+     * @param  {String} [roundingMode='HALF_AWAY_FROM_ZERO'] - The rounding mode to use: `'HALF_ODD'`, `'HALF_EVEN'`, `'HALF_UP'`, `'HALF_DOWN'`, `'HALF_TOWARDS_ZERO'`, `'HALF_AWAY_FROM_ZERO'` or `'DOWN'`.
+     *
+     * @return {Number}
+     */
+    toRoundedUnit: function toRoundedUnit(digits) {
+      var roundingMode = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : globalFormatRoundingMode;
+      var factor = Math.pow(10, digits);
+      return calculator$1.divide(calculator$1.round(calculator$1.multiply(this.toUnit(), factor), roundingMode), factor);
+    },
+    /**
+     * Returns the object's data as an object literal.
+     *
+     * @example
+     * // returns { amount: 500, currency: 'EUR', precision: 2 }
+     * Dinero({ amount: 500, currency: 'EUR', precision: 2 }).toObject()
+     *
+     * @return {Object}
+     */
+    toObject: function toObject() {
+      return {
+        amount,
+        currency,
+        precision
+      };
+    },
+    /**
+     * Returns the object's data as an object literal.
+     *
+     * Alias of {@link module:Dinero~toObject toObject}.
+     * It is defined so that calling `JSON.stringify` on a Dinero object will automatically extract the relevant data.
+     *
+     * @example
+     * // returns '{"amount":500,"currency":"EUR","precision":2}'
+     * JSON.stringify(Dinero({ amount: 500, currency: 'EUR', precision: 2 }))
+     *
+     * @return {Object}
+     */
+    toJSON: function toJSON() {
+      return this.toObject();
+    }
+  };
+};
+var dinero = Object.assign(Dinero, Defaults, Globals, Static);
 const { Skip: Skip$1 } = gubu_minExports.Gubu;
 const BasicLedSpecShape = gubu_minExports.Gubu({
   title: String,
@@ -47854,27 +49215,36 @@ const BasicLedSpecShape = gubu_minExports.Gubu({
   }
 });
 function BasicLed(props) {
-  var _a, _b, _c, _d, _e, _f, _g, _h;
-  const { ctx } = props;
+  var _a, _b, _c;
+  const { ctx, action } = props;
   const { seneca, custom } = ctx();
   const [item, setItem] = useState({});
   const location2 = useLocation();
+  const navigate = useNavigate();
+  const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const basicLedSpec = BasicLedSpecShape(props.spec);
+  const viewName = basicLedSpec.name;
   const def = basicLedSpec.content.def;
   const canon = def.canon;
+  const cmpState = useSelector((state) => state.main.vxg.cmp);
+  const fields = basicLedSpec.content.def.field;
+  const entState = useSelector(
+    (state) => state.main.vxg.ent.meta.main[canon].state
+  );
+  useEffect(() => {
+    if ("none" === entState) {
+      let q = custom.BasicLed.query(basicLedSpec, cmpState);
+      seneca.entity(canon).list$(q);
+    }
+  }, [entState]);
   const entlist = useSelector(
     (state) => state.main.vxg.ent.list.main[canon]
   );
-  const rows = entlist;
-  const cmpstate = useSelector((state) => state.main.vxg.cmp);
-  const entstate = useSelector(
-    (state) => state.main.vxg.ent.meta.main[canon].state
-  );
-  if ("none" === entstate) {
-    let q = custom.BasicLed.query(basicLedSpec, cmpstate);
-    seneca.entity(canon).list$(q);
-  }
-  const fields = basicLedSpec.content.def.field;
+  useEffect(() => {
+    setIsLoading(false);
+    setData(entlist);
+  }, [entlist]);
   const basicListColumns = Object.entries(fields).map(
     ([key, field]) => ({
       accessorFn: (row) => row[key],
@@ -47883,25 +49253,94 @@ function BasicLed(props) {
       enableEditing: field.editable,
       editVariant: field.inputType,
       editSelectOptions: "select" === field.inputType ? Object.keys(field.options) : null,
-      Header: () => /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: field.label }),
+      Header: () => /* @__PURE__ */ jsxRuntimeExports.jsx(
+        Box$2,
+        {
+          sx: {
+            display: "flex",
+            width: "100%",
+            justifyContent: field.headerAlign || "left"
+          },
+          children: /* @__PURE__ */ jsxRuntimeExports.jsx(Typography$1, { variant: "body2", fontWeight: "bold", children: field.label })
+        }
+      ),
       Cell: ({ cell, row }) => renderCell({ cell, field, row }),
-      size: 40
+      size: field.size || 40
     })
   );
-  const viewName = basicLedSpec.name;
   const renderCell = ({ cell, field, row }) => {
     const cellValue = cell.getValue();
-    var entityId, action;
+    let entityId, action2, textAlign2;
     switch (field.displayType) {
       case "link":
-        entityId = row.original.id;
-        return /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: `/view/${viewName}/${entityId}/show`, children: cellValue });
+        const target = field.target;
+        entityId = row.original[(target == null ? void 0 : target.idName) || "id"];
+        const entityName = (target == null ? void 0 : target.entity) || viewName;
+        return /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: `/view/${entityName}/${entityId}/show`, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Typography$1, { variant: "body2", children: cellValue }) });
       case "image":
         return /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: cellValue, alt: "Cell Content" });
+      case "navbutton":
+        return /* @__PURE__ */ jsxRuntimeExports.jsx(
+          BasicButton,
+          {
+            type: "submit",
+            variant: "outlined",
+            size: "medium",
+            onClick: () => {
+              navigate(`/view/${viewName}/${row.original.id}/${field.action}`);
+            },
+            children: field.actionLabel
+          }
+        );
+      case "button":
+        if (field.action === "approve") {
+          return /* @__PURE__ */ jsxRuntimeExports.jsx(
+            BasicButton,
+            {
+              type: "submit",
+              variant: "outlined",
+              size: "medium",
+              disabled: row.original.approvedAmount === row.original.amountOrdered,
+              onClick: () => __async(this, null, function* () {
+                let dataCopy = [];
+                for (let item2 in data) {
+                  let copy2 = __spreadValues({}, data[item2]);
+                  dataCopy.push(copy2);
+                }
+                entityId = row.original.id;
+                let supplier = dataCopy.find((entity) => {
+                  return entity.id === entityId;
+                });
+                supplier.approvedAmount = supplier.amountOrdered;
+                const callbacks = custom.BasicLed;
+                const approve = callbacks.approve;
+                const approved = yield approve(supplier, seneca);
+                if (approved) {
+                  console.log("approved?: ", approved);
+                  setData(dataCopy);
+                } else {
+                  console.log("approving failed: ", approved);
+                }
+              }),
+              children: field.actionLabel
+            }
+          );
+        } else {
+          return /* @__PURE__ */ jsxRuntimeExports.jsx(
+            Box$2,
+            {
+              sx: {
+                display: "flex",
+                justifyContent: field.justifyContent || "center"
+              },
+              children: /* @__PURE__ */ jsxRuntimeExports.jsx(BasicButton, { type: "submit", variant: "outlined", size: "medium", children: field.actionLabel })
+            }
+          );
+        }
       case "action":
         entityId = row.original.id;
-        action = field.action;
-        return /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: `/view/${viewName}/${entityId}/${action}`, children: field.actionLabel });
+        action2 = field.action;
+        return /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: `/view/${viewName}/${entityId}/${action2}`, children: field.actionLabel });
       case "chip":
         if (cellValue === "Low") {
           return /* @__PURE__ */ jsxRuntimeExports.jsx(Chip$1, { sx: { color: "white" }, label: cellValue, color: "success" });
@@ -47910,11 +49349,68 @@ function BasicLed(props) {
         } else if (cellValue === "High") {
           return /* @__PURE__ */ jsxRuntimeExports.jsx(Chip$1, { sx: { color: "white" }, label: cellValue, color: "error" });
         }
+      case "progressBar":
+        return /* @__PURE__ */ jsxRuntimeExports.jsx(
+          LinearProgress$1,
+          {
+            variant: "determinate",
+            value: cellValue,
+            color: "success",
+            sx: { height: "9px", border: "2px solid #ccc", width: "80%" }
+          }
+        );
+      case "currency":
+        const currency = field.currency || "EUR";
+        textAlign2 = field.textAlign || "right";
+        if (isNaN(cellValue)) {
+          return /* @__PURE__ */ jsxRuntimeExports.jsx(Box$2, { sx: { textAlign: textAlign2 }, children: field.defaultValue });
+        } else {
+          const valueCurrency = Number(cellValue);
+          const dineroObject = dinero({
+            amount: Math.round(valueCurrency * 100),
+            currency: "EUR"
+          });
+          const formattedValue = dineroObject.toFormat("$0,0.00");
+          return /* @__PURE__ */ jsxRuntimeExports.jsx(Box$2, { sx: { textAlign: textAlign2 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Typography$1, { variant: "body2", children: formattedValue }) });
+        }
+      case "number":
+        textAlign2 = field.textAlign || "right";
+        const valueNumber = Number(cellValue);
+        if (isNaN(valueNumber)) {
+          return /* @__PURE__ */ jsxRuntimeExports.jsx(Box$2, { sx: { textAlign: textAlign2 }, children: field.defaultValue });
+        }
+        return /* @__PURE__ */ jsxRuntimeExports.jsx(
+          Box$2,
+          {
+            display: "flex",
+            justifyContent: "flex-end",
+            width: "100%",
+            sx: {
+              textAlign: textAlign2
+            },
+            children: /* @__PURE__ */ jsxRuntimeExports.jsx(Typography$1, { variant: "body2", children: valueNumber.toLocaleString() })
+          }
+        );
+      case "percentage":
+        return /* @__PURE__ */ jsxRuntimeExports.jsx(
+          Box$2,
+          {
+            display: "flex",
+            justifyContent: "flex-end",
+            sx: {
+              textAlign: "right"
+            },
+            children: /* @__PURE__ */ jsxRuntimeExports.jsxs(Typography$1, { variant: "body2", children: [
+              cellValue,
+              "%"
+            ] })
+          }
+        );
       default:
-        return /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: cellValue });
+        textAlign2 = field.textAlign || "left";
+        return /* @__PURE__ */ jsxRuntimeExports.jsx(Box$2, { sx: { textAlign: textAlign2 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Typography$1, { variant: "body2", children: cellValue }) });
     }
   };
-  let data = rows;
   useEffect(() => {
     setItem({});
   }, [location2.pathname]);
@@ -47927,12 +49423,13 @@ function BasicLed(props) {
     }
     setTriggerLed(++triggerLed);
   }, [led_add]);
-  const headComponent = (_d = (_c = (_b = (_a = basicLedSpec.content.def) == null ? void 0 : _a.subview) == null ? void 0 : _b.index) == null ? void 0 : _c.head) == null ? void 0 : _d.cmp;
-  const footComponent = (_h = (_g = (_f = (_e = basicLedSpec.content.def) == null ? void 0 : _e.subview) == null ? void 0 : _f.index) == null ? void 0 : _g.foot) == null ? void 0 : _h.cmp;
+  const currentSubview = (_a = basicLedSpec.content.def) == null ? void 0 : _a.subview[action];
+  const headComponent = (_b = currentSubview == null ? void 0 : currentSubview.head) == null ? void 0 : _b.cmp;
+  const footComponent = (_c = currentSubview == null ? void 0 : currentSubview.foot) == null ? void 0 : _c.cmp;
   const HeadCmp = ctx().cmp[headComponent];
   const FootCmp = ctx().cmp[footComponent];
   return /* @__PURE__ */ jsxRuntimeExports.jsx(Box$2, { className: "BasicLed", children: "-/" + canon !== item.entity$ ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-    HeadCmp ? /* @__PURE__ */ jsxRuntimeExports.jsx(HeadCmp, {}) : null,
+    HeadCmp ? /* @__PURE__ */ jsxRuntimeExports.jsx(HeadCmp, { ctx }) : null,
     /* @__PURE__ */ jsxRuntimeExports.jsx(
       BasicList,
       {
@@ -47940,8 +49437,9 @@ function BasicLed(props) {
         spec: basicLedSpec,
         data: data || [],
         columns: basicListColumns,
+        isLoading,
+        action,
         onRowClick: (event, item2) => {
-          console.log("item: ", item2);
           setItem(item2);
         },
         onEditingRowSave: (row, values2) => __async(this, null, function* () {
@@ -47955,7 +49453,7 @@ function BasicLed(props) {
       },
       canon
     ),
-    FootCmp ? /* @__PURE__ */ jsxRuntimeExports.jsx(FootCmp, {}) : null
+    FootCmp ? /* @__PURE__ */ jsxRuntimeExports.jsx(FootCmp, { ctx }) : null
   ] }) : /* @__PURE__ */ jsxRuntimeExports.jsx(
     BasicEdit,
     {
@@ -47976,7 +49474,8 @@ function BasicLed(props) {
 const { Child, Optional, Skip } = gubu_minExports.Gubu;
 const BasicMainSpecShape = gubu_minExports.Gubu({
   main: {
-    title: String
+    title: String,
+    default: String
   },
   view: Child({
     title: String,
@@ -47990,6 +49489,7 @@ const BasicMainSpecShape = gubu_minExports.Gubu({
         },
         subview: Child({
           render: "collection",
+          default: false,
           kind: "led",
           active: Skip(Boolean),
           cmp: Skip(String),
@@ -47999,7 +49499,9 @@ const BasicMainSpecShape = gubu_minExports.Gubu({
           },
           foot: {
             cmp: Skip(String)
-          }
+          },
+          linkPath: Skip(String),
+          enableColumnFilters: false
         }),
         id: Skip({
           field: String
@@ -48016,9 +49518,16 @@ function BasicMain(props) {
   const theme = useTheme$4();
   const basicMainSpec = BasicMainSpecShape(props.spec);
   const views = Object.values(basicMainSpec.view);
+  const defaultRoute = basicMainSpec.main.default;
   const sideOpen = useSelector(
     (state) => state.main.vxg.cmp.BasicSide.show
   );
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (location.pathname === "/" && defaultRoute !== void 0) {
+      navigate(defaultRoute);
+    }
+  }, [location, navigate]);
   const paddingLeft = ((_d = (_c = (_b = (_a = theme.components) == null ? void 0 : _a.MuiDrawer) == null ? void 0 : _b.styleOverrides) == null ? void 0 : _c.paper) == null ? void 0 : _d.width) || "16rem";
   const basicMainStyle = {
     paddingLeft: sideOpen ? paddingLeft : "0rem",
@@ -48027,7 +49536,7 @@ function BasicMain(props) {
   const basicMainContainerStyle = {
     height: "100%"
   };
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(Box$2, { className: "BasicMain", sx: basicMainStyle, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Box$2, { className: "BasicMain-container", sx: basicMainContainerStyle, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Routes, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/view", children: renderRoutes(views, vxg, ctx, theme) }) }) }) });
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(Box$2, { className: "BasicMain", sx: basicMainStyle, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Box$2, { className: "BasicMain-container", sx: basicMainContainerStyle, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Routes, { children: renderRoutes(views, vxg, ctx, theme) }) }) });
 }
 const renderRoutes = (views, vxg, ctx, theme) => {
   return views.map((view) => /* @__PURE__ */ jsxRuntimeExports.jsx(Fragment, { children: Object.entries(view.content.def.subview).map(([key, subview]) => {
@@ -48042,7 +49551,7 @@ const renderRoutes = (views, vxg, ctx, theme) => {
       Route,
       {
         path: routePath,
-        element: /* @__PURE__ */ jsxRuntimeExports.jsx(ThemeProvider$2, { theme, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Cmp, { vxg, ctx, spec: view }) })
+        element: /* @__PURE__ */ jsxRuntimeExports.jsx(ThemeProvider$2, { theme, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Cmp, { action: key, vxg, ctx, spec: view }, key) })
       }
     ) }, key);
   }) }, view.name));

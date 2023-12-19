@@ -14,7 +14,7 @@ describe('BasicMain', () => {
       view: view
     }
 
-    console.log('basicMainSpec', basicMainSpec)
+    // console.log('basicMainSpec', basicMainSpec)
 
     customRender(<BasicMain vxg={vxg} ctx={ctx} spec={basicMainSpec} />, {
       mockInitialState: initialState

@@ -25,7 +25,7 @@ describe('BasicLed', () => {
     const basicLedSpec = ctx().model.app.web.frame[frame].view.task
 
     const { screen } = customRender(
-      <BasicLed vxg={vxg} ctx={ctx} spec={basicLedSpec} />,
+      <BasicLed vxg={vxg} ctx={ctx} spec={basicLedSpec} action='index' />,
       {
         mockInitialState: initialState
       }

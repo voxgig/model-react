@@ -1,6 +1,6 @@
 {
   "name": "@voxgig/model-react",
-  "version": "1.2.3",
+  "version": "1.6.2",
   "license": "MIT",
   "files": [
     "dist"
@@ -21,7 +21,7 @@
     "preview": "vite preview",
     "test": "vitest",
     "clean": "rm -rf dist node_modules yarn.lock package-lock.json",
-    "reset": "npm run clean && npm install && npm run build",
+    "reset": "npm run clean && npm install && npm run build && npm run test",
     "repo-check": "REPO_VERSION=`node -e \"console.log(require('./package').version)\"` && echo TAG: v$REPO_VERSION && [[ '' == `git tag --list v${REPO_VERSION}` ]]",
     "repo-tag": "REPO_VERSION=`node -e \"console.log(require('./package').version)\"` && echo TAG: v$REPO_VERSION && git commit -a -m v$REPO_VERSION && git push && git tag v$REPO_VERSION && git push --tags;",
     "repo-publish": "npm run repo-check && npm run clean && npm install --registry https://registry.npmjs.org && npm run build && npm test && npm run repo-tag && npm publish --registry https://registry.npmjs.org",
@@ -48,7 +48,9 @@
     "react-hook-form": "^7.47.0",
     "react-redux": ">=8",
     "react-router-dom": ">=6",
-    "styled-components": ">=5"
+    "styled-components": ">=5",
+    "@types/dinero.js": "^1.9.4",
+    "dinero.js": "^1.9.1"
   },
   "devDependencies": {
     "@babel/core": "7.23.2",

@@ -210,7 +210,8 @@ export const ctx = () => {
                   }
                 },
                 main: {
-                  title: 'Main'
+                  title: 'Main',
+                  default: 'view/task/index'
                 },
                 foot: {
                   title: 'Footer'

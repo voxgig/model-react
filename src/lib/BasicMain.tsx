@@ -1,6 +1,6 @@
-import { Fragment } from 'react'
+import { Fragment, useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, useNavigation, useNavigate } from 'react-router-dom'
 import BasicLed from './BasicLed'
 import { Exact, Gubu } from 'gubu'
 import { Box, CSSObject, ThemeProvider, useTheme } from '@mui/material'
@@ -10,7 +10,8 @@ const { Child, Optional, Skip } = Gubu
 // Validate spec shape with Gubu
 const BasicMainSpecShape = Gubu({
   main: {
-    title: String
+    title: String,
+    default: String
   },
   view: Child({
     title: String,
@@ -24,6 +25,7 @@ const BasicMainSpecShape = Gubu({
         },
         subview: Child({
           render: 'collection',
+          default: false,
           kind: 'led',
           active: Skip(Boolean),
           cmp: Skip(String),
@@ -33,7 +35,9 @@ const BasicMainSpecShape = Gubu({
           },
           foot: {
             cmp: Skip(String)
-          }
+          },
+          linkPath: Skip(String),
+          enableColumnFilters: false
         }),
         id: Skip({
           field: String
@@ -50,9 +54,17 @@ function BasicMain (props: any) {
   const theme = useTheme()
   const basicMainSpec = BasicMainSpecShape(props.spec)
   const views = Object.values(basicMainSpec.view)
+  const defaultRoute = basicMainSpec.main.default
   const sideOpen = useSelector(
     (state: any) => state.main.vxg.cmp.BasicSide.show
   )
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (location.pathname === '/' && defaultRoute !== undefined) {
+      navigate(defaultRoute)
+    }
+  }, [location, navigate])
 
   const paddingLeft =
     (theme.components?.MuiDrawer?.styleOverrides?.paper as CSSObject)?.width ||
@@ -72,9 +84,7 @@ function BasicMain (props: any) {
   return (
     <Box className='BasicMain' sx={basicMainStyle}>
       <Box className='BasicMain-container' sx={basicMainContainerStyle}>
-        <Routes>
-          <Route path='/view'>{renderRoutes(views, vxg, ctx, theme)}</Route>
-        </Routes>
+        <Routes>{renderRoutes(views, vxg, ctx, theme)}</Routes>
       </Box>
     </Box>
   )
@@ -102,7 +112,7 @@ const renderRoutes = (views: any[], vxg: any, ctx: any, theme: any) => {
               path={routePath}
               element={
                 <ThemeProvider theme={theme}>
-                  <Cmp vxg={vxg} ctx={ctx} spec={view} />
+                  <Cmp key={key} action={key} vxg={vxg} ctx={ctx} spec={view} />
                 </ThemeProvider>
               }
             />
