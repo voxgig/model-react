@@ -22,11 +22,13 @@ describe('BasicSideMenuItem', () => {
   })
 
   it('happy', () => {
+
     const frame = ctx().model.app.web.frame[spec.frame]
     const basicSideMenuItemSpec = {
       section: frame.part.side.section.section1
     }
     const itemKey = 'task'
+
     customRender(
       <BasicSideMenuItem
         key={itemKey}

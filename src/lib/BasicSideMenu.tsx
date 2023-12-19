@@ -1,3 +1,4 @@
+import React from 'react'
 import { Gubu } from 'gubu'
 import BasicSideMenuItem from './BasicSideMenuItem'
 

@@ -39,7 +39,10 @@
     "@mui/icons-material": ">=5",
     "@mui/material": ">=5",
     "@mui/x-data-grid": ">=6",
+    "@reduxjs/toolkit": ">=2",
     "@seneca/search-mini": ">=0",
+    "@types/dinero.js": ">=1",
+    "dinero.js": ">=1",
     "gubu": ">=6",
     "material-react-table": ">=2",
     "patrun": ">=7",
@@ -48,12 +51,9 @@
     "react-hook-form": ">=7",
     "react-redux": ">=9",
     "react-router-dom": ">=6",
-    "styled-components": ">=6",
-    "@types/dinero.js": ">=1",
-    "dinero.js": ">=1",
-    "@reduxjs/toolkit": ">=2",
     "redux": ">=5.0.0",
-    "redux-thunk": ">=3"
+    "redux-thunk": ">=3",
+    "styled-components": ">=6"
   },
   "devDependencies": {
     "@babel/core": "7.23.6",

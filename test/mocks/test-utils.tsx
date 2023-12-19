@@ -3,7 +3,7 @@ import { render, screen, RenderOptions } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import { Provider } from 'react-redux'
 import { BrowserRouter } from 'react-router-dom'
-import thunk from 'redux-thunk'
+import { thunk } from 'redux-thunk'
 import configureStore from 'redux-mock-store'
 import { createTheme } from '@mui/material'
 
@@ -19,8 +19,10 @@ const wrapInRouter = (componentTree: JSX.Element) => (
 
 const wrapInRedux = (
   componentTree: JSX.Element,
-  { mockInitialState }: IExtendedRenderOptions
+  opts: IExtendedRenderOptions
 ) => {
+  const { mockInitialState } = opts
+
   const storeMock = configureStore([thunk])(mockInitialState)
   return <Provider store={storeMock}>{componentTree}</Provider>
 }
@@ -31,7 +33,7 @@ const setupComponent = (
 ) => {
   let componentTree = <>{ui}</>
   componentTree = wrapInRouter(componentTree)
-  componentTree = wrapInRedux(componentTree, renderOptions)
+  componentTree = wrapInRedux(componentTree, renderOptions||{})
   return componentTree
 }
 
