@@ -73,13 +73,10 @@ function BasicHead (props: BasicHeadProps) {
   const user = useSelector((state: any) => state.main.auth.user)
   const userName = user.name || user.email
 
-  console.log('model-react.user', user)
-
   useEffect(() => {
     const name = user.name ? user.name : 'A'
     const acronyms = name.match(/\b(\w)/g) || []
     const initials = acronyms.join('')
-    console.log('initials', initials)
     setInitials(initials)
   }, [user])
 
