@@ -63,11 +63,12 @@ function BasicLed (props: any) {
 
   // Handle when the add button (in BasicHead) is clicked
   const led_add = useSelector((state: any) => state.main.vxg.trigger.led.add)
+  // const vxgState = useSelector((state: any) => state.main.vxg)
+  // const led_add = vxgState.trigger.led.add
 
   useEffect(() => {
     setIsLoading(true)
     console.log('[]setIsLoading(true)')
-    console.log('useEffect empty array')
   }, [])
 
   useEffect(() => {
@@ -81,7 +82,7 @@ function BasicLed (props: any) {
     }
 
     if ('loaded' === entState) {
-      console.log('data loaded')
+      console.log('[...]setIsLoading(false)')
       setIsLoading(false)
       setData(entlist)
     }

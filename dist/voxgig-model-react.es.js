@@ -49245,7 +49245,6 @@ function BasicLed(props) {
   useEffect(() => {
     setIsLoading(true);
     console.log("[]setIsLoading(true)");
-    console.log("useEffect empty array");
   }, []);
   useEffect(() => {
     console.log("useEffect entState, entlist");
@@ -49256,7 +49255,7 @@ function BasicLed(props) {
       seneca.entity(canon).list$(q);
     }
     if ("loaded" === entState) {
-      console.log("data loaded");
+      console.log("[...]setIsLoading(false)");
       setIsLoading(false);
       setData(entlist);
     }

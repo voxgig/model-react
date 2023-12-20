@@ -330,7 +330,7 @@ export const initialState = {
         },
         meta: {
           main: {
-            'vxg/task': { state: 'none' }
+            'vxg/task': { state: 'loaded' }
           }
         }
       }

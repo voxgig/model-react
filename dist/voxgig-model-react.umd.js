@@ -49257,7 +49257,6 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     React.useEffect(() => {
       setIsLoading(true);
       console.log("[]setIsLoading(true)");
-      console.log("useEffect empty array");
     }, []);
     React.useEffect(() => {
       console.log("useEffect entState, entlist");
@@ -49268,7 +49267,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         seneca.entity(canon).list$(q);
       }
       if ("loaded" === entState) {
-        console.log("data loaded");
+        console.log("[...]setIsLoading(false)");
         setIsLoading(false);
         setData(entlist);
       }
