@@ -20342,12 +20342,10 @@ function BasicHead(props) {
   const basicHeadSpec = BasicHeadSpecShape(props.spec);
   const user = useSelector((state) => state.main.auth.user);
   const userName = user.name || user.email;
-  console.log("model-react.user", user);
   useEffect(() => {
     const name = user.name ? user.name : "A";
     const acronyms = name.match(/\b(\w)/g) || [];
     const initials2 = acronyms.join("");
-    console.log("initials", initials2);
     setInitials(initials2);
   }, [user]);
   const tooldefs = Object.entries(basicHeadSpec.head.tool.def).map(
@@ -49222,29 +49220,60 @@ function BasicLed(props) {
   const location2 = useLocation();
   const navigate = useNavigate();
   const [data, setData] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  let [triggerLed, setTriggerLed] = useState(0);
   const basicLedSpec = BasicLedSpecShape(props.spec);
   const viewName = basicLedSpec.name;
   const def = basicLedSpec.content.def;
   const canon = def.canon;
-  const cmpState = useSelector((state) => state.main.vxg.cmp);
   const fields = basicLedSpec.content.def.field;
+  const cmpState = useSelector((state) => state.main.vxg.cmp);
   const entState = useSelector(
     (state) => state.main.vxg.ent.meta.main[canon].state
   );
-  useEffect(() => {
-    if ("none" === entState) {
-      let q = custom.BasicLed.query(basicLedSpec, cmpState);
-      seneca.entity(canon).list$(q);
-    }
-  }, [entState]);
   const entlist = useSelector(
     (state) => state.main.vxg.ent.list.main[canon]
   );
+  const led_add = useSelector((state) => state.main.vxg.trigger.led.add);
   useEffect(() => {
-    setIsLoading(false);
-    setData(entlist);
-  }, [entlist]);
+    setIsLoading(true);
+  }, []);
+  useEffect(() => {
+    console.log("useEffect entState, entlist", canon);
+    if ("none" === entState) {
+      setIsLoading(true);
+      let q = custom.BasicLed.query(basicLedSpec, cmpState);
+      seneca.entity(canon).list$(q);
+    }
+    if ("loaded" === entState) {
+      setIsLoading(false);
+      if ("fox/bom" === canon) {
+        const filters = cmpState.AssignSuppliersHead.filters;
+        const supplierId = filters.supplier.selected;
+        const toolId = filters.tool.selected;
+        const startDate = filters.prefacStart.selected;
+        const endDate = filters.prefacEnd.selected;
+        const filteredData = entlist.filter((item2) => {
+          const isSupplierMatch = supplierId === "" || item2.suppliers.includes(supplierId);
+          const isToolMatch = toolId === "" || item2.ceids.includes(toolId);
+          const isDateRangeMatch = (startDate === "" || item2.earlirestPrefac >= startDate) && (endDate === "" || item2.earlirestPrefac <= endDate);
+          return isSupplierMatch && isToolMatch && isDateRangeMatch;
+        });
+        setData(filteredData);
+      } else {
+        setData(entlist);
+      }
+    }
+  }, [entState, entlist, cmpState]);
+  useEffect(() => {
+    setItem({});
+  }, [location2.pathname]);
+  useEffect(() => {
+    if (triggerLed >= 2) {
+      setItem({ entity$: "-/" + def.canon });
+    }
+    setTriggerLed(++triggerLed);
+  }, [led_add]);
   const basicListColumns = Object.entries(fields).map(
     ([key, field]) => ({
       accessorFn: (row) => row[key],
@@ -49411,18 +49440,6 @@ function BasicLed(props) {
         return /* @__PURE__ */ jsxRuntimeExports.jsx(Box$2, { sx: { textAlign: textAlign2 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Typography$1, { variant: "body2", children: cellValue }) });
     }
   };
-  useEffect(() => {
-    setItem({});
-  }, [location2.pathname]);
-  const vxgState = useSelector((state) => state.main.vxg);
-  const led_add = vxgState.trigger.led.add;
-  let [triggerLed, setTriggerLed] = useState(0);
-  useEffect(() => {
-    if (triggerLed >= 2) {
-      setItem({ entity$: "-/" + def.canon });
-    }
-    setTriggerLed(++triggerLed);
-  }, [led_add]);
   const currentSubview = (_a = basicLedSpec.content.def) == null ? void 0 : _a.subview[action];
   const headComponent = (_b = currentSubview == null ? void 0 : currentSubview.head) == null ? void 0 : _b.cmp;
   const footComponent = (_c = currentSubview == null ? void 0 : currentSubview.foot) == null ? void 0 : _c.cmp;

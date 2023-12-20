@@ -20354,12 +20354,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const basicHeadSpec = BasicHeadSpecShape(props.spec);
     const user = reactRedux.useSelector((state) => state.main.auth.user);
     const userName = user.name || user.email;
-    console.log("model-react.user", user);
     React.useEffect(() => {
       const name = user.name ? user.name : "A";
       const acronyms = name.match(/\b(\w)/g) || [];
       const initials2 = acronyms.join("");
-      console.log("initials", initials2);
       setInitials(initials2);
     }, [user]);
     const tooldefs = Object.entries(basicHeadSpec.head.tool.def).map(
@@ -49234,29 +49232,60 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const location2 = reactRouterDom.useLocation();
     const navigate = reactRouterDom.useNavigate();
     const [data, setData] = React.useState([]);
-    const [isLoading, setIsLoading] = React.useState(true);
+    const [isLoading, setIsLoading] = React.useState(false);
+    let [triggerLed, setTriggerLed] = React.useState(0);
     const basicLedSpec = BasicLedSpecShape(props.spec);
     const viewName = basicLedSpec.name;
     const def = basicLedSpec.content.def;
     const canon = def.canon;
-    const cmpState = reactRedux.useSelector((state) => state.main.vxg.cmp);
     const fields = basicLedSpec.content.def.field;
+    const cmpState = reactRedux.useSelector((state) => state.main.vxg.cmp);
     const entState = reactRedux.useSelector(
       (state) => state.main.vxg.ent.meta.main[canon].state
     );
-    React.useEffect(() => {
-      if ("none" === entState) {
-        let q = custom.BasicLed.query(basicLedSpec, cmpState);
-        seneca.entity(canon).list$(q);
-      }
-    }, [entState]);
     const entlist = reactRedux.useSelector(
       (state) => state.main.vxg.ent.list.main[canon]
     );
+    const led_add = reactRedux.useSelector((state) => state.main.vxg.trigger.led.add);
     React.useEffect(() => {
-      setIsLoading(false);
-      setData(entlist);
-    }, [entlist]);
+      setIsLoading(true);
+    }, []);
+    React.useEffect(() => {
+      console.log("useEffect entState, entlist", canon);
+      if ("none" === entState) {
+        setIsLoading(true);
+        let q = custom.BasicLed.query(basicLedSpec, cmpState);
+        seneca.entity(canon).list$(q);
+      }
+      if ("loaded" === entState) {
+        setIsLoading(false);
+        if ("fox/bom" === canon) {
+          const filters = cmpState.AssignSuppliersHead.filters;
+          const supplierId = filters.supplier.selected;
+          const toolId = filters.tool.selected;
+          const startDate = filters.prefacStart.selected;
+          const endDate = filters.prefacEnd.selected;
+          const filteredData = entlist.filter((item2) => {
+            const isSupplierMatch = supplierId === "" || item2.suppliers.includes(supplierId);
+            const isToolMatch = toolId === "" || item2.ceids.includes(toolId);
+            const isDateRangeMatch = (startDate === "" || item2.earlirestPrefac >= startDate) && (endDate === "" || item2.earlirestPrefac <= endDate);
+            return isSupplierMatch && isToolMatch && isDateRangeMatch;
+          });
+          setData(filteredData);
+        } else {
+          setData(entlist);
+        }
+      }
+    }, [entState, entlist, cmpState]);
+    React.useEffect(() => {
+      setItem({});
+    }, [location2.pathname]);
+    React.useEffect(() => {
+      if (triggerLed >= 2) {
+        setItem({ entity$: "-/" + def.canon });
+      }
+      setTriggerLed(++triggerLed);
+    }, [led_add]);
     const basicListColumns = Object.entries(fields).map(
       ([key, field]) => ({
         accessorFn: (row) => row[key],
@@ -49423,18 +49452,6 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           return /* @__PURE__ */ jsxRuntimeExports.jsx(material.Box, { sx: { textAlign: textAlign2 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(material.Typography, { variant: "body2", children: cellValue }) });
       }
     };
-    React.useEffect(() => {
-      setItem({});
-    }, [location2.pathname]);
-    const vxgState = reactRedux.useSelector((state) => state.main.vxg);
-    const led_add = vxgState.trigger.led.add;
-    let [triggerLed, setTriggerLed] = React.useState(0);
-    React.useEffect(() => {
-      if (triggerLed >= 2) {
-        setItem({ entity$: "-/" + def.canon });
-      }
-      setTriggerLed(++triggerLed);
-    }, [led_add]);
     const currentSubview = (_a = basicLedSpec.content.def) == null ? void 0 : _a.subview[action];
     const headComponent = (_b = currentSubview == null ? void 0 : currentSubview.head) == null ? void 0 : _b.cmp;
     const footComponent = (_c = currentSubview == null ? void 0 : currentSubview.foot) == null ? void 0 : _c.cmp;

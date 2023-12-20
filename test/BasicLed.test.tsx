@@ -39,12 +39,14 @@ describe('BasicLed', () => {
     const frame = spec.frame
     const basicLedSpec = ctx().model.app.web.frame[frame].view.task
 
-    const { screen } = customRender(
+    const { screen, debug } = customRender(
       <BasicLed vxg={vxg} ctx={ctx} spec={basicLedSpec} />,
       {
         mockInitialState: initialState
       }
     )
+
+    // console.log(debug())
 
     const firstTask = screen.getByRole('cell', { name: 'Task 1' })
     expect(firstTask).toBeInTheDocument()
