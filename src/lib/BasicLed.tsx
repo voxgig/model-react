@@ -68,25 +68,43 @@ function BasicLed (props: any) {
 
   useEffect(() => {
     setIsLoading(true)
-    console.log('[]setIsLoading(true)')
+    // console.log('[]setIsLoading(true)')
   }, [])
 
   useEffect(() => {
-    console.log('useEffect entState, entlist')
+    console.log('useEffect entState, entlist', canon)
 
     if ('none' === entState) {
       setIsLoading(true)
-      console.log('[...]setIsLoading(true)')
+      // console.log('[...]setIsLoading(true)')
       let q = custom.BasicLed.query(basicLedSpec, cmpState)
       seneca.entity(canon).list$(q)
     }
 
     if ('loaded' === entState) {
-      console.log('[...]setIsLoading(false)')
       setIsLoading(false)
-      setData(entlist)
+      if ('fox/bom' === canon) {
+        const filters = cmpState.AssignSuppliersHead.filters
+        const supplierId = filters.supplier.selected
+        const toolId = filters.tool.selected
+        const startDate = filters.prefacStart.selected
+        const endDate = filters.prefacEnd.selected
+        const filteredData = entlist.filter((item: any) => {
+          const isSupplierMatch =
+            supplierId === '' || item.suppliers.includes(supplierId)
+          const isToolMatch = toolId === '' || item.ceids.includes(toolId)
+          const isDateRangeMatch =
+            (startDate === '' || item.earlirestPrefac >= startDate) &&
+            (endDate === '' || item.earlirestPrefac <= endDate)
+          return isSupplierMatch && isToolMatch && isDateRangeMatch
+        })
+
+        setData(filteredData)
+      } else {
+        setData(entlist)
+      }
     }
-  }, [entState, entlist])
+  }, [entState, entlist, cmpState])
 
   // Reset item when location changes
   useEffect(() => {

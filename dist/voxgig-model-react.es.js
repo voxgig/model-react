@@ -49244,22 +49244,34 @@ function BasicLed(props) {
   const led_add = useSelector((state) => state.main.vxg.trigger.led.add);
   useEffect(() => {
     setIsLoading(true);
-    console.log("[]setIsLoading(true)");
   }, []);
   useEffect(() => {
-    console.log("useEffect entState, entlist");
+    console.log("useEffect entState, entlist", canon);
     if ("none" === entState) {
       setIsLoading(true);
-      console.log("[...]setIsLoading(true)");
       let q = custom.BasicLed.query(basicLedSpec, cmpState);
       seneca.entity(canon).list$(q);
     }
     if ("loaded" === entState) {
-      console.log("[...]setIsLoading(false)");
       setIsLoading(false);
-      setData(entlist);
+      if ("fox/bom" === canon) {
+        const filters = cmpState.AssignSuppliersHead.filters;
+        const supplierId = filters.supplier.selected;
+        const toolId = filters.tool.selected;
+        const startDate = filters.prefacStart.selected;
+        const endDate = filters.prefacEnd.selected;
+        const filteredData = entlist.filter((item2) => {
+          const isSupplierMatch = supplierId === "" || item2.suppliers.includes(supplierId);
+          const isToolMatch = toolId === "" || item2.ceids.includes(toolId);
+          const isDateRangeMatch = (startDate === "" || item2.earlirestPrefac >= startDate) && (endDate === "" || item2.earlirestPrefac <= endDate);
+          return isSupplierMatch && isToolMatch && isDateRangeMatch;
+        });
+        setData(filteredData);
+      } else {
+        setData(entlist);
+      }
     }
-  }, [entState, entlist]);
+  }, [entState, entlist, cmpState]);
   useEffect(() => {
     setItem({});
   }, [location2.pathname]);
