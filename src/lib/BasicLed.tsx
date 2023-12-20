@@ -39,54 +39,68 @@ function BasicLed (props: any) {
   const location = useLocation()
   const navigate = useNavigate()
   const [data, setData] = useState([] as any)
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(false)
+  let [triggerLed, setTriggerLed] = useState(0)
 
-  // Validate props.spec shape
+  // define variables from spec
   const basicLedSpec = BasicLedSpecShape(props.spec)
-
-  // Define few variables from spec
   const viewName = basicLedSpec.name
   const def = basicLedSpec.content.def
   const canon = def.canon
-
-  // Fetch entity data if not already fetched
-  const cmpState = useSelector((state: any) => state.main.vxg.cmp)
-
-  // --------------------------------------------------
-  // Common
-  // --------------------------------------------------
-
-  // Define entity fields from spec
   const fields: any = basicLedSpec.content.def.field
 
-  // console.log('fields: ', fields)
-
-  // --------------------------------------------------
-  // BasicList related
-  // --------------------------------------------------
+  const cmpState = useSelector((state: any) => state.main.vxg.cmp)
 
   // Move the useSelector hook to the top level of your component
   const entState = useSelector(
     (state: any) => state.main.vxg.ent.meta.main[canon].state
   )
 
-  useEffect(() => {
-    if ('none' === entState) {
-      let q = custom.BasicLed.query(basicLedSpec, cmpState)
-      seneca.entity(canon).list$(q)
-    }
-  }, [entState])
-
   // Define data we'll use to render the list
   const entlist = useSelector(
     (state: any) => state.main.vxg.ent.list.main[canon]
   )
 
+  // Handle when the add button (in BasicHead) is clicked
+  const led_add = useSelector((state: any) => state.main.vxg.trigger.led.add)
+
   useEffect(() => {
-    // sleep for 1 second to show loading
-    setIsLoading(false)
-    setData(entlist)
-  }, [entlist])
+    setIsLoading(true)
+    console.log('[]setIsLoading(true)')
+    console.log('useEffect empty array')
+  }, [])
+
+  useEffect(() => {
+    console.log('useEffect entState, entlist')
+
+    if ('none' === entState) {
+      setIsLoading(true)
+      console.log('[...]setIsLoading(true)')
+      let q = custom.BasicLed.query(basicLedSpec, cmpState)
+      seneca.entity(canon).list$(q)
+    }
+
+    if ('loaded' === entState) {
+      console.log('data loaded')
+      setIsLoading(false)
+      setData(entlist)
+    }
+  }, [entState, entlist])
+
+  // Reset item when location changes
+  useEffect(() => {
+    setItem({})
+  }, [location.pathname])
+
+  // Reset item when led_add changes
+  useEffect(() => {
+    // a workaround to prevent 'useEffect' to trigger when re-rendered
+    if (triggerLed >= 2) {
+      setItem({ entity$: '-/' + def.canon })
+    }
+
+    setTriggerLed(++triggerLed)
+  }, [led_add])
 
   // TODO: move to BasicList
   // Define BasicList columns from fields
@@ -304,33 +318,6 @@ function BasicLed (props: any) {
         )
     }
   }
-
-  // --------------------------------------------------
-  // BasicEdit related
-  // --------------------------------------------------
-
-  // Reset item when location changes
-  useEffect(() => {
-    setItem({})
-  }, [location.pathname])
-
-  // Handle when the add button (in BasicHead) is clicked
-  const vxgState = useSelector((state: any) => state.main.vxg)
-  const led_add = vxgState.trigger.led.add
-  let [triggerLed, setTriggerLed] = useState(0)
-
-  useEffect(() => {
-    // a workaround to prevent 'useEffect' to trigger when re-rendered
-    if (triggerLed >= 2) {
-      setItem({ entity$: '-/' + def.canon })
-    }
-
-    setTriggerLed(++triggerLed)
-  }, [led_add])
-
-  //
-  // Component rendering
-  //
 
   // Define names of custom header and footer components
   const currentSubview = basicLedSpec.content.def?.subview[action]
