@@ -49265,11 +49265,13 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           const toolId = filters.tool.selected;
           const startDate = filters.prefacStart.selected;
           const endDate = filters.prefacEnd.selected;
+          const unallocatedOnly = filters.unallocated.selected;
           const filteredData = entlist.filter((item2) => {
             const isSupplierMatch = supplierId === "" || item2.suppliers.includes(supplierId);
             const isToolMatch = toolId === "" || item2.ceids.includes(toolId);
             const isDateRangeMatch = (startDate === "" || item2.earlirestPrefac >= startDate) && (endDate === "" || item2.earlirestPrefac <= endDate);
-            return isSupplierMatch && isToolMatch && isDateRangeMatch;
+            const unallocatedMatch = !unallocatedOnly || item2.qtyasn < 100;
+            return isSupplierMatch && isToolMatch && isDateRangeMatch && unallocatedMatch;
           });
           setData(filteredData);
         } else {

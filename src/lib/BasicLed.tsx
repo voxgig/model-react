@@ -89,6 +89,7 @@ function BasicLed (props: any) {
         const toolId = filters.tool.selected
         const startDate = filters.prefacStart.selected
         const endDate = filters.prefacEnd.selected
+        const unallocatedOnly = filters.unallocated.selected
         const filteredData = entlist.filter((item: any) => {
           const isSupplierMatch =
             supplierId === '' || item.suppliers.includes(supplierId)
@@ -96,7 +97,13 @@ function BasicLed (props: any) {
           const isDateRangeMatch =
             (startDate === '' || item.earlirestPrefac >= startDate) &&
             (endDate === '' || item.earlirestPrefac <= endDate)
-          return isSupplierMatch && isToolMatch && isDateRangeMatch
+          const unallocatedMatch = !unallocatedOnly || item.qtyasn < 100
+          return (
+            isSupplierMatch &&
+            isToolMatch &&
+            isDateRangeMatch &&
+            unallocatedMatch
+          )
         })
 
         setData(filteredData)
