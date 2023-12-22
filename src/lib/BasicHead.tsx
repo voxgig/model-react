@@ -98,18 +98,23 @@ function BasicHead (props: BasicHeadProps) {
   }
 
   const handleLogout = async () => {
-    // await seneca.post('aim:web,on:auth,signin:user')
-    await seneca.post('aim:app,set:state', {
+    const signout = await seneca.post('aim:web,on:auth,signout:user')
+
+    console.log('signout', signout)
+
+    const res = await seneca.post('aim:app,set:state', {
       section: 'auth.state',
       content: 'none'
     })
 
-    await seneca.post('aim:web,on:auth,signout:user')
+    console.log('res', res)
 
-    // reload page
-    window.location.reload()
-
-    console.log('logout')
+    if (res && signout.ok) {
+      console.log('signed out')
+      document.location.href = document.location.origin + '/'
+    } else {
+      console.log('failed to sign out')
+    }
   }
 
   if (basicHeadSpec.head.variant === 'permanent') {
