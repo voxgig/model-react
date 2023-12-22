@@ -20345,12 +20345,6 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const [initials, setInitials] = React.useState("");
     const [anchorEl, setAnchorEl] = React.useState(null);
     const menuOpen = Boolean(anchorEl);
-    const handleClick = (event) => {
-      setAnchorEl(event.currentTarget);
-    };
-    const handleClose = () => {
-      setAnchorEl(null);
-    };
     const basicHeadSpec = BasicHeadSpecShape(props.spec);
     const user = reactRedux.useSelector((state) => state.main.auth.user);
     const userName = user.name || user.email;
@@ -20370,6 +20364,21 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     let add = ((_c = (_b = (_a = basicHeadSpec.view[viewPath]) == null ? void 0 : _a.content) == null ? void 0 : _b.def) == null ? void 0 : _c.add) || { active: false };
     const viewName = ((_d = basicHeadSpec.view[viewPath]) == null ? void 0 : _d.name) || "";
     const theme = material.useTheme();
+    const handleAvatarClick = (event) => {
+      setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+      setAnchorEl(null);
+    };
+    const handleLogout = () => __async(this, null, function* () {
+      yield seneca.post("aim:app,set:state", {
+        section: "auth.state",
+        content: "none"
+      });
+      yield seneca.post("aim:web,on:auth,signout:user");
+      window.location.reload();
+      console.log("logout");
+    });
     if (basicHeadSpec.head.variant === "permanent") {
       return /* @__PURE__ */ jsxRuntimeExports.jsx(
         BasicAppBar,
@@ -20381,7 +20390,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           children: /* @__PURE__ */ jsxRuntimeExports.jsxs(material.Toolbar, { children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: basicHeadSpec.head.logo.img, style: { width: "5rem" } }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { flexGrow: 1 } }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(BasicButton, { onClick: handleClick, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+            /* @__PURE__ */ jsxRuntimeExports.jsx(BasicButton, { onClick: handleAvatarClick, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
               material.Avatar,
               {
                 sx: { bgcolor: purple[300], color: "white", fontWeight: 100 },
@@ -20398,7 +20407,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
                 MenuListProps: {
                   "aria-labelledby": "basic-button"
                 },
-                children: /* @__PURE__ */ jsxRuntimeExports.jsx(material.MenuItem, { onClick: handleClose, children: "Logout" })
+                children: /* @__PURE__ */ jsxRuntimeExports.jsx(material.MenuItem, { onClick: handleLogout, children: "Logout" })
               }
             )
           ] })

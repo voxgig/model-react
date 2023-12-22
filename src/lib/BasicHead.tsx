@@ -57,14 +57,7 @@ function BasicHead (props: BasicHeadProps) {
   const { seneca } = ctx()
   const [initials, setInitials] = useState('')
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
-
   const menuOpen = Boolean(anchorEl)
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget)
-  }
-  const handleClose = () => {
-    setAnchorEl(null)
-  }
 
   // spec shape validation with Gubu
   const basicHeadSpec = BasicHeadSpecShape(props.spec)
@@ -97,6 +90,28 @@ function BasicHead (props: BasicHeadProps) {
 
   const theme = useTheme()
 
+  const handleAvatarClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget)
+  }
+  const handleClose = () => {
+    setAnchorEl(null)
+  }
+
+  const handleLogout = async () => {
+    // await seneca.post('aim:web,on:auth,signin:user')
+    await seneca.post('aim:app,set:state', {
+      section: 'auth.state',
+      content: 'none'
+    })
+
+    await seneca.post('aim:web,on:auth,signout:user')
+
+    // reload page
+    window.location.reload()
+
+    console.log('logout')
+  }
+
   if (basicHeadSpec.head.variant === 'permanent') {
     return (
       <BasicAppBar
@@ -108,7 +123,7 @@ function BasicHead (props: BasicHeadProps) {
         <Toolbar>
           <img src={basicHeadSpec.head.logo.img} style={{ width: '5rem' }} />
           <div style={{ flexGrow: 1 }}></div>
-          <BasicButton onClick={handleClick}>
+          <BasicButton onClick={handleAvatarClick}>
             <Avatar
               sx={{ bgcolor: purple[300], color: 'white', fontWeight: 100 }}
             >
@@ -124,7 +139,7 @@ function BasicHead (props: BasicHeadProps) {
               'aria-labelledby': 'basic-button'
             }}
           >
-            <MenuItem onClick={handleClose}>Logout</MenuItem>
+            <MenuItem onClick={handleLogout}>Logout</MenuItem>
           </Menu>
         </Toolbar>
       </BasicAppBar>
