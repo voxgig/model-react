@@ -3,6 +3,8 @@
 import Patrun from 'patrun'
 import Jsonic from '@jsonic/jsonic-next'
 
+import './vxg.css'
+
 import Pkg from '../../package.json'
 
 const config_defaults: any = {}
@@ -50,7 +52,7 @@ class Vxg {
       }
     }
 
-    return found ? !!found.allow : false
+    return found ? !!(found as any)?.allow : false
   }
 }
 

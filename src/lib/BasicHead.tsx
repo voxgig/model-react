@@ -1,60 +1,92 @@
-import { useSelector } from 'react-redux'
-import { useLocation } from 'react-router-dom'
-import { Gubu, Exact } from 'gubu'
-import {
-  Toolbar,
-  Typography,
-  IconButton,
-  useTheme,
-  Avatar,
-  Menu,
-  MenuItem
-} from '@mui/material'
-import ChevronRightIcon from '@mui/icons-material/ChevronRight'
-import BasicButton from './BasicButton'
-import BasicAppBar from './BasicAppBar'
-import BasicAutocomplete from './BasicAutocomplete'
-import { deepPurple, purple } from '@mui/material/colors'
-import { useEffect, useState } from 'react'
+// import React, { useEffect, useState } from 'react'
+// import { useSelector } from 'react-redux'
+// import { useLocation } from 'react-router-dom'
+// import {
+//   Toolbar,
+//   Typography,
+//   IconButton,
+//   useTheme,
+//   Avatar,
+//   Menu,
+//   MenuItem
+// } from '@mui/material'
+// import ChevronRightIcon from '@mui/icons-material/ChevronRight'
+// import BasicButton from './BasicButton'
+// import BasicAppBar from './BasicAppBar'
+// import BasicAutocomplete from './BasicAutocomplete'
+// import { deepPurple, purple } from '@mui/material/colors'
 
-const { Child } = Gubu
 
-// Define spec shape with Gubu
+import React from 'react'
+
+import AppBar from '@mui/material/AppBar'
+import ToolBar from '@mui/material/ToolBar'
+import Button from '@mui/material/Button'
+
+import { Gubu } from 'gubu'
+
+import type { BasicProps, Spec } from './basic-types'
+
+import { BasicHeadTool } from './BasicHeadTool'
+
+
+const { Child, Exact, Open } = Gubu
+
+
+const cmpname = 'BasicHead'
+
 const BasicHeadSpecShape = Gubu({
   head: {
-    logo: {
-      img: String
-    },
-    variant: String,
-    tool: {
-      def: Child({
-        kind: Exact('add', 'autocomplete'),
-        label: String,
-        options: {
-          kind: String,
-          label: {
-            field: String
-          },
-          ent: String
-        },
-        name: ''
-      })
-    },
-    app: {}
+    name: String,
+    active: Boolean,
+  
+    tool: Child(Open({
+      name: String,
+      align: Exact('left','right'),
+    })),
   },
-  view: {}
-})
 
-interface BasicHeadProps {
-  ctx: any
-  spec: any
-  vxg?: any
-}
+  // Set MUI component props directly 
+  mui: {
+    AppBar: {},
+    ToolBar: {},
+  }
+}, {prefix:cmpname})
 
-function BasicHead (props: BasicHeadProps) {
+
+function BasicHead (props: BasicProps) {
+  const { ctx, spec } = props
+  // const { seneca } = ctx()
+
+  console.log(cmpname, spec)
+  const basicHeadSpec = BasicHeadSpecShape(spec)
+  const { head } = (basicHeadSpec as any)
+
+  const tools: Spec[] = Object.values(head.tool)
+  const leftTools: Spec[] = tools.filter((t:Spec)=>'left'===t.align)
+  const rightTools: Spec[] = tools.filter((t:Spec)=>'right'===t.align)
+
+  return (
+    <AppBar className="vxg-BasicHead" {...spec.mui.AppBar}>
+      <ToolBar className="vxg-BasicHead-toolbar" {...spec.mui.ToolBar}>
+        <div
+          className="vxg-BasicHead-toolbar vxg-BasicHead-toolbar-left"
+        >
+          { leftTools.map(t=><BasicHeadTool key={t.name} ctx={ctx} spec={t} />) }
+        </div>
+        <div
+          className="vxg-BasicHead-toolbar vxg-BasicHead-toolbar-right"
+          style={{marginLeft:'auto'}}
+        >
+          { rightTools.map(t=><BasicHeadTool key={t.name} ctx={ctx} spec={t} />) }
+        </div>
+      </ToolBar>  
+    </AppBar>  
+  )
+
+  
+  /*
   const location = useLocation()
-  const { ctx } = props
-  const { seneca } = ctx()
   const [initials, setInitials] = useState('')
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
 
@@ -66,25 +98,21 @@ function BasicHead (props: BasicHeadProps) {
     setAnchorEl(null)
   }
 
-  // spec shape validation with Gubu
-  const basicHeadSpec = BasicHeadSpecShape(props.spec)
 
   // set userName to user.name or user.email
   const user = useSelector((state: any) => state.main.auth.user)
   const userName = user.name || user.email
 
-  console.log('model-react.user', user)
 
   useEffect(() => {
     const name = user.name ? user.name : 'A'
     const acronyms = name.match(/\b(\w)/g) || []
     const initials = acronyms.join('')
-    console.log('initials', initials)
     setInitials(initials)
   }, [user])
 
   // add name property to each tool definition
-  const tooldefs = Object.entries(basicHeadSpec.head.tool.def).map(
+  const tooldefs = Object.entries(tool.def).map(
     (entry: any) => ((entry[1].name = entry[0]), entry[1])
   )
 
@@ -94,13 +122,13 @@ function BasicHead (props: BasicHeadProps) {
   let led_add = vxgState.trigger.led.add
 
   // get name and add state from spec
-  const viewPath: any = location.pathname.split('/')[2]
-  let add = basicHeadSpec.view[viewPath]?.content?.def?.add || { active: false }
-  const viewName = basicHeadSpec.view[viewPath]?.name || ''
+  // const viewPath: any = location.pathname.split('/')[2]
+  // let add = basicHeadSpec.view[viewPath]?.content?.def?.add || { active: false }
+  // const viewName = basicHeadSpec.view[viewPath]?.name || ''
 
   const theme = useTheme()
 
-  if (basicHeadSpec.head.variant === 'permanent') {
+  if (spec.variant === 'permanent') {
     return (
       <BasicAppBar
         open={false}
@@ -109,7 +137,7 @@ function BasicHead (props: BasicHeadProps) {
         }}
       >
         <Toolbar>
-          <img src={basicHeadSpec.head.logo.img} style={{ width: '5rem' }} />
+          <img src={spec.logo.img} style={{ width: '5rem' }} />
           <div style={{ flexGrow: 1 }}></div>
           <BasicButton onClick={handleClick}>
             <Avatar
@@ -189,9 +217,9 @@ function BasicHead (props: BasicHeadProps) {
       </BasicAppBar>
     )
   }
+  */
 }
 
-export default BasicHead
 
 // updates backend when user toggles BasicSide
 function onOpen (seneca: any) {
@@ -207,4 +235,9 @@ function addItem (seneca: any, led_add: any) {
     section: 'vxg.trigger.led.add',
     content: ++led_add
   })
+}
+
+
+export {
+  BasicHead
 }

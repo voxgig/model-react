@@ -1,0 +1,17 @@
+
+.vxg-BasicAdmin {
+
+}
+
+
+
+.vxg-BasicHead-toolbar {
+    display: flex;
+}
+
+
+.vxg-BasicHeadTool-logo > img {
+    width: 5rem;
+}
+
+

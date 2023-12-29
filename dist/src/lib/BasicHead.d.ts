@@ -1,7 +1,3 @@
-interface BasicHeadProps {
-    ctx: any;
-    spec: any;
-    vxg?: any;
-}
-declare function BasicHead(props: BasicHeadProps): import("react/jsx-runtime").JSX.Element;
-export default BasicHead;
+import type { BasicProps } from './basic-types';
+declare function BasicHead(props: BasicProps): import("react/jsx-runtime").JSX.Element;
+export { BasicHead };

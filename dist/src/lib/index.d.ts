@@ -1,5 +1,6 @@
-export { default as BasicAdmin } from './BasicAdmin';
-export { default as BasicHead } from './BasicHead';
+export { BasicAdmin } from './BasicAdmin';
+export { BasicHead } from './BasicHead';
+export { BasicHeadTool } from './BasicHeadTool';
 export { default as BasicSide } from './BasicSide';
 export { default as BasicSideMenu } from './BasicSideMenu';
 export { default as BasicSideMenuItem } from './BasicSideMenuItem';

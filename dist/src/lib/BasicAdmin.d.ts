@@ -1,2 +1,3 @@
-declare function BasicAdmin(props: any): import("react/jsx-runtime").JSX.Element;
-export default BasicAdmin;
+import type { BasicProps } from './basic-types';
+declare function BasicAdmin(props: BasicProps): import("react/jsx-runtime").JSX.Element;
+export { BasicAdmin };
