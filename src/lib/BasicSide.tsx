@@ -1,13 +1,21 @@
+import React from 'react'
+
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { Gubu } from 'gubu'
 import BasicSideMenu from './BasicSideMenu'
+
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 
 import {
   Box,
   Divider,
   Drawer,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
   IconButton,
   Toolbar,
   useTheme
@@ -50,6 +58,9 @@ function BasicSide (props: any) {
   const { seneca } = ctx()
   const theme = useTheme()
 
+  const navigate = useNavigate()
+  
+  /*
   const vxgState = useSelector((state: any) => state.main.vxg)
   const open = vxgState.cmp.BasicSide.show
 
@@ -114,6 +125,42 @@ function BasicSide (props: any) {
       </Drawer>
     )
   }
+   */
+
+
+  function selectView(viewName) {
+    console.log('viewName', viewName)
+    navigate('/view/'+viewName)
+  }
+  
+  
+  return (
+    <Drawer
+      variant="persistent"
+      anchor="left"
+      open={true}
+    >
+      <List>
+        {['Foo','Bar'].map((text, index) => (
+          <ListItem
+            key={text}
+            disablePadding
+          >
+            <ListItemButton
+              onClick={()=>selectView(text.toLowerCase())}
+            >
+              <ListItemIcon>
+                <ChevronLeftIcon />
+              </ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
+    </Drawer>
+  )
 }
 
-export default BasicSide
+export {
+  BasicSide
+}

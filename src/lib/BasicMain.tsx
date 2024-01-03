@@ -1,17 +1,26 @@
-import { Fragment, useEffect } from 'react'
+import React, { useState } from 'react'
+
 import { useSelector } from 'react-redux'
-import { Routes, Route, useNavigation, useNavigate } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 import BasicLed from './BasicLed'
-import { Exact, Gubu } from 'gubu'
+
+
 import { Box, CSSObject, ThemeProvider, useTheme } from '@mui/material'
 
-const { Child, Optional, Skip } = Gubu
+import { Gubu } from 'gubu'
+
+const { Child, Skip } = Gubu
+
+
+console.log('BasicMain 1')
+
 
 // Validate spec shape with Gubu
 const BasicMainSpecShape = Gubu({
   main: {
-    title: String,
-    default: String
+    view: {
+      default: String
+    }
   },
   view: Child({
     title: String,
@@ -49,7 +58,23 @@ const BasicMainSpecShape = Gubu({
   })
 })
 
+
+function Foo() {
+  return <div><h1>FOO</h1><Link to="/view/bar">bar</Link></div>
+}
+
+function Bar() {
+  return <div><h1>BAR</h1><Link to="/view/foo">foo</Link></div>
+}
+
+const viewMap: any = {
+  foo: Foo,
+  bar: Bar,
+}
+
+
 function BasicMain (props: any) {
+  /*
   const { vxg, ctx } = props
   const theme = useTheme()
   const basicMainSpec = BasicMainSpecShape(props.spec)
@@ -80,18 +105,42 @@ function BasicMain (props: any) {
   const basicMainContainerStyle = {
     height: '100%'
   }
-
-  return (
     <Box className='BasicMain' sx={basicMainStyle}>
       <Box className='BasicMain-container' sx={basicMainContainerStyle}>
-        <Routes>{renderRoutes(views, vxg, ctx, theme)}</Routes>
+
+  <Routes>{renderRoutes(views, vxg, ctx, theme)}</Routes>
+   */
+
+  const { ctx, spec } = props
+  const { seneca } = ctx()
+
+  const viewName = useSelector((state:any)=>state.main.view.current)
+  
+  const params:any = useParams()
+
+  if(viewName !== params.view) {
+    seneca.act('aim:app,set:view', {view:params.view})
+  }
+  
+  const View = viewMap[viewName]
+
+  const viewSpec = {}
+  
+  return (
+    <Box className='vxg-BasicMain'>
+      <Box className='vxg-BasicMain-container'>
+        { View && <View ctx={ctx} spec={viewSpec} /> }
       </Box>
     </Box>
   )
 }
 
-export default BasicMain
+export {
+  BasicMain
+}
 
+
+/*
 const renderRoutes = (views: any[], vxg: any, ctx: any, theme: any) => {
   return views.map((view: any) => (
     <Fragment key={view.name}>
@@ -122,3 +171,4 @@ const renderRoutes = (views: any[], vxg: any, ctx: any, theme: any) => {
     </Fragment>
   ))
 }
+*/

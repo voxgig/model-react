@@ -1,45 +1,63 @@
-import * as React from 'react'
-// import Avatar from '@mui/material/Avatar'
+import React, { useCallback, useState } from 'react'
+
 import Button from '@mui/material/Button'
-import CssBaseline from '@mui/material/CssBaseline'
 import TextField from '@mui/material/TextField'
-// import FormControlLabel from '@mui/material/FormControlLabel'
-// import Checkbox from '@mui/material/Checkbox'
-// import Link from '@mui/material/Link'
-// import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
-// import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
-import { ThemeProvider } from '@emotion/react'
-import { useTheme } from 'styled-components'
-// import { createTheme, ThemeProvider } from '@mui/material/styles'
+import Alert from '@mui/material/Alert'
 
-/*
-function Copyright(props: any) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  )
-}
- */
 
-// const theme = createTheme()
+
+console.log('BasicAuth 1')
+
 
 function BasicAuth (props: any) {
-  const { spec } = props
+  const { spec, ctx } = props
+  const seneca = ctx().seneca
 
-  const { handle } = spec
+  const [signinStatus, setSigninStatus] = useState('none')
+  
+  const handleSignin = useCallback((event:any)=>{
+    event.preventDefault()
+    const data = new FormData(event.currentTarget)
+
+    const email = data.get('email')
+    const password = data.get('password')
+    
+    seneca.act(
+      'aim:req,on:auth,signin:user',
+      { email, password },
+      function (err: any, out: any) {
+        if (null == err && null != out && out.ok && !spec.signin.debug) {
+          document.location.href = document.location.origin +
+            '/view/'+spec.signin.view
+          return
+        }
+
+        else if(null == err && !out.ok) {
+          setSigninStatus('invalid')
+          return
+        }
+
+        else if(null == err && out.ok && spec.signin.debug) {
+          setSigninStatus('debug')
+          return
+        }
+
+        if(null != err ) {
+          console.warn('BasicAuth', 'signin', email, err)
+        }
+
+        setSigninStatus('unavailable')
+      }
+    )
+
+  },[])
+  
 
   return (
     <Container component='main' maxWidth='xs'>
-      <CssBaseline />
       <Box
         sx={{
           marginTop: 8,
@@ -48,24 +66,19 @@ function BasicAuth (props: any) {
           alignItems: 'center'
         }}
       >
-        {/*
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <LockOutlinedIcon />
-      </Avatar>
-      */}
 
         <img style={{ width: 400 }} src={spec.img.logo} />
 
         <Typography
-          sx={{ marginTop: 4, color: '#5EB6F1' }}
-          component='h1'
-          variant='h5'
+          sx={{ mt: 4, color: 'primary.main' }}
+          variant='h3'
         >
           {spec.title}
         </Typography>
+
         <Box
           component='form'
-          onSubmit={handle.signin}
+          onSubmit={handleSignin}
           noValidate
           sx={{ mt: 1 }}
         >
@@ -89,12 +102,7 @@ function BasicAuth (props: any) {
             id='password'
             autoComplete='current-password'
           />
-          {/*
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-      />
-      */}
+
           <Button
             type='submit'
             fullWidth
@@ -104,6 +112,16 @@ function BasicAuth (props: any) {
             Sign In
           </Button>
 
+
+          { 'invalid' == signinStatus &&
+            <Alert severity="warning">Invalid email or password</Alert> }
+
+          { 'debug' == signinStatus && 
+            <Alert severity="warning">Signin debug</Alert> }
+
+          { 'unavailable' == signinStatus &&
+            <Alert severity="error">Signin unavailable</Alert> }
+          
           {/*
             <Grid container>
               <Grid item xs>
@@ -117,10 +135,11 @@ function BasicAuth (props: any) {
                 </Link>
               </Grid>
       </Grid>
-      */}
+           */}
+
+          <div><br /><br /><br /><br /></div>
         </Box>
       </Box>
-      {/* <Copyright sx={{ mt: 8, mb: 4 }} /> */}
     </Container>
   )
 }

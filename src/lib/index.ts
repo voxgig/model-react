@@ -1,10 +1,11 @@
 export { BasicAdmin } from './BasicAdmin'
 export { BasicHead } from './BasicHead'
 export { BasicHeadTool } from './BasicHeadTool'
-export { default as BasicSide } from './BasicSide'
+export { BasicMain } from './BasicMain'
+export { BasicSide } from './BasicSide'
+
 export { default as BasicSideMenu } from './BasicSideMenu'
 export { default as BasicSideMenuItem } from './BasicSideMenuItem'
-export { default as BasicMain } from './BasicMain'
 export { default as BasicFoot } from './BasicFoot'
 export { default as BasicLed } from './BasicLed'
 export { default as BasicList } from './BasicList'
