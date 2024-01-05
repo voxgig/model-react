@@ -12737,36 +12737,60 @@ Please use another name.` : formatMuiErrorMessage(18));
   }
   function BasicSide(props) {
     const { vxg, ctx } = props;
-    const { seneca } = ctx();
-    const theme = material.useTheme();
+    const { seneca, model } = ctx();
+    let viewMap2 = model.app.web.frame.private.view;
+    let { cmap: cmap2 } = seneca.context;
     const navigate = reactRouterDom.useNavigate();
-    function selectView(viewName) {
-      console.log("viewName", viewName);
-      navigate("/view/" + viewName);
-    }
+    const nav = reactRedux.useSelector((state) => state.main.nav);
+    const sections = Object.values(nav.section).filter((n) => n.active).map((n) => ({
+      name: n.name,
+      items: Object.values(n.item).filter((n2) => n2.active && viewMap2[n2.view]).map((n2) => ({
+        name: n2.name,
+        view: n2.view,
+        title: viewMap2[n2.view].title
+      }))
+    }));
+    const selectView = React.useCallback((view) => navigate("/view/" + view), []);
     return /* @__PURE__ */ jsxRuntimeExports.jsx(
       material.Drawer,
       {
         variant: "persistent",
         anchor: "left",
         open: true,
-        children: /* @__PURE__ */ jsxRuntimeExports.jsx(material.List, { children: ["Foo", "Bar"].map((text2, index2) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-          material.ListItem,
-          {
-            disablePadding: true,
-            children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
-              material.ListItemButton,
+        className: "vxg-BasicSide",
+        children: sections.map(
+          (section) => /* @__PURE__ */ jsxRuntimeExports.jsxs(React.Fragment, { children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              material.List,
               {
-                onClick: () => selectView(text2.toLowerCase()),
-                children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsx(material.ListItemIcon, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(default_1$w, {}) }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx(material.ListItemText, { primary: text2 })
-                ]
+                className: "vxg-BasicSide-section",
+                "data-vxg-basicside-section": section.name,
+                children: section.items.map(
+                  (item) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+                    material.ListItem,
+                    {
+                      disablePadding: true,
+                      className: "vxg-BasicSide-section-item",
+                      "data-vxg-basicside-section-item": item.name,
+                      children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                        material.ListItemButton,
+                        {
+                          onClick: () => selectView(item.view),
+                          children: [
+                            /* @__PURE__ */ jsxRuntimeExports.jsx(material.ListItemIcon, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(default_1$w, {}) }),
+                            /* @__PURE__ */ jsxRuntimeExports.jsx(material.ListItemText, { primary: item.title })
+                          ]
+                        }
+                      )
+                    },
+                    item.name
+                  )
+                )
               }
-            )
-          },
-          text2
-        )) })
+            ),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(material.Divider, {})
+          ] }, section.name)
+        )
       }
     );
   }
@@ -12778,7 +12802,8 @@ Please use another name.` : formatMuiErrorMessage(18));
       name: String,
       kind: String,
       part: Child$2({}),
-      view: Child$2({})
+      view: Child$2({}),
+      nav: Child$2({})
     }
   }, { prefix: cmpname });
   function Loading() {
@@ -12806,21 +12831,61 @@ Please use another name.` : formatMuiErrorMessage(18));
       (main2 == null ? void 0 : main2.active) && /* @__PURE__ */ jsxRuntimeExports.jsx(BasicMain, { ctx, spec: { main: main2 } })
     ] }) : /* @__PURE__ */ jsxRuntimeExports.jsx(Loading, {});
   }
+  function cmap(o, p) {
+    return Object.entries(o).reduce((r2, n, _2) => (_2 = Object.entries(p).reduce((s, m) => cmap.DEL === s ? s : (s[m[0]] = "function" === typeof m[1] ? m[1](n[1][m[0]]) : m[1], cmap.DEL === s[m[0]] ? cmap.DEL : s), {}), cmap.DEL === _2 ? 0 : r2[n[0]] = _2, r2), {});
+  }
+  cmap.ID = (x) => x;
+  cmap.DEL = (x) => x ? x : cmap.DEL;
   function init(seneca, done) {
     return __async(this, null, function* () {
       console.log("BasicAdmin init");
       seneca.context.vxg = seneca.context.vxg || {};
       seneca.context.vxg.BasicAdmin = seneca.context.vxg.BasicAdmin || {};
+      seneca.context.cmap = cmap;
       if (!seneca.context.vxg.BasicAdmin.preparing) {
         seneca.context.vxg.BasicAdmin.preparing = true;
         seneca.use(function BasicAdmin2() {
           const seneca2 = this;
           seneca2.message(
             "aim:app,prepare:app,redux$:true",
-            function prepareApp(msg, meta) {
+            function prepareApp(_msg, meta) {
               return __async(this, null, function* () {
                 let state = meta.custom.state;
-                state.view = { current: "" };
+                let model = seneca2.context.model;
+                let frame = model.app.web.frame.private;
+                let viewMap2 = frame.view;
+                let sectionMap = frame.nav.section;
+                state.view = {
+                  current: ""
+                };
+                state.nav = {
+                  section: cmap(sectionMap, {
+                    name: cmap.ID,
+                    active: cmap.DEL,
+                    item: (x) => cmap(x, {
+                      active: cmap.DEL,
+                      view: cmap.ID,
+                      name: cmap.ID
+                    })
+                  })
+                  /*
+                                  Object.values(sectionMap)
+                                  .filter((n:any)=>n.active)
+                                  .reduce((m:any,n:any)=>(m[n.name]={
+                                    name: n.name,
+                                    active: n.active,
+                  
+                  
+                                    item: Object.values(n.item)
+                                      .filter((n:any)=>viewMap[n.view]?.active)
+                                      .reduce((m:any,n:any)=>(m[n.name]={
+                                        active: n.active,
+                                        view: n.view,
+                                        name: n.name,
+                  },m),{})
+                  },m),{})
+                  */
+                };
               });
             }
           ).message(
@@ -12835,7 +12900,7 @@ Please use another name.` : formatMuiErrorMessage(18));
             }
           ).prepare(function() {
             return __async(this, null, function* () {
-              this.act("aim:app,prepare:app,direct$:true");
+              yield this.post("aim:app,prepare:app");
             });
           });
         });

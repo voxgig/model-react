@@ -56,8 +56,8 @@ var __async = (__this, __arguments, generator) => {
   });
 };
 import * as React from "react";
-import React__default, { isValidElement, Children, cloneElement, useState, useEffect, useLayoutEffect, createElement, useMemo, memo as memo$2, useRef, useCallback, Fragment, useReducer } from "react";
-import { Box as Box$2, useTheme as useTheme$4, Drawer as Drawer$1, List as List$1, ListItem as ListItem$1, ListItemButton as ListItemButton$1, ListItemIcon as ListItemIcon$1, ListItemText as ListItemText$1, Divider as Divider$1, Container as Container$2, Grid as Grid$1, Typography as Typography$1, alpha as alpha$1, Button as Button$2, createFilterOptions as createFilterOptions$1, Autocomplete as Autocomplete$1, TextField as TextField$1, MenuItem as MenuItem$2, LinearProgress as LinearProgress$1, Chip as Chip$1 } from "@mui/material";
+import React__default, { isValidElement, Children, cloneElement, useCallback, Fragment, useState, useEffect, useLayoutEffect, createElement, useMemo, memo as memo$2, useRef, useReducer } from "react";
+import { Box as Box$2, Drawer as Drawer$1, List as List$1, ListItem as ListItem$1, ListItemButton as ListItemButton$1, ListItemIcon as ListItemIcon$1, ListItemText as ListItemText$1, Divider as Divider$1, Container as Container$2, Grid as Grid$1, Typography as Typography$1, alpha as alpha$1, Button as Button$2, createFilterOptions as createFilterOptions$1, Autocomplete as Autocomplete$1, TextField as TextField$1, MenuItem as MenuItem$2, LinearProgress as LinearProgress$1, Chip as Chip$1 } from "@mui/material";
 import emStyled from "@emotion/styled";
 import { CacheProvider, Global, ThemeContext as ThemeContext$1, keyframes, css } from "@emotion/react";
 import * as ReactDOM from "react-dom";
@@ -12725,36 +12725,60 @@ function onClose(seneca) {
 }
 function BasicSide(props) {
   const { vxg, ctx } = props;
-  const { seneca } = ctx();
-  const theme = useTheme$4();
+  const { seneca, model } = ctx();
+  let viewMap2 = model.app.web.frame.private.view;
+  let { cmap: cmap2 } = seneca.context;
   const navigate = useNavigate();
-  function selectView(viewName) {
-    console.log("viewName", viewName);
-    navigate("/view/" + viewName);
-  }
+  const nav = useSelector((state) => state.main.nav);
+  const sections = Object.values(nav.section).filter((n) => n.active).map((n) => ({
+    name: n.name,
+    items: Object.values(n.item).filter((n2) => n2.active && viewMap2[n2.view]).map((n2) => ({
+      name: n2.name,
+      view: n2.view,
+      title: viewMap2[n2.view].title
+    }))
+  }));
+  const selectView = useCallback((view) => navigate("/view/" + view), []);
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
     Drawer$1,
     {
       variant: "persistent",
       anchor: "left",
       open: true,
-      children: /* @__PURE__ */ jsxRuntimeExports.jsx(List$1, { children: ["Foo", "Bar"].map((text2, index2) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-        ListItem$1,
-        {
-          disablePadding: true,
-          children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
-            ListItemButton$1,
+      className: "vxg-BasicSide",
+      children: sections.map(
+        (section) => /* @__PURE__ */ jsxRuntimeExports.jsxs(Fragment, { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            List$1,
             {
-              onClick: () => selectView(text2.toLowerCase()),
-              children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx(ListItemIcon$1, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(default_1$w, {}) }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx(ListItemText$1, { primary: text2 })
-              ]
+              className: "vxg-BasicSide-section",
+              "data-vxg-basicside-section": section.name,
+              children: section.items.map(
+                (item) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  ListItem$1,
+                  {
+                    disablePadding: true,
+                    className: "vxg-BasicSide-section-item",
+                    "data-vxg-basicside-section-item": item.name,
+                    children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                      ListItemButton$1,
+                      {
+                        onClick: () => selectView(item.view),
+                        children: [
+                          /* @__PURE__ */ jsxRuntimeExports.jsx(ListItemIcon$1, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(default_1$w, {}) }),
+                          /* @__PURE__ */ jsxRuntimeExports.jsx(ListItemText$1, { primary: item.title })
+                        ]
+                      }
+                    )
+                  },
+                  item.name
+                )
+              )
             }
-          )
-        },
-        text2
-      )) })
+          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(Divider$1, {})
+        ] }, section.name)
+      )
     }
   );
 }
@@ -12766,7 +12790,8 @@ const BasicAdminSpecShape = gubu_minExports.Gubu({
     name: String,
     kind: String,
     part: Child$2({}),
-    view: Child$2({})
+    view: Child$2({}),
+    nav: Child$2({})
   }
 }, { prefix: cmpname });
 function Loading() {
@@ -12794,21 +12819,61 @@ function BasicAdmin(props) {
     (main2 == null ? void 0 : main2.active) && /* @__PURE__ */ jsxRuntimeExports.jsx(BasicMain, { ctx, spec: { main: main2 } })
   ] }) : /* @__PURE__ */ jsxRuntimeExports.jsx(Loading, {});
 }
+function cmap(o, p) {
+  return Object.entries(o).reduce((r2, n, _2) => (_2 = Object.entries(p).reduce((s, m) => cmap.DEL === s ? s : (s[m[0]] = "function" === typeof m[1] ? m[1](n[1][m[0]]) : m[1], cmap.DEL === s[m[0]] ? cmap.DEL : s), {}), cmap.DEL === _2 ? 0 : r2[n[0]] = _2, r2), {});
+}
+cmap.ID = (x) => x;
+cmap.DEL = (x) => x ? x : cmap.DEL;
 function init(seneca, done) {
   return __async(this, null, function* () {
     console.log("BasicAdmin init");
     seneca.context.vxg = seneca.context.vxg || {};
     seneca.context.vxg.BasicAdmin = seneca.context.vxg.BasicAdmin || {};
+    seneca.context.cmap = cmap;
     if (!seneca.context.vxg.BasicAdmin.preparing) {
       seneca.context.vxg.BasicAdmin.preparing = true;
       seneca.use(function BasicAdmin2() {
         const seneca2 = this;
         seneca2.message(
           "aim:app,prepare:app,redux$:true",
-          function prepareApp(msg, meta) {
+          function prepareApp(_msg, meta) {
             return __async(this, null, function* () {
               let state = meta.custom.state;
-              state.view = { current: "" };
+              let model = seneca2.context.model;
+              let frame = model.app.web.frame.private;
+              let viewMap2 = frame.view;
+              let sectionMap = frame.nav.section;
+              state.view = {
+                current: ""
+              };
+              state.nav = {
+                section: cmap(sectionMap, {
+                  name: cmap.ID,
+                  active: cmap.DEL,
+                  item: (x) => cmap(x, {
+                    active: cmap.DEL,
+                    view: cmap.ID,
+                    name: cmap.ID
+                  })
+                })
+                /*
+                                Object.values(sectionMap)
+                                .filter((n:any)=>n.active)
+                                .reduce((m:any,n:any)=>(m[n.name]={
+                                  name: n.name,
+                                  active: n.active,
+                
+                
+                                  item: Object.values(n.item)
+                                    .filter((n:any)=>viewMap[n.view]?.active)
+                                    .reduce((m:any,n:any)=>(m[n.name]={
+                                      active: n.active,
+                                      view: n.view,
+                                      name: n.name,
+                },m),{})
+                },m),{})
+                */
+              };
             });
           }
         ).message(
@@ -12823,7 +12888,7 @@ function init(seneca, done) {
           }
         ).prepare(function() {
           return __async(this, null, function* () {
-            this.act("aim:app,prepare:app,direct$:true");
+            yield this.post("aim:app,prepare:app");
           });
         });
       });
