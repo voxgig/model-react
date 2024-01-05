@@ -1,6 +1,6 @@
 (function(global2, factory) {
-  typeof exports === "object" && typeof module !== "undefined" ? factory(exports, require("react"), require("@mui/material"), require("@emotion/styled"), require("@emotion/react"), require("react-dom"), require("react-redux"), require("react-router-dom"), require("@mui/icons-material")) : typeof define === "function" && define.amd ? define(["exports", "react", "@mui/material", "@emotion/styled", "@emotion/react", "react-dom", "react-redux", "react-router-dom", "@mui/icons-material"], factory) : (global2 = typeof globalThis !== "undefined" ? globalThis : global2 || self, factory(global2.VoxgigModelReact = {}, global2.React, global2.material, global2.emStyled, global2.react, global2.ReactDOM, global2.reactRedux, global2.reactRouterDom, global2.iconsMaterial));
-})(this, function(exports2, React, material, emStyled, react, ReactDOM, reactRedux, reactRouterDom, iconsMaterial) {
+  typeof exports === "object" && typeof module !== "undefined" ? factory(exports, require("react"), require("@mui/material"), require("@emotion/styled"), require("@emotion/react"), require("react-redux"), require("@mui/icons-material"), require("react-router-dom"), require("react-dom")) : typeof define === "function" && define.amd ? define(["exports", "react", "@mui/material", "@emotion/styled", "@emotion/react", "react-redux", "@mui/icons-material", "react-router-dom", "react-dom"], factory) : (global2 = typeof globalThis !== "undefined" ? globalThis : global2 || self, factory(global2.VoxgigModelReact = {}, global2.React, global2.material, global2.emStyled, global2.react, global2.reactRedux, global2.iconsMaterial, global2.reactRouterDom, global2.ReactDOM));
+})(this, function(exports2, React, material, emStyled, react, reactRedux, iconsMaterial, reactRouterDom, ReactDOM) {
   "use strict";var __defProp = Object.defineProperty;
 var __defProps = Object.defineProperties;
 var __getOwnPropDescs = Object.getOwnPropertyDescriptors;
@@ -1626,6 +1626,77 @@ var __async = (__this, __arguments, generator) => {
   })(gubu_min$2, gubu_min$2.exports);
   var gubu_minExports = gubu_min$2.exports;
   const gubu_min$1 = /* @__PURE__ */ getDefaultExportFromCjs(gubu_minExports);
+  function VxgSeneca() {
+    const seneca = this;
+    const { Exact: Exact2 } = seneca.valid;
+    seneca.root.context.cmap = cmap;
+    seneca.root.context.vmap = vmap;
+    seneca.message(
+      "aim:app,prepare:app,redux$:true",
+      function prepareApp(_msg, meta) {
+        return __async(this, null, function* () {
+          let state = meta.custom.state;
+          let model = seneca.context.model;
+          let frame = model.app.web.frame.private;
+          let viewMap = frame.view;
+          let sectionMap = frame.nav.section;
+          state.current = {
+            view: ""
+          };
+          state.view = cmap(viewMap, {
+            name: cmap.ID,
+            active: cmap.DEL
+          });
+          state.nav = {
+            mode: "shown",
+            section: cmap(sectionMap, {
+              name: cmap.ID,
+              active: cmap.DEL,
+              item: (x) => cmap(x, {
+                active: cmap.DEL,
+                view: cmap.ID,
+                name: cmap.ID
+              })
+            })
+          };
+        });
+      }
+    ).message(
+      "aim:app,set:view,redux$:true",
+      { view: String },
+      function setView(msg, meta) {
+        return __async(this, null, function* () {
+          meta.custom.state.current.view = msg.view;
+        });
+      }
+    ).message(
+      "aim:app,area:nav,set:mode,redux$:true",
+      { mode: Exact2("shown", "hidden") },
+      function setMode(msg, meta) {
+        return __async(this, null, function* () {
+          meta.custom.state.nav.mode = msg.mode;
+        });
+      }
+    ).prepare(function() {
+      return __async(this, null, function* () {
+        yield this.post("aim:app,prepare:app");
+      });
+    });
+  }
+  function cmap(o, p) {
+    return Object.entries(o).reduce((r2, n, _2) => (_2 = Object.entries(p).reduce((s, m) => cmap.DEL === s ? s : (s[m[0]] = // transfom(val,key,current,parentkey,parent)
+    "function" === typeof m[1] ? m[1](n[1][m[0]], m[0], n[1], n[0], o) : m[1], cmap.DEL === s[m[0]] ? cmap.DEL : s), {}), cmap.DEL === _2 ? 0 : r2[n[0]] = _2, r2), {});
+  }
+  cmap.ID = (x) => x;
+  cmap.DEL = (x) => "function" === typeof x ? (y, k, c, j, p, _2) => (_2 = x(y, k, c, j, p), !_2[0] ? _2[1] : cmap.DEL) : x ? x : cmap.DEL;
+  cmap.KEY = (_x, _k, _c, j) => j;
+  function vmap(o, p) {
+    return Object.entries(o).reduce((r2, n, _2) => (_2 = Object.entries(p).reduce((s, m) => vmap.DEL === s ? s : (s[m[0]] = // transfom(val,key,current,parentkey,parent)
+    "function" === typeof m[1] ? m[1](n[1][m[0]], m[0], n[1], n[0], o) : m[1], vmap.DEL === s[m[0]] ? vmap.DEL : s), {}), vmap.DEL === _2 ? 0 : r2.push(_2), r2), []);
+  }
+  vmap.ID = (x) => x;
+  vmap.DEL = (x) => "function" === typeof x ? (y, k, c, j, p, _2) => (_2 = x(y, k, c, j, p), !_2[0] ? _2[1] : vmap.DEL) : x ? x : vmap.DEL;
+  vmap.KEY = (_x, _k, _c, j) => j;
   function _objectWithoutPropertiesLoose(source, excluded) {
     if (source == null)
       return {};
@@ -4779,7 +4850,7 @@ var __async = (__this, __arguments, generator) => {
       tag.__emotion_styles = processor(tag.__emotion_styles);
     }
   };
-  const _excluded$2g = ["values", "unit", "step"];
+  const _excluded$2f = ["values", "unit", "step"];
   const breakpointKeys = ["xs", "sm", "md", "lg", "xl"];
   const sortBreakpointsValues = (values2) => {
     const breakpointsAsArray = Object.keys(values2).map((key) => ({
@@ -4811,7 +4882,7 @@ var __async = (__this, __arguments, generator) => {
       },
       unit = "px",
       step = 5
-    } = breakpoints2, other = _objectWithoutPropertiesLoose(breakpoints2, _excluded$2g);
+    } = breakpoints2, other = _objectWithoutPropertiesLoose(breakpoints2, _excluded$2f);
     const sortedValues = sortBreakpointsValues(values2);
     const keys = Object.keys(sortedValues);
     function up(key) {
@@ -5840,14 +5911,14 @@ var __async = (__this, __arguments, generator) => {
   }
   const styleFunctionSx = unstable_createStyleFunctionSx();
   styleFunctionSx.filterProps = ["sx"];
-  const _excluded$2f = ["breakpoints", "palette", "spacing", "shape"];
+  const _excluded$2e = ["breakpoints", "palette", "spacing", "shape"];
   function createTheme$1(options = {}, ...args) {
     const {
       breakpoints: breakpointsInput = {},
       palette: paletteInput = {},
       spacing: spacingInput,
       shape: shapeInput = {}
-    } = options, other = _objectWithoutPropertiesLoose(options, _excluded$2f);
+    } = options, other = _objectWithoutPropertiesLoose(options, _excluded$2e);
     const breakpoints2 = createBreakpoints(breakpointsInput);
     const spacing2 = createSpacing(spacingInput);
     let muiTheme = deepmerge({
@@ -6038,7 +6109,7 @@ var __async = (__this, __arguments, generator) => {
     themeKey: "typography"
   });
   const typography = compose(typographyVariant, fontFamily, fontSize, fontStyle, fontWeight, letterSpacing, lineHeight, textAlign, textTransform);
-  const _excluded$2e = ["sx"];
+  const _excluded$2d = ["sx"];
   const splitProps = (props) => {
     var _props$theme$unstable, _props$theme;
     const result = {
@@ -6058,7 +6129,7 @@ var __async = (__this, __arguments, generator) => {
   function extendSxProp(props) {
     const {
       sx: inSx
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$2e);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$2d);
     const {
       systemProps,
       otherProps
@@ -6122,7 +6193,7 @@ var __async = (__this, __arguments, generator) => {
     };
   }
   "use client";
-  const _excluded$2d = ["className", "component"];
+  const _excluded$2c = ["className", "component"];
   function createBox(options = {}) {
     const {
       themeId,
@@ -6138,7 +6209,7 @@ var __async = (__this, __arguments, generator) => {
       const _extendSxProp = extendSxProp(inProps), {
         className,
         component = "div"
-      } = _extendSxProp, other = _objectWithoutPropertiesLoose(_extendSxProp, _excluded$2d);
+      } = _extendSxProp, other = _objectWithoutPropertiesLoose(_extendSxProp, _excluded$2c);
       return /* @__PURE__ */ jsxRuntimeExports.jsx(BoxRoot, _extends$2({
         as: component,
         ref,
@@ -6174,14 +6245,14 @@ var __async = (__this, __arguments, generator) => {
     sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object])
   } : void 0;
   "use client";
-  const _excluded$2c = ["variant"];
+  const _excluded$2b = ["variant"];
   function isEmpty$3(string) {
     return string.length === 0;
   }
   function propsToClassKey(props) {
     const {
       variant
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$2c);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$2b);
     let classKey = variant || "";
     Object.keys(other).sort().forEach((key) => {
       if (key === "color") {
@@ -6192,7 +6263,7 @@ var __async = (__this, __arguments, generator) => {
     });
     return classKey;
   }
-  const _excluded$2b = ["name", "slot", "skipVariantsResolver", "skipSx", "overridesResolver"];
+  const _excluded$2a = ["name", "slot", "skipVariantsResolver", "skipSx", "overridesResolver"];
   function isEmpty$2(obj) {
     return Object.keys(obj).length === 0;
   }
@@ -6322,7 +6393,7 @@ var __async = (__this, __arguments, generator) => {
         // TODO v6: remove `lowercaseFirstLetter()` in the next major release
         // For more details: https://github.com/mui/material-ui/pull/37908
         overridesResolver: overridesResolver2 = defaultOverridesResolver(lowercaseFirstLetter(componentSlot))
-      } = inputOptions, options = _objectWithoutPropertiesLoose(inputOptions, _excluded$2b);
+      } = inputOptions, options = _objectWithoutPropertiesLoose(inputOptions, _excluded$2a);
       const skipVariantsResolver = inputSkipVariantsResolver !== void 0 ? inputSkipVariantsResolver : (
         // TODO v6: remove `Root` in the next major release
         // For more details: https://github.com/mui/material-ui/pull/37908
@@ -7086,7 +7157,7 @@ try {
       setColorScheme
     });
   }
-  const _excluded$2a = ["colorSchemes", "components", "generateCssVars", "cssVarPrefix"];
+  const _excluded$29 = ["colorSchemes", "components", "generateCssVars", "cssVarPrefix"];
   const DISABLE_CSS_TRANSITION = "*{-webkit-transition:none!important;-moz-transition:none!important;-o-transition:none!important;-ms-transition:none!important;transition:none!important}";
   function createCssVarsProvider(options) {
     const {
@@ -7147,7 +7218,7 @@ try {
           css: {}
         }),
         cssVarPrefix
-      } = _ref, restThemeProp = _objectWithoutPropertiesLoose(_ref, _excluded$2a);
+      } = _ref, restThemeProp = _objectWithoutPropertiesLoose(_ref, _excluded$29);
       const allColorSchemes = Object.keys(colorSchemes);
       const defaultLightColorScheme2 = typeof defaultColorScheme === "string" ? defaultColorScheme : defaultColorScheme.light;
       const defaultDarkColorScheme2 = typeof defaultColorScheme === "string" ? defaultColorScheme : defaultColorScheme.dark;
@@ -7482,11 +7553,11 @@ try {
       varsWithDefaults
     };
   }
-  const _excluded$29 = ["colorSchemes", "components"], _excluded2$f = ["light"];
+  const _excluded$28 = ["colorSchemes", "components"], _excluded2$f = ["light"];
   function prepareCssVars(theme, parserConfig) {
     const {
       colorSchemes = {}
-    } = theme, otherTheme = _objectWithoutPropertiesLoose(theme, _excluded$29);
+    } = theme, otherTheme = _objectWithoutPropertiesLoose(theme, _excluded$28);
     const {
       vars: rootVars,
       css: rootCss,
@@ -7538,18 +7609,18 @@ try {
       generateCssVars
     };
   }
-  const _excluded$28 = ["cssVarPrefix", "shouldSkipGeneratingVar"];
+  const _excluded$27 = ["cssVarPrefix", "shouldSkipGeneratingVar"];
   function createCssVarsTheme(theme) {
     const {
       cssVarPrefix,
       shouldSkipGeneratingVar: shouldSkipGeneratingVar2
-    } = theme, otherTheme = _objectWithoutPropertiesLoose(theme, _excluded$28);
+    } = theme, otherTheme = _objectWithoutPropertiesLoose(theme, _excluded$27);
     return _extends$2({}, theme, prepareCssVars(otherTheme, {
       prefix: cssVarPrefix,
       shouldSkipGeneratingVar: shouldSkipGeneratingVar2
     }));
   }
-  const _excluded$27 = ["className", "component", "disableGutters", "fixed", "maxWidth", "classes"];
+  const _excluded$26 = ["className", "component", "disableGutters", "fixed", "maxWidth", "classes"];
   const defaultTheme$5 = createTheme$1();
   const defaultCreateStyledComponent$2 = styled$1("div", {
     name: "MuiContainer",
@@ -7566,7 +7637,7 @@ try {
     name: "MuiContainer",
     defaultTheme: defaultTheme$5
   });
-  const useUtilityClasses$1G = (ownerState, componentName) => {
+  const useUtilityClasses$1F = (ownerState, componentName) => {
     const getContainerUtilityClass2 = (slot) => {
       return generateUtilityClass(componentName, slot);
     };
@@ -7642,14 +7713,14 @@ try {
         disableGutters = false,
         fixed = false,
         maxWidth: maxWidth2 = "lg"
-      } = props, other = _objectWithoutPropertiesLoose(props, _excluded$27);
+      } = props, other = _objectWithoutPropertiesLoose(props, _excluded$26);
       const ownerState = _extends$2({}, props, {
         component,
         disableGutters,
         fixed,
         maxWidth: maxWidth2
       });
-      const classes = useUtilityClasses$1G(ownerState, componentName);
+      const classes = useUtilityClasses$1F(ownerState, componentName);
       return (
         // @ts-ignore theme is injected by the styled util
         /* @__PURE__ */ jsxRuntimeExports.jsx(ContainerRoot, _extends$2({
@@ -7981,7 +8052,7 @@ try {
     }
     return [`direction-xs-${String(direction)}`];
   };
-  const _excluded$26 = ["className", "children", "columns", "container", "component", "direction", "wrap", "spacing", "rowSpacing", "columnSpacing", "disableEqualOverflow", "unstable_level"];
+  const _excluded$25 = ["className", "children", "columns", "container", "component", "direction", "wrap", "spacing", "rowSpacing", "columnSpacing", "disableEqualOverflow", "unstable_level"];
   const defaultTheme$4 = createTheme$1();
   const defaultCreateStyledComponent$1 = styled$1("div", {
     name: "MuiGrid",
@@ -8036,7 +8107,7 @@ try {
         columnSpacing: columnSpacingProp = spacingProp,
         disableEqualOverflow: themeDisableEqualOverflow,
         unstable_level: level = 0
-      } = props, rest = _objectWithoutPropertiesLoose(props, _excluded$26);
+      } = props, rest = _objectWithoutPropertiesLoose(props, _excluded$25);
       let disableEqualOverflow = themeDisableEqualOverflow;
       if (level && themeDisableEqualOverflow !== void 0) {
         disableEqualOverflow = inProps.disableEqualOverflow;
@@ -8312,7 +8383,7 @@ try {
     ...GRID_SIZES.map((size2) => `grid-xl-${size2}`)
   ]);
   "use client";
-  const _excluded$25 = ["component", "direction", "spacing", "divider", "children", "className", "useFlexGap"];
+  const _excluded$24 = ["component", "direction", "spacing", "divider", "children", "className", "useFlexGap"];
   const defaultTheme$3 = createTheme$1();
   const defaultCreateStyledComponent = styled$1("div", {
     name: "MuiStack",
@@ -8435,7 +8506,7 @@ try {
         children,
         className,
         useFlexGap = false
-      } = props, other = _objectWithoutPropertiesLoose(props, _excluded$25);
+      } = props, other = _objectWithoutPropertiesLoose(props, _excluded$24);
       const ownerState = {
         direction,
         spacing: spacing2,
@@ -8646,7 +8717,7 @@ try {
     A400: "#00e676",
     A700: "#00c853"
   };
-  const _excluded$24 = ["mode", "contrastThreshold", "tonalOffset"];
+  const _excluded$23 = ["mode", "contrastThreshold", "tonalOffset"];
   const light = {
     // The colors used to style the text.
     text: {
@@ -8814,7 +8885,7 @@ try {
       mode = "light",
       contrastThreshold = 3,
       tonalOffset = 0.2
-    } = palette2, other = _objectWithoutPropertiesLoose(palette2, _excluded$24);
+    } = palette2, other = _objectWithoutPropertiesLoose(palette2, _excluded$23);
     const primary = palette2.primary || getDefaultPrimary(mode);
     const secondary = palette2.secondary || getDefaultSecondary(mode);
     const error = palette2.error || getDefaultError(mode);
@@ -8933,7 +9004,7 @@ const theme2 = createTheme({ palette: {
     }, modes2[mode]), other);
     return paletteOutput;
   }
-  const _excluded$23 = ["fontFamily", "fontSize", "fontWeightLight", "fontWeightRegular", "fontWeightMedium", "fontWeightBold", "htmlFontSize", "allVariants", "pxToRem"];
+  const _excluded$22 = ["fontFamily", "fontSize", "fontWeightLight", "fontWeightRegular", "fontWeightMedium", "fontWeightBold", "htmlFontSize", "allVariants", "pxToRem"];
   function round$3(value) {
     return Math.round(value * 1e5) / 1e5;
   }
@@ -8957,7 +9028,7 @@ const theme2 = createTheme({ palette: {
       // Apply the CSS properties to all the variants.
       allVariants,
       pxToRem: pxToRem2
-    } = _ref, other = _objectWithoutPropertiesLoose(_ref, _excluded$23);
+    } = _ref, other = _objectWithoutPropertiesLoose(_ref, _excluded$22);
     if (process.env.NODE_ENV !== "production") {
       if (typeof fontSize2 !== "number") {
         console.error("MUI: `fontSize` is required to be a number.");
@@ -9021,7 +9092,7 @@ const theme2 = createTheme({ palette: {
     return [`${px[0]}px ${px[1]}px ${px[2]}px ${px[3]}px rgba(0,0,0,${shadowKeyUmbraOpacity})`, `${px[4]}px ${px[5]}px ${px[6]}px ${px[7]}px rgba(0,0,0,${shadowKeyPenumbraOpacity})`, `${px[8]}px ${px[9]}px ${px[10]}px ${px[11]}px rgba(0,0,0,${shadowAmbientShadowOpacity})`].join(",");
   }
   const shadows = ["none", createShadow(0, 2, 1, -1, 0, 1, 1, 0, 0, 1, 3, 0), createShadow(0, 3, 1, -2, 0, 2, 2, 0, 0, 1, 5, 0), createShadow(0, 3, 3, -2, 0, 3, 4, 0, 0, 1, 8, 0), createShadow(0, 2, 4, -1, 0, 4, 5, 0, 0, 1, 10, 0), createShadow(0, 3, 5, -1, 0, 5, 8, 0, 0, 1, 14, 0), createShadow(0, 3, 5, -1, 0, 6, 10, 0, 0, 1, 18, 0), createShadow(0, 4, 5, -2, 0, 7, 10, 1, 0, 2, 16, 1), createShadow(0, 5, 5, -3, 0, 8, 10, 1, 0, 3, 14, 2), createShadow(0, 5, 6, -3, 0, 9, 12, 1, 0, 3, 16, 2), createShadow(0, 6, 6, -3, 0, 10, 14, 1, 0, 4, 18, 3), createShadow(0, 6, 7, -4, 0, 11, 15, 1, 0, 4, 20, 3), createShadow(0, 7, 8, -4, 0, 12, 17, 2, 0, 5, 22, 4), createShadow(0, 7, 8, -4, 0, 13, 19, 2, 0, 5, 24, 4), createShadow(0, 7, 9, -4, 0, 14, 21, 2, 0, 5, 26, 4), createShadow(0, 8, 9, -5, 0, 15, 22, 2, 0, 6, 28, 5), createShadow(0, 8, 10, -5, 0, 16, 24, 2, 0, 6, 30, 5), createShadow(0, 8, 11, -5, 0, 17, 26, 2, 0, 6, 32, 5), createShadow(0, 9, 11, -5, 0, 18, 28, 2, 0, 7, 34, 6), createShadow(0, 9, 12, -6, 0, 19, 29, 2, 0, 7, 36, 6), createShadow(0, 10, 13, -6, 0, 20, 31, 3, 0, 8, 38, 7), createShadow(0, 10, 13, -6, 0, 21, 33, 3, 0, 8, 40, 7), createShadow(0, 10, 14, -6, 0, 22, 35, 3, 0, 8, 42, 7), createShadow(0, 11, 14, -7, 0, 23, 36, 3, 0, 9, 44, 8), createShadow(0, 11, 15, -7, 0, 24, 38, 3, 0, 9, 46, 8)];
-  const _excluded$22 = ["duration", "easing", "delay"];
+  const _excluded$21 = ["duration", "easing", "delay"];
   const easing = {
     // This is the most common easing curve.
     easeInOut: "cubic-bezier(0.4, 0, 0.2, 1)",
@@ -9064,7 +9135,7 @@ const theme2 = createTheme({ palette: {
         duration: durationOption = mergedDuration.standard,
         easing: easingOption = mergedEasing.easeInOut,
         delay = 0
-      } = options, other = _objectWithoutPropertiesLoose(options, _excluded$22);
+      } = options, other = _objectWithoutPropertiesLoose(options, _excluded$21);
       if (process.env.NODE_ENV !== "production") {
         const isString2 = (value) => typeof value === "string";
         const isNumber2 = (value) => !isNaN(parseFloat(value));
@@ -9107,14 +9178,14 @@ const theme2 = createTheme({ palette: {
     snackbar: 1400,
     tooltip: 1500
   };
-  const _excluded$21 = ["breakpoints", "mixins", "spacing", "palette", "transitions", "typography", "shape"];
+  const _excluded$20 = ["breakpoints", "mixins", "spacing", "palette", "transitions", "typography", "shape"];
   function createTheme(options = {}, ...args) {
     const {
       mixins: mixinsInput = {},
       palette: paletteInput = {},
       transitions: transitionsInput = {},
       typography: typographyInput = {}
-    } = options, other = _objectWithoutPropertiesLoose(options, _excluded$21);
+    } = options, other = _objectWithoutPropertiesLoose(options, _excluded$20);
     if (options.vars) {
       throw new Error(process.env.NODE_ENV !== "production" ? `MUI: \`vars\` is a private field used for CSS variables support.
 Please use another name.` : formatMuiErrorMessage(18));
@@ -9222,8 +9293,8 @@ Please use another name.` : formatMuiErrorMessage(18));
   }
   const paperClasses = generateUtilityClasses("MuiPaper", ["root", "rounded", "outlined", "elevation", "elevation0", "elevation1", "elevation2", "elevation3", "elevation4", "elevation5", "elevation6", "elevation7", "elevation8", "elevation9", "elevation10", "elevation11", "elevation12", "elevation13", "elevation14", "elevation15", "elevation16", "elevation17", "elevation18", "elevation19", "elevation20", "elevation21", "elevation22", "elevation23", "elevation24"]);
   "use client";
-  const _excluded$20 = ["className", "component", "elevation", "square", "variant"];
-  const useUtilityClasses$1F = (ownerState) => {
+  const _excluded$1$ = ["className", "component", "elevation", "square", "variant"];
+  const useUtilityClasses$1E = (ownerState) => {
     const {
       square,
       elevation,
@@ -9276,14 +9347,14 @@ Please use another name.` : formatMuiErrorMessage(18));
       elevation = 1,
       square = false,
       variant = "elevation"
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$20);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1$);
     const ownerState = _extends$2({}, props, {
       component,
       elevation,
       square,
       variant
     });
-    const classes = useUtilityClasses$1F(ownerState);
+    const classes = useUtilityClasses$1E(ownerState);
     if (process.env.NODE_ENV !== "production") {
       const theme = useTheme();
       if (theme.shadows[elevation] === void 0) {
@@ -9355,8 +9426,8 @@ Please use another name.` : formatMuiErrorMessage(18));
   }
   const appBarClasses = generateUtilityClasses("MuiAppBar", ["root", "positionFixed", "positionAbsolute", "positionSticky", "positionStatic", "positionRelative", "colorDefault", "colorPrimary", "colorSecondary", "colorInherit", "colorTransparent", "colorError", "colorInfo", "colorSuccess", "colorWarning"]);
   "use client";
-  const _excluded$1$ = ["className", "color", "enableColorOnDark", "position"];
-  const useUtilityClasses$1E = (ownerState) => {
+  const _excluded$1_ = ["className", "color", "enableColorOnDark", "position"];
+  const useUtilityClasses$1D = (ownerState) => {
     const {
       color: color2,
       position: position2,
@@ -9457,13 +9528,13 @@ Please use another name.` : formatMuiErrorMessage(18));
       color: color2 = "primary",
       enableColorOnDark = false,
       position: position2 = "fixed"
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1$);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1_);
     const ownerState = _extends$2({}, props, {
       color: color2,
       position: position2,
       enableColorOnDark
     });
-    const classes = useUtilityClasses$1E(ownerState);
+    const classes = useUtilityClasses$1D(ownerState);
     return /* @__PURE__ */ jsxRuntimeExports.jsx(AppBarRoot, _extends$2({
       square: true,
       component: "header",
@@ -9520,8 +9591,8 @@ Please use another name.` : formatMuiErrorMessage(18));
   }
   const toolbarClasses = generateUtilityClasses("MuiToolbar", ["root", "gutters", "regular", "dense"]);
   "use client";
-  const _excluded$1_ = ["className", "component", "disableGutters", "variant"];
-  const useUtilityClasses$1D = (ownerState) => {
+  const _excluded$1Z = ["className", "component", "disableGutters", "variant"];
+  const useUtilityClasses$1C = (ownerState) => {
     const {
       classes,
       disableGutters,
@@ -9571,13 +9642,13 @@ Please use another name.` : formatMuiErrorMessage(18));
       component = "div",
       disableGutters = false,
       variant = "regular"
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1_);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1Z);
     const ownerState = _extends$2({}, props, {
       component,
       disableGutters,
       variant
     });
-    const classes = useUtilityClasses$1D(ownerState);
+    const classes = useUtilityClasses$1C(ownerState);
     return /* @__PURE__ */ jsxRuntimeExports.jsx(ToolbarRoot, _extends$2({
       as: component,
       className: clsx(classes.root, className),
@@ -9624,2413 +9695,239 @@ Please use another name.` : formatMuiErrorMessage(18));
     variant: PropTypes.oneOfType([PropTypes.oneOf(["dense", "regular"]), PropTypes.string])
   } : void 0;
   "use client";
-  "use client";
-  "use client";
-  "use client";
-  function _setPrototypeOf(o, p) {
-    _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf2(o2, p2) {
-      o2.__proto__ = p2;
-      return o2;
-    };
-    return _setPrototypeOf(o, p);
-  }
-  function _inheritsLoose(subClass, superClass) {
-    subClass.prototype = Object.create(superClass.prototype);
-    subClass.prototype.constructor = subClass;
-    _setPrototypeOf(subClass, superClass);
-  }
-  function hasClass(element, className) {
-    if (element.classList)
-      return !!className && element.classList.contains(className);
-    return (" " + (element.className.baseVal || element.className) + " ").indexOf(" " + className + " ") !== -1;
-  }
-  function addClass(element, className) {
-    if (element.classList)
-      element.classList.add(className);
-    else if (!hasClass(element, className))
-      if (typeof element.className === "string")
-        element.className = element.className + " " + className;
-      else
-        element.setAttribute("class", (element.className && element.className.baseVal || "") + " " + className);
-  }
-  function replaceClassName(origClass, classToRemove) {
-    return origClass.replace(new RegExp("(^|\\s)" + classToRemove + "(?:\\s|$)", "g"), "$1").replace(/\s+/g, " ").replace(/^\s*|\s*$/g, "");
-  }
-  function removeClass$1(element, className) {
-    if (element.classList) {
-      element.classList.remove(className);
-    } else if (typeof element.className === "string") {
-      element.className = replaceClassName(element.className, className);
-    } else {
-      element.setAttribute("class", replaceClassName(element.className && element.className.baseVal || "", className));
-    }
-  }
-  const config = {
-    disabled: false
-  };
-  var timeoutsShape = process.env.NODE_ENV !== "production" ? PropTypes.oneOfType([PropTypes.number, PropTypes.shape({
-    enter: PropTypes.number,
-    exit: PropTypes.number,
-    appear: PropTypes.number
-  }).isRequired]) : null;
-  var classNamesShape = process.env.NODE_ENV !== "production" ? PropTypes.oneOfType([PropTypes.string, PropTypes.shape({
-    enter: PropTypes.string,
-    exit: PropTypes.string,
-    active: PropTypes.string
-  }), PropTypes.shape({
-    enter: PropTypes.string,
-    enterDone: PropTypes.string,
-    enterActive: PropTypes.string,
-    exit: PropTypes.string,
-    exitDone: PropTypes.string,
-    exitActive: PropTypes.string
-  })]) : null;
-  const TransitionGroupContext = React.createContext(null);
-  var forceReflow = function forceReflow2(node2) {
-    return node2.scrollTop;
-  };
-  var UNMOUNTED = "unmounted";
-  var EXITED = "exited";
-  var ENTERING = "entering";
-  var ENTERED = "entered";
-  var EXITING = "exiting";
-  var Transition = /* @__PURE__ */ function(_React$Component) {
-    _inheritsLoose(Transition2, _React$Component);
-    function Transition2(props, context) {
-      var _this;
-      _this = _React$Component.call(this, props, context) || this;
-      var parentGroup = context;
-      var appear = parentGroup && !parentGroup.isMounting ? props.enter : props.appear;
-      var initialStatus;
-      _this.appearStatus = null;
-      if (props.in) {
-        if (appear) {
-          initialStatus = EXITED;
-          _this.appearStatus = ENTERING;
-        } else {
-          initialStatus = ENTERED;
+  const CMPNAME$4 = "BasicHeadTool";
+  console.log(CMPNAME$4, "1");
+  const { Exact: Exact$1 } = gubu_minExports.Gubu;
+  const BasicHeadToolSpecShape = gubu_minExports.Gubu({
+    name: String,
+    active: Boolean,
+    kind: String,
+    align: Exact$1("left", "right"),
+    attr: {},
+    sx: {},
+    style: {}
+  }, { prefix: CMPNAME$4 });
+  function BasicHeadTool(props) {
+    const { ctx, spec } = props;
+    const { seneca } = ctx();
+    const basicHeadToolSpec = BasicHeadToolSpecShape(spec);
+    const mode = reactRedux.useSelector((state) => state.main.nav.mode);
+    const { name, kind, attr, sx, style: style2 } = basicHeadToolSpec;
+    let tool = /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, {});
+    if ("" === kind) {
+      console.warn(CMPNAME$4, "empty-tool-kind", basicHeadToolSpec);
+    } else if ("logo" === kind) {
+      tool = /* @__PURE__ */ jsxRuntimeExports.jsxs(
+        "div",
+        {
+          style: {
+            // TODO: should come from same source as BasicSide width
+            width: "calc(var(--vxg-side-width) - 24px)",
+            display: "flex",
+            justifyContent: "space-between"
+          },
+          children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "a",
+              {
+                href: "/",
+                style: style2,
+                className: `vxg-${CMPNAME$4}-logo`,
+                children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: attr.img })
+              }
+            ),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              material.IconButton,
+              {
+                size: "large",
+                color: "inherit",
+                onClick: () => seneca.act("aim:app,area:nav,set:mode", {
+                  mode: "shown" === mode ? "hidden" : "shown"
+                }),
+                children: "shown" === mode ? /* @__PURE__ */ jsxRuntimeExports.jsx(iconsMaterial.ChevronLeft, {}) : /* @__PURE__ */ jsxRuntimeExports.jsx(iconsMaterial.ChevronRight, {})
+              }
+            )
+          ]
         }
-      } else {
-        if (props.unmountOnExit || props.mountOnEnter) {
-          initialStatus = UNMOUNTED;
-        } else {
-          initialStatus = EXITED;
-        }
-      }
-      _this.state = {
-        status: initialStatus
-      };
-      _this.nextCallback = null;
-      return _this;
-    }
-    Transition2.getDerivedStateFromProps = function getDerivedStateFromProps(_ref, prevState) {
-      var nextIn = _ref.in;
-      if (nextIn && prevState.status === UNMOUNTED) {
-        return {
-          status: EXITED
-        };
-      }
-      return null;
-    };
-    var _proto = Transition2.prototype;
-    _proto.componentDidMount = function componentDidMount() {
-      this.updateStatus(true, this.appearStatus);
-    };
-    _proto.componentDidUpdate = function componentDidUpdate(prevProps) {
-      var nextStatus = null;
-      if (prevProps !== this.props) {
-        var status = this.state.status;
-        if (this.props.in) {
-          if (status !== ENTERING && status !== ENTERED) {
-            nextStatus = ENTERING;
-          }
-        } else {
-          if (status === ENTERING || status === ENTERED) {
-            nextStatus = EXITING;
-          }
-        }
-      }
-      this.updateStatus(false, nextStatus);
-    };
-    _proto.componentWillUnmount = function componentWillUnmount() {
-      this.cancelNextCallback();
-    };
-    _proto.getTimeouts = function getTimeouts() {
-      var timeout = this.props.timeout;
-      var exit, enter, appear;
-      exit = enter = appear = timeout;
-      if (timeout != null && typeof timeout !== "number") {
-        exit = timeout.exit;
-        enter = timeout.enter;
-        appear = timeout.appear !== void 0 ? timeout.appear : enter;
-      }
-      return {
-        exit,
-        enter,
-        appear
-      };
-    };
-    _proto.updateStatus = function updateStatus(mounting, nextStatus) {
-      if (mounting === void 0) {
-        mounting = false;
-      }
-      if (nextStatus !== null) {
-        this.cancelNextCallback();
-        if (nextStatus === ENTERING) {
-          if (this.props.unmountOnExit || this.props.mountOnEnter) {
-            var node2 = this.props.nodeRef ? this.props.nodeRef.current : ReactDOM.findDOMNode(this);
-            if (node2)
-              forceReflow(node2);
-          }
-          this.performEnter(mounting);
-        } else {
-          this.performExit();
-        }
-      } else if (this.props.unmountOnExit && this.state.status === EXITED) {
-        this.setState({
-          status: UNMOUNTED
-        });
-      }
-    };
-    _proto.performEnter = function performEnter(mounting) {
-      var _this2 = this;
-      var enter = this.props.enter;
-      var appearing = this.context ? this.context.isMounting : mounting;
-      var _ref2 = this.props.nodeRef ? [appearing] : [ReactDOM.findDOMNode(this), appearing], maybeNode = _ref2[0], maybeAppearing = _ref2[1];
-      var timeouts = this.getTimeouts();
-      var enterTimeout = appearing ? timeouts.appear : timeouts.enter;
-      if (!mounting && !enter || config.disabled) {
-        this.safeSetState({
-          status: ENTERED
-        }, function() {
-          _this2.props.onEntered(maybeNode);
-        });
-        return;
-      }
-      this.props.onEnter(maybeNode, maybeAppearing);
-      this.safeSetState({
-        status: ENTERING
-      }, function() {
-        _this2.props.onEntering(maybeNode, maybeAppearing);
-        _this2.onTransitionEnd(enterTimeout, function() {
-          _this2.safeSetState({
-            status: ENTERED
-          }, function() {
-            _this2.props.onEntered(maybeNode, maybeAppearing);
-          });
-        });
-      });
-    };
-    _proto.performExit = function performExit() {
-      var _this3 = this;
-      var exit = this.props.exit;
-      var timeouts = this.getTimeouts();
-      var maybeNode = this.props.nodeRef ? void 0 : ReactDOM.findDOMNode(this);
-      if (!exit || config.disabled) {
-        this.safeSetState({
-          status: EXITED
-        }, function() {
-          _this3.props.onExited(maybeNode);
-        });
-        return;
-      }
-      this.props.onExit(maybeNode);
-      this.safeSetState({
-        status: EXITING
-      }, function() {
-        _this3.props.onExiting(maybeNode);
-        _this3.onTransitionEnd(timeouts.exit, function() {
-          _this3.safeSetState({
-            status: EXITED
-          }, function() {
-            _this3.props.onExited(maybeNode);
-          });
-        });
-      });
-    };
-    _proto.cancelNextCallback = function cancelNextCallback() {
-      if (this.nextCallback !== null) {
-        this.nextCallback.cancel();
-        this.nextCallback = null;
-      }
-    };
-    _proto.safeSetState = function safeSetState(nextState, callback) {
-      callback = this.setNextCallback(callback);
-      this.setState(nextState, callback);
-    };
-    _proto.setNextCallback = function setNextCallback(callback) {
-      var _this4 = this;
-      var active = true;
-      this.nextCallback = function(event) {
-        if (active) {
-          active = false;
-          _this4.nextCallback = null;
-          callback(event);
-        }
-      };
-      this.nextCallback.cancel = function() {
-        active = false;
-      };
-      return this.nextCallback;
-    };
-    _proto.onTransitionEnd = function onTransitionEnd(timeout, handler) {
-      this.setNextCallback(handler);
-      var node2 = this.props.nodeRef ? this.props.nodeRef.current : ReactDOM.findDOMNode(this);
-      var doesNotHaveTimeoutOrListener = timeout == null && !this.props.addEndListener;
-      if (!node2 || doesNotHaveTimeoutOrListener) {
-        setTimeout(this.nextCallback, 0);
-        return;
-      }
-      if (this.props.addEndListener) {
-        var _ref3 = this.props.nodeRef ? [this.nextCallback] : [node2, this.nextCallback], maybeNode = _ref3[0], maybeNextCallback = _ref3[1];
-        this.props.addEndListener(maybeNode, maybeNextCallback);
-      }
-      if (timeout != null) {
-        setTimeout(this.nextCallback, timeout);
-      }
-    };
-    _proto.render = function render() {
-      var status = this.state.status;
-      if (status === UNMOUNTED) {
-        return null;
-      }
-      var _this$props = this.props, children = _this$props.children, _in = _this$props.in, _mountOnEnter = _this$props.mountOnEnter, _unmountOnExit = _this$props.unmountOnExit, _appear = _this$props.appear, _enter = _this$props.enter, _exit = _this$props.exit, _timeout = _this$props.timeout, _addEndListener = _this$props.addEndListener, _onEnter = _this$props.onEnter, _onEntering = _this$props.onEntering, _onEntered = _this$props.onEntered, _onExit = _this$props.onExit, _onExiting = _this$props.onExiting, _onExited = _this$props.onExited, _nodeRef = _this$props.nodeRef, childProps = _objectWithoutPropertiesLoose(_this$props, ["children", "in", "mountOnEnter", "unmountOnExit", "appear", "enter", "exit", "timeout", "addEndListener", "onEnter", "onEntering", "onEntered", "onExit", "onExiting", "onExited", "nodeRef"]);
-      return (
-        // allows for nested Transitions
-        /* @__PURE__ */ React.createElement(TransitionGroupContext.Provider, {
-          value: null
-        }, typeof children === "function" ? children(status, childProps) : React.cloneElement(React.Children.only(children), childProps))
       );
-    };
-    return Transition2;
-  }(React.Component);
-  Transition.contextType = TransitionGroupContext;
-  Transition.propTypes = process.env.NODE_ENV !== "production" ? {
-    /**
-     * A React reference to DOM element that need to transition:
-     * https://stackoverflow.com/a/51127130/4671932
-     *
-     *   - When `nodeRef` prop is used, `node` is not passed to callback functions
-     *      (e.g. `onEnter`) because user already has direct access to the node.
-     *   - When changing `key` prop of `Transition` in a `TransitionGroup` a new
-     *     `nodeRef` need to be provided to `Transition` with changed `key` prop
-     *     (see
-     *     [test/CSSTransition-test.js](https://github.com/reactjs/react-transition-group/blob/13435f897b3ab71f6e19d724f145596f5910581c/test/CSSTransition-test.js#L362-L437)).
-     */
-    nodeRef: PropTypes.shape({
-      current: typeof Element === "undefined" ? PropTypes.any : function(propValue, key, componentName, location2, propFullName, secret) {
-        var value = propValue[key];
-        return PropTypes.instanceOf(value && "ownerDocument" in value ? value.ownerDocument.defaultView.Element : Element)(propValue, key, componentName, location2, propFullName, secret);
-      }
-    }),
-    /**
-     * A `function` child can be used instead of a React element. This function is
-     * called with the current transition status (`'entering'`, `'entered'`,
-     * `'exiting'`, `'exited'`), which can be used to apply context
-     * specific props to a component.
-     *
-     * ```jsx
-     * <Transition in={this.state.in} timeout={150}>
-     *   {state => (
-     *     <MyComponent className={`fade fade-${state}`} />
-     *   )}
-     * </Transition>
-     * ```
-     */
-    children: PropTypes.oneOfType([PropTypes.func.isRequired, PropTypes.element.isRequired]).isRequired,
-    /**
-     * Show the component; triggers the enter or exit states
-     */
-    in: PropTypes.bool,
-    /**
-     * By default the child component is mounted immediately along with
-     * the parent `Transition` component. If you want to "lazy mount" the component on the
-     * first `in={true}` you can set `mountOnEnter`. After the first enter transition the component will stay
-     * mounted, even on "exited", unless you also specify `unmountOnExit`.
-     */
-    mountOnEnter: PropTypes.bool,
-    /**
-     * By default the child component stays mounted after it reaches the `'exited'` state.
-     * Set `unmountOnExit` if you'd prefer to unmount the component after it finishes exiting.
-     */
-    unmountOnExit: PropTypes.bool,
-    /**
-     * By default the child component does not perform the enter transition when
-     * it first mounts, regardless of the value of `in`. If you want this
-     * behavior, set both `appear` and `in` to `true`.
-     *
-     * > **Note**: there are no special appear states like `appearing`/`appeared`, this prop
-     * > only adds an additional enter transition. However, in the
-     * > `<CSSTransition>` component that first enter transition does result in
-     * > additional `.appear-*` classes, that way you can choose to style it
-     * > differently.
-     */
-    appear: PropTypes.bool,
-    /**
-     * Enable or disable enter transitions.
-     */
-    enter: PropTypes.bool,
-    /**
-     * Enable or disable exit transitions.
-     */
-    exit: PropTypes.bool,
-    /**
-     * The duration of the transition, in milliseconds.
-     * Required unless `addEndListener` is provided.
-     *
-     * You may specify a single timeout for all transitions:
-     *
-     * ```jsx
-     * timeout={500}
-     * ```
-     *
-     * or individually:
-     *
-     * ```jsx
-     * timeout={{
-     *  appear: 500,
-     *  enter: 300,
-     *  exit: 500,
-     * }}
-     * ```
-     *
-     * - `appear` defaults to the value of `enter`
-     * - `enter` defaults to `0`
-     * - `exit` defaults to `0`
-     *
-     * @type {number | { enter?: number, exit?: number, appear?: number }}
-     */
-    timeout: function timeout(props) {
-      var pt = timeoutsShape;
-      if (!props.addEndListener)
-        pt = pt.isRequired;
-      for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-        args[_key - 1] = arguments[_key];
-      }
-      return pt.apply(void 0, [props].concat(args));
-    },
-    /**
-     * Add a custom transition end trigger. Called with the transitioning
-     * DOM node and a `done` callback. Allows for more fine grained transition end
-     * logic. Timeouts are still used as a fallback if provided.
-     *
-     * **Note**: when `nodeRef` prop is passed, `node` is not passed.
-     *
-     * ```jsx
-     * addEndListener={(node, done) => {
-     *   // use the css transitionend event to mark the finish of a transition
-     *   node.addEventListener('transitionend', done, false);
-     * }}
-     * ```
-     */
-    addEndListener: PropTypes.func,
-    /**
-     * Callback fired before the "entering" status is applied. An extra parameter
-     * `isAppearing` is supplied to indicate if the enter stage is occurring on the initial mount
-     *
-     * **Note**: when `nodeRef` prop is passed, `node` is not passed.
-     *
-     * @type Function(node: HtmlElement, isAppearing: bool) -> void
-     */
-    onEnter: PropTypes.func,
-    /**
-     * Callback fired after the "entering" status is applied. An extra parameter
-     * `isAppearing` is supplied to indicate if the enter stage is occurring on the initial mount
-     *
-     * **Note**: when `nodeRef` prop is passed, `node` is not passed.
-     *
-     * @type Function(node: HtmlElement, isAppearing: bool)
-     */
-    onEntering: PropTypes.func,
-    /**
-     * Callback fired after the "entered" status is applied. An extra parameter
-     * `isAppearing` is supplied to indicate if the enter stage is occurring on the initial mount
-     *
-     * **Note**: when `nodeRef` prop is passed, `node` is not passed.
-     *
-     * @type Function(node: HtmlElement, isAppearing: bool) -> void
-     */
-    onEntered: PropTypes.func,
-    /**
-     * Callback fired before the "exiting" status is applied.
-     *
-     * **Note**: when `nodeRef` prop is passed, `node` is not passed.
-     *
-     * @type Function(node: HtmlElement) -> void
-     */
-    onExit: PropTypes.func,
-    /**
-     * Callback fired after the "exiting" status is applied.
-     *
-     * **Note**: when `nodeRef` prop is passed, `node` is not passed.
-     *
-     * @type Function(node: HtmlElement) -> void
-     */
-    onExiting: PropTypes.func,
-    /**
-     * Callback fired after the "exited" status is applied.
-     *
-     * **Note**: when `nodeRef` prop is passed, `node` is not passed
-     *
-     * @type Function(node: HtmlElement) -> void
-     */
-    onExited: PropTypes.func
-  } : {};
-  function noop$2() {
-  }
-  Transition.defaultProps = {
-    in: false,
-    mountOnEnter: false,
-    unmountOnExit: false,
-    appear: false,
-    enter: true,
-    exit: true,
-    onEnter: noop$2,
-    onEntering: noop$2,
-    onEntered: noop$2,
-    onExit: noop$2,
-    onExiting: noop$2,
-    onExited: noop$2
-  };
-  Transition.UNMOUNTED = UNMOUNTED;
-  Transition.EXITED = EXITED;
-  Transition.ENTERING = ENTERING;
-  Transition.ENTERED = ENTERED;
-  Transition.EXITING = EXITING;
-  var _addClass = function addClass$1(node2, classes) {
-    return node2 && classes && classes.split(" ").forEach(function(c) {
-      return addClass(node2, c);
-    });
-  };
-  var removeClass = function removeClass2(node2, classes) {
-    return node2 && classes && classes.split(" ").forEach(function(c) {
-      return removeClass$1(node2, c);
-    });
-  };
-  var CSSTransition = /* @__PURE__ */ function(_React$Component) {
-    _inheritsLoose(CSSTransition2, _React$Component);
-    function CSSTransition2() {
-      var _this;
-      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
-      }
-      _this = _React$Component.call.apply(_React$Component, [this].concat(args)) || this;
-      _this.appliedClasses = {
-        appear: {},
-        enter: {},
-        exit: {}
-      };
-      _this.onEnter = function(maybeNode, maybeAppearing) {
-        var _this$resolveArgument = _this.resolveArguments(maybeNode, maybeAppearing), node2 = _this$resolveArgument[0], appearing = _this$resolveArgument[1];
-        _this.removeClasses(node2, "exit");
-        _this.addClass(node2, appearing ? "appear" : "enter", "base");
-        if (_this.props.onEnter) {
-          _this.props.onEnter(maybeNode, maybeAppearing);
+    } else if ("add" === kind) {
+      tool = /* @__PURE__ */ jsxRuntimeExports.jsx(
+        material.Button,
+        {
+          color: "inherit",
+          onClick: () => seneca.act("aim:app,part:head,tool:add,on:click"),
+          children: "Add"
         }
-      };
-      _this.onEntering = function(maybeNode, maybeAppearing) {
-        var _this$resolveArgument2 = _this.resolveArguments(maybeNode, maybeAppearing), node2 = _this$resolveArgument2[0], appearing = _this$resolveArgument2[1];
-        var type = appearing ? "appear" : "enter";
-        _this.addClass(node2, type, "active");
-        if (_this.props.onEntering) {
-          _this.props.onEntering(maybeNode, maybeAppearing);
-        }
-      };
-      _this.onEntered = function(maybeNode, maybeAppearing) {
-        var _this$resolveArgument3 = _this.resolveArguments(maybeNode, maybeAppearing), node2 = _this$resolveArgument3[0], appearing = _this$resolveArgument3[1];
-        var type = appearing ? "appear" : "enter";
-        _this.removeClasses(node2, type);
-        _this.addClass(node2, type, "done");
-        if (_this.props.onEntered) {
-          _this.props.onEntered(maybeNode, maybeAppearing);
-        }
-      };
-      _this.onExit = function(maybeNode) {
-        var _this$resolveArgument4 = _this.resolveArguments(maybeNode), node2 = _this$resolveArgument4[0];
-        _this.removeClasses(node2, "appear");
-        _this.removeClasses(node2, "enter");
-        _this.addClass(node2, "exit", "base");
-        if (_this.props.onExit) {
-          _this.props.onExit(maybeNode);
-        }
-      };
-      _this.onExiting = function(maybeNode) {
-        var _this$resolveArgument5 = _this.resolveArguments(maybeNode), node2 = _this$resolveArgument5[0];
-        _this.addClass(node2, "exit", "active");
-        if (_this.props.onExiting) {
-          _this.props.onExiting(maybeNode);
-        }
-      };
-      _this.onExited = function(maybeNode) {
-        var _this$resolveArgument6 = _this.resolveArguments(maybeNode), node2 = _this$resolveArgument6[0];
-        _this.removeClasses(node2, "exit");
-        _this.addClass(node2, "exit", "done");
-        if (_this.props.onExited) {
-          _this.props.onExited(maybeNode);
-        }
-      };
-      _this.resolveArguments = function(maybeNode, maybeAppearing) {
-        return _this.props.nodeRef ? [_this.props.nodeRef.current, maybeNode] : [maybeNode, maybeAppearing];
-      };
-      _this.getClassNames = function(type) {
-        var classNames = _this.props.classNames;
-        var isStringClassNames = typeof classNames === "string";
-        var prefix2 = isStringClassNames && classNames ? classNames + "-" : "";
-        var baseClassName = isStringClassNames ? "" + prefix2 + type : classNames[type];
-        var activeClassName = isStringClassNames ? baseClassName + "-active" : classNames[type + "Active"];
-        var doneClassName = isStringClassNames ? baseClassName + "-done" : classNames[type + "Done"];
-        return {
-          baseClassName,
-          activeClassName,
-          doneClassName
-        };
-      };
-      return _this;
-    }
-    var _proto = CSSTransition2.prototype;
-    _proto.addClass = function addClass2(node2, type, phase) {
-      var className = this.getClassNames(type)[phase + "ClassName"];
-      var _this$getClassNames = this.getClassNames("enter"), doneClassName = _this$getClassNames.doneClassName;
-      if (type === "appear" && phase === "done" && doneClassName) {
-        className += " " + doneClassName;
-      }
-      if (phase === "active") {
-        if (node2)
-          forceReflow(node2);
-      }
-      if (className) {
-        this.appliedClasses[type][phase] = className;
-        _addClass(node2, className);
-      }
-    };
-    _proto.removeClasses = function removeClasses(node2, type) {
-      var _this$appliedClasses$ = this.appliedClasses[type], baseClassName = _this$appliedClasses$.base, activeClassName = _this$appliedClasses$.active, doneClassName = _this$appliedClasses$.done;
-      this.appliedClasses[type] = {};
-      if (baseClassName) {
-        removeClass(node2, baseClassName);
-      }
-      if (activeClassName) {
-        removeClass(node2, activeClassName);
-      }
-      if (doneClassName) {
-        removeClass(node2, doneClassName);
-      }
-    };
-    _proto.render = function render() {
-      var _this$props = this.props, _2 = _this$props.classNames, props = _objectWithoutPropertiesLoose(_this$props, ["classNames"]);
-      return /* @__PURE__ */ React.createElement(Transition, _extends$2({}, props, {
-        onEnter: this.onEnter,
-        onEntered: this.onEntered,
-        onEntering: this.onEntering,
-        onExit: this.onExit,
-        onExiting: this.onExiting,
-        onExited: this.onExited
-      }));
-    };
-    return CSSTransition2;
-  }(React.Component);
-  CSSTransition.defaultProps = {
-    classNames: ""
-  };
-  CSSTransition.propTypes = process.env.NODE_ENV !== "production" ? _extends$2({}, Transition.propTypes, {
-    /**
-     * The animation classNames applied to the component as it appears, enters,
-     * exits or has finished the transition. A single name can be provided, which
-     * will be suffixed for each stage, e.g. `classNames="fade"` applies:
-     *
-     * - `fade-appear`, `fade-appear-active`, `fade-appear-done`
-     * - `fade-enter`, `fade-enter-active`, `fade-enter-done`
-     * - `fade-exit`, `fade-exit-active`, `fade-exit-done`
-     *
-     * A few details to note about how these classes are applied:
-     *
-     * 1. They are _joined_ with the ones that are already defined on the child
-     *    component, so if you want to add some base styles, you can use
-     *    `className` without worrying that it will be overridden.
-     *
-     * 2. If the transition component mounts with `in={false}`, no classes are
-     *    applied yet. You might be expecting `*-exit-done`, but if you think
-     *    about it, a component cannot finish exiting if it hasn't entered yet.
-     *
-     * 2. `fade-appear-done` and `fade-enter-done` will _both_ be applied. This
-     *    allows you to define different behavior for when appearing is done and
-     *    when regular entering is done, using selectors like
-     *    `.fade-enter-done:not(.fade-appear-done)`. For example, you could apply
-     *    an epic entrance animation when element first appears in the DOM using
-     *    [Animate.css](https://daneden.github.io/animate.css/). Otherwise you can
-     *    simply use `fade-enter-done` for defining both cases.
-     *
-     * Each individual classNames can also be specified independently like:
-     *
-     * ```js
-     * classNames={{
-     *  appear: 'my-appear',
-     *  appearActive: 'my-active-appear',
-     *  appearDone: 'my-done-appear',
-     *  enter: 'my-enter',
-     *  enterActive: 'my-active-enter',
-     *  enterDone: 'my-done-enter',
-     *  exit: 'my-exit',
-     *  exitActive: 'my-active-exit',
-     *  exitDone: 'my-done-exit',
-     * }}
-     * ```
-     *
-     * If you want to set these classes using CSS Modules:
-     *
-     * ```js
-     * import styles from './styles.css';
-     * ```
-     *
-     * you might want to use camelCase in your CSS file, that way could simply
-     * spread them instead of listing them one by one:
-     *
-     * ```js
-     * classNames={{ ...styles }}
-     * ```
-     *
-     * @type {string | {
-     *  appear?: string,
-     *  appearActive?: string,
-     *  appearDone?: string,
-     *  enter?: string,
-     *  enterActive?: string,
-     *  enterDone?: string,
-     *  exit?: string,
-     *  exitActive?: string,
-     *  exitDone?: string,
-     * }}
-     */
-    classNames: classNamesShape,
-    /**
-     * A `<Transition>` callback fired immediately after the 'enter' or 'appear' class is
-     * applied.
-     *
-     * **Note**: when `nodeRef` prop is passed, `node` is not passed.
-     *
-     * @type Function(node: HtmlElement, isAppearing: bool)
-     */
-    onEnter: PropTypes.func,
-    /**
-     * A `<Transition>` callback fired immediately after the 'enter-active' or
-     * 'appear-active' class is applied.
-     *
-     * **Note**: when `nodeRef` prop is passed, `node` is not passed.
-     *
-     * @type Function(node: HtmlElement, isAppearing: bool)
-     */
-    onEntering: PropTypes.func,
-    /**
-     * A `<Transition>` callback fired immediately after the 'enter' or
-     * 'appear' classes are **removed** and the `done` class is added to the DOM node.
-     *
-     * **Note**: when `nodeRef` prop is passed, `node` is not passed.
-     *
-     * @type Function(node: HtmlElement, isAppearing: bool)
-     */
-    onEntered: PropTypes.func,
-    /**
-     * A `<Transition>` callback fired immediately after the 'exit' class is
-     * applied.
-     *
-     * **Note**: when `nodeRef` prop is passed, `node` is not passed
-     *
-     * @type Function(node: HtmlElement)
-     */
-    onExit: PropTypes.func,
-    /**
-     * A `<Transition>` callback fired immediately after the 'exit-active' is applied.
-     *
-     * **Note**: when `nodeRef` prop is passed, `node` is not passed
-     *
-     * @type Function(node: HtmlElement)
-     */
-    onExiting: PropTypes.func,
-    /**
-     * A `<Transition>` callback fired immediately after the 'exit' classes
-     * are **removed** and the `exit-done` class is added to the DOM node.
-     *
-     * **Note**: when `nodeRef` prop is passed, `node` is not passed
-     *
-     * @type Function(node: HtmlElement)
-     */
-    onExited: PropTypes.func
-  }) : {};
-  function _assertThisInitialized(self2) {
-    if (self2 === void 0) {
-      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-    }
-    return self2;
-  }
-  function getChildMapping(children, mapFn) {
-    var mapper = function mapper2(child) {
-      return mapFn && React.isValidElement(child) ? mapFn(child) : child;
-    };
-    var result = /* @__PURE__ */ Object.create(null);
-    if (children)
-      React.Children.map(children, function(c) {
-        return c;
-      }).forEach(function(child) {
-        result[child.key] = mapper(child);
-      });
-    return result;
-  }
-  function mergeChildMappings(prev2, next2) {
-    prev2 = prev2 || {};
-    next2 = next2 || {};
-    function getValueForKey(key) {
-      return key in next2 ? next2[key] : prev2[key];
-    }
-    var nextKeysPending = /* @__PURE__ */ Object.create(null);
-    var pendingKeys = [];
-    for (var prevKey in prev2) {
-      if (prevKey in next2) {
-        if (pendingKeys.length) {
-          nextKeysPending[prevKey] = pendingKeys;
-          pendingKeys = [];
-        }
-      } else {
-        pendingKeys.push(prevKey);
-      }
-    }
-    var i;
-    var childMapping = {};
-    for (var nextKey in next2) {
-      if (nextKeysPending[nextKey]) {
-        for (i = 0; i < nextKeysPending[nextKey].length; i++) {
-          var pendingNextKey = nextKeysPending[nextKey][i];
-          childMapping[nextKeysPending[nextKey][i]] = getValueForKey(pendingNextKey);
-        }
-      }
-      childMapping[nextKey] = getValueForKey(nextKey);
-    }
-    for (i = 0; i < pendingKeys.length; i++) {
-      childMapping[pendingKeys[i]] = getValueForKey(pendingKeys[i]);
-    }
-    return childMapping;
-  }
-  function getProp(child, prop, props) {
-    return props[prop] != null ? props[prop] : child.props[prop];
-  }
-  function getInitialChildMapping(props, onExited) {
-    return getChildMapping(props.children, function(child) {
-      return React.cloneElement(child, {
-        onExited: onExited.bind(null, child),
-        in: true,
-        appear: getProp(child, "appear", props),
-        enter: getProp(child, "enter", props),
-        exit: getProp(child, "exit", props)
-      });
-    });
-  }
-  function getNextChildMapping(nextProps, prevChildMapping, onExited) {
-    var nextChildMapping = getChildMapping(nextProps.children);
-    var children = mergeChildMappings(prevChildMapping, nextChildMapping);
-    Object.keys(children).forEach(function(key) {
-      var child = children[key];
-      if (!React.isValidElement(child))
-        return;
-      var hasPrev = key in prevChildMapping;
-      var hasNext = key in nextChildMapping;
-      var prevChild = prevChildMapping[key];
-      var isLeaving = React.isValidElement(prevChild) && !prevChild.props.in;
-      if (hasNext && (!hasPrev || isLeaving)) {
-        children[key] = React.cloneElement(child, {
-          onExited: onExited.bind(null, child),
-          in: true,
-          exit: getProp(child, "exit", nextProps),
-          enter: getProp(child, "enter", nextProps)
-        });
-      } else if (!hasNext && hasPrev && !isLeaving) {
-        children[key] = React.cloneElement(child, {
-          in: false
-        });
-      } else if (hasNext && hasPrev && React.isValidElement(prevChild)) {
-        children[key] = React.cloneElement(child, {
-          onExited: onExited.bind(null, child),
-          in: prevChild.props.in,
-          exit: getProp(child, "exit", nextProps),
-          enter: getProp(child, "enter", nextProps)
-        });
-      }
-    });
-    return children;
-  }
-  var values = Object.values || function(obj) {
-    return Object.keys(obj).map(function(k) {
-      return obj[k];
-    });
-  };
-  var defaultProps = {
-    component: "div",
-    childFactory: function childFactory(child) {
-      return child;
-    }
-  };
-  var TransitionGroup = /* @__PURE__ */ function(_React$Component) {
-    _inheritsLoose(TransitionGroup2, _React$Component);
-    function TransitionGroup2(props, context) {
-      var _this;
-      _this = _React$Component.call(this, props, context) || this;
-      var handleExited = _this.handleExited.bind(_assertThisInitialized(_this));
-      _this.state = {
-        contextValue: {
-          isMounting: true
-        },
-        handleExited,
-        firstRender: true
-      };
-      return _this;
-    }
-    var _proto = TransitionGroup2.prototype;
-    _proto.componentDidMount = function componentDidMount() {
-      this.mounted = true;
-      this.setState({
-        contextValue: {
-          isMounting: false
-        }
-      });
-    };
-    _proto.componentWillUnmount = function componentWillUnmount() {
-      this.mounted = false;
-    };
-    TransitionGroup2.getDerivedStateFromProps = function getDerivedStateFromProps(nextProps, _ref) {
-      var prevChildMapping = _ref.children, handleExited = _ref.handleExited, firstRender = _ref.firstRender;
-      return {
-        children: firstRender ? getInitialChildMapping(nextProps, handleExited) : getNextChildMapping(nextProps, prevChildMapping, handleExited),
-        firstRender: false
-      };
-    };
-    _proto.handleExited = function handleExited(child, node2) {
-      var currentChildMapping = getChildMapping(this.props.children);
-      if (child.key in currentChildMapping)
-        return;
-      if (child.props.onExited) {
-        child.props.onExited(node2);
-      }
-      if (this.mounted) {
-        this.setState(function(state) {
-          var children = _extends$2({}, state.children);
-          delete children[child.key];
-          return {
-            children
-          };
-        });
-      }
-    };
-    _proto.render = function render() {
-      var _this$props = this.props, Component = _this$props.component, childFactory = _this$props.childFactory, props = _objectWithoutPropertiesLoose(_this$props, ["component", "childFactory"]);
-      var contextValue = this.state.contextValue;
-      var children = values(this.state.children).map(childFactory);
-      delete props.appear;
-      delete props.enter;
-      delete props.exit;
-      if (Component === null) {
-        return /* @__PURE__ */ React.createElement(TransitionGroupContext.Provider, {
-          value: contextValue
-        }, children);
-      }
-      return /* @__PURE__ */ React.createElement(TransitionGroupContext.Provider, {
-        value: contextValue
-      }, /* @__PURE__ */ React.createElement(Component, props, children));
-    };
-    return TransitionGroup2;
-  }(React.Component);
-  TransitionGroup.propTypes = process.env.NODE_ENV !== "production" ? {
-    /**
-     * `<TransitionGroup>` renders a `<div>` by default. You can change this
-     * behavior by providing a `component` prop.
-     * If you use React v16+ and would like to avoid a wrapping `<div>` element
-     * you can pass in `component={null}`. This is useful if the wrapping div
-     * borks your css styles.
-     */
-    component: PropTypes.any,
-    /**
-     * A set of `<Transition>` components, that are toggled `in` and out as they
-     * leave. the `<TransitionGroup>` will inject specific transition props, so
-     * remember to spread them through if you are wrapping the `<Transition>` as
-     * with our `<Fade>` example.
-     *
-     * While this component is meant for multiple `Transition` or `CSSTransition`
-     * children, sometimes you may want to have a single transition child with
-     * content that you want to be transitioned out and in when you change it
-     * (e.g. routes, images etc.) In that case you can change the `key` prop of
-     * the transition child as you change its content, this will cause
-     * `TransitionGroup` to transition the child out and back in.
-     */
-    children: PropTypes.node,
-    /**
-     * A convenience prop that enables or disables appear animations
-     * for all children. Note that specifying this will override any defaults set
-     * on individual children Transitions.
-     */
-    appear: PropTypes.bool,
-    /**
-     * A convenience prop that enables or disables enter animations
-     * for all children. Note that specifying this will override any defaults set
-     * on individual children Transitions.
-     */
-    enter: PropTypes.bool,
-    /**
-     * A convenience prop that enables or disables exit animations
-     * for all children. Note that specifying this will override any defaults set
-     * on individual children Transitions.
-     */
-    exit: PropTypes.bool,
-    /**
-     * You may need to apply reactive updates to a child as it is exiting.
-     * This is generally done by using `cloneElement` however in the case of an exiting
-     * child the element has already been removed and not accessible to the consumer.
-     *
-     * If you do need to update a child as it leaves you can provide a `childFactory`
-     * to wrap every child, even the ones that are leaving.
-     *
-     * @type Function(child: ReactElement) -> ReactElement
-     */
-    childFactory: PropTypes.func
-  } : {};
-  TransitionGroup.defaultProps = defaultProps;
-  var ReplaceTransition = /* @__PURE__ */ function(_React$Component) {
-    _inheritsLoose(ReplaceTransition2, _React$Component);
-    function ReplaceTransition2() {
-      var _this;
-      for (var _len = arguments.length, _args = new Array(_len), _key = 0; _key < _len; _key++) {
-        _args[_key] = arguments[_key];
-      }
-      _this = _React$Component.call.apply(_React$Component, [this].concat(_args)) || this;
-      _this.handleEnter = function() {
-        for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-          args[_key2] = arguments[_key2];
-        }
-        return _this.handleLifecycle("onEnter", 0, args);
-      };
-      _this.handleEntering = function() {
-        for (var _len3 = arguments.length, args = new Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
-          args[_key3] = arguments[_key3];
-        }
-        return _this.handleLifecycle("onEntering", 0, args);
-      };
-      _this.handleEntered = function() {
-        for (var _len4 = arguments.length, args = new Array(_len4), _key4 = 0; _key4 < _len4; _key4++) {
-          args[_key4] = arguments[_key4];
-        }
-        return _this.handleLifecycle("onEntered", 0, args);
-      };
-      _this.handleExit = function() {
-        for (var _len5 = arguments.length, args = new Array(_len5), _key5 = 0; _key5 < _len5; _key5++) {
-          args[_key5] = arguments[_key5];
-        }
-        return _this.handleLifecycle("onExit", 1, args);
-      };
-      _this.handleExiting = function() {
-        for (var _len6 = arguments.length, args = new Array(_len6), _key6 = 0; _key6 < _len6; _key6++) {
-          args[_key6] = arguments[_key6];
-        }
-        return _this.handleLifecycle("onExiting", 1, args);
-      };
-      _this.handleExited = function() {
-        for (var _len7 = arguments.length, args = new Array(_len7), _key7 = 0; _key7 < _len7; _key7++) {
-          args[_key7] = arguments[_key7];
-        }
-        return _this.handleLifecycle("onExited", 1, args);
-      };
-      return _this;
-    }
-    var _proto = ReplaceTransition2.prototype;
-    _proto.handleLifecycle = function handleLifecycle(handler, idx, originalArgs) {
-      var _child$props;
-      var children = this.props.children;
-      var child = React.Children.toArray(children)[idx];
-      if (child.props[handler])
-        (_child$props = child.props)[handler].apply(_child$props, originalArgs);
-      if (this.props[handler]) {
-        var maybeNode = child.props.nodeRef ? void 0 : ReactDOM.findDOMNode(this);
-        this.props[handler](maybeNode);
-      }
-    };
-    _proto.render = function render() {
-      var _this$props = this.props, children = _this$props.children, inProp = _this$props.in, props = _objectWithoutPropertiesLoose(_this$props, ["children", "in"]);
-      var _React$Children$toArr = React.Children.toArray(children), first = _React$Children$toArr[0], second = _React$Children$toArr[1];
-      delete props.onEnter;
-      delete props.onEntering;
-      delete props.onEntered;
-      delete props.onExit;
-      delete props.onExiting;
-      delete props.onExited;
-      return /* @__PURE__ */ React.createElement(TransitionGroup, props, inProp ? React.cloneElement(first, {
-        key: "first",
-        onEnter: this.handleEnter,
-        onEntering: this.handleEntering,
-        onEntered: this.handleEntered
-      }) : React.cloneElement(second, {
-        key: "second",
-        onEnter: this.handleExit,
-        onEntering: this.handleExiting,
-        onEntered: this.handleExited
-      }));
-    };
-    return ReplaceTransition2;
-  }(React.Component);
-  ReplaceTransition.propTypes = process.env.NODE_ENV !== "production" ? {
-    in: PropTypes.bool.isRequired,
-    children: function children(props, propName) {
-      if (React.Children.count(props[propName]) !== 2)
-        return new Error('"' + propName + '" must be exactly two transition components.');
-      return null;
-    }
-  } : {};
-  var _leaveRenders, _enterRenders;
-  function areChildrenDifferent(oldChildren, newChildren) {
-    if (oldChildren === newChildren)
-      return false;
-    if (React.isValidElement(oldChildren) && React.isValidElement(newChildren) && oldChildren.key != null && oldChildren.key === newChildren.key) {
-      return false;
-    }
-    return true;
-  }
-  var modes = {
-    out: "out-in",
-    in: "in-out"
-  };
-  var callHook = function callHook2(element, name, cb) {
-    return function() {
-      var _element$props;
-      element.props[name] && (_element$props = element.props)[name].apply(_element$props, arguments);
-      cb();
-    };
-  };
-  var leaveRenders = (_leaveRenders = {}, _leaveRenders[modes.out] = function(_ref) {
-    var current = _ref.current, changeState = _ref.changeState;
-    return React.cloneElement(current, {
-      in: false,
-      onExited: callHook(current, "onExited", function() {
-        changeState(ENTERING, null);
-      })
-    });
-  }, _leaveRenders[modes.in] = function(_ref2) {
-    var current = _ref2.current, changeState = _ref2.changeState, children = _ref2.children;
-    return [current, React.cloneElement(children, {
-      in: true,
-      onEntered: callHook(children, "onEntered", function() {
-        changeState(ENTERING);
-      })
-    })];
-  }, _leaveRenders);
-  var enterRenders = (_enterRenders = {}, _enterRenders[modes.out] = function(_ref3) {
-    var children = _ref3.children, changeState = _ref3.changeState;
-    return React.cloneElement(children, {
-      in: true,
-      onEntered: callHook(children, "onEntered", function() {
-        changeState(ENTERED, React.cloneElement(children, {
-          in: true
-        }));
-      })
-    });
-  }, _enterRenders[modes.in] = function(_ref4) {
-    var current = _ref4.current, children = _ref4.children, changeState = _ref4.changeState;
-    return [React.cloneElement(current, {
-      in: false,
-      onExited: callHook(current, "onExited", function() {
-        changeState(ENTERED, React.cloneElement(children, {
-          in: true
-        }));
-      })
-    }), React.cloneElement(children, {
-      in: true
-    })];
-  }, _enterRenders);
-  var SwitchTransition = /* @__PURE__ */ function(_React$Component) {
-    _inheritsLoose(SwitchTransition2, _React$Component);
-    function SwitchTransition2() {
-      var _this;
-      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
-      }
-      _this = _React$Component.call.apply(_React$Component, [this].concat(args)) || this;
-      _this.state = {
-        status: ENTERED,
-        current: null
-      };
-      _this.appeared = false;
-      _this.changeState = function(status, current) {
-        if (current === void 0) {
-          current = _this.state.current;
-        }
-        _this.setState({
-          status,
-          current
-        });
-      };
-      return _this;
-    }
-    var _proto = SwitchTransition2.prototype;
-    _proto.componentDidMount = function componentDidMount() {
-      this.appeared = true;
-    };
-    SwitchTransition2.getDerivedStateFromProps = function getDerivedStateFromProps(props, state) {
-      if (props.children == null) {
-        return {
-          current: null
-        };
-      }
-      if (state.status === ENTERING && props.mode === modes.in) {
-        return {
-          status: ENTERING
-        };
-      }
-      if (state.current && areChildrenDifferent(state.current, props.children)) {
-        return {
-          status: EXITING
-        };
-      }
-      return {
-        current: React.cloneElement(props.children, {
-          in: true
-        })
-      };
-    };
-    _proto.render = function render() {
-      var _this$props = this.props, children = _this$props.children, mode = _this$props.mode, _this$state = this.state, status = _this$state.status, current = _this$state.current;
-      var data = {
-        children,
-        current,
-        changeState: this.changeState,
-        status
-      };
-      var component;
-      switch (status) {
-        case ENTERING:
-          component = enterRenders[mode](data);
-          break;
-        case EXITING:
-          component = leaveRenders[mode](data);
-          break;
-        case ENTERED:
-          component = current;
-      }
-      return /* @__PURE__ */ React.createElement(TransitionGroupContext.Provider, {
-        value: {
-          isMounting: !this.appeared
-        }
-      }, component);
-    };
-    return SwitchTransition2;
-  }(React.Component);
-  SwitchTransition.propTypes = process.env.NODE_ENV !== "production" ? {
-    /**
-     * Transition modes.
-     * `out-in`: Current element transitions out first, then when complete, the new element transitions in.
-     * `in-out`: New element transitions in first, then when complete, the current element transitions out.
-     *
-     * @type {'out-in'|'in-out'}
-     */
-    mode: PropTypes.oneOf([modes.in, modes.out]),
-    /**
-     * Any `Transition` or `CSSTransition` component.
-     */
-    children: PropTypes.oneOfType([PropTypes.element.isRequired])
-  } : {};
-  SwitchTransition.defaultProps = {
-    mode: modes.out
-  };
-  "use client";
-  function Ripple(props) {
-    const {
-      className,
-      classes,
-      pulsate = false,
-      rippleX,
-      rippleY,
-      rippleSize,
-      in: inProp,
-      onExited,
-      timeout
-    } = props;
-    const [leaving, setLeaving] = React__namespace.useState(false);
-    const rippleClassName = clsx(className, classes.ripple, classes.rippleVisible, pulsate && classes.ripplePulsate);
-    const rippleStyles = {
-      width: rippleSize,
-      height: rippleSize,
-      top: -(rippleSize / 2) + rippleY,
-      left: -(rippleSize / 2) + rippleX
-    };
-    const childClassName = clsx(classes.child, leaving && classes.childLeaving, pulsate && classes.childPulsate);
-    if (!inProp && !leaving) {
-      setLeaving(true);
-    }
-    React__namespace.useEffect(() => {
-      if (!inProp && onExited != null) {
-        const timeoutId = setTimeout(onExited, timeout);
-        return () => {
-          clearTimeout(timeoutId);
-        };
-      }
-      return void 0;
-    }, [onExited, inProp, timeout]);
-    return /* @__PURE__ */ jsxRuntimeExports.jsx("span", {
-      className: rippleClassName,
-      style: rippleStyles,
-      children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", {
-        className: childClassName
-      })
-    });
-  }
-  process.env.NODE_ENV !== "production" ? Ripple.propTypes = {
-    /**
-     * Override or extend the styles applied to the component.
-     * See [CSS API](#css) below for more details.
-     */
-    classes: PropTypes.object.isRequired,
-    className: PropTypes.string,
-    /**
-     * @ignore - injected from TransitionGroup
-     */
-    in: PropTypes.bool,
-    /**
-     * @ignore - injected from TransitionGroup
-     */
-    onExited: PropTypes.func,
-    /**
-     * If `true`, the ripple pulsates, typically indicating the keyboard focus state of an element.
-     */
-    pulsate: PropTypes.bool,
-    /**
-     * Diameter of the ripple.
-     */
-    rippleSize: PropTypes.number,
-    /**
-     * Horizontal position of the ripple center.
-     */
-    rippleX: PropTypes.number,
-    /**
-     * Vertical position of the ripple center.
-     */
-    rippleY: PropTypes.number,
-    /**
-     * exit delay
-     */
-    timeout: PropTypes.number.isRequired
-  } : void 0;
-  function getTouchRippleUtilityClass(slot) {
-    return generateUtilityClass("MuiTouchRipple", slot);
-  }
-  const touchRippleClasses = generateUtilityClasses("MuiTouchRipple", ["root", "ripple", "rippleVisible", "ripplePulsate", "child", "childLeaving", "childPulsate"]);
-  "use client";
-  const _excluded$1Z = ["center", "classes", "className"];
-  let _$3 = (t) => t, _t$3, _t2$3, _t3$3, _t4$3;
-  const DURATION = 550;
-  const DELAY_RIPPLE = 80;
-  const enterKeyframe = react.keyframes(_t$3 || (_t$3 = _$3`
-  0% {
-    transform: scale(0);
-    opacity: 0.1;
-  }
-
-  100% {
-    transform: scale(1);
-    opacity: 0.3;
-  }
-`));
-  const exitKeyframe = react.keyframes(_t2$3 || (_t2$3 = _$3`
-  0% {
-    opacity: 1;
-  }
-
-  100% {
-    opacity: 0;
-  }
-`));
-  const pulsateKeyframe = react.keyframes(_t3$3 || (_t3$3 = _$3`
-  0% {
-    transform: scale(1);
-  }
-
-  50% {
-    transform: scale(0.92);
-  }
-
-  100% {
-    transform: scale(1);
-  }
-`));
-  const TouchRippleRoot = styled("span", {
-    name: "MuiTouchRipple",
-    slot: "Root"
-  })({
-    overflow: "hidden",
-    pointerEvents: "none",
-    position: "absolute",
-    zIndex: 0,
-    top: 0,
-    right: 0,
-    bottom: 0,
-    left: 0,
-    borderRadius: "inherit"
-  });
-  const TouchRippleRipple = styled(Ripple, {
-    name: "MuiTouchRipple",
-    slot: "Ripple"
-  })(_t4$3 || (_t4$3 = _$3`
-  opacity: 0;
-  position: absolute;
-
-  &.${0} {
-    opacity: 0.3;
-    transform: scale(1);
-    animation-name: ${0};
-    animation-duration: ${0}ms;
-    animation-timing-function: ${0};
-  }
-
-  &.${0} {
-    animation-duration: ${0}ms;
-  }
-
-  & .${0} {
-    opacity: 1;
-    display: block;
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    background-color: currentColor;
-  }
-
-  & .${0} {
-    opacity: 0;
-    animation-name: ${0};
-    animation-duration: ${0}ms;
-    animation-timing-function: ${0};
-  }
-
-  & .${0} {
-    position: absolute;
-    /* @noflip */
-    left: 0px;
-    top: 0;
-    animation-name: ${0};
-    animation-duration: 2500ms;
-    animation-timing-function: ${0};
-    animation-iteration-count: infinite;
-    animation-delay: 200ms;
-  }
-`), touchRippleClasses.rippleVisible, enterKeyframe, DURATION, ({
-    theme
-  }) => theme.transitions.easing.easeInOut, touchRippleClasses.ripplePulsate, ({
-    theme
-  }) => theme.transitions.duration.shorter, touchRippleClasses.child, touchRippleClasses.childLeaving, exitKeyframe, DURATION, ({
-    theme
-  }) => theme.transitions.easing.easeInOut, touchRippleClasses.childPulsate, pulsateKeyframe, ({
-    theme
-  }) => theme.transitions.easing.easeInOut);
-  const TouchRipple = /* @__PURE__ */ React__namespace.forwardRef(function TouchRipple2(inProps, ref) {
-    const props = useThemeProps({
-      props: inProps,
-      name: "MuiTouchRipple"
-    });
-    const {
-      center: centerProp = false,
-      classes = {},
-      className
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1Z);
-    const [ripples, setRipples] = React__namespace.useState([]);
-    const nextKey = React__namespace.useRef(0);
-    const rippleCallback = React__namespace.useRef(null);
-    React__namespace.useEffect(() => {
-      if (rippleCallback.current) {
-        rippleCallback.current();
-        rippleCallback.current = null;
-      }
-    }, [ripples]);
-    const ignoringMouseDown = React__namespace.useRef(false);
-    const startTimer = React__namespace.useRef(0);
-    const startTimerCommit = React__namespace.useRef(null);
-    const container = React__namespace.useRef(null);
-    React__namespace.useEffect(() => {
-      return () => {
-        if (startTimer.current) {
-          clearTimeout(startTimer.current);
-        }
-      };
-    }, []);
-    const startCommit = React__namespace.useCallback((params) => {
-      const {
-        pulsate: pulsate2,
-        rippleX,
-        rippleY,
-        rippleSize,
-        cb
-      } = params;
-      setRipples((oldRipples) => [...oldRipples, /* @__PURE__ */ jsxRuntimeExports.jsx(TouchRippleRipple, {
-        classes: {
-          ripple: clsx(classes.ripple, touchRippleClasses.ripple),
-          rippleVisible: clsx(classes.rippleVisible, touchRippleClasses.rippleVisible),
-          ripplePulsate: clsx(classes.ripplePulsate, touchRippleClasses.ripplePulsate),
-          child: clsx(classes.child, touchRippleClasses.child),
-          childLeaving: clsx(classes.childLeaving, touchRippleClasses.childLeaving),
-          childPulsate: clsx(classes.childPulsate, touchRippleClasses.childPulsate)
-        },
-        timeout: DURATION,
-        pulsate: pulsate2,
-        rippleX,
-        rippleY,
-        rippleSize
-      }, nextKey.current)]);
-      nextKey.current += 1;
-      rippleCallback.current = cb;
-    }, [classes]);
-    const start2 = React__namespace.useCallback((event = {}, options = {}, cb = () => {
-    }) => {
-      const {
-        pulsate: pulsate2 = false,
-        center = centerProp || options.pulsate,
-        fakeElement = false
-        // For test purposes
-      } = options;
-      if ((event == null ? void 0 : event.type) === "mousedown" && ignoringMouseDown.current) {
-        ignoringMouseDown.current = false;
-        return;
-      }
-      if ((event == null ? void 0 : event.type) === "touchstart") {
-        ignoringMouseDown.current = true;
-      }
-      const element = fakeElement ? null : container.current;
-      const rect = element ? element.getBoundingClientRect() : {
-        width: 0,
-        height: 0,
-        left: 0,
-        top: 0
-      };
-      let rippleX;
-      let rippleY;
-      let rippleSize;
-      if (center || event === void 0 || event.clientX === 0 && event.clientY === 0 || !event.clientX && !event.touches) {
-        rippleX = Math.round(rect.width / 2);
-        rippleY = Math.round(rect.height / 2);
-      } else {
-        const {
-          clientX,
-          clientY
-        } = event.touches && event.touches.length > 0 ? event.touches[0] : event;
-        rippleX = Math.round(clientX - rect.left);
-        rippleY = Math.round(clientY - rect.top);
-      }
-      if (center) {
-        rippleSize = Math.sqrt((2 * __pow(rect.width, 2) + __pow(rect.height, 2)) / 3);
-        if (rippleSize % 2 === 0) {
-          rippleSize += 1;
-        }
-      } else {
-        const sizeX = Math.max(Math.abs((element ? element.clientWidth : 0) - rippleX), rippleX) * 2 + 2;
-        const sizeY = Math.max(Math.abs((element ? element.clientHeight : 0) - rippleY), rippleY) * 2 + 2;
-        rippleSize = Math.sqrt(__pow(sizeX, 2) + __pow(sizeY, 2));
-      }
-      if (event != null && event.touches) {
-        if (startTimerCommit.current === null) {
-          startTimerCommit.current = () => {
-            startCommit({
-              pulsate: pulsate2,
-              rippleX,
-              rippleY,
-              rippleSize,
-              cb
-            });
-          };
-          startTimer.current = setTimeout(() => {
-            if (startTimerCommit.current) {
-              startTimerCommit.current();
-              startTimerCommit.current = null;
-            }
-          }, DELAY_RIPPLE);
-        }
-      } else {
-        startCommit({
-          pulsate: pulsate2,
-          rippleX,
-          rippleY,
-          rippleSize,
-          cb
-        });
-      }
-    }, [centerProp, startCommit]);
-    const pulsate = React__namespace.useCallback(() => {
-      start2({}, {
-        pulsate: true
-      });
-    }, [start2]);
-    const stop = React__namespace.useCallback((event, cb) => {
-      clearTimeout(startTimer.current);
-      if ((event == null ? void 0 : event.type) === "touchend" && startTimerCommit.current) {
-        startTimerCommit.current();
-        startTimerCommit.current = null;
-        startTimer.current = setTimeout(() => {
-          stop(event, cb);
-        });
-        return;
-      }
-      startTimerCommit.current = null;
-      setRipples((oldRipples) => {
-        if (oldRipples.length > 0) {
-          return oldRipples.slice(1);
-        }
-        return oldRipples;
-      });
-      rippleCallback.current = cb;
-    }, []);
-    React__namespace.useImperativeHandle(ref, () => ({
-      pulsate,
-      start: start2,
-      stop
-    }), [pulsate, start2, stop]);
-    return /* @__PURE__ */ jsxRuntimeExports.jsx(TouchRippleRoot, _extends$2({
-      className: clsx(touchRippleClasses.root, classes.root, className),
-      ref: container
-    }, other, {
-      children: /* @__PURE__ */ jsxRuntimeExports.jsx(TransitionGroup, {
-        component: null,
-        exit: true,
-        children: ripples
-      })
-    }));
-  });
-  process.env.NODE_ENV !== "production" ? TouchRipple.propTypes = {
-    /**
-     * If `true`, the ripple starts at the center of the component
-     * rather than at the point of interaction.
-     */
-    center: PropTypes.bool,
-    /**
-     * Override or extend the styles applied to the component.
-     * See [CSS API](#css) below for more details.
-     */
-    classes: PropTypes.object,
-    /**
-     * @ignore
-     */
-    className: PropTypes.string
-  } : void 0;
-  function getButtonBaseUtilityClass(slot) {
-    return generateUtilityClass("MuiButtonBase", slot);
-  }
-  const buttonBaseClasses = generateUtilityClasses("MuiButtonBase", ["root", "disabled", "focusVisible"]);
-  "use client";
-  const _excluded$1Y = ["action", "centerRipple", "children", "className", "component", "disabled", "disableRipple", "disableTouchRipple", "focusRipple", "focusVisibleClassName", "LinkComponent", "onBlur", "onClick", "onContextMenu", "onDragLeave", "onFocus", "onFocusVisible", "onKeyDown", "onKeyUp", "onMouseDown", "onMouseLeave", "onMouseUp", "onTouchEnd", "onTouchMove", "onTouchStart", "tabIndex", "TouchRippleProps", "touchRippleRef", "type"];
-  const useUtilityClasses$1C = (ownerState) => {
-    const {
-      disabled,
-      focusVisible,
-      focusVisibleClassName,
-      classes
-    } = ownerState;
-    const slots = {
-      root: ["root", disabled && "disabled", focusVisible && "focusVisible"]
-    };
-    const composedClasses = composeClasses(slots, getButtonBaseUtilityClass, classes);
-    if (focusVisible && focusVisibleClassName) {
-      composedClasses.root += ` ${focusVisibleClassName}`;
-    }
-    return composedClasses;
-  };
-  const ButtonBaseRoot = styled("button", {
-    name: "MuiButtonBase",
-    slot: "Root",
-    overridesResolver: (props, styles2) => styles2.root
-  })({
-    display: "inline-flex",
-    alignItems: "center",
-    justifyContent: "center",
-    position: "relative",
-    boxSizing: "border-box",
-    WebkitTapHighlightColor: "transparent",
-    backgroundColor: "transparent",
-    // Reset default value
-    // We disable the focus ring for mouse, touch and keyboard users.
-    outline: 0,
-    border: 0,
-    margin: 0,
-    // Remove the margin in Safari
-    borderRadius: 0,
-    padding: 0,
-    // Remove the padding in Firefox
-    cursor: "pointer",
-    userSelect: "none",
-    verticalAlign: "middle",
-    MozAppearance: "none",
-    // Reset
-    WebkitAppearance: "none",
-    // Reset
-    textDecoration: "none",
-    // So we take precedent over the style of a native <a /> element.
-    color: "inherit",
-    "&::-moz-focus-inner": {
-      borderStyle: "none"
-      // Remove Firefox dotted outline.
-    },
-    [`&.${buttonBaseClasses.disabled}`]: {
-      pointerEvents: "none",
-      // Disable link interactions
-      cursor: "default"
-    },
-    "@media print": {
-      colorAdjust: "exact"
-    }
-  });
-  const ButtonBase = /* @__PURE__ */ React__namespace.forwardRef(function ButtonBase2(inProps, ref) {
-    const props = useThemeProps({
-      props: inProps,
-      name: "MuiButtonBase"
-    });
-    const {
-      action,
-      centerRipple = false,
-      children,
-      className,
-      component = "button",
-      disabled = false,
-      disableRipple = false,
-      disableTouchRipple = false,
-      focusRipple = false,
-      LinkComponent = "a",
-      onBlur,
-      onClick,
-      onContextMenu,
-      onDragLeave,
-      onFocus,
-      onFocusVisible,
-      onKeyDown,
-      onKeyUp,
-      onMouseDown,
-      onMouseLeave,
-      onMouseUp,
-      onTouchEnd,
-      onTouchMove,
-      onTouchStart,
-      tabIndex = 0,
-      TouchRippleProps,
-      touchRippleRef,
-      type
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1Y);
-    const buttonRef = React__namespace.useRef(null);
-    const rippleRef = React__namespace.useRef(null);
-    const handleRippleRef = useForkRef(rippleRef, touchRippleRef);
-    const {
-      isFocusVisibleRef,
-      onFocus: handleFocusVisible,
-      onBlur: handleBlurVisible,
-      ref: focusVisibleRef
-    } = useIsFocusVisible();
-    const [focusVisible, setFocusVisible] = React__namespace.useState(false);
-    if (disabled && focusVisible) {
-      setFocusVisible(false);
-    }
-    React__namespace.useImperativeHandle(action, () => ({
-      focusVisible: () => {
-        setFocusVisible(true);
-        buttonRef.current.focus();
-      }
-    }), []);
-    const [mountedState, setMountedState] = React__namespace.useState(false);
-    React__namespace.useEffect(() => {
-      setMountedState(true);
-    }, []);
-    const enableTouchRipple = mountedState && !disableRipple && !disabled;
-    React__namespace.useEffect(() => {
-      if (focusVisible && focusRipple && !disableRipple && mountedState) {
-        rippleRef.current.pulsate();
-      }
-    }, [disableRipple, focusRipple, focusVisible, mountedState]);
-    function useRippleHandler(rippleAction, eventCallback, skipRippleAction = disableTouchRipple) {
-      return useEventCallback((event) => {
-        if (eventCallback) {
-          eventCallback(event);
-        }
-        const ignore = skipRippleAction;
-        if (!ignore && rippleRef.current) {
-          rippleRef.current[rippleAction](event);
-        }
-        return true;
-      });
-    }
-    const handleMouseDown = useRippleHandler("start", onMouseDown);
-    const handleContextMenu = useRippleHandler("stop", onContextMenu);
-    const handleDragLeave = useRippleHandler("stop", onDragLeave);
-    const handleMouseUp = useRippleHandler("stop", onMouseUp);
-    const handleMouseLeave = useRippleHandler("stop", (event) => {
-      if (focusVisible) {
-        event.preventDefault();
-      }
-      if (onMouseLeave) {
-        onMouseLeave(event);
-      }
-    });
-    const handleTouchStart = useRippleHandler("start", onTouchStart);
-    const handleTouchEnd = useRippleHandler("stop", onTouchEnd);
-    const handleTouchMove = useRippleHandler("stop", onTouchMove);
-    const handleBlur2 = useRippleHandler("stop", (event) => {
-      handleBlurVisible(event);
-      if (isFocusVisibleRef.current === false) {
-        setFocusVisible(false);
-      }
-      if (onBlur) {
-        onBlur(event);
-      }
-    }, false);
-    const handleFocus = useEventCallback((event) => {
-      if (!buttonRef.current) {
-        buttonRef.current = event.currentTarget;
-      }
-      handleFocusVisible(event);
-      if (isFocusVisibleRef.current === true) {
-        setFocusVisible(true);
-        if (onFocusVisible) {
-          onFocusVisible(event);
-        }
-      }
-      if (onFocus) {
-        onFocus(event);
-      }
-    });
-    const isNonNativeButton = () => {
-      const button = buttonRef.current;
-      return component && component !== "button" && !(button.tagName === "A" && button.href);
-    };
-    const keydownRef = React__namespace.useRef(false);
-    const handleKeyDown2 = useEventCallback((event) => {
-      if (focusRipple && !keydownRef.current && focusVisible && rippleRef.current && event.key === " ") {
-        keydownRef.current = true;
-        rippleRef.current.stop(event, () => {
-          rippleRef.current.start(event);
-        });
-      }
-      if (event.target === event.currentTarget && isNonNativeButton() && event.key === " ") {
-        event.preventDefault();
-      }
-      if (onKeyDown) {
-        onKeyDown(event);
-      }
-      if (event.target === event.currentTarget && isNonNativeButton() && event.key === "Enter" && !disabled) {
-        event.preventDefault();
-        if (onClick) {
-          onClick(event);
-        }
-      }
-    });
-    const handleKeyUp = useEventCallback((event) => {
-      if (focusRipple && event.key === " " && rippleRef.current && focusVisible && !event.defaultPrevented) {
-        keydownRef.current = false;
-        rippleRef.current.stop(event, () => {
-          rippleRef.current.pulsate(event);
-        });
-      }
-      if (onKeyUp) {
-        onKeyUp(event);
-      }
-      if (onClick && event.target === event.currentTarget && isNonNativeButton() && event.key === " " && !event.defaultPrevented) {
-        onClick(event);
-      }
-    });
-    let ComponentProp = component;
-    if (ComponentProp === "button" && (other.href || other.to)) {
-      ComponentProp = LinkComponent;
-    }
-    const buttonProps = {};
-    if (ComponentProp === "button") {
-      buttonProps.type = type === void 0 ? "button" : type;
-      buttonProps.disabled = disabled;
+      );
+    } else if ("search" === kind) {
+      tool = /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: "SEARCH" });
+    } else if ("account" === kind) {
+      tool = /* @__PURE__ */ jsxRuntimeExports.jsx(material.Avatar, { children: "AB" });
     } else {
-      if (!other.href && !other.to) {
-        buttonProps.role = "button";
-      }
-      if (disabled) {
-        buttonProps["aria-disabled"] = disabled;
-      }
+      console.warn(CMPNAME$4, "unknown-tool-kind", kind, basicHeadToolSpec);
     }
-    const handleRef = useForkRef(ref, focusVisibleRef, buttonRef);
-    if (process.env.NODE_ENV !== "production") {
-      React__namespace.useEffect(() => {
-        if (enableTouchRipple && !rippleRef.current) {
-          console.error(["MUI: The `component` prop provided to ButtonBase is invalid.", "Please make sure the children prop is rendered in this custom component."].join("\n"));
-        }
-      }, [enableTouchRipple]);
+    return tool;
+  }
+  const CMPNAME$3 = "BasicHead";
+  console.log(CMPNAME$3, "1");
+  const { Child: Child$5, Exact, Open: Open$2 } = gubu_minExports.Gubu;
+  const BasicHeadSpecShape = gubu_minExports.Gubu({
+    head: {
+      name: String,
+      active: Boolean,
+      tool: Child$5(Open$2({
+        name: String,
+        align: Exact("left", "right")
+      }))
+    },
+    // Set MUI component props directly 
+    mui: {
+      AppBar: {},
+      ToolBar: {}
     }
-    const ownerState = _extends$2({}, props, {
-      centerRipple,
-      component,
-      disabled,
-      disableRipple,
-      disableTouchRipple,
-      focusRipple,
-      tabIndex,
-      focusVisible
-    });
-    const classes = useUtilityClasses$1C(ownerState);
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs(ButtonBaseRoot, _extends$2({
-      as: ComponentProp,
-      className: clsx(classes.root, className),
-      ownerState,
-      onBlur: handleBlur2,
-      onClick,
-      onContextMenu: handleContextMenu,
-      onFocus: handleFocus,
-      onKeyDown: handleKeyDown2,
-      onKeyUp: handleKeyUp,
-      onMouseDown: handleMouseDown,
-      onMouseLeave: handleMouseLeave,
-      onMouseUp: handleMouseUp,
-      onDragLeave: handleDragLeave,
-      onTouchEnd: handleTouchEnd,
-      onTouchMove: handleTouchMove,
-      onTouchStart: handleTouchStart,
-      ref: handleRef,
-      tabIndex: disabled ? -1 : tabIndex,
-      type
-    }, buttonProps, other, {
-      children: [children, enableTouchRipple ? (
-        /* TouchRipple is only needed client-side, x2 boost on the server. */
-        jsxRuntimeExports.jsx(TouchRipple, _extends$2({
-          ref: handleRippleRef,
-          center: centerRipple
-        }, TouchRippleProps))
-      ) : null]
-    }));
-  });
-  process.env.NODE_ENV !== "production" ? ButtonBase.propTypes = {
-    // ----------------------------- Warning --------------------------------
-    // | These PropTypes are generated from the TypeScript type definitions |
-    // |     To update them edit the d.ts file and run "yarn proptypes"     |
-    // ----------------------------------------------------------------------
-    /**
-     * A ref for imperative actions.
-     * It currently only supports `focusVisible()` action.
-     */
-    action: refType,
-    /**
-     * If `true`, the ripples are centered.
-     * They won't start at the cursor interaction position.
-     * @default false
-     */
-    centerRipple: PropTypes.bool,
-    /**
-     * The content of the component.
-     */
-    children: PropTypes.node,
-    /**
-     * Override or extend the styles applied to the component.
-     */
-    classes: PropTypes.object,
-    /**
-     * @ignore
-     */
-    className: PropTypes.string,
-    /**
-     * The component used for the root node.
-     * Either a string to use a HTML element or a component.
-     */
-    component: elementTypeAcceptingRef$1,
-    /**
-     * If `true`, the component is disabled.
-     * @default false
-     */
-    disabled: PropTypes.bool,
-    /**
-     * If `true`, the ripple effect is disabled.
-     *
-     * ⚠️ Without a ripple there is no styling for :focus-visible by default. Be sure
-     * to highlight the element by applying separate styles with the `.Mui-focusVisible` class.
-     * @default false
-     */
-    disableRipple: PropTypes.bool,
-    /**
-     * If `true`, the touch ripple effect is disabled.
-     * @default false
-     */
-    disableTouchRipple: PropTypes.bool,
-    /**
-     * If `true`, the base button will have a keyboard focus ripple.
-     * @default false
-     */
-    focusRipple: PropTypes.bool,
-    /**
-     * This prop can help identify which element has keyboard focus.
-     * The class name will be applied when the element gains the focus through keyboard interaction.
-     * It's a polyfill for the [CSS :focus-visible selector](https://drafts.csswg.org/selectors-4/#the-focus-visible-pseudo).
-     * The rationale for using this feature [is explained here](https://github.com/WICG/focus-visible/blob/HEAD/explainer.md).
-     * A [polyfill can be used](https://github.com/WICG/focus-visible) to apply a `focus-visible` class to other components
-     * if needed.
-     */
-    focusVisibleClassName: PropTypes.string,
-    /**
-     * @ignore
-     */
-    href: PropTypes.any,
-    /**
-     * The component used to render a link when the `href` prop is provided.
-     * @default 'a'
-     */
-    LinkComponent: PropTypes.elementType,
-    /**
-     * @ignore
-     */
-    onBlur: PropTypes.func,
-    /**
-     * @ignore
-     */
-    onClick: PropTypes.func,
-    /**
-     * @ignore
-     */
-    onContextMenu: PropTypes.func,
-    /**
-     * @ignore
-     */
-    onDragLeave: PropTypes.func,
-    /**
-     * @ignore
-     */
-    onFocus: PropTypes.func,
-    /**
-     * Callback fired when the component is focused with a keyboard.
-     * We trigger a `onFocus` callback too.
-     */
-    onFocusVisible: PropTypes.func,
-    /**
-     * @ignore
-     */
-    onKeyDown: PropTypes.func,
-    /**
-     * @ignore
-     */
-    onKeyUp: PropTypes.func,
-    /**
-     * @ignore
-     */
-    onMouseDown: PropTypes.func,
-    /**
-     * @ignore
-     */
-    onMouseLeave: PropTypes.func,
-    /**
-     * @ignore
-     */
-    onMouseUp: PropTypes.func,
-    /**
-     * @ignore
-     */
-    onTouchEnd: PropTypes.func,
-    /**
-     * @ignore
-     */
-    onTouchMove: PropTypes.func,
-    /**
-     * @ignore
-     */
-    onTouchStart: PropTypes.func,
-    /**
-     * The system prop that allows defining system overrides as well as additional CSS styles.
-     */
-    sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object]),
-    /**
-     * @default 0
-     */
-    tabIndex: PropTypes.number,
-    /**
-     * Props applied to the `TouchRipple` element.
-     */
-    TouchRippleProps: PropTypes.object,
-    /**
-     * A ref that points to the `TouchRipple` element.
-     */
-    touchRippleRef: PropTypes.oneOfType([PropTypes.func, PropTypes.shape({
-      current: PropTypes.shape({
-        pulsate: PropTypes.func.isRequired,
-        start: PropTypes.func.isRequired,
-        stop: PropTypes.func.isRequired
+  }, { prefix: CMPNAME$3 });
+  function BasicHead(props) {
+    const { ctx, spec } = props;
+    const basicHeadSpec = BasicHeadSpecShape(spec);
+    const { head } = basicHeadSpec;
+    const tools = Object.values(head.tool);
+    const leftTools = tools.filter((t) => "left" === t.align);
+    const rightTools = tools.filter((t) => "right" === t.align);
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(
+      AppBar,
+      __spreadProps(__spreadValues({
+        className: "vxg-BasicHead"
+      }, spec.mui.AppBar), {
+        children: /* @__PURE__ */ jsxRuntimeExports.jsxs(Toolbar, __spreadProps(__spreadValues({ className: "vxg-BasicHead-toolbar" }, spec.mui.ToolBar), { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "div",
+            {
+              className: "vxg-BasicHead-toolbar vxg-BasicHead-toolbar-left",
+              children: leftTools.map((t) => /* @__PURE__ */ jsxRuntimeExports.jsx(BasicHeadTool, { ctx, spec: t }, t.name))
+            }
+          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "div",
+            {
+              className: "vxg-BasicHead-toolbar vxg-BasicHead-toolbar-right",
+              style: { marginLeft: "auto" },
+              children: rightTools.map((t) => /* @__PURE__ */ jsxRuntimeExports.jsx(BasicHeadTool, { ctx, spec: t }, t.name))
+            }
+          )
+        ] }))
       })
-    })]),
-    /**
-     * @ignore
-     */
-    type: PropTypes.oneOfType([PropTypes.oneOf(["button", "reset", "submit"]), PropTypes.string])
-  } : void 0;
-  "use client";
-  function getButtonUtilityClass$1(slot) {
-    return generateUtilityClass("MuiButton", slot);
+    );
   }
-  const buttonClasses$1 = generateUtilityClasses("MuiButton", ["root", "text", "textInherit", "textPrimary", "textSecondary", "textSuccess", "textError", "textInfo", "textWarning", "outlined", "outlinedInherit", "outlinedPrimary", "outlinedSecondary", "outlinedSuccess", "outlinedError", "outlinedInfo", "outlinedWarning", "contained", "containedInherit", "containedPrimary", "containedSecondary", "containedSuccess", "containedError", "containedInfo", "containedWarning", "disableElevation", "focusVisible", "disabled", "colorInherit", "textSizeSmall", "textSizeMedium", "textSizeLarge", "outlinedSizeSmall", "outlinedSizeMedium", "outlinedSizeLarge", "containedSizeSmall", "containedSizeMedium", "containedSizeLarge", "sizeMedium", "sizeSmall", "sizeLarge", "fullWidth", "startIcon", "endIcon", "iconSizeSmall", "iconSizeMedium", "iconSizeLarge"]);
-  const ButtonGroupContext = /* @__PURE__ */ React__namespace.createContext({});
-  if (process.env.NODE_ENV !== "production") {
-    ButtonGroupContext.displayName = "ButtonGroupContext";
+  function onOpen(seneca) {
+    seneca.act("aim:app,set:state", {
+      section: "vxg.cmp.BasicSide.show",
+      content: true
+    });
   }
-  const ButtonGroupButtonContext = /* @__PURE__ */ React__namespace.createContext(void 0);
-  if (process.env.NODE_ENV !== "production") {
-    ButtonGroupButtonContext.displayName = "ButtonGroupButtonContext";
+  function addItem(seneca, led_add) {
+    seneca.act("aim:app,set:state", {
+      section: "vxg.trigger.led.add",
+      content: ++led_add
+    });
   }
-  "use client";
-  const _excluded$1X = ["children", "color", "component", "className", "disabled", "disableElevation", "disableFocusRipple", "endIcon", "focusVisibleClassName", "fullWidth", "size", "startIcon", "type", "variant"];
-  const useUtilityClasses$1B = (ownerState) => {
-    const {
-      color: color2,
-      disableElevation,
-      fullWidth,
-      size: size2,
-      variant,
-      classes
-    } = ownerState;
-    const slots = {
-      root: ["root", variant, `${variant}${capitalize(color2)}`, `size${capitalize(size2)}`, `${variant}Size${capitalize(size2)}`, color2 === "inherit" && "colorInherit", disableElevation && "disableElevation", fullWidth && "fullWidth"],
-      label: ["label"],
-      startIcon: ["startIcon", `iconSize${capitalize(size2)}`],
-      endIcon: ["endIcon", `iconSize${capitalize(size2)}`]
-    };
-    const composedClasses = composeClasses(slots, getButtonUtilityClass$1, classes);
-    return _extends$2({}, classes, composedClasses);
-  };
-  const commonIconStyles = (ownerState) => _extends$2({}, ownerState.size === "small" && {
-    "& > *:nth-of-type(1)": {
-      fontSize: 18
-    }
-  }, ownerState.size === "medium" && {
-    "& > *:nth-of-type(1)": {
-      fontSize: 20
-    }
-  }, ownerState.size === "large" && {
-    "& > *:nth-of-type(1)": {
-      fontSize: 22
+  const { Skip } = gubu_minExports.Gubu;
+  const BasicLedSpecShape = gubu_minExports.Gubu({
+    title: String,
+    name: String,
+    paramId: Skip(String),
+    content: {
+      cmp: Skip(String),
+      def: {
+        canon: String,
+        add: Skip({
+          active: Boolean
+        }),
+        subview: {},
+        id: Skip({
+          field: String
+        }),
+        field: {},
+        columnVisibility: Skip({})
+      }
     }
   });
-  const ButtonRoot = styled(ButtonBase, {
-    shouldForwardProp: (prop) => rootShouldForwardProp(prop) || prop === "classes",
-    name: "MuiButton",
-    slot: "Root",
-    overridesResolver: (props, styles2) => {
-      const {
-        ownerState
-      } = props;
-      return [styles2.root, styles2[ownerState.variant], styles2[`${ownerState.variant}${capitalize(ownerState.color)}`], styles2[`size${capitalize(ownerState.size)}`], styles2[`${ownerState.variant}Size${capitalize(ownerState.size)}`], ownerState.color === "inherit" && styles2.colorInherit, ownerState.disableElevation && styles2.disableElevation, ownerState.fullWidth && styles2.fullWidth];
+  function BasicLed(props) {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: "BASICLED" });
+  }
+  const CMPNAME$2 = "BasicSide";
+  console.log(CMPNAME$2, "1");
+  const { Child: Child$4, Open: Open$1 } = gubu_minExports.Gubu;
+  const BasicMainSpecShape = gubu_minExports.Gubu({
+    main: {
+      name: String,
+      active: Boolean,
+      view: {
+        default: String
+      }
+    },
+    view: Child$4(Open$1({
+      kind: String
+    })),
+    mui: {
+      Box: {},
+      Container: {}
     }
-  })(({
-    theme,
-    ownerState
-  }) => {
-    var _theme$palette$getCon, _theme$palette;
-    const inheritContainedBackgroundColor = theme.palette.mode === "light" ? theme.palette.grey[300] : theme.palette.grey[800];
-    const inheritContainedHoverBackgroundColor = theme.palette.mode === "light" ? theme.palette.grey.A100 : theme.palette.grey[700];
-    return _extends$2({}, theme.typography.button, {
-      minWidth: 64,
-      padding: "6px 16px",
-      borderRadius: (theme.vars || theme).shape.borderRadius,
-      transition: theme.transitions.create(["background-color", "box-shadow", "border-color", "color"], {
-        duration: theme.transitions.duration.short
-      }),
-      "&:hover": _extends$2({
-        textDecoration: "none",
-        backgroundColor: theme.vars ? `rgba(${theme.vars.palette.text.primaryChannel} / ${theme.vars.palette.action.hoverOpacity})` : alpha(theme.palette.text.primary, theme.palette.action.hoverOpacity),
-        // Reset on touch devices, it doesn't add specificity
-        "@media (hover: none)": {
-          backgroundColor: "transparent"
-        }
-      }, ownerState.variant === "text" && ownerState.color !== "inherit" && {
-        backgroundColor: theme.vars ? `rgba(${theme.vars.palette[ownerState.color].mainChannel} / ${theme.vars.palette.action.hoverOpacity})` : alpha(theme.palette[ownerState.color].main, theme.palette.action.hoverOpacity),
-        // Reset on touch devices, it doesn't add specificity
-        "@media (hover: none)": {
-          backgroundColor: "transparent"
-        }
-      }, ownerState.variant === "outlined" && ownerState.color !== "inherit" && {
-        border: `1px solid ${(theme.vars || theme).palette[ownerState.color].main}`,
-        backgroundColor: theme.vars ? `rgba(${theme.vars.palette[ownerState.color].mainChannel} / ${theme.vars.palette.action.hoverOpacity})` : alpha(theme.palette[ownerState.color].main, theme.palette.action.hoverOpacity),
-        // Reset on touch devices, it doesn't add specificity
-        "@media (hover: none)": {
-          backgroundColor: "transparent"
-        }
-      }, ownerState.variant === "contained" && {
-        backgroundColor: theme.vars ? theme.vars.palette.Button.inheritContainedHoverBg : inheritContainedHoverBackgroundColor,
-        boxShadow: (theme.vars || theme).shadows[4],
-        // Reset on touch devices, it doesn't add specificity
-        "@media (hover: none)": {
-          boxShadow: (theme.vars || theme).shadows[2],
-          backgroundColor: (theme.vars || theme).palette.grey[300]
-        }
-      }, ownerState.variant === "contained" && ownerState.color !== "inherit" && {
-        backgroundColor: (theme.vars || theme).palette[ownerState.color].dark,
-        // Reset on touch devices, it doesn't add specificity
-        "@media (hover: none)": {
-          backgroundColor: (theme.vars || theme).palette[ownerState.color].main
-        }
-      }),
-      "&:active": _extends$2({}, ownerState.variant === "contained" && {
-        boxShadow: (theme.vars || theme).shadows[8]
-      }),
-      [`&.${buttonClasses$1.focusVisible}`]: _extends$2({}, ownerState.variant === "contained" && {
-        boxShadow: (theme.vars || theme).shadows[6]
-      }),
-      [`&.${buttonClasses$1.disabled}`]: _extends$2({
-        color: (theme.vars || theme).palette.action.disabled
-      }, ownerState.variant === "outlined" && {
-        border: `1px solid ${(theme.vars || theme).palette.action.disabledBackground}`
-      }, ownerState.variant === "contained" && {
-        color: (theme.vars || theme).palette.action.disabled,
-        boxShadow: (theme.vars || theme).shadows[0],
-        backgroundColor: (theme.vars || theme).palette.action.disabledBackground
+  });
+  function BasicMain(props) {
+    const { ctx, spec } = props;
+    const { seneca, cmp } = ctx();
+    const basicMainSpec = BasicMainSpecShape(spec);
+    const mode = reactRedux.useSelector((state) => state.main.nav.mode);
+    const viewName = reactRedux.useSelector((state) => state.main.current.view);
+    const params = reactRouterDom.useParams();
+    if (viewName !== params.view) {
+      seneca.act("aim:app,set:view", { view: params.view });
+    }
+    const viewSpec = basicMainSpec.view[viewName];
+    const kind = viewSpec == null ? void 0 : viewSpec.kind;
+    const View = "custom" === kind ? cmp[viewSpec.cmp] : "led" === kind ? BasicLed : () => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: "LOADING" });
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(
+      material.Box,
+      __spreadProps(__spreadValues({
+        className: "vxg-BasicMain"
+      }, basicMainSpec.mui.Box), {
+        sx: (theme) => ({
+          // TODO: should use actual toolbar height; 16 should be from standard spacing
+          marginTop: theme.mixins.toolbar.minHeight + 38 + "px",
+          marginLeft: "shown" === mode ? "var(--vxg-side-width)" : 0,
+          marginBottom: 0,
+          marginRight: 0
+        }),
+        children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+          material.Container,
+          __spreadProps(__spreadValues({}, basicMainSpec.mui.Container), {
+            children: View && /* @__PURE__ */ jsxRuntimeExports.jsx(View, { ctx, spec: viewSpec })
+          })
+        )
       })
-    }, ownerState.variant === "text" && {
-      padding: "6px 8px"
-    }, ownerState.variant === "text" && ownerState.color !== "inherit" && {
-      color: (theme.vars || theme).palette[ownerState.color].main
-    }, ownerState.variant === "outlined" && {
-      padding: "5px 15px",
-      border: "1px solid currentColor"
-    }, ownerState.variant === "outlined" && ownerState.color !== "inherit" && {
-      color: (theme.vars || theme).palette[ownerState.color].main,
-      border: theme.vars ? `1px solid rgba(${theme.vars.palette[ownerState.color].mainChannel} / 0.5)` : `1px solid ${alpha(theme.palette[ownerState.color].main, 0.5)}`
-    }, ownerState.variant === "contained" && {
-      color: theme.vars ? (
-        // this is safe because grey does not change between default light/dark mode
-        theme.vars.palette.text.primary
-      ) : (_theme$palette$getCon = (_theme$palette = theme.palette).getContrastText) == null ? void 0 : _theme$palette$getCon.call(_theme$palette, theme.palette.grey[300]),
-      backgroundColor: theme.vars ? theme.vars.palette.Button.inheritContainedBg : inheritContainedBackgroundColor,
-      boxShadow: (theme.vars || theme).shadows[2]
-    }, ownerState.variant === "contained" && ownerState.color !== "inherit" && {
-      color: (theme.vars || theme).palette[ownerState.color].contrastText,
-      backgroundColor: (theme.vars || theme).palette[ownerState.color].main
-    }, ownerState.color === "inherit" && {
-      color: "inherit",
-      borderColor: "currentColor"
-    }, ownerState.size === "small" && ownerState.variant === "text" && {
-      padding: "4px 5px",
-      fontSize: theme.typography.pxToRem(13)
-    }, ownerState.size === "large" && ownerState.variant === "text" && {
-      padding: "8px 11px",
-      fontSize: theme.typography.pxToRem(15)
-    }, ownerState.size === "small" && ownerState.variant === "outlined" && {
-      padding: "3px 9px",
-      fontSize: theme.typography.pxToRem(13)
-    }, ownerState.size === "large" && ownerState.variant === "outlined" && {
-      padding: "7px 21px",
-      fontSize: theme.typography.pxToRem(15)
-    }, ownerState.size === "small" && ownerState.variant === "contained" && {
-      padding: "4px 10px",
-      fontSize: theme.typography.pxToRem(13)
-    }, ownerState.size === "large" && ownerState.variant === "contained" && {
-      padding: "8px 22px",
-      fontSize: theme.typography.pxToRem(15)
-    }, ownerState.fullWidth && {
-      width: "100%"
-    });
-  }, ({
-    ownerState
-  }) => ownerState.disableElevation && {
-    boxShadow: "none",
-    "&:hover": {
-      boxShadow: "none"
-    },
-    [`&.${buttonClasses$1.focusVisible}`]: {
-      boxShadow: "none"
-    },
-    "&:active": {
-      boxShadow: "none"
-    },
-    [`&.${buttonClasses$1.disabled}`]: {
-      boxShadow: "none"
+    );
+  }
+  var ChevronLeft = {};
+  var interopRequireDefault$2 = { exports: {} };
+  var interopRequireDefault = interopRequireDefault$2.exports;
+  (function(module2) {
+    function _interopRequireDefault2(obj) {
+      return obj && obj.__esModule ? obj : {
+        "default": obj
+      };
     }
-  });
-  const ButtonStartIcon = styled("span", {
-    name: "MuiButton",
-    slot: "StartIcon",
-    overridesResolver: (props, styles2) => {
-      const {
-        ownerState
-      } = props;
-      return [styles2.startIcon, styles2[`iconSize${capitalize(ownerState.size)}`]];
-    }
-  })(({
-    ownerState
-  }) => _extends$2({
-    display: "inherit",
-    marginRight: 8,
-    marginLeft: -4
-  }, ownerState.size === "small" && {
-    marginLeft: -2
-  }, commonIconStyles(ownerState)));
-  const ButtonEndIcon = styled("span", {
-    name: "MuiButton",
-    slot: "EndIcon",
-    overridesResolver: (props, styles2) => {
-      const {
-        ownerState
-      } = props;
-      return [styles2.endIcon, styles2[`iconSize${capitalize(ownerState.size)}`]];
-    }
-  })(({
-    ownerState
-  }) => _extends$2({
-    display: "inherit",
-    marginRight: -4,
-    marginLeft: 8
-  }, ownerState.size === "small" && {
-    marginRight: -2
-  }, commonIconStyles(ownerState)));
-  const Button$1 = /* @__PURE__ */ React__namespace.forwardRef(function Button2(inProps, ref) {
-    const contextProps = React__namespace.useContext(ButtonGroupContext);
-    const buttonGroupButtonContextPositionClassName = React__namespace.useContext(ButtonGroupButtonContext);
-    const resolvedProps = resolveProps(contextProps, inProps);
-    const props = useThemeProps({
-      props: resolvedProps,
-      name: "MuiButton"
-    });
-    const {
-      children,
-      color: color2 = "primary",
-      component = "button",
-      className,
-      disabled = false,
-      disableElevation = false,
-      disableFocusRipple = false,
-      endIcon: endIconProp,
-      focusVisibleClassName,
-      fullWidth = false,
-      size: size2 = "medium",
-      startIcon: startIconProp,
-      type,
-      variant = "text"
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1X);
-    const ownerState = _extends$2({}, props, {
-      color: color2,
-      component,
-      disabled,
-      disableElevation,
-      disableFocusRipple,
-      fullWidth,
-      size: size2,
-      type,
-      variant
-    });
-    const classes = useUtilityClasses$1B(ownerState);
-    const startIcon = startIconProp && /* @__PURE__ */ jsxRuntimeExports.jsx(ButtonStartIcon, {
-      className: classes.startIcon,
-      ownerState,
-      children: startIconProp
-    });
-    const endIcon = endIconProp && /* @__PURE__ */ jsxRuntimeExports.jsx(ButtonEndIcon, {
-      className: classes.endIcon,
-      ownerState,
-      children: endIconProp
-    });
-    const positionClassName = buttonGroupButtonContextPositionClassName || "";
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs(ButtonRoot, _extends$2({
-      ownerState,
-      className: clsx(contextProps.className, classes.root, className, positionClassName),
-      component,
-      disabled,
-      focusRipple: !disableFocusRipple,
-      focusVisibleClassName: clsx(classes.focusVisible, focusVisibleClassName),
-      ref,
-      type
-    }, other, {
-      classes,
-      children: [startIcon, children, endIcon]
-    }));
-  });
-  process.env.NODE_ENV !== "production" ? Button$1.propTypes = {
-    // ----------------------------- Warning --------------------------------
-    // | These PropTypes are generated from the TypeScript type definitions |
-    // |     To update them edit the d.ts file and run "yarn proptypes"     |
-    // ----------------------------------------------------------------------
-    /**
-     * The content of the component.
-     */
-    children: PropTypes.node,
-    /**
-     * Override or extend the styles applied to the component.
-     */
-    classes: PropTypes.object,
-    /**
-     * @ignore
-     */
-    className: PropTypes.string,
-    /**
-     * The color of the component.
-     * It supports both default and custom theme colors, which can be added as shown in the
-     * [palette customization guide](https://mui.com/material-ui/customization/palette/#custom-colors).
-     * @default 'primary'
-     */
-    color: PropTypes.oneOfType([PropTypes.oneOf(["inherit", "primary", "secondary", "success", "error", "info", "warning"]), PropTypes.string]),
-    /**
-     * The component used for the root node.
-     * Either a string to use a HTML element or a component.
-     */
-    component: PropTypes.elementType,
-    /**
-     * If `true`, the component is disabled.
-     * @default false
-     */
-    disabled: PropTypes.bool,
-    /**
-     * If `true`, no elevation is used.
-     * @default false
-     */
-    disableElevation: PropTypes.bool,
-    /**
-     * If `true`, the  keyboard focus ripple is disabled.
-     * @default false
-     */
-    disableFocusRipple: PropTypes.bool,
-    /**
-     * If `true`, the ripple effect is disabled.
-     *
-     * ⚠️ Without a ripple there is no styling for :focus-visible by default. Be sure
-     * to highlight the element by applying separate styles with the `.Mui-focusVisible` class.
-     * @default false
-     */
-    disableRipple: PropTypes.bool,
-    /**
-     * Element placed after the children.
-     */
-    endIcon: PropTypes.node,
-    /**
-     * @ignore
-     */
-    focusVisibleClassName: PropTypes.string,
-    /**
-     * If `true`, the button will take up the full width of its container.
-     * @default false
-     */
-    fullWidth: PropTypes.bool,
-    /**
-     * The URL to link to when the button is clicked.
-     * If defined, an `a` element will be used as the root node.
-     */
-    href: PropTypes.string,
-    /**
-     * The size of the component.
-     * `small` is equivalent to the dense button styling.
-     * @default 'medium'
-     */
-    size: PropTypes.oneOfType([PropTypes.oneOf(["small", "medium", "large"]), PropTypes.string]),
-    /**
-     * Element placed before the children.
-     */
-    startIcon: PropTypes.node,
-    /**
-     * The system prop that allows defining system overrides as well as additional CSS styles.
-     */
-    sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object]),
-    /**
-     * @ignore
-     */
-    type: PropTypes.oneOfType([PropTypes.oneOf(["button", "reset", "submit"]), PropTypes.string]),
-    /**
-     * The variant to use.
-     * @default 'text'
-     */
-    variant: PropTypes.oneOfType([PropTypes.oneOf(["contained", "outlined", "text"]), PropTypes.string])
-  } : void 0;
-  "use client";
+    module2.exports = _interopRequireDefault2, module2.exports.__esModule = true, module2.exports["default"] = module2.exports;
+  })(interopRequireDefault$2);
+  var interopRequireDefaultExports = interopRequireDefault$2.exports;
+  const interopRequireDefault$1 = /* @__PURE__ */ getDefaultExportFromCjs(interopRequireDefaultExports);
+  var createSvgIcon$1 = {};
   function getSvgIconUtilityClass(slot) {
     return generateUtilityClass("MuiSvgIcon", slot);
   }
   const svgIconClasses = generateUtilityClasses("MuiSvgIcon", ["root", "colorPrimary", "colorSecondary", "colorAction", "colorError", "colorDisabled", "fontSizeInherit", "fontSizeSmall", "fontSizeMedium", "fontSizeLarge"]);
   "use client";
-  const _excluded$1W = ["children", "className", "color", "component", "fontSize", "htmlColor", "inheritViewBox", "titleAccess", "viewBox"];
-  const useUtilityClasses$1A = (ownerState) => {
+  const _excluded$1Y = ["children", "className", "color", "component", "fontSize", "htmlColor", "inheritViewBox", "titleAccess", "viewBox"];
+  const useUtilityClasses$1B = (ownerState) => {
     const {
       color: color2,
       fontSize: fontSize2,
@@ -12096,7 +9993,7 @@ Please use another name.` : formatMuiErrorMessage(18));
       inheritViewBox = false,
       titleAccess,
       viewBox = "0 0 24 24"
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1W);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1Y);
     const hasSvgAsChild = /* @__PURE__ */ React__namespace.isValidElement(children) && children.type === "svg";
     const ownerState = _extends$2({}, props, {
       color: color2,
@@ -12111,7 +10008,7 @@ Please use another name.` : formatMuiErrorMessage(18));
     if (!inheritViewBox) {
       more.viewBox = viewBox;
     }
-    const classes = useUtilityClasses$1A(ownerState);
+    const classes = useUtilityClasses$1B(ownerState);
     return /* @__PURE__ */ jsxRuntimeExports.jsxs(SvgIconRoot, _extends$2({
       as: component,
       className: clsx(classes.root, className),
@@ -12202,7 +10099,7 @@ Please use another name.` : formatMuiErrorMessage(18));
   SvgIcon.muiName = "SvgIcon";
   "use client";
   "use client";
-  function createSvgIcon$1(path, displayName) {
+  function createSvgIcon(path, displayName) {
     function Component(props, ref) {
       return /* @__PURE__ */ jsxRuntimeExports.jsx(SvgIcon, _extends$2({
         "data-testid": `${displayName}Icon`,
@@ -12218,428 +10115,8 @@ Please use another name.` : formatMuiErrorMessage(18));
     return /* @__PURE__ */ React__namespace.memo(/* @__PURE__ */ React__namespace.forwardRef(Component));
   }
   "use client";
-  const Person = createSvgIcon$1(/* @__PURE__ */ jsxRuntimeExports.jsx("path", {
-    d: "M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
-  }), "Person");
-  function getAvatarUtilityClass(slot) {
-    return generateUtilityClass("MuiAvatar", slot);
-  }
-  const avatarClasses = generateUtilityClasses("MuiAvatar", ["root", "colorDefault", "circular", "rounded", "square", "img", "fallback"]);
   "use client";
-  const _excluded$1V = ["alt", "children", "className", "component", "imgProps", "sizes", "src", "srcSet", "variant"];
-  const useUtilityClasses$1z = (ownerState) => {
-    const {
-      classes,
-      variant,
-      colorDefault
-    } = ownerState;
-    const slots = {
-      root: ["root", variant, colorDefault && "colorDefault"],
-      img: ["img"],
-      fallback: ["fallback"]
-    };
-    return composeClasses(slots, getAvatarUtilityClass, classes);
-  };
-  const AvatarRoot = styled("div", {
-    name: "MuiAvatar",
-    slot: "Root",
-    overridesResolver: (props, styles2) => {
-      const {
-        ownerState
-      } = props;
-      return [styles2.root, styles2[ownerState.variant], ownerState.colorDefault && styles2.colorDefault];
-    }
-  })(({
-    theme,
-    ownerState
-  }) => _extends$2({
-    position: "relative",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    flexShrink: 0,
-    width: 40,
-    height: 40,
-    fontFamily: theme.typography.fontFamily,
-    fontSize: theme.typography.pxToRem(20),
-    lineHeight: 1,
-    borderRadius: "50%",
-    overflow: "hidden",
-    userSelect: "none"
-  }, ownerState.variant === "rounded" && {
-    borderRadius: (theme.vars || theme).shape.borderRadius
-  }, ownerState.variant === "square" && {
-    borderRadius: 0
-  }, ownerState.colorDefault && _extends$2({
-    color: (theme.vars || theme).palette.background.default
-  }, theme.vars ? {
-    backgroundColor: theme.vars.palette.Avatar.defaultBg
-  } : {
-    backgroundColor: theme.palette.mode === "light" ? theme.palette.grey[400] : theme.palette.grey[600]
-  })));
-  const AvatarImg = styled("img", {
-    name: "MuiAvatar",
-    slot: "Img",
-    overridesResolver: (props, styles2) => styles2.img
-  })({
-    width: "100%",
-    height: "100%",
-    textAlign: "center",
-    // Handle non-square image. The property isn't supported by IE11.
-    objectFit: "cover",
-    // Hide alt text.
-    color: "transparent",
-    // Hide the image broken icon, only works on Chrome.
-    textIndent: 1e4
-  });
-  const AvatarFallback = styled(Person, {
-    name: "MuiAvatar",
-    slot: "Fallback",
-    overridesResolver: (props, styles2) => styles2.fallback
-  })({
-    width: "75%",
-    height: "75%"
-  });
-  function useLoaded({
-    crossOrigin,
-    referrerPolicy,
-    src,
-    srcSet
-  }) {
-    const [loaded, setLoaded] = React__namespace.useState(false);
-    React__namespace.useEffect(() => {
-      if (!src && !srcSet) {
-        return void 0;
-      }
-      setLoaded(false);
-      let active = true;
-      const image = new Image();
-      image.onload = () => {
-        if (!active) {
-          return;
-        }
-        setLoaded("loaded");
-      };
-      image.onerror = () => {
-        if (!active) {
-          return;
-        }
-        setLoaded("error");
-      };
-      image.crossOrigin = crossOrigin;
-      image.referrerPolicy = referrerPolicy;
-      image.src = src;
-      if (srcSet) {
-        image.srcset = srcSet;
-      }
-      return () => {
-        active = false;
-      };
-    }, [crossOrigin, referrerPolicy, src, srcSet]);
-    return loaded;
-  }
-  const Avatar = /* @__PURE__ */ React__namespace.forwardRef(function Avatar2(inProps, ref) {
-    const props = useThemeProps({
-      props: inProps,
-      name: "MuiAvatar"
-    });
-    const {
-      alt,
-      children: childrenProp,
-      className,
-      component = "div",
-      imgProps,
-      sizes,
-      src,
-      srcSet,
-      variant = "circular"
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1V);
-    let children = null;
-    const loaded = useLoaded(_extends$2({}, imgProps, {
-      src,
-      srcSet
-    }));
-    const hasImg = src || srcSet;
-    const hasImgNotFailing = hasImg && loaded !== "error";
-    const ownerState = _extends$2({}, props, {
-      colorDefault: !hasImgNotFailing,
-      component,
-      variant
-    });
-    const classes = useUtilityClasses$1z(ownerState);
-    if (hasImgNotFailing) {
-      children = /* @__PURE__ */ jsxRuntimeExports.jsx(AvatarImg, _extends$2({
-        alt,
-        srcSet,
-        src,
-        sizes,
-        ownerState,
-        className: classes.img
-      }, imgProps));
-    } else if (childrenProp != null) {
-      children = childrenProp;
-    } else if (hasImg && alt) {
-      children = alt[0];
-    } else {
-      children = /* @__PURE__ */ jsxRuntimeExports.jsx(AvatarFallback, {
-        ownerState,
-        className: classes.fallback
-      });
-    }
-    return /* @__PURE__ */ jsxRuntimeExports.jsx(AvatarRoot, _extends$2({
-      as: component,
-      ownerState,
-      className: clsx(classes.root, className),
-      ref
-    }, other, {
-      children
-    }));
-  });
-  process.env.NODE_ENV !== "production" ? Avatar.propTypes = {
-    // ----------------------------- Warning --------------------------------
-    // | These PropTypes are generated from the TypeScript type definitions |
-    // |     To update them edit the d.ts file and run "yarn proptypes"     |
-    // ----------------------------------------------------------------------
-    /**
-     * Used in combination with `src` or `srcSet` to
-     * provide an alt attribute for the rendered `img` element.
-     */
-    alt: PropTypes.string,
-    /**
-     * Used to render icon or text elements inside the Avatar if `src` is not set.
-     * This can be an element, or just a string.
-     */
-    children: PropTypes.node,
-    /**
-     * Override or extend the styles applied to the component.
-     */
-    classes: PropTypes.object,
-    /**
-     * @ignore
-     */
-    className: PropTypes.string,
-    /**
-     * The component used for the root node.
-     * Either a string to use a HTML element or a component.
-     */
-    component: PropTypes.elementType,
-    /**
-     * [Attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img#attributes) applied to the `img` element if the component is used to display an image.
-     * It can be used to listen for the loading error event.
-     */
-    imgProps: PropTypes.object,
-    /**
-     * The `sizes` attribute for the `img` element.
-     */
-    sizes: PropTypes.string,
-    /**
-     * The `src` attribute for the `img` element.
-     */
-    src: PropTypes.string,
-    /**
-     * The `srcSet` attribute for the `img` element.
-     * Use this attribute for responsive image display.
-     */
-    srcSet: PropTypes.string,
-    /**
-     * The system prop that allows defining system overrides as well as additional CSS styles.
-     */
-    sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object]),
-    /**
-     * The shape of the avatar.
-     * @default 'circular'
-     */
-    variant: PropTypes.oneOfType([PropTypes.oneOf(["circular", "rounded", "square"]), PropTypes.string])
-  } : void 0;
   "use client";
-  const { Exact: Exact$1 } = gubu_minExports.Gubu;
-  const cmpname$2 = "BasicHeadTool";
-  const BasicHeadToolSpecShape = gubu_minExports.Gubu({
-    name: String,
-    active: Boolean,
-    kind: String,
-    align: Exact$1("left", "right"),
-    attr: {},
-    sx: {},
-    style: {}
-  }, { prefix: cmpname$2 });
-  function BasicHeadTool(props) {
-    const { ctx, spec } = props;
-    const { seneca } = ctx();
-    console.log(cmpname$2, spec);
-    const basicHeadToolSpec = BasicHeadToolSpecShape(spec);
-    const { name, kind, attr, sx, style: style2 } = basicHeadToolSpec;
-    let tool = /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, {});
-    if ("" === kind) {
-      console.warn(cmpname$2, "empty-tool-kind");
-    } else if ("logo" === kind) {
-      tool = /* @__PURE__ */ jsxRuntimeExports.jsx(
-        "a",
-        {
-          href: "/",
-          style: style2,
-          className: `vxg-${cmpname$2}-logo`,
-          children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: attr.img })
-        }
-      );
-    } else if ("add" === kind) {
-      tool = /* @__PURE__ */ jsxRuntimeExports.jsx(
-        Button$1,
-        {
-          color: "inherit",
-          onClick: () => seneca.act("aim:app,part:head,tool:add,on:click"),
-          children: "Add"
-        }
-      );
-    } else if ("search" === kind) {
-      tool = /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: "SEARCH" });
-    } else if ("account" === kind) {
-      tool = /* @__PURE__ */ jsxRuntimeExports.jsx(Avatar, { children: "AB" });
-    } else {
-      console.warn(cmpname$2, "unknown-tool-kind", kind);
-    }
-    return tool;
-  }
-  const { Child: Child$5, Exact, Open } = gubu_minExports.Gubu;
-  const cmpname$1 = "BasicHead";
-  const BasicHeadSpecShape = gubu_minExports.Gubu({
-    head: {
-      name: String,
-      active: Boolean,
-      tool: Child$5(Open({
-        name: String,
-        align: Exact("left", "right")
-      }))
-    },
-    // Set MUI component props directly 
-    mui: {
-      AppBar: {},
-      ToolBar: {}
-    }
-  }, { prefix: cmpname$1 });
-  function BasicHead(props) {
-    const { ctx, spec } = props;
-    console.log(cmpname$1, spec);
-    const basicHeadSpec = BasicHeadSpecShape(spec);
-    const { head } = basicHeadSpec;
-    const tools = Object.values(head.tool);
-    const leftTools = tools.filter((t) => "left" === t.align);
-    const rightTools = tools.filter((t) => "right" === t.align);
-    return /* @__PURE__ */ jsxRuntimeExports.jsx(AppBar, __spreadProps(__spreadValues({ className: "vxg-BasicHead" }, spec.mui.AppBar), { children: /* @__PURE__ */ jsxRuntimeExports.jsxs(Toolbar, __spreadProps(__spreadValues({ className: "vxg-BasicHead-toolbar" }, spec.mui.ToolBar), { children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx(
-        "div",
-        {
-          className: "vxg-BasicHead-toolbar vxg-BasicHead-toolbar-left",
-          children: leftTools.map((t) => /* @__PURE__ */ jsxRuntimeExports.jsx(BasicHeadTool, { ctx, spec: t }, t.name))
-        }
-      ),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(
-        "div",
-        {
-          className: "vxg-BasicHead-toolbar vxg-BasicHead-toolbar-right",
-          style: { marginLeft: "auto" },
-          children: rightTools.map((t) => /* @__PURE__ */ jsxRuntimeExports.jsx(BasicHeadTool, { ctx, spec: t }, t.name))
-        }
-      )
-    ] })) }));
-  }
-  function onOpen(seneca) {
-    seneca.act("aim:app,set:state", {
-      section: "vxg.cmp.BasicSide.show",
-      content: true
-    });
-  }
-  function addItem(seneca, led_add) {
-    seneca.act("aim:app,set:state", {
-      section: "vxg.trigger.led.add",
-      content: ++led_add
-    });
-  }
-  const { Child: Child$4, Skip: Skip$1 } = gubu_minExports.Gubu;
-  console.log("BasicMain 1");
-  const BasicMainSpecShape = gubu_minExports.Gubu({
-    main: {
-      view: {
-        default: String
-      }
-    },
-    view: Child$4({
-      title: String,
-      paramId: Skip$1(String),
-      name: String,
-      content: {
-        def: {
-          canon: Skip$1(String),
-          add: {
-            active: true
-          },
-          subview: Child$4({
-            render: "collection",
-            default: false,
-            kind: "led",
-            active: Skip$1(Boolean),
-            cmp: Skip$1(String),
-            editingMode: "none",
-            head: {
-              cmp: Skip$1(String)
-            },
-            foot: {
-              cmp: Skip$1(String)
-            },
-            linkPath: Skip$1(String),
-            enableColumnFilters: false
-          }),
-          id: Skip$1({
-            field: String
-          }),
-          field: Skip$1({}),
-          columnVisibility: Skip$1({})
-        }
-      }
-    })
-  });
-  function Foo() {
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("h1", { children: "FOO" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(reactRouterDom.Link, { to: "/view/bar", children: "bar" })
-    ] });
-  }
-  function Bar() {
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("h1", { children: "BAR" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(reactRouterDom.Link, { to: "/view/foo", children: "foo" })
-    ] });
-  }
-  const viewMap = {
-    foo: Foo,
-    bar: Bar
-  };
-  function BasicMain(props) {
-    const { ctx, spec } = props;
-    const { seneca } = ctx();
-    const viewName = reactRedux.useSelector((state) => state.main.view.current);
-    const params = reactRouterDom.useParams();
-    if (viewName !== params.view) {
-      seneca.act("aim:app,set:view", { view: params.view });
-    }
-    const View = viewMap[viewName];
-    const viewSpec = {};
-    return /* @__PURE__ */ jsxRuntimeExports.jsx(material.Box, { className: "vxg-BasicMain", children: /* @__PURE__ */ jsxRuntimeExports.jsx(material.Box, { className: "vxg-BasicMain-container", children: View && /* @__PURE__ */ jsxRuntimeExports.jsx(View, { ctx, spec: viewSpec }) }) });
-  }
-  var ChevronLeft = {};
-  var interopRequireDefault$2 = { exports: {} };
-  var interopRequireDefault = interopRequireDefault$2.exports;
-  (function(module2) {
-    function _interopRequireDefault2(obj) {
-      return obj && obj.__esModule ? obj : {
-        "default": obj
-      };
-    }
-    module2.exports = _interopRequireDefault2, module2.exports.__esModule = true, module2.exports["default"] = module2.exports;
-  })(interopRequireDefault$2);
-  var interopRequireDefaultExports = interopRequireDefault$2.exports;
-  const interopRequireDefault$1 = /* @__PURE__ */ getDefaultExportFromCjs(interopRequireDefaultExports);
-  var createSvgIcon = {};
   "use client";
   "use client";
   "use client";
@@ -12656,7 +10133,7 @@ Please use another name.` : formatMuiErrorMessage(18));
     __proto__: null,
     capitalize,
     createChainedFunction,
-    createSvgIcon: createSvgIcon$1,
+    createSvgIcon,
     debounce: debounce$1,
     deprecatedPropType,
     isMuiElement,
@@ -12677,7 +10154,7 @@ Please use another name.` : formatMuiErrorMessage(18));
   var hasRequiredCreateSvgIcon;
   function requireCreateSvgIcon() {
     if (hasRequiredCreateSvgIcon)
-      return createSvgIcon;
+      return createSvgIcon$1;
     hasRequiredCreateSvgIcon = 1;
     (function(exports3) {
       "use strict";
@@ -12692,8 +10169,8 @@ Please use another name.` : formatMuiErrorMessage(18));
         }
       });
       var _utils = require$$0;
-    })(createSvgIcon);
-    return createSvgIcon;
+    })(createSvgIcon$1);
+    return createSvgIcon$1;
   }
   "use strict";
   "use client";
@@ -12708,56 +10185,55 @@ Please use another name.` : formatMuiErrorMessage(18));
     d: "M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"
   }), "ChevronLeft");
   default_1$w = ChevronLeft.default = _default$w;
-  const { Child: Child$3 } = gubu_minExports.Gubu;
+  const CMPNAME$1 = "BasicSide";
+  console.log(CMPNAME$1, "1");
+  const { Child: Child$3, Open, Required } = gubu_minExports.Gubu;
   const BasicSideSpecShape = gubu_minExports.Gubu({
     side: {
-      logo: {
-        img: String
-      },
-      variant: String,
-      section: Child$3({
-        title: String,
-        divider: Boolean,
-        item: Child$3({
-          kind: String,
-          label: String,
-          icon: String,
-          path: String,
-          access: Child$3(Boolean, {})
-        })
-      })
+      name: String,
+      active: Boolean
     },
-    view: {}
-  });
-  function onClose(seneca) {
-    seneca.act("aim:app,set:state", {
-      section: "vxg.cmp.BasicSide.show",
-      content: false
-    });
-  }
+    view: Child$3(Open({
+      title: String
+    }), Required({})),
+    // Set MUI component props directly 
+    mui: {
+      Drawer: {}
+    }
+  }, { prefix: CMPNAME$1 });
   function BasicSide(props) {
-    const { vxg, ctx } = props;
-    const { seneca, model } = ctx();
-    let viewMap2 = model.app.web.frame.private.view;
-    let { cmap: cmap2 } = seneca.context;
+    const { spec, ctx } = props;
+    const basicSideSpec = BasicSideSpecShape(spec);
     const navigate = reactRouterDom.useNavigate();
     const nav = reactRedux.useSelector((state) => state.main.nav);
-    const sections = Object.values(nav.section).filter((n) => n.active).map((n) => ({
-      name: n.name,
-      items: Object.values(n.item).filter((n2) => n2.active && viewMap2[n2.view]).map((n2) => ({
-        name: n2.name,
-        view: n2.view,
-        title: viewMap2[n2.view].title
-      }))
-    }));
+    const viewMap = basicSideSpec.view;
+    const mode = nav.mode;
+    const sections = vmap(nav.section, {
+      active: vmap.DEL,
+      name: vmap.ID,
+      items: (...a) => vmap(a[2].item, {
+        active: vmap.DEL,
+        name: vmap.ID,
+        view: vmap.ID,
+        title: (...a2) => viewMap[a2[2].view].title
+      })
+    });
     const selectView = React.useCallback((view) => navigate("/view/" + view), []);
     return /* @__PURE__ */ jsxRuntimeExports.jsx(
       material.Drawer,
-      {
+      __spreadProps(__spreadValues({
         variant: "persistent",
         anchor: "left",
-        open: true,
+        open: "shown" === mode,
         className: "vxg-BasicSide",
+        sx: (theme) => ({
+          "& .MuiDrawer-paper": {
+            // TODO: should use actual toolbar height; 16 should be from standard spacing
+            paddingTop: theme.mixins.toolbar.minHeight + 16 + "px",
+            width: "var(--vxg-side-width)"
+          }
+        })
+      }, spec.mui.Drawer), {
         children: sections.map(
           (section) => /* @__PURE__ */ jsxRuntimeExports.jsxs(React.Fragment, { children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -12791,12 +10267,12 @@ Please use another name.` : formatMuiErrorMessage(18));
             /* @__PURE__ */ jsxRuntimeExports.jsx(material.Divider, {})
           ] }, section.name)
         )
-      }
+      })
     );
   }
+  const CMPNAME = "BasicAdmin";
   console.log("BasicAdmin 1");
   const { Child: Child$2 } = gubu_minExports.Gubu;
-  const cmpname = "BasicAdmin";
   const BasicAdminSpecShape = gubu_minExports.Gubu({
     frame: {
       name: String,
@@ -12805,13 +10281,13 @@ Please use another name.` : formatMuiErrorMessage(18));
       view: Child$2({}),
       nav: Child$2({})
     }
-  }, { prefix: cmpname });
+  }, { prefix: CMPNAME });
   function Loading() {
-    return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: "LOADING" });
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(material.Container, { children: "LOADING" });
   }
   function BasicAdmin(props) {
     const { ctx, spec } = props;
-    const { seneca } = ctx();
+    const { seneca, model } = ctx();
     const [ready, setReady] = React.useState("init");
     React.useEffect(() => {
       if ("init" !== ready) {
@@ -12824,86 +10300,41 @@ Please use another name.` : formatMuiErrorMessage(18));
     }, []);
     const basicAdminSpec = BasicAdminSpecShape(spec);
     const { head, side, main: main2, foot } = basicAdminSpec.frame.part;
-    console.log("side", side);
+    const headSpec = {
+      head,
+      mui: {
+        // TODO: set in theme: https://mui.com/material-ui/customization/z-index/
+        AppBar: { style: { zIndex: 4e3 } }
+      }
+    };
+    const sideSpec = {
+      side,
+      view: model.app.web.frame.private.view,
+      mui: {
+        Drawer: { style: { zIndex: 3e3 } }
+      }
+    };
+    const mainSpec = {
+      main: main2,
+      view: model.app.web.frame.private.view,
+      mui: {
+        Container: { style: { zIndex: 1e3 } }
+      }
+    };
     return "done" === ready ? /* @__PURE__ */ jsxRuntimeExports.jsxs(material.Box, { className: "vxg-BasicAdmin", children: [
-      (head == null ? void 0 : head.active) && /* @__PURE__ */ jsxRuntimeExports.jsx(BasicHead, { ctx, spec: { head } }),
-      (side == null ? void 0 : side.active) && /* @__PURE__ */ jsxRuntimeExports.jsx(BasicSide, { ctx, spec: { side } }),
-      (main2 == null ? void 0 : main2.active) && /* @__PURE__ */ jsxRuntimeExports.jsx(BasicMain, { ctx, spec: { main: main2 } })
+      (head == null ? void 0 : head.active) && /* @__PURE__ */ jsxRuntimeExports.jsx(BasicHead, { ctx, spec: headSpec }),
+      (side == null ? void 0 : side.active) && /* @__PURE__ */ jsxRuntimeExports.jsx(BasicSide, { ctx, spec: sideSpec }),
+      (main2 == null ? void 0 : main2.active) && /* @__PURE__ */ jsxRuntimeExports.jsx(BasicMain, { ctx, spec: mainSpec })
     ] }) : /* @__PURE__ */ jsxRuntimeExports.jsx(Loading, {});
   }
-  function cmap(o, p) {
-    return Object.entries(o).reduce((r2, n, _2) => (_2 = Object.entries(p).reduce((s, m) => cmap.DEL === s ? s : (s[m[0]] = "function" === typeof m[1] ? m[1](n[1][m[0]]) : m[1], cmap.DEL === s[m[0]] ? cmap.DEL : s), {}), cmap.DEL === _2 ? 0 : r2[n[0]] = _2, r2), {});
-  }
-  cmap.ID = (x) => x;
-  cmap.DEL = (x) => x ? x : cmap.DEL;
   function init(seneca, done) {
     return __async(this, null, function* () {
       console.log("BasicAdmin init");
       seneca.context.vxg = seneca.context.vxg || {};
       seneca.context.vxg.BasicAdmin = seneca.context.vxg.BasicAdmin || {};
-      seneca.context.cmap = cmap;
       if (!seneca.context.vxg.BasicAdmin.preparing) {
         seneca.context.vxg.BasicAdmin.preparing = true;
-        seneca.use(function BasicAdmin2() {
-          const seneca2 = this;
-          seneca2.message(
-            "aim:app,prepare:app,redux$:true",
-            function prepareApp(_msg, meta) {
-              return __async(this, null, function* () {
-                let state = meta.custom.state;
-                let model = seneca2.context.model;
-                let frame = model.app.web.frame.private;
-                let viewMap2 = frame.view;
-                let sectionMap = frame.nav.section;
-                state.view = {
-                  current: ""
-                };
-                state.nav = {
-                  section: cmap(sectionMap, {
-                    name: cmap.ID,
-                    active: cmap.DEL,
-                    item: (x) => cmap(x, {
-                      active: cmap.DEL,
-                      view: cmap.ID,
-                      name: cmap.ID
-                    })
-                  })
-                  /*
-                                  Object.values(sectionMap)
-                                  .filter((n:any)=>n.active)
-                                  .reduce((m:any,n:any)=>(m[n.name]={
-                                    name: n.name,
-                                    active: n.active,
-                  
-                  
-                                    item: Object.values(n.item)
-                                      .filter((n:any)=>viewMap[n.view]?.active)
-                                      .reduce((m:any,n:any)=>(m[n.name]={
-                                        active: n.active,
-                                        view: n.view,
-                                        name: n.name,
-                  },m),{})
-                  },m),{})
-                  */
-                };
-              });
-            }
-          ).message(
-            "aim:app,set:view,redux$:true",
-            { view: String },
-            function setView(msg, meta) {
-              return __async(this, null, function* () {
-                let viewName = msg.view;
-                let state = meta.custom.state;
-                state.view.current = viewName;
-              });
-            }
-          ).prepare(function() {
-            return __async(this, null, function* () {
-              yield this.post("aim:app,prepare:app");
-            });
-          });
-        });
+        seneca.use(VxgSeneca);
         yield seneca.ready(done);
       }
     });
@@ -13041,7 +10472,7 @@ Please use another name.` : formatMuiErrorMessage(18));
       }
     );
   }
-  const _excluded$1U = ["defaultProps", "mixins", "overrides", "palette", "props", "styleOverrides"], _excluded2$e = ["type", "mode"];
+  const _excluded$1X = ["defaultProps", "mixins", "overrides", "palette", "props", "styleOverrides"], _excluded2$e = ["type", "mode"];
   function adaptV4Theme(inputTheme) {
     if (process.env.NODE_ENV !== "production") {
       console.warn(["MUI: adaptV4Theme() is deprecated.", "Follow the upgrade guide on https://mui.com/r/migration-v4#theme."].join("\n"));
@@ -13053,7 +10484,7 @@ Please use another name.` : formatMuiErrorMessage(18));
       palette: palette2 = {},
       props = {},
       styleOverrides = {}
-    } = inputTheme, other = _objectWithoutPropertiesLoose(inputTheme, _excluded$1U);
+    } = inputTheme, other = _objectWithoutPropertiesLoose(inputTheme, _excluded$1X);
     const theme = _extends$2({}, other, {
       components: {}
     });
@@ -13248,11 +10679,11 @@ Use unitless line heights instead.` : formatMuiErrorMessage(6));
     return theme;
   }
   "use client";
-  const _excluded$1T = ["theme"];
+  const _excluded$1W = ["theme"];
   function ThemeProvider(_ref) {
     let {
       theme: themeInput
-    } = _ref, props = _objectWithoutPropertiesLoose(_ref, _excluded$1T);
+    } = _ref, props = _objectWithoutPropertiesLoose(_ref, _excluded$1W);
     const scopedTheme = themeInput[THEME_ID];
     return /* @__PURE__ */ jsxRuntimeExports.jsx(ThemeProvider$1, _extends$2({}, props, {
       themeId: scopedTheme ? THEME_ID : void 0,
@@ -13289,7 +10720,7 @@ See https://mui.com/r/migration-v4/#mui-material-styles for more details.` : for
     return !!keys[0].match(/(cssVarPrefix|typography|mixins|breakpoints|direction|transitions)/) || !!keys[0].match(/sxConfig$/) || // ends with sxConfig
     keys[0] === "palette" && !!((_keys$ = keys[1]) != null && _keys$.match(/(mode|contrastThreshold|tonalOffset)/));
   }
-  const _excluded$1S = ["colorSchemes", "cssVarPrefix", "shouldSkipGeneratingVar"], _excluded2$d = ["palette"];
+  const _excluded$1V = ["colorSchemes", "cssVarPrefix", "shouldSkipGeneratingVar"], _excluded2$d = ["palette"];
   const defaultDarkOverlays = [...Array(25)].map((_2, index2) => {
     if (index2 === 0) {
       return void 0;
@@ -13335,7 +10766,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       colorSchemes: colorSchemesInput = {},
       cssVarPrefix = "mui",
       shouldSkipGeneratingVar: shouldSkipGeneratingVar$1 = shouldSkipGeneratingVar
-    } = options, input = _objectWithoutPropertiesLoose(options, _excluded$1S);
+    } = options, input = _objectWithoutPropertiesLoose(options, _excluded$1V);
     const getCssVar = createGetCssVar(cssVarPrefix);
     const _createThemeWithoutVa = createTheme(_extends$2({}, input, colorSchemesInput.light && {
       palette: (_colorSchemesInput$li = colorSchemesInput.light) == null ? void 0 : _colorSchemesInput$li.palette
@@ -13609,8 +11040,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const tableContainerClasses = generateUtilityClasses("MuiTableContainer", ["root"]);
   "use client";
-  const _excluded$1R = ["className", "component"];
-  const useUtilityClasses$1y = (ownerState) => {
+  const _excluded$1U = ["className", "component"];
+  const useUtilityClasses$1A = (ownerState) => {
     const {
       classes
     } = ownerState;
@@ -13635,11 +11066,11 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const {
       className,
       component = "div"
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1R);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1U);
     const ownerState = _extends$2({}, props, {
       component
     });
-    const classes = useUtilityClasses$1y(ownerState);
+    const classes = useUtilityClasses$1A(ownerState);
     return /* @__PURE__ */ jsxRuntimeExports.jsx(TableContainerRoot, _extends$2({
       ref,
       as: component,
@@ -14453,8 +11884,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const tableClasses = generateUtilityClasses("MuiTable", ["root", "stickyHeader"]);
   "use client";
-  const _excluded$1Q = ["className", "component", "padding", "size", "stickyHeader"];
-  const useUtilityClasses$1x = (ownerState) => {
+  const _excluded$1T = ["className", "component", "padding", "size", "stickyHeader"];
+  const useUtilityClasses$1z = (ownerState) => {
     const {
       classes,
       stickyHeader
@@ -14502,14 +11933,14 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       padding: padding2 = "normal",
       size: size2 = "medium",
       stickyHeader = false
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1Q);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1T);
     const ownerState = _extends$2({}, props, {
       component,
       padding: padding2,
       size: size2,
       stickyHeader
     });
-    const classes = useUtilityClasses$1x(ownerState);
+    const classes = useUtilityClasses$1z(ownerState);
     const table = React__namespace.useMemo(() => ({
       padding: padding2,
       size: size2,
@@ -14580,8 +12011,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const tableBodyClasses = generateUtilityClasses("MuiTableBody", ["root"]);
   "use client";
-  const _excluded$1P = ["className", "component"];
-  const useUtilityClasses$1w = (ownerState) => {
+  const _excluded$1S = ["className", "component"];
+  const useUtilityClasses$1y = (ownerState) => {
     const {
       classes
     } = ownerState;
@@ -14609,11 +12040,11 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const {
       className,
       component = defaultComponent$3
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1P);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1S);
     const ownerState = _extends$2({}, props, {
       component
     });
-    const classes = useUtilityClasses$1w(ownerState);
+    const classes = useUtilityClasses$1y(ownerState);
     return /* @__PURE__ */ jsxRuntimeExports.jsx(Tablelvl2Context.Provider, {
       value: tablelvl2$2,
       children: /* @__PURE__ */ jsxRuntimeExports.jsx(TableBodyRoot, _extends$2({
@@ -14658,8 +12089,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const typographyClasses = generateUtilityClasses("MuiTypography", ["root", "h1", "h2", "h3", "h4", "h5", "h6", "subtitle1", "subtitle2", "body1", "body2", "inherit", "button", "caption", "overline", "alignLeft", "alignRight", "alignCenter", "alignJustify", "noWrap", "gutterBottom", "paragraph"]);
   "use client";
-  const _excluded$1O = ["align", "className", "component", "gutterBottom", "noWrap", "paragraph", "variant", "variantMapping"];
-  const useUtilityClasses$1v = (ownerState) => {
+  const _excluded$1R = ["align", "className", "component", "gutterBottom", "noWrap", "paragraph", "variant", "variantMapping"];
+  const useUtilityClasses$1x = (ownerState) => {
     const {
       align,
       gutterBottom,
@@ -14742,7 +12173,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       paragraph = false,
       variant = "body1",
       variantMapping = defaultVariantMapping
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1O);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1R);
     const ownerState = _extends$2({}, props, {
       align,
       color: color2,
@@ -14755,7 +12186,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       variantMapping
     });
     const Component = component || (paragraph ? "p" : variantMapping[variant] || defaultVariantMapping[variant]) || "span";
-    const classes = useUtilityClasses$1v(ownerState);
+    const classes = useUtilityClasses$1x(ownerState);
     return /* @__PURE__ */ jsxRuntimeExports.jsx(TypographyRoot, _extends$2({
       as: Component,
       ref,
@@ -14844,8 +12275,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const tableRowClasses = generateUtilityClasses("MuiTableRow", ["root", "selected", "hover", "head", "footer"]);
   "use client";
-  const _excluded$1N = ["className", "component", "hover", "selected"];
-  const useUtilityClasses$1u = (ownerState) => {
+  const _excluded$1Q = ["className", "component", "hover", "selected"];
+  const useUtilityClasses$1w = (ownerState) => {
     const {
       classes,
       selected,
@@ -14896,7 +12327,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       component = defaultComponent$2,
       hover = false,
       selected = false
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1N);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1Q);
     const tablelvl22 = React__namespace.useContext(Tablelvl2Context);
     const ownerState = _extends$2({}, props, {
       component,
@@ -14905,7 +12336,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       head: tablelvl22 && tablelvl22.variant === "head",
       footer: tablelvl22 && tablelvl22.variant === "footer"
     });
-    const classes = useUtilityClasses$1u(ownerState);
+    const classes = useUtilityClasses$1w(ownerState);
     return /* @__PURE__ */ jsxRuntimeExports.jsx(TableRowRoot, _extends$2({
       as: component,
       ref,
@@ -14957,9 +12388,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const skeletonClasses = generateUtilityClasses("MuiSkeleton", ["root", "text", "rectangular", "rounded", "circular", "pulse", "wave", "withChildren", "fitContent", "heightAuto"]);
   "use client";
-  const _excluded$1M = ["animation", "className", "component", "height", "style", "variant", "width"];
-  let _$2 = (t) => t, _t$2, _t2$2, _t3$2, _t4$2;
-  const useUtilityClasses$1t = (ownerState) => {
+  const _excluded$1P = ["animation", "className", "component", "height", "style", "variant", "width"];
+  let _$3 = (t) => t, _t$3, _t2$3, _t3$3, _t4$3;
+  const useUtilityClasses$1v = (ownerState) => {
     const {
       classes,
       variant,
@@ -14973,7 +12404,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     };
     return composeClasses(slots, getSkeletonUtilityClass, classes);
   };
-  const pulseKeyframe = react.keyframes(_t$2 || (_t$2 = _$2`
+  const pulseKeyframe = react.keyframes(_t$3 || (_t$3 = _$3`
   0% {
     opacity: 1;
   }
@@ -14986,7 +12417,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     opacity: 1;
   }
 `));
-  const waveKeyframe = react.keyframes(_t2$2 || (_t2$2 = _$2`
+  const waveKeyframe = react.keyframes(_t2$3 || (_t2$3 = _$3`
   0% {
     transform: translateX(-100%);
   }
@@ -15045,12 +12476,12 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     });
   }, ({
     ownerState
-  }) => ownerState.animation === "pulse" && react.css(_t3$2 || (_t3$2 = _$2`
+  }) => ownerState.animation === "pulse" && react.css(_t3$3 || (_t3$3 = _$3`
       animation: ${0} 2s ease-in-out 0.5s infinite;
     `), pulseKeyframe), ({
     ownerState,
     theme
-  }) => ownerState.animation === "wave" && react.css(_t4$2 || (_t4$2 = _$2`
+  }) => ownerState.animation === "wave" && react.css(_t4$3 || (_t4$3 = _$3`
       position: relative;
       overflow: hidden;
 
@@ -15087,14 +12518,14 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       style: style2,
       variant = "text",
       width: width2
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1M);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1P);
     const ownerState = _extends$2({}, props, {
       animation,
       component,
       variant,
       hasChildren: Boolean(other.children)
     });
-    const classes = useUtilityClasses$1t(ownerState);
+    const classes = useUtilityClasses$1v(ownerState);
     return /* @__PURE__ */ jsxRuntimeExports.jsx(SkeletonRoot, _extends$2({
       as: component,
       ref,
@@ -15165,8 +12596,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const tableCellClasses = generateUtilityClasses("MuiTableCell", ["root", "head", "body", "footer", "sizeSmall", "sizeMedium", "paddingCheckbox", "paddingNone", "alignLeft", "alignCenter", "alignRight", "alignJustify", "stickyHeader"]);
   "use client";
-  const _excluded$1L = ["align", "className", "component", "padding", "scope", "size", "sortDirection", "variant"];
-  const useUtilityClasses$1s = (ownerState) => {
+  const _excluded$1O = ["align", "className", "component", "padding", "scope", "size", "sortDirection", "variant"];
+  const useUtilityClasses$1u = (ownerState) => {
     const {
       classes,
       variant,
@@ -15256,7 +12687,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       size: sizeProp,
       sortDirection,
       variant: variantProp
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1L);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1O);
     const table = React__namespace.useContext(TableContext);
     const tablelvl22 = React__namespace.useContext(Tablelvl2Context);
     const isHeadCell = tablelvl22 && tablelvl22.variant === "head";
@@ -15282,7 +12713,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       stickyHeader: variant === "head" && table && table.stickyHeader,
       variant
     });
-    const classes = useUtilityClasses$1s(ownerState);
+    const classes = useUtilityClasses$1u(ownerState);
     let ariaSort = null;
     if (sortDirection) {
       ariaSort = sortDirection === "asc" ? "ascending" : "descending";
@@ -15397,7 +12828,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   function functionalUpdate(updater, input) {
     return typeof updater === "function" ? updater(input) : updater;
   }
-  function noop$1() {
+  function noop$2() {
   }
   function makeStateUpdater(key, instance) {
     return (updater) => {
@@ -18865,13 +16296,2038 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       }))
     }));
   };
+  function _setPrototypeOf(o, p) {
+    _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf2(o2, p2) {
+      o2.__proto__ = p2;
+      return o2;
+    };
+    return _setPrototypeOf(o, p);
+  }
+  function _inheritsLoose(subClass, superClass) {
+    subClass.prototype = Object.create(superClass.prototype);
+    subClass.prototype.constructor = subClass;
+    _setPrototypeOf(subClass, superClass);
+  }
+  function hasClass(element, className) {
+    if (element.classList)
+      return !!className && element.classList.contains(className);
+    return (" " + (element.className.baseVal || element.className) + " ").indexOf(" " + className + " ") !== -1;
+  }
+  function addClass(element, className) {
+    if (element.classList)
+      element.classList.add(className);
+    else if (!hasClass(element, className))
+      if (typeof element.className === "string")
+        element.className = element.className + " " + className;
+      else
+        element.setAttribute("class", (element.className && element.className.baseVal || "") + " " + className);
+  }
+  function replaceClassName(origClass, classToRemove) {
+    return origClass.replace(new RegExp("(^|\\s)" + classToRemove + "(?:\\s|$)", "g"), "$1").replace(/\s+/g, " ").replace(/^\s*|\s*$/g, "");
+  }
+  function removeClass$1(element, className) {
+    if (element.classList) {
+      element.classList.remove(className);
+    } else if (typeof element.className === "string") {
+      element.className = replaceClassName(element.className, className);
+    } else {
+      element.setAttribute("class", replaceClassName(element.className && element.className.baseVal || "", className));
+    }
+  }
+  const config = {
+    disabled: false
+  };
+  var timeoutsShape = process.env.NODE_ENV !== "production" ? PropTypes.oneOfType([PropTypes.number, PropTypes.shape({
+    enter: PropTypes.number,
+    exit: PropTypes.number,
+    appear: PropTypes.number
+  }).isRequired]) : null;
+  var classNamesShape = process.env.NODE_ENV !== "production" ? PropTypes.oneOfType([PropTypes.string, PropTypes.shape({
+    enter: PropTypes.string,
+    exit: PropTypes.string,
+    active: PropTypes.string
+  }), PropTypes.shape({
+    enter: PropTypes.string,
+    enterDone: PropTypes.string,
+    enterActive: PropTypes.string,
+    exit: PropTypes.string,
+    exitDone: PropTypes.string,
+    exitActive: PropTypes.string
+  })]) : null;
+  const TransitionGroupContext = React.createContext(null);
+  var forceReflow = function forceReflow2(node2) {
+    return node2.scrollTop;
+  };
+  var UNMOUNTED = "unmounted";
+  var EXITED = "exited";
+  var ENTERING = "entering";
+  var ENTERED = "entered";
+  var EXITING = "exiting";
+  var Transition = /* @__PURE__ */ function(_React$Component) {
+    _inheritsLoose(Transition2, _React$Component);
+    function Transition2(props, context) {
+      var _this;
+      _this = _React$Component.call(this, props, context) || this;
+      var parentGroup = context;
+      var appear = parentGroup && !parentGroup.isMounting ? props.enter : props.appear;
+      var initialStatus;
+      _this.appearStatus = null;
+      if (props.in) {
+        if (appear) {
+          initialStatus = EXITED;
+          _this.appearStatus = ENTERING;
+        } else {
+          initialStatus = ENTERED;
+        }
+      } else {
+        if (props.unmountOnExit || props.mountOnEnter) {
+          initialStatus = UNMOUNTED;
+        } else {
+          initialStatus = EXITED;
+        }
+      }
+      _this.state = {
+        status: initialStatus
+      };
+      _this.nextCallback = null;
+      return _this;
+    }
+    Transition2.getDerivedStateFromProps = function getDerivedStateFromProps(_ref, prevState) {
+      var nextIn = _ref.in;
+      if (nextIn && prevState.status === UNMOUNTED) {
+        return {
+          status: EXITED
+        };
+      }
+      return null;
+    };
+    var _proto = Transition2.prototype;
+    _proto.componentDidMount = function componentDidMount() {
+      this.updateStatus(true, this.appearStatus);
+    };
+    _proto.componentDidUpdate = function componentDidUpdate(prevProps) {
+      var nextStatus = null;
+      if (prevProps !== this.props) {
+        var status = this.state.status;
+        if (this.props.in) {
+          if (status !== ENTERING && status !== ENTERED) {
+            nextStatus = ENTERING;
+          }
+        } else {
+          if (status === ENTERING || status === ENTERED) {
+            nextStatus = EXITING;
+          }
+        }
+      }
+      this.updateStatus(false, nextStatus);
+    };
+    _proto.componentWillUnmount = function componentWillUnmount() {
+      this.cancelNextCallback();
+    };
+    _proto.getTimeouts = function getTimeouts() {
+      var timeout = this.props.timeout;
+      var exit, enter, appear;
+      exit = enter = appear = timeout;
+      if (timeout != null && typeof timeout !== "number") {
+        exit = timeout.exit;
+        enter = timeout.enter;
+        appear = timeout.appear !== void 0 ? timeout.appear : enter;
+      }
+      return {
+        exit,
+        enter,
+        appear
+      };
+    };
+    _proto.updateStatus = function updateStatus(mounting, nextStatus) {
+      if (mounting === void 0) {
+        mounting = false;
+      }
+      if (nextStatus !== null) {
+        this.cancelNextCallback();
+        if (nextStatus === ENTERING) {
+          if (this.props.unmountOnExit || this.props.mountOnEnter) {
+            var node2 = this.props.nodeRef ? this.props.nodeRef.current : ReactDOM.findDOMNode(this);
+            if (node2)
+              forceReflow(node2);
+          }
+          this.performEnter(mounting);
+        } else {
+          this.performExit();
+        }
+      } else if (this.props.unmountOnExit && this.state.status === EXITED) {
+        this.setState({
+          status: UNMOUNTED
+        });
+      }
+    };
+    _proto.performEnter = function performEnter(mounting) {
+      var _this2 = this;
+      var enter = this.props.enter;
+      var appearing = this.context ? this.context.isMounting : mounting;
+      var _ref2 = this.props.nodeRef ? [appearing] : [ReactDOM.findDOMNode(this), appearing], maybeNode = _ref2[0], maybeAppearing = _ref2[1];
+      var timeouts = this.getTimeouts();
+      var enterTimeout = appearing ? timeouts.appear : timeouts.enter;
+      if (!mounting && !enter || config.disabled) {
+        this.safeSetState({
+          status: ENTERED
+        }, function() {
+          _this2.props.onEntered(maybeNode);
+        });
+        return;
+      }
+      this.props.onEnter(maybeNode, maybeAppearing);
+      this.safeSetState({
+        status: ENTERING
+      }, function() {
+        _this2.props.onEntering(maybeNode, maybeAppearing);
+        _this2.onTransitionEnd(enterTimeout, function() {
+          _this2.safeSetState({
+            status: ENTERED
+          }, function() {
+            _this2.props.onEntered(maybeNode, maybeAppearing);
+          });
+        });
+      });
+    };
+    _proto.performExit = function performExit() {
+      var _this3 = this;
+      var exit = this.props.exit;
+      var timeouts = this.getTimeouts();
+      var maybeNode = this.props.nodeRef ? void 0 : ReactDOM.findDOMNode(this);
+      if (!exit || config.disabled) {
+        this.safeSetState({
+          status: EXITED
+        }, function() {
+          _this3.props.onExited(maybeNode);
+        });
+        return;
+      }
+      this.props.onExit(maybeNode);
+      this.safeSetState({
+        status: EXITING
+      }, function() {
+        _this3.props.onExiting(maybeNode);
+        _this3.onTransitionEnd(timeouts.exit, function() {
+          _this3.safeSetState({
+            status: EXITED
+          }, function() {
+            _this3.props.onExited(maybeNode);
+          });
+        });
+      });
+    };
+    _proto.cancelNextCallback = function cancelNextCallback() {
+      if (this.nextCallback !== null) {
+        this.nextCallback.cancel();
+        this.nextCallback = null;
+      }
+    };
+    _proto.safeSetState = function safeSetState(nextState, callback) {
+      callback = this.setNextCallback(callback);
+      this.setState(nextState, callback);
+    };
+    _proto.setNextCallback = function setNextCallback(callback) {
+      var _this4 = this;
+      var active = true;
+      this.nextCallback = function(event) {
+        if (active) {
+          active = false;
+          _this4.nextCallback = null;
+          callback(event);
+        }
+      };
+      this.nextCallback.cancel = function() {
+        active = false;
+      };
+      return this.nextCallback;
+    };
+    _proto.onTransitionEnd = function onTransitionEnd(timeout, handler) {
+      this.setNextCallback(handler);
+      var node2 = this.props.nodeRef ? this.props.nodeRef.current : ReactDOM.findDOMNode(this);
+      var doesNotHaveTimeoutOrListener = timeout == null && !this.props.addEndListener;
+      if (!node2 || doesNotHaveTimeoutOrListener) {
+        setTimeout(this.nextCallback, 0);
+        return;
+      }
+      if (this.props.addEndListener) {
+        var _ref3 = this.props.nodeRef ? [this.nextCallback] : [node2, this.nextCallback], maybeNode = _ref3[0], maybeNextCallback = _ref3[1];
+        this.props.addEndListener(maybeNode, maybeNextCallback);
+      }
+      if (timeout != null) {
+        setTimeout(this.nextCallback, timeout);
+      }
+    };
+    _proto.render = function render() {
+      var status = this.state.status;
+      if (status === UNMOUNTED) {
+        return null;
+      }
+      var _this$props = this.props, children = _this$props.children, _in = _this$props.in, _mountOnEnter = _this$props.mountOnEnter, _unmountOnExit = _this$props.unmountOnExit, _appear = _this$props.appear, _enter = _this$props.enter, _exit = _this$props.exit, _timeout = _this$props.timeout, _addEndListener = _this$props.addEndListener, _onEnter = _this$props.onEnter, _onEntering = _this$props.onEntering, _onEntered = _this$props.onEntered, _onExit = _this$props.onExit, _onExiting = _this$props.onExiting, _onExited = _this$props.onExited, _nodeRef = _this$props.nodeRef, childProps = _objectWithoutPropertiesLoose(_this$props, ["children", "in", "mountOnEnter", "unmountOnExit", "appear", "enter", "exit", "timeout", "addEndListener", "onEnter", "onEntering", "onEntered", "onExit", "onExiting", "onExited", "nodeRef"]);
+      return (
+        // allows for nested Transitions
+        /* @__PURE__ */ React.createElement(TransitionGroupContext.Provider, {
+          value: null
+        }, typeof children === "function" ? children(status, childProps) : React.cloneElement(React.Children.only(children), childProps))
+      );
+    };
+    return Transition2;
+  }(React.Component);
+  Transition.contextType = TransitionGroupContext;
+  Transition.propTypes = process.env.NODE_ENV !== "production" ? {
+    /**
+     * A React reference to DOM element that need to transition:
+     * https://stackoverflow.com/a/51127130/4671932
+     *
+     *   - When `nodeRef` prop is used, `node` is not passed to callback functions
+     *      (e.g. `onEnter`) because user already has direct access to the node.
+     *   - When changing `key` prop of `Transition` in a `TransitionGroup` a new
+     *     `nodeRef` need to be provided to `Transition` with changed `key` prop
+     *     (see
+     *     [test/CSSTransition-test.js](https://github.com/reactjs/react-transition-group/blob/13435f897b3ab71f6e19d724f145596f5910581c/test/CSSTransition-test.js#L362-L437)).
+     */
+    nodeRef: PropTypes.shape({
+      current: typeof Element === "undefined" ? PropTypes.any : function(propValue, key, componentName, location2, propFullName, secret) {
+        var value = propValue[key];
+        return PropTypes.instanceOf(value && "ownerDocument" in value ? value.ownerDocument.defaultView.Element : Element)(propValue, key, componentName, location2, propFullName, secret);
+      }
+    }),
+    /**
+     * A `function` child can be used instead of a React element. This function is
+     * called with the current transition status (`'entering'`, `'entered'`,
+     * `'exiting'`, `'exited'`), which can be used to apply context
+     * specific props to a component.
+     *
+     * ```jsx
+     * <Transition in={this.state.in} timeout={150}>
+     *   {state => (
+     *     <MyComponent className={`fade fade-${state}`} />
+     *   )}
+     * </Transition>
+     * ```
+     */
+    children: PropTypes.oneOfType([PropTypes.func.isRequired, PropTypes.element.isRequired]).isRequired,
+    /**
+     * Show the component; triggers the enter or exit states
+     */
+    in: PropTypes.bool,
+    /**
+     * By default the child component is mounted immediately along with
+     * the parent `Transition` component. If you want to "lazy mount" the component on the
+     * first `in={true}` you can set `mountOnEnter`. After the first enter transition the component will stay
+     * mounted, even on "exited", unless you also specify `unmountOnExit`.
+     */
+    mountOnEnter: PropTypes.bool,
+    /**
+     * By default the child component stays mounted after it reaches the `'exited'` state.
+     * Set `unmountOnExit` if you'd prefer to unmount the component after it finishes exiting.
+     */
+    unmountOnExit: PropTypes.bool,
+    /**
+     * By default the child component does not perform the enter transition when
+     * it first mounts, regardless of the value of `in`. If you want this
+     * behavior, set both `appear` and `in` to `true`.
+     *
+     * > **Note**: there are no special appear states like `appearing`/`appeared`, this prop
+     * > only adds an additional enter transition. However, in the
+     * > `<CSSTransition>` component that first enter transition does result in
+     * > additional `.appear-*` classes, that way you can choose to style it
+     * > differently.
+     */
+    appear: PropTypes.bool,
+    /**
+     * Enable or disable enter transitions.
+     */
+    enter: PropTypes.bool,
+    /**
+     * Enable or disable exit transitions.
+     */
+    exit: PropTypes.bool,
+    /**
+     * The duration of the transition, in milliseconds.
+     * Required unless `addEndListener` is provided.
+     *
+     * You may specify a single timeout for all transitions:
+     *
+     * ```jsx
+     * timeout={500}
+     * ```
+     *
+     * or individually:
+     *
+     * ```jsx
+     * timeout={{
+     *  appear: 500,
+     *  enter: 300,
+     *  exit: 500,
+     * }}
+     * ```
+     *
+     * - `appear` defaults to the value of `enter`
+     * - `enter` defaults to `0`
+     * - `exit` defaults to `0`
+     *
+     * @type {number | { enter?: number, exit?: number, appear?: number }}
+     */
+    timeout: function timeout(props) {
+      var pt = timeoutsShape;
+      if (!props.addEndListener)
+        pt = pt.isRequired;
+      for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+        args[_key - 1] = arguments[_key];
+      }
+      return pt.apply(void 0, [props].concat(args));
+    },
+    /**
+     * Add a custom transition end trigger. Called with the transitioning
+     * DOM node and a `done` callback. Allows for more fine grained transition end
+     * logic. Timeouts are still used as a fallback if provided.
+     *
+     * **Note**: when `nodeRef` prop is passed, `node` is not passed.
+     *
+     * ```jsx
+     * addEndListener={(node, done) => {
+     *   // use the css transitionend event to mark the finish of a transition
+     *   node.addEventListener('transitionend', done, false);
+     * }}
+     * ```
+     */
+    addEndListener: PropTypes.func,
+    /**
+     * Callback fired before the "entering" status is applied. An extra parameter
+     * `isAppearing` is supplied to indicate if the enter stage is occurring on the initial mount
+     *
+     * **Note**: when `nodeRef` prop is passed, `node` is not passed.
+     *
+     * @type Function(node: HtmlElement, isAppearing: bool) -> void
+     */
+    onEnter: PropTypes.func,
+    /**
+     * Callback fired after the "entering" status is applied. An extra parameter
+     * `isAppearing` is supplied to indicate if the enter stage is occurring on the initial mount
+     *
+     * **Note**: when `nodeRef` prop is passed, `node` is not passed.
+     *
+     * @type Function(node: HtmlElement, isAppearing: bool)
+     */
+    onEntering: PropTypes.func,
+    /**
+     * Callback fired after the "entered" status is applied. An extra parameter
+     * `isAppearing` is supplied to indicate if the enter stage is occurring on the initial mount
+     *
+     * **Note**: when `nodeRef` prop is passed, `node` is not passed.
+     *
+     * @type Function(node: HtmlElement, isAppearing: bool) -> void
+     */
+    onEntered: PropTypes.func,
+    /**
+     * Callback fired before the "exiting" status is applied.
+     *
+     * **Note**: when `nodeRef` prop is passed, `node` is not passed.
+     *
+     * @type Function(node: HtmlElement) -> void
+     */
+    onExit: PropTypes.func,
+    /**
+     * Callback fired after the "exiting" status is applied.
+     *
+     * **Note**: when `nodeRef` prop is passed, `node` is not passed.
+     *
+     * @type Function(node: HtmlElement) -> void
+     */
+    onExiting: PropTypes.func,
+    /**
+     * Callback fired after the "exited" status is applied.
+     *
+     * **Note**: when `nodeRef` prop is passed, `node` is not passed
+     *
+     * @type Function(node: HtmlElement) -> void
+     */
+    onExited: PropTypes.func
+  } : {};
+  function noop$1() {
+  }
+  Transition.defaultProps = {
+    in: false,
+    mountOnEnter: false,
+    unmountOnExit: false,
+    appear: false,
+    enter: true,
+    exit: true,
+    onEnter: noop$1,
+    onEntering: noop$1,
+    onEntered: noop$1,
+    onExit: noop$1,
+    onExiting: noop$1,
+    onExited: noop$1
+  };
+  Transition.UNMOUNTED = UNMOUNTED;
+  Transition.EXITED = EXITED;
+  Transition.ENTERING = ENTERING;
+  Transition.ENTERED = ENTERED;
+  Transition.EXITING = EXITING;
+  var _addClass = function addClass$1(node2, classes) {
+    return node2 && classes && classes.split(" ").forEach(function(c) {
+      return addClass(node2, c);
+    });
+  };
+  var removeClass = function removeClass2(node2, classes) {
+    return node2 && classes && classes.split(" ").forEach(function(c) {
+      return removeClass$1(node2, c);
+    });
+  };
+  var CSSTransition = /* @__PURE__ */ function(_React$Component) {
+    _inheritsLoose(CSSTransition2, _React$Component);
+    function CSSTransition2() {
+      var _this;
+      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+      _this = _React$Component.call.apply(_React$Component, [this].concat(args)) || this;
+      _this.appliedClasses = {
+        appear: {},
+        enter: {},
+        exit: {}
+      };
+      _this.onEnter = function(maybeNode, maybeAppearing) {
+        var _this$resolveArgument = _this.resolveArguments(maybeNode, maybeAppearing), node2 = _this$resolveArgument[0], appearing = _this$resolveArgument[1];
+        _this.removeClasses(node2, "exit");
+        _this.addClass(node2, appearing ? "appear" : "enter", "base");
+        if (_this.props.onEnter) {
+          _this.props.onEnter(maybeNode, maybeAppearing);
+        }
+      };
+      _this.onEntering = function(maybeNode, maybeAppearing) {
+        var _this$resolveArgument2 = _this.resolveArguments(maybeNode, maybeAppearing), node2 = _this$resolveArgument2[0], appearing = _this$resolveArgument2[1];
+        var type = appearing ? "appear" : "enter";
+        _this.addClass(node2, type, "active");
+        if (_this.props.onEntering) {
+          _this.props.onEntering(maybeNode, maybeAppearing);
+        }
+      };
+      _this.onEntered = function(maybeNode, maybeAppearing) {
+        var _this$resolveArgument3 = _this.resolveArguments(maybeNode, maybeAppearing), node2 = _this$resolveArgument3[0], appearing = _this$resolveArgument3[1];
+        var type = appearing ? "appear" : "enter";
+        _this.removeClasses(node2, type);
+        _this.addClass(node2, type, "done");
+        if (_this.props.onEntered) {
+          _this.props.onEntered(maybeNode, maybeAppearing);
+        }
+      };
+      _this.onExit = function(maybeNode) {
+        var _this$resolveArgument4 = _this.resolveArguments(maybeNode), node2 = _this$resolveArgument4[0];
+        _this.removeClasses(node2, "appear");
+        _this.removeClasses(node2, "enter");
+        _this.addClass(node2, "exit", "base");
+        if (_this.props.onExit) {
+          _this.props.onExit(maybeNode);
+        }
+      };
+      _this.onExiting = function(maybeNode) {
+        var _this$resolveArgument5 = _this.resolveArguments(maybeNode), node2 = _this$resolveArgument5[0];
+        _this.addClass(node2, "exit", "active");
+        if (_this.props.onExiting) {
+          _this.props.onExiting(maybeNode);
+        }
+      };
+      _this.onExited = function(maybeNode) {
+        var _this$resolveArgument6 = _this.resolveArguments(maybeNode), node2 = _this$resolveArgument6[0];
+        _this.removeClasses(node2, "exit");
+        _this.addClass(node2, "exit", "done");
+        if (_this.props.onExited) {
+          _this.props.onExited(maybeNode);
+        }
+      };
+      _this.resolveArguments = function(maybeNode, maybeAppearing) {
+        return _this.props.nodeRef ? [_this.props.nodeRef.current, maybeNode] : [maybeNode, maybeAppearing];
+      };
+      _this.getClassNames = function(type) {
+        var classNames = _this.props.classNames;
+        var isStringClassNames = typeof classNames === "string";
+        var prefix2 = isStringClassNames && classNames ? classNames + "-" : "";
+        var baseClassName = isStringClassNames ? "" + prefix2 + type : classNames[type];
+        var activeClassName = isStringClassNames ? baseClassName + "-active" : classNames[type + "Active"];
+        var doneClassName = isStringClassNames ? baseClassName + "-done" : classNames[type + "Done"];
+        return {
+          baseClassName,
+          activeClassName,
+          doneClassName
+        };
+      };
+      return _this;
+    }
+    var _proto = CSSTransition2.prototype;
+    _proto.addClass = function addClass2(node2, type, phase) {
+      var className = this.getClassNames(type)[phase + "ClassName"];
+      var _this$getClassNames = this.getClassNames("enter"), doneClassName = _this$getClassNames.doneClassName;
+      if (type === "appear" && phase === "done" && doneClassName) {
+        className += " " + doneClassName;
+      }
+      if (phase === "active") {
+        if (node2)
+          forceReflow(node2);
+      }
+      if (className) {
+        this.appliedClasses[type][phase] = className;
+        _addClass(node2, className);
+      }
+    };
+    _proto.removeClasses = function removeClasses(node2, type) {
+      var _this$appliedClasses$ = this.appliedClasses[type], baseClassName = _this$appliedClasses$.base, activeClassName = _this$appliedClasses$.active, doneClassName = _this$appliedClasses$.done;
+      this.appliedClasses[type] = {};
+      if (baseClassName) {
+        removeClass(node2, baseClassName);
+      }
+      if (activeClassName) {
+        removeClass(node2, activeClassName);
+      }
+      if (doneClassName) {
+        removeClass(node2, doneClassName);
+      }
+    };
+    _proto.render = function render() {
+      var _this$props = this.props, _2 = _this$props.classNames, props = _objectWithoutPropertiesLoose(_this$props, ["classNames"]);
+      return /* @__PURE__ */ React.createElement(Transition, _extends$2({}, props, {
+        onEnter: this.onEnter,
+        onEntered: this.onEntered,
+        onEntering: this.onEntering,
+        onExit: this.onExit,
+        onExiting: this.onExiting,
+        onExited: this.onExited
+      }));
+    };
+    return CSSTransition2;
+  }(React.Component);
+  CSSTransition.defaultProps = {
+    classNames: ""
+  };
+  CSSTransition.propTypes = process.env.NODE_ENV !== "production" ? _extends$2({}, Transition.propTypes, {
+    /**
+     * The animation classNames applied to the component as it appears, enters,
+     * exits or has finished the transition. A single name can be provided, which
+     * will be suffixed for each stage, e.g. `classNames="fade"` applies:
+     *
+     * - `fade-appear`, `fade-appear-active`, `fade-appear-done`
+     * - `fade-enter`, `fade-enter-active`, `fade-enter-done`
+     * - `fade-exit`, `fade-exit-active`, `fade-exit-done`
+     *
+     * A few details to note about how these classes are applied:
+     *
+     * 1. They are _joined_ with the ones that are already defined on the child
+     *    component, so if you want to add some base styles, you can use
+     *    `className` without worrying that it will be overridden.
+     *
+     * 2. If the transition component mounts with `in={false}`, no classes are
+     *    applied yet. You might be expecting `*-exit-done`, but if you think
+     *    about it, a component cannot finish exiting if it hasn't entered yet.
+     *
+     * 2. `fade-appear-done` and `fade-enter-done` will _both_ be applied. This
+     *    allows you to define different behavior for when appearing is done and
+     *    when regular entering is done, using selectors like
+     *    `.fade-enter-done:not(.fade-appear-done)`. For example, you could apply
+     *    an epic entrance animation when element first appears in the DOM using
+     *    [Animate.css](https://daneden.github.io/animate.css/). Otherwise you can
+     *    simply use `fade-enter-done` for defining both cases.
+     *
+     * Each individual classNames can also be specified independently like:
+     *
+     * ```js
+     * classNames={{
+     *  appear: 'my-appear',
+     *  appearActive: 'my-active-appear',
+     *  appearDone: 'my-done-appear',
+     *  enter: 'my-enter',
+     *  enterActive: 'my-active-enter',
+     *  enterDone: 'my-done-enter',
+     *  exit: 'my-exit',
+     *  exitActive: 'my-active-exit',
+     *  exitDone: 'my-done-exit',
+     * }}
+     * ```
+     *
+     * If you want to set these classes using CSS Modules:
+     *
+     * ```js
+     * import styles from './styles.css';
+     * ```
+     *
+     * you might want to use camelCase in your CSS file, that way could simply
+     * spread them instead of listing them one by one:
+     *
+     * ```js
+     * classNames={{ ...styles }}
+     * ```
+     *
+     * @type {string | {
+     *  appear?: string,
+     *  appearActive?: string,
+     *  appearDone?: string,
+     *  enter?: string,
+     *  enterActive?: string,
+     *  enterDone?: string,
+     *  exit?: string,
+     *  exitActive?: string,
+     *  exitDone?: string,
+     * }}
+     */
+    classNames: classNamesShape,
+    /**
+     * A `<Transition>` callback fired immediately after the 'enter' or 'appear' class is
+     * applied.
+     *
+     * **Note**: when `nodeRef` prop is passed, `node` is not passed.
+     *
+     * @type Function(node: HtmlElement, isAppearing: bool)
+     */
+    onEnter: PropTypes.func,
+    /**
+     * A `<Transition>` callback fired immediately after the 'enter-active' or
+     * 'appear-active' class is applied.
+     *
+     * **Note**: when `nodeRef` prop is passed, `node` is not passed.
+     *
+     * @type Function(node: HtmlElement, isAppearing: bool)
+     */
+    onEntering: PropTypes.func,
+    /**
+     * A `<Transition>` callback fired immediately after the 'enter' or
+     * 'appear' classes are **removed** and the `done` class is added to the DOM node.
+     *
+     * **Note**: when `nodeRef` prop is passed, `node` is not passed.
+     *
+     * @type Function(node: HtmlElement, isAppearing: bool)
+     */
+    onEntered: PropTypes.func,
+    /**
+     * A `<Transition>` callback fired immediately after the 'exit' class is
+     * applied.
+     *
+     * **Note**: when `nodeRef` prop is passed, `node` is not passed
+     *
+     * @type Function(node: HtmlElement)
+     */
+    onExit: PropTypes.func,
+    /**
+     * A `<Transition>` callback fired immediately after the 'exit-active' is applied.
+     *
+     * **Note**: when `nodeRef` prop is passed, `node` is not passed
+     *
+     * @type Function(node: HtmlElement)
+     */
+    onExiting: PropTypes.func,
+    /**
+     * A `<Transition>` callback fired immediately after the 'exit' classes
+     * are **removed** and the `exit-done` class is added to the DOM node.
+     *
+     * **Note**: when `nodeRef` prop is passed, `node` is not passed
+     *
+     * @type Function(node: HtmlElement)
+     */
+    onExited: PropTypes.func
+  }) : {};
+  function _assertThisInitialized(self2) {
+    if (self2 === void 0) {
+      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }
+    return self2;
+  }
+  function getChildMapping(children, mapFn) {
+    var mapper = function mapper2(child) {
+      return mapFn && React.isValidElement(child) ? mapFn(child) : child;
+    };
+    var result = /* @__PURE__ */ Object.create(null);
+    if (children)
+      React.Children.map(children, function(c) {
+        return c;
+      }).forEach(function(child) {
+        result[child.key] = mapper(child);
+      });
+    return result;
+  }
+  function mergeChildMappings(prev2, next2) {
+    prev2 = prev2 || {};
+    next2 = next2 || {};
+    function getValueForKey(key) {
+      return key in next2 ? next2[key] : prev2[key];
+    }
+    var nextKeysPending = /* @__PURE__ */ Object.create(null);
+    var pendingKeys = [];
+    for (var prevKey in prev2) {
+      if (prevKey in next2) {
+        if (pendingKeys.length) {
+          nextKeysPending[prevKey] = pendingKeys;
+          pendingKeys = [];
+        }
+      } else {
+        pendingKeys.push(prevKey);
+      }
+    }
+    var i;
+    var childMapping = {};
+    for (var nextKey in next2) {
+      if (nextKeysPending[nextKey]) {
+        for (i = 0; i < nextKeysPending[nextKey].length; i++) {
+          var pendingNextKey = nextKeysPending[nextKey][i];
+          childMapping[nextKeysPending[nextKey][i]] = getValueForKey(pendingNextKey);
+        }
+      }
+      childMapping[nextKey] = getValueForKey(nextKey);
+    }
+    for (i = 0; i < pendingKeys.length; i++) {
+      childMapping[pendingKeys[i]] = getValueForKey(pendingKeys[i]);
+    }
+    return childMapping;
+  }
+  function getProp(child, prop, props) {
+    return props[prop] != null ? props[prop] : child.props[prop];
+  }
+  function getInitialChildMapping(props, onExited) {
+    return getChildMapping(props.children, function(child) {
+      return React.cloneElement(child, {
+        onExited: onExited.bind(null, child),
+        in: true,
+        appear: getProp(child, "appear", props),
+        enter: getProp(child, "enter", props),
+        exit: getProp(child, "exit", props)
+      });
+    });
+  }
+  function getNextChildMapping(nextProps, prevChildMapping, onExited) {
+    var nextChildMapping = getChildMapping(nextProps.children);
+    var children = mergeChildMappings(prevChildMapping, nextChildMapping);
+    Object.keys(children).forEach(function(key) {
+      var child = children[key];
+      if (!React.isValidElement(child))
+        return;
+      var hasPrev = key in prevChildMapping;
+      var hasNext = key in nextChildMapping;
+      var prevChild = prevChildMapping[key];
+      var isLeaving = React.isValidElement(prevChild) && !prevChild.props.in;
+      if (hasNext && (!hasPrev || isLeaving)) {
+        children[key] = React.cloneElement(child, {
+          onExited: onExited.bind(null, child),
+          in: true,
+          exit: getProp(child, "exit", nextProps),
+          enter: getProp(child, "enter", nextProps)
+        });
+      } else if (!hasNext && hasPrev && !isLeaving) {
+        children[key] = React.cloneElement(child, {
+          in: false
+        });
+      } else if (hasNext && hasPrev && React.isValidElement(prevChild)) {
+        children[key] = React.cloneElement(child, {
+          onExited: onExited.bind(null, child),
+          in: prevChild.props.in,
+          exit: getProp(child, "exit", nextProps),
+          enter: getProp(child, "enter", nextProps)
+        });
+      }
+    });
+    return children;
+  }
+  var values = Object.values || function(obj) {
+    return Object.keys(obj).map(function(k) {
+      return obj[k];
+    });
+  };
+  var defaultProps = {
+    component: "div",
+    childFactory: function childFactory(child) {
+      return child;
+    }
+  };
+  var TransitionGroup = /* @__PURE__ */ function(_React$Component) {
+    _inheritsLoose(TransitionGroup2, _React$Component);
+    function TransitionGroup2(props, context) {
+      var _this;
+      _this = _React$Component.call(this, props, context) || this;
+      var handleExited = _this.handleExited.bind(_assertThisInitialized(_this));
+      _this.state = {
+        contextValue: {
+          isMounting: true
+        },
+        handleExited,
+        firstRender: true
+      };
+      return _this;
+    }
+    var _proto = TransitionGroup2.prototype;
+    _proto.componentDidMount = function componentDidMount() {
+      this.mounted = true;
+      this.setState({
+        contextValue: {
+          isMounting: false
+        }
+      });
+    };
+    _proto.componentWillUnmount = function componentWillUnmount() {
+      this.mounted = false;
+    };
+    TransitionGroup2.getDerivedStateFromProps = function getDerivedStateFromProps(nextProps, _ref) {
+      var prevChildMapping = _ref.children, handleExited = _ref.handleExited, firstRender = _ref.firstRender;
+      return {
+        children: firstRender ? getInitialChildMapping(nextProps, handleExited) : getNextChildMapping(nextProps, prevChildMapping, handleExited),
+        firstRender: false
+      };
+    };
+    _proto.handleExited = function handleExited(child, node2) {
+      var currentChildMapping = getChildMapping(this.props.children);
+      if (child.key in currentChildMapping)
+        return;
+      if (child.props.onExited) {
+        child.props.onExited(node2);
+      }
+      if (this.mounted) {
+        this.setState(function(state) {
+          var children = _extends$2({}, state.children);
+          delete children[child.key];
+          return {
+            children
+          };
+        });
+      }
+    };
+    _proto.render = function render() {
+      var _this$props = this.props, Component = _this$props.component, childFactory = _this$props.childFactory, props = _objectWithoutPropertiesLoose(_this$props, ["component", "childFactory"]);
+      var contextValue = this.state.contextValue;
+      var children = values(this.state.children).map(childFactory);
+      delete props.appear;
+      delete props.enter;
+      delete props.exit;
+      if (Component === null) {
+        return /* @__PURE__ */ React.createElement(TransitionGroupContext.Provider, {
+          value: contextValue
+        }, children);
+      }
+      return /* @__PURE__ */ React.createElement(TransitionGroupContext.Provider, {
+        value: contextValue
+      }, /* @__PURE__ */ React.createElement(Component, props, children));
+    };
+    return TransitionGroup2;
+  }(React.Component);
+  TransitionGroup.propTypes = process.env.NODE_ENV !== "production" ? {
+    /**
+     * `<TransitionGroup>` renders a `<div>` by default. You can change this
+     * behavior by providing a `component` prop.
+     * If you use React v16+ and would like to avoid a wrapping `<div>` element
+     * you can pass in `component={null}`. This is useful if the wrapping div
+     * borks your css styles.
+     */
+    component: PropTypes.any,
+    /**
+     * A set of `<Transition>` components, that are toggled `in` and out as they
+     * leave. the `<TransitionGroup>` will inject specific transition props, so
+     * remember to spread them through if you are wrapping the `<Transition>` as
+     * with our `<Fade>` example.
+     *
+     * While this component is meant for multiple `Transition` or `CSSTransition`
+     * children, sometimes you may want to have a single transition child with
+     * content that you want to be transitioned out and in when you change it
+     * (e.g. routes, images etc.) In that case you can change the `key` prop of
+     * the transition child as you change its content, this will cause
+     * `TransitionGroup` to transition the child out and back in.
+     */
+    children: PropTypes.node,
+    /**
+     * A convenience prop that enables or disables appear animations
+     * for all children. Note that specifying this will override any defaults set
+     * on individual children Transitions.
+     */
+    appear: PropTypes.bool,
+    /**
+     * A convenience prop that enables or disables enter animations
+     * for all children. Note that specifying this will override any defaults set
+     * on individual children Transitions.
+     */
+    enter: PropTypes.bool,
+    /**
+     * A convenience prop that enables or disables exit animations
+     * for all children. Note that specifying this will override any defaults set
+     * on individual children Transitions.
+     */
+    exit: PropTypes.bool,
+    /**
+     * You may need to apply reactive updates to a child as it is exiting.
+     * This is generally done by using `cloneElement` however in the case of an exiting
+     * child the element has already been removed and not accessible to the consumer.
+     *
+     * If you do need to update a child as it leaves you can provide a `childFactory`
+     * to wrap every child, even the ones that are leaving.
+     *
+     * @type Function(child: ReactElement) -> ReactElement
+     */
+    childFactory: PropTypes.func
+  } : {};
+  TransitionGroup.defaultProps = defaultProps;
+  var ReplaceTransition = /* @__PURE__ */ function(_React$Component) {
+    _inheritsLoose(ReplaceTransition2, _React$Component);
+    function ReplaceTransition2() {
+      var _this;
+      for (var _len = arguments.length, _args = new Array(_len), _key = 0; _key < _len; _key++) {
+        _args[_key] = arguments[_key];
+      }
+      _this = _React$Component.call.apply(_React$Component, [this].concat(_args)) || this;
+      _this.handleEnter = function() {
+        for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+          args[_key2] = arguments[_key2];
+        }
+        return _this.handleLifecycle("onEnter", 0, args);
+      };
+      _this.handleEntering = function() {
+        for (var _len3 = arguments.length, args = new Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
+          args[_key3] = arguments[_key3];
+        }
+        return _this.handleLifecycle("onEntering", 0, args);
+      };
+      _this.handleEntered = function() {
+        for (var _len4 = arguments.length, args = new Array(_len4), _key4 = 0; _key4 < _len4; _key4++) {
+          args[_key4] = arguments[_key4];
+        }
+        return _this.handleLifecycle("onEntered", 0, args);
+      };
+      _this.handleExit = function() {
+        for (var _len5 = arguments.length, args = new Array(_len5), _key5 = 0; _key5 < _len5; _key5++) {
+          args[_key5] = arguments[_key5];
+        }
+        return _this.handleLifecycle("onExit", 1, args);
+      };
+      _this.handleExiting = function() {
+        for (var _len6 = arguments.length, args = new Array(_len6), _key6 = 0; _key6 < _len6; _key6++) {
+          args[_key6] = arguments[_key6];
+        }
+        return _this.handleLifecycle("onExiting", 1, args);
+      };
+      _this.handleExited = function() {
+        for (var _len7 = arguments.length, args = new Array(_len7), _key7 = 0; _key7 < _len7; _key7++) {
+          args[_key7] = arguments[_key7];
+        }
+        return _this.handleLifecycle("onExited", 1, args);
+      };
+      return _this;
+    }
+    var _proto = ReplaceTransition2.prototype;
+    _proto.handleLifecycle = function handleLifecycle(handler, idx, originalArgs) {
+      var _child$props;
+      var children = this.props.children;
+      var child = React.Children.toArray(children)[idx];
+      if (child.props[handler])
+        (_child$props = child.props)[handler].apply(_child$props, originalArgs);
+      if (this.props[handler]) {
+        var maybeNode = child.props.nodeRef ? void 0 : ReactDOM.findDOMNode(this);
+        this.props[handler](maybeNode);
+      }
+    };
+    _proto.render = function render() {
+      var _this$props = this.props, children = _this$props.children, inProp = _this$props.in, props = _objectWithoutPropertiesLoose(_this$props, ["children", "in"]);
+      var _React$Children$toArr = React.Children.toArray(children), first = _React$Children$toArr[0], second = _React$Children$toArr[1];
+      delete props.onEnter;
+      delete props.onEntering;
+      delete props.onEntered;
+      delete props.onExit;
+      delete props.onExiting;
+      delete props.onExited;
+      return /* @__PURE__ */ React.createElement(TransitionGroup, props, inProp ? React.cloneElement(first, {
+        key: "first",
+        onEnter: this.handleEnter,
+        onEntering: this.handleEntering,
+        onEntered: this.handleEntered
+      }) : React.cloneElement(second, {
+        key: "second",
+        onEnter: this.handleExit,
+        onEntering: this.handleExiting,
+        onEntered: this.handleExited
+      }));
+    };
+    return ReplaceTransition2;
+  }(React.Component);
+  ReplaceTransition.propTypes = process.env.NODE_ENV !== "production" ? {
+    in: PropTypes.bool.isRequired,
+    children: function children(props, propName) {
+      if (React.Children.count(props[propName]) !== 2)
+        return new Error('"' + propName + '" must be exactly two transition components.');
+      return null;
+    }
+  } : {};
+  var _leaveRenders, _enterRenders;
+  function areChildrenDifferent(oldChildren, newChildren) {
+    if (oldChildren === newChildren)
+      return false;
+    if (React.isValidElement(oldChildren) && React.isValidElement(newChildren) && oldChildren.key != null && oldChildren.key === newChildren.key) {
+      return false;
+    }
+    return true;
+  }
+  var modes = {
+    out: "out-in",
+    in: "in-out"
+  };
+  var callHook = function callHook2(element, name, cb) {
+    return function() {
+      var _element$props;
+      element.props[name] && (_element$props = element.props)[name].apply(_element$props, arguments);
+      cb();
+    };
+  };
+  var leaveRenders = (_leaveRenders = {}, _leaveRenders[modes.out] = function(_ref) {
+    var current = _ref.current, changeState = _ref.changeState;
+    return React.cloneElement(current, {
+      in: false,
+      onExited: callHook(current, "onExited", function() {
+        changeState(ENTERING, null);
+      })
+    });
+  }, _leaveRenders[modes.in] = function(_ref2) {
+    var current = _ref2.current, changeState = _ref2.changeState, children = _ref2.children;
+    return [current, React.cloneElement(children, {
+      in: true,
+      onEntered: callHook(children, "onEntered", function() {
+        changeState(ENTERING);
+      })
+    })];
+  }, _leaveRenders);
+  var enterRenders = (_enterRenders = {}, _enterRenders[modes.out] = function(_ref3) {
+    var children = _ref3.children, changeState = _ref3.changeState;
+    return React.cloneElement(children, {
+      in: true,
+      onEntered: callHook(children, "onEntered", function() {
+        changeState(ENTERED, React.cloneElement(children, {
+          in: true
+        }));
+      })
+    });
+  }, _enterRenders[modes.in] = function(_ref4) {
+    var current = _ref4.current, children = _ref4.children, changeState = _ref4.changeState;
+    return [React.cloneElement(current, {
+      in: false,
+      onExited: callHook(current, "onExited", function() {
+        changeState(ENTERED, React.cloneElement(children, {
+          in: true
+        }));
+      })
+    }), React.cloneElement(children, {
+      in: true
+    })];
+  }, _enterRenders);
+  var SwitchTransition = /* @__PURE__ */ function(_React$Component) {
+    _inheritsLoose(SwitchTransition2, _React$Component);
+    function SwitchTransition2() {
+      var _this;
+      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+      _this = _React$Component.call.apply(_React$Component, [this].concat(args)) || this;
+      _this.state = {
+        status: ENTERED,
+        current: null
+      };
+      _this.appeared = false;
+      _this.changeState = function(status, current) {
+        if (current === void 0) {
+          current = _this.state.current;
+        }
+        _this.setState({
+          status,
+          current
+        });
+      };
+      return _this;
+    }
+    var _proto = SwitchTransition2.prototype;
+    _proto.componentDidMount = function componentDidMount() {
+      this.appeared = true;
+    };
+    SwitchTransition2.getDerivedStateFromProps = function getDerivedStateFromProps(props, state) {
+      if (props.children == null) {
+        return {
+          current: null
+        };
+      }
+      if (state.status === ENTERING && props.mode === modes.in) {
+        return {
+          status: ENTERING
+        };
+      }
+      if (state.current && areChildrenDifferent(state.current, props.children)) {
+        return {
+          status: EXITING
+        };
+      }
+      return {
+        current: React.cloneElement(props.children, {
+          in: true
+        })
+      };
+    };
+    _proto.render = function render() {
+      var _this$props = this.props, children = _this$props.children, mode = _this$props.mode, _this$state = this.state, status = _this$state.status, current = _this$state.current;
+      var data = {
+        children,
+        current,
+        changeState: this.changeState,
+        status
+      };
+      var component;
+      switch (status) {
+        case ENTERING:
+          component = enterRenders[mode](data);
+          break;
+        case EXITING:
+          component = leaveRenders[mode](data);
+          break;
+        case ENTERED:
+          component = current;
+      }
+      return /* @__PURE__ */ React.createElement(TransitionGroupContext.Provider, {
+        value: {
+          isMounting: !this.appeared
+        }
+      }, component);
+    };
+    return SwitchTransition2;
+  }(React.Component);
+  SwitchTransition.propTypes = process.env.NODE_ENV !== "production" ? {
+    /**
+     * Transition modes.
+     * `out-in`: Current element transitions out first, then when complete, the new element transitions in.
+     * `in-out`: New element transitions in first, then when complete, the current element transitions out.
+     *
+     * @type {'out-in'|'in-out'}
+     */
+    mode: PropTypes.oneOf([modes.in, modes.out]),
+    /**
+     * Any `Transition` or `CSSTransition` component.
+     */
+    children: PropTypes.oneOfType([PropTypes.element.isRequired])
+  } : {};
+  SwitchTransition.defaultProps = {
+    mode: modes.out
+  };
+  "use client";
+  function Ripple(props) {
+    const {
+      className,
+      classes,
+      pulsate = false,
+      rippleX,
+      rippleY,
+      rippleSize,
+      in: inProp,
+      onExited,
+      timeout
+    } = props;
+    const [leaving, setLeaving] = React__namespace.useState(false);
+    const rippleClassName = clsx(className, classes.ripple, classes.rippleVisible, pulsate && classes.ripplePulsate);
+    const rippleStyles = {
+      width: rippleSize,
+      height: rippleSize,
+      top: -(rippleSize / 2) + rippleY,
+      left: -(rippleSize / 2) + rippleX
+    };
+    const childClassName = clsx(classes.child, leaving && classes.childLeaving, pulsate && classes.childPulsate);
+    if (!inProp && !leaving) {
+      setLeaving(true);
+    }
+    React__namespace.useEffect(() => {
+      if (!inProp && onExited != null) {
+        const timeoutId = setTimeout(onExited, timeout);
+        return () => {
+          clearTimeout(timeoutId);
+        };
+      }
+      return void 0;
+    }, [onExited, inProp, timeout]);
+    return /* @__PURE__ */ jsxRuntimeExports.jsx("span", {
+      className: rippleClassName,
+      style: rippleStyles,
+      children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", {
+        className: childClassName
+      })
+    });
+  }
+  process.env.NODE_ENV !== "production" ? Ripple.propTypes = {
+    /**
+     * Override or extend the styles applied to the component.
+     * See [CSS API](#css) below for more details.
+     */
+    classes: PropTypes.object.isRequired,
+    className: PropTypes.string,
+    /**
+     * @ignore - injected from TransitionGroup
+     */
+    in: PropTypes.bool,
+    /**
+     * @ignore - injected from TransitionGroup
+     */
+    onExited: PropTypes.func,
+    /**
+     * If `true`, the ripple pulsates, typically indicating the keyboard focus state of an element.
+     */
+    pulsate: PropTypes.bool,
+    /**
+     * Diameter of the ripple.
+     */
+    rippleSize: PropTypes.number,
+    /**
+     * Horizontal position of the ripple center.
+     */
+    rippleX: PropTypes.number,
+    /**
+     * Vertical position of the ripple center.
+     */
+    rippleY: PropTypes.number,
+    /**
+     * exit delay
+     */
+    timeout: PropTypes.number.isRequired
+  } : void 0;
+  function getTouchRippleUtilityClass(slot) {
+    return generateUtilityClass("MuiTouchRipple", slot);
+  }
+  const touchRippleClasses = generateUtilityClasses("MuiTouchRipple", ["root", "ripple", "rippleVisible", "ripplePulsate", "child", "childLeaving", "childPulsate"]);
+  "use client";
+  const _excluded$1N = ["center", "classes", "className"];
+  let _$2 = (t) => t, _t$2, _t2$2, _t3$2, _t4$2;
+  const DURATION = 550;
+  const DELAY_RIPPLE = 80;
+  const enterKeyframe = react.keyframes(_t$2 || (_t$2 = _$2`
+  0% {
+    transform: scale(0);
+    opacity: 0.1;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 0.3;
+  }
+`));
+  const exitKeyframe = react.keyframes(_t2$2 || (_t2$2 = _$2`
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+`));
+  const pulsateKeyframe = react.keyframes(_t3$2 || (_t3$2 = _$2`
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(0.92);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+`));
+  const TouchRippleRoot = styled("span", {
+    name: "MuiTouchRipple",
+    slot: "Root"
+  })({
+    overflow: "hidden",
+    pointerEvents: "none",
+    position: "absolute",
+    zIndex: 0,
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+    borderRadius: "inherit"
+  });
+  const TouchRippleRipple = styled(Ripple, {
+    name: "MuiTouchRipple",
+    slot: "Ripple"
+  })(_t4$2 || (_t4$2 = _$2`
+  opacity: 0;
+  position: absolute;
+
+  &.${0} {
+    opacity: 0.3;
+    transform: scale(1);
+    animation-name: ${0};
+    animation-duration: ${0}ms;
+    animation-timing-function: ${0};
+  }
+
+  &.${0} {
+    animation-duration: ${0}ms;
+  }
+
+  & .${0} {
+    opacity: 1;
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: currentColor;
+  }
+
+  & .${0} {
+    opacity: 0;
+    animation-name: ${0};
+    animation-duration: ${0}ms;
+    animation-timing-function: ${0};
+  }
+
+  & .${0} {
+    position: absolute;
+    /* @noflip */
+    left: 0px;
+    top: 0;
+    animation-name: ${0};
+    animation-duration: 2500ms;
+    animation-timing-function: ${0};
+    animation-iteration-count: infinite;
+    animation-delay: 200ms;
+  }
+`), touchRippleClasses.rippleVisible, enterKeyframe, DURATION, ({
+    theme
+  }) => theme.transitions.easing.easeInOut, touchRippleClasses.ripplePulsate, ({
+    theme
+  }) => theme.transitions.duration.shorter, touchRippleClasses.child, touchRippleClasses.childLeaving, exitKeyframe, DURATION, ({
+    theme
+  }) => theme.transitions.easing.easeInOut, touchRippleClasses.childPulsate, pulsateKeyframe, ({
+    theme
+  }) => theme.transitions.easing.easeInOut);
+  const TouchRipple = /* @__PURE__ */ React__namespace.forwardRef(function TouchRipple2(inProps, ref) {
+    const props = useThemeProps({
+      props: inProps,
+      name: "MuiTouchRipple"
+    });
+    const {
+      center: centerProp = false,
+      classes = {},
+      className
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1N);
+    const [ripples, setRipples] = React__namespace.useState([]);
+    const nextKey = React__namespace.useRef(0);
+    const rippleCallback = React__namespace.useRef(null);
+    React__namespace.useEffect(() => {
+      if (rippleCallback.current) {
+        rippleCallback.current();
+        rippleCallback.current = null;
+      }
+    }, [ripples]);
+    const ignoringMouseDown = React__namespace.useRef(false);
+    const startTimer = React__namespace.useRef(0);
+    const startTimerCommit = React__namespace.useRef(null);
+    const container = React__namespace.useRef(null);
+    React__namespace.useEffect(() => {
+      return () => {
+        if (startTimer.current) {
+          clearTimeout(startTimer.current);
+        }
+      };
+    }, []);
+    const startCommit = React__namespace.useCallback((params) => {
+      const {
+        pulsate: pulsate2,
+        rippleX,
+        rippleY,
+        rippleSize,
+        cb
+      } = params;
+      setRipples((oldRipples) => [...oldRipples, /* @__PURE__ */ jsxRuntimeExports.jsx(TouchRippleRipple, {
+        classes: {
+          ripple: clsx(classes.ripple, touchRippleClasses.ripple),
+          rippleVisible: clsx(classes.rippleVisible, touchRippleClasses.rippleVisible),
+          ripplePulsate: clsx(classes.ripplePulsate, touchRippleClasses.ripplePulsate),
+          child: clsx(classes.child, touchRippleClasses.child),
+          childLeaving: clsx(classes.childLeaving, touchRippleClasses.childLeaving),
+          childPulsate: clsx(classes.childPulsate, touchRippleClasses.childPulsate)
+        },
+        timeout: DURATION,
+        pulsate: pulsate2,
+        rippleX,
+        rippleY,
+        rippleSize
+      }, nextKey.current)]);
+      nextKey.current += 1;
+      rippleCallback.current = cb;
+    }, [classes]);
+    const start2 = React__namespace.useCallback((event = {}, options = {}, cb = () => {
+    }) => {
+      const {
+        pulsate: pulsate2 = false,
+        center = centerProp || options.pulsate,
+        fakeElement = false
+        // For test purposes
+      } = options;
+      if ((event == null ? void 0 : event.type) === "mousedown" && ignoringMouseDown.current) {
+        ignoringMouseDown.current = false;
+        return;
+      }
+      if ((event == null ? void 0 : event.type) === "touchstart") {
+        ignoringMouseDown.current = true;
+      }
+      const element = fakeElement ? null : container.current;
+      const rect = element ? element.getBoundingClientRect() : {
+        width: 0,
+        height: 0,
+        left: 0,
+        top: 0
+      };
+      let rippleX;
+      let rippleY;
+      let rippleSize;
+      if (center || event === void 0 || event.clientX === 0 && event.clientY === 0 || !event.clientX && !event.touches) {
+        rippleX = Math.round(rect.width / 2);
+        rippleY = Math.round(rect.height / 2);
+      } else {
+        const {
+          clientX,
+          clientY
+        } = event.touches && event.touches.length > 0 ? event.touches[0] : event;
+        rippleX = Math.round(clientX - rect.left);
+        rippleY = Math.round(clientY - rect.top);
+      }
+      if (center) {
+        rippleSize = Math.sqrt((2 * __pow(rect.width, 2) + __pow(rect.height, 2)) / 3);
+        if (rippleSize % 2 === 0) {
+          rippleSize += 1;
+        }
+      } else {
+        const sizeX = Math.max(Math.abs((element ? element.clientWidth : 0) - rippleX), rippleX) * 2 + 2;
+        const sizeY = Math.max(Math.abs((element ? element.clientHeight : 0) - rippleY), rippleY) * 2 + 2;
+        rippleSize = Math.sqrt(__pow(sizeX, 2) + __pow(sizeY, 2));
+      }
+      if (event != null && event.touches) {
+        if (startTimerCommit.current === null) {
+          startTimerCommit.current = () => {
+            startCommit({
+              pulsate: pulsate2,
+              rippleX,
+              rippleY,
+              rippleSize,
+              cb
+            });
+          };
+          startTimer.current = setTimeout(() => {
+            if (startTimerCommit.current) {
+              startTimerCommit.current();
+              startTimerCommit.current = null;
+            }
+          }, DELAY_RIPPLE);
+        }
+      } else {
+        startCommit({
+          pulsate: pulsate2,
+          rippleX,
+          rippleY,
+          rippleSize,
+          cb
+        });
+      }
+    }, [centerProp, startCommit]);
+    const pulsate = React__namespace.useCallback(() => {
+      start2({}, {
+        pulsate: true
+      });
+    }, [start2]);
+    const stop = React__namespace.useCallback((event, cb) => {
+      clearTimeout(startTimer.current);
+      if ((event == null ? void 0 : event.type) === "touchend" && startTimerCommit.current) {
+        startTimerCommit.current();
+        startTimerCommit.current = null;
+        startTimer.current = setTimeout(() => {
+          stop(event, cb);
+        });
+        return;
+      }
+      startTimerCommit.current = null;
+      setRipples((oldRipples) => {
+        if (oldRipples.length > 0) {
+          return oldRipples.slice(1);
+        }
+        return oldRipples;
+      });
+      rippleCallback.current = cb;
+    }, []);
+    React__namespace.useImperativeHandle(ref, () => ({
+      pulsate,
+      start: start2,
+      stop
+    }), [pulsate, start2, stop]);
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(TouchRippleRoot, _extends$2({
+      className: clsx(touchRippleClasses.root, classes.root, className),
+      ref: container
+    }, other, {
+      children: /* @__PURE__ */ jsxRuntimeExports.jsx(TransitionGroup, {
+        component: null,
+        exit: true,
+        children: ripples
+      })
+    }));
+  });
+  process.env.NODE_ENV !== "production" ? TouchRipple.propTypes = {
+    /**
+     * If `true`, the ripple starts at the center of the component
+     * rather than at the point of interaction.
+     */
+    center: PropTypes.bool,
+    /**
+     * Override or extend the styles applied to the component.
+     * See [CSS API](#css) below for more details.
+     */
+    classes: PropTypes.object,
+    /**
+     * @ignore
+     */
+    className: PropTypes.string
+  } : void 0;
+  function getButtonBaseUtilityClass(slot) {
+    return generateUtilityClass("MuiButtonBase", slot);
+  }
+  const buttonBaseClasses = generateUtilityClasses("MuiButtonBase", ["root", "disabled", "focusVisible"]);
+  "use client";
+  const _excluded$1M = ["action", "centerRipple", "children", "className", "component", "disabled", "disableRipple", "disableTouchRipple", "focusRipple", "focusVisibleClassName", "LinkComponent", "onBlur", "onClick", "onContextMenu", "onDragLeave", "onFocus", "onFocusVisible", "onKeyDown", "onKeyUp", "onMouseDown", "onMouseLeave", "onMouseUp", "onTouchEnd", "onTouchMove", "onTouchStart", "tabIndex", "TouchRippleProps", "touchRippleRef", "type"];
+  const useUtilityClasses$1t = (ownerState) => {
+    const {
+      disabled,
+      focusVisible,
+      focusVisibleClassName,
+      classes
+    } = ownerState;
+    const slots = {
+      root: ["root", disabled && "disabled", focusVisible && "focusVisible"]
+    };
+    const composedClasses = composeClasses(slots, getButtonBaseUtilityClass, classes);
+    if (focusVisible && focusVisibleClassName) {
+      composedClasses.root += ` ${focusVisibleClassName}`;
+    }
+    return composedClasses;
+  };
+  const ButtonBaseRoot = styled("button", {
+    name: "MuiButtonBase",
+    slot: "Root",
+    overridesResolver: (props, styles2) => styles2.root
+  })({
+    display: "inline-flex",
+    alignItems: "center",
+    justifyContent: "center",
+    position: "relative",
+    boxSizing: "border-box",
+    WebkitTapHighlightColor: "transparent",
+    backgroundColor: "transparent",
+    // Reset default value
+    // We disable the focus ring for mouse, touch and keyboard users.
+    outline: 0,
+    border: 0,
+    margin: 0,
+    // Remove the margin in Safari
+    borderRadius: 0,
+    padding: 0,
+    // Remove the padding in Firefox
+    cursor: "pointer",
+    userSelect: "none",
+    verticalAlign: "middle",
+    MozAppearance: "none",
+    // Reset
+    WebkitAppearance: "none",
+    // Reset
+    textDecoration: "none",
+    // So we take precedent over the style of a native <a /> element.
+    color: "inherit",
+    "&::-moz-focus-inner": {
+      borderStyle: "none"
+      // Remove Firefox dotted outline.
+    },
+    [`&.${buttonBaseClasses.disabled}`]: {
+      pointerEvents: "none",
+      // Disable link interactions
+      cursor: "default"
+    },
+    "@media print": {
+      colorAdjust: "exact"
+    }
+  });
+  const ButtonBase = /* @__PURE__ */ React__namespace.forwardRef(function ButtonBase2(inProps, ref) {
+    const props = useThemeProps({
+      props: inProps,
+      name: "MuiButtonBase"
+    });
+    const {
+      action,
+      centerRipple = false,
+      children,
+      className,
+      component = "button",
+      disabled = false,
+      disableRipple = false,
+      disableTouchRipple = false,
+      focusRipple = false,
+      LinkComponent = "a",
+      onBlur,
+      onClick,
+      onContextMenu,
+      onDragLeave,
+      onFocus,
+      onFocusVisible,
+      onKeyDown,
+      onKeyUp,
+      onMouseDown,
+      onMouseLeave,
+      onMouseUp,
+      onTouchEnd,
+      onTouchMove,
+      onTouchStart,
+      tabIndex = 0,
+      TouchRippleProps,
+      touchRippleRef,
+      type
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1M);
+    const buttonRef = React__namespace.useRef(null);
+    const rippleRef = React__namespace.useRef(null);
+    const handleRippleRef = useForkRef(rippleRef, touchRippleRef);
+    const {
+      isFocusVisibleRef,
+      onFocus: handleFocusVisible,
+      onBlur: handleBlurVisible,
+      ref: focusVisibleRef
+    } = useIsFocusVisible();
+    const [focusVisible, setFocusVisible] = React__namespace.useState(false);
+    if (disabled && focusVisible) {
+      setFocusVisible(false);
+    }
+    React__namespace.useImperativeHandle(action, () => ({
+      focusVisible: () => {
+        setFocusVisible(true);
+        buttonRef.current.focus();
+      }
+    }), []);
+    const [mountedState, setMountedState] = React__namespace.useState(false);
+    React__namespace.useEffect(() => {
+      setMountedState(true);
+    }, []);
+    const enableTouchRipple = mountedState && !disableRipple && !disabled;
+    React__namespace.useEffect(() => {
+      if (focusVisible && focusRipple && !disableRipple && mountedState) {
+        rippleRef.current.pulsate();
+      }
+    }, [disableRipple, focusRipple, focusVisible, mountedState]);
+    function useRippleHandler(rippleAction, eventCallback, skipRippleAction = disableTouchRipple) {
+      return useEventCallback((event) => {
+        if (eventCallback) {
+          eventCallback(event);
+        }
+        const ignore = skipRippleAction;
+        if (!ignore && rippleRef.current) {
+          rippleRef.current[rippleAction](event);
+        }
+        return true;
+      });
+    }
+    const handleMouseDown = useRippleHandler("start", onMouseDown);
+    const handleContextMenu = useRippleHandler("stop", onContextMenu);
+    const handleDragLeave = useRippleHandler("stop", onDragLeave);
+    const handleMouseUp = useRippleHandler("stop", onMouseUp);
+    const handleMouseLeave = useRippleHandler("stop", (event) => {
+      if (focusVisible) {
+        event.preventDefault();
+      }
+      if (onMouseLeave) {
+        onMouseLeave(event);
+      }
+    });
+    const handleTouchStart = useRippleHandler("start", onTouchStart);
+    const handleTouchEnd = useRippleHandler("stop", onTouchEnd);
+    const handleTouchMove = useRippleHandler("stop", onTouchMove);
+    const handleBlur2 = useRippleHandler("stop", (event) => {
+      handleBlurVisible(event);
+      if (isFocusVisibleRef.current === false) {
+        setFocusVisible(false);
+      }
+      if (onBlur) {
+        onBlur(event);
+      }
+    }, false);
+    const handleFocus = useEventCallback((event) => {
+      if (!buttonRef.current) {
+        buttonRef.current = event.currentTarget;
+      }
+      handleFocusVisible(event);
+      if (isFocusVisibleRef.current === true) {
+        setFocusVisible(true);
+        if (onFocusVisible) {
+          onFocusVisible(event);
+        }
+      }
+      if (onFocus) {
+        onFocus(event);
+      }
+    });
+    const isNonNativeButton = () => {
+      const button = buttonRef.current;
+      return component && component !== "button" && !(button.tagName === "A" && button.href);
+    };
+    const keydownRef = React__namespace.useRef(false);
+    const handleKeyDown2 = useEventCallback((event) => {
+      if (focusRipple && !keydownRef.current && focusVisible && rippleRef.current && event.key === " ") {
+        keydownRef.current = true;
+        rippleRef.current.stop(event, () => {
+          rippleRef.current.start(event);
+        });
+      }
+      if (event.target === event.currentTarget && isNonNativeButton() && event.key === " ") {
+        event.preventDefault();
+      }
+      if (onKeyDown) {
+        onKeyDown(event);
+      }
+      if (event.target === event.currentTarget && isNonNativeButton() && event.key === "Enter" && !disabled) {
+        event.preventDefault();
+        if (onClick) {
+          onClick(event);
+        }
+      }
+    });
+    const handleKeyUp = useEventCallback((event) => {
+      if (focusRipple && event.key === " " && rippleRef.current && focusVisible && !event.defaultPrevented) {
+        keydownRef.current = false;
+        rippleRef.current.stop(event, () => {
+          rippleRef.current.pulsate(event);
+        });
+      }
+      if (onKeyUp) {
+        onKeyUp(event);
+      }
+      if (onClick && event.target === event.currentTarget && isNonNativeButton() && event.key === " " && !event.defaultPrevented) {
+        onClick(event);
+      }
+    });
+    let ComponentProp = component;
+    if (ComponentProp === "button" && (other.href || other.to)) {
+      ComponentProp = LinkComponent;
+    }
+    const buttonProps = {};
+    if (ComponentProp === "button") {
+      buttonProps.type = type === void 0 ? "button" : type;
+      buttonProps.disabled = disabled;
+    } else {
+      if (!other.href && !other.to) {
+        buttonProps.role = "button";
+      }
+      if (disabled) {
+        buttonProps["aria-disabled"] = disabled;
+      }
+    }
+    const handleRef = useForkRef(ref, focusVisibleRef, buttonRef);
+    if (process.env.NODE_ENV !== "production") {
+      React__namespace.useEffect(() => {
+        if (enableTouchRipple && !rippleRef.current) {
+          console.error(["MUI: The `component` prop provided to ButtonBase is invalid.", "Please make sure the children prop is rendered in this custom component."].join("\n"));
+        }
+      }, [enableTouchRipple]);
+    }
+    const ownerState = _extends$2({}, props, {
+      centerRipple,
+      component,
+      disabled,
+      disableRipple,
+      disableTouchRipple,
+      focusRipple,
+      tabIndex,
+      focusVisible
+    });
+    const classes = useUtilityClasses$1t(ownerState);
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(ButtonBaseRoot, _extends$2({
+      as: ComponentProp,
+      className: clsx(classes.root, className),
+      ownerState,
+      onBlur: handleBlur2,
+      onClick,
+      onContextMenu: handleContextMenu,
+      onFocus: handleFocus,
+      onKeyDown: handleKeyDown2,
+      onKeyUp: handleKeyUp,
+      onMouseDown: handleMouseDown,
+      onMouseLeave: handleMouseLeave,
+      onMouseUp: handleMouseUp,
+      onDragLeave: handleDragLeave,
+      onTouchEnd: handleTouchEnd,
+      onTouchMove: handleTouchMove,
+      onTouchStart: handleTouchStart,
+      ref: handleRef,
+      tabIndex: disabled ? -1 : tabIndex,
+      type
+    }, buttonProps, other, {
+      children: [children, enableTouchRipple ? (
+        /* TouchRipple is only needed client-side, x2 boost on the server. */
+        jsxRuntimeExports.jsx(TouchRipple, _extends$2({
+          ref: handleRippleRef,
+          center: centerRipple
+        }, TouchRippleProps))
+      ) : null]
+    }));
+  });
+  process.env.NODE_ENV !== "production" ? ButtonBase.propTypes = {
+    // ----------------------------- Warning --------------------------------
+    // | These PropTypes are generated from the TypeScript type definitions |
+    // |     To update them edit the d.ts file and run "yarn proptypes"     |
+    // ----------------------------------------------------------------------
+    /**
+     * A ref for imperative actions.
+     * It currently only supports `focusVisible()` action.
+     */
+    action: refType,
+    /**
+     * If `true`, the ripples are centered.
+     * They won't start at the cursor interaction position.
+     * @default false
+     */
+    centerRipple: PropTypes.bool,
+    /**
+     * The content of the component.
+     */
+    children: PropTypes.node,
+    /**
+     * Override or extend the styles applied to the component.
+     */
+    classes: PropTypes.object,
+    /**
+     * @ignore
+     */
+    className: PropTypes.string,
+    /**
+     * The component used for the root node.
+     * Either a string to use a HTML element or a component.
+     */
+    component: elementTypeAcceptingRef$1,
+    /**
+     * If `true`, the component is disabled.
+     * @default false
+     */
+    disabled: PropTypes.bool,
+    /**
+     * If `true`, the ripple effect is disabled.
+     *
+     * ⚠️ Without a ripple there is no styling for :focus-visible by default. Be sure
+     * to highlight the element by applying separate styles with the `.Mui-focusVisible` class.
+     * @default false
+     */
+    disableRipple: PropTypes.bool,
+    /**
+     * If `true`, the touch ripple effect is disabled.
+     * @default false
+     */
+    disableTouchRipple: PropTypes.bool,
+    /**
+     * If `true`, the base button will have a keyboard focus ripple.
+     * @default false
+     */
+    focusRipple: PropTypes.bool,
+    /**
+     * This prop can help identify which element has keyboard focus.
+     * The class name will be applied when the element gains the focus through keyboard interaction.
+     * It's a polyfill for the [CSS :focus-visible selector](https://drafts.csswg.org/selectors-4/#the-focus-visible-pseudo).
+     * The rationale for using this feature [is explained here](https://github.com/WICG/focus-visible/blob/HEAD/explainer.md).
+     * A [polyfill can be used](https://github.com/WICG/focus-visible) to apply a `focus-visible` class to other components
+     * if needed.
+     */
+    focusVisibleClassName: PropTypes.string,
+    /**
+     * @ignore
+     */
+    href: PropTypes.any,
+    /**
+     * The component used to render a link when the `href` prop is provided.
+     * @default 'a'
+     */
+    LinkComponent: PropTypes.elementType,
+    /**
+     * @ignore
+     */
+    onBlur: PropTypes.func,
+    /**
+     * @ignore
+     */
+    onClick: PropTypes.func,
+    /**
+     * @ignore
+     */
+    onContextMenu: PropTypes.func,
+    /**
+     * @ignore
+     */
+    onDragLeave: PropTypes.func,
+    /**
+     * @ignore
+     */
+    onFocus: PropTypes.func,
+    /**
+     * Callback fired when the component is focused with a keyboard.
+     * We trigger a `onFocus` callback too.
+     */
+    onFocusVisible: PropTypes.func,
+    /**
+     * @ignore
+     */
+    onKeyDown: PropTypes.func,
+    /**
+     * @ignore
+     */
+    onKeyUp: PropTypes.func,
+    /**
+     * @ignore
+     */
+    onMouseDown: PropTypes.func,
+    /**
+     * @ignore
+     */
+    onMouseLeave: PropTypes.func,
+    /**
+     * @ignore
+     */
+    onMouseUp: PropTypes.func,
+    /**
+     * @ignore
+     */
+    onTouchEnd: PropTypes.func,
+    /**
+     * @ignore
+     */
+    onTouchMove: PropTypes.func,
+    /**
+     * @ignore
+     */
+    onTouchStart: PropTypes.func,
+    /**
+     * The system prop that allows defining system overrides as well as additional CSS styles.
+     */
+    sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object]),
+    /**
+     * @default 0
+     */
+    tabIndex: PropTypes.number,
+    /**
+     * Props applied to the `TouchRipple` element.
+     */
+    TouchRippleProps: PropTypes.object,
+    /**
+     * A ref that points to the `TouchRipple` element.
+     */
+    touchRippleRef: PropTypes.oneOfType([PropTypes.func, PropTypes.shape({
+      current: PropTypes.shape({
+        pulsate: PropTypes.func.isRequired,
+        start: PropTypes.func.isRequired,
+        stop: PropTypes.func.isRequired
+      })
+    })]),
+    /**
+     * @ignore
+     */
+    type: PropTypes.oneOfType([PropTypes.oneOf(["button", "reset", "submit"]), PropTypes.string])
+  } : void 0;
+  "use client";
   function getIconButtonUtilityClass(slot) {
     return generateUtilityClass("MuiIconButton", slot);
   }
   const iconButtonClasses = generateUtilityClasses("MuiIconButton", ["root", "disabled", "colorInherit", "colorPrimary", "colorSecondary", "colorError", "colorInfo", "colorSuccess", "colorWarning", "edgeStart", "edgeEnd", "sizeSmall", "sizeMedium", "sizeLarge"]);
   "use client";
-  const _excluded$1K = ["edge", "children", "className", "color", "disabled", "disableFocusRipple", "size"];
-  const useUtilityClasses$1r = (ownerState) => {
+  const _excluded$1L = ["edge", "children", "className", "color", "disabled", "disableFocusRipple", "size"];
+  const useUtilityClasses$1s = (ownerState) => {
     const {
       classes,
       disabled,
@@ -18965,7 +18421,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       disabled = false,
       disableFocusRipple = false,
       size: size2 = "medium"
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1K);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1L);
     const ownerState = _extends$2({}, props, {
       edge,
       color: color2,
@@ -18973,7 +18429,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       disableFocusRipple,
       size: size2
     });
-    const classes = useUtilityClasses$1r(ownerState);
+    const classes = useUtilityClasses$1s(ownerState);
     return /* @__PURE__ */ jsxRuntimeExports.jsx(IconButtonRoot, _extends$2({
       className: clsx(classes.root, className),
       centerRipple: true,
@@ -19164,7 +18620,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     };
   }
   "use client";
-  const _excluded$1J = ["elementType", "externalSlotProps", "ownerState", "skipResolvingSlotProps"];
+  const _excluded$1K = ["elementType", "externalSlotProps", "ownerState", "skipResolvingSlotProps"];
   function useSlotProps(parameters) {
     var _parameters$additiona;
     const {
@@ -19172,7 +18628,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       externalSlotProps,
       ownerState,
       skipResolvingSlotProps = false
-    } = parameters, rest = _objectWithoutPropertiesLoose(parameters, _excluded$1J);
+    } = parameters, rest = _objectWithoutPropertiesLoose(parameters, _excluded$1K);
     const resolvedComponentsProps = skipResolvingSlotProps ? {} : resolveComponentProps(externalSlotProps, ownerState);
     const {
       props: mergedProps,
@@ -19186,10 +18642,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }), ownerState);
     return props;
   }
-  const _excluded$1I = ["ownerState"];
+  const _excluded$1J = ["ownerState"];
   function prepareForSlot(Component) {
     return /* @__PURE__ */ React__namespace.forwardRef(function Slot(props, ref) {
-      const other = _objectWithoutPropertiesLoose(props, _excluded$1I);
+      const other = _objectWithoutPropertiesLoose(props, _excluded$1J);
       return /* @__PURE__ */ React__namespace.createElement(Component, _extends$2({}, other, {
         ref
       }));
@@ -19230,8 +18686,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const badgeClasses$1 = generateUtilityClasses("MuiBadge", ["root", "badge", "invisible"]);
   "use client";
-  const _excluded$1H = ["badgeContent", "children", "invisible", "max", "slotProps", "slots", "showZero"];
-  const useUtilityClasses$1q = (ownerState) => {
+  const _excluded$1I = ["badgeContent", "children", "invisible", "max", "slotProps", "slots", "showZero"];
+  const useUtilityClasses$1r = (ownerState) => {
     const {
       invisible
     } = ownerState;
@@ -19249,7 +18705,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       slotProps = {},
       slots = {},
       showZero = false
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1H);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1I);
     const {
       badgeContent,
       max: max2,
@@ -19264,7 +18720,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       max: max2,
       showZero
     });
-    const classes = useUtilityClasses$1q(ownerState);
+    const classes = useUtilityClasses$1r(ownerState);
     const Root = (_slots$root = slots.root) != null ? _slots$root : "span";
     const rootProps = useSlotProps({
       elementType: Root,
@@ -19336,10 +18792,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     })
   } : void 0;
   "use client";
-  function getButtonUtilityClass(slot) {
+  function getButtonUtilityClass$1(slot) {
     return generateUtilityClass("MuiButton", slot);
   }
-  const buttonClasses = generateUtilityClasses("MuiButton", ["root", "active", "disabled", "focusVisible"]);
+  const buttonClasses$1 = generateUtilityClasses("MuiButton", ["root", "active", "disabled", "focusVisible"]);
   "use client";
   function useButton(parameters = {}) {
     const {
@@ -19499,8 +18955,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   "use client";
   "use client";
-  const _excluded$1G = ["action", "children", "disabled", "focusableWhenDisabled", "onFocusVisible", "slotProps", "slots"];
-  const useUtilityClasses$1p = (ownerState) => {
+  const _excluded$1H = ["action", "children", "disabled", "focusableWhenDisabled", "onFocusVisible", "slotProps", "slots"];
+  const useUtilityClasses$1q = (ownerState) => {
     const {
       active,
       disabled,
@@ -19509,9 +18965,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const slots = {
       root: ["root", disabled && "disabled", focusVisible && "focusVisible", active && "active"]
     };
-    return composeClasses(slots, useClassNamesOverride(getButtonUtilityClass));
+    return composeClasses(slots, useClassNamesOverride(getButtonUtilityClass$1));
   };
-  const Button = /* @__PURE__ */ React__namespace.forwardRef(function Button2(props, forwardedRef) {
+  const Button$1 = /* @__PURE__ */ React__namespace.forwardRef(function Button2(props, forwardedRef) {
     var _slots$root;
     const {
       action,
@@ -19519,7 +18975,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       focusableWhenDisabled = false,
       slotProps = {},
       slots = {}
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1G);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1H);
     const buttonRef = React__namespace.useRef();
     const {
       active,
@@ -19540,7 +18996,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       focusableWhenDisabled,
       focusVisible
     });
-    const classes = useUtilityClasses$1p(ownerState);
+    const classes = useUtilityClasses$1q(ownerState);
     const defaultElement = other.href || other.to ? "a" : "button";
     const Root = (_slots$root = slots.root) != null ? _slots$root : defaultElement;
     const rootProps = useSlotProps({
@@ -19558,7 +19014,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       children
     }));
   });
-  process.env.NODE_ENV !== "production" ? Button.propTypes = {
+  process.env.NODE_ENV !== "production" ? Button$1.propTypes = {
     // ----------------------------- Warning --------------------------------
     // | These PropTypes are generated from the TypeScript type definitions |
     // |     To update them edit TypeScript types and run "yarn proptypes"  |
@@ -20256,11 +19712,11 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const formControlClasses$1 = generateUtilityClasses("MuiFormControl", ["root", "disabled", "error", "filled", "focused", "required"]);
   "use client";
-  const _excluded$1F = ["defaultValue", "children", "disabled", "error", "onChange", "required", "slotProps", "slots", "value"];
+  const _excluded$1G = ["defaultValue", "children", "disabled", "error", "onChange", "required", "slotProps", "slots", "value"];
   function hasValue$1(value) {
     return value != null && !(Array.isArray(value) && value.length === 0) && value !== "";
   }
-  function useUtilityClasses$1o(ownerState) {
+  function useUtilityClasses$1p(ownerState) {
     const {
       disabled,
       error,
@@ -20285,7 +19741,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       slotProps = {},
       slots = {},
       value: incomingValue
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1F);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1G);
     const [value, setValue] = useControlled({
       controlled: incomingValue,
       default: defaultValue,
@@ -20323,7 +19779,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         value: value != null ? value : ""
       };
     }, [disabled, error, filled, focused, onChange, required, setValue, value]);
-    const classes = useUtilityClasses$1o(ownerState);
+    const classes = useUtilityClasses$1p(ownerState);
     const renderChildren = () => {
       if (typeof children === "function") {
         return children(childContext);
@@ -20553,8 +20009,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   "use client";
   "use client";
-  const _excluded$1E = ["aria-describedby", "aria-label", "aria-labelledby", "autoComplete", "autoFocus", "className", "defaultValue", "disabled", "endAdornment", "error", "id", "multiline", "name", "onClick", "onChange", "onKeyDown", "onKeyUp", "onFocus", "onBlur", "placeholder", "readOnly", "required", "startAdornment", "value", "type", "rows", "slotProps", "slots", "minRows", "maxRows"];
-  const useUtilityClasses$1n = (ownerState) => {
+  const _excluded$1F = ["aria-describedby", "aria-label", "aria-labelledby", "autoComplete", "autoFocus", "className", "defaultValue", "disabled", "endAdornment", "error", "id", "multiline", "name", "onClick", "onChange", "onKeyDown", "onKeyUp", "onFocus", "onBlur", "placeholder", "readOnly", "required", "startAdornment", "value", "type", "rows", "slotProps", "slots", "minRows", "maxRows"];
+  const useUtilityClasses$1o = (ownerState) => {
     const {
       disabled,
       error,
@@ -20603,7 +20059,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       slots = {},
       minRows,
       maxRows
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1E);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1F);
     const {
       getRootProps,
       getInputProps,
@@ -20631,7 +20087,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       multiline,
       type
     });
-    const classes = useUtilityClasses$1n(ownerState);
+    const classes = useUtilityClasses$1o(ownerState);
     const propsToForward = {
       "aria-describedby": ariaDescribedby,
       "aria-label": ariaLabel,
@@ -23177,7 +22633,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const popperClasses = generateUtilityClasses("MuiPopper", ["root"]);
   "use client";
-  const _excluded$1D = ["anchorEl", "children", "direction", "disablePortal", "modifiers", "open", "placement", "popperOptions", "popperRef", "slotProps", "slots", "TransitionProps", "ownerState"], _excluded2$c = ["anchorEl", "children", "container", "direction", "disablePortal", "keepMounted", "modifiers", "open", "placement", "popperOptions", "popperRef", "style", "transition", "slotProps", "slots"];
+  const _excluded$1E = ["anchorEl", "children", "direction", "disablePortal", "modifiers", "open", "placement", "popperOptions", "popperRef", "slotProps", "slots", "TransitionProps", "ownerState"], _excluded2$c = ["anchorEl", "children", "container", "direction", "disablePortal", "keepMounted", "modifiers", "open", "placement", "popperOptions", "popperRef", "style", "transition", "slotProps", "slots"];
   function flipPlacement(placement, direction) {
     if (direction === "ltr") {
       return placement;
@@ -23204,7 +22660,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   function isVirtualElement(element) {
     return !isHTMLElement$2(element);
   }
-  const useUtilityClasses$1m = () => {
+  const useUtilityClasses$1n = () => {
     const slots = {
       root: ["root"]
     };
@@ -23228,7 +22684,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       TransitionProps
       // @ts-ignore internal logic
       // prevent from spreading to DOM, it can come from the parent component e.g. Select.
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1D);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1E);
     const tooltipRef = React__namespace.useRef(null);
     const ownRef = useForkRef(tooltipRef, forwardedRef);
     const popperRef = React__namespace.useRef(null);
@@ -23309,7 +22765,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     if (TransitionProps !== null) {
       childProps.TransitionProps = TransitionProps;
     }
-    const classes = useUtilityClasses$1m();
+    const classes = useUtilityClasses$1n();
     const Root = (_slots$root = slots.root) != null ? _slots$root : "div";
     const rootProps = useSlotProps({
       elementType: Root,
@@ -23519,8 +22975,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   } : void 0;
   "use client";
   "use client";
-  const _excluded$1C = ["actions", "anchor", "children", "onItemsChange", "slotProps", "slots"];
-  function useUtilityClasses$1l(ownerState) {
+  const _excluded$1D = ["actions", "anchor", "children", "onItemsChange", "slotProps", "slots"];
+  function useUtilityClasses$1m(ownerState) {
     const {
       open
     } = ownerState;
@@ -23539,7 +22995,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       onItemsChange,
       slotProps = {},
       slots = {}
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1C);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1D);
     const {
       contextValue,
       getListboxProps,
@@ -23561,7 +23017,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const ownerState = _extends$2({}, props, {
       open
     });
-    const classes = useUtilityClasses$1l(ownerState);
+    const classes = useUtilityClasses$1m(ownerState);
     const Root = (_slots$root = slots.root) != null ? _slots$root : "div";
     const rootProps = useSlotProps({
       elementType: Root,
@@ -23731,8 +23187,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const menuButtonClasses = generateUtilityClasses("MuiMenuButton", ["root", "active", "disabled", "expanded"]);
   "use client";
-  const _excluded$1B = ["children", "disabled", "label", "slots", "slotProps", "focusableWhenDisabled"];
-  const useUtilityClasses$1k = (ownerState) => {
+  const _excluded$1C = ["children", "disabled", "label", "slots", "slotProps", "focusableWhenDisabled"];
+  const useUtilityClasses$1l = (ownerState) => {
     const {
       active,
       disabled,
@@ -23750,7 +23206,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       slots = {},
       slotProps = {},
       focusableWhenDisabled = false
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1B);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1C);
     const {
       getRootProps,
       open,
@@ -23766,7 +23222,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       disabled,
       focusableWhenDisabled
     });
-    const classes = useUtilityClasses$1k(ownerState);
+    const classes = useUtilityClasses$1l(ownerState);
     const Root = slots.root || "button";
     const rootProps = useSlotProps({
       elementType: Root,
@@ -23984,8 +23440,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   "use client";
   "use client";
-  const _excluded$1A = ["children", "disabled", "label", "id", "slotProps", "slots"];
-  function useUtilityClasses$1j(ownerState) {
+  const _excluded$1B = ["children", "disabled", "label", "id", "slotProps", "slots"];
+  function useUtilityClasses$1k(ownerState) {
     const {
       disabled,
       focusVisible
@@ -24004,7 +23460,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       id,
       slotProps = {},
       slots = {}
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1A);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1B);
     const {
       getRootProps,
       disabled,
@@ -24021,7 +23477,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       focusVisible,
       highlighted
     });
-    const classes = useUtilityClasses$1j(ownerState);
+    const classes = useUtilityClasses$1k(ownerState);
     const Root = (_slots$root = slots.root) != null ? _slots$root : "li";
     const rootProps = useSlotProps({
       elementType: Root,
@@ -24296,7 +23752,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       onTransitionEnter,
       onTransitionExited,
       children,
-      onClose: onClose2,
+      onClose,
       open,
       rootRef
     } = parameters;
@@ -24367,8 +23823,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       }
       if (!disableEscapeKeyDown) {
         event.stopPropagation();
-        if (onClose2) {
-          onClose2(event, "escapeKeyDown");
+        if (onClose) {
+          onClose(event, "escapeKeyDown");
         }
       }
     };
@@ -24378,8 +23834,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       if (event.target !== event.currentTarget) {
         return;
       }
-      if (onClose2) {
-        onClose2(event, "backdropClick");
+      if (onClose) {
+        onClose(event, "backdropClick");
       }
     };
     const getRootProps = (otherHandlers = {}) => {
@@ -24441,8 +23897,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const modalClasses$1 = generateUtilityClasses("MuiModal", ["root", "hidden", "backdrop"]);
   "use client";
-  const _excluded$1z = ["children", "closeAfterTransition", "container", "disableAutoFocus", "disableEnforceFocus", "disableEscapeKeyDown", "disablePortal", "disableRestoreFocus", "disableScrollLock", "hideBackdrop", "keepMounted", "onBackdropClick", "onClose", "onKeyDown", "open", "onTransitionEnter", "onTransitionExited", "slotProps", "slots"];
-  const useUtilityClasses$1i = (ownerState) => {
+  const _excluded$1A = ["children", "closeAfterTransition", "container", "disableAutoFocus", "disableEnforceFocus", "disableEscapeKeyDown", "disablePortal", "disableRestoreFocus", "disableScrollLock", "hideBackdrop", "keepMounted", "onBackdropClick", "onClose", "onKeyDown", "open", "onTransitionEnter", "onTransitionExited", "slotProps", "slots"];
+  const useUtilityClasses$1j = (ownerState) => {
     const {
       open,
       exited
@@ -24471,7 +23927,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       open,
       slotProps = {},
       slots = {}
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1z);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1A);
     const propsWithDefaults = _extends$2({}, props, {
       closeAfterTransition,
       disableAutoFocus,
@@ -24498,7 +23954,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       exited,
       hasTransition
     });
-    const classes = useUtilityClasses$1i(ownerState);
+    const classes = useUtilityClasses$1j(ownerState);
     const childProps = {};
     if (children.props.tabIndex === void 0) {
       childProps.tabIndex = "-1";
@@ -25021,8 +24477,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   "use client";
   "use client";
-  const _excluded$1y = ["className", "defaultValue", "disabled", "endAdornment", "error", "id", "max", "min", "onBlur", "onInputChange", "onFocus", "onChange", "placeholder", "required", "readOnly", "shiftMultiplier", "startAdornment", "step", "value", "slotProps", "slots"];
-  const useUtilityClasses$1h = (ownerState) => {
+  const _excluded$1z = ["className", "defaultValue", "disabled", "endAdornment", "error", "id", "max", "min", "onBlur", "onInputChange", "onFocus", "onChange", "placeholder", "required", "readOnly", "shiftMultiplier", "startAdornment", "step", "value", "slotProps", "slots"];
+  const useUtilityClasses$1i = (ownerState) => {
     const {
       disabled,
       error,
@@ -25066,7 +24522,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       value,
       slotProps = {},
       slots = {}
-    } = props, rest = _objectWithoutPropertiesLoose(props, _excluded$1y);
+    } = props, rest = _objectWithoutPropertiesLoose(props, _excluded$1z);
     const {
       getRootProps,
       getInputProps,
@@ -25104,7 +24560,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       isIncrementDisabled,
       isDecrementDisabled
     });
-    const classes = useUtilityClasses$1h(ownerState);
+    const classes = useUtilityClasses$1i(ownerState);
     const propsForwardedToInputSlot = {
       placeholder
     };
@@ -25275,8 +24731,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const optionGroupClasses = generateUtilityClasses("MuiOptionGroup", ["root", "disabled", "label", "list"]);
   "use client";
-  const _excluded$1x = ["disabled", "slotProps", "slots"];
-  function useUtilityClasses$1g(disabled) {
+  const _excluded$1y = ["disabled", "slotProps", "slots"];
+  function useUtilityClasses$1h(disabled) {
     const slots = {
       root: ["root", disabled && "disabled"],
       label: ["label"],
@@ -25289,11 +24745,11 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       disabled = false,
       slotProps = {},
       slots = {}
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1x);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1y);
     const Root = (slots == null ? void 0 : slots.root) || "li";
     const Label = (slots == null ? void 0 : slots.label) || "span";
     const List2 = (slots == null ? void 0 : slots.list) || "ul";
-    const classes = useUtilityClasses$1g(disabled);
+    const classes = useUtilityClasses$1h(disabled);
     const rootProps = useSlotProps({
       elementType: Root,
       externalSlotProps: slotProps.root,
@@ -25451,8 +24907,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   "use client";
   "use client";
-  const _excluded$1w = ["children", "disabled", "label", "slotProps", "slots", "value"];
-  function useUtilityClasses$1f(ownerState) {
+  const _excluded$1x = ["children", "disabled", "label", "slotProps", "slots", "value"];
+  function useUtilityClasses$1g(ownerState) {
     const {
       disabled,
       highlighted,
@@ -25472,7 +24928,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       slotProps = {},
       slots = {},
       value
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1w);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1x);
     const Root = (_slots$root = slots.root) != null ? _slots$root : "li";
     const optionRef = React__namespace.useRef(null);
     const combinedRef = useForkRef(optionRef, forwardedRef);
@@ -25494,7 +24950,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       index: index2,
       selected
     });
-    const classes = useUtilityClasses$1f(ownerState);
+    const classes = useUtilityClasses$1g(ownerState);
     const rootProps = useSlotProps({
       getSlotProps: getRootProps,
       elementType: Root,
@@ -27492,8 +26948,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const popupClasses = generateUtilityClasses("MuiPopup", ["root", "open"]);
   "use client";
-  const _excluded$1v = ["anchor", "children", "container", "disablePortal", "keepMounted", "middleware", "offset", "open", "placement", "slotProps", "slots", "strategy", "withTransition"];
-  function useUtilityClasses$1e(ownerState) {
+  const _excluded$1w = ["anchor", "children", "container", "disablePortal", "keepMounted", "middleware", "offset", "open", "placement", "slotProps", "slots", "strategy", "withTransition"];
+  function useUtilityClasses$1f(ownerState) {
     const {
       open
     } = ownerState;
@@ -27521,7 +26977,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       slots = {},
       strategy = "absolute",
       withTransition = false
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1v);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1w);
     const {
       refs,
       elements,
@@ -27564,7 +27020,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       withTransition
     });
     const display2 = !open && keepMounted && (!withTransition || exited) ? "none" : void 0;
-    const classes = useUtilityClasses$1e(ownerState);
+    const classes = useUtilityClasses$1f(ownerState);
     const Root = (_slots$root = slots == null ? void 0 : slots.root) != null ? _slots$root : "div";
     const rootProps = useSlotProps({
       elementType: Root,
@@ -28136,7 +27592,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   const selectClasses$1 = generateUtilityClasses("MuiSelect", ["root", "button", "listbox", "popper", "active", "expanded", "disabled", "focusVisible"]);
   "use client";
   var _span$5;
-  const _excluded$1u = ["areOptionsEqual", "autoComplete", "autoFocus", "children", "defaultValue", "defaultListboxOpen", "disabled", "getSerializedValue", "listboxId", "listboxOpen", "multiple", "name", "required", "onChange", "onListboxOpenChange", "getOptionAsString", "renderValue", "placeholder", "slotProps", "slots", "value"];
+  const _excluded$1v = ["areOptionsEqual", "autoComplete", "autoFocus", "children", "defaultValue", "defaultListboxOpen", "disabled", "getSerializedValue", "listboxId", "listboxOpen", "multiple", "name", "required", "onChange", "onListboxOpenChange", "getOptionAsString", "renderValue", "placeholder", "slotProps", "slots", "value"];
   function defaultRenderValue(selectedOptions) {
     var _selectedOptions$labe;
     if (Array.isArray(selectedOptions)) {
@@ -28146,7 +27602,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }
     return (_selectedOptions$labe = selectedOptions == null ? void 0 : selectedOptions.label) != null ? _selectedOptions$labe : null;
   }
-  function useUtilityClasses$1d(ownerState) {
+  function useUtilityClasses$1e(ownerState) {
     const {
       active,
       disabled,
@@ -28184,7 +27640,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       slotProps = {},
       slots = {},
       value: valueProp
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1u);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1v);
     const renderValue = renderValueProp != null ? renderValueProp : defaultRenderValue;
     const [buttonDefined, setButtonDefined] = React__namespace.useState(false);
     const buttonRef = React__namespace.useRef(null);
@@ -28240,7 +27696,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       renderValue,
       value
     });
-    const classes = useUtilityClasses$1d(ownerState);
+    const classes = useUtilityClasses$1e(ownerState);
     const buttonProps = useSlotProps({
       elementType: Button2,
       getSlotProps: getButtonProps,
@@ -29004,11 +28460,11 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   "use client";
   "use client";
-  const _excluded$1t = ["aria-label", "aria-valuetext", "aria-labelledby", "className", "disableSwap", "disabled", "getAriaLabel", "getAriaValueText", "marks", "max", "min", "name", "onChange", "onChangeCommitted", "orientation", "scale", "step", "tabIndex", "track", "value", "valueLabelFormat", "isRtl", "defaultValue", "slotProps", "slots"];
+  const _excluded$1u = ["aria-label", "aria-valuetext", "aria-labelledby", "className", "disableSwap", "disabled", "getAriaLabel", "getAriaValueText", "marks", "max", "min", "name", "onChange", "onChangeCommitted", "orientation", "scale", "step", "tabIndex", "track", "value", "valueLabelFormat", "isRtl", "defaultValue", "slotProps", "slots"];
   function Identity$1(x) {
     return x;
   }
-  const useUtilityClasses$1c = (ownerState) => {
+  const useUtilityClasses$1d = (ownerState) => {
     const {
       disabled,
       dragging,
@@ -29055,7 +28511,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       defaultValue,
       slotProps = {},
       slots = {}
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1t);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1u);
     const partialOwnerState = _extends$2({}, props, {
       marks: marksProp,
       disabled,
@@ -29094,7 +28550,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       focusedThumbIndex,
       activeThumbIndex: active
     });
-    const classes = useUtilityClasses$1c(ownerState);
+    const classes = useUtilityClasses$1d(ownerState);
     const Root = (_slots$root = slots.root) != null ? _slots$root : "span";
     const rootProps = useSlotProps({
       elementType: Root,
@@ -29416,7 +28872,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const {
       autoHideDuration = null,
       disableWindowBlurListener = false,
-      onClose: onClose2,
+      onClose,
       open,
       resumeHideDuration
     } = parameters;
@@ -29428,7 +28884,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       function handleKeyDown2(nativeEvent) {
         if (!nativeEvent.defaultPrevented) {
           if (nativeEvent.key === "Escape" || nativeEvent.key === "Esc") {
-            onClose2 == null || onClose2(nativeEvent, "escapeKeyDown");
+            onClose == null || onClose(nativeEvent, "escapeKeyDown");
           }
         }
       }
@@ -29436,12 +28892,12 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       return () => {
         document.removeEventListener("keydown", handleKeyDown2);
       };
-    }, [open, onClose2]);
+    }, [open, onClose]);
     const handleClose = useEventCallback((event, reason) => {
-      onClose2 == null || onClose2(event, reason);
+      onClose == null || onClose(event, reason);
     });
     const setAutoHideTimer = useEventCallback((autoHideDurationParam) => {
-      if (!onClose2 || autoHideDurationParam == null) {
+      if (!onClose || autoHideDurationParam == null) {
         return;
       }
       clearTimeout(timerAutoHide.current);
@@ -29458,7 +28914,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       };
     }, [open, autoHideDuration, setAutoHideTimer]);
     const handleClickAway = (event) => {
-      onClose2 == null || onClose2(event, "clickaway");
+      onClose == null || onClose(event, "clickaway");
     };
     const handlePause = () => {
       clearTimeout(timerAutoHide.current);
@@ -29519,8 +28975,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   "use client";
   "use client";
-  const _excluded$1s = ["autoHideDuration", "children", "disableWindowBlurListener", "exited", "onBlur", "onClose", "onFocus", "onMouseEnter", "onMouseLeave", "open", "resumeHideDuration", "slotProps", "slots"];
-  const useUtilityClasses$1b = () => {
+  const _excluded$1t = ["autoHideDuration", "children", "disableWindowBlurListener", "exited", "onBlur", "onClose", "onFocus", "onMouseEnter", "onMouseLeave", "open", "resumeHideDuration", "slotProps", "slots"];
+  const useUtilityClasses$1c = () => {
     const slots = {
       root: ["root"]
     };
@@ -29532,20 +28988,20 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       children,
       disableWindowBlurListener = false,
       exited = true,
-      onClose: onClose2,
+      onClose,
       open,
       resumeHideDuration,
       slotProps = {},
       slots = {}
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1s);
-    const classes = useUtilityClasses$1b();
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1t);
+    const classes = useUtilityClasses$1c();
     const {
       getRootProps,
       onClickAway
     } = useSnackbar(_extends$2({}, props, {
       autoHideDuration,
       disableWindowBlurListener,
-      onClose: onClose2,
+      onClose,
       open,
       resumeHideDuration
     }));
@@ -29746,8 +29202,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const switchClasses$1 = generateUtilityClasses("MuiSwitch", ["root", "input", "track", "thumb", "checked", "disabled", "focusVisible", "readOnly"]);
   "use client";
-  const _excluded$1r = ["checked", "defaultChecked", "disabled", "onBlur", "onChange", "onFocus", "onFocusVisible", "readOnly", "required", "slotProps", "slots"];
-  const useUtilityClasses$1a = (ownerState) => {
+  const _excluded$1s = ["checked", "defaultChecked", "disabled", "onBlur", "onChange", "onFocus", "onFocusVisible", "readOnly", "required", "slotProps", "slots"];
+  const useUtilityClasses$1b = (ownerState) => {
     const {
       checked,
       disabled,
@@ -29767,7 +29223,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const {
       slotProps = {},
       slots = {}
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1r);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1s);
     const {
       getInputProps,
       checked,
@@ -29781,7 +29237,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       focusVisible,
       readOnly
     });
-    const classes = useUtilityClasses$1a(ownerState);
+    const classes = useUtilityClasses$1b(ownerState);
     const Root = (_slots$root = slots.root) != null ? _slots$root : "span";
     const rootProps = useSlotProps({
       elementType: Root,
@@ -29892,7 +29348,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   } : void 0;
   "use client";
   "use client";
-  const _excluded$1q = ["count", "getItemAriaLabel", "onPageChange", "page", "rowsPerPage", "showFirstButton", "showLastButton", "direction", "ownerState", "slotProps", "slots"];
+  const _excluded$1r = ["count", "getItemAriaLabel", "onPageChange", "page", "rowsPerPage", "showFirstButton", "showLastButton", "direction", "ownerState", "slotProps", "slots"];
   var _span$4, _span2, _span3, _span4;
   function LastPageIconDefault() {
     return _span$4 || (_span$4 = /* @__PURE__ */ jsxRuntimeExports.jsx("span", {
@@ -29930,7 +29386,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       direction,
       slotProps = {},
       slots = {}
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1q);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1r);
     const ownerState = props;
     const handleFirstPageButtonClick = (event) => {
       onPageChange(event, 0);
@@ -30023,7 +29479,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const tablePaginationClasses = generateUtilityClasses("MuiTablePagination", ["root", "toolbar", "spacer", "selectLabel", "selectRoot", "select", "selectIcon", "input", "menuItem", "displayedRows", "actions"]);
   "use client";
-  const _excluded$1p = ["colSpan", "count", "getItemAriaLabel", "labelDisplayedRows", "labelId", "labelRowsPerPage", "onPageChange", "onRowsPerPageChange", "page", "rowsPerPage", "rowsPerPageOptions", "selectId", "slotProps", "slots"];
+  const _excluded$1q = ["colSpan", "count", "getItemAriaLabel", "labelDisplayedRows", "labelId", "labelRowsPerPage", "onPageChange", "onRowsPerPageChange", "page", "rowsPerPage", "rowsPerPageOptions", "selectId", "slotProps", "slots"];
   function defaultLabelDisplayedRows({
     from: from2,
     to,
@@ -30034,7 +29490,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   function defaultGetAriaLabel$1(type) {
     return `Go to ${type} page`;
   }
-  const useUtilityClasses$19 = () => {
+  const useUtilityClasses$1a = () => {
     const slots = {
       root: ["root"],
       toolbar: ["toolbar"],
@@ -30066,9 +29522,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       selectId: selectIdProp,
       slotProps = {},
       slots = {}
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1p);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1q);
     const ownerState = props;
-    const classes = useUtilityClasses$19();
+    const classes = useUtilityClasses$1a();
     let colSpan;
     const Root = (_slots$root = slots.root) != null ? _slots$root : "td";
     if (Root === "td" || !isHostComponent(Root)) {
@@ -30423,8 +29879,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   "use client";
   "use client";
-  const _excluded$1o = ["children", "value", "defaultValue", "orientation", "direction", "onChange", "selectionFollowsFocus", "slotProps", "slots"];
-  const useUtilityClasses$18 = (ownerState) => {
+  const _excluded$1p = ["children", "value", "defaultValue", "orientation", "direction", "onChange", "selectionFollowsFocus", "slotProps", "slots"];
+  const useUtilityClasses$19 = (ownerState) => {
     const {
       orientation
     } = ownerState;
@@ -30441,7 +29897,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       direction = "ltr",
       slotProps = {},
       slots = {}
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1o);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1p);
     const ownerState = _extends$2({}, props, {
       orientation,
       direction
@@ -30449,7 +29905,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const {
       contextValue
     } = useTabs(ownerState);
-    const classes = useUtilityClasses$18(ownerState);
+    const classes = useUtilityClasses$19(ownerState);
     const TabsRoot = (_slots$root = slots.root) != null ? _slots$root : "div";
     const tabsRootProps = useSlotProps({
       elementType: TabsRoot,
@@ -30572,8 +30028,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     };
   }
   "use client";
-  const _excluded$1n = ["children", "value", "slotProps", "slots"];
-  const useUtilityClasses$17 = (ownerState) => {
+  const _excluded$1o = ["children", "value", "slotProps", "slots"];
+  const useUtilityClasses$18 = (ownerState) => {
     const {
       hidden
     } = ownerState;
@@ -30588,7 +30044,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       children,
       slotProps = {},
       slots = {}
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1n);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1o);
     const {
       hidden,
       getRootProps
@@ -30596,7 +30052,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const ownerState = _extends$2({}, props, {
       hidden
     });
-    const classes = useUtilityClasses$17(ownerState);
+    const classes = useUtilityClasses$18(ownerState);
     const TabPanelRoot = (_slots$root = slots.root) != null ? _slots$root : "div";
     const tabPanelRootProps = useSlotProps({
       elementType: TabPanelRoot,
@@ -30827,8 +30283,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   "use client";
   "use client";
-  const _excluded$1m = ["children", "slotProps", "slots"];
-  const useUtilityClasses$16 = (ownerState) => {
+  const _excluded$1n = ["children", "slotProps", "slots"];
+  const useUtilityClasses$17 = (ownerState) => {
     const {
       orientation
     } = ownerState;
@@ -30843,7 +30299,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       children,
       slotProps = {},
       slots = {}
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1m);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1n);
     const {
       isRtl,
       orientation,
@@ -30856,7 +30312,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       isRtl,
       orientation
     });
-    const classes = useUtilityClasses$16(ownerState);
+    const classes = useUtilityClasses$17(ownerState);
     const TabsListRoot = (_slots$root = slots.root) != null ? _slots$root : "div";
     const tabsListRootProps = useSlotProps({
       elementType: TabsListRoot,
@@ -30982,8 +30438,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   "use client";
   "use client";
-  const _excluded$1l = ["action", "children", "disabled", "onChange", "onClick", "onFocus", "slotProps", "slots", "value"];
-  const useUtilityClasses$15 = (ownerState) => {
+  const _excluded$1m = ["action", "children", "disabled", "onChange", "onClick", "onFocus", "slotProps", "slots", "value"];
+  const useUtilityClasses$16 = (ownerState) => {
     const {
       selected,
       disabled
@@ -31001,7 +30457,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       slotProps = {},
       slots = {},
       value
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1l);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1m);
     const tabRef = React__namespace.useRef();
     const handleRef = useForkRef(tabRef, forwardedRef);
     const {
@@ -31019,7 +30475,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       highlighted,
       selected
     });
-    const classes = useUtilityClasses$15(ownerState);
+    const classes = useUtilityClasses$16(ownerState);
     const TabRoot = (_slots$root = slots.root) != null ? _slots$root : "button";
     const tabRootProps = useSlotProps({
       elementType: TabRoot,
@@ -31084,7 +30540,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   } : void 0;
   "use client";
   "use client";
-  const _excluded$1k = ["onChange", "maxRows", "minRows", "style", "value"];
+  const _excluded$1l = ["onChange", "maxRows", "minRows", "style", "value"];
   function getStyleValue(value) {
     return parseInt(value, 10) || 0;
   }
@@ -31113,7 +30569,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       minRows = 1,
       style: style2,
       value
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1k);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1l);
     const {
       current: isControlled
     } = React__namespace.useRef(value != null);
@@ -31388,7 +30844,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       isOptionEqualToValue = (option, value2) => option === value2,
       multiple = false,
       onChange,
-      onClose: onClose2,
+      onClose,
       onHighlightChange,
       onInputChange,
       onOpen: onOpen2,
@@ -31758,8 +31214,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         return;
       }
       setOpenState(false);
-      if (onClose2) {
-        onClose2(event, reason);
+      if (onClose) {
+        onClose(event, reason);
       }
     };
     const handleValue = (event, newValue, reason, details) => {
@@ -32242,7 +31698,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     };
   }
   "use client";
-  const _excluded$1j = ["addEndListener", "appear", "children", "easing", "in", "onEnter", "onEntered", "onEntering", "onExit", "onExited", "onExiting", "style", "timeout", "TransitionComponent"];
+  const _excluded$1k = ["addEndListener", "appear", "children", "easing", "in", "onEnter", "onEntered", "onEntering", "onExit", "onExited", "onExiting", "style", "timeout", "TransitionComponent"];
   function getScale(value) {
     return `scale(${value}, ${__pow(value, 2)})`;
   }
@@ -32274,7 +31730,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       timeout = "auto",
       // eslint-disable-next-line react/prop-types
       TransitionComponent = Transition
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1j);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1k);
     const timer = React__namespace.useRef();
     const autoTimeout = React__namespace.useRef();
     const theme = useTheme();
@@ -32474,7 +31930,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   Grow.muiSupportAuto = true;
   "use client";
   "use client";
-  const _excluded$1i = ["anchorEl", "component", "components", "componentsProps", "container", "disablePortal", "keepMounted", "modifiers", "open", "placement", "popperOptions", "popperRef", "transition", "slots", "slotProps"];
+  const _excluded$1j = ["anchorEl", "component", "components", "componentsProps", "container", "disablePortal", "keepMounted", "modifiers", "open", "placement", "popperOptions", "popperRef", "transition", "slots", "slotProps"];
   const PopperRoot = styled(Popper$1, {
     name: "MuiPopper",
     slot: "Root",
@@ -32503,7 +31959,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       transition,
       slots,
       slotProps
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1i);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1j);
     const RootComponent = (_slots$root = slots == null ? void 0 : slots.root) != null ? _slots$root : components == null ? void 0 : components.Root;
     const otherProps = _extends$2({
       anchorEl,
@@ -32661,11 +32117,11 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const tooltipClasses = generateUtilityClasses("MuiTooltip", ["popper", "popperInteractive", "popperArrow", "popperClose", "tooltip", "tooltipArrow", "touch", "tooltipPlacementLeft", "tooltipPlacementRight", "tooltipPlacementTop", "tooltipPlacementBottom", "arrow"]);
   "use client";
-  const _excluded$1h = ["arrow", "children", "classes", "components", "componentsProps", "describeChild", "disableFocusListener", "disableHoverListener", "disableInteractive", "disableTouchListener", "enterDelay", "enterNextDelay", "enterTouchDelay", "followCursor", "id", "leaveDelay", "leaveTouchDelay", "onClose", "onOpen", "open", "placement", "PopperComponent", "PopperProps", "slotProps", "slots", "title", "TransitionComponent", "TransitionProps"];
+  const _excluded$1i = ["arrow", "children", "classes", "components", "componentsProps", "describeChild", "disableFocusListener", "disableHoverListener", "disableInteractive", "disableTouchListener", "enterDelay", "enterNextDelay", "enterTouchDelay", "followCursor", "id", "leaveDelay", "leaveTouchDelay", "onClose", "onOpen", "open", "placement", "PopperComponent", "PopperProps", "slotProps", "slots", "title", "TransitionComponent", "TransitionProps"];
   function round(value) {
     return Math.round(value * 1e5) / 1e5;
   }
-  const useUtilityClasses$14 = (ownerState) => {
+  const useUtilityClasses$15 = (ownerState) => {
     const {
       classes,
       disableInteractive,
@@ -32873,7 +32329,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       id: idProp,
       leaveDelay = 0,
       leaveTouchDelay = 1500,
-      onClose: onClose2,
+      onClose,
       onOpen: onOpen2,
       open: openProp,
       placement = "bottom",
@@ -32884,7 +32340,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       title,
       TransitionComponent: TransitionComponentProp = Grow,
       TransitionProps
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1h);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1i);
     const children = /* @__PURE__ */ React__namespace.isValidElement(childrenProp) ? childrenProp : /* @__PURE__ */ jsxRuntimeExports.jsx("span", {
       children: childrenProp
     });
@@ -32950,8 +32406,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           hystersisOpen = false;
         }, 800 + leaveDelay);
         setOpenState(false);
-        if (onClose2 && open) {
-          onClose2(event);
+        if (onClose && open) {
+          onClose(event);
         }
         clearTimeout(closeTimer.current);
         closeTimer.current = setTimeout(() => {
@@ -33145,7 +32601,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       PopperComponentProp,
       touch: ignoreNonTouchEvents.current
     });
-    const classes = useUtilityClasses$14(ownerState);
+    const classes = useUtilityClasses$15(ownerState);
     const PopperComponent = (_ref = (_slots$popper = slots.popper) != null ? _slots$popper : components.Popper) != null ? _ref : TooltipPopper;
     const TransitionComponent = (_ref2 = (_ref3 = (_slots$transition = slots.transition) != null ? _slots$transition : components.Transition) != null ? _ref3 : TransitionComponentProp) != null ? _ref2 : Grow;
     const TooltipComponent = (_ref4 = (_slots$tooltip = slots.tooltip) != null ? _slots$tooltip : components.Tooltip) != null ? _ref4 : TooltipTooltip;
@@ -33386,6 +32842,378 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * By default, the element is based on this [`Transition`](http://reactcommunity.org/react-transition-group/transition/) component.
      */
     TransitionProps: PropTypes.object
+  } : void 0;
+  "use client";
+  function getButtonUtilityClass(slot) {
+    return generateUtilityClass("MuiButton", slot);
+  }
+  const buttonClasses = generateUtilityClasses("MuiButton", ["root", "text", "textInherit", "textPrimary", "textSecondary", "textSuccess", "textError", "textInfo", "textWarning", "outlined", "outlinedInherit", "outlinedPrimary", "outlinedSecondary", "outlinedSuccess", "outlinedError", "outlinedInfo", "outlinedWarning", "contained", "containedInherit", "containedPrimary", "containedSecondary", "containedSuccess", "containedError", "containedInfo", "containedWarning", "disableElevation", "focusVisible", "disabled", "colorInherit", "textSizeSmall", "textSizeMedium", "textSizeLarge", "outlinedSizeSmall", "outlinedSizeMedium", "outlinedSizeLarge", "containedSizeSmall", "containedSizeMedium", "containedSizeLarge", "sizeMedium", "sizeSmall", "sizeLarge", "fullWidth", "startIcon", "endIcon", "iconSizeSmall", "iconSizeMedium", "iconSizeLarge"]);
+  const ButtonGroupContext = /* @__PURE__ */ React__namespace.createContext({});
+  if (process.env.NODE_ENV !== "production") {
+    ButtonGroupContext.displayName = "ButtonGroupContext";
+  }
+  const ButtonGroupButtonContext = /* @__PURE__ */ React__namespace.createContext(void 0);
+  if (process.env.NODE_ENV !== "production") {
+    ButtonGroupButtonContext.displayName = "ButtonGroupButtonContext";
+  }
+  "use client";
+  const _excluded$1h = ["children", "color", "component", "className", "disabled", "disableElevation", "disableFocusRipple", "endIcon", "focusVisibleClassName", "fullWidth", "size", "startIcon", "type", "variant"];
+  const useUtilityClasses$14 = (ownerState) => {
+    const {
+      color: color2,
+      disableElevation,
+      fullWidth,
+      size: size2,
+      variant,
+      classes
+    } = ownerState;
+    const slots = {
+      root: ["root", variant, `${variant}${capitalize(color2)}`, `size${capitalize(size2)}`, `${variant}Size${capitalize(size2)}`, color2 === "inherit" && "colorInherit", disableElevation && "disableElevation", fullWidth && "fullWidth"],
+      label: ["label"],
+      startIcon: ["startIcon", `iconSize${capitalize(size2)}`],
+      endIcon: ["endIcon", `iconSize${capitalize(size2)}`]
+    };
+    const composedClasses = composeClasses(slots, getButtonUtilityClass, classes);
+    return _extends$2({}, classes, composedClasses);
+  };
+  const commonIconStyles = (ownerState) => _extends$2({}, ownerState.size === "small" && {
+    "& > *:nth-of-type(1)": {
+      fontSize: 18
+    }
+  }, ownerState.size === "medium" && {
+    "& > *:nth-of-type(1)": {
+      fontSize: 20
+    }
+  }, ownerState.size === "large" && {
+    "& > *:nth-of-type(1)": {
+      fontSize: 22
+    }
+  });
+  const ButtonRoot = styled(ButtonBase, {
+    shouldForwardProp: (prop) => rootShouldForwardProp(prop) || prop === "classes",
+    name: "MuiButton",
+    slot: "Root",
+    overridesResolver: (props, styles2) => {
+      const {
+        ownerState
+      } = props;
+      return [styles2.root, styles2[ownerState.variant], styles2[`${ownerState.variant}${capitalize(ownerState.color)}`], styles2[`size${capitalize(ownerState.size)}`], styles2[`${ownerState.variant}Size${capitalize(ownerState.size)}`], ownerState.color === "inherit" && styles2.colorInherit, ownerState.disableElevation && styles2.disableElevation, ownerState.fullWidth && styles2.fullWidth];
+    }
+  })(({
+    theme,
+    ownerState
+  }) => {
+    var _theme$palette$getCon, _theme$palette;
+    const inheritContainedBackgroundColor = theme.palette.mode === "light" ? theme.palette.grey[300] : theme.palette.grey[800];
+    const inheritContainedHoverBackgroundColor = theme.palette.mode === "light" ? theme.palette.grey.A100 : theme.palette.grey[700];
+    return _extends$2({}, theme.typography.button, {
+      minWidth: 64,
+      padding: "6px 16px",
+      borderRadius: (theme.vars || theme).shape.borderRadius,
+      transition: theme.transitions.create(["background-color", "box-shadow", "border-color", "color"], {
+        duration: theme.transitions.duration.short
+      }),
+      "&:hover": _extends$2({
+        textDecoration: "none",
+        backgroundColor: theme.vars ? `rgba(${theme.vars.palette.text.primaryChannel} / ${theme.vars.palette.action.hoverOpacity})` : alpha(theme.palette.text.primary, theme.palette.action.hoverOpacity),
+        // Reset on touch devices, it doesn't add specificity
+        "@media (hover: none)": {
+          backgroundColor: "transparent"
+        }
+      }, ownerState.variant === "text" && ownerState.color !== "inherit" && {
+        backgroundColor: theme.vars ? `rgba(${theme.vars.palette[ownerState.color].mainChannel} / ${theme.vars.palette.action.hoverOpacity})` : alpha(theme.palette[ownerState.color].main, theme.palette.action.hoverOpacity),
+        // Reset on touch devices, it doesn't add specificity
+        "@media (hover: none)": {
+          backgroundColor: "transparent"
+        }
+      }, ownerState.variant === "outlined" && ownerState.color !== "inherit" && {
+        border: `1px solid ${(theme.vars || theme).palette[ownerState.color].main}`,
+        backgroundColor: theme.vars ? `rgba(${theme.vars.palette[ownerState.color].mainChannel} / ${theme.vars.palette.action.hoverOpacity})` : alpha(theme.palette[ownerState.color].main, theme.palette.action.hoverOpacity),
+        // Reset on touch devices, it doesn't add specificity
+        "@media (hover: none)": {
+          backgroundColor: "transparent"
+        }
+      }, ownerState.variant === "contained" && {
+        backgroundColor: theme.vars ? theme.vars.palette.Button.inheritContainedHoverBg : inheritContainedHoverBackgroundColor,
+        boxShadow: (theme.vars || theme).shadows[4],
+        // Reset on touch devices, it doesn't add specificity
+        "@media (hover: none)": {
+          boxShadow: (theme.vars || theme).shadows[2],
+          backgroundColor: (theme.vars || theme).palette.grey[300]
+        }
+      }, ownerState.variant === "contained" && ownerState.color !== "inherit" && {
+        backgroundColor: (theme.vars || theme).palette[ownerState.color].dark,
+        // Reset on touch devices, it doesn't add specificity
+        "@media (hover: none)": {
+          backgroundColor: (theme.vars || theme).palette[ownerState.color].main
+        }
+      }),
+      "&:active": _extends$2({}, ownerState.variant === "contained" && {
+        boxShadow: (theme.vars || theme).shadows[8]
+      }),
+      [`&.${buttonClasses.focusVisible}`]: _extends$2({}, ownerState.variant === "contained" && {
+        boxShadow: (theme.vars || theme).shadows[6]
+      }),
+      [`&.${buttonClasses.disabled}`]: _extends$2({
+        color: (theme.vars || theme).palette.action.disabled
+      }, ownerState.variant === "outlined" && {
+        border: `1px solid ${(theme.vars || theme).palette.action.disabledBackground}`
+      }, ownerState.variant === "contained" && {
+        color: (theme.vars || theme).palette.action.disabled,
+        boxShadow: (theme.vars || theme).shadows[0],
+        backgroundColor: (theme.vars || theme).palette.action.disabledBackground
+      })
+    }, ownerState.variant === "text" && {
+      padding: "6px 8px"
+    }, ownerState.variant === "text" && ownerState.color !== "inherit" && {
+      color: (theme.vars || theme).palette[ownerState.color].main
+    }, ownerState.variant === "outlined" && {
+      padding: "5px 15px",
+      border: "1px solid currentColor"
+    }, ownerState.variant === "outlined" && ownerState.color !== "inherit" && {
+      color: (theme.vars || theme).palette[ownerState.color].main,
+      border: theme.vars ? `1px solid rgba(${theme.vars.palette[ownerState.color].mainChannel} / 0.5)` : `1px solid ${alpha(theme.palette[ownerState.color].main, 0.5)}`
+    }, ownerState.variant === "contained" && {
+      color: theme.vars ? (
+        // this is safe because grey does not change between default light/dark mode
+        theme.vars.palette.text.primary
+      ) : (_theme$palette$getCon = (_theme$palette = theme.palette).getContrastText) == null ? void 0 : _theme$palette$getCon.call(_theme$palette, theme.palette.grey[300]),
+      backgroundColor: theme.vars ? theme.vars.palette.Button.inheritContainedBg : inheritContainedBackgroundColor,
+      boxShadow: (theme.vars || theme).shadows[2]
+    }, ownerState.variant === "contained" && ownerState.color !== "inherit" && {
+      color: (theme.vars || theme).palette[ownerState.color].contrastText,
+      backgroundColor: (theme.vars || theme).palette[ownerState.color].main
+    }, ownerState.color === "inherit" && {
+      color: "inherit",
+      borderColor: "currentColor"
+    }, ownerState.size === "small" && ownerState.variant === "text" && {
+      padding: "4px 5px",
+      fontSize: theme.typography.pxToRem(13)
+    }, ownerState.size === "large" && ownerState.variant === "text" && {
+      padding: "8px 11px",
+      fontSize: theme.typography.pxToRem(15)
+    }, ownerState.size === "small" && ownerState.variant === "outlined" && {
+      padding: "3px 9px",
+      fontSize: theme.typography.pxToRem(13)
+    }, ownerState.size === "large" && ownerState.variant === "outlined" && {
+      padding: "7px 21px",
+      fontSize: theme.typography.pxToRem(15)
+    }, ownerState.size === "small" && ownerState.variant === "contained" && {
+      padding: "4px 10px",
+      fontSize: theme.typography.pxToRem(13)
+    }, ownerState.size === "large" && ownerState.variant === "contained" && {
+      padding: "8px 22px",
+      fontSize: theme.typography.pxToRem(15)
+    }, ownerState.fullWidth && {
+      width: "100%"
+    });
+  }, ({
+    ownerState
+  }) => ownerState.disableElevation && {
+    boxShadow: "none",
+    "&:hover": {
+      boxShadow: "none"
+    },
+    [`&.${buttonClasses.focusVisible}`]: {
+      boxShadow: "none"
+    },
+    "&:active": {
+      boxShadow: "none"
+    },
+    [`&.${buttonClasses.disabled}`]: {
+      boxShadow: "none"
+    }
+  });
+  const ButtonStartIcon = styled("span", {
+    name: "MuiButton",
+    slot: "StartIcon",
+    overridesResolver: (props, styles2) => {
+      const {
+        ownerState
+      } = props;
+      return [styles2.startIcon, styles2[`iconSize${capitalize(ownerState.size)}`]];
+    }
+  })(({
+    ownerState
+  }) => _extends$2({
+    display: "inherit",
+    marginRight: 8,
+    marginLeft: -4
+  }, ownerState.size === "small" && {
+    marginLeft: -2
+  }, commonIconStyles(ownerState)));
+  const ButtonEndIcon = styled("span", {
+    name: "MuiButton",
+    slot: "EndIcon",
+    overridesResolver: (props, styles2) => {
+      const {
+        ownerState
+      } = props;
+      return [styles2.endIcon, styles2[`iconSize${capitalize(ownerState.size)}`]];
+    }
+  })(({
+    ownerState
+  }) => _extends$2({
+    display: "inherit",
+    marginRight: -4,
+    marginLeft: 8
+  }, ownerState.size === "small" && {
+    marginRight: -2
+  }, commonIconStyles(ownerState)));
+  const Button = /* @__PURE__ */ React__namespace.forwardRef(function Button2(inProps, ref) {
+    const contextProps = React__namespace.useContext(ButtonGroupContext);
+    const buttonGroupButtonContextPositionClassName = React__namespace.useContext(ButtonGroupButtonContext);
+    const resolvedProps = resolveProps(contextProps, inProps);
+    const props = useThemeProps({
+      props: resolvedProps,
+      name: "MuiButton"
+    });
+    const {
+      children,
+      color: color2 = "primary",
+      component = "button",
+      className,
+      disabled = false,
+      disableElevation = false,
+      disableFocusRipple = false,
+      endIcon: endIconProp,
+      focusVisibleClassName,
+      fullWidth = false,
+      size: size2 = "medium",
+      startIcon: startIconProp,
+      type,
+      variant = "text"
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1h);
+    const ownerState = _extends$2({}, props, {
+      color: color2,
+      component,
+      disabled,
+      disableElevation,
+      disableFocusRipple,
+      fullWidth,
+      size: size2,
+      type,
+      variant
+    });
+    const classes = useUtilityClasses$14(ownerState);
+    const startIcon = startIconProp && /* @__PURE__ */ jsxRuntimeExports.jsx(ButtonStartIcon, {
+      className: classes.startIcon,
+      ownerState,
+      children: startIconProp
+    });
+    const endIcon = endIconProp && /* @__PURE__ */ jsxRuntimeExports.jsx(ButtonEndIcon, {
+      className: classes.endIcon,
+      ownerState,
+      children: endIconProp
+    });
+    const positionClassName = buttonGroupButtonContextPositionClassName || "";
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(ButtonRoot, _extends$2({
+      ownerState,
+      className: clsx(contextProps.className, classes.root, className, positionClassName),
+      component,
+      disabled,
+      focusRipple: !disableFocusRipple,
+      focusVisibleClassName: clsx(classes.focusVisible, focusVisibleClassName),
+      ref,
+      type
+    }, other, {
+      classes,
+      children: [startIcon, children, endIcon]
+    }));
+  });
+  process.env.NODE_ENV !== "production" ? Button.propTypes = {
+    // ----------------------------- Warning --------------------------------
+    // | These PropTypes are generated from the TypeScript type definitions |
+    // |     To update them edit the d.ts file and run "yarn proptypes"     |
+    // ----------------------------------------------------------------------
+    /**
+     * The content of the component.
+     */
+    children: PropTypes.node,
+    /**
+     * Override or extend the styles applied to the component.
+     */
+    classes: PropTypes.object,
+    /**
+     * @ignore
+     */
+    className: PropTypes.string,
+    /**
+     * The color of the component.
+     * It supports both default and custom theme colors, which can be added as shown in the
+     * [palette customization guide](https://mui.com/material-ui/customization/palette/#custom-colors).
+     * @default 'primary'
+     */
+    color: PropTypes.oneOfType([PropTypes.oneOf(["inherit", "primary", "secondary", "success", "error", "info", "warning"]), PropTypes.string]),
+    /**
+     * The component used for the root node.
+     * Either a string to use a HTML element or a component.
+     */
+    component: PropTypes.elementType,
+    /**
+     * If `true`, the component is disabled.
+     * @default false
+     */
+    disabled: PropTypes.bool,
+    /**
+     * If `true`, no elevation is used.
+     * @default false
+     */
+    disableElevation: PropTypes.bool,
+    /**
+     * If `true`, the  keyboard focus ripple is disabled.
+     * @default false
+     */
+    disableFocusRipple: PropTypes.bool,
+    /**
+     * If `true`, the ripple effect is disabled.
+     *
+     * ⚠️ Without a ripple there is no styling for :focus-visible by default. Be sure
+     * to highlight the element by applying separate styles with the `.Mui-focusVisible` class.
+     * @default false
+     */
+    disableRipple: PropTypes.bool,
+    /**
+     * Element placed after the children.
+     */
+    endIcon: PropTypes.node,
+    /**
+     * @ignore
+     */
+    focusVisibleClassName: PropTypes.string,
+    /**
+     * If `true`, the button will take up the full width of its container.
+     * @default false
+     */
+    fullWidth: PropTypes.bool,
+    /**
+     * The URL to link to when the button is clicked.
+     * If defined, an `a` element will be used as the root node.
+     */
+    href: PropTypes.string,
+    /**
+     * The size of the component.
+     * `small` is equivalent to the dense button styling.
+     * @default 'medium'
+     */
+    size: PropTypes.oneOfType([PropTypes.oneOf(["small", "medium", "large"]), PropTypes.string]),
+    /**
+     * Element placed before the children.
+     */
+    startIcon: PropTypes.node,
+    /**
+     * The system prop that allows defining system overrides as well as additional CSS styles.
+     */
+    sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object]),
+    /**
+     * @ignore
+     */
+    type: PropTypes.oneOfType([PropTypes.oneOf(["button", "reset", "submit"]), PropTypes.string]),
+    /**
+     * The variant to use.
+     * @default 'text'
+     */
+    variant: PropTypes.oneOfType([PropTypes.oneOf(["contained", "outlined", "text"]), PropTypes.string])
   } : void 0;
   "use client";
   "use client";
@@ -38427,7 +38255,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       className,
       disableAutoFocusItem = false,
       MenuListProps = {},
-      onClose: onClose2,
+      onClose,
       open,
       PaperProps = {},
       PopoverClasses,
@@ -38465,8 +38293,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const handleListKeyDown = (event) => {
       if (event.key === "Tab") {
         event.preventDefault();
-        if (onClose2) {
-          onClose2(event, "tabKeyDown");
+        if (onClose) {
+          onClose(event, "tabKeyDown");
         }
       }
     };
@@ -38503,7 +38331,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       className: classes.paper
     });
     return /* @__PURE__ */ jsxRuntimeExports.jsx(MenuRoot, _extends$2({
-      onClose: onClose2,
+      onClose,
       anchorOrigin: {
         vertical: "bottom",
         horizontal: isRtl ? "right" : "left"
@@ -38963,7 +38791,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       name,
       onBlur,
       onChange,
-      onClose: onClose2,
+      onClose,
       onFocus,
       onOpen: onOpen2,
       open: openProp,
@@ -39040,8 +38868,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         if (onOpen2) {
           onOpen2(event);
         }
-      } else if (onClose2) {
-        onClose2(event);
+      } else if (onClose) {
+        onClose(event);
       }
       if (!isOpenControlled) {
         setMenuMinWidthState(autoWidth ? null : anchorElement.clientWidth);
@@ -39464,7 +39292,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     variant: PropTypes.oneOf(["standard", "outlined", "filled"])
   } : void 0;
   "use client";
-  const ArrowDropDownIcon$1 = createSvgIcon$1(/* @__PURE__ */ jsxRuntimeExports.jsx("path", {
+  const ArrowDropDownIcon$1 = createSvgIcon(/* @__PURE__ */ jsxRuntimeExports.jsx("path", {
     d: "M7 10l5 5 5-5z"
   }), "ArrowDropDown");
   "use client";
@@ -39505,7 +39333,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       MenuProps,
       multiple = false,
       native = false,
-      onClose: onClose2,
+      onClose,
       onOpen: onOpen2,
       open,
       renderValue,
@@ -39560,7 +39388,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           displayEmpty,
           labelId,
           MenuProps,
-          onClose: onClose2,
+          onClose,
           onOpen: onOpen2,
           open,
           renderValue,
@@ -41423,15 +41251,15 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     value: PropTypes.any
   } : void 0;
   "use client";
-  const CheckBoxOutlineBlankIcon = createSvgIcon$1(/* @__PURE__ */ jsxRuntimeExports.jsx("path", {
+  const CheckBoxOutlineBlankIcon = createSvgIcon(/* @__PURE__ */ jsxRuntimeExports.jsx("path", {
     d: "M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
   }), "CheckBoxOutlineBlank");
   "use client";
-  const CheckBoxIcon = createSvgIcon$1(/* @__PURE__ */ jsxRuntimeExports.jsx("path", {
+  const CheckBoxIcon = createSvgIcon(/* @__PURE__ */ jsxRuntimeExports.jsx("path", {
     d: "M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
   }), "CheckBox");
   "use client";
-  const IndeterminateCheckBoxIcon = createSvgIcon$1(/* @__PURE__ */ jsxRuntimeExports.jsx("path", {
+  const IndeterminateCheckBoxIcon = createSvgIcon(/* @__PURE__ */ jsxRuntimeExports.jsx("path", {
     d: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10H7v-2h10v2z"
   }), "IndeterminateCheckBox");
   function getCheckboxUtilityClass(slot) {
@@ -42049,7 +41877,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   } : void 0;
   "use client";
   "use client";
-  const CancelIcon = createSvgIcon$1(/* @__PURE__ */ jsxRuntimeExports.jsx("path", {
+  const CancelIcon = createSvgIcon(/* @__PURE__ */ jsxRuntimeExports.jsx("path", {
     d: "M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"
   }), "Cancel");
   function getChipUtilityClass(slot) {
@@ -42536,7 +42364,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   } : void 0;
   "use client";
   "use client";
-  const CloseIcon = createSvgIcon$1(/* @__PURE__ */ jsxRuntimeExports.jsx("path", {
+  const CloseIcon = createSvgIcon(/* @__PURE__ */ jsxRuntimeExports.jsx("path", {
     d: "M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
   }), "Close");
   function getAutocompleteUtilityClass(slot) {
@@ -45265,36 +45093,36 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       slotProps: (_themeProps$slotProps = themeProps.slotProps) != null ? _themeProps$slotProps : themeProps.componentsProps
     });
   }
-  const ArrowDropDownIcon = createSvgIcon$1(/* @__PURE__ */ jsxRuntimeExports.jsx("path", {
+  const ArrowDropDownIcon = createSvgIcon(/* @__PURE__ */ jsxRuntimeExports.jsx("path", {
     d: "M7 10l5 5 5-5z"
   }), "ArrowDropDown");
-  const ArrowLeftIcon = createSvgIcon$1(/* @__PURE__ */ jsxRuntimeExports.jsx("path", {
+  const ArrowLeftIcon = createSvgIcon(/* @__PURE__ */ jsxRuntimeExports.jsx("path", {
     d: "M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"
   }), "ArrowLeft");
-  const ArrowRightIcon = createSvgIcon$1(/* @__PURE__ */ jsxRuntimeExports.jsx("path", {
+  const ArrowRightIcon = createSvgIcon(/* @__PURE__ */ jsxRuntimeExports.jsx("path", {
     d: "M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"
   }), "ArrowRight");
-  const CalendarIcon = createSvgIcon$1(/* @__PURE__ */ jsxRuntimeExports.jsx("path", {
+  const CalendarIcon = createSvgIcon(/* @__PURE__ */ jsxRuntimeExports.jsx("path", {
     d: "M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"
   }), "Calendar");
-  const ClockIcon = createSvgIcon$1(/* @__PURE__ */ jsxRuntimeExports.jsxs(React__namespace.Fragment, {
+  const ClockIcon = createSvgIcon(/* @__PURE__ */ jsxRuntimeExports.jsxs(React__namespace.Fragment, {
     children: [/* @__PURE__ */ jsxRuntimeExports.jsx("path", {
       d: "M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
     }), /* @__PURE__ */ jsxRuntimeExports.jsx("path", {
       d: "M12.5 7H11v6l5.25 3.15.75-1.23-4.5-2.67z"
     })]
   }), "Clock");
-  const DateRangeIcon = createSvgIcon$1(/* @__PURE__ */ jsxRuntimeExports.jsx("path", {
+  const DateRangeIcon = createSvgIcon(/* @__PURE__ */ jsxRuntimeExports.jsx("path", {
     d: "M9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm2-7h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"
   }), "DateRange");
-  const TimeIcon = createSvgIcon$1(/* @__PURE__ */ jsxRuntimeExports.jsxs(React__namespace.Fragment, {
+  const TimeIcon = createSvgIcon(/* @__PURE__ */ jsxRuntimeExports.jsxs(React__namespace.Fragment, {
     children: [/* @__PURE__ */ jsxRuntimeExports.jsx("path", {
       d: "M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
     }), /* @__PURE__ */ jsxRuntimeExports.jsx("path", {
       d: "M12.5 7H11v6l5.25 3.15.75-1.23-4.5-2.67z"
     })]
   }), "Time");
-  const ClearIcon = createSvgIcon$1(/* @__PURE__ */ jsxRuntimeExports.jsx("path", {
+  const ClearIcon = createSvgIcon(/* @__PURE__ */ jsxRuntimeExports.jsx("path", {
     d: "M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
   }), "Clear");
   function getPickersArrowSwitcherUtilityClass(slot) {
@@ -45698,7 +45526,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       fullWidth = false,
       maxWidth: maxWidth2 = "sm",
       onBackdropClick,
-      onClose: onClose2,
+      onClose,
       open,
       PaperComponent = Paper,
       PaperProps = {},
@@ -45727,8 +45555,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       if (onBackdropClick) {
         onBackdropClick(event);
       }
-      if (onClose2) {
-        onClose2(event, "backdropClick");
+      if (onClose) {
+        onClose(event, "backdropClick");
       }
     };
     const ariaLabelledby = useId(ariaLabelledbyProp);
@@ -45750,7 +45578,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         }, BackdropProps)
       },
       disableEscapeKeyDown,
-      onClose: onClose2,
+      onClose,
       open,
       ref,
       onClick: handleBackdropClick,
@@ -46323,7 +46151,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     };
     return composeClasses(slots, getPickersToolbarUtilityClass, classes);
   };
-  const PickersToolbarButtonRoot = styled(Button$1, {
+  const PickersToolbarButtonRoot = styled(Button, {
     name: "MuiPickersToolbarButton",
     slot: "Root",
     overridesResolver: (_2, styles2) => styles2.root
@@ -47266,7 +47094,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   const useOpenState = ({
     open,
     onOpen: onOpen2,
-    onClose: onClose2
+    onClose
   }) => {
     const isControllingOpenProp = React__namespace.useRef(typeof open === "boolean").current;
     const [openState, setIsOpenState] = React__namespace.useState(false);
@@ -47285,10 +47113,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       if (newIsOpen && onOpen2) {
         onOpen2();
       }
-      if (!newIsOpen && onClose2) {
-        onClose2();
+      if (!newIsOpen && onClose) {
+        onClose();
       }
-    }, [isControllingOpenProp, onOpen2, onClose2]);
+    }, [isControllingOpenProp, onOpen2, onClose]);
     return {
       isOpen: openState,
       setIsOpen
@@ -47725,7 +47553,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       onChange,
       open,
       onSelectedSectionsChange,
-      onClose: onClose2
+      onClose
     } = propsFromPickerValue;
     const {
       views,
@@ -47786,7 +47614,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }
     useEnhancedEffect(() => {
       if (currentViewMode === "field" && open) {
-        onClose2();
+        onClose();
         setTimeout(() => {
           inputRef == null || inputRef.current.focus();
           onSelectedSectionsChange(view);
@@ -48072,22 +47900,22 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const buttons = actions == null ? void 0 : actions.map((actionType) => {
       switch (actionType) {
         case "clear":
-          return /* @__PURE__ */ jsxRuntimeExports.jsx(Button$1, {
+          return /* @__PURE__ */ jsxRuntimeExports.jsx(Button, {
             onClick: onClear,
             children: localeText.clearButtonLabel
           }, actionType);
         case "cancel":
-          return /* @__PURE__ */ jsxRuntimeExports.jsx(Button$1, {
+          return /* @__PURE__ */ jsxRuntimeExports.jsx(Button, {
             onClick: onCancel,
             children: localeText.cancelButtonLabel
           }, actionType);
         case "accept":
-          return /* @__PURE__ */ jsxRuntimeExports.jsx(Button$1, {
+          return /* @__PURE__ */ jsxRuntimeExports.jsx(Button, {
             onClick: onAccept,
             children: localeText.okButtonLabel
           }, actionType);
         case "today":
-          return /* @__PURE__ */ jsxRuntimeExports.jsx(Button$1, {
+          return /* @__PURE__ */ jsxRuntimeExports.jsx(Button, {
             onClick: onSetToday,
             children: localeText.todayButtonLabel
           }, actionType);
@@ -55286,7 +55114,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   } : void 0;
   "use client";
   "use client";
-  const ArrowDownwardIcon = createSvgIcon$1(/* @__PURE__ */ jsxRuntimeExports.jsx("path", {
+  const ArrowDownwardIcon = createSvgIcon(/* @__PURE__ */ jsxRuntimeExports.jsx("path", {
     d: "M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z"
   }), "ArrowDownward");
   function getTableSortLabelUtilityClass(slot) {
@@ -55891,19 +55719,19 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const paginationItemClasses = generateUtilityClasses("MuiPaginationItem", ["root", "page", "sizeSmall", "sizeLarge", "text", "textPrimary", "textSecondary", "outlined", "outlinedPrimary", "outlinedSecondary", "rounded", "ellipsis", "firstLast", "previousNext", "focusVisible", "disabled", "selected", "icon"]);
   "use client";
-  const FirstPageIcon = createSvgIcon$1(/* @__PURE__ */ jsxRuntimeExports.jsx("path", {
+  const FirstPageIcon = createSvgIcon(/* @__PURE__ */ jsxRuntimeExports.jsx("path", {
     d: "M18.41 16.59L13.82 12l4.59-4.59L17 6l-6 6 6 6zM6 6h2v12H6z"
   }), "FirstPage");
   "use client";
-  const LastPageIcon = createSvgIcon$1(/* @__PURE__ */ jsxRuntimeExports.jsx("path", {
+  const LastPageIcon = createSvgIcon(/* @__PURE__ */ jsxRuntimeExports.jsx("path", {
     d: "M5.59 7.41L10.18 12l-4.59 4.59L7 18l6-6-6-6zM16 6h2v12h-2z"
   }), "LastPage");
   "use client";
-  const NavigateBeforeIcon = createSvgIcon$1(/* @__PURE__ */ jsxRuntimeExports.jsx("path", {
+  const NavigateBeforeIcon = createSvgIcon(/* @__PURE__ */ jsxRuntimeExports.jsx("path", {
     d: "M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"
   }), "NavigateBefore");
   "use client";
-  const NavigateNextIcon = createSvgIcon$1(/* @__PURE__ */ jsxRuntimeExports.jsx("path", {
+  const NavigateNextIcon = createSvgIcon(/* @__PURE__ */ jsxRuntimeExports.jsx("path", {
     d: "M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
   }), "NavigateNext");
   "use client";
@@ -56478,19 +56306,19 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const alertClasses = generateUtilityClasses("MuiAlert", ["root", "action", "icon", "message", "filled", "filledSuccess", "filledInfo", "filledWarning", "filledError", "outlined", "outlinedSuccess", "outlinedInfo", "outlinedWarning", "outlinedError", "standard", "standardSuccess", "standardInfo", "standardWarning", "standardError"]);
   "use client";
-  const SuccessOutlinedIcon = createSvgIcon$1(/* @__PURE__ */ jsxRuntimeExports.jsx("path", {
+  const SuccessOutlinedIcon = createSvgIcon(/* @__PURE__ */ jsxRuntimeExports.jsx("path", {
     d: "M20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4C12.76,4 13.5,4.11 14.2, 4.31L15.77,2.74C14.61,2.26 13.34,2 12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0, 0 22,12M7.91,10.08L6.5,11.5L11,16L21,6L19.59,4.58L11,13.17L7.91,10.08Z"
   }), "SuccessOutlined");
   "use client";
-  const ReportProblemOutlinedIcon = createSvgIcon$1(/* @__PURE__ */ jsxRuntimeExports.jsx("path", {
+  const ReportProblemOutlinedIcon = createSvgIcon(/* @__PURE__ */ jsxRuntimeExports.jsx("path", {
     d: "M12 5.99L19.53 19H4.47L12 5.99M12 2L1 21h22L12 2zm1 14h-2v2h2v-2zm0-6h-2v4h2v-4z"
   }), "ReportProblemOutlined");
   "use client";
-  const ErrorOutlineIcon = createSvgIcon$1(/* @__PURE__ */ jsxRuntimeExports.jsx("path", {
+  const ErrorOutlineIcon = createSvgIcon(/* @__PURE__ */ jsxRuntimeExports.jsx("path", {
     d: "M11 15h2v2h-2zm0-8h2v6h-2zm.99-5C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
   }), "ErrorOutline");
   "use client";
-  const InfoOutlinedIcon = createSvgIcon$1(/* @__PURE__ */ jsxRuntimeExports.jsx("path", {
+  const InfoOutlinedIcon = createSvgIcon(/* @__PURE__ */ jsxRuntimeExports.jsx("path", {
     d: "M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20, 12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10, 10 0 0,0 12,2M11,17H13V11H11V17Z"
   }), "InfoOutlined");
   "use client";
@@ -56617,7 +56445,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       componentsProps = {},
       icon,
       iconMapping = defaultIconMapping,
-      onClose: onClose2,
+      onClose,
       role = "alert",
       severity = "success",
       slotProps = {},
@@ -56653,7 +56481,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         ownerState,
         className: classes.action,
         children: action
-      }) : null, action == null && onClose2 ? /* @__PURE__ */ jsxRuntimeExports.jsx(AlertAction, {
+      }) : null, action == null && onClose ? /* @__PURE__ */ jsxRuntimeExports.jsx(AlertAction, {
         ownerState,
         className: classes.action,
         children: /* @__PURE__ */ jsxRuntimeExports.jsx(AlertCloseButton, _extends$2({
@@ -56661,7 +56489,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           "aria-label": closeText,
           title: closeText,
           color: "inherit",
-          onClick: onClose2
+          onClick: onClose
         }, closeButtonProps, {
           children: /* @__PURE__ */ jsxRuntimeExports.jsx(AlertCloseIcon, _extends$2({
             fontSize: "small"
@@ -56866,11 +56694,11 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   } : void 0;
   "use client";
   "use client";
-  const RadioButtonUncheckedIcon = createSvgIcon$1(/* @__PURE__ */ jsxRuntimeExports.jsx("path", {
+  const RadioButtonUncheckedIcon = createSvgIcon(/* @__PURE__ */ jsxRuntimeExports.jsx("path", {
     d: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
   }), "RadioButtonUnchecked");
   "use client";
-  const RadioButtonCheckedIcon = createSvgIcon$1(/* @__PURE__ */ jsxRuntimeExports.jsx("path", {
+  const RadioButtonCheckedIcon = createSvgIcon(/* @__PURE__ */ jsxRuntimeExports.jsx("path", {
     d: "M8.465 8.465C9.37 7.56 10.62 7 12 7C14.76 7 17 9.24 17 12C17 13.38 16.44 14.63 15.535 15.535C14.63 16.44 13.38 17 12 17C9.24 17 7 14.76 7 12C7 10.62 7.56 9.37 8.465 8.465Z"
   }), "RadioButtonChecked");
   "use client";
@@ -58522,7 +58350,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       row,
       table
     })), rest);
-    return jsxRuntimeExports.jsx(Tooltip, { enterDelay: 1e3, enterNextDelay: 1e3, placement: "top", title: (_b = buttonProps === null || buttonProps === void 0 ? void 0 : buttonProps.title) !== null && _b !== void 0 ? _b : copied ? localization.copiedToClipboard : localization.clickToCopy, children: jsxRuntimeExports.jsx(Button$1, Object.assign({ onClick: (e) => handleCopy(e, cell.getValue()), size: "small", type: "button", variant: "text" }, buttonProps, { sx: (theme) => Object.assign({ backgroundColor: "transparent", border: "none", color: "inherit", cursor: "copy", fontFamily: "inherit", fontSize: "inherit", letterSpacing: "inherit", m: "-0.25rem", minWidth: "unset", textAlign: "inherit", textTransform: "inherit" }, parseFromValuesOrFunc(buttonProps === null || buttonProps === void 0 ? void 0 : buttonProps.sx, theme)), title: void 0 })) });
+    return jsxRuntimeExports.jsx(Tooltip, { enterDelay: 1e3, enterNextDelay: 1e3, placement: "top", title: (_b = buttonProps === null || buttonProps === void 0 ? void 0 : buttonProps.title) !== null && _b !== void 0 ? _b : copied ? localization.copiedToClipboard : localization.clickToCopy, children: jsxRuntimeExports.jsx(Button, Object.assign({ onClick: (e) => handleCopy(e, cell.getValue()), size: "small", type: "button", variant: "text" }, buttonProps, { sx: (theme) => Object.assign({ backgroundColor: "transparent", border: "none", color: "inherit", cursor: "copy", fontFamily: "inherit", fontSize: "inherit", letterSpacing: "inherit", m: "-0.25rem", minWidth: "unset", textAlign: "inherit", textTransform: "inherit" }, parseFromValuesOrFunc(buttonProps === null || buttonProps === void 0 ? void 0 : buttonProps.sx, theme)), title: void 0 })) });
   };
   const MRT_EditCellTextField = (_a) => {
     var _b, _c, _d;
@@ -60031,7 +59859,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       justifyContent: "space-between",
       p: "0.5rem",
       pt: 0
-    }, children: [enableHiding && jsxRuntimeExports.jsx(Button$1, { disabled: !getIsSomeColumnsVisible(), onClick: hideAllColumns, children: localization.hideAll }), enableColumnOrdering && jsxRuntimeExports.jsx(Button$1, { onClick: () => table.setColumnOrder(getDefaultColumnOrderIds(table.options)), children: localization.resetOrder }), enableColumnPinning && jsxRuntimeExports.jsx(Button$1, { disabled: !getIsSomeColumnsPinned(), onClick: () => table.resetColumnPinning(true), children: localization.unpinAll }), enableHiding && jsxRuntimeExports.jsx(Button$1, { disabled: getIsAllColumnsVisible(), onClick: () => toggleAllColumnsVisible(true), children: localization.showAll })] }), jsxRuntimeExports.jsx(Divider, {}), allColumns.map((column2, index2) => jsxRuntimeExports.jsx(MRT_ShowHideColumnsMenuItems, { allColumns, column: column2, hoveredColumn, setHoveredColumn, table }, `${index2}-${column2.id}`))] }));
+    }, children: [enableHiding && jsxRuntimeExports.jsx(Button, { disabled: !getIsSomeColumnsVisible(), onClick: hideAllColumns, children: localization.hideAll }), enableColumnOrdering && jsxRuntimeExports.jsx(Button, { onClick: () => table.setColumnOrder(getDefaultColumnOrderIds(table.options)), children: localization.resetOrder }), enableColumnPinning && jsxRuntimeExports.jsx(Button, { disabled: !getIsSomeColumnsPinned(), onClick: () => table.resetColumnPinning(true), children: localization.unpinAll }), enableHiding && jsxRuntimeExports.jsx(Button, { disabled: getIsAllColumnsVisible(), onClick: () => toggleAllColumnsVisible(true), children: localization.showAll })] }), jsxRuntimeExports.jsx(Divider, {}), allColumns.map((column2, index2) => jsxRuntimeExports.jsx(MRT_ShowHideColumnsMenuItems, { allColumns, column: column2, hoveredColumn, setHoveredColumn, table }, `${index2}-${column2.id}`))] }));
   };
   const MRT_ShowHideColumnsButton = (_a) => {
     var _b;
@@ -60269,7 +60097,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         });
       }
     };
-    return jsxRuntimeExports.jsx(Box, { onClick: (e) => e.stopPropagation(), sx: (theme) => Object.assign({ display: "flex", gap: "0.75rem" }, parseFromValuesOrFunc(rest === null || rest === void 0 ? void 0 : rest.sx, theme)), children: variant === "icon" ? jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [jsxRuntimeExports.jsx(Tooltip, { title: localization.cancel, children: jsxRuntimeExports.jsx(IconButton, { "aria-label": localization.cancel, onClick: handleCancel, children: jsxRuntimeExports.jsx(CancelIcon2, {}) }) }), jsxRuntimeExports.jsx(Tooltip, { title: localization.save, children: jsxRuntimeExports.jsx(IconButton, { "aria-label": localization.save, color: "info", onClick: handleSubmitRow, children: isSaving ? jsxRuntimeExports.jsx(CircularProgress, { size: 18 }) : jsxRuntimeExports.jsx(SaveIcon, {}) }) })] }) : jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [jsxRuntimeExports.jsx(Button$1, { onClick: handleCancel, sx: { minWidth: "100px" }, children: localization.cancel }), jsxRuntimeExports.jsxs(Button$1, { onClick: handleSubmitRow, sx: { minWidth: "100px" }, variant: "contained", children: [isSaving && jsxRuntimeExports.jsx(CircularProgress, { color: "inherit", size: 18 }), localization.save] })] }) });
+    return jsxRuntimeExports.jsx(Box, { onClick: (e) => e.stopPropagation(), sx: (theme) => Object.assign({ display: "flex", gap: "0.75rem" }, parseFromValuesOrFunc(rest === null || rest === void 0 ? void 0 : rest.sx, theme)), children: variant === "icon" ? jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [jsxRuntimeExports.jsx(Tooltip, { title: localization.cancel, children: jsxRuntimeExports.jsx(IconButton, { "aria-label": localization.cancel, onClick: handleCancel, children: jsxRuntimeExports.jsx(CancelIcon2, {}) }) }), jsxRuntimeExports.jsx(Tooltip, { title: localization.save, children: jsxRuntimeExports.jsx(IconButton, { "aria-label": localization.save, color: "info", onClick: handleSubmitRow, children: isSaving ? jsxRuntimeExports.jsx(CircularProgress, { size: 18 }) : jsxRuntimeExports.jsx(SaveIcon, {}) }) })] }) : jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [jsxRuntimeExports.jsx(Button, { onClick: handleCancel, sx: { minWidth: "100px" }, children: localization.cancel }), jsxRuntimeExports.jsxs(Button, { onClick: handleSubmitRow, sx: { minWidth: "100px" }, variant: "contained", children: [isSaving && jsxRuntimeExports.jsx(CircularProgress, { color: "inherit", size: 18 }), localization.save] })] }) });
   };
   const MRT_EditRowModal = (_a) => {
     var _b;
@@ -61175,13 +61003,13 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     return copy2;
   }
   var compact = (value) => Array.isArray(value) ? value.filter(Boolean) : [];
-  var isUndefined$1 = (val) => val === void 0;
+  var isUndefined = (val) => val === void 0;
   var get = (object, path, defaultValue) => {
     if (!path || !isObject(object)) {
       return defaultValue;
     }
     const result = compact(path.split(/[,[\].]+?/)).reduce((result2, key) => isNullOrUndefined(result2) ? result2 : result2[key], object);
-    return isUndefined$1(result) || result === object ? isUndefined$1(object[path]) ? defaultValue : object[path] : result;
+    return isUndefined(result) || result === object ? isUndefined(object[path]) ? defaultValue : object[path] : result;
   };
   var isBoolean = (value) => typeof value === "boolean";
   const EVENTS = {
@@ -61357,7 +61185,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       if (_shouldUnregisterField) {
         const value2 = cloneObject(get(control._options.defaultValues, name));
         set(control._defaultValues, name, value2);
-        if (isUndefined$1(get(control._formValues, name))) {
+        if (isUndefined(get(control._formValues, name))) {
           set(control._formValues, name, value2);
         }
       }
@@ -61507,7 +61335,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       return (c == "x" ? r2 : r2 & 3 | 8).toString(16);
     });
   };
-  var getFocusFieldName = (name, index2, options = {}) => options.shouldFocus || isUndefined$1(options.shouldFocus) ? options.focusName || `${name}.${isUndefined$1(options.focusIndex) ? index2 : options.focusIndex}.` : "";
+  var getFocusFieldName = (name, index2, options = {}) => options.shouldFocus || isUndefined(options.shouldFocus) ? options.focusName || `${name}.${isUndefined(options.focusIndex) ? index2 : options.focusIndex}.` : "";
   var getValidationModes = (mode) => ({
     isOnSubmit: !mode || mode === VALIDATION_MODE.onSubmit,
     isOnBlur: mode === VALIDATION_MODE.onBlur,
@@ -61566,7 +61394,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       }
       return options[0].checked && !options[0].disabled ? (
         // @ts-expect-error expected to work in the browser
-        options[0].attributes && !isUndefined$1(options[0].attributes.value) ? isUndefined$1(options[0].value) || options[0].value === "" ? validResult : { value: options[0].value, isValid: true } : validResult
+        options[0].attributes && !isUndefined(options[0].attributes.value) ? isUndefined(options[0].value) || options[0].value === "" ? validResult : { value: options[0].value, isValid: true } : validResult
       ) : defaultResult;
     }
     return defaultResult;
@@ -61609,7 +61437,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const isRadio = isRadioInput(ref);
     const isCheckBox = isCheckBoxInput(ref);
     const isRadioOrCheckbox2 = isRadio || isCheckBox;
-    const isEmpty2 = (valueAsNumber || isFileInput(ref)) && isUndefined$1(ref.value) && isUndefined$1(inputValue) || isHTMLElement(ref) && ref.value === "" || inputValue === "" || Array.isArray(inputValue) && !inputValue.length;
+    const isEmpty2 = (valueAsNumber || isFileInput(ref)) && isUndefined(ref.value) && isUndefined(inputValue) || isHTMLElement(ref) && ref.value === "" || inputValue === "" || Array.isArray(inputValue) && !inputValue.length;
     const appendErrorsCurry = appendErrors.bind(null, name, validateAllFieldCriteria, error);
     const getMinMaxMessage = (exceedMax, maxLengthMessage, minLengthMessage, maxType = INPUT_VALIDATION_RULES.maxLength, minType = INPUT_VALIDATION_RULES.minLength) => {
       const message = exceedMax ? maxLengthMessage : minLengthMessage;
@@ -61748,7 +61576,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     if (!Array.isArray(data)) {
       return [];
     }
-    if (isUndefined$1(data[to])) {
+    if (isUndefined(data[to])) {
       data[to] = void 0;
     }
     data.splice(to, 0, data.splice(from2, 1)[0]);
@@ -61767,7 +61595,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }
     return compact(temp).length ? temp : [];
   }
-  var removeArrayAt = (data, index2) => isUndefined$1(index2) ? [] : removeAtIndexes(data, convertToArrayPayload(index2).sort((a, b) => a - b));
+  var removeArrayAt = (data, index2) => isUndefined(index2) ? [] : removeAtIndexes(data, convertToArrayPayload(index2).sort((a, b) => a - b));
   var swapArrayAt = (data, indexA, indexB) => {
     [data[indexA], data[indexB]] = [data[indexB], data[indexA]];
   };
@@ -61775,13 +61603,13 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const length2 = updatePath.slice(0, -1).length;
     let index2 = 0;
     while (index2 < length2) {
-      object = isUndefined$1(object) ? index2++ : object[updatePath[index2++]];
+      object = isUndefined(object) ? index2++ : object[updatePath[index2++]];
     }
     return object;
   }
   function isEmptyArray(obj) {
     for (const key in obj) {
-      if (obj.hasOwnProperty(key) && !isUndefined$1(obj[key])) {
+      if (obj.hasOwnProperty(key) && !isUndefined(obj[key])) {
         return false;
       }
     }
@@ -62058,7 +61886,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     if (isObject(data) || isParentNodeArray) {
       for (const key in data) {
         if (Array.isArray(data[key]) || isObject(data[key]) && !objectHasFunction(data[key])) {
-          if (isUndefined$1(formValues) || isPrimitive(dirtyFieldsFromValues[key])) {
+          if (isUndefined(formValues) || isPrimitive(dirtyFieldsFromValues[key])) {
             dirtyFieldsFromValues[key] = Array.isArray(data[key]) ? markFieldsDirty(data[key], []) : __spreadValues({}, markFieldsDirty(data[key]));
           } else {
             getDirtyFieldsFromDefaultValues(data[key], isNullOrUndefined(formValues) ? {} : formValues[key], dirtyFieldsFromValues[key]);
@@ -62071,7 +61899,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     return dirtyFieldsFromValues;
   }
   var getDirtyFields = (defaultValues, formValues) => getDirtyFieldsFromDefaultValues(defaultValues, formValues, markFieldsDirty(formValues));
-  var getFieldValueAs = (value, { valueAsNumber, valueAsDate, setValueAs }) => isUndefined$1(value) ? value : valueAsNumber ? value === "" ? NaN : value ? +value : value : valueAsDate && isString(value) ? new Date(value) : setValueAs ? setValueAs(value) : value;
+  var getFieldValueAs = (value, { valueAsNumber, valueAsDate, setValueAs }) => isUndefined(value) ? value : valueAsNumber ? value === "" ? NaN : value ? +value : value : valueAsDate && isString(value) ? new Date(value) : setValueAs ? setValueAs(value) : value;
   function getFieldValue(_f) {
     const ref = _f.ref;
     if (_f.refs ? _f.refs.every((ref2) => ref2.disabled) : ref.disabled) {
@@ -62089,7 +61917,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     if (isCheckBoxInput(ref)) {
       return getCheckboxValue(_f.refs).value;
     }
-    return getFieldValueAs(isUndefined$1(ref.value) ? _f.ref.value : ref.value, _f);
+    return getFieldValueAs(isUndefined(ref.value) ? _f.ref.value : ref.value, _f);
   }
   var getResolverOptions = (fieldsNames, _fields, criteriaMode, shouldUseNativeValidation) => {
     const fields = {};
@@ -62104,7 +61932,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       shouldUseNativeValidation
     };
   };
-  var getRuleValue = (rule) => isUndefined$1(rule) ? rule : isRegex(rule) ? rule.source : isObject(rule) ? isRegex(rule.value) ? rule.value.source : rule.value : rule;
+  var getRuleValue = (rule) => isUndefined(rule) ? rule : isRegex(rule) ? rule.source : isObject(rule) ? isRegex(rule.value) ? rule.value.source : rule.value : rule;
   var hasValidation = (options) => options.mount && (options.required || options.min || options.max || options.maxLength || options.minLength || options.pattern || options.validate);
   function schemaErrorLookup(errors, _fields, name) {
     const error = get(errors, name);
@@ -62264,8 +62092,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const updateValidAndValue = (name, shouldSkipSetValueAs, value, ref) => {
       const field = get(_fields, name);
       if (field) {
-        const defaultValue = get(_formValues, name, isUndefined$1(value) ? get(_defaultValues, name) : value);
-        isUndefined$1(defaultValue) || ref && ref.defaultChecked || shouldSkipSetValueAs ? set(_formValues, name, shouldSkipSetValueAs ? defaultValue : getFieldValue(field._f)) : setFieldValue(name, defaultValue);
+        const defaultValue = get(_formValues, name, isUndefined(value) ? get(_defaultValues, name) : value);
+        isUndefined(defaultValue) || ref && ref.defaultChecked || shouldSkipSetValueAs ? set(_formValues, name, shouldSkipSetValueAs ? defaultValue : getFieldValue(field._f)) : setFieldValue(name, defaultValue);
         _state.mount && _updateValid();
       }
     };
@@ -62366,7 +62194,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       _names.unMount = /* @__PURE__ */ new Set();
     };
     const _getDirty = (name, data) => (name && data && set(_formValues, name, data), !deepEqual(getValues(), _defaultValues));
-    const _getWatch = (names, defaultValue, isGlobal) => generateWatchOutput(names, _names, __spreadValues({}, _state.mount ? _formValues : isUndefined$1(defaultValue) ? _defaultValues : isString(names) ? { [names]: defaultValue } : defaultValue), isGlobal, defaultValue);
+    const _getWatch = (names, defaultValue, isGlobal) => generateWatchOutput(names, _names, __spreadValues({}, _state.mount ? _formValues : isUndefined(defaultValue) ? _defaultValues : isString(names) ? { [names]: defaultValue } : defaultValue), isGlobal, defaultValue);
     const _getFieldArray = (name) => compact(get(_state.mount ? _formValues : _defaultValues, name, props.shouldUnregister ? get(_defaultValues, name, []) : []));
     const setFieldValue = (name, value, options = {}) => {
       const field = get(_fields, name);
@@ -62511,7 +62339,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       const fieldNames = convertToArrayPayload(name);
       _updateIsValidating(true);
       if (_options.resolver) {
-        const errors = yield executeSchemaAndUpdateState(isUndefined$1(name) ? name : fieldNames);
+        const errors = yield executeSchemaAndUpdateState(isUndefined(name) ? name : fieldNames);
         isValid = isEmptyObject(errors);
         validationResult = name ? !fieldNames.some((name2) => get(errors, name2)) : isValid;
       } else if (name) {
@@ -62532,7 +62360,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     });
     const getValues = (fieldNames) => {
       const values2 = __spreadValues(__spreadValues({}, _defaultValues), _state.mount ? _formValues : {});
-      return isUndefined$1(fieldNames) ? values2 : isString(fieldNames) ? get(values2, fieldNames) : fieldNames.map((name) => get(values2, name));
+      return isUndefined(fieldNames) ? values2 : isString(fieldNames) ? get(values2, fieldNames) : fieldNames.map((name) => get(values2, name));
     };
     const getFieldState = (name, formState) => ({
       invalid: !!get((formState || _formState).errors, name),
@@ -62582,7 +62410,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     };
     const _updateDisabledField = ({ disabled, name, field, fields, value }) => {
       if (isBoolean(disabled)) {
-        const inputValue = disabled ? void 0 : isUndefined$1(value) ? getFieldValue(field ? field._f : get(fields, name)._f) : value;
+        const inputValue = disabled ? void 0 : isUndefined(value) ? getFieldValue(field ? field._f : get(fields, name)._f) : value;
         set(_formValues, name, inputValue);
         updateTouchAndDirty(name, inputValue, false, false, true);
       }
@@ -62622,7 +62450,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           if (ref) {
             register(name, options);
             field = get(_fields, name);
-            const fieldRef = isUndefined$1(ref.value) ? ref.querySelectorAll ? ref.querySelectorAll("input,select,textarea")[0] || ref : ref : ref;
+            const fieldRef = isUndefined(ref.value) ? ref.querySelectorAll ? ref.querySelectorAll("input,select,textarea")[0] || ref : ref : ref;
             const radioOrCheckbox = isRadioOrCheckbox(fieldRef);
             const refs = field._f.refs || [];
             if (radioOrCheckbox ? refs.find((option) => option === fieldRef) : fieldRef === field._f.ref) {
@@ -62702,7 +62530,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     });
     const resetField = (name, options = {}) => {
       if (get(_fields, name)) {
-        if (isUndefined$1(options.defaultValue)) {
+        if (isUndefined(options.defaultValue)) {
           setValue(name, get(_defaultValues, name));
         } else {
           setValue(name, options.defaultValue);
@@ -62735,7 +62563,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
             get(_formState.dirtyFields, fieldName) ? set(values2, fieldName, get(_formValues, fieldName)) : setValue(fieldName, get(values2, fieldName));
           }
         } else {
-          if (isWeb && isUndefined$1(formValues)) {
+          if (isWeb && isUndefined(formValues)) {
             for (const name of _names.mount) {
               const field = get(_fields, name);
               if (field && field._f) {
@@ -62957,7 +62785,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const {
       item,
       itemFields,
-      onClose: onClose2 = () => {
+      onClose = () => {
       },
       onSubmit = () => {
       },
@@ -63078,7 +62906,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
                   {
                     variant: "outlined",
                     size: "large",
-                    onClick: () => onClose2(),
+                    onClick: () => onClose(),
                     children: "Cancel"
                   }
                 ) }),
@@ -63087,1601 +62915,6 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
             }
           ) })
         ] })
-      }
-    ) });
-  }
-  var Defaults = {
-    defaultAmount: 0,
-    defaultCurrency: "USD",
-    defaultPrecision: 2
-  };
-  var Globals = {
-    globalLocale: "en-US",
-    globalFormat: "$0,0.00",
-    globalRoundingMode: "HALF_EVEN",
-    globalFormatRoundingMode: "HALF_AWAY_FROM_ZERO",
-    globalExchangeRatesApi: {
-      endpoint: void 0,
-      headers: void 0,
-      propertyPath: void 0
-    }
-  };
-  function _typeof(obj) {
-    "@babel/helpers - typeof";
-    if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
-      _typeof = function(obj2) {
-        return typeof obj2;
-      };
-    } else {
-      _typeof = function(obj2) {
-        return obj2 && typeof Symbol === "function" && obj2.constructor === Symbol && obj2 !== Symbol.prototype ? "symbol" : typeof obj2;
-      };
-    }
-    return _typeof(obj);
-  }
-  function _toArray(arr) {
-    return _arrayWithHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableRest();
-  }
-  function _arrayWithHoles(arr) {
-    if (Array.isArray(arr))
-      return arr;
-  }
-  function _iterableToArray(iter) {
-    if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter))
-      return Array.from(iter);
-  }
-  function _unsupportedIterableToArray(o, minLen) {
-    if (!o)
-      return;
-    if (typeof o === "string")
-      return _arrayLikeToArray(o, minLen);
-    var n = Object.prototype.toString.call(o).slice(8, -1);
-    if (n === "Object" && o.constructor)
-      n = o.constructor.name;
-    if (n === "Map" || n === "Set")
-      return Array.from(o);
-    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n))
-      return _arrayLikeToArray(o, minLen);
-  }
-  function _arrayLikeToArray(arr, len) {
-    if (len == null || len > arr.length)
-      len = arr.length;
-    for (var i = 0, arr2 = new Array(len); i < len; i++)
-      arr2[i] = arr[i];
-    return arr2;
-  }
-  function _nonIterableRest() {
-    throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-  }
-  var Static = {
-    /**
-     * Returns an array of Dinero objects, normalized to the same precision (the highest).
-     *
-     * @memberof module:Dinero
-     * @method
-     *
-     * @param {Dinero[]} objects - An array of Dinero objects
-     *
-     * @example
-     * // returns an array of Dinero objects
-     * // both with a precision of 3
-     * // and an amount of 1000
-     * Dinero.normalizePrecision([
-     *   Dinero({ amount: 100, precision: 2 }),
-     *   Dinero({ amount: 1000, precision: 3 })
-     * ])
-     *
-     * @return {Dinero[]}
-     */
-    normalizePrecision: function normalizePrecision(objects) {
-      var highestPrecision = objects.reduce(function(a, b) {
-        return Math.max(a.getPrecision(), b.getPrecision());
-      });
-      return objects.map(function(object) {
-        return object.getPrecision() !== highestPrecision ? object.convertPrecision(highestPrecision) : object;
-      });
-    },
-    /**
-     * Returns the smallest Dinero object from an array of Dinero objects
-     *
-     * @memberof module:Dinero
-     * @method
-     *
-     * @param {Dinero[]} objects - An array of Dinero objects
-     *
-     * @example
-     * // returns the smallest Dinero object with amount of 500 from an array of Dinero objects with different precisions
-     * Dinero.minimum([
-     *   Dinero({ amount: 500, precision: 3 }),
-     *   Dinero({ amount: 100, precision: 2 })
-     * ])
-     * @example
-     * // returns the smallest Dinero object with amount of 50 from an array of Dinero objects
-     * Dinero.minimum([
-     *   Dinero({ amount: 50 }),
-     *   Dinero({ amount: 100 })
-     * ])
-     *
-     * @return {Dinero[]}
-     */
-    minimum: function minimum(objects) {
-      var _objects = _toArray(objects), firstObject = _objects[0], tailObjects = _objects.slice(1);
-      var currentMinimum = firstObject;
-      tailObjects.forEach(function(obj) {
-        currentMinimum = currentMinimum.lessThan(obj) ? currentMinimum : obj;
-      });
-      return currentMinimum;
-    },
-    /**
-     * Returns the biggest Dinero object from an array of Dinero objects
-     *
-     * @memberof module:Dinero
-     * @method
-     *
-     * @param {Dinero[]} objects - An array of Dinero objects
-     *
-     * @example
-     * // returns the biggest Dinero object with amount of 20, from an array of Dinero objects with different precisions
-     * Dinero.maximum([
-     *   Dinero({ amount: 20, precision: 2 }),
-     *   Dinero({ amount: 150, precision: 3 })
-     * ])
-     * @example
-     * // returns the biggest Dinero object with amount of 100, from an array of Dinero objects
-     * Dinero.maximum([
-     *   Dinero({ amount: 100 }),
-     *   Dinero({ amount: 50 })
-     * ])
-     *
-     * @return {Dinero[]}
-     */
-    maximum: function maximum(objects) {
-      var _objects2 = _toArray(objects), firstObject = _objects2[0], tailObjects = _objects2.slice(1);
-      var currentMaximum = firstObject;
-      tailObjects.forEach(function(obj) {
-        currentMaximum = currentMaximum.greaterThan(obj) ? currentMaximum : obj;
-      });
-      return currentMaximum;
-    }
-  };
-  function isNumeric(value) {
-    return !isNaN(parseInt(value)) && isFinite(value);
-  }
-  function isPercentage(percentage) {
-    return isNumeric(percentage) && percentage <= 100 && percentage >= 0;
-  }
-  function areValidRatios(ratios) {
-    return ratios.length > 0 && ratios.every(function(ratio) {
-      return ratio >= 0;
-    }) && ratios.some(function(ratio) {
-      return ratio > 0;
-    });
-  }
-  function isEven(value) {
-    return value % 2 === 0;
-  }
-  function isFloat(value) {
-    return isNumeric(value) && !Number.isInteger(value);
-  }
-  function countFractionDigits() {
-    var number = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : 0;
-    var stringRepresentation = number.toString();
-    if (stringRepresentation.indexOf("e-") > 0) {
-      return parseInt(stringRepresentation.split("e-")[1]);
-    } else {
-      var fractionDigits = stringRepresentation.split(".")[1];
-      return fractionDigits ? fractionDigits.length : 0;
-    }
-  }
-  function isHalf(number) {
-    return Math.abs(number) % 1 === 0.5;
-  }
-  function getJSON(url) {
-    var options = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {};
-    return new Promise(function(resolve, reject) {
-      var request = Object.assign(new XMLHttpRequest(), {
-        onreadystatechange: function onreadystatechange() {
-          if (request.readyState === 4) {
-            if (request.status >= 200 && request.status < 400)
-              resolve(JSON.parse(request.responseText));
-            else
-              reject(new Error(request.statusText));
-          }
-        },
-        onerror: function onerror() {
-          reject(new Error("Network error"));
-        }
-      });
-      request.open("GET", url, true);
-      setXHRHeaders(request, options.headers);
-      request.send();
-    });
-  }
-  function setXHRHeaders(xhr) {
-    var headers = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {};
-    for (var header in headers) {
-      xhr.setRequestHeader(header, headers[header]);
-    }
-    return xhr;
-  }
-  function isUndefined(value) {
-    return typeof value === "undefined";
-  }
-  function flattenObject(object) {
-    var separator = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : ".";
-    var finalObject = {};
-    Object.entries(object).forEach(function(item) {
-      if (_typeof(item[1]) === "object") {
-        var flatObject = flattenObject(item[1]);
-        Object.entries(flatObject).forEach(function(node2) {
-          finalObject[item[0] + separator + node2[0]] = node2[1];
-        });
-      } else {
-        finalObject[item[0]] = item[1];
-      }
-    });
-    return finalObject;
-  }
-  function isThenable(value) {
-    return Boolean(value) && (_typeof(value) === "object" || typeof value === "function") && typeof value.then === "function";
-  }
-  function Calculator() {
-    var floatMultiply = function floatMultiply2(a, b) {
-      var getFactor = function getFactor2(number) {
-        return Math.pow(10, countFractionDigits(number));
-      };
-      var factor = Math.max(getFactor(a), getFactor(b));
-      return Math.round(a * factor) * Math.round(b * factor) / (factor * factor);
-    };
-    var roundingModes = {
-      HALF_ODD: function HALF_ODD(number) {
-        var rounded = Math.round(number);
-        return isHalf(number) ? isEven(rounded) ? rounded - 1 : rounded : rounded;
-      },
-      HALF_EVEN: function HALF_EVEN(number) {
-        var rounded = Math.round(number);
-        return isHalf(number) ? isEven(rounded) ? rounded : rounded - 1 : rounded;
-      },
-      HALF_UP: function HALF_UP(number) {
-        return Math.round(number);
-      },
-      HALF_DOWN: function HALF_DOWN(number) {
-        return isHalf(number) ? Math.floor(number) : Math.round(number);
-      },
-      HALF_TOWARDS_ZERO: function HALF_TOWARDS_ZERO(number) {
-        return isHalf(number) ? Math.sign(number) * Math.floor(Math.abs(number)) : Math.round(number);
-      },
-      HALF_AWAY_FROM_ZERO: function HALF_AWAY_FROM_ZERO(number) {
-        return isHalf(number) ? Math.sign(number) * Math.ceil(Math.abs(number)) : Math.round(number);
-      },
-      DOWN: function DOWN(number) {
-        return Math.floor(number);
-      }
-    };
-    return {
-      /**
-       * Returns the sum of two numbers.
-       * @ignore
-       *
-       * @param {Number} a - The first number to add.
-       * @param {Number} b - The second number to add.
-       *
-       * @return {Number}
-       */
-      add: function add(a, b) {
-        return a + b;
-      },
-      /**
-       * Returns the difference of two numbers.
-       * @ignore
-       *
-       * @param {Number} a - The first number to subtract.
-       * @param {Number} b - The second number to subtract.
-       *
-       * @return {Number}
-       */
-      subtract: function subtract(a, b) {
-        return a - b;
-      },
-      /**
-       * Returns the product of two numbers.
-       * @ignore
-       *
-       * @param {Number} a - The first number to multiply.
-       * @param {Number} b - The second number to multiply.
-       *
-       * @return {Number}
-       */
-      multiply: function multiply(a, b) {
-        return isFloat(a) || isFloat(b) ? floatMultiply(a, b) : a * b;
-      },
-      /**
-       * Returns the quotient of two numbers.
-       * @ignore
-       *
-       * @param {Number} a - The first number to divide.
-       * @param {Number} b - The second number to divide.
-       *
-       * @return {Number}
-       */
-      divide: function divide(a, b) {
-        return a / b;
-      },
-      /**
-       * Returns the remainder of two numbers.
-       * @ignore
-       *
-       * @param  {Number} a - The first number to divide.
-       * @param  {Number} b - The second number to divide.
-       *
-       * @return {Number}
-       */
-      modulo: function modulo(a, b) {
-        return a % b;
-      },
-      /**
-       * Returns a rounded number based off a specific rounding mode.
-       * @ignore
-       *
-       * @param {Number} number - The number to round.
-       * @param {String} [roundingMode='HALF_EVEN'] - The rounding mode to use.
-       *
-       * @returns {Number}
-       */
-      round: function round2(number) {
-        var roundingMode = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : "HALF_EVEN";
-        return roundingModes[roundingMode](number);
-      }
-    };
-  }
-  var calculator = Calculator();
-  function Format(format) {
-    var matches = /^(?:(\$|USD)?0(?:(,)0)?(\.)?(0+)?|0(?:(,)0)?(\.)?(0+)?\s?(dollar)?)$/gm.exec(format);
-    return {
-      /**
-       * Returns the matches.
-       * @ignore
-       *
-       * @return {Array}
-       */
-      getMatches: function getMatches() {
-        return matches !== null ? matches.slice(1).filter(function(match2) {
-          return !isUndefined(match2);
-        }) : [];
-      },
-      /**
-       * Returns the amount of fraction digits to display.
-       * @ignore
-       *
-       * @return {Number}
-       */
-      getMinimumFractionDigits: function getMinimumFractionDigits() {
-        var decimalPosition = function decimalPosition2(match2) {
-          return match2 === ".";
-        };
-        return !isUndefined(this.getMatches().find(decimalPosition)) ? this.getMatches()[calculator.add(this.getMatches().findIndex(decimalPosition), 1)].split("").length : 0;
-      },
-      /**
-       * Returns the currency display mode.
-       * @ignore
-       *
-       * @return {String}
-       */
-      getCurrencyDisplay: function getCurrencyDisplay() {
-        var modes2 = {
-          USD: "code",
-          dollar: "name",
-          $: "symbol"
-        };
-        return modes2[this.getMatches().find(function(match2) {
-          return match2 === "USD" || match2 === "dollar" || match2 === "$";
-        })];
-      },
-      /**
-       * Returns the formatting style.
-       * @ignore
-       *
-       * @return {String}
-       */
-      getStyle: function getStyle() {
-        return !isUndefined(this.getCurrencyDisplay(this.getMatches())) ? "currency" : "decimal";
-      },
-      /**
-       * Returns whether grouping should be used or not.
-       * @ignore
-       *
-       * @return {Boolean}
-       */
-      getUseGrouping: function getUseGrouping() {
-        return !isUndefined(this.getMatches().find(function(match2) {
-          return match2 === ",";
-        }));
-      }
-    };
-  }
-  function CurrencyConverter(options) {
-    var mergeTags = function mergeTags2() {
-      var string = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : "";
-      var tags = arguments.length > 1 ? arguments[1] : void 0;
-      for (var tag in tags) {
-        string = string.replace("{{".concat(tag, "}}"), tags[tag]);
-      }
-      return string;
-    };
-    var getRatesFromRestApi = function getRatesFromRestApi2(from2, to) {
-      return getJSON(mergeTags(options.endpoint, {
-        from: from2,
-        to
-      }), {
-        headers: options.headers
-      });
-    };
-    return {
-      /**
-       * Returns the exchange rate.
-       * @ignore
-       *
-       * @param  {String} from - The base currency.
-       * @param  {String} to   - The destination currency.
-       *
-       * @return {Promise}
-       */
-      getExchangeRate: function getExchangeRate(from2, to) {
-        return (isThenable(options.endpoint) ? options.endpoint : getRatesFromRestApi(from2, to)).then(function(data) {
-          return flattenObject(data)[mergeTags(options.propertyPath, {
-            from: from2,
-            to
-          })];
-        });
-      }
-    };
-  }
-  function assert(condition, errorMessage) {
-    var ErrorType = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : Error;
-    if (!condition)
-      throw new ErrorType(errorMessage);
-  }
-  function assertPercentage(percentage) {
-    assert(isPercentage(percentage), "You must provide a numeric value between 0 and 100.", RangeError);
-  }
-  function assertValidRatios(ratios) {
-    assert(areValidRatios(ratios), "You must provide a non-empty array of numeric values greater than 0.", TypeError);
-  }
-  function assertInteger(number) {
-    assert(Number.isInteger(number), "You must provide an integer.", TypeError);
-  }
-  var calculator$1 = Calculator();
-  var Dinero = function Dinero2(options) {
-    var _Object$assign = Object.assign({}, {
-      amount: Dinero2.defaultAmount,
-      currency: Dinero2.defaultCurrency,
-      precision: Dinero2.defaultPrecision
-    }, options), amount = _Object$assign.amount, currency = _Object$assign.currency, precision = _Object$assign.precision;
-    assertInteger(amount);
-    assertInteger(precision);
-    var globalLocale = Dinero2.globalLocale, globalFormat = Dinero2.globalFormat, globalRoundingMode = Dinero2.globalRoundingMode, globalFormatRoundingMode = Dinero2.globalFormatRoundingMode;
-    var globalExchangeRatesApi = Object.assign({}, Dinero2.globalExchangeRatesApi);
-    var create = function create2(options2) {
-      var obj = Object.assign({}, Object.assign({}, {
-        amount,
-        currency,
-        precision
-      }, options2), Object.assign({}, {
-        locale: this.locale
-      }, options2));
-      return Object.assign(Dinero2({
-        amount: obj.amount,
-        currency: obj.currency,
-        precision: obj.precision
-      }), {
-        locale: obj.locale
-      });
-    };
-    var assertSameCurrency = function assertSameCurrency2(comparator) {
-      assert(this.hasSameCurrency(comparator), "You must provide a Dinero instance with the same currency.", TypeError);
-    };
-    return {
-      /**
-       * Returns the amount.
-       *
-       * @example
-       * // returns 500
-       * Dinero({ amount: 500 }).getAmount()
-       *
-       * @return {Number}
-       */
-      getAmount: function getAmount() {
-        return amount;
-      },
-      /**
-       * Returns the currency.
-       *
-       * @example
-       * // returns 'EUR'
-       * Dinero({ currency: 'EUR' }).getCurrency()
-       *
-       * @return {String}
-       */
-      getCurrency: function getCurrency() {
-        return currency;
-      },
-      /**
-       * Returns the locale.
-       *
-       * @example
-       * // returns 'fr-FR'
-       * Dinero().setLocale('fr-FR').getLocale()
-       *
-       * @return {String}
-       */
-      getLocale: function getLocale() {
-        return this.locale || globalLocale;
-      },
-      /**
-       * Returns a new Dinero object with an embedded locale.
-       *
-       * @param {String} newLocale - The new locale as an {@link http://tools.ietf.org/html/rfc5646 BCP 47 language tag}.
-       *
-       * @example
-       * // Returns a Dinero object with locale 'ja-JP'
-       * Dinero().setLocale('ja-JP')
-       *
-       * @return {Dinero}
-       */
-      setLocale: function setLocale(newLocale) {
-        return create.call(this, {
-          locale: newLocale
-        });
-      },
-      /**
-       * Returns the precision.
-       *
-       * @example
-       * // returns 3
-       * Dinero({ precision: 3 }).getPrecision()
-       *
-       * @return {Number}
-       */
-      getPrecision: function getPrecision() {
-        return precision;
-      },
-      /**
-       * Returns a new Dinero object with a new precision and a converted amount.
-       *
-       * By default, fractional minor currency units are rounded using the **half to even** rule ([banker's rounding](http://wiki.c2.com/?BankersRounding)).
-       * This can be necessary when you need to convert objects to a smaller precision.
-       *
-       * Rounding *can* lead to accuracy issues as you chain many times. Consider a minimal amount of subsequent conversions for safer results.
-       * You can also specify a different `roundingMode` to better fit your needs.
-       *
-       * @param {Number} newPrecision - The new precision.
-       * @param {String} [roundingMode='HALF_EVEN'] - The rounding mode to use: `'HALF_ODD'`, `'HALF_EVEN'`, `'HALF_UP'`, `'HALF_DOWN'`, `'HALF_TOWARDS_ZERO'`, `'HALF_AWAY_FROM_ZERO'` or `'DOWN'`.
-       *
-       * @example
-       * // Returns a Dinero object with precision 3 and amount 1000
-       * Dinero({ amount: 100, precision: 2 }).convertPrecision(3)
-       *
-       * @throws {TypeError} If `newPrecision` is invalid.
-       *
-       * @return {Dinero}
-       */
-      convertPrecision: function convertPrecision(newPrecision) {
-        var roundingMode = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : globalFormatRoundingMode;
-        assertInteger(newPrecision);
-        var precision2 = this.getPrecision();
-        var isNewPrecisionLarger = newPrecision > precision2;
-        var operation = isNewPrecisionLarger ? calculator$1.multiply : calculator$1.divide;
-        var terms = isNewPrecisionLarger ? [newPrecision, precision2] : [precision2, newPrecision];
-        var factor = Math.pow(10, calculator$1.subtract.apply(calculator$1, terms));
-        return create.call(this, {
-          amount: calculator$1.round(operation(this.getAmount(), factor), roundingMode),
-          precision: newPrecision
-        });
-      },
-      /**
-       * Returns a new Dinero object that represents the sum of this and an other Dinero object.
-       *
-       * If Dinero objects have a different `precision`, they will be first converted to the highest.
-       *
-       * @param {Dinero} addend - The Dinero object to add.
-       *
-       * @example
-       * // returns a Dinero object with amount 600
-       * Dinero({ amount: 400 }).add(Dinero({ amount: 200 }))
-       * @example
-       * // returns a Dinero object with amount 144545 and precision 4
-       * Dinero({ amount: 400 }).add(Dinero({ amount: 104545, precision: 4 }))
-       *
-       * @throws {TypeError} If `addend` has a different currency.
-       *
-       * @return {Dinero}
-       */
-      add: function add(addend) {
-        assertSameCurrency.call(this, addend);
-        var addends = Dinero2.normalizePrecision([this, addend]);
-        return create.call(this, {
-          amount: calculator$1.add(addends[0].getAmount(), addends[1].getAmount()),
-          precision: addends[0].getPrecision()
-        });
-      },
-      /**
-       * Returns a new Dinero object that represents the difference of this and an other Dinero object.
-       *
-       * If Dinero objects have a different `precision`, they will be first converted to the highest.
-       *
-       * @param  {Dinero} subtrahend - The Dinero object to subtract.
-       *
-       * @example
-       * // returns a Dinero object with amount 200
-       * Dinero({ amount: 400 }).subtract(Dinero({ amount: 200 }))
-       * @example
-       * // returns a Dinero object with amount 64545 and precision 4
-       * Dinero({ amount: 104545, precision: 4 }).subtract(Dinero({ amount: 400 }))
-       *
-       * @throws {TypeError} If `subtrahend` has a different currency.
-       *
-       * @return {Dinero}
-       */
-      subtract: function subtract(subtrahend) {
-        assertSameCurrency.call(this, subtrahend);
-        var subtrahends = Dinero2.normalizePrecision([this, subtrahend]);
-        return create.call(this, {
-          amount: calculator$1.subtract(subtrahends[0].getAmount(), subtrahends[1].getAmount()),
-          precision: subtrahends[0].getPrecision()
-        });
-      },
-      /**
-       * Returns a new Dinero object that represents the multiplied value by the given factor.
-       *
-       * By default, fractional minor currency units are rounded using the **half to even** rule ([banker's rounding](http://wiki.c2.com/?BankersRounding)).
-       *
-       * Rounding *can* lead to accuracy issues as you chain many times. Consider a minimal amount of subsequent calculations for safer results.
-       * You can also specify a different `roundingMode` to better fit your needs.
-       *
-       * @param  {Number} multiplier - The factor to multiply by.
-       * @param  {String} [roundingMode='HALF_EVEN'] - The rounding mode to use: `'HALF_ODD'`, `'HALF_EVEN'`, `'HALF_UP'`, `'HALF_DOWN'`, `'HALF_TOWARDS_ZERO'`, `'HALF_AWAY_FROM_ZERO'` or `'DOWN'`.
-       *
-       * @example
-       * // returns a Dinero object with amount 1600
-       * Dinero({ amount: 400 }).multiply(4)
-       * @example
-       * // returns a Dinero object with amount 800
-       * Dinero({ amount: 400 }).multiply(2.001)
-       * @example
-       * // returns a Dinero object with amount 801
-       * Dinero({ amount: 400 }).multiply(2.00125, 'HALF_UP')
-       *
-       * @return {Dinero}
-       */
-      multiply: function multiply(multiplier) {
-        var roundingMode = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : globalRoundingMode;
-        return create.call(this, {
-          amount: calculator$1.round(calculator$1.multiply(this.getAmount(), multiplier), roundingMode)
-        });
-      },
-      /**
-       * Returns a new Dinero object that represents the divided value by the given factor.
-       *
-       * By default, fractional minor currency units are rounded using the **half to even** rule ([banker's rounding](http://wiki.c2.com/?BankersRounding)).
-       *
-       * Rounding *can* lead to accuracy issues as you chain many times. Consider a minimal amount of subsequent calculations for safer results.
-       * You can also specify a different `roundingMode` to better fit your needs.
-       *
-       * As rounding is applied, precision may be lost in the process. If you want to accurately split a Dinero object, use {@link module:Dinero~allocate allocate} instead.
-       *
-       * @param  {Number} divisor - The factor to divide by.
-       * @param  {String} [roundingMode='HALF_EVEN'] - The rounding mode to use: `'HALF_ODD'`, `'HALF_EVEN'`, `'HALF_UP'`, `'HALF_DOWN'`, `'HALF_TOWARDS_ZERO'`, `'HALF_AWAY_FROM_ZERO'` or `'DOWN'`.
-       *
-       * @example
-       * // returns a Dinero object with amount 100
-       * Dinero({ amount: 400 }).divide(4)
-       * @example
-       * // returns a Dinero object with amount 52
-       * Dinero({ amount: 105 }).divide(2)
-       * @example
-       * // returns a Dinero object with amount 53
-       * Dinero({ amount: 105 }).divide(2, 'HALF_UP')
-       *
-       * @return {Dinero}
-       */
-      divide: function divide(divisor) {
-        var roundingMode = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : globalRoundingMode;
-        return create.call(this, {
-          amount: calculator$1.round(calculator$1.divide(this.getAmount(), divisor), roundingMode)
-        });
-      },
-      /**
-       * Returns a new Dinero object that represents a percentage of this.
-       *
-       * As rounding is applied, precision may be lost in the process. If you want to accurately split a Dinero object, use {@link module:Dinero~allocate allocate} instead.
-       *
-       * @param  {Number} percentage - The percentage to extract (between 0 and 100).
-       * @param  {String} [roundingMode='HALF_EVEN'] - The rounding mode to use: `'HALF_ODD'`, `'HALF_EVEN'`, `'HALF_UP'`, `'HALF_DOWN'`, `'HALF_TOWARDS_ZERO'`, `'HALF_AWAY_FROM_ZERO'` or `'DOWN'`.
-       *
-       * @example
-       * // returns a Dinero object with amount 5000
-       * Dinero({ amount: 10000 }).percentage(50)
-       * @example
-       * // returns a Dinero object with amount 29
-       * Dinero({ amount: 57 }).percentage(50, "HALF_ODD")
-       *
-       * @throws {RangeError} If `percentage` is out of range.
-       *
-       * @return {Dinero}
-       */
-      percentage: function percentage(_percentage) {
-        var roundingMode = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : globalRoundingMode;
-        assertPercentage(_percentage);
-        return this.multiply(calculator$1.divide(_percentage, 100), roundingMode);
-      },
-      /**
-       * Allocates the amount of a Dinero object according to a list of ratios.
-       *
-       * Sometimes you need to split monetary values but percentages can't cut it without adding or losing pennies.
-       * A good example is invoicing: let's say you need to bill $1,000.03 and you want a 50% downpayment.
-       * If you use {@link module:Dinero~percentage percentage}, you'll get an accurate Dinero object but the amount won't be billable: you can't split a penny.
-       * If you round it, you'll bill a penny extra.
-       * With {@link module:Dinero~allocate allocate}, you can split a monetary amount then distribute the remainder as evenly as possible.
-       *
-       * You can use percentage style or ratio style for `ratios`: `[25, 75]` and `[1, 3]` will do the same thing.
-       *
-       * Since v1.8.0, you can use zero ratios (such as [0, 50, 50]). If there's a remainder to distribute, zero ratios are skipped and return a Dinero object with amount zero.
-       *
-       * @param  {Number[]} ratios - The ratios to allocate the money to.
-       *
-       * @example
-       * // returns an array of two Dinero objects
-       * // the first one with an amount of 502
-       * // the second one with an amount of 501
-       * Dinero({ amount: 1003 }).allocate([50, 50])
-       * @example
-       * // returns an array of two Dinero objects
-       * // the first one with an amount of 25
-       * // the second one with an amount of 75
-       * Dinero({ amount: 100 }).allocate([1, 3])
-       * @example
-       * // since version 1.8.0
-       * // returns an array of three Dinero objects
-       * // the first one with an amount of 0
-       * // the second one with an amount of 502
-       * // the third one with an amount of 501
-       * Dinero({ amount: 1003 }).allocate([0, 50, 50])
-       *
-       * @throws {TypeError} If ratios are invalid.
-       *
-       * @return {Dinero[]}
-       */
-      allocate: function allocate(ratios) {
-        var _this = this;
-        assertValidRatios(ratios);
-        var total = ratios.reduce(function(a, b) {
-          return calculator$1.add(a, b);
-        });
-        var remainder = this.getAmount();
-        var shares = ratios.map(function(ratio) {
-          var share = Math.floor(calculator$1.divide(calculator$1.multiply(_this.getAmount(), ratio), total));
-          remainder = calculator$1.subtract(remainder, share);
-          return create.call(_this, {
-            amount: share
-          });
-        });
-        var i = 0;
-        while (remainder > 0) {
-          if (ratios[i] > 0) {
-            shares[i] = shares[i].add(create.call(this, {
-              amount: 1
-            }));
-            remainder = calculator$1.subtract(remainder, 1);
-          }
-          i += 1;
-        }
-        return shares;
-      },
-      /**
-       * Returns a Promise containing a new Dinero object converted to another currency.
-       *
-       * You have two options to provide the exchange rates:
-       *
-       * 1. **Use an exchange rate REST API, and let Dinero handle the fetching and conversion.**
-       *   This is a simple option if you have access to an exchange rate REST API and want Dinero to do the rest.
-       * 2. **Fetch the exchange rates on your own and provide them directly.**
-       *   This is useful if you're fetching your rates from somewhere else (a file, a database), use a different protocol or query language than REST (SOAP, GraphQL) or want to fetch rates once and cache them instead of making new requests every time.
-       *
-       * **If you want to use a REST API**, you must provide a third-party endpoint yourself. Dinero doesn't come bundled with an exchange rates endpoint.
-       *
-       * Here are some exchange rate APIs you can use:
-       *
-       * * [Fixer](https://fixer.io)
-       * * [Open Exchange Rates](https://openexchangerates.org)
-       * * [Coinbase](https://api.coinbase.com/v2/exchange-rates)
-       * * More [foreign](https://github.com/toddmotto/public-apis#currency-exchange) and [crypto](https://github.com/toddmotto/public-apis#cryptocurrency) exchange rate APIs.
-       *
-       * **If you want to fetch your own rates and provide them directly**, you need to pass a promise that resolves to the exchanges rates.
-       *
-       * In both cases, you need to specify at least:
-       *
-       * * a **destination currency**: the currency in which you want to convert your Dinero object. You can specify it with `currency`.
-       * * an **endpoint**: the API URL to query exchange rates, with parameters, or a promise that resolves to the exchange rates. You can specify it with `options.endpoint`.
-       * * a **property path**: the path to access the wanted rate in your API's JSON response (or the custom promise's payload). For example, with a response of:
-       * ```json
-       * {
-       *     "data": {
-       *       "base": "USD",
-       *       "destination": "EUR",
-       *       "rate": "0.827728919"
-       *     }
-       * }
-       * ```
-       * Then the property path is `'data.rate'`. You can specify it with `options.propertyPath`.
-       *
-       * The base currency (the one of your Dinero object) and the destination currency can be used as "merge tags" with the mustache syntax, respectively `{{from}}` and `{{to}}`.
-       * You can use these tags to refer to these values in `options.endpoint` and `options.propertyPath`.
-       *
-       * For example, if you need to specify the base currency as a query parameter, you can do the following:
-       *
-       * ```js
-       * {
-       *   endpoint: 'https://yourexchangerates.api/latest?base={{from}}'
-       * }
-       * ```
-       *
-       * @param  {String} currency - The destination currency, expressed as an {@link https://en.wikipedia.org/wiki/ISO_4217#Active_codes ISO 4217 currency code}.
-       * @param  {(String|Promise)} options.endpoint - The API endpoint to retrieve exchange rates. You can substitute this with a promise that resolves to the exchanges rates if you already have them.
-       * @param  {String} [options.propertyPath='rates.{{to}}'] - The property path to the rate.
-       * @param  {Object} [options.headers] - The HTTP headers to provide, if needed.
-       * @param  {String} [options.roundingMode='HALF_EVEN'] - The rounding mode to use: `'HALF_ODD'`, `'HALF_EVEN'`, `'HALF_UP'`, `'HALF_DOWN'`, `'HALF_TOWARDS_ZERO'`, `'HALF_AWAY_FROM_ZERO'` or `'DOWN'`.
-       *
-       * @example
-       * // your global API parameters
-       * Dinero.globalExchangeRatesApi = { ... }
-       *
-       * // returns a Promise containing a Dinero object with the destination currency
-       * // and the initial amount converted to the new currency.
-       * Dinero({ amount: 500 }).convert('EUR')
-       * @example
-       * // returns a Promise containing a Dinero object,
-       * // with specific API parameters and rounding mode for this specific instance.
-       * Dinero({ amount: 500 })
-       *   .convert('XBT', {
-       *     endpoint: 'https://yourexchangerates.api/latest?base={{from}}',
-       *     propertyPath: 'data.rates.{{to}}',
-       *     headers: {
-       *       'user-key': 'xxxxxxxxx'
-       *     },
-       *     roundingMode: 'HALF_UP'
-       *   })
-       * @example
-       * // usage with exchange rates provided as a custom promise
-       * // using the default `propertyPath` format (so it doesn't have to be specified)
-       * const rates = {
-       *   rates: {
-       *     EUR: 0.81162
-       *   }
-       * }
-       *
-       * Dinero({ amount: 500 })
-       *   .convert('EUR', {
-       *     endpoint: new Promise(resolve => resolve(rates))
-       *   })
-       * @example
-       * // usage with Promise.prototype.then and Promise.prototype.catch
-       * Dinero({ amount: 500 })
-       *   .convert('EUR')
-       *   .then(dinero => {
-       *     dinero.getCurrency() // returns 'EUR'
-       *   })
-       *   .catch(err => {
-       *     // handle errors
-       *   })
-       * @example
-       * // usage with async/await
-       * (async () => {
-       *   const price = await Dinero({ amount: 500 }).convert('EUR')
-       *   price.getCurrency() // returns 'EUR'
-       * })()
-       *
-       * @return {Promise}
-       */
-      convert: function convert(currency2) {
-        var _this2 = this;
-        var _ref = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {}, _ref$endpoint = _ref.endpoint, endpoint = _ref$endpoint === void 0 ? globalExchangeRatesApi.endpoint : _ref$endpoint, _ref$propertyPath = _ref.propertyPath, propertyPath = _ref$propertyPath === void 0 ? globalExchangeRatesApi.propertyPath || "rates.{{to}}" : _ref$propertyPath, _ref$headers = _ref.headers, headers = _ref$headers === void 0 ? globalExchangeRatesApi.headers : _ref$headers, _ref$roundingMode = _ref.roundingMode, roundingMode = _ref$roundingMode === void 0 ? globalRoundingMode : _ref$roundingMode;
-        var options2 = Object.assign({}, {
-          endpoint,
-          propertyPath,
-          headers,
-          roundingMode
-        });
-        return CurrencyConverter(options2).getExchangeRate(this.getCurrency(), currency2).then(function(rate) {
-          assert(!isUndefined(rate), 'No rate was found for the destination currency "'.concat(currency2, '".'), TypeError);
-          return create.call(_this2, {
-            amount: calculator$1.round(calculator$1.multiply(_this2.getAmount(), parseFloat(rate)), options2.roundingMode),
-            currency: currency2
-          });
-        });
-      },
-      /**
-       * Checks whether the value represented by this object equals to the other.
-       *
-       * @param  {Dinero} comparator - The Dinero object to compare to.
-       *
-       * @example
-       * // returns true
-       * Dinero({ amount: 500, currency: 'EUR' }).equalsTo(Dinero({ amount: 500, currency: 'EUR' }))
-       * @example
-       * // returns false
-       * Dinero({ amount: 500, currency: 'EUR' }).equalsTo(Dinero({ amount: 800, currency: 'EUR' }))
-       * @example
-       * // returns false
-       * Dinero({ amount: 500, currency: 'USD' }).equalsTo(Dinero({ amount: 500, currency: 'EUR' }))
-       * @example
-       * // returns false
-       * Dinero({ amount: 500, currency: 'USD' }).equalsTo(Dinero({ amount: 800, currency: 'EUR' }))
-       * @example
-       * // returns true
-       * Dinero({ amount: 1000, currency: 'EUR', precision: 2 }).equalsTo(Dinero({ amount: 10000, currency: 'EUR', precision: 3 }))
-       * @example
-       * // returns false
-       * Dinero({ amount: 10000, currency: 'EUR', precision: 2 }).equalsTo(Dinero({ amount: 10000, currency: 'EUR', precision: 3 }))
-       *
-       * @return {Boolean}
-       */
-      equalsTo: function equalsTo(comparator) {
-        return this.hasSameAmount(comparator) && this.hasSameCurrency(comparator);
-      },
-      /**
-       * Checks whether the value represented by this object is less than the other.
-       *
-       * @param  {Dinero} comparator - The Dinero object to compare to.
-       *
-       * @example
-       * // returns true
-       * Dinero({ amount: 500 }).lessThan(Dinero({ amount: 800 }))
-       * @example
-       * // returns false
-       * Dinero({ amount: 800 }).lessThan(Dinero({ amount: 500 }))
-       * @example
-       * // returns true
-       * Dinero({ amount: 5000, precision: 3 }).lessThan(Dinero({ amount: 800 }))
-       * @example
-       * // returns false
-       * Dinero({ amount: 800 }).lessThan(Dinero({ amount: 5000, precision: 3 }))
-       *
-       * @throws {TypeError} If `comparator` has a different currency.
-       *
-       * @return {Boolean}
-       */
-      lessThan: function lessThan2(comparator) {
-        assertSameCurrency.call(this, comparator);
-        var comparators = Dinero2.normalizePrecision([this, comparator]);
-        return comparators[0].getAmount() < comparators[1].getAmount();
-      },
-      /**
-       * Checks whether the value represented by this object is less than or equal to the other.
-       *
-       * @param  {Dinero} comparator - The Dinero object to compare to.
-       *
-       * @example
-       * // returns true
-       * Dinero({ amount: 500 }).lessThanOrEqual(Dinero({ amount: 800 }))
-       * @example
-       * // returns true
-       * Dinero({ amount: 500 }).lessThanOrEqual(Dinero({ amount: 500 }))
-       * @example
-       * // returns false
-       * Dinero({ amount: 500 }).lessThanOrEqual(Dinero({ amount: 300 }))
-       * @example
-       * // returns true
-       * Dinero({ amount: 5000, precision: 3 }).lessThanOrEqual(Dinero({ amount: 800 }))
-       * @example
-       * // returns true
-       * Dinero({ amount: 5000, precision: 3 }).lessThanOrEqual(Dinero({ amount: 500 }))
-       * @example
-       * // returns false
-       * Dinero({ amount: 800 }).lessThanOrEqual(Dinero({ amount: 5000, precision: 3 }))
-       *
-       * @throws {TypeError} If `comparator` has a different currency.
-       *
-       * @return {Boolean}
-       */
-      lessThanOrEqual: function lessThanOrEqual(comparator) {
-        assertSameCurrency.call(this, comparator);
-        var comparators = Dinero2.normalizePrecision([this, comparator]);
-        return comparators[0].getAmount() <= comparators[1].getAmount();
-      },
-      /**
-       * Checks whether the value represented by this object is greater than the other.
-       *
-       * @param  {Dinero} comparator - The Dinero object to compare to.
-       *
-       * @example
-       * // returns false
-       * Dinero({ amount: 500 }).greaterThan(Dinero({ amount: 800 }))
-       * @example
-       * // returns true
-       * Dinero({ amount: 800 }).greaterThan(Dinero({ amount: 500 }))
-       * @example
-       * // returns true
-       * Dinero({ amount: 800 }).greaterThan(Dinero({ amount: 5000, precision: 3 }))
-       * @example
-       * // returns false
-       * Dinero({ amount: 5000, precision: 3 }).greaterThan(Dinero({ amount: 800 }))
-       *
-       * @throws {TypeError} If `comparator` has a different currency.
-       *
-       * @return {Boolean}
-       */
-      greaterThan: function greaterThan2(comparator) {
-        assertSameCurrency.call(this, comparator);
-        var comparators = Dinero2.normalizePrecision([this, comparator]);
-        return comparators[0].getAmount() > comparators[1].getAmount();
-      },
-      /**
-       * Checks whether the value represented by this object is greater than or equal to the other.
-       *
-       * @param  {Dinero} comparator - The Dinero object to compare to.
-       *
-       * @example
-       * // returns true
-       * Dinero({ amount: 500 }).greaterThanOrEqual(Dinero({ amount: 300 }))
-       * @example
-       * // returns true
-       * Dinero({ amount: 500 }).greaterThanOrEqual(Dinero({ amount: 500 }))
-       * @example
-       * // returns false
-       * Dinero({ amount: 500 }).greaterThanOrEqual(Dinero({ amount: 800 }))
-       * @example
-       * // returns true
-       * Dinero({ amount: 800 }).greaterThanOrEqual(Dinero({ amount: 5000, precision: 3 }))
-       * @example
-       * // returns true
-       * Dinero({ amount: 500 }).greaterThanOrEqual(Dinero({ amount: 5000, precision: 3 }))
-       * @example
-       * // returns false
-       * Dinero({ amount: 5000, precision: 3 }).greaterThanOrEqual(Dinero({ amount: 800 }))
-       *
-       * @throws {TypeError} If `comparator` has a different currency.
-       *
-       * @return {Boolean}
-       */
-      greaterThanOrEqual: function greaterThanOrEqual(comparator) {
-        assertSameCurrency.call(this, comparator);
-        var comparators = Dinero2.normalizePrecision([this, comparator]);
-        return comparators[0].getAmount() >= comparators[1].getAmount();
-      },
-      /**
-       * Checks if the value represented by this object is zero.
-       *
-       * @example
-       * // returns true
-       * Dinero({ amount: 0 }).isZero()
-       * @example
-       * // returns false
-       * Dinero({ amount: 100 }).isZero()
-       *
-       * @return {Boolean}
-       */
-      isZero: function isZero() {
-        return this.getAmount() === 0;
-      },
-      /**
-       * Checks if the value represented by this object is positive.
-       *
-       * @example
-       * // returns false
-       * Dinero({ amount: -10 }).isPositive()
-       * @example
-       * // returns true
-       * Dinero({ amount: 10 }).isPositive()
-       * @example
-       * // returns true
-       * Dinero({ amount: 0 }).isPositive()
-       *
-       * @return {Boolean}
-       */
-      isPositive: function isPositive() {
-        return this.getAmount() >= 0;
-      },
-      /**
-       * Checks if the value represented by this object is negative.
-       *
-       * @example
-       * // returns true
-       * Dinero({ amount: -10 }).isNegative()
-       * @example
-       * // returns false
-       * Dinero({ amount: 10 }).isNegative()
-       * @example
-       * // returns false
-       * Dinero({ amount: 0 }).isNegative()
-       *
-       * @return {Boolean}
-       */
-      isNegative: function isNegative() {
-        return this.getAmount() < 0;
-      },
-      /**
-       * Checks if this has minor currency units.
-       * Deprecates {@link module:Dinero~hasCents hasCents}.
-       *
-       * @example
-       * // returns false
-       * Dinero({ amount: 1100 }).hasSubUnits()
-       * @example
-       * // returns true
-       * Dinero({ amount: 1150 }).hasSubUnits()
-       *
-       * @return {Boolean}
-       */
-      hasSubUnits: function hasSubUnits() {
-        return calculator$1.modulo(this.getAmount(), Math.pow(10, precision)) !== 0;
-      },
-      /**
-       * Checks if this has minor currency units.
-       *
-       * @deprecated since version 1.4.0, will be removed in 2.0.0
-       * Use {@link module:Dinero~hasSubUnits hasSubUnits} instead.
-       *
-       * @example
-       * // returns false
-       * Dinero({ amount: 1100 }).hasCents()
-       * @example
-       * // returns true
-       * Dinero({ amount: 1150 }).hasCents()
-       *
-       * @return {Boolean}
-       */
-      hasCents: function hasCents() {
-        return calculator$1.modulo(this.getAmount(), Math.pow(10, precision)) !== 0;
-      },
-      /**
-       * Checks whether the currency represented by this object equals to the other.
-       *
-       * @param  {Dinero}  comparator - The Dinero object to compare to.
-       *
-       * @example
-       * // returns true
-       * Dinero({ amount: 2000, currency: 'EUR' }).hasSameCurrency(Dinero({ amount: 1000, currency: 'EUR' }))
-       * @example
-       * // returns false
-       * Dinero({ amount: 1000, currency: 'EUR' }).hasSameCurrency(Dinero({ amount: 1000, currency: 'USD' }))
-       *
-       * @return {Boolean}
-       */
-      hasSameCurrency: function hasSameCurrency(comparator) {
-        return this.getCurrency() === comparator.getCurrency();
-      },
-      /**
-       * Checks whether the amount represented by this object equals to the other.
-       *
-       * @param  {Dinero}  comparator - The Dinero object to compare to.
-       *
-       * @example
-       * // returns true
-       * Dinero({ amount: 1000, currency: 'EUR' }).hasSameAmount(Dinero({ amount: 1000 }))
-       * @example
-       * // returns false
-       * Dinero({ amount: 2000, currency: 'EUR' }).hasSameAmount(Dinero({ amount: 1000, currency: 'EUR' }))
-       * @example
-       * // returns true
-       * Dinero({ amount: 1000, currency: 'EUR', precision: 2 }).hasSameAmount(Dinero({ amount: 10000, precision: 3 }))
-       * @example
-       * // returns false
-       * Dinero({ amount: 10000, currency: 'EUR', precision: 2 }).hasSameAmount(Dinero({ amount: 10000, precision: 3 }))
-       *
-       * @return {Boolean}
-       */
-      hasSameAmount: function hasSameAmount(comparator) {
-        var comparators = Dinero2.normalizePrecision([this, comparator]);
-        return comparators[0].getAmount() === comparators[1].getAmount();
-      },
-      /**
-       * Returns this object formatted as a string.
-       *
-       * The format is a mask which defines how the output string will be formatted.
-       * It defines whether to display a currency, in what format, how many fraction digits to display and whether to use grouping separators.
-       * The output is formatted according to the applying locale.
-       *
-       * Object                       | Format            | String
-       * :--------------------------- | :---------------- | :---
-       * `Dinero({ amount: 500050 })` | `'$0,0.00'`       | $5,000.50
-       * `Dinero({ amount: 500050 })` | `'$0,0'`          | $5,001
-       * `Dinero({ amount: 500050 })` | `'$0'`            | $5001
-       * `Dinero({ amount: 500050 })` | `'$0.0'`          | $5000.5
-       * `Dinero({ amount: 500050 })` | `'USD0,0.0'`      | USD5,000.5
-       * `Dinero({ amount: 500050 })` | `'0,0.0 dollar'`  | 5,000.5 dollars
-       *
-       * Don't try to substitute the `$` sign or the `USD` code with your target currency, nor adapt the format string to the exact format you want.
-       * The format is a mask which defines a pattern and returns a valid, localized currency string.
-       * If you want to display the object in a custom way, either use {@link module:Dinero~getAmount getAmount}, {@link module:Dinero~toUnit toUnit} or {@link module:Dinero~toRoundedUnit toRoundedUnit} and manipulate the output string as you wish.
-       *
-       * {@link module:Dinero~toFormat toFormat} wraps around `Number.prototype.toLocaleString`. For that reason, **format will vary depending on how it's implemented in the end user's environment**.
-       *
-       * You can also use `toLocaleString` directly:
-       * `Dinero().toRoundedUnit(digits, roundingMode).toLocaleString(locale, options)`.
-       *
-       * By default, amounts are rounded using the **half away from zero** rule ([commercial rounding](https://en.wikipedia.org/wiki/Rounding#Round_half_away_from_zero)).
-       * You can also specify a different `roundingMode` to better fit your needs.
-       *
-       * @param  {String} [format='$0,0.00'] - The format mask to format to.
-       * @param  {String} [roundingMode='HALF_AWAY_FROM_ZERO'] - The rounding mode to use: `'HALF_ODD'`, `'HALF_EVEN'`, `'HALF_UP'`, `'HALF_DOWN'`, `'HALF_TOWARDS_ZERO'`, `'HALF_AWAY_FROM_ZERO'` or `'DOWN'`.
-       *
-       * @example
-       * // returns $2,000
-       * Dinero({ amount: 200000 }).toFormat('$0,0')
-       * @example
-       * // returns €50.5
-       * Dinero({ amount: 5050, currency: 'EUR' }).toFormat('$0,0.0')
-       * @example
-       * // returns 100 euros
-       * Dinero({ amount: 10000, currency: 'EUR' }).setLocale('fr-FR').toFormat('0,0 dollar')
-       * @example
-       * // returns 2000
-       * Dinero({ amount: 200000, currency: 'EUR' }).toFormat()
-       * @example
-       * // returns $10
-       * Dinero({ amount: 1050 }).toFormat('$0', 'HALF_EVEN')
-       *
-       * @return {String}
-       */
-      toFormat: function toFormat() {
-        var format = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : globalFormat;
-        var roundingMode = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : globalFormatRoundingMode;
-        var formatter = Format(format);
-        return this.toRoundedUnit(formatter.getMinimumFractionDigits(), roundingMode).toLocaleString(this.getLocale(), {
-          currencyDisplay: formatter.getCurrencyDisplay(),
-          useGrouping: formatter.getUseGrouping(),
-          minimumFractionDigits: formatter.getMinimumFractionDigits(),
-          style: formatter.getStyle(),
-          currency: this.getCurrency()
-        });
-      },
-      /**
-       * Returns the amount represented by this object in units.
-       *
-       * @example
-       * // returns 10.5
-       * Dinero({ amount: 1050 }).toUnit()
-       * @example
-       * // returns 10.545
-       * Dinero({ amount: 10545, precision: 3 }).toUnit()
-       *
-       * @return {Number}
-       */
-      toUnit: function toUnit() {
-        return calculator$1.divide(this.getAmount(), Math.pow(10, precision));
-      },
-      /**
-       * Returns the amount represented by this object in rounded units.
-       *
-       * By default, the method uses the **half away from zero** rule ([commercial rounding](https://en.wikipedia.org/wiki/Rounding#Round_half_away_from_zero)).
-       * You can also specify a different `roundingMode` to better fit your needs.
-       *
-       * @example
-       * // returns 10.6
-       * Dinero({ amount: 1055 }).toRoundedUnit(1)
-       * @example
-       * // returns 10
-       * Dinero({ amount: 1050 }).toRoundedUnit(0, 'HALF_EVEN')
-       *
-       * @param  {Number} digits - The number of fraction digits to round to.
-       * @param  {String} [roundingMode='HALF_AWAY_FROM_ZERO'] - The rounding mode to use: `'HALF_ODD'`, `'HALF_EVEN'`, `'HALF_UP'`, `'HALF_DOWN'`, `'HALF_TOWARDS_ZERO'`, `'HALF_AWAY_FROM_ZERO'` or `'DOWN'`.
-       *
-       * @return {Number}
-       */
-      toRoundedUnit: function toRoundedUnit(digits) {
-        var roundingMode = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : globalFormatRoundingMode;
-        var factor = Math.pow(10, digits);
-        return calculator$1.divide(calculator$1.round(calculator$1.multiply(this.toUnit(), factor), roundingMode), factor);
-      },
-      /**
-       * Returns the object's data as an object literal.
-       *
-       * @example
-       * // returns { amount: 500, currency: 'EUR', precision: 2 }
-       * Dinero({ amount: 500, currency: 'EUR', precision: 2 }).toObject()
-       *
-       * @return {Object}
-       */
-      toObject: function toObject() {
-        return {
-          amount,
-          currency,
-          precision
-        };
-      },
-      /**
-       * Returns the object's data as an object literal.
-       *
-       * Alias of {@link module:Dinero~toObject toObject}.
-       * It is defined so that calling `JSON.stringify` on a Dinero object will automatically extract the relevant data.
-       *
-       * @example
-       * // returns '{"amount":500,"currency":"EUR","precision":2}'
-       * JSON.stringify(Dinero({ amount: 500, currency: 'EUR', precision: 2 }))
-       *
-       * @return {Object}
-       */
-      toJSON: function toJSON() {
-        return this.toObject();
-      }
-    };
-  };
-  var dinero = Object.assign(Dinero, Defaults, Globals, Static);
-  const { Skip } = gubu_minExports.Gubu;
-  const BasicLedSpecShape = gubu_minExports.Gubu({
-    title: String,
-    name: String,
-    paramId: Skip(String),
-    content: {
-      cmp: Skip(String),
-      def: {
-        canon: String,
-        add: Skip({
-          active: Boolean
-        }),
-        subview: {},
-        id: Skip({
-          field: String
-        }),
-        field: {},
-        columnVisibility: Skip({})
-      }
-    }
-  });
-  function BasicLed(props) {
-    var _a, _b, _c;
-    const { ctx, action } = props;
-    const { seneca, custom } = ctx();
-    const [item, setItem] = React.useState({});
-    const location2 = reactRouterDom.useLocation();
-    const navigate = reactRouterDom.useNavigate();
-    const [data, setData] = React.useState([]);
-    const [isLoading, setIsLoading] = React.useState(true);
-    const basicLedSpec = BasicLedSpecShape(props.spec);
-    const viewName = basicLedSpec.name;
-    const def = basicLedSpec.content.def;
-    const canon = def.canon;
-    const cmpState = reactRedux.useSelector((state) => state.main.vxg.cmp);
-    const fields = basicLedSpec.content.def.field;
-    const entState = reactRedux.useSelector(
-      (state) => state.main.vxg.ent.meta.main[canon].state
-    );
-    React.useEffect(() => {
-      if ("none" === entState) {
-        let q = custom.BasicLed.query(basicLedSpec, cmpState);
-        seneca.entity(canon).list$(q);
-      }
-    }, [entState]);
-    const entlist = reactRedux.useSelector(
-      (state) => state.main.vxg.ent.list.main[canon]
-    );
-    React.useEffect(() => {
-      setIsLoading(false);
-      setData(entlist);
-    }, [entlist]);
-    const basicListColumns = Object.entries(fields).map(
-      ([key, field]) => ({
-        accessorFn: (row) => row[key],
-        accessorKey: key,
-        header: field.label,
-        enableEditing: field.editable,
-        editVariant: field.inputType,
-        editSelectOptions: "select" === field.inputType ? Object.keys(field.options) : null,
-        Header: () => /* @__PURE__ */ jsxRuntimeExports.jsx(
-          material.Box,
-          {
-            sx: {
-              display: "flex",
-              width: "100%",
-              justifyContent: field.headerAlign || "left"
-            },
-            children: /* @__PURE__ */ jsxRuntimeExports.jsx(material.Typography, { variant: "body2", fontWeight: "bold", children: field.label })
-          }
-        ),
-        Cell: ({ cell, row }) => renderCell({ cell, field, row }),
-        size: field.size || 40
-      })
-    );
-    const renderCell = ({ cell, field, row }) => {
-      const cellValue = cell.getValue();
-      let entityId, action2, textAlign2;
-      switch (field.displayType) {
-        case "link":
-          const target = field.target;
-          entityId = row.original[(target == null ? void 0 : target.idName) || "id"];
-          const entityName = (target == null ? void 0 : target.entity) || viewName;
-          return /* @__PURE__ */ jsxRuntimeExports.jsx(reactRouterDom.Link, { to: `/view/${entityName}/${entityId}/show`, children: /* @__PURE__ */ jsxRuntimeExports.jsx(material.Typography, { variant: "body2", children: cellValue }) });
-        case "image":
-          return /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: cellValue, alt: "Cell Content" });
-        case "navbutton":
-          return /* @__PURE__ */ jsxRuntimeExports.jsx(
-            BasicButton,
-            {
-              type: "submit",
-              variant: "outlined",
-              size: "medium",
-              onClick: () => {
-                navigate(`/view/${viewName}/${row.original.id}/${field.action}`);
-              },
-              children: field.actionLabel
-            }
-          );
-        case "button":
-          if (field.action === "approve") {
-            return /* @__PURE__ */ jsxRuntimeExports.jsx(
-              BasicButton,
-              {
-                type: "submit",
-                variant: "outlined",
-                size: "medium",
-                disabled: row.original.approvedAmount === row.original.amountOrdered,
-                onClick: () => __async(this, null, function* () {
-                  let dataCopy = [];
-                  for (let item2 in data) {
-                    let copy2 = __spreadValues({}, data[item2]);
-                    dataCopy.push(copy2);
-                  }
-                  entityId = row.original.id;
-                  let supplier = dataCopy.find((entity) => {
-                    return entity.id === entityId;
-                  });
-                  supplier.approvedAmount = supplier.amountOrdered;
-                  const callbacks = custom.BasicLed;
-                  const approve = callbacks.approve;
-                  const approved = yield approve(supplier, seneca);
-                  if (approved) {
-                    console.log("approved?: ", approved);
-                    setData(dataCopy);
-                  } else {
-                    console.log("approving failed: ", approved);
-                  }
-                }),
-                children: field.actionLabel
-              }
-            );
-          } else {
-            return /* @__PURE__ */ jsxRuntimeExports.jsx(
-              material.Box,
-              {
-                sx: {
-                  display: "flex",
-                  justifyContent: field.justifyContent || "center"
-                },
-                children: /* @__PURE__ */ jsxRuntimeExports.jsx(BasicButton, { type: "submit", variant: "outlined", size: "medium", children: field.actionLabel })
-              }
-            );
-          }
-        case "action":
-          entityId = row.original.id;
-          action2 = field.action;
-          return /* @__PURE__ */ jsxRuntimeExports.jsx(reactRouterDom.Link, { to: `/view/${viewName}/${entityId}/${action2}`, children: field.actionLabel });
-        case "chip":
-          if (cellValue === "Low") {
-            return /* @__PURE__ */ jsxRuntimeExports.jsx(material.Chip, { sx: { color: "white" }, label: cellValue, color: "success" });
-          } else if (cellValue === "Med") {
-            return /* @__PURE__ */ jsxRuntimeExports.jsx(material.Chip, { sx: { color: "white" }, label: cellValue, color: "warning" });
-          } else if (cellValue === "High") {
-            return /* @__PURE__ */ jsxRuntimeExports.jsx(material.Chip, { sx: { color: "white" }, label: cellValue, color: "error" });
-          }
-        case "progressBar":
-          return /* @__PURE__ */ jsxRuntimeExports.jsx(
-            material.LinearProgress,
-            {
-              variant: "determinate",
-              value: cellValue,
-              color: "success",
-              sx: { height: "9px", border: "2px solid #ccc", width: "80%" }
-            }
-          );
-        case "currency":
-          const currency = field.currency || "EUR";
-          textAlign2 = field.textAlign || "right";
-          if (isNaN(cellValue)) {
-            return /* @__PURE__ */ jsxRuntimeExports.jsx(material.Box, { sx: { textAlign: textAlign2 }, children: field.defaultValue });
-          } else {
-            const valueCurrency = Number(cellValue);
-            const dineroObject = dinero({
-              amount: Math.round(valueCurrency * 100),
-              currency: "EUR"
-            });
-            const formattedValue = dineroObject.toFormat("$0,0.00");
-            return /* @__PURE__ */ jsxRuntimeExports.jsx(material.Box, { sx: { textAlign: textAlign2 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(material.Typography, { variant: "body2", children: formattedValue }) });
-          }
-        case "number":
-          textAlign2 = field.textAlign || "right";
-          const valueNumber = Number(cellValue);
-          if (isNaN(valueNumber)) {
-            return /* @__PURE__ */ jsxRuntimeExports.jsx(material.Box, { sx: { textAlign: textAlign2 }, children: field.defaultValue });
-          }
-          return /* @__PURE__ */ jsxRuntimeExports.jsx(
-            material.Box,
-            {
-              display: "flex",
-              justifyContent: "flex-end",
-              width: "100%",
-              sx: {
-                textAlign: textAlign2
-              },
-              children: /* @__PURE__ */ jsxRuntimeExports.jsx(material.Typography, { variant: "body2", children: valueNumber.toLocaleString() })
-            }
-          );
-        case "percentage":
-          return /* @__PURE__ */ jsxRuntimeExports.jsx(
-            material.Box,
-            {
-              display: "flex",
-              justifyContent: "flex-end",
-              sx: {
-                textAlign: "right"
-              },
-              children: /* @__PURE__ */ jsxRuntimeExports.jsxs(material.Typography, { variant: "body2", children: [
-                cellValue,
-                "%"
-              ] })
-            }
-          );
-        default:
-          textAlign2 = field.textAlign || "left";
-          return /* @__PURE__ */ jsxRuntimeExports.jsx(material.Box, { sx: { textAlign: textAlign2 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(material.Typography, { variant: "body2", children: cellValue }) });
-      }
-    };
-    React.useEffect(() => {
-      setItem({});
-    }, [location2.pathname]);
-    const vxgState = reactRedux.useSelector((state) => state.main.vxg);
-    const led_add = vxgState.trigger.led.add;
-    let [triggerLed, setTriggerLed] = React.useState(0);
-    React.useEffect(() => {
-      if (triggerLed >= 2) {
-        setItem({ entity$: "-/" + def.canon });
-      }
-      setTriggerLed(++triggerLed);
-    }, [led_add]);
-    const currentSubview = (_a = basicLedSpec.content.def) == null ? void 0 : _a.subview[action];
-    const headComponent = (_b = currentSubview == null ? void 0 : currentSubview.head) == null ? void 0 : _b.cmp;
-    const footComponent = (_c = currentSubview == null ? void 0 : currentSubview.foot) == null ? void 0 : _c.cmp;
-    const HeadCmp = ctx().cmp[headComponent];
-    const FootCmp = ctx().cmp[footComponent];
-    return /* @__PURE__ */ jsxRuntimeExports.jsx(material.Box, { className: "BasicLed", children: "-/" + canon !== item.entity$ ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-      HeadCmp ? /* @__PURE__ */ jsxRuntimeExports.jsx(HeadCmp, { ctx }) : null,
-      /* @__PURE__ */ jsxRuntimeExports.jsx(
-        BasicList,
-        {
-          ctx,
-          spec: basicLedSpec,
-          data: data || [],
-          columns: basicListColumns,
-          isLoading,
-          action,
-          onRowClick: (event, item2) => {
-            setItem(item2);
-          },
-          onEditingRowSave: (row, values2) => __async(this, null, function* () {
-            let selectedItem = __spreadValues({}, data[row.index]);
-            for (let k in values2) {
-              selectedItem[k] = values2[k];
-            }
-            yield seneca.entity(canon).save$(selectedItem);
-            setItem({});
-          })
-        },
-        canon
-      ),
-      FootCmp ? /* @__PURE__ */ jsxRuntimeExports.jsx(FootCmp, { ctx }) : null
-    ] }) : /* @__PURE__ */ jsxRuntimeExports.jsx(
-      BasicEdit,
-      {
-        ctx,
-        spec: basicLedSpec,
-        item,
-        itemFields: fields,
-        onClose: () => {
-          setItem({});
-        },
-        onSubmit: (item2) => __async(this, null, function* () {
-          yield seneca.entity(canon).save$(item2);
-          setItem({});
-        })
       }
     ) });
   }
@@ -68333,7 +66566,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       ModalProps: {
         BackdropProps: BackdropPropsProp
       } = {},
-      onClose: onClose2,
+      onClose,
       open = false,
       PaperProps = {},
       SlideProps,
@@ -68396,7 +66629,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       className: clsx(classes.root, classes.modal, className),
       open,
       ownerState,
-      onClose: onClose2,
+      onClose,
       hideBackdrop,
       ref
     }, other, ModalProps, {
@@ -68696,7 +66929,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
                   }
                 ),
                 /* @__PURE__ */ jsxRuntimeExports.jsx(
-                  Button$1,
+                  Button,
                   {
                     type: "submit",
                     fullWidth: true,

@@ -1,136 +1,84 @@
 import React, { useState } from 'react'
-
 import { useSelector } from 'react-redux'
 import { useParams, Link } from 'react-router-dom'
-import BasicLed from './BasicLed'
 
-
-import { Box, CSSObject, ThemeProvider, useTheme } from '@mui/material'
+import {
+  Box,
+  Container
+} from '@mui/material'
 
 import { Gubu } from 'gubu'
 
-const { Child, Skip } = Gubu
+import { BasicLed } from './BasicLed'
 
 
-console.log('BasicMain 1')
+const CMPNAME = 'BasicSide'
+console.log(CMPNAME,'1')
 
 
-// Validate spec shape with Gubu
+const { Child, Open } = Gubu
 const BasicMainSpecShape = Gubu({
   main: {
+    name: String,
+    active: Boolean,
+  
     view: {
       default: String
     }
   },
-  view: Child({
-    title: String,
-    paramId: Skip(String),
-    name: String,
-    content: {
-      def: {
-        canon: Skip(String),
-        add: {
-          active: true
-        },
-        subview: Child({
-          render: 'collection',
-          default: false,
-          kind: 'led',
-          active: Skip(Boolean),
-          cmp: Skip(String),
-          editingMode: 'none',
-          head: {
-            cmp: Skip(String)
-          },
-          foot: {
-            cmp: Skip(String)
-          },
-          linkPath: Skip(String),
-          enableColumnFilters: false
-        }),
-        id: Skip({
-          field: String
-        }),
-        field: Skip({}),
-        columnVisibility: Skip({})
-      }
-    }
-  })
+
+  view: Child(Open({
+    kind: String
+  })),
+  
+  mui: {
+    Box: {},
+    Container: {},
+  }
 })
 
 
-function Foo() {
-  return <div><h1>FOO</h1><Link to="/view/bar">bar</Link></div>
-}
-
-function Bar() {
-  return <div><h1>BAR</h1><Link to="/view/foo">foo</Link></div>
-}
-
-const viewMap: any = {
-  foo: Foo,
-  bar: Bar,
-}
-
 
 function BasicMain (props: any) {
-  /*
-  const { vxg, ctx } = props
-  const theme = useTheme()
-  const basicMainSpec = BasicMainSpecShape(props.spec)
-  const views = Object.values(basicMainSpec.view)
-  const defaultRoute = basicMainSpec.main.default
-  const sideOpen = useSelector(
-    (state: any) => state.main.vxg.cmp.BasicSide.show
-  )
-  const navigate = useNavigate()
-
-  useEffect(() => {
-    if (location.pathname === '/' && defaultRoute !== undefined) {
-      navigate(defaultRoute)
-    }
-  }, [location, navigate])
-
-  const paddingLeft =
-    (theme.components?.MuiDrawer?.styleOverrides?.paper as CSSObject)?.width ||
-    '16rem'
-
-  // TODO: Refactor this
-  const basicMainStyle = {
-    paddingLeft: sideOpen ? paddingLeft : '0rem',
-    backgroundColor: theme.palette.background.default
-  }
-
-  // TODO: Refactor this
-  const basicMainContainerStyle = {
-    height: '100%'
-  }
-    <Box className='BasicMain' sx={basicMainStyle}>
-      <Box className='BasicMain-container' sx={basicMainContainerStyle}>
-
-  <Routes>{renderRoutes(views, vxg, ctx, theme)}</Routes>
-   */
-
   const { ctx, spec } = props
-  const { seneca } = ctx()
+  const { seneca, cmp } = ctx()
 
-  const viewName = useSelector((state:any)=>state.main.view.current)
-  
-  const params:any = useParams()
+  const basicMainSpec = BasicMainSpecShape(spec)
+
+  const mode = useSelector((state:any)=>state.main.nav.mode)
+  const viewName = useSelector((state:any)=>state.main.current.view)
+  const params: any = useParams()
 
   if(viewName !== params.view) {
-    seneca.act('aim:app,set:view', {view:params.view})
+    seneca.act('aim:app,set:view', {view: params.view})
   }
-  
-  const View = viewMap[viewName]
 
-  const viewSpec = {}
+  // const viewMap = model.app.web.frame.private.view
+  const viewSpec = basicMainSpec.view[viewName]
+  const kind = viewSpec?.kind
   
+  const View =
+    'custom' === kind ? cmp[viewSpec.cmp] :
+    'led' === kind ? BasicLed :
+    ()=><div>LOADING</div>
+
   return (
-    <Box className='vxg-BasicMain'>
-      <Box className='vxg-BasicMain-container'>
+    <Box
+      className='vxg-BasicMain'
+      {...basicMainSpec.mui.Box}
+      sx={(theme:any)=>({
+        // TODO: should use actual toolbar height; 16 should be from standard spacing
+        marginTop: (theme.mixins.toolbar.minHeight+38)+'px',
+        marginLeft: 'shown' === mode ? 'var(--vxg-side-width)' : 0,
+        marginBottom: 0,
+        marginRight: 0,
+      })}
+    >
+      <Container
+        {...basicMainSpec.mui.Container}
+      >
         { View && <View ctx={ctx} spec={viewSpec} /> }
-      </Box>
+      </Container>
     </Box>
   )
 }
@@ -138,37 +86,3 @@ function BasicMain (props: any) {
 export {
   BasicMain
 }
-
-
-/*
-const renderRoutes = (views: any[], vxg: any, ctx: any, theme: any) => {
-  return views.map((view: any) => (
-    <Fragment key={view.name}>
-      {Object.entries(view.content.def.subview).map(([key, subview]: any) => {
-        const Cmp =
-          subview.kind === 'custom' ? ctx().cmp[subview.cmp] : BasicLed
-
-        let routePath
-        if (subview.render === 'member') {
-          routePath = `/view/${view.name}/:${view.paramId}/${key}`
-        } else {
-          routePath = `/view/${view.name}/${key}`
-        }
-
-        return (
-          <Fragment key={key}>
-            <Route
-              path={routePath}
-              element={
-                <ThemeProvider theme={theme}>
-                  <Cmp key={key} action={key} vxg={vxg} ctx={ctx} spec={view} />
-                </ThemeProvider>
-              }
-            />
-          </Fragment>
-        )
-      })}
-    </Fragment>
-  ))
-}
-*/

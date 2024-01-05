@@ -1,27 +1,7 @@
-// import React, { useEffect, useState } from 'react'
-// import { useSelector } from 'react-redux'
-// import { useLocation } from 'react-router-dom'
-// import {
-//   Toolbar,
-//   Typography,
-//   IconButton,
-//   useTheme,
-//   Avatar,
-//   Menu,
-//   MenuItem
-// } from '@mui/material'
-// import ChevronRightIcon from '@mui/icons-material/ChevronRight'
-// import BasicButton from './BasicButton'
-// import BasicAppBar from './BasicAppBar'
-// import BasicAutocomplete from './BasicAutocomplete'
-// import { deepPurple, purple } from '@mui/material/colors'
-
-
 import React from 'react'
 
 import AppBar from '@mui/material/AppBar'
 import ToolBar from '@mui/material/ToolBar'
-import Button from '@mui/material/Button'
 
 import { Gubu } from 'gubu'
 
@@ -30,11 +10,11 @@ import type { BasicProps, Spec } from './basic-types'
 import { BasicHeadTool } from './BasicHeadTool'
 
 
+const CMPNAME = 'BasicHead'
+console.log(CMPNAME,'1')
+
+
 const { Child, Exact, Open } = Gubu
-
-
-const cmpname = 'BasicHead'
-
 const BasicHeadSpecShape = Gubu({
   head: {
     name: String,
@@ -44,6 +24,7 @@ const BasicHeadSpecShape = Gubu({
       name: String,
       align: Exact('left','right'),
     })),
+
   },
 
   // Set MUI component props directly 
@@ -51,14 +32,14 @@ const BasicHeadSpecShape = Gubu({
     AppBar: {},
     ToolBar: {},
   }
-}, {prefix:cmpname})
+  
+}, {prefix:CMPNAME})
 
 
 function BasicHead (props: BasicProps) {
   const { ctx, spec } = props
   // const { seneca } = ctx()
 
-  console.log(cmpname, spec)
   const basicHeadSpec = BasicHeadSpecShape(spec)
   const { head } = (basicHeadSpec as any)
 
@@ -67,7 +48,10 @@ function BasicHead (props: BasicProps) {
   const rightTools: Spec[] = tools.filter((t:Spec)=>'right'===t.align)
 
   return (
-    <AppBar className="vxg-BasicHead" {...spec.mui.AppBar}>
+    <AppBar
+      className="vxg-BasicHead"
+      {...spec.mui.AppBar}
+    >
       <ToolBar className="vxg-BasicHead-toolbar" {...spec.mui.ToolBar}>
         <div
           className="vxg-BasicHead-toolbar vxg-BasicHead-toolbar-left"

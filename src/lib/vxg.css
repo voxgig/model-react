@@ -1,8 +1,16 @@
 
-.vxg-BasicAdmin {
-
+html {
+    --vxg-side-width: 200px;
 }
 
+.vxg-BasicAdmin {
+    width: 100%;
+}
+
+
+
+.vxg-BasicHead {
+}
 
 
 .vxg-BasicHead-toolbar {
@@ -15,8 +23,14 @@
 }
 
 
-.vxg-BasicMain {
-    /* TODO: remove */
-    margin: 200px;
+.vxg-BasicSide {
 }
 
+
+.vxg-BasicMain {
+
+}
+
+
+.vxg-BasicFoot {
+}

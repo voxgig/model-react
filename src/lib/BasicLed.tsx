@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import BasicList from './BasicList'
@@ -33,6 +33,12 @@ const BasicLedSpecShape = Gubu({
 
 // BasicLed renders a list of entities (with BasicList) or a form to edit them (with BasicEdit)
 function BasicLed (props: any) {
+
+  return (
+    <div>BASICLED</div>
+  )
+  
+  /*
   const { ctx, action } = props
   const { seneca, custom } = ctx()
   const [item, setItem] = useState({} as any)
@@ -386,6 +392,9 @@ function BasicLed (props: any) {
       )}
     </Box>
   )
+  */
 }
 
-export default BasicLed
+export {
+  BasicLed
+}

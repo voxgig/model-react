@@ -1,2 +1,2 @@
 declare function BasicLed(props: any): import("react/jsx-runtime").JSX.Element;
-export default BasicLed;
+export { BasicLed };

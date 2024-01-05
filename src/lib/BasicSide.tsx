@@ -2,13 +2,9 @@ import React, { useCallback, Fragment } from 'react'
 
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { Gubu } from 'gubu'
-// import BasicSideMenu from './BasicSideMenu'
 
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
-
+import { styled, useTheme } from '@mui/material/styles'
 import {
-  Box,
   Divider,
   Drawer,
   List,
@@ -16,157 +12,87 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
-  IconButton,
-  Toolbar,
-  useTheme
 } from '@mui/material'
-import { BasicDrawer, BasicDrawerHeader } from './BasicDrawer'
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 
-const { Child } = Gubu
+import { Gubu } from 'gubu'
 
-// TODO: Make sure Child() fails properly
+import { vmap, cmap } from './vxg-seneca'
+
+const CMPNAME = 'BasicSide'
+console.log(CMPNAME,'1')
+
+
+const { Child, Open, Required } = Gubu
 const BasicSideSpecShape = Gubu({
   side: {
-    logo: {
-      img: String
-    },
-    variant: String,
-    section: Child({
-      title: String,
-      divider: Boolean,
-      item: Child({
-        kind: String,
-        label: String,
-        icon: String,
-        path: String,
-        access: Child(Boolean, {})
-      })
-    })
+    name: String,
+    active: Boolean,
   },
-  view: {}
-})
 
-function onClose (seneca: any) {
-  seneca.act('aim:app,set:state', {
-    section: 'vxg.cmp.BasicSide.show',
-    content: false
-  })
-}
+  view: Child(Open({
+    title: String
+  }), Required({})),
+  
+  // Set MUI component props directly 
+  mui: {
+    Drawer: {},
+  }
+}, {prefix: CMPNAME})
 
 
 
 function BasicSide (props: any) {
-  const { vxg, ctx } = props
-  const { seneca, model } = ctx()
-  let viewMap = model.app.web.frame.private.view
-  let { cmap } = seneca.context
-  
+  const { spec, ctx } = props
+  // const { seneca, model } = ctx()
+
+  const basicSideSpec = BasicSideSpecShape(spec)
+
+  // const theme = useTheme()
+  // console.log('THEME', theme)
   const navigate = useNavigate()
   const nav = useSelector((state:any)=>state.main.nav)
 
-  // console.log('BasicSide NAV', nav)
+  const viewMap = basicSideSpec.view
+  const mode = nav.mode
   
-  const sections = Object.values(nav.section)
-    .filter((n:any)=>n.active)
-    .map((n:any)=>({
-      name: n.name,
-      items: Object.values(n.item)
-        .filter((n:any)=>n.active && viewMap[n.view])
-        .map((n:any)=>({
-          name: n.name,
-          view: n.view,
-          title: viewMap[n.view].title
-        }))
-    }))
-    
-    // console.log('BasicSide SECTIONS', JSON.stringify(sections))
-  
-  /*
-  const vxgState = useSelector((state: any) => state.main.vxg)
-  const open = vxgState.cmp.BasicSide.show
-
-  const navigate = useNavigate()
-
-  const basicSideSpec = BasicSideSpecShape(props.spec)
-
-  function handleItemSelect (key: any, item: any) {
-    if (item.kind === 'resource') {
-      navigate(item.path)
-    }
-  }
-
-  const basicSideMenuSpec = {
-    section: basicSideSpec.side.section
-  }
-
-  const drawerVariant = basicSideSpec.side.variant
-
-  // TODO: refactor and DRY
-  if (drawerVariant === 'permanent') {
-    // TODO: Extract Box sx={} to theme
-    return (
-      <Drawer open={open}>
-        <Toolbar />
-        <Box
-          className='DrawerContainer'
-          sx={{
-            backgroundColor: '#2a2d49',
-            overflow: 'auto',
-            marginLeft: '23px',
-            marginBottom: '20px',
-            marginTop: '15px',
-            width: '189px',
-            height: '100%',
-            borderRadius: '4px'
-          }}
-        >
-          <BasicSideMenu
-            spec={basicSideMenuSpec}
-            onItemSelect={handleItemSelect}
-          />
-        </Box>
-      </Drawer>
-    )
-  } else {
-    return (
-      <Drawer open={open}>
-        <Box>
-          <BasicDrawerHeader>
-            <img src={basicSideSpec.side.logo.img} style={{ width: '5rem' }} />
-            <IconButton onClick={() => onClose(seneca)}>
-              <ChevronLeftIcon sx={{ color: theme.palette.primary.main }} />
-            </IconButton>
-          </BasicDrawerHeader>
-          <Divider />
-          <BasicSideMenu
-            spec={basicSideMenuSpec}
-            onItemSelect={handleItemSelect}
-          />
-        </Box>
-      </Drawer>
-    )
-  }
-   */
-
+  const sections = vmap(nav.section,{
+    active: vmap.DEL,
+    name: vmap.ID,
+    items: (...a:any[])=>vmap(a[2].item,{
+      active: vmap.DEL,
+      name: vmap.ID,
+      view: vmap.ID,
+      title: (...a:any[])=>viewMap[a[2].view].title
+    })
+  })
 
   const selectView = useCallback((view:string)=>navigate('/view/'+view),[])
-  
+
   
   return (
     <Drawer
       variant="persistent"
       anchor="left"
-      open={true}
+      open={'shown' === mode}
       className="vxg-BasicSide"
+      sx={(theme:any)=>({
+        '& .MuiDrawer-paper': {
+          // TODO: should use actual toolbar height; 16 should be from standard spacing
+          paddingTop: (theme.mixins.toolbar.minHeight+16)+'px',
+          width: 'var(--vxg-side-width)'
+        },
+      })}
+      {...spec.mui.Drawer}
     >
 
-      { sections.map((section) =>
+      { sections.map((section:any) =>
         <Fragment key={section.name}>
           <List
             className="vxg-BasicSide-section"
             data-vxg-basicside-section={section.name}
           >
-            { section.items.map((item) =>
+            { section.items.map((item:any) =>
               <ListItem
                 key={item.name}
                 disablePadding
