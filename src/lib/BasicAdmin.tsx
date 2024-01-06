@@ -29,9 +29,10 @@ const BasicAdminSpecShape = Gubu({
   frame: {
     name: String,
     kind: String,
-    part: Child({}),
-    view: Child({}),
-    nav: Child({}),
+    part: {},
+    view: {},
+    nav:  {},
+    tool: {},
   }
 }, {prefix: CMPNAME})
 
@@ -68,6 +69,7 @@ function BasicAdmin (props: BasicProps) {
   // NOTE: keep separate from frontend part definitions as implementation
   const headSpec = {
     head,
+    tool: model.app.web.frame.private.tool,
     mui: {
       // TODO: set in theme: https://mui.com/material-ui/customization/z-index/
       AppBar: { style: { zIndex: 4000 } }

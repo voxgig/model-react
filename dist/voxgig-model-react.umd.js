@@ -1644,18 +1644,18 @@ var __async = (__this, __arguments, generator) => {
             view: ""
           };
           state.view = cmap(viewMap, {
-            name: cmap.ID,
-            active: cmap.DEL
+            name: cmap.COPY,
+            active: cmap.FILTER
           });
           state.nav = {
             mode: "shown",
             section: cmap(sectionMap, {
-              name: cmap.ID,
-              active: cmap.DEL,
+              name: cmap.COPY,
+              active: cmap.FILTER,
               item: (x) => cmap(x, {
-                active: cmap.DEL,
-                view: cmap.ID,
-                name: cmap.ID
+                active: cmap.FILTER,
+                view: cmap.COPY,
+                name: cmap.COPY
               })
             })
           };
@@ -1684,19 +1684,30 @@ var __async = (__this, __arguments, generator) => {
     });
   }
   function cmap(o, p) {
-    return Object.entries(o).reduce((r2, n, _2) => (_2 = Object.entries(p).reduce((s, m) => cmap.DEL === s ? s : (s[m[0]] = // transfom(val,key,current,parentkey,parent)
-    "function" === typeof m[1] ? m[1](n[1][m[0]], m[0], n[1], n[0], o) : m[1], cmap.DEL === s[m[0]] ? cmap.DEL : s), {}), cmap.DEL === _2 ? 0 : r2[n[0]] = _2, r2), {});
+    return Object.entries(o).reduce((r2, n, _2) => (_2 = Object.entries(p).reduce((s, m) => cmap.FILTER === s ? s : (s[m[0]] = // transfom(val,key,current,parentkey,parent)
+    "function" === typeof m[1] ? m[1](n[1][m[0]], {
+      skey: m[0],
+      self: n[1],
+      key: n[0],
+      parent: o
+    }) : m[1], cmap.FILTER === s[m[0]] ? cmap.FILTER : s), {}), cmap.FILTER === _2 ? 0 : r2[n[0]] = _2, r2), {});
   }
-  cmap.ID = (x) => x;
-  cmap.DEL = (x) => "function" === typeof x ? (y, k, c, j, p, _2) => (_2 = x(y, k, c, j, p), !_2[0] ? _2[1] : cmap.DEL) : x ? x : cmap.DEL;
-  cmap.KEY = (_x, _k, _c, j) => j;
+  cmap.COPY = (x) => x;
+  cmap.FILTER = (x) => "function" === typeof x ? (y, p, _2) => (_2 = x(y, p), Array.isArray(_2) ? !_2[0] ? _2[1] : cmap.FILTER : _2) : x ? x : cmap.FILTER;
+  cmap.KEY = (_2, p) => p.key;
   function vmap(o, p) {
-    return Object.entries(o).reduce((r2, n, _2) => (_2 = Object.entries(p).reduce((s, m) => vmap.DEL === s ? s : (s[m[0]] = // transfom(val,key,current,parentkey,parent)
-    "function" === typeof m[1] ? m[1](n[1][m[0]], m[0], n[1], n[0], o) : m[1], vmap.DEL === s[m[0]] ? vmap.DEL : s), {}), vmap.DEL === _2 ? 0 : r2.push(_2), r2), []);
+    return Object.entries(o).reduce((r2, n, _2) => (_2 = Object.entries(p).reduce((s, m) => vmap.FILTER === s ? s : (s[m[0]] = // transfom(val,key,current,parentkey,parent)
+    // 'function' === typeof m[1] ? m[1](n[1][m[0]], m[0], n[1], n[0], o) : m[1]
+    "function" === typeof m[1] ? m[1](n[1][m[0]], {
+      skey: m[0],
+      self: n[1],
+      key: n[0],
+      parent: o
+    }) : m[1], vmap.FILTER === s[m[0]] ? vmap.FILTER : s), {}), vmap.FILTER === _2 ? 0 : r2.push(_2), r2), []);
   }
-  vmap.ID = (x) => x;
-  vmap.DEL = (x) => "function" === typeof x ? (y, k, c, j, p, _2) => (_2 = x(y, k, c, j, p), !_2[0] ? _2[1] : vmap.DEL) : x ? x : vmap.DEL;
-  vmap.KEY = (_x, _k, _c, j) => j;
+  vmap.COPY = (x) => x;
+  vmap.FILTER = (x) => "function" === typeof x ? (y, p, _2) => (_2 = x(y, p), Array.isArray(_2) ? !_2[0] ? _2[1] : vmap.FILTER : _2) : x ? x : vmap.FILTER;
+  vmap.KEY = (_2, p) => p.key;
   function _objectWithoutPropertiesLoose(source, excluded) {
     if (source == null)
       return {};
@@ -9708,10 +9719,12 @@ Please use another name.` : formatMuiErrorMessage(18));
     style: {}
   }, { prefix: CMPNAME$4 });
   function BasicHeadTool(props) {
+    var _a;
     const { ctx, spec } = props;
     const { seneca } = ctx();
     const basicHeadToolSpec = BasicHeadToolSpecShape(spec);
     const mode = reactRedux.useSelector((state) => state.main.nav.mode);
+    const auth = reactRedux.useSelector((state) => state.main.auth);
     const { name, kind, attr, sx, style: style2 } = basicHeadToolSpec;
     let tool = /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, {});
     if ("" === kind) {
@@ -9762,24 +9775,50 @@ Please use another name.` : formatMuiErrorMessage(18));
     } else if ("search" === kind) {
       tool = /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: "SEARCH" });
     } else if ("account" === kind) {
-      tool = /* @__PURE__ */ jsxRuntimeExports.jsx(material.Avatar, { children: "AB" });
+      tool = /* @__PURE__ */ jsxRuntimeExports.jsx(material.Avatar, __spreadValues({}, stringAvatar((_a = auth.user) == null ? void 0 : _a.email)));
     } else {
       console.warn(CMPNAME$4, "unknown-tool-kind", kind, basicHeadToolSpec);
     }
     return tool;
   }
+  function stringToColor(string) {
+    let hash2 = 0;
+    let i;
+    for (i = 0; i < string.length; i += 1) {
+      hash2 = string.charCodeAt(i) + ((hash2 << 5) - hash2);
+    }
+    let color2 = "#";
+    for (i = 0; i < 3; i += 1) {
+      const value = hash2 >> i * 8 & 255;
+      color2 += `00${value.toString(16)}`.slice(-2);
+    }
+    return color2;
+  }
+  function stringAvatar(s) {
+    s = null == s ? "" : s;
+    s = s.toUpperCase().split("@")[0] || "";
+    let parts = s.split(/[-\s_.]+/);
+    parts[1] = (parts[1] || "")[0] || (parts[0] || "")[1] || "-";
+    parts[0] = (parts[0] || "")[0] || "-";
+    return {
+      sx: {
+        bgcolor: stringToColor(s)
+      },
+      children: `${parts.join("")}`
+    };
+  }
   const CMPNAME$3 = "BasicHead";
   console.log(CMPNAME$3, "1");
-  const { Child: Child$5, Exact, Open: Open$2 } = gubu_minExports.Gubu;
+  const { Child: Child$5, Exact, Open: Open$2, Required: Required$1 } = gubu_minExports.Gubu;
   const BasicHeadSpecShape = gubu_minExports.Gubu({
     head: {
       name: String,
       active: Boolean,
       tool: Child$5(Open$2({
-        name: String,
         align: Exact("left", "right")
       }))
     },
+    tool: Required$1({}),
     // Set MUI component props directly 
     mui: {
       AppBar: {},
@@ -9788,9 +9827,18 @@ Please use another name.` : formatMuiErrorMessage(18));
   }, { prefix: CMPNAME$3 });
   function BasicHead(props) {
     const { ctx, spec } = props;
+    const { seneca } = ctx();
+    const { vmap: vmap2 } = seneca.context;
     const basicHeadSpec = BasicHeadSpecShape(spec);
     const { head } = basicHeadSpec;
-    const tools = Object.values(head.tool);
+    const tools = vmap2(head.tool, {
+      active: vmap2.FILTER,
+      name: vmap2.FILTER((_2, p) => {
+        var _a;
+        return [(_a = basicHeadSpec.tool[p.key]) == null ? void 0 : _a.active, p.key];
+      }),
+      align: vmap2.COPY
+    }).map((t) => __spreadValues(__spreadValues({}, basicHeadSpec.tool[t.name]), t));
     const leftTools = tools.filter((t) => "left" === t.align);
     const rightTools = tools.filter((t) => "right" === t.align);
     return /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -9817,18 +9865,6 @@ Please use another name.` : formatMuiErrorMessage(18));
         ] }))
       })
     );
-  }
-  function onOpen(seneca) {
-    seneca.act("aim:app,set:state", {
-      section: "vxg.cmp.BasicSide.show",
-      content: true
-    });
-  }
-  function addItem(seneca, led_add) {
-    seneca.act("aim:app,set:state", {
-      section: "vxg.trigger.led.add",
-      content: ++led_add
-    });
   }
   const { Skip } = gubu_minExports.Gubu;
   const BasicLedSpecShape = gubu_minExports.Gubu({
@@ -10209,13 +10245,16 @@ Please use another name.` : formatMuiErrorMessage(18));
     const viewMap = basicSideSpec.view;
     const mode = nav.mode;
     const sections = vmap(nav.section, {
-      active: vmap.DEL,
-      name: vmap.ID,
-      items: (...a) => vmap(a[2].item, {
-        active: vmap.DEL,
-        name: vmap.ID,
-        view: vmap.ID,
-        title: (...a2) => viewMap[a2[2].view].title
+      active: vmap.FILTER,
+      name: vmap.COPY,
+      items: (_2, p) => vmap(p.self.item, {
+        active: vmap.FILTER,
+        name: vmap.COPY,
+        view: vmap.COPY,
+        title: vmap.FILTER((_22, p2) => {
+          var _a;
+          return (_a = viewMap[p2.self.view]) == null ? void 0 : _a.title;
+        })
       })
     });
     const selectView = React.useCallback((view) => navigate("/view/" + view), []);
@@ -10277,9 +10316,10 @@ Please use another name.` : formatMuiErrorMessage(18));
     frame: {
       name: String,
       kind: String,
-      part: Child$2({}),
-      view: Child$2({}),
-      nav: Child$2({})
+      part: {},
+      view: {},
+      nav: {},
+      tool: {}
     }
   }, { prefix: CMPNAME });
   function Loading() {
@@ -10302,6 +10342,7 @@ Please use another name.` : formatMuiErrorMessage(18));
     const { head, side, main: main2, foot } = basicAdminSpec.frame.part;
     const headSpec = {
       head,
+      tool: model.app.web.frame.private.tool,
       mui: {
         // TODO: set in theme: https://mui.com/material-ui/customization/z-index/
         AppBar: { style: { zIndex: 4e3 } }
@@ -30847,7 +30888,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       onClose,
       onHighlightChange,
       onInputChange,
-      onOpen: onOpen2,
+      onOpen,
       open: openProp,
       openOnFocus = false,
       options,
@@ -31205,8 +31246,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       }
       setOpenState(true);
       setInputPristine(true);
-      if (onOpen2) {
-        onOpen2(event);
+      if (onOpen) {
+        onOpen(event);
       }
     };
     const handleClose = (event, reason) => {
@@ -32330,7 +32371,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       leaveDelay = 0,
       leaveTouchDelay = 1500,
       onClose,
-      onOpen: onOpen2,
+      onOpen,
       open: openProp,
       placement = "bottom",
       PopperComponent: PopperComponentProp,
@@ -32392,8 +32433,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       clearTimeout(hystersisTimer);
       hystersisOpen = true;
       setOpenState(true);
-      if (onOpen2 && !open) {
-        onOpen2(event);
+      if (onOpen && !open) {
+        onOpen(event);
       }
     };
     const handleClose = useEventCallback(
@@ -38793,7 +38834,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       onChange,
       onClose,
       onFocus,
-      onOpen: onOpen2,
+      onOpen,
       open: openProp,
       readOnly,
       renderValue,
@@ -38865,8 +38906,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }, [labelId]);
     const update = (open2, event) => {
       if (open2) {
-        if (onOpen2) {
-          onOpen2(event);
+        if (onOpen) {
+          onOpen(event);
         }
       } else if (onClose) {
         onClose(event);
@@ -39334,7 +39375,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       multiple = false,
       native = false,
       onClose,
-      onOpen: onOpen2,
+      onOpen,
       open,
       renderValue,
       SelectDisplayProps,
@@ -39389,7 +39430,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           labelId,
           MenuProps,
           onClose,
-          onOpen: onOpen2,
+          onOpen,
           open,
           renderValue,
           SelectDisplayProps: _extends$2({
@@ -47093,7 +47134,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   };
   const useOpenState = ({
     open,
-    onOpen: onOpen2,
+    onOpen,
     onClose
   }) => {
     const isControllingOpenProp = React__namespace.useRef(typeof open === "boolean").current;
@@ -47110,13 +47151,13 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       if (!isControllingOpenProp) {
         setIsOpenState(newIsOpen);
       }
-      if (newIsOpen && onOpen2) {
-        onOpen2();
+      if (newIsOpen && onOpen) {
+        onOpen();
       }
       if (!newIsOpen && onClose) {
         onClose();
       }
-    }, [isControllingOpenProp, onOpen2, onClose]);
+    }, [isControllingOpenProp, onOpen, onClose]);
     return {
       isOpen: openState,
       setIsOpen

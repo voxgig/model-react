@@ -57,13 +57,13 @@ function BasicSide (props: any) {
   const mode = nav.mode
   
   const sections = vmap(nav.section,{
-    active: vmap.DEL,
-    name: vmap.ID,
-    items: (...a:any[])=>vmap(a[2].item,{
-      active: vmap.DEL,
-      name: vmap.ID,
-      view: vmap.ID,
-      title: (...a:any[])=>viewMap[a[2].view].title
+    active: vmap.FILTER,
+    name: vmap.COPY,
+    items: (_:any,p:any)=>vmap(p.self.item,{
+      active: vmap.FILTER,
+      name: vmap.COPY,
+      view: vmap.COPY,
+      title: vmap.FILTER((_:any,p:any)=>viewMap[p.self.view]?.title)
     })
   })
 

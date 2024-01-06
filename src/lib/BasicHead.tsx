@@ -14,19 +14,19 @@ const CMPNAME = 'BasicHead'
 console.log(CMPNAME,'1')
 
 
-const { Child, Exact, Open } = Gubu
+const { Child, Exact, Open, Required } = Gubu
 const BasicHeadSpecShape = Gubu({
   head: {
     name: String,
     active: Boolean,
   
     tool: Child(Open({
-      name: String,
       align: Exact('left','right'),
     })),
-
   },
 
+  tool: Required({}),
+  
   // Set MUI component props directly 
   mui: {
     AppBar: {},
@@ -38,12 +38,24 @@ const BasicHeadSpecShape = Gubu({
 
 function BasicHead (props: BasicProps) {
   const { ctx, spec } = props
-  // const { seneca } = ctx()
-
-  const basicHeadSpec = BasicHeadSpecShape(spec)
+  const { seneca } = ctx()
+  const { vmap } = seneca.context
+  
+  const basicHeadSpec: Spec = BasicHeadSpecShape(spec)
   const { head } = (basicHeadSpec as any)
 
-  const tools: Spec[] = Object.values(head.tool)
+  const tools = vmap(head.tool,{
+    active: vmap.FILTER,
+    name: vmap.FILTER((_:any,p:any)=>[basicHeadSpec.tool[p.key]?.active, p.key]),
+    align: vmap.COPY,
+  })
+    .map((t:any)=>({
+      ...basicHeadSpec.tool[t.name],
+      ...t,
+    }))
+
+  // console.log('TOOLS', tools)
+  
   const leftTools: Spec[] = tools.filter((t:Spec)=>'left'===t.align)
   const rightTools: Spec[] = tools.filter((t:Spec)=>'right'===t.align)
 
@@ -204,7 +216,7 @@ function BasicHead (props: BasicProps) {
   */
 }
 
-
+/*
 // updates backend when user toggles BasicSide
 function onOpen (seneca: any) {
   seneca.act('aim:app,set:state', {
@@ -220,7 +232,7 @@ function addItem (seneca: any, led_add: any) {
     content: ++led_add
   })
 }
-
+*/
 
 export {
   BasicHead
