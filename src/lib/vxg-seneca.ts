@@ -13,7 +13,7 @@ function VxgSeneca(this: any) {
     .message(
       'aim:app,prepare:app,redux$:true',
       async function prepareApp(_msg: any, meta: any) {
-        let state = meta.custom.state
+        let state = meta.custom.state()
 
         let model = seneca.context.model
         let frame = model.app.web.frame.private
@@ -48,14 +48,14 @@ function VxgSeneca(this: any) {
       'aim:app,set:view,redux$:true',
       { view: String },
       async function setView(msg: any, meta: any) {
-        meta.custom.state.current.view = msg.view
+        meta.custom.state().current.view = msg.view
       })
 
     .message(
       'aim:app,area:nav,set:mode,redux$:true',
       { mode: Exact('shown', 'hidden') },
       async function setMode(msg: any, meta: any) {
-        meta.custom.state.nav.mode = msg.mode
+        meta.custom.state().nav.mode = msg.mode
       })
 
 

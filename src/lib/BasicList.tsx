@@ -21,6 +21,14 @@ import { Box } from '@mui/material'
 // import { DataGrid } from '@mui/x-data-grid'
 
 function BasicList (props: any) {
+
+  return (
+    <Box className='vxg-BasicList'>
+      <b>BasicList</b>
+    </Box>
+  )
+  
+  /*
   const {
     ctx,
     onRowClick = () => {},
@@ -101,6 +109,9 @@ function BasicList (props: any) {
       </Box>
     </ThemeProvider>
   )
+  */
 }
 
-export default BasicList
+export {
+  BasicList
+}

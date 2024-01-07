@@ -3,6 +3,9 @@ import React, { useEffect, useState } from 'react'
 
 import { Box, Container } from '@mui/material'
 
+import SenecaEntity from 'seneca-entity'
+import BrowserStore from '@seneca/browser-store'
+
 import { Gubu } from 'gubu'
 
 import type { BasicProps, Spec } from './basic-types'
@@ -116,7 +119,10 @@ async function init(seneca: any, done: any) {
   if(!seneca.context.vxg.BasicAdmin.preparing) {
     seneca.context.vxg.BasicAdmin.preparing = true
 
-    seneca.use(VxgSeneca)
+    seneca
+      .use(SenecaEntity)
+      .use(BrowserStore)
+      .use(VxgSeneca)
     await seneca.ready(done)
   }
 }

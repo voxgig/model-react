@@ -1,16 +1,29 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import BasicList from './BasicList'
-import BasicEdit from './BasicEdit'
-import { Gubu } from 'gubu'
 import { Box, Chip, LinearProgress, Typography } from '@mui/material'
 import BasicButton from './BasicButton'
 import Dinero from 'dinero.js'
 
+import { Gubu } from 'gubu'
+
+
+import type { BasicProps, Spec } from './basic-types'
+
+import { BasicHeadTool } from './BasicHeadTool'
+import { BasicList } from './BasicList'
+import { BasicEdit } from './BasicEdit'
+import { BasicLoading } from './BasicLoading'
+
+
+const CMPNAME = 'BasicLed'
+console.log(CMPNAME,'1')
+
+
 // Define the shape of props.spec
 const { Skip } = Gubu
 const BasicLedSpecShape = Gubu({
+  /*
   title: String,
   name: String,
   paramId: Skip(String),
@@ -29,14 +42,88 @@ const BasicLedSpecShape = Gubu({
       columnVisibility: Skip({})
     }
   }
-})
+  */
+}, {prefix: CMPNAME})
 
 // BasicLed renders a list of entities (with BasicList) or a form to edit them (with BasicEdit)
 function BasicLed (props: any) {
+  const { ctx, spec } = props
+  const { seneca, model } = ctx()
 
+  const basicLedSpec: Spec = BasicLedSpecShape(spec)
+  console.log(CMPNAME,basicLedSpec)
+  
+  const name = basicLedSpec.name
+  const canon = basicLedSpec.spec.ent
+  
+  const led = useSelector((state:any)=>state.main.view[name])
+  const ready = true === led.ready
+  const show = led.show
+  
+  if(!ready) {
+    console.log(CMPNAME,'ready', ready)
+    const ledplugin = function(this:any) {
+      this
+        .fix({view:name})
+        .add('aim:app,on:view,init:state,redux$:true',
+          function(_msg:any, _reply:any, meta:any) {
+            let view = meta.custom.state().view[name]
+            view.show = {
+              list: true,
+              edit: false
+            }
+            view.status = 'init'
+            view.ready = true
+          })
+        .add('aim:app,on:view,edit:start,redux$:true',
+          {item_id:String},
+          function(_msg:any, _reply:any, meta:any) {
+            let view = meta.custom.state().view[name]
+            view.show.list = false
+            view.show.edit = true
+            view.status = 'load-item'
+          })
+        .message('aim:app,on:view,edit:item',
+          {item_id:String},
+          async function(this:any, msg:any) {
+            this.act('aim:app,on:view,view:track,edit:start,direct$:true',{item_id:msg.item_id})
+            // await new Promise(r=>setTimeout(r,1000))
+            return await this.entity(canon).load$({
+              id:msg.item_id,
+              slot$:'track'
+            })
+          })
+      this.prepare(async function(this:any) {
+        this.act('aim:app,on:view,init:state,direct$:true',{view:name})
+      })
+    }
+    Object.defineProperty(ledplugin,'name',{value:'VxgBasicLed_'+name})
+    seneca.use(ledplugin)
+  }
+  
   return (
-    <div>BASICLED</div>
+    ready ?
+    <Box className="vxg-BasicLed">
+      <b>BasicLed</b>
+      { show.list ? <BasicList /> : <></> }
+      { show.edit ? <BasicEdit /> : <></> }
+    </Box>
+      :
+    <BasicLoading /> 
   )
+  
+/*  
+
+    { ready ?
+    <Box className="vxg-BasicLed">
+    <b>BasicLed</b>
+    <BasicList />
+    <BasicEdit />
+    </Box>
+    :
+    <BasicLoading /> }
+  )
+   */
   
   /*
   const { ctx, action } = props

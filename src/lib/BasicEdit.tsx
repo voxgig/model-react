@@ -16,6 +16,15 @@ import BasicButton from './BasicButton'
 const filter = createFilterOptions()
 
 function BasicEdit (props: any) {
+
+  return (
+    <Box className='vxg-BasicEdit'>
+      <b>BasicEdit</b>
+    </Box>
+  )
+
+  
+  /*
   const {
     item,
     itemFields,
@@ -175,6 +184,9 @@ function BasicEdit (props: any) {
       </form>
     </Box>
   )
+  */
 }
 
-export default BasicEdit
+export {
+  BasicEdit
+}

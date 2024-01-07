@@ -44,7 +44,6 @@
     "@mui/material": ">=5",
     "@mui/x-data-grid": ">=6",
     "@reduxjs/toolkit": ">=2",
-    "@seneca/search-mini": ">=0",
     "@types/dinero.js": ">=1",
     "dinero.js": ">=1",
     "gubu": ">=6",
@@ -57,10 +56,13 @@
     "react-router-dom": ">=6",
     "redux": ">=5.0.0",
     "redux-thunk": ">=3",
-    "styled-components": ">=6"
+    "styled-components": ">=6",
+    "@seneca/browser-store": ">=0",
+    "seneca-entity": ">=25"
   },
   "devDependencies": {
     "@babel/core": "7.23.7",
+    "@seneca/browser-store": "^0.0.4",
     "@testing-library/jest-dom": "^6.2.0",
     "@testing-library/react": "^14.1.2",
     "@types/node": "^20.10.6",
@@ -73,6 +75,7 @@
     "jsdom": "^23.1.0",
     "prettier-standard": "^16.4.1",
     "redux-mock-store": "^1.5.4",
+    "seneca-entity": "^25.1.1",
     "typescript": "^5.3.3",
     "vite": "^5.0.11",
     "vite-plugin-dts": "^3.7.0",
