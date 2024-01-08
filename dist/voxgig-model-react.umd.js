@@ -1036,22 +1036,15 @@ var __async = (__this, __arguments, generator) => {
     reactJsxRuntime_production_min.jsxs = q;
     return reactJsxRuntime_production_min;
   }
-  var jsxRuntime$1 = jsxRuntime$2.exports;
-  var hasRequiredJsxRuntime;
-  function requireJsxRuntime() {
-    if (hasRequiredJsxRuntime)
-      return jsxRuntime$2.exports;
-    hasRequiredJsxRuntime = 1;
-    "use strict";
-    if (process.env.NODE_ENV === "production") {
-      jsxRuntime$2.exports = requireReactJsxRuntime_production_min();
-    } else {
-      jsxRuntime$2.exports = requireReactJsxRuntime_development();
-    }
-    return jsxRuntime$2.exports;
+  var jsxRuntime = jsxRuntime$2.exports;
+  "use strict";
+  if (process.env.NODE_ENV === "production") {
+    jsxRuntime$2.exports = requireReactJsxRuntime_production_min();
+  } else {
+    jsxRuntime$2.exports = requireReactJsxRuntime_development();
   }
-  var jsxRuntimeExports = requireJsxRuntime();
-  const jsxRuntime = /* @__PURE__ */ getDefaultExportFromCjs(jsxRuntimeExports);
+  var jsxRuntimeExports = jsxRuntime$2.exports;
+  const jsxRuntime$1 = /* @__PURE__ */ getDefaultExportFromCjs(jsxRuntimeExports);
   var entity = { exports: {} };
   var make_entity = {};
   "use strict";
@@ -2330,163 +2323,159 @@ var __async = (__this, __arguments, generator) => {
   })(entity, entity.exports);
   var entityExports = entity.exports;
   const SenecaEntity = /* @__PURE__ */ getDefaultExportFromCjs(entityExports);
-  function S(t) {
-    let e = this, o = e.export("entity/init"), u = t.handleResponse, i = ["save", "load", "list", "remove"].reduce(
-      (n, r2) => (n[r2] = u[r2] || u.any, n),
-      {}
-    );
-    const b = [];
-    function m(n, r2, c) {
-      let a = {}, s = c.apimsg;
-      for (let l in s) {
-        let f = s[l];
-        typeof f == "function" ? a[l] = f(n, r2, c) : a[l] = JSON.parse(JSON.stringify(f));
+  var browserStore$1 = { exports: {} };
+  var browserStore = browserStore$1.exports;
+  (function(module2, exports3) {
+    "use strict";
+    Object.defineProperty(exports3, "__esModule", { value: true });
+    function BrowserStore2(options) {
+      let seneca = this;
+      let init2 = seneca.export("entity/init");
+      let ohr = options.handleResponse;
+      let handleResponse = ["save", "load", "list", "remove"].reduce((a, n) => (a[n] = ohr[n] || ohr.any, a), {});
+      const msglog = [];
+      function makeApiMsg(msg, ctx, options2) {
+        let apimsg = {};
+        let apimsgtm = options2.apimsg;
+        for (let pn in apimsgtm) {
+          let pv = apimsgtm[pn];
+          if ("function" === typeof pv) {
+            apimsg[pn] = pv(msg, ctx, options2);
+          } else {
+            apimsg[pn] = JSON.parse(JSON.stringify(pv));
+          }
+        }
+        return apimsg;
       }
-      return a;
-    }
-    let d = {
-      name: "BrowserStore",
-      save: function(n, r2, c) {
-        let a = t.debug && v(arguments), s = t.prepareCtx(n), l = m(n, s, t);
-        a && w(a, s, l), this.act(
-          l,
-          function(g, _2, p) {
-            return a && h(a, arguments), i.save(this, s, r2, g, _2, p, a);
-          }
-        );
-      },
-      load: function(n, r2, c) {
-        let a = t.debug && v(arguments), s = t.prepareCtx(n), l = m(n, s, t);
-        a && w(a, s, l), this.act(
-          l,
-          function(g, _2, p) {
-            return a && h(a, arguments), i.load(this, s, r2, g, _2, p, a);
-          }
-        );
-      },
-      list: function(n, r2, c) {
-        let a = t.debug && v(arguments), s = t.prepareCtx(n), l = m(n, s, t);
-        a && w(a, s, l), this.act(
-          l,
-          function(g, _2, p) {
-            return a && h(a, arguments), i.list(this, s, r2, g, _2, p, a);
-          }
-        );
-      },
-      remove: function(n, r2, c) {
-        let a = t.debug && v(arguments), s = t.prepareCtx(n), l = m(n, s, t);
-        a && w(a, s, l), this.act(
-          l,
-          function(g, _2, p) {
-            return a && h(a, arguments), i.remove(
-              this,
-              s,
-              r2,
-              g,
-              _2,
-              p,
-              a
-            );
-          }
-        );
-      },
-      close: function(n, r2) {
-        r2();
-      },
-      native: function(n, r2) {
-        r2();
-      }
-    }, $ = o(e, t, d);
-    function v(n) {
-      let r2 = t.debug && {
-        msg: n[0],
-        meta: n[2],
-        start: Date.now()
+      let store2 = {
+        name: "BrowserStore",
+        save: function(msg, reply, _meta) {
+          let logn = options.debug && logstart(arguments);
+          let ctx = options.prepareCtx(msg);
+          let apimsg = makeApiMsg(msg, ctx, options);
+          logn && (logn.ctx = ctx) && (logn.apimsg = apimsg);
+          this.act(apimsg, function save_result(err, res, apimeta) {
+            logn && (logn.apiend = Date.now()) && (logn.err = err) && (logn.res = res) && (logn.apimeta = apimeta);
+            return handleResponse.save(this, ctx, reply, err, res, apimeta, logn);
+          });
+        },
+        load: function(msg, reply, _meta) {
+          let logn = options.debug && logstart(arguments);
+          let ctx = options.prepareCtx(msg);
+          let apimsg = makeApiMsg(msg, ctx, options);
+          logn && (logn.ctx = ctx) && (logn.apimsg = apimsg);
+          this.act(apimsg, function load_result(err, res, apimeta) {
+            logn && logres(logn, arguments);
+            return handleResponse.load(this, ctx, reply, err, res, apimeta, logn);
+          });
+        },
+        list: function(msg, reply, _meta) {
+          let logn = options.debug && logstart(arguments);
+          let ctx = options.prepareCtx(msg);
+          let apimsg = makeApiMsg(msg, ctx, options);
+          logn && (logn.ctx = ctx) && (logn.apimsg = apimsg);
+          this.act(apimsg, function list_result(err, res, apimeta) {
+            logn && logres(logn, arguments);
+            return handleResponse.list(this, ctx, reply, err, res, apimeta, logn);
+          });
+        },
+        remove: function(msg, reply, _meta) {
+          let logn = options.debug && logstart(arguments);
+          let ctx = options.prepareCtx(msg);
+          let apimsg = makeApiMsg(msg, ctx, options);
+          logn && (logn.ctx = ctx) && (logn.apimsg = apimsg);
+          this.act(apimsg, function remove_result(err, res, apimeta) {
+            logn && logres(logn, arguments);
+            return handleResponse.remove(this, ctx, reply, err, res, apimeta, logn);
+          });
+        },
+        close: function(_msg, reply) {
+          reply();
+        },
+        native: function(_msg, reply) {
+          reply();
+        }
       };
-      return r2 && b.push(r2), r2;
+      let meta = init2(seneca, options, store2);
+      function logstart(args) {
+        let logn = options.debug && {
+          msg: args[0],
+          meta: args[2],
+          start: Date.now()
+        };
+        logn && msglog.push(logn);
+        return logn;
+      }
+      function logres(logn, args) {
+        logn.apiend = Date.now();
+        logn.err = args[0];
+        logn.res = args[1];
+        logn.apimeta = args[2];
+        return logn;
+      }
+      return {
+        name: store2.name,
+        tag: meta.tag,
+        exports: {
+          makeApiMsg,
+          msglog
+        }
+      };
     }
-    function w(n, r2, c) {
-      return n.apistart = Date.now(), n.ctx = r2, n.apimsg = c, n;
-    }
-    function h(n, r2) {
-      return n.apiend = Date.now(), n.err = r2[0], n.res = r2[1], n.apimeta = r2[2], n;
-    }
-    return {
-      name: d.name,
-      tag: $.tag,
-      exports: {
-        makeApiMsg: m,
-        msglog: b
+    BrowserStore2.defaults = {
+      debug: false,
+      apimsg: {
+        aim: "req",
+        on: "entity",
+        debounce$: true,
+        q: (msg, _ctx) => msg.q,
+        ent: (msg, _ctx) => msg.ent,
+        cmd: (_msg, ctx) => ctx.cmd,
+        canon: (msg, _ctx) => (msg.ent || msg.qent).entity$,
+        store: (_msg, ctx) => ctx.store
+      },
+      prepareCtx: (msg, ctx) => {
+        ctx = ctx || {};
+        let q = msg.q;
+        ctx.store = false !== q.store$;
+        delete q.store$;
+        ctx.cmd = msg.cmd;
+        ctx.canon = (msg.ent || msg.qent).entity$;
+        return ctx;
+      },
+      handleResponse: {
+        any: function(_seneca, ctx, reply, err, res, _apimeta, logn) {
+          logn && (logn.end = Date.now());
+          if (err) {
+            reply(err);
+          }
+          if (res && res.ok) {
+            reply(res.ent);
+          } else {
+            reply(res && res.err || new Error(`BrowserStore: ${ctx.cmd} ${ctx.canon}: unknown error`));
+          }
+        },
+        list: function(seneca, ctx, reply, err, res, _apimeta, logn) {
+          logn && (logn.end = Date.now());
+          if (err)
+            reply(err);
+          if (res && res.ok && res.list) {
+            let list = res.list.map((item) => seneca.entity(ctx.canon).data$(item));
+            logn && (logn.end = Date.now());
+            reply(list);
+          } else {
+            reply(res && res.err || new Error(`BrowserStore: ${ctx.cmd} ${ctx.canon}: unknown list error`));
+          }
+        }
       }
     };
-  }
-  function y(t, e) {
-    return t.entity(e.zone, e.base, e.name).canon$();
-  }
-  S.defaults = {
-    debug: false,
-    apimsg: {
-      aim: "req",
-      on: "entity",
-      debounce$: true,
-      q: (t, e) => t.q,
-      ent: (t, e) => t.ent,
-      // cmd: (_msg: any, ctx: any) => ctx.cmd,
-      save: (t, e) => e.cmd === "save" ? "entity" : void 0,
-      load: (t, e) => e.cmd === "load" ? "entity" : void 0,
-      list: (t, e) => e.cmd === "list" ? "entity" : void 0,
-      remove: (t, e) => e.cmd === "remove" ? "entity" : void 0,
-      store: (t, e) => e.store,
-      name: (t, e) => e.name,
-      base: (t, e) => e.base,
-      zone: (t, e) => e.zone
-    },
-    prepareCtx: (t, e) => {
-      e = e || {};
-      let o = t.q;
-      e.store = o.store$ !== false, delete o.store$, e.cmd = t.cmd;
-      let u = t.ent || t.qent;
-      if (u) {
-        if (u.canon$)
-          Object.assign(e, u.canon$({ object: true }));
-        else if (u.entity$) {
-          let i = u.entity$.split("/");
-          Object.assign(e, {
-            zone: i[0] === "-" ? null : i[0],
-            base: i[1] === "-" ? null : i[1],
-            name: i[2] === "-" ? null : i[2]
-          });
-        }
-      }
-      return e;
-    },
-    handleResponse: {
-      any: function(t, e, o, u, i, b, m) {
-        if (m && (m.end = Date.now()), u)
-          return o(u);
-        if (i && i.ok)
-          return o(i.ent);
-        {
-          let d = i && i.err;
-          return d = d || new Error(
-            `BrowserStore: ${e.cmd} ${y(t, e)}: unknown error`
-          ), o(d);
-        }
-      },
-      list: function(t, e, o, u, i, b, m) {
-        if (m && (m.end = Date.now()), u && o(u), i && i.ok && i.list) {
-          let d = t.entity({ zone: e.zone, base: e.base, name: e.name }), $ = i.list.map((v) => d.make$().data$(v));
-          m && (m.end = Date.now()), o($);
-        } else {
-          let d = i && i.err;
-          d = d || new Error(
-            `BrowserStore: ${e.cmd} ${y(t, e)}: unknown list error`
-          ), o(d);
-        }
-      }
+    exports3.default = BrowserStore2;
+    if (true) {
+      module2.exports = BrowserStore2;
     }
-  };
-  Object.defineProperty(S, "name", { value: "BrowserStore" });
+  })(browserStore$1, browserStore$1.exports);
+  var browserStoreExports = browserStore$1.exports;
+  const BrowserStore = /* @__PURE__ */ getDefaultExportFromCjs(browserStoreExports);
   var gubu_min$2 = { exports: {} };
   var gubu_min = gubu_min$2.exports;
   (function(module2, exports3) {
@@ -2501,7 +2490,7 @@ var __async = (__this, __arguments, generator) => {
     }(function() {
       var e = {}, t = {};
       Object.defineProperty(t, "__esModule", { value: true }), t.Gubu = void 0;
-      const n = Symbol.for("gubu$"), l = { gubu$: n, v$: "6.0.1" }, r2 = Symbol.for("gubu$nil"), i = /^[A-Z]/, o = "gubu", s = "name", u = "nan", a = "never", c = "number", f = "required", p = "array", h = "function", v = "object", d = "string", g = "boolean", m = "undefined", y2 = "any", b = "list", x = "instance", $ = "null", I = "type", k = "closed", j = "shape", w = "check", O = "Object", N = "Array", S2 = "Function", V = "Value", R = "Above", A = "All", D = "Below", E = "Max", C = "Min", G = "Len", B = "One", T = "Some", M = " for property ", L = '"$PATH"', F = '"$VALUE"', P = (e2) => Object.keys(e2), z = (e2, t2, n2) => Object.defineProperty(e2, t2, n2), q = (e2) => Array.isArray(e2), W = (e2) => JSON.parse(e2), _2 = (e2, t2) => JSON.stringify(e2, t2);
+      const n = Symbol.for("gubu$"), l = { gubu$: n, v$: "6.0.1" }, r2 = Symbol.for("gubu$nil"), i = /^[A-Z]/, o = "gubu", s = "name", u = "nan", a = "never", c = "number", f = "required", p = "array", h = "function", v = "object", d = "string", g = "boolean", m = "undefined", y = "any", b = "list", x = "instance", $ = "null", I = "type", k = "closed", j = "shape", w = "check", O = "Object", N = "Array", S = "Function", V = "Value", R = "Above", A = "All", D = "Below", E = "Max", C = "Min", G = "Len", B = "One", T = "Some", M = " for property ", L = '"$PATH"', F = '"$VALUE"', P = (e2) => Object.keys(e2), z = (e2, t2, n2) => Object.defineProperty(e2, t2, n2), q = (e2) => Array.isArray(e2), W = (e2) => JSON.parse(e2), _2 = (e2, t2) => JSON.stringify(e2, t2);
       class J {
         constructor(e2, t2, n2, l2) {
           this.match = false, this.dI = 0, this.nI = 2, this.cI = -1, this.pI = 0, this.sI = -1, this.valType = a, this.isRoot = false, this.key = "", this.type = a, this.stop = true, this.nextSibling = true, this.fromDefault = false, this.ignoreVal = void 0, this.curerr = [], this.err = [], this.parents = [], this.keys = [], this.path = [], this.root = e2, this.vals = [e2, -1], this.node = t2, this.nodes = [t2, -1], this.ctx = n2 || {}, this.match = !!l2;
@@ -2543,7 +2532,7 @@ var __async = (__this, __arguments, generator) => {
           }
         }
         let b2 = null === e2 ? $ : typeof e2;
-        b2 = m === b2 ? y2 : b2;
+        b2 = m === b2 ? y : b2;
         let I2 = e2, k2 = I2, j2 = r2, w2 = false, N2 = {}, V2 = [], R2 = [];
         if (v === b2)
           k2 = void 0, q(I2) ? (b2 = p, 1 === I2.length && (j2 = I2[0], I2 = [])) : null != I2 && Function !== I2.constructor && Object !== I2.constructor && null != I2.constructor ? (b2 = x, N2.n = I2.constructor.name, N2.i = I2.constructor, k2 = I2) : 0 === P(I2).length && (j2 = oe());
@@ -2554,7 +2543,7 @@ var __async = (__this, __arguments, generator) => {
             let e3 = I2.node ? I2.node() : I2;
             b2 = e3.t, I2 = e3.v, k2 = I2, w2 = e3.r, N2 = Object.assign({}, e3.u), V2 = [...e3.a], R2 = [...e3.b];
           } else
-            S2 === I2.constructor.name && i.test(I2.name) && (b2 = x, w2 = true, N2.n = null === (g2 = null === (f2 = I2.prototype) || void 0 === f2 ? void 0 : f2.constructor) || void 0 === g2 ? void 0 : g2.name, N2.i = I2);
+            S === I2.constructor.name && i.test(I2.name) && (b2 = x, w2 = true, N2.n = null === (g2 = null === (f2 = I2.prototype) || void 0 === f2 ? void 0 : f2.constructor) || void 0 === g2 ? void 0 : g2.name, N2.i = I2);
         else
           c === b2 && isNaN(I2) ? b2 = u : d === b2 && "" === I2 && (N2.empty = true);
         let A2 = null == I2 || v !== b2 && p !== b2 ? I2 : Object.assign({}, I2);
@@ -2650,10 +2639,10 @@ var __async = (__this, __arguments, generator) => {
                   }
                 } else
                   l2.curerr.push(Ge(I, l2, 1040));
-              else if (y2 === l2.type || b === l2.type || void 0 === l2.val || l2.type === l2.valType || x === l2.type && t4.u.i && l2.val instanceof t4.u.i || $ === l2.type && null === l2.val)
+              else if (y === l2.type || b === l2.type || void 0 === l2.val || l2.type === l2.valType || x === l2.type && t4.u.i && l2.val instanceof t4.u.i || $ === l2.type && null === l2.val)
                 if (void 0 === l2.val) {
                   let e3 = l2.path[l2.dI];
-                  !t4.r || m === l2.type && l2.parent.hasOwnProperty(e3) ? void 0 !== t4.f && !t4.p || m === l2.type ? (l2.updateVal(t4.f), l2.fromDefault = true) : y2 === l2.type && (l2.ignoreVal = void 0 === l2.ignoreVal || l2.ignoreVal) : (l2.ignoreVal = true, l2.curerr.push(Ge(f, l2, 1060))), l2.ctx.log && l2.ctx.log("kv", l2);
+                  !t4.r || m === l2.type && l2.parent.hasOwnProperty(e3) ? void 0 !== t4.f && !t4.p || m === l2.type ? (l2.updateVal(t4.f), l2.fromDefault = true) : y === l2.type && (l2.ignoreVal = void 0 === l2.ignoreVal || l2.ignoreVal) : (l2.ignoreVal = true, l2.curerr.push(Ge(f, l2, 1060))), l2.ctx.log && l2.ctx.log("kv", l2);
                 } else
                   d !== l2.type || "" !== l2.val || t4.u.empty || l2.curerr.push(Ge(f, l2, 1080)), l2.ctx.log && l2.ctx.log("kv", l2);
               else
@@ -2762,7 +2751,7 @@ var __async = (__this, __arguments, generator) => {
         return t2.r = false, void 0 === e2 && 1 === arguments.length && (t2.t = m, t2.v = void 0), t2;
       }, oe = function(e2) {
         let t2 = Ee(this, e2);
-        return t2.t = y2, void 0 !== e2 && (t2.v = e2, t2.f = e2), t2;
+        return t2.t = y, void 0 !== e2 && (t2.v = e2, t2.f = e2), t2;
       }, se = function(e2, t2) {
         let n2 = Ee(this, t2);
         return n2.z = e2, n2;
@@ -3127,7 +3116,7 @@ var __async = (__this, __arguments, generator) => {
     }) : m[1], cmap.FILTER === s[m[0]] ? cmap.FILTER : s), {}), cmap.FILTER === _2 ? 0 : r2[n[0]] = _2, r2), {});
   }
   cmap.COPY = (x) => x;
-  cmap.FILTER = (x) => "function" === typeof x ? (y2, p, _2) => (_2 = x(y2, p), Array.isArray(_2) ? !_2[0] ? _2[1] : cmap.FILTER : _2) : x ? x : cmap.FILTER;
+  cmap.FILTER = (x) => "function" === typeof x ? (y, p, _2) => (_2 = x(y, p), Array.isArray(_2) ? !_2[0] ? _2[1] : cmap.FILTER : _2) : x ? x : cmap.FILTER;
   cmap.KEY = (_2, p) => p.key;
   function vmap(o, p) {
     return Object.entries(o).reduce((r2, n, _2) => (_2 = Object.entries(p).reduce((s, m) => vmap.FILTER === s ? s : (s[m[0]] = // transfom(val,key,current,parentkey,parent)
@@ -3140,7 +3129,7 @@ var __async = (__this, __arguments, generator) => {
     }) : m[1], vmap.FILTER === s[m[0]] ? vmap.FILTER : s), {}), vmap.FILTER === _2 ? 0 : r2.push(_2), r2), []);
   }
   vmap.COPY = (x) => x;
-  vmap.FILTER = (x) => "function" === typeof x ? (y2, p, _2) => (_2 = x(y2, p), Array.isArray(_2) ? !_2[0] ? _2[1] : vmap.FILTER : _2) : x ? x : vmap.FILTER;
+  vmap.FILTER = (x) => "function" === typeof x ? (y, p, _2) => (_2 = x(y, p), Array.isArray(_2) ? !_2[0] ? _2[1] : vmap.FILTER : _2) : x ? x : vmap.FILTER;
   vmap.KEY = (_2, p) => p.key;
   function _objectWithoutPropertiesLoose(source, excluded) {
     if (source == null)
@@ -3421,7 +3410,7 @@ var __async = (__this, __arguments, generator) => {
       return reactIs_production_min$1;
     hasRequiredReactIs_production_min$1 = 1;
     "use strict";
-    var b = "function" === typeof Symbol && Symbol.for, c = b ? Symbol.for("react.element") : 60103, d = b ? Symbol.for("react.portal") : 60106, e = b ? Symbol.for("react.fragment") : 60107, f = b ? Symbol.for("react.strict_mode") : 60108, g = b ? Symbol.for("react.profiler") : 60114, h = b ? Symbol.for("react.provider") : 60109, k = b ? Symbol.for("react.context") : 60110, l = b ? Symbol.for("react.async_mode") : 60111, m = b ? Symbol.for("react.concurrent_mode") : 60111, n = b ? Symbol.for("react.forward_ref") : 60112, p = b ? Symbol.for("react.suspense") : 60113, q = b ? Symbol.for("react.suspense_list") : 60120, r2 = b ? Symbol.for("react.memo") : 60115, t = b ? Symbol.for("react.lazy") : 60116, v = b ? Symbol.for("react.block") : 60121, w = b ? Symbol.for("react.fundamental") : 60117, x = b ? Symbol.for("react.responder") : 60118, y2 = b ? Symbol.for("react.scope") : 60119;
+    var b = "function" === typeof Symbol && Symbol.for, c = b ? Symbol.for("react.element") : 60103, d = b ? Symbol.for("react.portal") : 60106, e = b ? Symbol.for("react.fragment") : 60107, f = b ? Symbol.for("react.strict_mode") : 60108, g = b ? Symbol.for("react.profiler") : 60114, h = b ? Symbol.for("react.provider") : 60109, k = b ? Symbol.for("react.context") : 60110, l = b ? Symbol.for("react.async_mode") : 60111, m = b ? Symbol.for("react.concurrent_mode") : 60111, n = b ? Symbol.for("react.forward_ref") : 60112, p = b ? Symbol.for("react.suspense") : 60113, q = b ? Symbol.for("react.suspense_list") : 60120, r2 = b ? Symbol.for("react.memo") : 60115, t = b ? Symbol.for("react.lazy") : 60116, v = b ? Symbol.for("react.block") : 60121, w = b ? Symbol.for("react.fundamental") : 60117, x = b ? Symbol.for("react.responder") : 60118, y = b ? Symbol.for("react.scope") : 60119;
     function z(a) {
       if ("object" === typeof a && null !== a) {
         var u = a.$$typeof;
@@ -3506,7 +3495,7 @@ var __async = (__this, __arguments, generator) => {
       return z(a) === p;
     };
     reactIs_production_min$1.isValidElementType = function(a) {
-      return "string" === typeof a || "function" === typeof a || a === e || a === m || a === g || a === f || a === p || a === q || "object" === typeof a && null !== a && (a.$$typeof === t || a.$$typeof === r2 || a.$$typeof === h || a.$$typeof === k || a.$$typeof === n || a.$$typeof === w || a.$$typeof === x || a.$$typeof === y2 || a.$$typeof === v);
+      return "string" === typeof a || "function" === typeof a || a === e || a === m || a === g || a === f || a === p || a === q || "object" === typeof a && null !== a && (a.$$typeof === t || a.$$typeof === r2 || a.$$typeof === h || a.$$typeof === k || a.$$typeof === n || a.$$typeof === w || a.$$typeof === x || a.$$typeof === y || a.$$typeof === v);
     };
     reactIs_production_min$1.typeOf = z;
     return reactIs_production_min$1;
@@ -3736,11 +3725,11 @@ var __async = (__this, __arguments, generator) => {
         shape: createShapeTypeChecker,
         exact: createStrictShapeTypeChecker
       };
-      function is(x, y2) {
-        if (x === y2) {
-          return x !== 0 || 1 / x === 1 / y2;
+      function is(x, y) {
+        if (x === y) {
+          return x !== 0 || 1 / x === 1 / y;
         } else {
-          return x !== x && y2 !== y2;
+          return x !== x && y !== y;
         }
       }
       function PropTypeError(message, data) {
@@ -4136,17 +4125,18 @@ var __async = (__this, __arguments, generator) => {
     if ("string" == typeof e || "number" == typeof e)
       n += e;
     else if ("object" == typeof e)
-      if (Array.isArray(e))
-        for (t = 0; t < e.length; t++)
+      if (Array.isArray(e)) {
+        var o = e.length;
+        for (t = 0; t < o; t++)
           e[t] && (f = r(e[t])) && (n && (n += " "), n += f);
-      else
-        for (t in e)
-          e[t] && (n && (n += " "), n += t);
+      } else
+        for (f in e)
+          e[f] && (n && (n += " "), n += f);
     return n;
   }
   function clsx() {
-    for (var e, t, f = 0, n = ""; f < arguments.length; )
-      (e = arguments[f++]) && (t = r(e)) && (n && (n += " "), n += t);
+    for (var e, t, f = 0, n = "", o = arguments.length; f < o; f++)
+      (e = arguments[f]) && (t = r(e)) && (n && (n += " "), n += t);
     return n;
   }
   function chainPropTypes(propType1, propType2) {
@@ -5536,8 +5526,8 @@ var __async = (__this, __arguments, generator) => {
     var rule = offset2 === 0 ? rules2 : [""];
     var size2 = sizeof(rule);
     for (var i = 0, j = 0, k = 0; i < index2; ++i)
-      for (var x = 0, y2 = substr(value, post + 1, post = abs(j = points[i])), z = value; x < size2; ++x)
-        if (z = trim(j > 0 ? rule[x] + " " + y2 : replace(y2, /&\f/g, rule[x])))
+      for (var x = 0, y = substr(value, post + 1, post = abs(j = points[i])), z = value; x < size2; ++x)
+        if (z = trim(j > 0 ? rule[x] + " " + y : replace(y, /&\f/g, rule[x])))
           props[k++] = z;
     return node(value, root, parent, offset2 === 0 ? RULESET : type, props, children, length2);
   }
@@ -6268,7 +6258,7 @@ var __async = (__this, __arguments, generator) => {
   } : void 0;
   "use client";
   /**
-   * @mui/styled-engine v5.15.1
+   * @mui/styled-engine v5.15.3
    *
    * @license MIT
    * This source code is licensed under the MIT license found in the
@@ -6295,7 +6285,7 @@ var __async = (__this, __arguments, generator) => {
       tag.__emotion_styles = processor(tag.__emotion_styles);
     }
   };
-  const _excluded$1d = ["values", "unit", "step"];
+  const _excluded$1f = ["values", "unit", "step"];
   const breakpointKeys = ["xs", "sm", "md", "lg", "xl"];
   const sortBreakpointsValues = (values2) => {
     const breakpointsAsArray = Object.keys(values2).map((key) => ({
@@ -6327,7 +6317,7 @@ var __async = (__this, __arguments, generator) => {
       },
       unit = "px",
       step = 5
-    } = breakpoints2, other = _objectWithoutPropertiesLoose(breakpoints2, _excluded$1d);
+    } = breakpoints2, other = _objectWithoutPropertiesLoose(breakpoints2, _excluded$1f);
     const sortedValues = sortBreakpointsValues(values2);
     const keys = Object.keys(sortedValues);
     function up(key) {
@@ -7356,14 +7346,14 @@ var __async = (__this, __arguments, generator) => {
   }
   const styleFunctionSx = unstable_createStyleFunctionSx();
   styleFunctionSx.filterProps = ["sx"];
-  const _excluded$1c = ["breakpoints", "palette", "spacing", "shape"];
+  const _excluded$1e = ["breakpoints", "palette", "spacing", "shape"];
   function createTheme$1(options = {}, ...args) {
     const {
       breakpoints: breakpointsInput = {},
       palette: paletteInput = {},
       spacing: spacingInput,
       shape: shapeInput = {}
-    } = options, other = _objectWithoutPropertiesLoose(options, _excluded$1c);
+    } = options, other = _objectWithoutPropertiesLoose(options, _excluded$1e);
     const breakpoints2 = createBreakpoints(breakpointsInput);
     const spacing2 = createSpacing(spacingInput);
     let muiTheme = deepmerge({
@@ -7554,7 +7544,7 @@ var __async = (__this, __arguments, generator) => {
     themeKey: "typography"
   });
   const typography = compose(typographyVariant, fontFamily, fontSize, fontStyle, fontWeight, letterSpacing, lineHeight, textAlign, textTransform);
-  const _excluded$1b = ["sx"];
+  const _excluded$1d = ["sx"];
   const splitProps = (props) => {
     var _props$theme$unstable, _props$theme;
     const result = {
@@ -7574,7 +7564,7 @@ var __async = (__this, __arguments, generator) => {
   function extendSxProp(props) {
     const {
       sx: inSx
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1b);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1d);
     const {
       systemProps,
       otherProps
@@ -7638,7 +7628,7 @@ var __async = (__this, __arguments, generator) => {
     };
   }
   "use client";
-  const _excluded$1a = ["className", "component"];
+  const _excluded$1c = ["className", "component"];
   function createBox(options = {}) {
     const {
       themeId,
@@ -7654,7 +7644,7 @@ var __async = (__this, __arguments, generator) => {
       const _extendSxProp = extendSxProp(inProps), {
         className,
         component = "div"
-      } = _extendSxProp, other = _objectWithoutPropertiesLoose(_extendSxProp, _excluded$1a);
+      } = _extendSxProp, other = _objectWithoutPropertiesLoose(_extendSxProp, _excluded$1c);
       return /* @__PURE__ */ jsxRuntimeExports.jsx(BoxRoot, _extends({
         as: component,
         ref,
@@ -7690,14 +7680,14 @@ var __async = (__this, __arguments, generator) => {
     sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object])
   } : void 0;
   "use client";
-  const _excluded$19 = ["variant"];
+  const _excluded$1b = ["variant"];
   function isEmpty$3(string) {
     return string.length === 0;
   }
   function propsToClassKey(props) {
     const {
       variant
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$19);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1b);
     let classKey = variant || "";
     Object.keys(other).sort().forEach((key) => {
       if (key === "color") {
@@ -7708,7 +7698,7 @@ var __async = (__this, __arguments, generator) => {
     });
     return classKey;
   }
-  const _excluded$18 = ["name", "slot", "skipVariantsResolver", "skipSx", "overridesResolver"];
+  const _excluded$1a = ["name", "slot", "skipVariantsResolver", "skipSx", "overridesResolver"];
   function isEmpty$2(obj) {
     return Object.keys(obj).length === 0;
   }
@@ -7725,10 +7715,17 @@ var __async = (__this, __arguments, generator) => {
     return null;
   };
   const transformVariants = (variants) => {
+    let numOfCallbacks = 0;
     const variantsStyles = {};
     if (variants) {
       variants.forEach((definition) => {
-        const key = propsToClassKey(definition.props);
+        let key = "";
+        if (typeof definition.props === "function") {
+          key = `callback${numOfCallbacks}`;
+          numOfCallbacks += 1;
+        } else {
+          key = propsToClassKey(definition.props);
+        }
         variantsStyles[key] = definition.style;
       });
     }
@@ -7746,16 +7743,29 @@ var __async = (__this, __arguments, generator) => {
       ownerState = {}
     } = props;
     const variantsStyles = [];
+    let numOfCallbacks = 0;
     if (variants) {
       variants.forEach((variant) => {
         let isMatch = true;
-        Object.keys(variant.props).forEach((key) => {
-          if (ownerState[key] !== variant.props[key] && props[key] !== variant.props[key]) {
-            isMatch = false;
-          }
-        });
+        if (typeof variant.props === "function") {
+          const propsToCheck = _extends({}, props, ownerState);
+          isMatch = variant.props(propsToCheck);
+        } else {
+          Object.keys(variant.props).forEach((key) => {
+            if (ownerState[key] !== variant.props[key] && props[key] !== variant.props[key]) {
+              isMatch = false;
+            }
+          });
+        }
         if (isMatch) {
-          variantsStyles.push(styles2[propsToClassKey(variant.props)]);
+          if (typeof variant.props === "function") {
+            variantsStyles.push(styles2[`callback${numOfCallbacks}`]);
+          } else {
+            variantsStyles.push(styles2[propsToClassKey(variant.props)]);
+          }
+        }
+        if (typeof variant.props === "function") {
+          numOfCallbacks += 1;
         }
       });
     }
@@ -7838,7 +7848,7 @@ var __async = (__this, __arguments, generator) => {
         // TODO v6: remove `lowercaseFirstLetter()` in the next major release
         // For more details: https://github.com/mui/material-ui/pull/37908
         overridesResolver: overridesResolver2 = defaultOverridesResolver(lowercaseFirstLetter(componentSlot))
-      } = inputOptions, options = _objectWithoutPropertiesLoose(inputOptions, _excluded$18);
+      } = inputOptions, options = _objectWithoutPropertiesLoose(inputOptions, _excluded$1a);
       const skipVariantsResolver = inputSkipVariantsResolver !== void 0 ? inputSkipVariantsResolver : (
         // TODO v6: remove `Root` in the next major release
         // For more details: https://github.com/mui/material-ui/pull/37908
@@ -8293,7 +8303,7 @@ The following color spaces are supported: srgb, display-p3, a98-rgb, prophoto-rg
     process.env.NODE_ENV !== "production" ? ThemeProvider$2.propTypes = exactProp(ThemeProvider$2.propTypes) : void 0;
   }
   /**
-   * @mui/private-theming v5.15.1
+   * @mui/private-theming v5.15.3
    *
    * @license MIT
    * This source code is licensed under the MIT license found in the
@@ -8602,7 +8612,7 @@ try {
       setColorScheme
     });
   }
-  const _excluded$17 = ["colorSchemes", "components", "generateCssVars", "cssVarPrefix"];
+  const _excluded$19 = ["colorSchemes", "components", "generateCssVars", "cssVarPrefix"];
   const DISABLE_CSS_TRANSITION = "*{-webkit-transition:none!important;-moz-transition:none!important;-o-transition:none!important;-ms-transition:none!important;transition:none!important}";
   function createCssVarsProvider(options) {
     const {
@@ -8663,7 +8673,7 @@ try {
           css: {}
         }),
         cssVarPrefix
-      } = _ref, restThemeProp = _objectWithoutPropertiesLoose(_ref, _excluded$17);
+      } = _ref, restThemeProp = _objectWithoutPropertiesLoose(_ref, _excluded$19);
       const allColorSchemes = Object.keys(colorSchemes);
       const defaultLightColorScheme2 = typeof defaultColorScheme === "string" ? defaultColorScheme : defaultColorScheme.light;
       const defaultDarkColorScheme2 = typeof defaultColorScheme === "string" ? defaultColorScheme : defaultColorScheme.dark;
@@ -8998,11 +9008,11 @@ try {
       varsWithDefaults
     };
   }
-  const _excluded$16 = ["colorSchemes", "components"], _excluded2$7 = ["light"];
+  const _excluded$18 = ["colorSchemes", "components"], _excluded2$7 = ["light"];
   function prepareCssVars(theme, parserConfig) {
     const {
       colorSchemes = {}
-    } = theme, otherTheme = _objectWithoutPropertiesLoose(theme, _excluded$16);
+    } = theme, otherTheme = _objectWithoutPropertiesLoose(theme, _excluded$18);
     const {
       vars: rootVars,
       css: rootCss,
@@ -9054,18 +9064,18 @@ try {
       generateCssVars
     };
   }
-  const _excluded$15 = ["cssVarPrefix", "shouldSkipGeneratingVar"];
+  const _excluded$17 = ["cssVarPrefix", "shouldSkipGeneratingVar"];
   function createCssVarsTheme(theme) {
     const {
       cssVarPrefix,
       shouldSkipGeneratingVar: shouldSkipGeneratingVar2
-    } = theme, otherTheme = _objectWithoutPropertiesLoose(theme, _excluded$15);
+    } = theme, otherTheme = _objectWithoutPropertiesLoose(theme, _excluded$17);
     return _extends({}, theme, prepareCssVars(otherTheme, {
       prefix: cssVarPrefix,
       shouldSkipGeneratingVar: shouldSkipGeneratingVar2
     }));
   }
-  const _excluded$14 = ["className", "component", "disableGutters", "fixed", "maxWidth", "classes"];
+  const _excluded$16 = ["className", "component", "disableGutters", "fixed", "maxWidth", "classes"];
   const defaultTheme$5 = createTheme$1();
   const defaultCreateStyledComponent$2 = styled$1("div", {
     name: "MuiContainer",
@@ -9158,7 +9168,7 @@ try {
         disableGutters = false,
         fixed = false,
         maxWidth: maxWidth2 = "lg"
-      } = props, other = _objectWithoutPropertiesLoose(props, _excluded$14);
+      } = props, other = _objectWithoutPropertiesLoose(props, _excluded$16);
       const ownerState = _extends({}, props, {
         component,
         disableGutters,
@@ -9497,7 +9507,7 @@ try {
     }
     return [`direction-xs-${String(direction)}`];
   };
-  const _excluded$13 = ["className", "children", "columns", "container", "component", "direction", "wrap", "spacing", "rowSpacing", "columnSpacing", "disableEqualOverflow", "unstable_level"];
+  const _excluded$15 = ["className", "children", "columns", "container", "component", "direction", "wrap", "spacing", "rowSpacing", "columnSpacing", "disableEqualOverflow", "unstable_level"];
   const defaultTheme$4 = createTheme$1();
   const defaultCreateStyledComponent$1 = styled$1("div", {
     name: "MuiGrid",
@@ -9552,7 +9562,7 @@ try {
         columnSpacing: columnSpacingProp = spacingProp,
         disableEqualOverflow: themeDisableEqualOverflow,
         unstable_level: level = 0
-      } = props, rest = _objectWithoutPropertiesLoose(props, _excluded$13);
+      } = props, rest = _objectWithoutPropertiesLoose(props, _excluded$15);
       let disableEqualOverflow = themeDisableEqualOverflow;
       if (level && themeDisableEqualOverflow !== void 0) {
         disableEqualOverflow = inProps.disableEqualOverflow;
@@ -9828,7 +9838,7 @@ try {
     ...GRID_SIZES.map((size2) => `grid-xl-${size2}`)
   ]);
   "use client";
-  const _excluded$12 = ["component", "direction", "spacing", "divider", "children", "className", "useFlexGap"];
+  const _excluded$14 = ["component", "direction", "spacing", "divider", "children", "className", "useFlexGap"];
   const defaultTheme$3 = createTheme$1();
   const defaultCreateStyledComponent = styled$1("div", {
     name: "MuiStack",
@@ -9951,7 +9961,7 @@ try {
         children,
         className,
         useFlexGap = false
-      } = props, other = _objectWithoutPropertiesLoose(props, _excluded$12);
+      } = props, other = _objectWithoutPropertiesLoose(props, _excluded$14);
       const ownerState = {
         direction,
         spacing: spacing2,
@@ -10162,7 +10172,7 @@ try {
     A400: "#00e676",
     A700: "#00c853"
   };
-  const _excluded$11 = ["mode", "contrastThreshold", "tonalOffset"];
+  const _excluded$13 = ["mode", "contrastThreshold", "tonalOffset"];
   const light = {
     // The colors used to style the text.
     text: {
@@ -10330,7 +10340,7 @@ try {
       mode = "light",
       contrastThreshold = 3,
       tonalOffset = 0.2
-    } = palette2, other = _objectWithoutPropertiesLoose(palette2, _excluded$11);
+    } = palette2, other = _objectWithoutPropertiesLoose(palette2, _excluded$13);
     const primary = palette2.primary || getDefaultPrimary(mode);
     const secondary = palette2.secondary || getDefaultSecondary(mode);
     const error = palette2.error || getDefaultError(mode);
@@ -10449,7 +10459,7 @@ const theme2 = createTheme({ palette: {
     }, modes2[mode]), other);
     return paletteOutput;
   }
-  const _excluded$10 = ["fontFamily", "fontSize", "fontWeightLight", "fontWeightRegular", "fontWeightMedium", "fontWeightBold", "htmlFontSize", "allVariants", "pxToRem"];
+  const _excluded$12 = ["fontFamily", "fontSize", "fontWeightLight", "fontWeightRegular", "fontWeightMedium", "fontWeightBold", "htmlFontSize", "allVariants", "pxToRem"];
   function round$2(value) {
     return Math.round(value * 1e5) / 1e5;
   }
@@ -10473,7 +10483,7 @@ const theme2 = createTheme({ palette: {
       // Apply the CSS properties to all the variants.
       allVariants,
       pxToRem: pxToRem2
-    } = _ref, other = _objectWithoutPropertiesLoose(_ref, _excluded$10);
+    } = _ref, other = _objectWithoutPropertiesLoose(_ref, _excluded$12);
     if (process.env.NODE_ENV !== "production") {
       if (typeof fontSize2 !== "number") {
         console.error("MUI: `fontSize` is required to be a number.");
@@ -10537,7 +10547,7 @@ const theme2 = createTheme({ palette: {
     return [`${px[0]}px ${px[1]}px ${px[2]}px ${px[3]}px rgba(0,0,0,${shadowKeyUmbraOpacity})`, `${px[4]}px ${px[5]}px ${px[6]}px ${px[7]}px rgba(0,0,0,${shadowKeyPenumbraOpacity})`, `${px[8]}px ${px[9]}px ${px[10]}px ${px[11]}px rgba(0,0,0,${shadowAmbientShadowOpacity})`].join(",");
   }
   const shadows = ["none", createShadow(0, 2, 1, -1, 0, 1, 1, 0, 0, 1, 3, 0), createShadow(0, 3, 1, -2, 0, 2, 2, 0, 0, 1, 5, 0), createShadow(0, 3, 3, -2, 0, 3, 4, 0, 0, 1, 8, 0), createShadow(0, 2, 4, -1, 0, 4, 5, 0, 0, 1, 10, 0), createShadow(0, 3, 5, -1, 0, 5, 8, 0, 0, 1, 14, 0), createShadow(0, 3, 5, -1, 0, 6, 10, 0, 0, 1, 18, 0), createShadow(0, 4, 5, -2, 0, 7, 10, 1, 0, 2, 16, 1), createShadow(0, 5, 5, -3, 0, 8, 10, 1, 0, 3, 14, 2), createShadow(0, 5, 6, -3, 0, 9, 12, 1, 0, 3, 16, 2), createShadow(0, 6, 6, -3, 0, 10, 14, 1, 0, 4, 18, 3), createShadow(0, 6, 7, -4, 0, 11, 15, 1, 0, 4, 20, 3), createShadow(0, 7, 8, -4, 0, 12, 17, 2, 0, 5, 22, 4), createShadow(0, 7, 8, -4, 0, 13, 19, 2, 0, 5, 24, 4), createShadow(0, 7, 9, -4, 0, 14, 21, 2, 0, 5, 26, 4), createShadow(0, 8, 9, -5, 0, 15, 22, 2, 0, 6, 28, 5), createShadow(0, 8, 10, -5, 0, 16, 24, 2, 0, 6, 30, 5), createShadow(0, 8, 11, -5, 0, 17, 26, 2, 0, 6, 32, 5), createShadow(0, 9, 11, -5, 0, 18, 28, 2, 0, 7, 34, 6), createShadow(0, 9, 12, -6, 0, 19, 29, 2, 0, 7, 36, 6), createShadow(0, 10, 13, -6, 0, 20, 31, 3, 0, 8, 38, 7), createShadow(0, 10, 13, -6, 0, 21, 33, 3, 0, 8, 40, 7), createShadow(0, 10, 14, -6, 0, 22, 35, 3, 0, 8, 42, 7), createShadow(0, 11, 14, -7, 0, 23, 36, 3, 0, 9, 44, 8), createShadow(0, 11, 15, -7, 0, 24, 38, 3, 0, 9, 46, 8)];
-  const _excluded$$ = ["duration", "easing", "delay"];
+  const _excluded$11 = ["duration", "easing", "delay"];
   const easing = {
     // This is the most common easing curve.
     easeInOut: "cubic-bezier(0.4, 0, 0.2, 1)",
@@ -10580,7 +10590,7 @@ const theme2 = createTheme({ palette: {
         duration: durationOption = mergedDuration.standard,
         easing: easingOption = mergedEasing.easeInOut,
         delay = 0
-      } = options, other = _objectWithoutPropertiesLoose(options, _excluded$$);
+      } = options, other = _objectWithoutPropertiesLoose(options, _excluded$11);
       if (process.env.NODE_ENV !== "production") {
         const isString = (value) => typeof value === "string";
         const isNumber2 = (value) => !isNaN(parseFloat(value));
@@ -10623,14 +10633,14 @@ const theme2 = createTheme({ palette: {
     snackbar: 1400,
     tooltip: 1500
   };
-  const _excluded$_ = ["breakpoints", "mixins", "spacing", "palette", "transitions", "typography", "shape"];
+  const _excluded$10 = ["breakpoints", "mixins", "spacing", "palette", "transitions", "typography", "shape"];
   function createTheme(options = {}, ...args) {
     const {
       mixins: mixinsInput = {},
       palette: paletteInput = {},
       transitions: transitionsInput = {},
       typography: typographyInput = {}
-    } = options, other = _objectWithoutPropertiesLoose(options, _excluded$_);
+    } = options, other = _objectWithoutPropertiesLoose(options, _excluded$10);
     if (options.vars) {
       throw new Error(process.env.NODE_ENV !== "production" ? `MUI: \`vars\` is a private field used for CSS variables support.
 Please use another name.` : formatMuiErrorMessage(18));
@@ -10738,7 +10748,7 @@ Please use another name.` : formatMuiErrorMessage(18));
   }
   const paperClasses = generateUtilityClasses("MuiPaper", ["root", "rounded", "outlined", "elevation", "elevation0", "elevation1", "elevation2", "elevation3", "elevation4", "elevation5", "elevation6", "elevation7", "elevation8", "elevation9", "elevation10", "elevation11", "elevation12", "elevation13", "elevation14", "elevation15", "elevation16", "elevation17", "elevation18", "elevation19", "elevation20", "elevation21", "elevation22", "elevation23", "elevation24"]);
   "use client";
-  const _excluded$Z = ["className", "component", "elevation", "square", "variant"];
+  const _excluded$$ = ["className", "component", "elevation", "square", "variant"];
   const useUtilityClasses$M = (ownerState) => {
     const {
       square,
@@ -10792,7 +10802,7 @@ Please use another name.` : formatMuiErrorMessage(18));
       elevation = 1,
       square = false,
       variant = "elevation"
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$Z);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$$);
     const ownerState = _extends({}, props, {
       component,
       elevation,
@@ -10871,7 +10881,7 @@ Please use another name.` : formatMuiErrorMessage(18));
   }
   const appBarClasses = generateUtilityClasses("MuiAppBar", ["root", "positionFixed", "positionAbsolute", "positionSticky", "positionStatic", "positionRelative", "colorDefault", "colorPrimary", "colorSecondary", "colorInherit", "colorTransparent", "colorError", "colorInfo", "colorSuccess", "colorWarning"]);
   "use client";
-  const _excluded$Y = ["className", "color", "enableColorOnDark", "position"];
+  const _excluded$_ = ["className", "color", "enableColorOnDark", "position"];
   const useUtilityClasses$L = (ownerState) => {
     const {
       color: color2,
@@ -10973,7 +10983,7 @@ Please use another name.` : formatMuiErrorMessage(18));
       color: color2 = "primary",
       enableColorOnDark = false,
       position: position2 = "fixed"
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$Y);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$_);
     const ownerState = _extends({}, props, {
       color: color2,
       position: position2,
@@ -11036,7 +11046,7 @@ Please use another name.` : formatMuiErrorMessage(18));
   }
   const toolbarClasses = generateUtilityClasses("MuiToolbar", ["root", "gutters", "regular", "dense"]);
   "use client";
-  const _excluded$X = ["className", "component", "disableGutters", "variant"];
+  const _excluded$Z = ["className", "component", "disableGutters", "variant"];
   const useUtilityClasses$K = (ownerState) => {
     const {
       classes,
@@ -11087,7 +11097,7 @@ Please use another name.` : formatMuiErrorMessage(18));
       component = "div",
       disableGutters = false,
       variant = "regular"
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$X);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$Z);
     const ownerState = _extends({}, props, {
       component,
       disableGutters,
@@ -11528,7 +11538,7 @@ Please use another name.` : formatMuiErrorMessage(18));
   }
   const svgIconClasses = generateUtilityClasses("MuiSvgIcon", ["root", "colorPrimary", "colorSecondary", "colorAction", "colorError", "colorDisabled", "fontSizeInherit", "fontSizeSmall", "fontSizeMedium", "fontSizeLarge"]);
   "use client";
-  const _excluded$W = ["children", "className", "color", "component", "fontSize", "htmlColor", "inheritViewBox", "titleAccess", "viewBox"];
+  const _excluded$Y = ["children", "className", "color", "component", "fontSize", "htmlColor", "inheritViewBox", "titleAccess", "viewBox"];
   const useUtilityClasses$J = (ownerState) => {
     const {
       color: color2,
@@ -11595,7 +11605,7 @@ Please use another name.` : formatMuiErrorMessage(18));
       inheritViewBox = false,
       titleAccess,
       viewBox = "0 0 24 24"
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$W);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$Y);
     const hasSvgAsChild = /* @__PURE__ */ React__namespace.isValidElement(children) && children.type === "svg";
     const ownerState = _extends({}, props, {
       color: color2,
@@ -11782,7 +11792,7 @@ Please use another name.` : formatMuiErrorMessage(18));
   });
   var default_1 = ChevronLeft.default = void 0;
   var _createSvgIcon = _interopRequireDefault(requireCreateSvgIcon());
-  var _jsxRuntime = requireJsxRuntime();
+  var _jsxRuntime = jsxRuntimeExports;
   var _default = (0, _createSvgIcon.default)(/* @__PURE__ */ (0, _jsxRuntime.jsx)("path", {
     d: "M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"
   }), "ChevronLeft");
@@ -11941,7 +11951,7 @@ Please use another name.` : formatMuiErrorMessage(18));
       seneca.context.vxg.BasicAdmin = seneca.context.vxg.BasicAdmin || {};
       if (!seneca.context.vxg.BasicAdmin.preparing) {
         seneca.context.vxg.BasicAdmin.preparing = true;
-        seneca.use(SenecaEntity).use(S).use(VxgSeneca);
+        seneca.use(SenecaEntity).use(BrowserStore).use(VxgSeneca);
         yield seneca.ready(done);
       }
     });
@@ -12110,12 +12120,12 @@ Please use another name.` : formatMuiErrorMessage(18));
           if ("string" == typeof f2 && f2.match(/[=<>.[()\]]/)) {
             let e3 = f2.match(h), d2 = { jo: "and", o0: "err", n0: NaN, o1: "err", n1: NaN }, g2 = (e4) => false;
             if (null != e3) {
-              let h2 = c.normop(e3[1]) || c.normop(e3[5]), m2 = c.normop(e3[8]) || c.normop(e3[10]), v = p(this, "=" === h2 ? a : "<" === h2 || ")" === h2 ? l : "<=" === h2 || "]" === h2 ? u : ">" === h2 || "(" === h2 ? i : ">=" === h2 || "[" === h2 ? o : s, "f"), x = Number(e3[2]), k = null == e3[9] ? NaN : Number(e3[9]), y2 = e3[7], w = null == y2 ? p(this, n, "f") : "&" === y2.substring(0, 1) || "," === y2.substring(0, 1) ? p(this, t, "f") : p(this, n, "f");
-              ".." === y2 && (w = p(this, t, "f"), v = p(this, s, "f") === v ? p(this, o, "f") : v, m2 = "" === m2 ? "<=" : m2);
+              let h2 = c.normop(e3[1]) || c.normop(e3[5]), m2 = c.normop(e3[8]) || c.normop(e3[10]), v = p(this, "=" === h2 ? a : "<" === h2 || ")" === h2 ? l : "<=" === h2 || "]" === h2 ? u : ">" === h2 || "(" === h2 ? i : ">=" === h2 || "[" === h2 ? o : s, "f"), x = Number(e3[2]), k = null == e3[9] ? NaN : Number(e3[9]), y = e3[7], w = null == y ? p(this, n, "f") : "&" === y.substring(0, 1) || "," === y.substring(0, 1) ? p(this, t, "f") : p(this, n, "f");
+              ".." === y && (w = p(this, t, "f"), v = p(this, s, "f") === v ? p(this, o, "f") : v, m2 = "" === m2 ? "<=" : m2);
               let N = p(this, null == m2 ? r2 : "=" === m2 ? a : "<" === m2 || ")" === m2 ? l : "<=" === m2 || "]" === m2 ? u : ">" === m2 ? i : ">=" === m2 ? o : s, "f");
               if (x === k && ("=" === h2 && null != m2 ? (k = NaN, N = p(this, r2, "f"), v = m2.includes("<") ? p(this, u, "f") : m2.includes(">") ? p(this, o, "f") : m2.includes("=") ? p(this, a, "f") : p(this, s, "f")) : "=" === m2 && null != h2 && (k = NaN, N = p(this, r2, "f"), v = h2.includes("<") ? p(this, u, "f") : h2.includes(">") ? p(this, o, "f") : p(this, s, "f"))), p(this, s, "f") !== v && p(this, r2, "f") === N && (p(this, l, "f") === v || p(this, u, "f") === v ? (N = v, k = x, v = p(this, o, "f"), x = Number.NEGATIVE_INFINITY, w = p(this, t, "f")) : p(this, i, "f") !== v && p(this, o, "f") !== v || (N = p(this, u, "f"), k = Number.POSITIVE_INFINITY, w = p(this, t, "f"))), !isNaN(k) && k < x) {
                 let e4 = N, t2 = k;
-                k = x, x = t2, ".." !== y2 && (N = v, v = e4);
+                k = x, x = t2, ".." !== y && (N = v, v = e4);
               }
               let b = v(x), O = N(k), j = w(b, O);
               return { kind: "interval", fix: f2, meta: d2 = { jo: j.name, o0: b.name, n0: x, o1: O.name, n1: k }, match: g2 = (e4) => {
@@ -13086,7 +13096,7 @@ Please use another name.` : formatMuiErrorMessage(18));
       }, {});
     };
     utility.omap = omap;
-    const S2 = {
+    const S = {
       indent: ". ",
       logindent: "  ",
       space: " ",
@@ -13127,7 +13137,7 @@ Please use another name.` : formatMuiErrorMessage(18));
       make: "make",
       colon: ":"
     };
-    utility.S = S2;
+    utility.S = S;
     class JsonicError extends SyntaxError {
       constructor(code, details, token2, rule, ctx) {
         details = deep({}, details);
@@ -13377,20 +13387,20 @@ Please use another name.` : formatMuiErrorMessage(18));
     }
     utility.escre = escre;
     function deep(base, ...rest) {
-      let base_isf = S2.function === typeof base;
-      let base_iso = null != base && (S2.object === typeof base || base_isf);
+      let base_isf = S.function === typeof base;
+      let base_iso = null != base && (S.object === typeof base || base_isf);
       for (let over of rest) {
-        let over_isf = S2.function === typeof over;
-        let over_iso = null != over && (S2.object === typeof over || over_isf);
+        let over_isf = S.function === typeof over;
+        let over_iso = null != over && (S.object === typeof over || over_isf);
         let over_ctor;
         if (base_iso && over_iso && !over_isf && Array.isArray(base) === Array.isArray(over)) {
           for (let k in over) {
             base[k] = deep(base[k], over[k]);
           }
         } else {
-          base = void 0 === over ? base : over_isf ? over : over_iso ? S2.function === typeof (over_ctor = over.constructor) && S2.Object !== over_ctor.name && S2.Array !== over_ctor.name ? over : deep(Array.isArray(over) ? [] : {}, over) : over;
-          base_isf = S2.function === typeof base;
-          base_iso = null != base && (S2.object === typeof base || base_isf);
+          base = void 0 === over ? base : over_isf ? over : over_iso ? S.function === typeof (over_ctor = over.constructor) && S.Object !== over_ctor.name && S.Array !== over_ctor.name ? over : deep(Array.isArray(over) ? [] : {}, over) : over;
+          base_isf = S.function === typeof base;
+          base_iso = null != base && (S.object === typeof base || base_isf);
         }
       }
       return base;
@@ -13440,7 +13450,7 @@ Please use another name.` : formatMuiErrorMessage(18));
         let cfg = ctx.cfg;
         let meta = ctx.meta;
         let errtxt = errinject(cfg.error[code] || ((_a = details === null || details === void 0 ? void 0 : details.use) === null || _a === void 0 ? void 0 : _a.err) && (details.use.err.code || details.use.err.message) || cfg.error.unknown, code, details, token2, rule, ctx);
-        if (S2.function === typeof cfg.hint) {
+        if (S.function === typeof cfg.hint) {
           cfg.hint = __spreadValues(__spreadValues({}, cfg.hint()), cfg.hint);
         }
         let message = [
@@ -13484,7 +13494,7 @@ Please use another name.` : formatMuiErrorMessage(18));
           if (null != token2.use) {
             details.use = token2.use;
           }
-          throw new JsonicError(token2.why || S2.unexpected, details, token2, rule, ctx);
+          throw new JsonicError(token2.why || S.unexpected, details, token2, rule, ctx);
         }
         return token2;
       };
@@ -13504,7 +13514,7 @@ Please use another name.` : formatMuiErrorMessage(18));
           }
           ctx.log = (...rest) => {
             if (exclude_objects) {
-              let logstr = rest.filter((item) => S2.object != typeof item).map((item) => S2.function == typeof item ? item.name : item).join(S2.gap);
+              let logstr = rest.filter((item) => S.object != typeof item).map((item) => S.function == typeof item ? item.name : item).join(S.gap);
               ctx.cfg.debug.get_console().log(logstr);
             } else {
               ctx.cfg.debug.get_console().dir(rest, { depth: logdepth });
@@ -15191,7 +15201,7 @@ Please use another name.` : formatMuiErrorMessage(18));
       return found ? !!(found == null ? void 0 : found.allow) : false;
     }
   }
-  const _excluded$V = ["defaultProps", "mixins", "overrides", "palette", "props", "styleOverrides"], _excluded2$6 = ["type", "mode"];
+  const _excluded$X = ["defaultProps", "mixins", "overrides", "palette", "props", "styleOverrides"], _excluded2$6 = ["type", "mode"];
   function adaptV4Theme(inputTheme) {
     if (process.env.NODE_ENV !== "production") {
       console.warn(["MUI: adaptV4Theme() is deprecated.", "Follow the upgrade guide on https://mui.com/r/migration-v4#theme."].join("\n"));
@@ -15203,7 +15213,7 @@ Please use another name.` : formatMuiErrorMessage(18));
       palette: palette2 = {},
       props = {},
       styleOverrides = {}
-    } = inputTheme, other = _objectWithoutPropertiesLoose(inputTheme, _excluded$V);
+    } = inputTheme, other = _objectWithoutPropertiesLoose(inputTheme, _excluded$X);
     const theme = _extends({}, other, {
       components: {}
     });
@@ -15398,11 +15408,11 @@ Use unitless line heights instead.` : formatMuiErrorMessage(6));
     return theme;
   }
   "use client";
-  const _excluded$U = ["theme"];
+  const _excluded$W = ["theme"];
   function ThemeProvider(_ref) {
     let {
       theme: themeInput
-    } = _ref, props = _objectWithoutPropertiesLoose(_ref, _excluded$U);
+    } = _ref, props = _objectWithoutPropertiesLoose(_ref, _excluded$W);
     const scopedTheme = themeInput[THEME_ID];
     return /* @__PURE__ */ jsxRuntimeExports.jsx(ThemeProvider$1, _extends({}, props, {
       themeId: scopedTheme ? THEME_ID : void 0,
@@ -15439,7 +15449,7 @@ See https://mui.com/r/migration-v4/#mui-material-styles for more details.` : for
     return !!keys[0].match(/(cssVarPrefix|typography|mixins|breakpoints|direction|transitions)/) || !!keys[0].match(/sxConfig$/) || // ends with sxConfig
     keys[0] === "palette" && !!((_keys$ = keys[1]) != null && _keys$.match(/(mode|contrastThreshold|tonalOffset)/));
   }
-  const _excluded$T = ["colorSchemes", "cssVarPrefix", "shouldSkipGeneratingVar"], _excluded2$5 = ["palette"];
+  const _excluded$V = ["colorSchemes", "cssVarPrefix", "shouldSkipGeneratingVar"], _excluded2$5 = ["palette"];
   const defaultDarkOverlays = [...Array(25)].map((_2, index2) => {
     if (index2 === 0) {
       return void 0;
@@ -15485,7 +15495,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       colorSchemes: colorSchemesInput = {},
       cssVarPrefix = "mui",
       shouldSkipGeneratingVar: shouldSkipGeneratingVar$1 = shouldSkipGeneratingVar
-    } = options, input = _objectWithoutPropertiesLoose(options, _excluded$T);
+    } = options, input = _objectWithoutPropertiesLoose(options, _excluded$V);
     const getCssVar = createGetCssVar(cssVarPrefix);
     const _createThemeWithoutVa = createTheme(_extends({}, input, colorSchemesInput.light && {
       palette: (_colorSchemesInput$li = colorSchemesInput.light) == null ? void 0 : _colorSchemesInput$li.palette
@@ -15865,7 +15875,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     };
   }
   "use client";
-  const _excluded$S = ["elementType", "externalSlotProps", "ownerState", "skipResolvingSlotProps"];
+  const _excluded$U = ["elementType", "externalSlotProps", "ownerState", "skipResolvingSlotProps"];
   function useSlotProps(parameters) {
     var _parameters$additiona;
     const {
@@ -15873,7 +15883,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       externalSlotProps,
       ownerState,
       skipResolvingSlotProps = false
-    } = parameters, rest = _objectWithoutPropertiesLoose(parameters, _excluded$S);
+    } = parameters, rest = _objectWithoutPropertiesLoose(parameters, _excluded$U);
     const resolvedComponentsProps = skipResolvingSlotProps ? {} : resolveComponentProps(externalSlotProps, ownerState);
     const {
       props: mergedProps,
@@ -15887,10 +15897,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }), ownerState);
     return props;
   }
-  const _excluded$R = ["ownerState"];
+  const _excluded$T = ["ownerState"];
   function prepareForSlot(Component) {
     return /* @__PURE__ */ React__namespace.forwardRef(function Slot(props, ref) {
-      const other = _objectWithoutPropertiesLoose(props, _excluded$R);
+      const other = _objectWithoutPropertiesLoose(props, _excluded$T);
       return /* @__PURE__ */ React__namespace.createElement(Component, _extends({}, other, {
         ref
       }));
@@ -16272,7 +16282,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const badgeClasses = generateUtilityClasses("MuiBadge", ["root", "badge", "invisible"]);
   "use client";
-  const _excluded$Q = ["badgeContent", "children", "invisible", "max", "slotProps", "slots", "showZero"];
+  const _excluded$S = ["badgeContent", "children", "invisible", "max", "slotProps", "slots", "showZero"];
   const useUtilityClasses$I = (ownerState) => {
     const {
       invisible
@@ -16291,7 +16301,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       slotProps = {},
       slots = {},
       showZero = false
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$Q);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$S);
     const {
       badgeContent,
       max: max2,
@@ -16541,7 +16551,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   "use client";
   "use client";
-  const _excluded$P = ["action", "children", "disabled", "focusableWhenDisabled", "onFocusVisible", "slotProps", "slots"];
+  const _excluded$R = ["action", "children", "disabled", "focusableWhenDisabled", "onFocusVisible", "slotProps", "slots"];
   const useUtilityClasses$H = (ownerState) => {
     const {
       active,
@@ -16561,7 +16571,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       focusableWhenDisabled = false,
       slotProps = {},
       slots = {}
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$P);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$R);
     const buttonRef = React__namespace.useRef();
     const {
       active,
@@ -17298,7 +17308,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const formControlClasses$1 = generateUtilityClasses("MuiFormControl", ["root", "disabled", "error", "filled", "focused", "required"]);
   "use client";
-  const _excluded$O = ["defaultValue", "children", "disabled", "error", "onChange", "required", "slotProps", "slots", "value"];
+  const _excluded$Q = ["defaultValue", "children", "disabled", "error", "onChange", "required", "slotProps", "slots", "value"];
   function hasValue$1(value) {
     return value != null && !(Array.isArray(value) && value.length === 0) && value !== "";
   }
@@ -17327,7 +17337,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       slotProps = {},
       slots = {},
       value: incomingValue
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$O);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$Q);
     const [value, setValue] = useControlled({
       controlled: incomingValue,
       default: defaultValue,
@@ -17595,7 +17605,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   "use client";
   "use client";
-  const _excluded$N = ["aria-describedby", "aria-label", "aria-labelledby", "autoComplete", "autoFocus", "className", "defaultValue", "disabled", "endAdornment", "error", "id", "multiline", "name", "onClick", "onChange", "onKeyDown", "onKeyUp", "onFocus", "onBlur", "placeholder", "readOnly", "required", "startAdornment", "value", "type", "rows", "slotProps", "slots", "minRows", "maxRows"];
+  const _excluded$P = ["aria-describedby", "aria-label", "aria-labelledby", "autoComplete", "autoFocus", "className", "defaultValue", "disabled", "endAdornment", "error", "id", "multiline", "name", "onClick", "onChange", "onKeyDown", "onKeyUp", "onFocus", "onBlur", "placeholder", "readOnly", "required", "startAdornment", "value", "type", "rows", "slotProps", "slots", "minRows", "maxRows"];
   const useUtilityClasses$F = (ownerState) => {
     const {
       disabled,
@@ -17645,7 +17655,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       slots = {},
       minRows,
       maxRows
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$N);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$P);
     const {
       getRootProps,
       getInputProps,
@@ -18945,18 +18955,18 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     var _ref = isElement$1(element) ? getWindow$1(element) : window, visualViewport = _ref.visualViewport;
     var addVisualOffsets = !isLayoutViewport() && isFixedStrategy;
     var x = (clientRect.left + (addVisualOffsets && visualViewport ? visualViewport.offsetLeft : 0)) / scaleX;
-    var y2 = (clientRect.top + (addVisualOffsets && visualViewport ? visualViewport.offsetTop : 0)) / scaleY;
+    var y = (clientRect.top + (addVisualOffsets && visualViewport ? visualViewport.offsetTop : 0)) / scaleY;
     var width2 = clientRect.width / scaleX;
     var height2 = clientRect.height / scaleY;
     return {
       width: width2,
       height: height2,
-      top: y2,
+      top: y,
       right: x + width2,
-      bottom: y2 + height2,
+      bottom: y + height2,
       left: x,
       x,
-      y: y2
+      y
     };
   }
   function getLayoutRect(element) {
@@ -19092,7 +19102,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     })) : padding2;
     return mergePaddingObject(typeof padding2 !== "number" ? padding2 : expandToHashMap(padding2, basePlacements));
   };
-  function arrow$2(_ref) {
+  function arrow$3(_ref) {
     var _state$modifiersData$;
     var state = _ref.state, name = _ref.name, options = _ref.options;
     var arrowElement = state.elements.arrow;
@@ -19137,11 +19147,11 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }
     state.elements.arrow = arrowElement;
   }
-  const arrow$3 = {
+  const arrow$4 = {
     name: "arrow",
     enabled: true,
     phase: "main",
-    fn: arrow$2,
+    fn: arrow$3,
     effect: effect$1,
     requires: ["popperOffsets"],
     requiresIfExists: ["preventOverflow"]
@@ -19156,26 +19166,26 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     left: "auto"
   };
   function roundOffsetsByDPR(_ref, win) {
-    var x = _ref.x, y2 = _ref.y;
+    var x = _ref.x, y = _ref.y;
     var dpr = win.devicePixelRatio || 1;
     return {
       x: round$1(x * dpr) / dpr || 0,
-      y: round$1(y2 * dpr) / dpr || 0
+      y: round$1(y * dpr) / dpr || 0
     };
   }
   function mapToStyles(_ref2) {
     var _Object$assign2;
     var popper2 = _ref2.popper, popperRect = _ref2.popperRect, placement = _ref2.placement, variation = _ref2.variation, offsets = _ref2.offsets, position2 = _ref2.position, gpuAcceleration = _ref2.gpuAcceleration, adaptive = _ref2.adaptive, roundOffsets = _ref2.roundOffsets, isFixed = _ref2.isFixed;
-    var _offsets$x = offsets.x, x = _offsets$x === void 0 ? 0 : _offsets$x, _offsets$y = offsets.y, y2 = _offsets$y === void 0 ? 0 : _offsets$y;
+    var _offsets$x = offsets.x, x = _offsets$x === void 0 ? 0 : _offsets$x, _offsets$y = offsets.y, y = _offsets$y === void 0 ? 0 : _offsets$y;
     var _ref3 = typeof roundOffsets === "function" ? roundOffsets({
       x,
-      y: y2
+      y
     }) : {
       x,
-      y: y2
+      y
     };
     x = _ref3.x;
-    y2 = _ref3.y;
+    y = _ref3.y;
     var hasX = offsets.hasOwnProperty("x");
     var hasY = offsets.hasOwnProperty("y");
     var sideX = left;
@@ -19199,8 +19209,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           // $FlowFixMe[prop-missing]
           offsetParent[heightProp]
         );
-        y2 -= offsetY - popperRect.height;
-        y2 *= gpuAcceleration ? 1 : -1;
+        y -= offsetY - popperRect.height;
+        y *= gpuAcceleration ? 1 : -1;
       }
       if (placement === left || (placement === top || placement === bottom) && variation === end) {
         sideX = right;
@@ -19217,18 +19227,18 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }, adaptive && unsetSides);
     var _ref4 = roundOffsets === true ? roundOffsetsByDPR({
       x,
-      y: y2
+      y
     }, getWindow$1(popper2)) : {
       x,
-      y: y2
+      y
     };
     x = _ref4.x;
-    y2 = _ref4.y;
+    y = _ref4.y;
     if (gpuAcceleration) {
       var _Object$assign;
-      return Object.assign({}, commonStyles, (_Object$assign = {}, _Object$assign[sideY] = hasY ? "0" : "", _Object$assign[sideX] = hasX ? "0" : "", _Object$assign.transform = (win.devicePixelRatio || 1) <= 1 ? "translate(" + x + "px, " + y2 + "px)" : "translate3d(" + x + "px, " + y2 + "px, 0)", _Object$assign));
+      return Object.assign({}, commonStyles, (_Object$assign = {}, _Object$assign[sideY] = hasY ? "0" : "", _Object$assign[sideX] = hasX ? "0" : "", _Object$assign.transform = (win.devicePixelRatio || 1) <= 1 ? "translate(" + x + "px, " + y + "px)" : "translate3d(" + x + "px, " + y + "px, 0)", _Object$assign));
     }
-    return Object.assign({}, commonStyles, (_Object$assign2 = {}, _Object$assign2[sideY] = hasY ? y2 + "px" : "", _Object$assign2[sideX] = hasX ? x + "px" : "", _Object$assign2.transform = "", _Object$assign2));
+    return Object.assign({}, commonStyles, (_Object$assign2 = {}, _Object$assign2[sideY] = hasY ? y + "px" : "", _Object$assign2[sideX] = hasX ? x + "px" : "", _Object$assign2.transform = "", _Object$assign2));
   }
   function computeStyles(_ref5) {
     var state = _ref5.state, options = _ref5.options;
@@ -19343,21 +19353,21 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     var width2 = html.clientWidth;
     var height2 = html.clientHeight;
     var x = 0;
-    var y2 = 0;
+    var y = 0;
     if (visualViewport) {
       width2 = visualViewport.width;
       height2 = visualViewport.height;
       var layoutViewport = isLayoutViewport();
       if (layoutViewport || !layoutViewport && strategy === "fixed") {
         x = visualViewport.offsetLeft;
-        y2 = visualViewport.offsetTop;
+        y = visualViewport.offsetTop;
       }
     }
     return {
       width: width2,
       height: height2,
       x: x + getWindowScrollBarX$1(element),
-      y: y2
+      y
     };
   }
   function getDocumentRect$1(element) {
@@ -19368,7 +19378,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     var width2 = max$1(html.scrollWidth, html.clientWidth, body ? body.scrollWidth : 0, body ? body.clientWidth : 0);
     var height2 = max$1(html.scrollHeight, html.clientHeight, body ? body.scrollHeight : 0, body ? body.clientHeight : 0);
     var x = -winScroll.scrollLeft + getWindowScrollBarX$1(element);
-    var y2 = -winScroll.scrollTop;
+    var y = -winScroll.scrollTop;
     if (getComputedStyle$1(body || html).direction === "rtl") {
       x += max$1(html.clientWidth, body ? body.clientWidth : 0) - width2;
     }
@@ -19376,7 +19386,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       width: width2,
       height: height2,
       x,
-      y: y2
+      y
     };
   }
   function isScrollParent(element) {
@@ -19583,7 +19593,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     var oppositePlacement = getOppositePlacement$1(placement);
     return [getOppositeVariationPlacement(placement), oppositePlacement, getOppositeVariationPlacement(oppositePlacement)];
   }
-  function flip$1(_ref) {
+  function flip$2(_ref) {
     var state = _ref.state, options = _ref.options, name = _ref.name;
     if (state.modifiersData[name]._skip) {
       return;
@@ -19670,11 +19680,11 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       state.reset = true;
     }
   }
-  const flip$2 = {
+  const flip$3 = {
     name: "flip",
     enabled: true,
     phase: "main",
-    fn: flip$1,
+    fn: flip$2,
     requiresIfExists: ["offset"],
     data: {
       _skip: false
@@ -19699,7 +19709,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       return overflow2[side] >= 0;
     });
   }
-  function hide$1(_ref) {
+  function hide$2(_ref) {
     var state = _ref.state, name = _ref.name;
     var referenceRect = state.rects.reference;
     var popperRect = state.rects.popper;
@@ -19725,12 +19735,12 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       "data-popper-escaped": hasPopperEscaped
     });
   }
-  const hide$2 = {
+  const hide$3 = {
     name: "hide",
     enabled: true,
     phase: "main",
     requiresIfExists: ["preventOverflow"],
-    fn: hide$1
+    fn: hide$2
   };
   function distanceAndSkiddingToXY(placement, rects, offset2) {
     var basePlacement = getBasePlacement(placement);
@@ -19755,10 +19765,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       acc[placement] = distanceAndSkiddingToXY(placement, state.rects, offset2);
       return acc;
     }, {});
-    var _data$state$placement = data[state.placement], x = _data$state$placement.x, y2 = _data$state$placement.y;
+    var _data$state$placement = data[state.placement], x = _data$state$placement.x, y = _data$state$placement.y;
     if (state.modifiersData.popperOffsets != null) {
       state.modifiersData.popperOffsets.x += x;
-      state.modifiersData.popperOffsets.y += y2;
+      state.modifiersData.popperOffsets.y += y;
     }
     state.modifiersData[name] = data;
   }
@@ -20139,7 +20149,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   var createPopper$1 = /* @__PURE__ */ popperGenerator({
     defaultModifiers: defaultModifiers$1
   });
-  var defaultModifiers = [eventListeners, popperOffsets$1, computeStyles$1, applyStyles$1, offset$2, flip$2, preventOverflow$1, arrow$3, hide$2];
+  var defaultModifiers = [eventListeners, popperOffsets$1, computeStyles$1, applyStyles$1, offset$2, flip$3, preventOverflow$1, arrow$4, hide$3];
   var createPopper = /* @__PURE__ */ popperGenerator({
     defaultModifiers
   });
@@ -20219,7 +20229,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const popperClasses = generateUtilityClasses("MuiPopper", ["root"]);
   "use client";
-  const _excluded$M = ["anchorEl", "children", "direction", "disablePortal", "modifiers", "open", "placement", "popperOptions", "popperRef", "slotProps", "slots", "TransitionProps", "ownerState"], _excluded2$4 = ["anchorEl", "children", "container", "direction", "disablePortal", "keepMounted", "modifiers", "open", "placement", "popperOptions", "popperRef", "style", "transition", "slotProps", "slots"];
+  const _excluded$O = ["anchorEl", "children", "direction", "disablePortal", "modifiers", "open", "placement", "popperOptions", "popperRef", "slotProps", "slots", "TransitionProps", "ownerState"], _excluded2$4 = ["anchorEl", "children", "container", "direction", "disablePortal", "keepMounted", "modifiers", "open", "placement", "popperOptions", "popperRef", "style", "transition", "slotProps", "slots"];
   function flipPlacement(placement, direction) {
     if (direction === "ltr") {
       return placement;
@@ -20270,7 +20280,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       TransitionProps
       // @ts-ignore internal logic
       // prevent from spreading to DOM, it can come from the parent component e.g. Select.
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$M);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$O);
     const tooltipRef = React__namespace.useRef(null);
     const ownRef = useForkRef(tooltipRef, forwardedRef);
     const popperRef = React__namespace.useRef(null);
@@ -20561,7 +20571,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   } : void 0;
   "use client";
   "use client";
-  const _excluded$L = ["actions", "anchor", "children", "onItemsChange", "slotProps", "slots"];
+  const _excluded$N = ["actions", "anchor", "children", "onItemsChange", "slotProps", "slots"];
   function useUtilityClasses$D(ownerState) {
     const {
       open
@@ -20581,7 +20591,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       onItemsChange,
       slotProps = {},
       slots = {}
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$L);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$N);
     const {
       contextValue,
       getListboxProps,
@@ -20773,7 +20783,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const menuButtonClasses = generateUtilityClasses("MuiMenuButton", ["root", "active", "disabled", "expanded"]);
   "use client";
-  const _excluded$K = ["children", "disabled", "label", "slots", "slotProps", "focusableWhenDisabled"];
+  const _excluded$M = ["children", "disabled", "label", "slots", "slotProps", "focusableWhenDisabled"];
   const useUtilityClasses$C = (ownerState) => {
     const {
       active,
@@ -20792,7 +20802,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       slots = {},
       slotProps = {},
       focusableWhenDisabled = false
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$K);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$M);
     const {
       getRootProps,
       open,
@@ -21026,7 +21036,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   "use client";
   "use client";
-  const _excluded$J = ["children", "disabled", "label", "id", "slotProps", "slots"];
+  const _excluded$L = ["children", "disabled", "label", "id", "slotProps", "slots"];
   function useUtilityClasses$B(ownerState) {
     const {
       disabled,
@@ -21046,7 +21056,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       id,
       slotProps = {},
       slots = {}
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$J);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$L);
     const {
       getRootProps,
       disabled,
@@ -21142,7 +21152,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const modalClasses$1 = generateUtilityClasses("MuiModal", ["root", "hidden", "backdrop"]);
   "use client";
-  const _excluded$I = ["children", "closeAfterTransition", "container", "disableAutoFocus", "disableEnforceFocus", "disableEscapeKeyDown", "disablePortal", "disableRestoreFocus", "disableScrollLock", "hideBackdrop", "keepMounted", "onBackdropClick", "onClose", "onKeyDown", "open", "onTransitionEnter", "onTransitionExited", "slotProps", "slots"];
+  const _excluded$K = ["children", "closeAfterTransition", "container", "disableAutoFocus", "disableEnforceFocus", "disableEscapeKeyDown", "disablePortal", "disableRestoreFocus", "disableScrollLock", "hideBackdrop", "keepMounted", "onBackdropClick", "onClose", "onKeyDown", "open", "onTransitionEnter", "onTransitionExited", "slotProps", "slots"];
   const useUtilityClasses$A = (ownerState) => {
     const {
       open,
@@ -21172,7 +21182,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       open,
       slotProps = {},
       slots = {}
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$I);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$K);
     const propsWithDefaults = _extends({}, props, {
       closeAfterTransition,
       disableAutoFocus,
@@ -21722,7 +21732,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   "use client";
   "use client";
-  const _excluded$H = ["className", "defaultValue", "disabled", "endAdornment", "error", "id", "max", "min", "onBlur", "onInputChange", "onFocus", "onChange", "placeholder", "required", "readOnly", "shiftMultiplier", "startAdornment", "step", "value", "slotProps", "slots"];
+  const _excluded$J = ["className", "defaultValue", "disabled", "endAdornment", "error", "id", "max", "min", "onBlur", "onInputChange", "onFocus", "onChange", "placeholder", "required", "readOnly", "shiftMultiplier", "startAdornment", "step", "value", "slotProps", "slots"];
   const useUtilityClasses$z = (ownerState) => {
     const {
       disabled,
@@ -21767,7 +21777,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       value,
       slotProps = {},
       slots = {}
-    } = props, rest = _objectWithoutPropertiesLoose(props, _excluded$H);
+    } = props, rest = _objectWithoutPropertiesLoose(props, _excluded$J);
     const {
       getRootProps,
       getInputProps,
@@ -21917,7 +21927,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      */
     onInputChange: PropTypes.func,
     /**
-     * @ignore
+     * The short hint displayed in the `input` before the user enters a value.
      */
     placeholder: PropTypes.string,
     /**
@@ -21976,7 +21986,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const optionGroupClasses = generateUtilityClasses("MuiOptionGroup", ["root", "disabled", "label", "list"]);
   "use client";
-  const _excluded$G = ["disabled", "slotProps", "slots"];
+  const _excluded$I = ["disabled", "slotProps", "slots"];
   function useUtilityClasses$y(disabled) {
     const slots = {
       root: ["root", disabled && "disabled"],
@@ -21990,7 +22000,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       disabled = false,
       slotProps = {},
       slots = {}
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$G);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$I);
     const Root = (slots == null ? void 0 : slots.root) || "li";
     const Label = (slots == null ? void 0 : slots.label) || "span";
     const List2 = (slots == null ? void 0 : slots.list) || "ul";
@@ -22088,6 +22098,13 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     } = useListItem({
       item: value
     });
+    const {
+      getRootProps: getButtonProps,
+      rootRef: buttonRefHandler
+    } = useButton({
+      disabled,
+      focusableWhenDisabled: true
+    });
     const id = useId(idParam);
     const optionRef = React__namespace.useRef(null);
     const selectOption = React__namespace.useMemo(() => ({
@@ -22100,11 +22117,25 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const {
       index: index2
     } = useCompoundItem(value, selectOption);
-    const handleRef = useForkRef(optionRefParam, optionRef);
+    const handleRef = useForkRef(optionRefParam, optionRef, buttonRefHandler);
+    const createHandleKeyDown = (otherHandlers) => (event) => {
+      var _otherHandlers$onKeyD;
+      (_otherHandlers$onKeyD = otherHandlers.onKeyDown) == null || _otherHandlers$onKeyD.call(otherHandlers, event);
+      if (event.defaultMuiPrevented) {
+        return;
+      }
+      if ([" ", "Enter"].includes(event.key)) {
+        event.defaultMuiPrevented = true;
+      }
+    };
+    const getOwnHandlers = (otherHandlers = {}) => ({
+      onKeyDown: createHandleKeyDown(otherHandlers)
+    });
     return {
       getRootProps: (externalProps = {}) => {
         const externalEventHandlers = extractEventHandlers(externalProps);
-        return _extends({}, externalProps, getListItemProps(externalEventHandlers), {
+        const getCombinedRootProps = combineHooksSlotProps(getListItemProps, combineHooksSlotProps(getButtonProps, getOwnHandlers));
+        return _extends({}, externalProps, externalEventHandlers, getCombinedRootProps(externalEventHandlers), {
           id,
           ref: handleRef,
           role: "option",
@@ -22152,7 +22183,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   "use client";
   "use client";
-  const _excluded$F = ["children", "disabled", "label", "slotProps", "slots", "value"];
+  const _excluded$H = ["children", "disabled", "label", "slotProps", "slots", "value"];
   function useUtilityClasses$x(ownerState) {
     const {
       disabled,
@@ -22173,7 +22204,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       slotProps = {},
       slots = {},
       value
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$F);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$H);
     const Root = (_slots$root = slots.root) != null ? _slots$root : "li";
     const optionRef = React__namespace.useRef(null);
     const combinedRef = useForkRef(optionRef, forwardedRef);
@@ -22458,7 +22489,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     });
     let {
       x,
-      y: y2
+      y
     } = computeCoordsFromPlacement(rects, placement, rtl);
     let statefulPlacement = placement;
     let middlewareData = {};
@@ -22475,7 +22506,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         reset
       } = yield fn({
         x,
-        y: y2,
+        y,
         initialPlacement: placement,
         placement: statefulPlacement,
         strategy,
@@ -22488,7 +22519,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         }
       });
       x = nextX != null ? nextX : x;
-      y2 = nextY != null ? nextY : y2;
+      y = nextY != null ? nextY : y;
       middlewareData = __spreadProps(__spreadValues({}, middlewareData), {
         [name]: __spreadValues(__spreadValues({}, middlewareData[name]), data)
       });
@@ -22507,7 +22538,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           }
           ({
             x,
-            y: y2
+            y
           } = computeCoordsFromPlacement(rects, statefulPlacement, rtl));
         }
         i = -1;
@@ -22516,7 +22547,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }
     return {
       x,
-      y: y2,
+      y,
       placement: statefulPlacement,
       strategy,
       middlewareData
@@ -22530,7 +22561,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       }
       const {
         x,
-        y: y2,
+        y,
         platform: platform2,
         rects,
         elements,
@@ -22554,7 +22585,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       }));
       const rect = elementContext === "floating" ? __spreadProps(__spreadValues({}, rects.floating), {
         x,
-        y: y2
+        y
       }) : rects.reference;
       const offsetParent = yield platform2.getOffsetParent == null ? void 0 : platform2.getOffsetParent(elements.floating);
       const offsetScale = (yield platform2.isElement == null ? void 0 : platform2.isElement(offsetParent)) ? (yield platform2.getScale == null ? void 0 : platform2.getScale(offsetParent)) || {
@@ -22577,14 +22608,14 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       };
     });
   }
-  const arrow$1 = (options) => ({
+  const arrow$2 = (options) => ({
     name: "arrow",
     options,
     fn(state) {
       return __async(this, null, function* () {
         const {
           x,
-          y: y2,
+          y,
           placement,
           rects,
           platform: platform2,
@@ -22601,7 +22632,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         const paddingObject = getPaddingObject(padding2);
         const coords = {
           x,
-          y: y2
+          y
         };
         const axis = getAlignmentAxis(placement);
         const length2 = getAxisLength(axis);
@@ -22649,7 +22680,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       return true;
     });
   }
-  const autoPlacement = function(options) {
+  const autoPlacement$1 = function(options) {
     if (options === void 0) {
       options = {};
     }
@@ -22742,7 +22773,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       }
     };
   };
-  const flip = function(options) {
+  const flip$1 = function(options) {
     if (options === void 0) {
       options = {};
     }
@@ -22855,7 +22886,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   function isAnySideFullyClipped(overflow2) {
     return sides.some((side) => overflow2[side] >= 0);
   }
-  const hide = function(options) {
+  const hide$1 = function(options) {
     if (options === void 0) {
       options = {};
     }
@@ -22932,7 +22963,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }
     return groups.map((rect) => rectToClientRect(getBoundingRect(rect)));
   }
-  const inline = function(options) {
+  const inline$1 = function(options) {
     if (options === void 0) {
       options = {};
     }
@@ -22951,15 +22982,15 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           const {
             padding: padding2 = 2,
             x,
-            y: y2
+            y
           } = evaluate(options, state);
           const nativeClientRects = Array.from((yield platform2.getClientRects == null ? void 0 : platform2.getClientRects(elements.reference)) || []);
           const clientRects = getRectsByLine(nativeClientRects);
           const fallback = rectToClientRect(getBoundingRect(nativeClientRects));
           const paddingObject = getPaddingObject(padding2);
           function getBoundingClientRect2() {
-            if (clientRects.length === 2 && clientRects[0].left > clientRects[1].right && x != null && y2 != null) {
-              return clientRects.find((rect) => x > rect.left - paddingObject.left && x < rect.right + paddingObject.right && y2 > rect.top - paddingObject.top && y2 < rect.bottom + paddingObject.bottom) || fallback;
+            if (clientRects.length === 2 && clientRects[0].left > clientRects[1].right && x != null && y != null) {
+              return clientRects.find((rect) => x > rect.left - paddingObject.left && x < rect.right + paddingObject.right && y > rect.top - paddingObject.top && y < rect.bottom + paddingObject.bottom) || fallback;
             }
             if (clientRects.length >= 2) {
               if (getSideAxis(placement) === "y") {
@@ -23076,7 +23107,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           var _middlewareData$offse, _middlewareData$arrow;
           const {
             x,
-            y: y2,
+            y,
             placement,
             middlewareData
           } = state;
@@ -23086,7 +23117,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           }
           return {
             x: x + diffCoords.x,
-            y: y2 + diffCoords.y,
+            y: y + diffCoords.y,
             data: __spreadProps(__spreadValues({}, diffCoords), {
               placement
             })
@@ -23095,7 +23126,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       }
     };
   };
-  const shift = function(options) {
+  const shift$1 = function(options) {
     if (options === void 0) {
       options = {};
     }
@@ -23106,7 +23137,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         return __async(this, null, function* () {
           const {
             x,
-            y: y2,
+            y,
             placement
           } = state;
           const _a2 = evaluate(options, state), {
@@ -23116,11 +23147,11 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
               fn: (_ref) => {
                 let {
                   x: x2,
-                  y: y3
+                  y: y2
                 } = _ref;
                 return {
                   x: x2,
-                  y: y3
+                  y: y2
                 };
               }
             }
@@ -23131,7 +23162,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           ]);
           const coords = {
             x,
-            y: y2
+            y
           };
           const overflow2 = yield detectOverflow(state, detectOverflowOptions);
           const crossAxis = getSideAxis(getSide(placement));
@@ -23159,14 +23190,14 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           return __spreadProps(__spreadValues({}, limitedCoords), {
             data: {
               x: limitedCoords.x - x,
-              y: limitedCoords.y - y2
+              y: limitedCoords.y - y
             }
           });
         });
       }
     };
   };
-  const limitShift = function(options) {
+  const limitShift$1 = function(options) {
     if (options === void 0) {
       options = {};
     }
@@ -23175,7 +23206,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       fn(state) {
         const {
           x,
-          y: y2,
+          y,
           placement,
           rects,
           middlewareData
@@ -23187,7 +23218,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         } = evaluate(options, state);
         const coords = {
           x,
-          y: y2
+          y
         };
         const crossAxis = getSideAxis(placement);
         const mainAxis = getOppositeAxis(crossAxis);
@@ -23230,7 +23261,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       }
     };
   };
-  const size = function(options) {
+  const size$1 = function(options) {
     if (options === void 0) {
       options = {};
     }
@@ -23316,7 +23347,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   function getWindow(node2) {
     var _node$ownerDocument;
-    return (node2 == null ? void 0 : (_node$ownerDocument = node2.ownerDocument) == null ? void 0 : _node$ownerDocument.defaultView) || window;
+    return (node2 == null || (_node$ownerDocument = node2.ownerDocument) == null ? void 0 : _node$ownerDocument.defaultView) || window;
   }
   function getDocumentElement(node2) {
     var _ref;
@@ -23460,16 +23491,16 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       $
     } = getCssDimensions(domElement);
     let x = ($ ? round(rect.width) : rect.width) / width2;
-    let y2 = ($ ? round(rect.height) : rect.height) / height2;
+    let y = ($ ? round(rect.height) : rect.height) / height2;
     if (!x || !Number.isFinite(x)) {
       x = 1;
     }
-    if (!y2 || !Number.isFinite(y2)) {
-      y2 = 1;
+    if (!y || !Number.isFinite(y)) {
+      y = 1;
     }
     return {
       x,
-      y: y2
+      y
     };
   }
   const noOffsets = /* @__PURE__ */ createCoords(0);
@@ -23513,7 +23544,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }
     const visualOffsets = shouldAddVisualOffsets(domElement, isFixedStrategy, offsetParent) ? getVisualOffsets(domElement) : createCoords(0);
     let x = (clientRect.left + visualOffsets.x) / scale.x;
-    let y2 = (clientRect.top + visualOffsets.y) / scale.y;
+    let y = (clientRect.top + visualOffsets.y) / scale.y;
     let width2 = clientRect.width / scale.x;
     let height2 = clientRect.height / scale.y;
     if (domElement) {
@@ -23527,11 +23558,11 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         const left2 = iframeRect.left + (currentIFrame.clientLeft + parseFloat(css.paddingLeft)) * iframeScale.x;
         const top2 = iframeRect.top + (currentIFrame.clientTop + parseFloat(css.paddingTop)) * iframeScale.y;
         x *= iframeScale.x;
-        y2 *= iframeScale.y;
+        y *= iframeScale.y;
         width2 *= iframeScale.x;
         height2 *= iframeScale.y;
         x += left2;
-        y2 += top2;
+        y += top2;
         currentIFrame = getWindow(currentIFrame).frameElement;
       }
     }
@@ -23539,7 +23570,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       width: width2,
       height: height2,
       x,
-      y: y2
+      y
     });
   }
   function convertOffsetParentRelativeRectToViewportRelativeRect(_ref) {
@@ -23590,7 +23621,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const width2 = max(html.scrollWidth, html.clientWidth, body.scrollWidth, body.clientWidth);
     const height2 = max(html.scrollHeight, html.clientHeight, body.scrollHeight, body.clientHeight);
     let x = -scroll.scrollLeft + getWindowScrollBarX(element);
-    const y2 = -scroll.scrollTop;
+    const y = -scroll.scrollTop;
     if (getComputedStyle(body).direction === "rtl") {
       x += max(html.clientWidth, body.clientWidth) - width2;
     }
@@ -23598,7 +23629,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       width: width2,
       height: height2,
       x,
-      y: y2
+      y
     };
   }
   function getViewportRect(element, strategy) {
@@ -23608,21 +23639,21 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     let width2 = html.clientWidth;
     let height2 = html.clientHeight;
     let x = 0;
-    let y2 = 0;
+    let y = 0;
     if (visualViewport) {
       width2 = visualViewport.width;
       height2 = visualViewport.height;
       const visualViewportBased = isWebKit();
       if (!visualViewportBased || visualViewportBased && strategy === "fixed") {
         x = visualViewport.offsetLeft;
-        y2 = visualViewport.offsetTop;
+        y = visualViewport.offsetTop;
       }
     }
     return {
       width: width2,
       height: height2,
       x,
-      y: y2
+      y
     };
   }
   function getInnerBoundingClientRect(element, strategy) {
@@ -23633,12 +23664,12 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const width2 = element.clientWidth * scale.x;
     const height2 = element.clientHeight * scale.y;
     const x = left2 * scale.x;
-    const y2 = top2 * scale.y;
+    const y = top2 * scale.y;
     return {
       width: width2,
       height: height2,
       x,
-      y: y2
+      y
     };
   }
   function getClientRectFromClippingAncestor(element, clippingAncestor, strategy) {
@@ -23717,7 +23748,14 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     };
   }
   function getDimensions(element) {
-    return getCssDimensions(element);
+    const {
+      width: width2,
+      height: height2
+    } = getCssDimensions(element);
+    return {
+      width: width2,
+      height: height2
+    };
   }
   function getRectRelativeToOffsetParent(element, offsetParent, strategy) {
     const isOffsetParentAnElement = isHTMLElement(offsetParent);
@@ -23938,6 +23976,14 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       }
     };
   }
+  const autoPlacement = autoPlacement$1;
+  const shift = shift$1;
+  const flip = flip$1;
+  const size = size$1;
+  const hide = hide$1;
+  const arrow$1 = arrow$2;
+  const inline = inline$1;
+  const limitShift = limitShift$1;
   const computePosition = (reference2, floating, options) => {
     const cache2 = /* @__PURE__ */ new Map();
     const mergedOptions = __spreadValues({
@@ -24167,10 +24213,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         return initialStyles;
       }
       const x = roundByDPR(elements.floating, data.x);
-      const y2 = roundByDPR(elements.floating, data.y);
+      const y = roundByDPR(elements.floating, data.y);
       if (transform) {
         return __spreadValues(__spreadProps(__spreadValues({}, initialStyles), {
-          transform: "translate(" + x + "px, " + y2 + "px)"
+          transform: "translate(" + x + "px, " + y + "px)"
         }), getDPR(elements.floating) >= 1.5 && {
           willChange: "transform"
         });
@@ -24178,7 +24224,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       return {
         position: strategy,
         left: x,
-        top: y2
+        top: y
       };
     }, [strategy, transform, elements.floating, data.x, data.y]);
     return React__namespace.useMemo(() => __spreadProps(__spreadValues({}, data), {
@@ -24192,8 +24238,110 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     return generateUtilityClass("MuiPopup", slot);
   }
   const popupClasses = generateUtilityClasses("MuiPopup", ["root", "open"]);
+  const TransitionContext = /* @__PURE__ */ React__namespace.createContext(null);
   "use client";
-  const _excluded$E = ["anchor", "children", "container", "disablePortal", "keepMounted", "middleware", "offset", "open", "placement", "slotProps", "slots", "strategy", "withTransition"];
+  function useTransitionStateManager() {
+    const transitionContext = React__namespace.useContext(TransitionContext);
+    if (!transitionContext) {
+      throw new Error("Missing transition context");
+    }
+    const {
+      registerTransition,
+      requestedEnter,
+      onEntering,
+      onEntered,
+      onExiting,
+      onExited
+    } = transitionContext;
+    React__namespace.useEffect(() => {
+      return registerTransition();
+    }, [registerTransition]);
+    return {
+      onEntering,
+      onEntered,
+      onExiting,
+      onExited,
+      requestedEnter
+    };
+  }
+  "use client";
+  function useTransitionTrigger(requestEnter) {
+    const [state, dispatch] = React__namespace.useReducer(transitionStateReducer, {
+      elementExited: !requestEnter,
+      inProgress: false
+    });
+    const hasTransition = React__namespace.useRef(false);
+    const handleEntering = React__namespace.useCallback(() => {
+      dispatch("entering");
+    }, []);
+    const handleEntered = React__namespace.useCallback(() => {
+      dispatch("entered");
+    }, []);
+    const handleExiting = React__namespace.useCallback(() => {
+      dispatch("exiting");
+    }, []);
+    const handleExited = React__namespace.useCallback(() => {
+      dispatch("exited");
+    }, []);
+    React__namespace.useEffect(() => {
+      if (!hasTransition.current) {
+        if (requestEnter) {
+          dispatch("entered");
+        } else {
+          dispatch("exited");
+        }
+      }
+    }, [requestEnter]);
+    const registerTransition = React__namespace.useCallback(() => {
+      hasTransition.current = true;
+      return () => {
+        hasTransition.current = false;
+      };
+    }, []);
+    const contextValue = React__namespace.useMemo(() => ({
+      requestedEnter: requestEnter,
+      onEntering: handleEntering,
+      onEntered: handleEntered,
+      onExiting: handleExiting,
+      onExited: handleExited,
+      registerTransition,
+      hasExited: state.elementExited
+    }), [handleEntering, handleEntered, handleExiting, handleExited, requestEnter, registerTransition, state.elementExited]);
+    return {
+      contextValue,
+      hasExited: state.elementExited,
+      transitionInProgress: state.inProgress
+    };
+  }
+  function transitionStateReducer(_2, action) {
+    switch (action) {
+      case "entering":
+        return {
+          elementExited: false,
+          inProgress: true
+        };
+      case "entered":
+        return {
+          elementExited: false,
+          inProgress: false
+        };
+      case "exiting":
+        return {
+          elementExited: false,
+          inProgress: true
+        };
+      case "exited":
+        return {
+          elementExited: true,
+          inProgress: false
+        };
+      default:
+        throw new Error(`Unhandled action: ${action}`);
+    }
+  }
+  const PopupContext = /* @__PURE__ */ React__namespace.createContext(null);
+  "use client";
+  const _excluded$G = ["anchor", "children", "container", "disablePortal", "keepMounted", "middleware", "offset", "open", "placement", "slotProps", "slots", "strategy", "withTransition"];
   function useUtilityClasses$w(ownerState) {
     const {
       open
@@ -24222,7 +24370,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       slots = {},
       strategy = "absolute",
       withTransition = false
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$E);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$G);
     const {
       refs,
       elements,
@@ -24234,19 +24382,12 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         reference: resolveAnchor(anchorProp)
       },
       open,
-      middleware: middleware2 != null ? middleware2 : [offset(offsetProp != null ? offsetProp : 0), flip()],
+      middleware: middleware2 != null ? middleware2 : [offset(offsetProp != null ? offsetProp : 0), flip(), shift()],
       placement,
       strategy,
       whileElementsMounted: !keepMounted ? autoUpdate : void 0
     });
     const handleRef = useForkRef(refs.setFloating, forwardedRef);
-    const [exited, setExited] = React__namespace.useState(true);
-    const handleEntering = () => {
-      setExited(false);
-    };
-    const handleExited = () => {
-      setExited(true);
-    };
     useEnhancedEffect(() => {
       if (keepMounted && open && elements.reference && elements.floating) {
         const cleanup = autoUpdate(elements.reference, elements.floating, update);
@@ -24264,7 +24405,11 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       strategy,
       withTransition
     });
-    const display2 = !open && keepMounted && (!withTransition || exited) ? "none" : void 0;
+    const {
+      contextValue,
+      hasExited: hasTransitionExited
+    } = useTransitionTrigger(open);
+    const visibility2 = keepMounted && hasTransitionExited ? "hidden" : void 0;
     const classes = useUtilityClasses$w(ownerState);
     const Root = (_slots$root = slots == null ? void 0 : slots.root) != null ? _slots$root : "div";
     const rootProps = useSlotProps({
@@ -24277,26 +24422,29 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         ref: handleRef,
         role: "tooltip",
         style: _extends({}, floatingStyles, {
-          display: display2
+          visibility: visibility2
         })
       }
     });
-    const shouldRender = open || keepMounted || withTransition && !exited;
+    const popupContextValue = React__namespace.useMemo(() => ({
+      placement: finalPlacement
+    }), [finalPlacement]);
+    const shouldRender = keepMounted || !hasTransitionExited;
     if (!shouldRender) {
       return null;
     }
-    const childProps = {
-      placement: finalPlacement,
-      requestOpen: open,
-      onExited: handleExited,
-      onEnter: handleEntering
-    };
     return /* @__PURE__ */ jsxRuntimeExports.jsx(Portal, {
       disablePortal,
       container,
-      children: /* @__PURE__ */ jsxRuntimeExports.jsx(Root, _extends({}, rootProps, {
-        children: typeof children === "function" ? children(childProps) : children
-      }))
+      children: /* @__PURE__ */ jsxRuntimeExports.jsx(PopupContext.Provider, {
+        value: popupContextValue,
+        children: /* @__PURE__ */ jsxRuntimeExports.jsx(TransitionContext.Provider, {
+          value: contextValue,
+          children: /* @__PURE__ */ jsxRuntimeExports.jsx(Root, _extends({}, rootProps, {
+            children
+          }))
+        })
+      })
     });
   });
   process.env.NODE_ENV !== "production" ? Popup.propTypes = {
@@ -24451,13 +24599,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
               open: false
             });
           }
-          if (selectionMode === "single" && (action.event.key === "Enter" || action.event.key === " ")) {
-            return _extends({}, newState, {
-              open: false
-            });
-          }
         } else {
-          if (action.event.key === "Enter" || action.event.key === " " || action.event.key === "ArrowDown") {
+          if (action.event.key === "ArrowDown") {
             var _state$selectedValues2;
             return _extends({}, state, {
               open: true,
@@ -24517,9 +24660,6 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       return selectedOption.value;
     }
     return JSON.stringify(selectedOption.value);
-  }
-  function preventDefault(event) {
-    event.preventDefault();
   }
   function useSelect(props) {
     const {
@@ -24640,6 +24780,13 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         }
       }
     }, [onOpenChange]);
+    const getItemDomElement = React__namespace.useCallback((itemId) => {
+      var _subitems$get$ref$cur, _subitems$get;
+      if (itemId == null) {
+        return null;
+      }
+      return (_subitems$get$ref$cur = (_subitems$get = subitems.get(itemId)) == null ? void 0 : _subitems$get.ref.current) != null ? _subitems$get$ref$cur : null;
+    }, [subitems]);
     const useListParameters = {
       getInitialState: () => {
         var _defaultValue;
@@ -24651,9 +24798,11 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       },
       getItemId,
       controlledProps: controlledState,
+      focusManagement: "DOM",
+      getItemDomElement,
       itemComparer: areOptionsEqual,
       isItemDisabled,
-      rootRef: mergedButtonRef,
+      rootRef: handleListboxRef,
       onChange: handleSelectionChange,
       onHighlightChange: handleHighlightChange,
       onStateChange: handleStateChange,
@@ -24677,23 +24826,18 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       },
       rootRef: mergedListRootRef
     } = useList(useListParameters);
-    const createHandleButtonMouseDown = (externalEventHandlers) => (event) => {
-      var _externalEventHandler;
-      externalEventHandlers == null || (_externalEventHandler = externalEventHandlers.onMouseDown) == null || _externalEventHandler.call(externalEventHandlers, event);
-      if (!event.defaultMuiPrevented) {
-        const action = {
-          type: SelectActionTypes.buttonClick,
-          event
-        };
-        dispatch(action);
-      }
-    };
+    const isInitiallyOpen = React__namespace.useRef(open);
     useEnhancedEffect(() => {
-      if (highlightedOption != null) {
+      if (open && highlightedOption !== null) {
         var _getOptionByValue;
         const optionRef = (_getOptionByValue = getOptionByValue(highlightedOption)) == null ? void 0 : _getOptionByValue.ref;
         if (!listboxRef.current || !(optionRef != null && optionRef.current)) {
           return;
+        }
+        if (!isInitiallyOpen.current) {
+          optionRef.current.focus({
+            preventScroll: true
+          });
         }
         const listboxClientRect = listboxRef.current.getBoundingClientRect();
         const optionClientRect = optionRef.current.getBoundingClientRect();
@@ -24703,12 +24847,40 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           listboxRef.current.scrollTop += optionClientRect.bottom - listboxClientRect.bottom;
         }
       }
-    }, [highlightedOption, getOptionByValue]);
+    }, [open, highlightedOption, getOptionByValue]);
     const getOptionMetadata = React__namespace.useCallback((optionValue) => getOptionByValue(optionValue), [getOptionByValue]);
+    const createHandleButtonClick = (externalEventHandlers) => (event) => {
+      var _externalEventHandler;
+      externalEventHandlers == null || (_externalEventHandler = externalEventHandlers.onClick) == null || _externalEventHandler.call(externalEventHandlers, event);
+      if (!event.defaultMuiPrevented) {
+        const action = {
+          type: SelectActionTypes.buttonClick,
+          event
+        };
+        dispatch(action);
+      }
+    };
+    const createHandleButtonKeyDown = (otherHandlers) => (event) => {
+      var _otherHandlers$onKeyD;
+      (_otherHandlers$onKeyD = otherHandlers.onKeyDown) == null || _otherHandlers$onKeyD.call(otherHandlers, event);
+      if (event.defaultMuiPrevented) {
+        return;
+      }
+      if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+        event.preventDefault();
+        dispatch({
+          type: ListActionTypes.keyDown,
+          key: event.key,
+          event
+        });
+      }
+    };
+    const getButtonOwnRootProps = (otherHandlers = {}) => ({
+      onClick: createHandleButtonClick(otherHandlers),
+      onKeyDown: createHandleButtonKeyDown(otherHandlers)
+    });
     const getSelectTriggerProps = (otherHandlers = {}) => {
-      return _extends({}, otherHandlers, {
-        onMouseDown: createHandleButtonMouseDown(otherHandlers),
-        ref: mergedListRootRef,
+      return _extends({}, otherHandlers, getButtonOwnRootProps(otherHandlers), {
         role: "combobox",
         "aria-expanded": open,
         "aria-controls": listboxId
@@ -24716,19 +24888,30 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     };
     const getButtonProps = (externalProps = {}) => {
       const externalEventHandlers = extractEventHandlers(externalProps);
-      const listboxAndButtonProps = combineHooksSlotProps(getButtonRootProps, getListboxRootProps);
-      const combinedProps = combineHooksSlotProps(listboxAndButtonProps, getSelectTriggerProps);
+      const combinedProps = combineHooksSlotProps(getButtonRootProps, getSelectTriggerProps);
       return _extends({}, externalProps, combinedProps(externalEventHandlers));
     };
+    const createListboxHandleBlur = (otherHandlers) => (event) => {
+      var _otherHandlers$onBlur, _listboxRef$current;
+      (_otherHandlers$onBlur = otherHandlers.onBlur) == null || _otherHandlers$onBlur.call(otherHandlers, event);
+      if (event.defaultMuiPrevented) {
+        return;
+      }
+      if ((_listboxRef$current = listboxRef.current) != null && _listboxRef$current.contains(event.relatedTarget) || event.relatedTarget === buttonRef.current) {
+        event.defaultMuiPrevented = true;
+      }
+    };
+    const getOwnListboxHandlers = (otherHandlers = {}) => ({
+      onBlur: createListboxHandleBlur(otherHandlers)
+    });
     const getListboxProps = (externalProps = {}) => {
-      return _extends({}, externalProps, {
+      const externalEventHandlers = extractEventHandlers(externalProps);
+      const getCombinedRootProps = combineHooksSlotProps(getOwnListboxHandlers, getListboxRootProps);
+      return _extends({
         id: listboxId,
         role: "listbox",
-        "aria-multiselectable": multiple ? "true" : void 0,
-        ref: handleListboxRef,
-        onMouseDown: preventDefault
-        // to prevent the button from losing focus when interacting with the listbox
-      });
+        "aria-multiselectable": multiple ? "true" : void 0
+      }, externalProps, getCombinedRootProps(externalEventHandlers));
     };
     React__namespace.useDebugValue({
       selectedOptions,
@@ -24837,7 +25020,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   const selectClasses$1 = generateUtilityClasses("MuiSelect", ["root", "button", "listbox", "popper", "active", "expanded", "disabled", "focusVisible"]);
   "use client";
   var _span$4;
-  const _excluded$D = ["areOptionsEqual", "autoComplete", "autoFocus", "children", "defaultValue", "defaultListboxOpen", "disabled", "getSerializedValue", "listboxId", "listboxOpen", "multiple", "name", "required", "onChange", "onListboxOpenChange", "getOptionAsString", "renderValue", "placeholder", "slotProps", "slots", "value"];
+  const _excluded$F = ["areOptionsEqual", "autoComplete", "autoFocus", "children", "defaultValue", "defaultListboxOpen", "disabled", "getSerializedValue", "listboxId", "listboxOpen", "multiple", "name", "required", "onChange", "onListboxOpenChange", "getOptionAsString", "renderValue", "placeholder", "slotProps", "slots", "value"];
   function defaultRenderValue(selectedOptions) {
     var _selectedOptions$labe;
     if (Array.isArray(selectedOptions)) {
@@ -24885,7 +25068,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       slotProps = {},
       slots = {},
       value: valueProp
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$D);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$F);
     const renderValue = renderValueProp != null ? renderValueProp : defaultRenderValue;
     const [buttonDefined, setButtonDefined] = React__namespace.useState(false);
     const buttonRef = React__namespace.useRef(null);
@@ -25080,7 +25263,6 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     multiple: PropTypes.bool,
     /**
      * Name of the element. For example used by the server to identify the fields in form submits.
-     * If the name is provided, the component will render a hidden input element that can be submitted to a server.
      */
     name: PropTypes.string,
     /**
@@ -25552,8 +25734,12 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       }
       moveCount.current = 0;
       const doc = ownerDocument(sliderRef.current);
-      doc.addEventListener("touchmove", handleTouchMove);
-      doc.addEventListener("touchend", handleTouchEnd);
+      doc.addEventListener("touchmove", handleTouchMove, {
+        passive: true
+      });
+      doc.addEventListener("touchend", handleTouchEnd, {
+        passive: true
+      });
     });
     const stopListening = React__namespace.useCallback(() => {
       const doc = ownerDocument(sliderRef.current);
@@ -25570,9 +25756,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         passive: doesSupportTouchActionNone()
       });
       return () => {
-        slider.removeEventListener("touchstart", handleTouchStart, {
-          passive: doesSupportTouchActionNone()
-        });
+        slider.removeEventListener("touchstart", handleTouchStart);
         stopListening();
       };
     }, [stopListening, handleTouchStart]);
@@ -25614,7 +25798,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       }
       moveCount.current = 0;
       const doc = ownerDocument(sliderRef.current);
-      doc.addEventListener("mousemove", handleTouchMove);
+      doc.addEventListener("mousemove", handleTouchMove, {
+        passive: true
+      });
       doc.addEventListener("mouseup", handleTouchEnd);
     };
     const trackOffset = valueToPercent(range ? values2[0] : min2, min2, max2);
@@ -25705,7 +25891,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   "use client";
   "use client";
-  const _excluded$C = ["aria-label", "aria-valuetext", "aria-labelledby", "className", "disableSwap", "disabled", "getAriaLabel", "getAriaValueText", "marks", "max", "min", "name", "onChange", "onChangeCommitted", "orientation", "scale", "step", "tabIndex", "track", "value", "valueLabelFormat", "isRtl", "defaultValue", "slotProps", "slots"];
+  const _excluded$E = ["aria-label", "aria-valuetext", "aria-labelledby", "className", "disableSwap", "disabled", "getAriaLabel", "getAriaValueText", "marks", "max", "min", "name", "onChange", "onChangeCommitted", "orientation", "scale", "step", "tabIndex", "track", "value", "valueLabelFormat", "isRtl", "defaultValue", "slotProps", "slots"];
   function Identity(x) {
     return x;
   }
@@ -25756,7 +25942,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       defaultValue,
       slotProps = {},
       slots = {}
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$C);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$E);
     const partialOwnerState = _extends({}, props, {
       marks: marksProp,
       disabled,
@@ -26220,7 +26406,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   "use client";
   "use client";
-  const _excluded$B = ["autoHideDuration", "children", "disableWindowBlurListener", "exited", "onBlur", "onClose", "onFocus", "onMouseEnter", "onMouseLeave", "open", "resumeHideDuration", "slotProps", "slots"];
+  const _excluded$D = ["autoHideDuration", "children", "disableWindowBlurListener", "exited", "onBlur", "onClose", "onFocus", "onMouseEnter", "onMouseLeave", "open", "resumeHideDuration", "slotProps", "slots"];
   const useUtilityClasses$t = () => {
     const slots = {
       root: ["root"]
@@ -26238,7 +26424,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       resumeHideDuration,
       slotProps = {},
       slots = {}
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$B);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$D);
     const classes = useUtilityClasses$t();
     const {
       getRootProps,
@@ -26447,7 +26633,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const switchClasses = generateUtilityClasses("MuiSwitch", ["root", "input", "track", "thumb", "checked", "disabled", "focusVisible", "readOnly"]);
   "use client";
-  const _excluded$A = ["checked", "defaultChecked", "disabled", "onBlur", "onChange", "onFocus", "onFocusVisible", "readOnly", "required", "slotProps", "slots"];
+  const _excluded$C = ["checked", "defaultChecked", "disabled", "onBlur", "onChange", "onFocus", "onFocusVisible", "readOnly", "required", "slotProps", "slots"];
   const useUtilityClasses$s = (ownerState) => {
     const {
       checked,
@@ -26468,7 +26654,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const {
       slotProps = {},
       slots = {}
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$A);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$C);
     const {
       getInputProps,
       checked,
@@ -26593,7 +26779,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   } : void 0;
   "use client";
   "use client";
-  const _excluded$z = ["count", "getItemAriaLabel", "onPageChange", "page", "rowsPerPage", "showFirstButton", "showLastButton", "direction", "ownerState", "slotProps", "slots"];
+  const _excluded$B = ["count", "getItemAriaLabel", "onPageChange", "page", "rowsPerPage", "showFirstButton", "showLastButton", "direction", "ownerState", "slotProps", "slots"];
   var _span$3, _span2, _span3, _span4;
   function LastPageIconDefault() {
     return _span$3 || (_span$3 = /* @__PURE__ */ jsxRuntimeExports.jsx("span", {
@@ -26631,7 +26817,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       direction,
       slotProps = {},
       slots = {}
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$z);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$B);
     const ownerState = props;
     const handleFirstPageButtonClick = (event) => {
       onPageChange(event, 0);
@@ -26724,7 +26910,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const tablePaginationClasses = generateUtilityClasses("MuiTablePagination", ["root", "toolbar", "spacer", "selectLabel", "selectRoot", "select", "selectIcon", "input", "menuItem", "displayedRows", "actions"]);
   "use client";
-  const _excluded$y = ["colSpan", "count", "getItemAriaLabel", "labelDisplayedRows", "labelId", "labelRowsPerPage", "onPageChange", "onRowsPerPageChange", "page", "rowsPerPage", "rowsPerPageOptions", "selectId", "slotProps", "slots"];
+  const _excluded$A = ["colSpan", "count", "getItemAriaLabel", "labelDisplayedRows", "labelId", "labelRowsPerPage", "onPageChange", "onRowsPerPageChange", "page", "rowsPerPage", "rowsPerPageOptions", "selectId", "slotProps", "slots"];
   function defaultLabelDisplayedRows({
     from: from2,
     to,
@@ -26767,7 +26953,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       selectId: selectIdProp,
       slotProps = {},
       slots = {}
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$y);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$A);
     const ownerState = props;
     const classes = useUtilityClasses$r();
     let colSpan;
@@ -27124,7 +27310,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   "use client";
   "use client";
-  const _excluded$x = ["children", "value", "defaultValue", "orientation", "direction", "onChange", "selectionFollowsFocus", "slotProps", "slots"];
+  const _excluded$z = ["children", "value", "defaultValue", "orientation", "direction", "onChange", "selectionFollowsFocus", "slotProps", "slots"];
   const useUtilityClasses$q = (ownerState) => {
     const {
       orientation
@@ -27142,7 +27328,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       direction = "ltr",
       slotProps = {},
       slots = {}
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$x);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$z);
     const ownerState = _extends({}, props, {
       orientation,
       direction
@@ -27273,7 +27459,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     };
   }
   "use client";
-  const _excluded$w = ["children", "value", "slotProps", "slots"];
+  const _excluded$y = ["children", "value", "slotProps", "slots"];
   const useUtilityClasses$p = (ownerState) => {
     const {
       hidden
@@ -27289,7 +27475,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       children,
       slotProps = {},
       slots = {}
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$w);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$y);
     const {
       hidden,
       getRootProps
@@ -27528,7 +27714,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   "use client";
   "use client";
-  const _excluded$v = ["children", "slotProps", "slots"];
+  const _excluded$x = ["children", "slotProps", "slots"];
   const useUtilityClasses$o = (ownerState) => {
     const {
       orientation
@@ -27544,7 +27730,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       children,
       slotProps = {},
       slots = {}
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$v);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$x);
     const {
       isRtl,
       orientation,
@@ -27683,7 +27869,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   "use client";
   "use client";
-  const _excluded$u = ["action", "children", "disabled", "onChange", "onClick", "onFocus", "slotProps", "slots", "value"];
+  const _excluded$w = ["action", "children", "disabled", "onChange", "onClick", "onFocus", "slotProps", "slots", "value"];
   const useUtilityClasses$n = (ownerState) => {
     const {
       selected,
@@ -27702,7 +27888,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       slotProps = {},
       slots = {},
       value
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$u);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$w);
     const tabRef = React__namespace.useRef();
     const handleRef = useForkRef(tabRef, forwardedRef);
     const {
@@ -27785,7 +27971,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   } : void 0;
   "use client";
   "use client";
-  const _excluded$t = ["onChange", "maxRows", "minRows", "style", "value"];
+  const _excluded$v = ["onChange", "maxRows", "minRows", "style", "value"];
   function getStyleValue(value) {
     return parseInt(value, 10) || 0;
   }
@@ -27814,7 +28000,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       minRows = 1,
       style: style2,
       value
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$t);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$v);
     const {
       current: isControlled
     } = React__namespace.useRef(value != null);
@@ -28002,6 +28188,118 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     value: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.string), PropTypes.number, PropTypes.string])
   } : void 0;
   "use client";
+  "use client";
+  const _excluded$u = ["children", "className", "enterAnimationName", "enterClassName", "exitAnimationName", "exitClassName"];
+  function CssAnimation(props) {
+    const {
+      children,
+      className,
+      enterAnimationName,
+      enterClassName,
+      exitAnimationName,
+      exitClassName
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$u);
+    const {
+      requestedEnter,
+      onEntering,
+      onEntered,
+      onExiting,
+      onExited
+    } = useTransitionStateManager();
+    const hasExited = React__namespace.useRef(true);
+    React__namespace.useEffect(() => {
+      if (requestedEnter && hasExited.current) {
+        onEntering();
+        hasExited.current = false;
+      } else if (!requestedEnter && !hasExited.current) {
+        onExiting();
+      }
+    }, [onEntering, onExiting, requestedEnter]);
+    const handleAnimationEnd = React__namespace.useCallback((event) => {
+      if (event.animationName === exitAnimationName) {
+        onExited();
+        hasExited.current = true;
+      } else if (event.animationName === enterAnimationName) {
+        onEntered();
+        hasExited.current = false;
+      }
+    }, [onExited, onEntered, exitAnimationName, enterAnimationName]);
+    return /* @__PURE__ */ jsxRuntimeExports.jsx("div", _extends({
+      onAnimationEnd: handleAnimationEnd,
+      className: clsx(className, requestedEnter ? enterClassName : exitClassName)
+    }, other, {
+      children
+    }));
+  }
+  process.env.NODE_ENV !== "production" ? CssAnimation.propTypes = {
+    children: PropTypes.node,
+    className: PropTypes.string,
+    enterAnimationName: PropTypes.string,
+    enterClassName: PropTypes.string,
+    exitAnimationName: PropTypes.string,
+    exitClassName: PropTypes.string
+  } : void 0;
+  "use client";
+  const _excluded$t = ["children", "className", "lastTransitionedPropertyOnEnter", "lastTransitionedPropertyOnExit", "enterClassName", "exitClassName"];
+  function CssTransition(props) {
+    const {
+      children,
+      className,
+      lastTransitionedPropertyOnEnter,
+      lastTransitionedPropertyOnExit,
+      enterClassName,
+      exitClassName
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$t);
+    const {
+      requestedEnter,
+      onEntering,
+      onEntered,
+      onExiting,
+      onExited
+    } = useTransitionStateManager();
+    const [isEntering, setIsEntering] = React__namespace.useState(!requestedEnter);
+    React__namespace.useEffect(() => {
+      if (requestedEnter) {
+        requestAnimationFrame(() => {
+          setIsEntering(true);
+        });
+      } else {
+        requestAnimationFrame(() => {
+          setIsEntering(false);
+        });
+      }
+    });
+    React__namespace.useEffect(() => {
+      if (requestedEnter) {
+        onEntering();
+      } else {
+        onExiting();
+      }
+    }, [requestedEnter, onEntering, onExiting]);
+    const handleTransitionEnd = React__namespace.useCallback((event) => {
+      if (requestedEnter) {
+        if (lastTransitionedPropertyOnEnter == null || event.propertyName === lastTransitionedPropertyOnEnter) {
+          onEntered();
+        }
+      } else if (lastTransitionedPropertyOnExit == null || event.propertyName === lastTransitionedPropertyOnExit) {
+        onExited();
+      }
+    }, [onExited, onEntered, requestedEnter, lastTransitionedPropertyOnEnter, lastTransitionedPropertyOnExit]);
+    return /* @__PURE__ */ jsxRuntimeExports.jsx("div", _extends({
+      onTransitionEnd: handleTransitionEnd,
+      className: clsx(className, isEntering ? enterClassName : exitClassName)
+    }, other, {
+      children
+    }));
+  }
+  process.env.NODE_ENV !== "production" ? CssTransition.propTypes = {
+    children: PropTypes.node,
+    className: PropTypes.string,
+    enterClassName: PropTypes.string,
+    exitClassName: PropTypes.string,
+    lastTransitionedPropertyOnEnter: PropTypes.string,
+    lastTransitionedPropertyOnExit: PropTypes.string
+  } : void 0;
   "use client";
   function stripDiacritics(string) {
     return typeof string.normalize !== "undefined" ? string.normalize("NFD").replace(/[\u0300-\u036f]/g, "") : string;
@@ -28921,7 +29219,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   "use client";
   "use client";
   /**
-   * @mui/base v5.0.0-beta.28
+   * @mui/base v5.0.0-beta.30
    *
    * @license MIT
    * This source code is licensed under the MIT license found in the
@@ -32164,7 +32462,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }, buttonProps, other, {
       children: [children, enableTouchRipple ? (
         /* TouchRipple is only needed client-side, x2 boost on the server. */
-        jsxRuntimeExports.jsx(TouchRipple, _extends({
+        /* @__PURE__ */ jsxRuntimeExports.jsx(TouchRipple, _extends({
           ref: handleRippleRef,
           center: centerRipple
         }, TouchRippleProps))
@@ -33466,7 +33764,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         marginTop: 16
       }
     }, !ownerState.disableUnderline && {
-      "&:after": {
+      "&::after": {
         borderBottom: `2px solid ${(theme.vars || theme).palette[ownerState.color].main}`,
         left: 0,
         bottom: 0,
@@ -33488,11 +33786,11 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         transform: "scaleX(1) translateX(0)"
       },
       [`&.${inputClasses.error}`]: {
-        "&:before, &:after": {
+        "&::before, &::after": {
           borderBottomColor: (theme.vars || theme).palette.error.main
         }
       },
-      "&:before": {
+      "&::before": {
         borderBottom: `1px solid ${bottomLineColor}`,
         left: 0,
         bottom: 0,
@@ -33816,7 +34114,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         backgroundColor: theme.vars ? theme.vars.palette.FilledInput.disabledBg : disabledBackground
       }
     }, !ownerState.disableUnderline && {
-      "&:after": {
+      "&::after": {
         borderBottom: `2px solid ${(_palette = (theme.vars || theme).palette[ownerState.color || "primary"]) == null ? void 0 : _palette.main}`,
         left: 0,
         bottom: 0,
@@ -33838,11 +34136,11 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         transform: "scaleX(1) translateX(0)"
       },
       [`&.${filledInputClasses.error}`]: {
-        "&:before, &:after": {
+        "&::before, &::after": {
           borderBottomColor: (theme.vars || theme).palette.error.main
         }
       },
-      "&:before": {
+      "&::before": {
         borderBottom: `1px solid ${theme.vars ? `rgba(${theme.vars.palette.common.onBackgroundChannel} / ${theme.vars.opacity.inputUnderline})` : bottomLineColor}`,
         left: 0,
         bottom: 0,
