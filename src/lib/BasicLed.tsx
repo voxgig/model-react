@@ -194,62 +194,13 @@ function BasicLed (props: any) {
         )
       // TODO: merge this case with 'navbutton'
       case 'button':
-        if (field.action === 'approve') {
-          return (
-            <BasicButton
-              type='submit'
-              variant='outlined'
-              size='medium'
-              disabled={
-                row.original.approvedAmount === row.original.amountOrdered
-              }
-              onClick={async () => {
-                // make a copy of data
-                let dataCopy: any = []
-                for (let item in data) {
-                  let copy = { ...data[item] }
-                  dataCopy.push(copy)
-                }
-
-                // find current fox/supplierorder
-                entityId = row.original.id
-                let supplier = dataCopy.find((entity: any) => {
-                  return entity.id === entityId
-                })
-
-                // update entity approve amount in dataCopy
-                supplier.approvedAmount = supplier.amountOrdered
-
-                // call approve function
-                const callbacks = custom.BasicLed
-                const approve = callbacks.approve
-                const approved = await approve(supplier, seneca)
-                if (approved) {
-                  console.log('approved?: ', approved)
-                  // update the data table
-                  setData(dataCopy)
-                } else {
-                  console.log('approving failed: ', approved)
-                }
-              }}
-            >
-              {field.actionLabel}
-            </BasicButton>
-          )
-        } else {
-          return (
-            <Box
-              sx={{
-                display: 'flex',
-                justifyContent: field.justifyContent || 'center'
-              }}
-            >
-              <BasicButton type='submit' variant='outlined' size='medium'>
-                {field.actionLabel}
-              </BasicButton>
-            </Box>
-          )
-        }
+        const approveButton = ctx().cmp[field.action]
+        return approveButton({
+          field: field,
+          row: row,
+          data: data,
+          seneca: seneca
+        })
       // TODO: remove this case
       case 'action':
         entityId = row.original.id

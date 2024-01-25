@@ -49373,50 +49373,13 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
             }
           );
         case "button":
-          if (field.action === "approve") {
-            return /* @__PURE__ */ jsxRuntimeExports.jsx(
-              BasicButton,
-              {
-                type: "submit",
-                variant: "outlined",
-                size: "medium",
-                disabled: row.original.approvedAmount === row.original.amountOrdered,
-                onClick: () => __async(this, null, function* () {
-                  let dataCopy = [];
-                  for (let item2 in data) {
-                    let copy2 = __spreadValues({}, data[item2]);
-                    dataCopy.push(copy2);
-                  }
-                  entityId = row.original.id;
-                  let supplier = dataCopy.find((entity) => {
-                    return entity.id === entityId;
-                  });
-                  supplier.approvedAmount = supplier.amountOrdered;
-                  const callbacks = custom.BasicLed;
-                  const approve = callbacks.approve;
-                  const approved = yield approve(supplier, seneca);
-                  if (approved) {
-                    console.log("approved?: ", approved);
-                    setData(dataCopy);
-                  } else {
-                    console.log("approving failed: ", approved);
-                  }
-                }),
-                children: field.actionLabel
-              }
-            );
-          } else {
-            return /* @__PURE__ */ jsxRuntimeExports.jsx(
-              material.Box,
-              {
-                sx: {
-                  display: "flex",
-                  justifyContent: field.justifyContent || "center"
-                },
-                children: /* @__PURE__ */ jsxRuntimeExports.jsx(BasicButton, { type: "submit", variant: "outlined", size: "medium", children: field.actionLabel })
-              }
-            );
-          }
+          const approveButton = ctx().cmp[field.action];
+          return approveButton({
+            field,
+            row,
+            data,
+            seneca
+          });
         case "action":
           entityId = row.original.id;
           action2 = field.action;
