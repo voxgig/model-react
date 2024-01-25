@@ -86,6 +86,7 @@ function BasicLed (props: any) {
       if ('fox/bom' === canon) {
         const filters = cmpState.AssignSuppliersHead.filters
         const supplierId = filters.supplier.selected
+        const ceid = filters.ceid.selected
         const toolId = filters.tool.selected
         const startDate = filters.prefacStart.selected
         const endDate = filters.prefacEnd.selected
@@ -93,14 +94,16 @@ function BasicLed (props: any) {
         const filteredData = entlist.filter((item: any) => {
           const isSupplierMatch =
             supplierId === '' || item.suppliers.includes(supplierId)
-          const isToolMatch = toolId === '' || item.ceids.includes(toolId)
+          const isCEIDMatch = ceid === '' || item.ceids.includes(ceid)
+          const isToolIdMatch = toolId === '' || item.tools.includes(toolId)
           const isDateRangeMatch =
             (startDate === '' || item.earlirestPrefac >= startDate) &&
             (endDate === '' || item.earlirestPrefac <= endDate)
           const unallocatedMatch = !unallocatedOnly || item.qtyasn < 100
           return (
             isSupplierMatch &&
-            isToolMatch &&
+            isCEIDMatch &&
+            isToolIdMatch &&
             isDateRangeMatch &&
             unallocatedMatch
           )

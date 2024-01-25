@@ -3180,7 +3180,6 @@ var __async = (__this, __arguments, generator) => {
     });
     return React__namespace.useRef((...args) => (
       // @ts-expect-error hide `this`
-      // tslint:disable-next-line:ban-comma-operator
       (0, ref.current)(...args)
     )).current;
   }
@@ -14504,7 +14503,7 @@ var __async = (__this, __arguments, generator) => {
   } : void 0;
   "use client";
   /**
-   * @mui/styled-engine v5.14.20
+   * @mui/styled-engine v5.15.2
    *
    * @license MIT
    * This source code is licensed under the MIT license found in the
@@ -15878,17 +15877,18 @@ var __async = (__this, __arguments, generator) => {
     if ("string" == typeof e || "number" == typeof e)
       n += e;
     else if ("object" == typeof e)
-      if (Array.isArray(e))
-        for (t = 0; t < e.length; t++)
+      if (Array.isArray(e)) {
+        var o = e.length;
+        for (t = 0; t < o; t++)
           e[t] && (f = r(e[t])) && (n && (n += " "), n += f);
-      else
-        for (t in e)
-          e[t] && (n && (n += " "), n += t);
+      } else
+        for (f in e)
+          e[f] && (n && (n += " "), n += f);
     return n;
   }
   function clsx() {
-    for (var e, t, f = 0, n = ""; f < arguments.length; )
-      (e = arguments[f++]) && (t = r(e)) && (n && (n += " "), n += t);
+    for (var e, t, f = 0, n = "", o = arguments.length; f < o; f++)
+      (e = arguments[f]) && (t = r(e)) && (n && (n += " "), n += t);
     return n;
   }
   "use client";
@@ -15979,10 +15979,17 @@ var __async = (__this, __arguments, generator) => {
     return null;
   };
   const transformVariants = (variants) => {
+    let numOfCallbacks = 0;
     const variantsStyles = {};
     if (variants) {
       variants.forEach((definition) => {
-        const key = propsToClassKey(definition.props);
+        let key = "";
+        if (typeof definition.props === "function") {
+          key = `callback${numOfCallbacks}`;
+          numOfCallbacks += 1;
+        } else {
+          key = propsToClassKey(definition.props);
+        }
         variantsStyles[key] = definition.style;
       });
     }
@@ -16000,16 +16007,29 @@ var __async = (__this, __arguments, generator) => {
       ownerState = {}
     } = props;
     const variantsStyles = [];
+    let numOfCallbacks = 0;
     if (variants) {
       variants.forEach((variant) => {
         let isMatch = true;
-        Object.keys(variant.props).forEach((key) => {
-          if (ownerState[key] !== variant.props[key] && props[key] !== variant.props[key]) {
-            isMatch = false;
-          }
-        });
+        if (typeof variant.props === "function") {
+          const propsToCheck = _extends$2({}, props, ownerState);
+          isMatch = variant.props(propsToCheck);
+        } else {
+          Object.keys(variant.props).forEach((key) => {
+            if (ownerState[key] !== variant.props[key] && props[key] !== variant.props[key]) {
+              isMatch = false;
+            }
+          });
+        }
         if (isMatch) {
-          variantsStyles.push(styles2[propsToClassKey(variant.props)]);
+          if (typeof variant.props === "function") {
+            variantsStyles.push(styles2[`callback${numOfCallbacks}`]);
+          } else {
+            variantsStyles.push(styles2[propsToClassKey(variant.props)]);
+          }
+        }
+        if (typeof variant.props === "function") {
+          numOfCallbacks += 1;
         }
       });
     }
@@ -16547,7 +16567,7 @@ The following color spaces are supported: srgb, display-p3, a98-rgb, prophoto-rg
     process.env.NODE_ENV !== "production" ? ThemeProvider$1.propTypes = exactProp(ThemeProvider$1.propTypes) : void 0;
   }
   /**
-   * @mui/private-theming v5.14.20
+   * @mui/private-theming v5.15.2
    *
    * @license MIT
    * This source code is licensed under the MIT license found in the
@@ -46159,11 +46179,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       control,
       name
     });
-    const _registerProps = React.useRef(control.register(name, __spreadProps(__spreadValues({}, props.rules), {
-      value,
-      disabled: props.disabled
-    })));
-    _registerProps.current = control.register(name, props.rules);
+    const _registerProps = React.useRef(control.register(name, __spreadValues(__spreadProps(__spreadValues({}, props.rules), {
+      value
+    }), isBoolean(props.disabled) ? { disabled: props.disabled } : {})));
     React.useEffect(() => {
       const _shouldUnregisterField = control._options.shouldUnregister || shouldUnregister;
       const updateMounted = (name2, value2) => {
@@ -47094,15 +47112,16 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       const output = {
         name
       };
+      const disabledField = !!(get(_fields, name) && get(_fields, name)._f.disabled);
       if (!isBlurEvent || shouldDirty) {
         if (_proxyFormState.isDirty) {
           isPreviousDirty = _formState.isDirty;
           _formState.isDirty = output.isDirty = _getDirty();
           shouldUpdateField = isPreviousDirty !== output.isDirty;
         }
-        const isCurrentFieldPristine = deepEqual(get(_defaultValues, name), fieldValue);
-        isPreviousDirty = get(_formState.dirtyFields, name);
-        isCurrentFieldPristine ? unset(_formState.dirtyFields, name) : set(_formState.dirtyFields, name, true);
+        const isCurrentFieldPristine = disabledField || deepEqual(get(_defaultValues, name), fieldValue);
+        isPreviousDirty = !!(!disabledField && get(_formState.dirtyFields, name));
+        isCurrentFieldPristine || disabledField ? unset(_formState.dirtyFields, name) : set(_formState.dirtyFields, name, true);
         output.dirtyFields = _formState.dirtyFields;
         shouldUpdateField = shouldUpdateField || _proxyFormState.dirtyFields && isPreviousDirty !== !isCurrentFieldPristine;
       }
@@ -47419,7 +47438,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         _updateDisabledField({
           field,
           disabled: options.disabled,
-          name
+          name,
+          value: options.value
         });
       } else {
         updateValidAndValue(name, true, options.value);
@@ -49277,16 +49297,18 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         if ("fox/bom" === canon) {
           const filters = cmpState.AssignSuppliersHead.filters;
           const supplierId = filters.supplier.selected;
+          const ceid = filters.ceid.selected;
           const toolId = filters.tool.selected;
           const startDate = filters.prefacStart.selected;
           const endDate = filters.prefacEnd.selected;
           const unallocatedOnly = filters.unallocated.selected;
           const filteredData = entlist.filter((item2) => {
             const isSupplierMatch = supplierId === "" || item2.suppliers.includes(supplierId);
-            const isToolMatch = toolId === "" || item2.ceids.includes(toolId);
+            const isCEIDMatch = ceid === "" || item2.ceids.includes(ceid);
+            const isToolIdMatch = toolId === "" || item2.tools.includes(toolId);
             const isDateRangeMatch = (startDate === "" || item2.earlirestPrefac >= startDate) && (endDate === "" || item2.earlirestPrefac <= endDate);
             const unallocatedMatch = !unallocatedOnly || item2.qtyasn < 100;
-            return isSupplierMatch && isToolMatch && isDateRangeMatch && unallocatedMatch;
+            return isSupplierMatch && isCEIDMatch && isToolIdMatch && isDateRangeMatch && unallocatedMatch;
           });
           setData(filteredData);
         } else {
