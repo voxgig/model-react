@@ -20393,17 +20393,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const handleLogout = () => __async(this, null, function* () {
       const signout = yield seneca.post("aim:web,on:auth,signout:user");
       console.log("signout", signout);
-      const res = yield seneca.post("aim:app,set:state", {
-        section: "auth.state",
-        content: "none"
-      });
-      console.log("res", res);
-      if (res && signout.ok) {
-        console.log("signed out");
-        document.location.href = document.location.origin + "/";
-      } else {
-        console.log("failed to sign out");
-      }
+      document.location.href = document.location.origin + "/";
     });
     if (basicHeadSpec.head.variant === "permanent") {
       return /* @__PURE__ */ jsxRuntimeExports.jsx(

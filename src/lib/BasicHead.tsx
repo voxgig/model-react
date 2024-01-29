@@ -102,19 +102,7 @@ function BasicHead (props: BasicHeadProps) {
 
     console.log('signout', signout)
 
-    const res = await seneca.post('aim:app,set:state', {
-      section: 'auth.state',
-      content: 'none'
-    })
-
-    console.log('res', res)
-
-    if (res && signout.ok) {
-      console.log('signed out')
-      document.location.href = document.location.origin + '/'
-    } else {
-      console.log('failed to sign out')
-    }
+    document.location.href = document.location.origin + '/'
   }
 
   if (basicHeadSpec.head.variant === 'permanent') {
