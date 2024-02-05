@@ -1,11 +1,16 @@
 import { Fragment, useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import { Routes, Route, useNavigation, useNavigate } from 'react-router-dom'
+import {
+  Routes,
+  Route,
+  useNavigate,
+  useInRouterContext
+} from 'react-router-dom'
 import BasicLed from './BasicLed'
-import { Exact, Gubu } from 'gubu'
+import { Gubu } from 'gubu'
 import { Box, CSSObject, ThemeProvider, useTheme } from '@mui/material'
 
-const { Child, Optional, Skip } = Gubu
+const { Child, Skip } = Gubu
 
 // Validate spec shape with Gubu
 const BasicMainSpecShape = Gubu({
@@ -52,19 +57,23 @@ const BasicMainSpecShape = Gubu({
 function BasicMain (props: any) {
   const { vxg, ctx } = props
   const theme = useTheme()
+  // const navigate = useNavigate()
+  const isInRouterContext = useInRouterContext()
+
   const basicMainSpec = BasicMainSpecShape(props.spec)
   const views = Object.values(basicMainSpec.view)
   const defaultRoute = basicMainSpec.main.default
   const sideOpen = useSelector(
     (state: any) => state.main.vxg.cmp.BasicSide.show
   )
-  const navigate = useNavigate()
 
-  useEffect(() => {
-    if (location.pathname === '/' && defaultRoute !== undefined) {
-      navigate(defaultRoute)
-    }
-  }, [location, navigate])
+  console.log('Is in Router Context:', isInRouterContext)
+
+  // useEffect(() => {
+  //   if (location.pathname === '/' && defaultRoute !== undefined) {
+  //     navigate(defaultRoute)
+  //   }
+  // }, [location, navigate])
 
   const paddingLeft =
     (theme.components?.MuiDrawer?.styleOverrides?.paper as CSSObject)?.width ||

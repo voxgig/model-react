@@ -14,7 +14,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import BasicButton from './BasicButton'
 import BasicAppBar from './BasicAppBar'
 import BasicAutocomplete from './BasicAutocomplete'
-import { deepPurple, purple } from '@mui/material/colors'
+import { purple } from '@mui/material/colors'
 import { useEffect, useState } from 'react'
 
 const { Child } = Gubu
@@ -52,7 +52,7 @@ interface BasicHeadProps {
 }
 
 function BasicHead (props: BasicHeadProps) {
-  const location = useLocation()
+  // const location = useLocation()
   const { ctx } = props
   const { seneca } = ctx()
   const [initials, setInitials] = useState('')
@@ -84,7 +84,7 @@ function BasicHead (props: BasicHeadProps) {
   let led_add = vxgState.trigger.led.add
 
   // get name and add state from spec
-  const viewPath: any = location.pathname.split('/')[2]
+  const viewPath: any = 'fox/part' //location.pathname.split('/')[2]
   let add = basicHeadSpec.view[viewPath]?.content?.def?.add || { active: false }
   const viewName = basicHeadSpec.view[viewPath]?.name || ''
 
