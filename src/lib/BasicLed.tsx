@@ -18,7 +18,7 @@ import { BasicLoading } from './BasicLoading'
 
 
 const CMPNAME = 'BasicLed'
-console.log(CMPNAME,'1')
+console.log(CMPNAME,'2')
 
 
 // Define the shape of props.spec
@@ -56,6 +56,7 @@ function BasicLed (props: any) {
   
   const name = basicLedSpec.name
   const canon = basicLedSpec.spec.ent
+  const slotName = 'BasicLed_'+name
   
   const led = useSelector((state:any)=>state.main.view[name])
   const ready = true === led.ready
@@ -67,14 +68,17 @@ function BasicLed (props: any) {
       this
         .fix({view:name})
         .add('aim:app,on:view,init:state,redux$:true',
-          function(_msg:any, _reply:any, meta:any) {
-            let view = meta.custom.state().view[name]
+          function(this:any, _msg:any, _reply:any, meta:any) {
+            const state = meta.custom.state()
+            let view = state.view[name]
             view.show = {
               list: true,
               edit: false
             }
             view.status = 'init'
             view.ready = true
+
+            this.export('Redux/entityPrepare')(state, slotName)
           })
         .add('aim:app,on:view,edit:start,redux$:true',
           {item_id:String},
@@ -88,12 +92,12 @@ function BasicLed (props: any) {
           {item_id:String},
           async function(this:any, msg:any) {
             this.act('aim:app,on:view,view:track,edit:start,direct$:true',{item_id:msg.item_id})
-            // await new Promise(r=>setTimeout(r,1000))
             return await this.entity(canon).load$({
               id:msg.item_id,
-              slot$:'track'
+              slot$: slotName,
             })
           })
+      
       this.prepare(async function(this:any) {
         this.act('aim:app,on:view,init:state,direct$:true',{view:name})
       })
@@ -101,13 +105,21 @@ function BasicLed (props: any) {
     Object.defineProperty(ledplugin,'name',{value:'VxgBasicLed_'+name})
     seneca.use(ledplugin)
   }
+
+  const listSpec = {
+    name,
+    ent: canon,
+    prefix: 'BasicLed_',
+  }
+  
+  const editSpec = {}
   
   return (
     ready ?
     <Box className="vxg-BasicLed">
       <b>BasicLed</b>
-      { show.list ? <BasicList /> : <></> }
-      { show.edit ? <BasicEdit /> : <></> }
+      { show.list ? <BasicList ctx={ctx} spec={listSpec} /> : <></> }
+      { show.edit ? <BasicEdit ctx={ctx} spec={editSpec} /> : <></> }
     </Box>
       :
     <BasicLoading /> 

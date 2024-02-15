@@ -120,8 +120,8 @@ async function init(seneca: any, done: any) {
     seneca.context.vxg.BasicAdmin.preparing = true
 
     seneca
-      .use(SenecaEntity)
-      .use(BrowserStore)
+      // .use(SenecaEntity)
+    // .use(BrowserStore)
       .use(VxgSeneca)
     await seneca.ready(done)
   }

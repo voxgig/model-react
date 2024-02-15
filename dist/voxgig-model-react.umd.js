@@ -113,6 +113,40 @@ var __async = (__this, __arguments, generator) => {
     return a;
   }
   var jsxRuntime$2 = { exports: {} };
+  var reactJsxRuntime_production_min = {};
+  /**
+   * @license React
+   * react-jsx-runtime.production.min.js
+   *
+   * Copyright (c) Facebook, Inc. and its affiliates.
+   *
+   * This source code is licensed under the MIT license found in the
+   * LICENSE file in the root directory of this source tree.
+   */
+  var hasRequiredReactJsxRuntime_production_min;
+  function requireReactJsxRuntime_production_min() {
+    if (hasRequiredReactJsxRuntime_production_min)
+      return reactJsxRuntime_production_min;
+    hasRequiredReactJsxRuntime_production_min = 1;
+    "use strict";
+    var f = React, k = Symbol.for("react.element"), l = Symbol.for("react.fragment"), m = Object.prototype.hasOwnProperty, n = f.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner, p = { key: true, ref: true, __self: true, __source: true };
+    function q(c, a, g) {
+      var b, d = {}, e = null, h = null;
+      void 0 !== g && (e = "" + g);
+      void 0 !== a.key && (e = "" + a.key);
+      void 0 !== a.ref && (h = a.ref);
+      for (b in a)
+        m.call(a, b) && !p.hasOwnProperty(b) && (d[b] = a[b]);
+      if (c && c.defaultProps)
+        for (b in a = c.defaultProps, a)
+          void 0 === d[b] && (d[b] = a[b]);
+      return { $$typeof: k, type: c, key: e, ref: h, props: d, _owner: n.current };
+    }
+    reactJsxRuntime_production_min.Fragment = l;
+    reactJsxRuntime_production_min.jsx = q;
+    reactJsxRuntime_production_min.jsxs = q;
+    return reactJsxRuntime_production_min;
+  }
   var reactJsxRuntime_development = {};
   /**
    * @license React
@@ -1002,1480 +1036,22 @@ var __async = (__this, __arguments, generator) => {
     }
     return reactJsxRuntime_development;
   }
-  var reactJsxRuntime_production_min = {};
-  /**
-   * @license React
-   * react-jsx-runtime.production.min.js
-   *
-   * Copyright (c) Facebook, Inc. and its affiliates.
-   *
-   * This source code is licensed under the MIT license found in the
-   * LICENSE file in the root directory of this source tree.
-   */
-  var hasRequiredReactJsxRuntime_production_min;
-  function requireReactJsxRuntime_production_min() {
-    if (hasRequiredReactJsxRuntime_production_min)
-      return reactJsxRuntime_production_min;
-    hasRequiredReactJsxRuntime_production_min = 1;
+  var jsxRuntime$1 = jsxRuntime$2.exports;
+  var hasRequiredJsxRuntime;
+  function requireJsxRuntime() {
+    if (hasRequiredJsxRuntime)
+      return jsxRuntime$2.exports;
+    hasRequiredJsxRuntime = 1;
     "use strict";
-    var f = React, k = Symbol.for("react.element"), l = Symbol.for("react.fragment"), m = Object.prototype.hasOwnProperty, n = f.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner, p = { key: true, ref: true, __self: true, __source: true };
-    function q(c, a, g) {
-      var b, d = {}, e = null, h = null;
-      void 0 !== g && (e = "" + g);
-      void 0 !== a.key && (e = "" + a.key);
-      void 0 !== a.ref && (h = a.ref);
-      for (b in a)
-        m.call(a, b) && !p.hasOwnProperty(b) && (d[b] = a[b]);
-      if (c && c.defaultProps)
-        for (b in a = c.defaultProps, a)
-          void 0 === d[b] && (d[b] = a[b]);
-      return { $$typeof: k, type: c, key: e, ref: h, props: d, _owner: n.current };
-    }
-    reactJsxRuntime_production_min.Fragment = l;
-    reactJsxRuntime_production_min.jsx = q;
-    reactJsxRuntime_production_min.jsxs = q;
-    return reactJsxRuntime_production_min;
-  }
-  var jsxRuntime = jsxRuntime$2.exports;
-  "use strict";
-  if (process.env.NODE_ENV === "production") {
-    jsxRuntime$2.exports = requireReactJsxRuntime_production_min();
-  } else {
-    jsxRuntime$2.exports = requireReactJsxRuntime_development();
-  }
-  var jsxRuntimeExports = jsxRuntime$2.exports;
-  const jsxRuntime$1 = /* @__PURE__ */ getDefaultExportFromCjs(jsxRuntimeExports);
-  var entity = { exports: {} };
-  var make_entity = {};
-  "use strict";
-  Object.defineProperty(make_entity, "__esModule", { value: true });
-  var Entity_1 = make_entity.Entity = MakeEntity_1 = make_entity.MakeEntity = void 0;
-  const proto = Object.getPrototypeOf;
-  const toString_map = {
-    // '': make_toString(),
-  };
-  const NO_ENTITY = null;
-  const NO_ERROR = null;
-  const DisallowAsDirective = {
-    id$: true,
-    custom$: true,
-    directive$: true,
-    merge$: true
-  };
-  function entargs(ent, args) {
-    args.ent = ent;
-    if (this.canon.name !== null) {
-      args.name = this.canon.name;
-    }
-    if (this.canon.base !== null) {
-      args.base = this.canon.base;
-    }
-    if (this.canon.zone !== null) {
-      args.zone = this.canon.zone;
-    }
-    let directives = Object.keys(ent.directive$).filter((dname) => dname.endsWith("$") && !DisallowAsDirective[dname]);
-    for (let dname of directives) {
-      args[dname] = ent.directive$[dname];
-    }
-    return args;
-  }
-  class Entity {
-    constructor(canon, seneca, options) {
-      this.private$ = {
-        canon: null,
-        promise: false,
-        get_instance: () => null,
-        entargs,
-        options: {}
-      };
-      const private$ = this.private$;
-      private$.get_instance = function() {
-        return seneca;
-      };
-      private$.canon = canon;
-      private$.entargs = entargs;
-      private$.options = options;
-      this.private$ = this.private$;
-      this.entity$ = this.canon$();
-    }
-    // Properties without '$' suffix are persisted
-    // id property is special: created if not present when saving
-    //   lack of id indicates new data record to create
-    //   to set id of a new record, use id$
-    // func$ functions provide persistence operations
-    // args: (<zone>,<base>,<name>,<props>)
-    // can be partially specified:
-    // make$(name)
-    // make$(base,name)
-    // make$(zone,base,name)
-    // make$(zone,base,null)
-    // make$(zone,null,null)
-    // props can specify zone$,base$,name$, but args override if present
-    // escaped names: foo_$ is converted to foo
-    make$(...args) {
-      const self2 = this;
-      let first = args[0];
-      let last = args[args.length - 1];
-      let promise = self2.private$.promise;
-      if ("boolean" === typeof last) {
-        promise = last;
-        args = args.slice(0, args.length - 1);
-      }
-      let instance = self2.private$.get_instance();
-      if (first && first.seneca) {
-        instance = first;
-        first = args[1];
-        args = args.slice(1);
-      }
-      if (first && first.entity$ && "function" === typeof first.canon$) {
-        return first;
-      }
-      const argprops = args[args.length - 1];
-      let props = {};
-      if (argprops && typeof argprops === "object") {
-        args.pop();
-        props = __spreadValues({}, argprops);
-      }
-      while (args.length < 3) {
-        args.unshift(null);
-      }
-      let canon;
-      if ("string" === typeof props.entity$) {
-        canon = parsecanon(props.entity$);
-      } else if (props.entity$ && "object" === typeof props.entity$) {
-        canon = {};
-        canon.zone = props.entity$.zone;
-        canon.base = props.entity$.base;
-        canon.name = props.entity$.name;
-      } else {
-        let argsname = args.pop();
-        argsname = argsname == null ? props.name$ : argsname;
-        canon = parsecanon(argsname);
-      }
-      const name = canon.name;
-      let base = args.pop();
-      base = base == null ? canon.base : base;
-      base = base == null ? props.base$ : base;
-      let zone = args.pop();
-      zone = zone == null ? canon.zone : zone;
-      zone = zone == null ? props.zone$ : zone;
-      const new_canon = {};
-      new_canon.name = name == null ? self2.private$.canon.name : name;
-      new_canon.base = base == null ? self2.private$.canon.base : base;
-      new_canon.zone = zone == null ? self2.private$.canon.zone : zone;
-      const entity2 = MakeEntity(new_canon, instance, __spreadProps(__spreadValues({}, self2.private$.options), {
-        promise
-      }));
-      for (const p in props) {
-        if (Object.prototype.hasOwnProperty.call(props, p)) {
-          if (!~p.indexOf("$")) {
-            ;
-            entity2[p] = props[p];
-          } else if (p.length > 2 && p.slice(-2) === "_$") {
-            ;
-            entity2[p.slice(0, -2)] = props[p];
-          }
-        }
-      }
-      if (Object.prototype.hasOwnProperty.call(props, "id$")) {
-        ;
-        entity2.id$ = props.id$;
-      }
-      ;
-      self2.log$ && self2.log$("make", entity2.canon$({ string: true }), entity2);
-      return entity2;
-    }
-    /** Save the entity.
-     *  param {object} [data] - Subset of entity field values.
-     *  param {callback~save$} done - Callback function providing saved entity.
-     */
-    save$(data, done) {
-      const self2 = this;
-      const si = self2.private$.get_instance();
-      let entmsg = __spreadValues({ cmd: "save", q: {} }, self2.private$.options.pattern_fix);
-      let done$ = prepareCmd(self2, data, entmsg, done);
-      entmsg = self2.private$.entargs(self2, entmsg);
-      const promise = self2.private$.promise && !done$;
-      let res = promise ? entityPromise(si, entmsg) : (si.act(entmsg, done$), promise ? NO_ENTITY : self2);
-      return res;
-    }
-    /** Callback for Entity.save$.
-     *  @callback callback~save$
-     *  @param {error} error - Error object, if any.
-     *  @param {Entity} entity - Saved Entity object containing updated data fields (in particular, `id`, if auto-generated).
-     */
-    // provide native database driver
-    native$(done) {
-      const self2 = this;
-      const si = self2.private$.get_instance();
-      const promise = self2.private$.promise;
-      let entmsg = __spreadValues({ cmd: "native" }, self2.private$.options.pattern_fix);
-      let done$ = prepareCmd(self2, void 0, entmsg, done);
-      entmsg = self2.private$.entargs(self2, entmsg);
-      let res = promise && !done ? entityPromise(si, entmsg) : (si.act(entmsg, done$), promise ? NO_ENTITY : self2);
-      return res;
-    }
-    // load one
-    // TODO: qin can be an entity, in which case, grab the id and reload
-    // qin omitted => reload self
-    /** Load the entity.
-     *  param {object|string|number} [query] - Either a entity id, or a query object with field values that must match.
-     *  param {callback~load$} done - Callback function providing loaded entity, if found.
-     */
-    load$(query, done) {
-      const self2 = this;
-      if ("function" === typeof query) {
-        done = query;
-        query = null;
-      }
-      const si = self2.private$.get_instance();
-      const q = normalize_query(query, self2);
-      let entmsg = __spreadValues({
-        cmd: "load",
-        q,
-        qent: self2
-      }, self2.private$.options.pattern_fix);
-      let done$ = prepareCmd(self2, void 0, entmsg, done);
-      entmsg = self2.private$.entargs(self2, entmsg);
-      const promise = self2.private$.promise && !done$;
-      if (emptyQuery(q)) {
-        return promise ? NO_ENTITY : (done && done.call(si, NO_ERROR, NO_ENTITY), self2);
-      }
-      let res = promise ? entityPromise(si, entmsg) : (si.act(entmsg, done$), promise ? NO_ENTITY : self2);
-      return res;
-    }
-    /** Callback for Entity.load$.
-     *  @callback callback~load$
-     *  @param {error} error - Error object, if any.
-     *  @param {Entity} entity - Matching `Entity` object, if found.
-     */
-    // TODO: need an update$ - does an atomic upsert
-    // list zero or more
-    // qin is optional, if omitted, list all
-    /** Load the entity.
-     *  param {object|string|number} [query] - A query object with field values that must match, can be empty.
-     *  param {callback~list$} done - Callback function providing list of matching `Entity` objects, if any.
-     */
-    // TODO: refactor list, remove, etc, as per save, load
-    list$(query, done) {
-      const self2 = this;
-      if ("function" === typeof query) {
-        done = query;
-        query = null;
-      }
-      const si = self2.private$.get_instance();
-      const q = normalize_query(query, self2, { inject_id: false });
-      let entmsg = __spreadValues({
-        cmd: "list",
-        q,
-        qent: self2
-      }, self2.private$.options.pattern_fix);
-      const done$ = prepareCmd(self2, void 0, entmsg, done);
-      entmsg = self2.private$.entargs(self2, entmsg);
-      const promise = self2.private$.promise && !done$;
-      let res = promise ? entityPromise(si, entmsg) : (si.act(entmsg, done$), promise ? NO_ENTITY : self2);
-      return res;
-    }
-    /** Callback for Entity.list$.
-     *  @callback callback~list$
-     *  @param {error} error - Error object, if any.
-     *  @param {Entity} entity - Array of `Entity` objects matching query.
-     */
-    // remove one or more
-    // TODO: make qin optional, in which case, use id
-    /** Remove the `Entity`.
-     *  param {object|string|number} [query] - Either a entity id, or a query object with field values that must match.
-     *  param {callback~remove$} done - Callback function to confirm removal.
-     */
-    remove$(query, done) {
-      const self2 = this;
-      if ("function" === typeof query) {
-        done = query;
-        query = null;
-      }
-      const si = self2.private$.get_instance();
-      const q = normalize_query(query, self2);
-      let entmsg = self2.private$.entargs(self2, __spreadValues({
-        cmd: "remove",
-        q,
-        qent: self2
-      }, self2.private$.options.pattern_fix));
-      let done$ = prepareCmd(self2, void 0, entmsg, done);
-      const promise = self2.private$.promise && !done$;
-      if (emptyQuery(q)) {
-        return promise ? NO_ENTITY : (done$ && done$.call(si, NO_ERROR, NO_ENTITY), self2);
-      }
-      let res = promise ? entityPromise(si, entmsg) : (si.act(entmsg, done$), promise ? NO_ENTITY : self2);
-      return res;
-    }
-    // DEPRECATE: legacy
-    delete$(query, done) {
-      return this.remove$(query, done);
-    }
-    /** Callback for Entity.remove$.
-     *  @callback callback~remove$
-     *  @param {error} error - Error object, if any.
-     */
-    fields$() {
-      const self2 = this;
-      const fields = [];
-      for (const p in self2) {
-        if (Object.prototype.hasOwnProperty.call(self2, p) && typeof self2[p] !== "function" && p.charAt(p.length - 1) !== "$") {
-          fields.push(p);
-        }
-      }
-      return fields;
-    }
-    // TODO: remove
-    close$(done) {
-      const self2 = this;
-      const si = self2.private$.get_instance();
-      let entmsg = self2.private$.entargs(self2, __spreadValues({
-        cmd: "close"
-      }, self2.private$.options.pattern_fix));
-      let done$ = prepareCmd(self2, void 0, entmsg, done);
-      const promise = self2.private$.promise && !done$;
-      self2.log$ && self2.log$("close");
-      return promise ? si.post(entmsg) : (si.act(entmsg, done$), self2);
-    }
-    is$(canonspec) {
-      const self2 = this;
-      const canon = canonspec ? canonspec.entity$ ? canonspec.canon$({ object: true }) : parsecanon(canonspec) : null;
-      if (!canon)
-        return false;
-      let selfcanon = self2.canon$({ object: true });
-      let sckeys = Object.keys(selfcanon);
-      let match2 = sckeys.length === Object.keys(canon).length;
-      if (match2) {
-        for (let key of sckeys) {
-          match2 = match2 && selfcanon[key] === canon[key];
-        }
-      }
-      return match2;
-    }
-    canon$(opt) {
-      const self2 = this;
-      const canon = self2.private$.canon;
-      if (opt) {
-        if (opt.isa) {
-          const isa = parsecanon(opt.isa);
-          return isa.zone == canon.zone && isa.base == canon.base && isa.name == canon.name;
-        } else if (opt.parse) {
-          return parsecanon(opt.parse);
-        } else if (opt.change) {
-          canon.zone = opt.change.zone == null ? canon.zone : opt.change.zone;
-          canon.base = opt.change.base == null ? canon.base : opt.change.base;
-          canon.name = opt.change.name == null ? canon.name : opt.change.name;
-          if (null == opt.zone)
-            delete canon.zone;
-          if (null == opt.base)
-            delete canon.base;
-          if (null == opt.name)
-            delete canon.name;
-          self2.entity$ = self2.canon$();
-        }
-      }
-      return null == opt || opt.string || opt.string$ ? (
-        // ? [
-        //   (opt && opt.string$ ? '$' : '') +
-        //   (null == canon.zone ? '-' : canon.zone),
-        //   null == canon.base ? '-' : canon.base,
-        //   null == canon.name ? '-' : canon.name,
-        // ].join('/') // TODO: make joiner an option
-        (opt && opt.string$ ? "$" : "") + canonstr(canon)
-      ) : opt.array ? [canon.zone, canon.base, canon.name] : opt.array$ ? [canon.zone, canon.base, canon.name] : opt.object ? { zone: canon.zone, base: canon.base, name: canon.name } : opt.object$ ? { zone$: canon.zone, base$: canon.base, name$: canon.name } : [canon.zone, canon.base, canon.name];
-    }
-    // data = object, or true|undef = include $, false = exclude $
-    data$(data, canonkind) {
-      const self2 = this;
-      let val;
-      if (data && "object" === typeof data) {
-        for (const f in data) {
-          if (f.charAt(0) !== "$" && f.charAt(f.length - 1) !== "$") {
-            val = data[f];
-            if (val && "object" === typeof val && val.entity$) {
-              self2[f] = val.id;
-            } else {
-              self2[f] = val;
-            }
-          }
-        }
-        if (data.id$ != null) {
-          self2.id$ = data.id$;
-        }
-        if (null != data.merge$) {
-          self2.merge$ = data.merge$;
-        }
-        if (null != data.custom$) {
-          self2.custom$(data.custom$);
-        }
-        if (null != data.directive$) {
-          self2.directive$(data.directive$);
-        }
-        return self2;
-      } else {
-        const include_$ = null == data ? true : !!data;
-        data = {};
-        if (include_$) {
-          canonkind = canonkind || "object";
-          let canonformat = {};
-          canonformat[canonkind] = true;
-          data.entity$ = self2.canon$(canonformat);
-          if (0 < Object.keys(self2.custom$).length) {
-            data.custom$ = self2.private$.get_instance().util.deep(self2.custom$);
-          }
-        }
-        const fields = self2.fields$();
-        for (let fI = 0; fI < fields.length; fI++) {
-          if (!~fields[fI].indexOf("$")) {
-            val = self2[fields[fI]];
-            if (val && "object" === typeof val && val.entity$) {
-              data[fields[fI]] = val.id;
-            } else if (void 0 !== val) {
-              data[fields[fI]] = val;
-            }
-          }
-        }
-        return data;
-      }
-    }
-    clone$() {
-      const self2 = this;
-      let deep = this.private$.get_instance().util.deep;
-      let clone = self2.make$(deep({}, self2.data$()));
-      if (0 < Object.keys(self2.custom$).length) {
-        clone.custom$(self2.custom$);
-      }
-      if (0 < Object.keys(self2.directive$).length) {
-        clone.directive$(self2.directive$);
-      }
-      return clone;
-    }
-    custom$(_props) {
-      return this;
-    }
-    directive$(_directiveMap) {
-      return this;
-    }
-  }
-  Entity_1 = make_entity.Entity = Entity;
-  function entityPromise(si, entmsg) {
-    var _a;
-    let attachMeta = true === ((_a = entmsg.q) === null || _a === void 0 ? void 0 : _a.meta$);
-    return new Promise((res, rej) => {
-      si.act(entmsg, (err, out, meta) => {
-        err ? rej((attachMeta ? err.meta$ = meta : null, err)) : res((attachMeta ? ((out === null || out === void 0 ? void 0 : out.entity$) ? proto(out) : out || (out = { entity$: null })).meta$ = meta : null, out));
-      });
-    });
-  }
-  function prepareCmd(ent, data, entmsg, done) {
-    if ("function" === typeof data) {
-      done = data;
-    } else if (data && "object" === typeof data) {
-      ent.data$(data);
-      entmsg.q = data;
-    }
-    return null == done ? void 0 : ent.done$ ? ent.done$(done) : done;
-  }
-  function emptyQuery(q) {
-    return null == q || 0 === Object.keys(q).length;
-  }
-  function normalize_query(qin, ent, flags) {
-    let q = qin;
-    let inject_id = flags ? false === flags.inject_id ? false : true : true;
-    if (inject_id) {
-      if ((null == qin || "function" === typeof qin) && ent.id != null) {
-        q = { id: ent.id };
-      } else if ("string" === typeof qin || "number" === typeof qin) {
-        q = qin === "" ? null : { id: qin };
-      } else if ("function" === typeof qin) {
-        q = null;
-      }
-    }
-    if (null != q) {
-      for (let k in q) {
-        if (void 0 === q[k]) {
-          delete q[k];
-        }
-      }
-    }
-    return q;
-  }
-  function parsecanon(str) {
-    let out = {};
-    if (Array.isArray(str)) {
-      return {
-        zone: str[0],
-        base: str[1],
-        name: str[2]
-      };
-    }
-    if (str && "object" === typeof str && "function" !== typeof str)
-      return str;
-    if ("string" !== typeof str)
-      return out;
-    const m = /\$?((\w+|-)\/)?((\w+|-)\/)?(\w+|-)/.exec(str);
-    if (m) {
-      const zi = m[4] == null ? 4 : 2;
-      const bi = m[4] == null ? 2 : 4;
-      out.zone = m[zi] === "-" ? void 0 : m[zi];
-      out.base = m[bi] === "-" ? void 0 : m[bi];
-      out.name = m[5] === "-" ? void 0 : m[5];
+    if (process.env.NODE_ENV === "production") {
+      jsxRuntime$2.exports = requireReactJsxRuntime_production_min();
     } else {
-      throw new Error(`Invalid entity canon: ${str}; expected format: zone/base/name.`);
+      jsxRuntime$2.exports = requireReactJsxRuntime_development();
     }
-    return out;
+    return jsxRuntime$2.exports;
   }
-  function canonstr(canon) {
-    canon = canon || { name: "" };
-    return [
-      null == canon.zone || "" === canon.zone ? "-" : canon.zone,
-      null == canon.base || "" === canon.base ? "-" : canon.base,
-      null == canon.name || "" === canon.name ? "-" : canon.name
-    ].join("/");
-  }
-  function handle_options(entopts, seneca) {
-    var _a;
-    entopts = entopts || /* @__PURE__ */ Object.create(null);
-    let Jsonic2 = seneca.util.Jsonic;
-    if (entopts.hide) {
-      Object.keys(entopts.hide).forEach((hidden_fields) => {
-        const canon_in = entopts.hide[hidden_fields];
-        const canon = parsecanon(canon_in);
-        const canon_str = [
-          canon.zone == null ? "-" : canon.zone,
-          canon.base == null ? "-" : canon.base,
-          canon.name == null ? "-" : canon.name
-        ].join("/");
-        toString_map[canon_str] = make_toString(canon_str, hidden_fields, entopts, Jsonic2);
-      });
-    }
-    if (false === ((_a = entopts.meta) === null || _a === void 0 ? void 0 : _a.provide)) {
-      ;
-      Entity.prototype.done$ = (done) => {
-        return null == done ? void 0 : function(err, out) {
-          done.call(this, err, out);
-        };
-      };
-    }
-    return entopts;
-  }
-  function make_toString(canon_str, hidden_fields_spec, opts, Jsonic2) {
-    opts = opts || { jsonic: {} };
-    let hidden_fields = [];
-    if (Array.isArray(hidden_fields_spec)) {
-      hidden_fields.concat(hidden_fields_spec);
-    } else if (hidden_fields_spec && "object" === typeof hidden_fields_spec) {
-      Object.keys(hidden_fields_spec).forEach((k) => {
-        hidden_fields.push(k);
-      });
-    }
-    hidden_fields.push("id");
-    return function() {
-      return [
-        "$",
-        canon_str || this.canon$({ string: true }),
-        ";id=",
-        this.id,
-        ";",
-        jsonic_stringify(this, {
-          omit: hidden_fields,
-          depth: opts.jsonic.depth,
-          maxitems: opts.jsonic.maxitems,
-          maxchars: opts.jsonic.maxchars
-        })
-      ].join("");
-    };
-  }
-  function MakeEntity(canon, seneca, opts) {
-    opts = handle_options(opts, seneca);
-    const deep = seneca.util.deep;
-    const ent = new Entity(canon, seneca, opts);
-    let canon_str = ent.canon$({ string: true });
-    let toString2 = (toString_map[canon_str] || toString_map[""] || (toString_map[""] = make_toString(void 0, void 0, void 0, seneca.util.Jsonic))).bind(ent);
-    let custom$ = function(props) {
-      if (null != props && ("object" === typeof props || "function" === typeof props)) {
-        Object.assign(this.custom$, deep(props));
-      }
-      return ent;
-    };
-    let hidden = Object.create(Object.getPrototypeOf(ent));
-    hidden.toString = toString2;
-    hidden.custom$ = custom$;
-    hidden.directive$ = function(directiveMap) {
-      if (null != directiveMap && "object" === typeof directiveMap) {
-        Object.assign(this.directive$, deep(directiveMap));
-      }
-      return ent;
-    };
-    hidden.private$ = ent.private$;
-    hidden.private$.promise = !!opts.promise;
-    Object.setPrototypeOf(ent, hidden);
-    delete ent.private$;
-    return ent;
-  }
-  var MakeEntity_1 = make_entity.MakeEntity = MakeEntity;
-  MakeEntity.parsecanon = parsecanon;
-  MakeEntity.canonstr = canonstr;
-  function jsonic_strify(val, opts, depth) {
-    depth++;
-    if (null == val)
-      return "null";
-    var type = Object.prototype.toString.call(val).charAt(8);
-    if ("F" === type && !opts.showfunc)
-      return null;
-    if (opts.custom) {
-      if (val.hasOwnProperty("toString")) {
-        return val.toString();
-      } else if (val.hasOwnProperty("inspect")) {
-        return val.inspect();
-      }
-    }
-    var out, i = 0, j, k;
-    if ("N" === type) {
-      return isNaN(val) ? "null" : val.toString();
-    } else if ("O" === type) {
-      out = [];
-      if (depth <= opts.depth) {
-        j = 0;
-        for (let i2 in val) {
-          if (j >= opts.maxitems)
-            break;
-          var pass = true;
-          for (k = 0; k < opts.exclude.length && pass; k++) {
-            pass = !~i2.indexOf(opts.exclude[k]);
-          }
-          pass = pass && !opts.omit[i2];
-          var str = jsonic_strify(val[i2], opts, depth);
-          if (null != str && pass) {
-            var n = i2.match(/^[a-zA-Z0-9_$]+$/) ? i2 : JSON.stringify(i2);
-            out.push(n + ":" + str);
-            j++;
-          }
-        }
-      }
-      return "{" + out.join(",") + "}";
-    } else if ("A" === type) {
-      out = [];
-      if (depth <= opts.depth) {
-        for (; i < val.length && i < opts.maxitems; i++) {
-          var str = jsonic_strify(val[i], opts, depth);
-          if (null != str) {
-            out.push(str);
-          }
-        }
-      }
-      return "[" + out.join(",") + "]";
-    } else {
-      var valstr = val.toString();
-      if (~` "'\r
-	,}]`.indexOf(valstr[0]) || !~valstr.match(/,}]/) || ~" \r\n	".indexOf(valstr[valstr.length - 1])) {
-        valstr = "'" + valstr.replace(/'/g, "\\'") + "'";
-      }
-      return valstr;
-    }
-  }
-  function jsonic_stringify(val, callopts) {
-    try {
-      var callopts = callopts || {};
-      var opts = {};
-      opts.showfunc = callopts.showfunc || callopts.f || false;
-      opts.custom = callopts.custom || callopts.c || false;
-      opts.depth = callopts.depth || callopts.d || 3;
-      opts.maxitems = callopts.maxitems || callopts.mi || 11;
-      opts.maxchars = callopts.maxchars || callopts.mc || 111;
-      opts.exclude = callopts.exclude || callopts.x || ["$"];
-      var omit = callopts.omit || callopts.o || [];
-      opts.omit = {};
-      for (var i = 0; i < omit.length; i++) {
-        opts.omit[omit[i]] = true;
-      }
-      var str = jsonic_strify(val, opts, 0);
-      str = null == str ? "" : str.substring(0, opts.maxchars);
-      return str;
-    } catch (e) {
-      return "ERROR: jsonic.stringify: " + e + " input was: " + JSON.stringify(val);
-    }
-  }
-  var store = {};
-  "use strict";
-  Object.defineProperty(store, "__esModule", { value: true });
-  var Store_1 = store.Store = Intern_1 = store.Intern = void 0;
-  const allcmds = ["save", "load", "list", "remove", "close", "native"];
-  function Store(plugin_opts) {
-    const tag_count_map = {};
-    function make_tag(store_name) {
-      tag_count_map[store_name] = (tag_count_map[store_name] || 0) + 1;
-      return tag_count_map[store_name];
-    }
-    const store2 = {
-      cmds: allcmds.slice(0),
-      // opts.map = { canon: [cmds] }
-      // canon is in string format zone/base/name, with empty or - indicating undefined
-      init: function(instance, store_opts, store3, cb) {
-        const entspecs = [];
-        if (store_opts.map) {
-          for (const canon in store_opts.map) {
-            let cmds = store_opts.map[canon];
-            if (cmds === "*") {
-              cmds = allcmds;
-            }
-            entspecs.push({ canon, cmds });
-          }
-        } else {
-          entspecs.push({ canon: "-/-/-", cmds: allcmds });
-        }
-        const plugin_tag = instance.fixedargs && instance.fixedargs.plugin$ && instance.fixedargs.plugin$.tag;
-        const tag = plugin_tag == null || plugin_tag === "-" ? make_tag(store3.name) : plugin_tag;
-        const storedesc = [store3.name, tag];
-        for (let esI = 0; esI < entspecs.length; esI++) {
-          const entspec = entspecs[esI];
-          storedesc.push(entspec.canon);
-          let zone;
-          let base;
-          let name;
-          let m = /^(\w*|-)\/(\w*|-)\/(\w*|-)$/.exec(entspec.canon);
-          if (m) {
-            zone = m[1];
-            base = m[2];
-            name = m[3];
-          } else if (m = /^(\w*|-)\/(\w*|-)$/.exec(entspec.canon)) {
-            base = m[1];
-            name = m[2];
-          } else if (m = /^(\w*|-)$/.exec(entspec.canon)) {
-            name = m[1];
-          }
-          zone = zone === "-" ? void 0 : zone;
-          base = base === "-" ? void 0 : base;
-          name = name === "-" ? void 0 : name;
-          const entargs2 = {};
-          if (void 0 !== name)
-            entargs2.name = name;
-          if (void 0 !== base)
-            entargs2.base = base;
-          if (void 0 !== zone)
-            entargs2.zone = zone;
-          entspec.cmds.forEach(function(cmd) {
-            const args = __spreadValues(__spreadProps(__spreadValues({}, entargs2), { cmd }), plugin_opts.pattern_fix);
-            const orig_cmdfunc = store3[cmd];
-            let cmdfunc = orig_cmdfunc;
-            if (null == cmdfunc) {
-              return instance.die("store_cmd_missing", {
-                cmd,
-                store: storedesc
-              });
-            }
-            cmdfunc = Intern.reify_entity_wrap(cmdfunc, cmd, zone, base, name);
-            for (const p in orig_cmdfunc) {
-              cmdfunc[p] = orig_cmdfunc[p];
-            }
-            if (cmd !== "close") {
-              instance.add(args, cmdfunc);
-            } else if (cmd === "close") {
-              instance.add("role:seneca,cmd:close", function(close_args, done) {
-                const closer = this;
-                if (!store3.closed$) {
-                  cmdfunc.call(closer, close_args, function(err) {
-                    if (err)
-                      closer.log.error("close-error", close_args, err);
-                    store3.closed$ = true;
-                    closer.prior(close_args, done);
-                  });
-                } else {
-                  return closer.prior(close_args, done);
-                }
-              });
-            }
-          });
-        }
-        if (cb) {
-          cb.call(instance, null, tag, storedesc.join("~"));
-        } else {
-          return {
-            tag,
-            desc: storedesc.join("~")
-          };
-        }
-      }
-    };
-    return store2;
-  }
-  Store_1 = store.Store = Store;
-  const Intern = {
-    // Ensure entity objects are instantiated
-    reify_entity_wrap: function(cmdfunc, cmd, zone, base, name) {
-      const outfunc = function(msg, reply, meta) {
-        if ("save" !== msg.cmd) {
-          if (null == msg.q) {
-            msg.q = {};
-            if (null != msg.id) {
-              msg.q.id = msg.id;
-              delete msg.id;
-            }
-          }
-          if (null == msg.qent) {
-            msg.qent = this.make$({
-              entity$: {
-                name: msg.name,
-                base: msg.base,
-                zone: msg.zone
-              }
-            });
-          }
-        }
-        if (null != msg.ent && "function" != typeof msg.ent.canon$) {
-          msg.ent = this.make$({
-            entity$: {
-              name: msg.name,
-              base: msg.base,
-              zone: msg.zone
-            }
-          }).data$(msg.ent);
-        }
-        return cmdfunc.call(this, msg, reply, meta);
-      };
-      Object.defineProperty(outfunc, "name", {
-        value: "entity_" + cmd + (null == zone ? "" : zone + "_") + (null == base ? "" : base + "_") + (null == name ? "" : name)
-      });
-      return outfunc;
-    }
-  };
-  var Intern_1 = store.Intern = Intern;
-  var memStore$1 = { exports: {} };
-  var intern = {};
-  var hasRequiredIntern;
-  function requireIntern() {
-    if (hasRequiredIntern)
-      return intern;
-    hasRequiredIntern = 1;
-    "use strict";
-    Object.defineProperty(intern, "__esModule", { value: true });
-    intern.intern = void 0;
-    let intern$1 = class intern2 {
-      static is_new(ent) {
-        return null != ent && null == ent.id;
-      }
-      static is_upsert(msg) {
-        const { ent, q } = msg;
-        return intern2.is_new(ent) && q && Array.isArray(q.upsert$);
-      }
-      static find_mement(entmap, base_ent, filter2) {
-        const { base, name } = base_ent.canon$({ object: true });
-        const entset = entmap[base] && entmap[base][name];
-        if (null == entset) {
-          return null;
-        }
-        let out = null;
-        for (const ent_id in entset) {
-          const mement = entset[ent_id];
-          if (matches(mement, filter2)) {
-            out = mement;
-            break;
-          }
-        }
-        return out;
-        function matches(ent, filter3) {
-          for (const fp in filter3) {
-            if (fp in ent && filter3[fp] === ent[fp]) {
-              continue;
-            }
-            return false;
-          }
-          return true;
-        }
-      }
-      static update_mement(entmap, base_ent, filter2, new_attrs) {
-        const ent_to_update = intern2.find_mement(entmap, base_ent, filter2);
-        if (ent_to_update) {
-          Object.assign(ent_to_update, new_attrs);
-          return ent_to_update;
-        }
-        return null;
-      }
-      static should_merge(ent, plugin_opts) {
-        return !(false === plugin_opts.merge || false === ent.merge$);
-      }
-      // NOTE: Seneca supports a reasonable set of features
-      // in terms of listing. This function can handle
-      // sorting, skiping, limiting and general retrieval.
-      //
-      static listents(seneca, entmap, qent, q, done) {
-        let list = [];
-        let canon = qent.canon$({ object: true });
-        let base = canon.base;
-        let name = canon.name;
-        let entset = entmap[base] ? entmap[base][name] : null;
-        let ent;
-        if (null != entset && null != q) {
-          if ("string" == typeof q) {
-            ent = entset[q];
-            if (ent) {
-              list.push(ent);
-            }
-          } else if (Array.isArray(q)) {
-            q.forEach(function(id) {
-              let ent2 = entset[id];
-              if (ent2) {
-                ent2 = qent.make$(ent2);
-                list.push(ent2);
-              }
-            });
-          } else if ("object" === typeof q) {
-            let entids = Object.keys(entset);
-            next_ent:
-              for (let id of entids) {
-                ent = entset[id];
-                for (let p in q) {
-                  let qv = q[p];
-                  let ev = ent[p];
-                  if (-1 === p.indexOf("$")) {
-                    if (Array.isArray(qv)) {
-                      if (-1 === qv.indexOf(ev)) {
-                        continue next_ent;
-                      }
-                    } else if (intern2.is_object(qv)) {
-                      if (null != qv.$ne && qv.$ne == ev || null != qv.$gte && qv.$gte > ev || null != qv.$gt && qv.$gt >= ev || null != qv.$lt && qv.$lt <= ev || null != qv.$lte && qv.$lte < ev || null != qv.$in && -1 === qv.$in.indexOf(ev) || null != qv.$nin && -1 !== qv.$nin.indexOf(ev) || false) {
-                        continue next_ent;
-                      }
-                    } else {
-                      if (intern2.is_date(qv)) {
-                        if (!(intern2.is_date(ev) && intern2.eq_dates(qv, ev))) {
-                          continue next_ent;
-                        }
-                      } else if (qv !== ev) {
-                        continue next_ent;
-                      }
-                    }
-                  }
-                }
-                ent = qent.make$(ent);
-                list.push(ent);
-              }
-          }
-        }
-        if (null != q && q.sort$) {
-          let sf;
-          for (sf in q.sort$) {
-            break;
-          }
-          let sd = q.sort$[sf] < 0 ? -1 : 1;
-          list = list.sort(function(a, b) {
-            return sd * (a[sf] < b[sf] ? -1 : a[sf] === b[sf] ? 0 : 1);
-          });
-        }
-        if (null != q && q.skip$ && q.skip$ > 0) {
-          list = list.slice(q.skip$);
-        }
-        if (null != q && q.limit$ && q.limit$ >= 0) {
-          list = list.slice(0, q.limit$);
-        }
-        if (null != q && q.fields$) {
-          for (let i = 0; i < list.length; i++) {
-            let entfields = list[i].fields$();
-            for (let j = 0; j < entfields.length; j++) {
-              if ("id" !== entfields[j] && -1 == q.fields$.indexOf(entfields[j])) {
-                delete list[i][entfields[j]];
-              }
-            }
-          }
-        }
-        done.call(seneca, null, list);
-      }
-      static clean_array(ary) {
-        return ary.filter((prop) => !prop.includes("$"));
-      }
-      static is_object(x) {
-        return "[object Object]" === toString.call(x);
-      }
-      static is_date(x) {
-        return "[object Date]" === toString.call(x);
-      }
-      static eq_dates(lv, rv) {
-        return lv.getTime() === rv.getTime();
-      }
-    };
-    intern.intern = intern$1;
-    return intern;
-  }
-  var memStore = memStore$1.exports;
-  var hasRequiredMemStore;
-  function requireMemStore() {
-    if (hasRequiredMemStore)
-      return memStore$1.exports;
-    hasRequiredMemStore = 1;
-    (function(module2, exports3) {
-      "use strict";
-      Object.defineProperty(exports3, "__esModule", { value: true });
-      const intern_1 = requireIntern();
-      let internals = {
-        name: "mem-store"
-      };
-      function mem_store(options) {
-        let seneca = this;
-        let init2 = seneca.export("entity/init");
-        options = seneca.util.deepextend({
-          prefix: "/mem-store",
-          idlen: 6,
-          web: {
-            dump: false
-          },
-          // TODO: use seneca.export once it allows for null values
-          generate_id: seneca.root.private$.exports["entity/generate_id"]
-        }, options);
-        let desc;
-        let entmap = {};
-        let store2 = {
-          // The name of the plugin, this is what is the name you would
-          // use in seneca.use(), eg seneca.use('mem-store').
-          name: internals.name,
-          save: function(msg, reply) {
-            let seneca2 = this;
-            let ent = msg.ent;
-            let canon = ent.canon$({ object: true });
-            let zone = canon.zone;
-            let base = canon.base;
-            let name = canon.name;
-            const is_new = intern_1.intern.is_new(ent);
-            return is_new ? do_create() : do_save();
-            function do_save(id, isnew) {
-              entmap[base] = entmap[base] || {};
-              entmap[base][name] = entmap[base][name] || {};
-              const mement = ent.data$(true, "string");
-              let mement_ptr = null;
-              let operation = null;
-              if (intern_1.intern.is_upsert(msg)) {
-                operation = "upsert";
-                mement_ptr = try_upsert(mement, msg);
-              }
-              if (null == mement_ptr) {
-                operation = intern_1.intern.is_new(msg.ent) ? "insert" : "update";
-                mement_ptr = complete_save(mement, msg, id, isnew);
-              }
-              const result_mement = seneca2.util.deep(mement_ptr);
-              const result_ent = ent.make$(result_mement);
-              seneca2.log.debug("save/" + operation, ent.canon$({ string: 1 }), mement_ptr, desc);
-              return reply(null, result_ent);
-              function try_upsert(mement2, msg2) {
-                const { q, ent: ent2 } = msg2;
-                const upsert_on = intern_1.intern.clean_array(q.upsert$);
-                if (0 < upsert_on.length) {
-                  const has_upsert_fields = upsert_on.every((p) => p in mement2);
-                  if (has_upsert_fields) {
-                    const match_by = upsert_on.reduce((h, p) => {
-                      h[p] = mement2[p];
-                      return h;
-                    }, {});
-                    const updated_ent = intern_1.intern.update_mement(entmap, ent2, match_by, mement2);
-                    return updated_ent;
-                  }
-                }
-                return null;
-              }
-              function complete_save(mement2, msg2, id2, isnew2) {
-                const { ent: ent2 } = msg2;
-                if (null != id2) {
-                  mement2.id = id2;
-                }
-                const prev2 = entmap[base][name][mement2.id];
-                if (isnew2 && prev2) {
-                  seneca2.fail("entity-id-exists", {
-                    type: ent2.entity$,
-                    id: mement2.id
-                  });
-                  return;
-                }
-                const should_merge = intern_1.intern.should_merge(ent2, options);
-                if (should_merge) {
-                  mement2 = Object.assign(prev2 || {}, mement2);
-                }
-                entmap[base][name][mement2.id] = mement2;
-                return mement2;
-              }
-            }
-            function do_create() {
-              let id;
-              if (null != ent.id$) {
-                id = ent.id$;
-                delete ent.id$;
-                return do_save(id, true);
-              }
-              id = options.generate_id ? options.generate_id(ent) : void 0;
-              if (null == id) {
-                seneca2.fail("generate-invalid-entity-id", {
-                  type: ent.entity$,
-                  id
-                });
-              } else {
-                return do_save(id, true);
-              }
-            }
-          },
-          load: function(msg, reply) {
-            let qent = msg.qent;
-            let q = msg.q || {};
-            return intern_1.intern.listents(this, entmap, qent, q, function(err, list) {
-              let ent = list[0] || null;
-              this.log.debug("load", q, qent.canon$({ string: 1 }), ent, desc);
-              reply(err, ent);
-            });
-          },
-          list: function(msg, reply) {
-            let qent = msg.qent;
-            let q = msg.q || {};
-            return intern_1.intern.listents(this, entmap, qent, q, function(err, list) {
-              this.log.debug("list", q, qent.canon$({ string: 1 }), list.length, list[0], desc);
-              reply(err, list);
-            });
-          },
-          remove: function(msg, reply) {
-            let seneca2 = this;
-            let qent = msg.qent;
-            let q = msg.q || {};
-            let all = q.all$;
-            let load = q.load$ === true;
-            return intern_1.intern.listents(seneca2, entmap, qent, q, function(err, list) {
-              if (err) {
-                return reply(err);
-              }
-              list = list || [];
-              list = all ? list : list.slice(0, 1);
-              list.forEach(function(ent2) {
-                let canon = qent.canon$({
-                  object: true
-                });
-                delete entmap[canon.base][canon.name][ent2.id];
-                seneca2.log.debug("remove/" + (all ? "all" : "one"), q, qent.canon$({ string: 1 }), ent2, desc);
-              });
-              let ent = !all && load && list[0] || null;
-              reply(null, ent);
-            });
-          },
-          close: function(_msg, reply) {
-            this.log.debug("close", desc);
-            reply();
-          },
-          // .native() is used to handle calls to the underlying driver. Since
-          // there is no underlying driver for mem-store we simply return the
-          // default entityMap object.
-          native: function(_msg, reply) {
-            reply(null, entmap);
-          }
-        };
-        let meta = init2(seneca, options, store2);
-        desc = meta.desc;
-        seneca.add({ role: store2.name, cmd: "dump" }, function(_msg, reply) {
-          reply(null, entmap);
-        });
-        seneca.add({ role: store2.name, cmd: "export" }, function(_msg, reply) {
-          let entjson = JSON.stringify(entmap);
-          reply(null, { json: entjson });
-        });
-        seneca.add({ role: store2.name, cmd: "import" }, function(msg, reply) {
-          let imported = JSON.parse(msg.json);
-          entmap = msg.merge ? this.util.deepextend(entmap, imported) : imported;
-          reply();
-        });
-        seneca.init(function(reply) {
-          var _a;
-          if ((_a = options === null || options === void 0 ? void 0 : options.web) === null || _a === void 0 ? void 0 : _a.dump) {
-            this.act("role:web", {
-              use: {
-                prefix: options.prefix,
-                pin: { role: "mem-store", cmd: "*" },
-                map: { dump: true }
-              },
-              default$: {}
-            });
-          }
-          return reply();
-        });
-        return {
-          name: store2.name,
-          tag: meta.tag,
-          exportmap: {
-            native: entmap
-          }
-        };
-      }
-      mem_store.preload = function() {
-        let seneca = this;
-        let meta = {
-          name: internals.name,
-          exportmap: {
-            native: function() {
-              seneca.export(internals.name + "/native").apply(this, arguments);
-            }
-          }
-        };
-        return meta;
-      };
-      mem_store.defaults = {
-        "entity-id-exists": "Entity of type <%=type%> with id = <%=id%> already exists."
-      };
-      mem_store.intern = intern_1.intern;
-      Object.defineProperty(mem_store, "name", { value: "mem-store" });
-      exports3.default = mem_store;
-      if (true) {
-        module2.exports = mem_store;
-      }
-    })(memStore$1, memStore$1.exports);
-    return memStore$1.exports;
-  }
-  var entity_1 = entity.exports;
-  (function(module2, exports3) {
-    "use strict";
-    Object.defineProperty(exports3, "__esModule", { value: true });
-    const make_entity_1 = make_entity;
-    const store_1 = store;
-    function entity2(_options) {
-      return {
-        // Define name, as tools like rollup will rename this function, breaking stuff.
-        name: "entity"
-      };
-    }
-    entity2.defaults = {
-      mem_store: true,
-      generate_id,
-      pattern_fix: { sys: "entity" },
-      // Control stringification of entities
-      jsonic: {
-        depth: 7,
-        maxitems: 11,
-        maxchars: 111
-      },
-      log: {
-        active: false
-      },
-      // hide: Open({}),
-      meta: {
-        // Provide action meta object as third argument to callbacks.
-        provide: true
-      }
-    };
-    function preload(context) {
-      var _a;
-      const seneca = this;
-      const options = context.options;
-      seneca.util.parsecanon = seneca.util.parsecanon || make_entity_1.MakeEntity.parsecanon;
-      const sd = seneca.delegate();
-      seneca.private$.entity = seneca.private$.entity || (0, make_entity_1.MakeEntity)({}, sd, options);
-      seneca.private$.exports.Entity = seneca.private$.exports.Entity || make_entity_1.Entity;
-      function build_api_make(promise) {
-        let entityAPI = function entityAPI2() {
-          let ent = seneca.private$.entity.make$(this, ...[...arguments, promise]);
-          return ent;
-        };
-        return entityAPI;
-      }
-      let make = build_api_make(false);
-      let entity3 = build_api_make(true);
-      if (!seneca.make$) {
-        seneca.decorate("make$", make);
-      }
-      if (!seneca.make) {
-        seneca.decorate("make", make);
-      }
-      if (!seneca.entity) {
-        seneca.decorate("entity", entity3);
-      }
-      seneca.translate("role:entity,cmd:load", "sys:entity,role:null").translate("role:entity,cmd:save", "sys:entity,role:null").translate("role:entity,cmd:list", "sys:entity,role:null").translate("role:entity,cmd:remove", "sys:entity,role:null");
-      const store2 = (0, store_1.Store)(options);
-      if (options.mem_store) {
-        seneca.root.use(requireMemStore());
-      }
-      if ((_a = options.log) === null || _a === void 0 ? void 0 : _a.active) {
-        seneca.root.private$.exports.Entity.prototype.log$ = function() {
-          const seneca2 = this.private$.get_instance();
-          seneca2.log.apply(seneca2, arguments);
-        };
-      }
-      return {
-        // Define name, as tools like rollup will rename this function, breaking stuff.
-        name: "entity",
-        exports: {
-          store: store2,
-          init: store2.init,
-          generate_id: options.generate_id.bind(seneca)
-        }
-      };
-    }
-    entity2.preload = preload;
-    const nidCache = [];
-    function generate_id(msg, reply) {
-      let seneca = this;
-      let Nid = seneca.util.Nid;
-      let actnid = null == msg ? Nid({}) : null;
-      if (null == actnid) {
-        const length2 = "object" === typeof msg ? parseInt(msg.length, 10) || 6 : parseInt(msg, 10);
-        if (length2 < 65) {
-          actnid = nidCache[length2] || (nidCache[length2] = Nid({ length: length2 }));
-        } else {
-          actnid = Nid({ length: length2 });
-        }
-      }
-      return reply ? reply(actnid()) : actnid();
-    }
-    Object.defineProperty(entity2, "name", { value: "entity" });
-    exports3.default = entity2;
-    if (true) {
-      module2.exports = entity2;
-    }
-  })(entity, entity.exports);
-  var entityExports = entity.exports;
-  const SenecaEntity = /* @__PURE__ */ getDefaultExportFromCjs(entityExports);
-  var browserStore$1 = { exports: {} };
-  var browserStore = browserStore$1.exports;
-  (function(module2, exports3) {
-    "use strict";
-    Object.defineProperty(exports3, "__esModule", { value: true });
-    function BrowserStore2(options) {
-      let seneca = this;
-      let init2 = seneca.export("entity/init");
-      let ohr = options.handleResponse;
-      let handleResponse = ["save", "load", "list", "remove"].reduce((a, n) => (a[n] = ohr[n] || ohr.any, a), {});
-      const msglog = [];
-      function makeApiMsg(msg, ctx, options2) {
-        let apimsg = {};
-        let apimsgtm = options2.apimsg;
-        for (let pn in apimsgtm) {
-          let pv = apimsgtm[pn];
-          if ("function" === typeof pv) {
-            apimsg[pn] = pv(msg, ctx, options2);
-          } else {
-            apimsg[pn] = JSON.parse(JSON.stringify(pv));
-          }
-        }
-        return apimsg;
-      }
-      let store2 = {
-        name: "BrowserStore",
-        save: function(msg, reply, _meta) {
-          let logn = options.debug && logstart(arguments);
-          let ctx = options.prepareCtx(msg);
-          let apimsg = makeApiMsg(msg, ctx, options);
-          logn && (logn.ctx = ctx) && (logn.apimsg = apimsg);
-          this.act(apimsg, function save_result(err, res, apimeta) {
-            logn && (logn.apiend = Date.now()) && (logn.err = err) && (logn.res = res) && (logn.apimeta = apimeta);
-            return handleResponse.save(this, ctx, reply, err, res, apimeta, logn);
-          });
-        },
-        load: function(msg, reply, _meta) {
-          let logn = options.debug && logstart(arguments);
-          let ctx = options.prepareCtx(msg);
-          let apimsg = makeApiMsg(msg, ctx, options);
-          logn && (logn.ctx = ctx) && (logn.apimsg = apimsg);
-          this.act(apimsg, function load_result(err, res, apimeta) {
-            logn && logres(logn, arguments);
-            return handleResponse.load(this, ctx, reply, err, res, apimeta, logn);
-          });
-        },
-        list: function(msg, reply, _meta) {
-          let logn = options.debug && logstart(arguments);
-          let ctx = options.prepareCtx(msg);
-          let apimsg = makeApiMsg(msg, ctx, options);
-          logn && (logn.ctx = ctx) && (logn.apimsg = apimsg);
-          this.act(apimsg, function list_result(err, res, apimeta) {
-            logn && logres(logn, arguments);
-            return handleResponse.list(this, ctx, reply, err, res, apimeta, logn);
-          });
-        },
-        remove: function(msg, reply, _meta) {
-          let logn = options.debug && logstart(arguments);
-          let ctx = options.prepareCtx(msg);
-          let apimsg = makeApiMsg(msg, ctx, options);
-          logn && (logn.ctx = ctx) && (logn.apimsg = apimsg);
-          this.act(apimsg, function remove_result(err, res, apimeta) {
-            logn && logres(logn, arguments);
-            return handleResponse.remove(this, ctx, reply, err, res, apimeta, logn);
-          });
-        },
-        close: function(_msg, reply) {
-          reply();
-        },
-        native: function(_msg, reply) {
-          reply();
-        }
-      };
-      let meta = init2(seneca, options, store2);
-      function logstart(args) {
-        let logn = options.debug && {
-          msg: args[0],
-          meta: args[2],
-          start: Date.now()
-        };
-        logn && msglog.push(logn);
-        return logn;
-      }
-      function logres(logn, args) {
-        logn.apiend = Date.now();
-        logn.err = args[0];
-        logn.res = args[1];
-        logn.apimeta = args[2];
-        return logn;
-      }
-      return {
-        name: store2.name,
-        tag: meta.tag,
-        exports: {
-          makeApiMsg,
-          msglog
-        }
-      };
-    }
-    BrowserStore2.defaults = {
-      debug: false,
-      apimsg: {
-        aim: "req",
-        on: "entity",
-        debounce$: true,
-        q: (msg, _ctx) => msg.q,
-        ent: (msg, _ctx) => msg.ent,
-        cmd: (_msg, ctx) => ctx.cmd,
-        canon: (msg, _ctx) => (msg.ent || msg.qent).entity$,
-        store: (_msg, ctx) => ctx.store
-      },
-      prepareCtx: (msg, ctx) => {
-        ctx = ctx || {};
-        let q = msg.q;
-        ctx.store = false !== q.store$;
-        delete q.store$;
-        ctx.cmd = msg.cmd;
-        ctx.canon = (msg.ent || msg.qent).entity$;
-        return ctx;
-      },
-      handleResponse: {
-        any: function(_seneca, ctx, reply, err, res, _apimeta, logn) {
-          logn && (logn.end = Date.now());
-          if (err) {
-            reply(err);
-          }
-          if (res && res.ok) {
-            reply(res.ent);
-          } else {
-            reply(res && res.err || new Error(`BrowserStore: ${ctx.cmd} ${ctx.canon}: unknown error`));
-          }
-        },
-        list: function(seneca, ctx, reply, err, res, _apimeta, logn) {
-          logn && (logn.end = Date.now());
-          if (err)
-            reply(err);
-          if (res && res.ok && res.list) {
-            let list = res.list.map((item) => seneca.entity(ctx.canon).data$(item));
-            logn && (logn.end = Date.now());
-            reply(list);
-          } else {
-            reply(res && res.err || new Error(`BrowserStore: ${ctx.cmd} ${ctx.canon}: unknown list error`));
-          }
-        }
-      }
-    };
-    exports3.default = BrowserStore2;
-    if (true) {
-      module2.exports = BrowserStore2;
-    }
-  })(browserStore$1, browserStore$1.exports);
-  var browserStoreExports = browserStore$1.exports;
-  const BrowserStore = /* @__PURE__ */ getDefaultExportFromCjs(browserStoreExports);
+  var jsxRuntimeExports = requireJsxRuntime();
+  const jsxRuntime = /* @__PURE__ */ getDefaultExportFromCjs(jsxRuntimeExports);
   var gubu_min$2 = { exports: {} };
   var gubu_min = gubu_min$2.exports;
   (function(module2, exports3) {
@@ -2490,26 +1066,26 @@ var __async = (__this, __arguments, generator) => {
     }(function() {
       var e = {}, t = {};
       Object.defineProperty(t, "__esModule", { value: true }), t.Gubu = void 0;
-      const n = Symbol.for("gubu$"), l = { gubu$: n, v$: "6.0.1" }, r2 = Symbol.for("gubu$nil"), i = /^[A-Z]/, o = "gubu", s = "name", u = "nan", a = "never", c = "number", f = "required", p = "array", h = "function", v = "object", d = "string", g = "boolean", m = "undefined", y = "any", b = "list", x = "instance", $ = "null", I = "type", k = "closed", j = "shape", w = "check", O = "Object", N = "Array", S = "Function", V = "Value", R = "Above", A = "All", D = "Below", E = "Max", C = "Min", G = "Len", B = "One", T = "Some", M = " for property ", L = '"$PATH"', F = '"$VALUE"', P = (e2) => Object.keys(e2), z = (e2, t2, n2) => Object.defineProperty(e2, t2, n2), q = (e2) => Array.isArray(e2), W = (e2) => JSON.parse(e2), _2 = (e2, t2) => JSON.stringify(e2, t2);
-      class J {
-        constructor(e2, t2, n2, l2) {
-          this.match = false, this.dI = 0, this.nI = 2, this.cI = -1, this.pI = 0, this.sI = -1, this.valType = a, this.isRoot = false, this.key = "", this.type = a, this.stop = true, this.nextSibling = true, this.fromDefault = false, this.ignoreVal = void 0, this.curerr = [], this.err = [], this.parents = [], this.keys = [], this.path = [], this.root = e2, this.vals = [e2, -1], this.node = t2, this.nodes = [t2, -1], this.ctx = n2 || {}, this.match = !!l2;
+      const n = Symbol.for("gubu$"), r2 = { gubu$: n, v$: "7.0.0" }, l = Symbol.for("gubu$nil"), i = /^[A-Z]/, { toString: o } = Object.prototype, s = "gubu", u = "name", a = "nan", c = "never", f = "number", p = "required", h = "array", v = "function", d = "object", g = "string", y = "boolean", m = "undefined", b = "any", $ = "list", x = "instance", I = "null", k = "type", j = "closed", w = "shape", O = "check", N = "regexp", S = "Object", V = "Array", R = "Function", A = "Value", D = "Above", E = "All", C = "Below", G = "Max", T = "Min", B = "Len", M = "One", L = "Some", P = " for property ", F = '"$PATH"', z = '"$VALUE"', q = (e2) => Object.keys(e2), W = (e2, t2, n2) => Object.defineProperty(e2, t2, n2), _2 = (e2) => Array.isArray(e2), J = (e2) => JSON.parse(e2), H = (e2, t2) => JSON.stringify(e2, t2);
+      class U {
+        constructor(e2, t2, n2, r3) {
+          this.match = false, this.dI = 0, this.nI = 2, this.cI = -1, this.pI = 0, this.sI = -1, this.valType = c, this.isRoot = false, this.key = "", this.type = c, this.stop = true, this.nextSibling = true, this.fromDflt = false, this.ignoreVal = void 0, this.curerr = [], this.err = [], this.parents = [], this.keys = [], this.path = [], this.root = e2, this.vals = [e2, -1], this.node = t2, this.nodes = [t2, -1], this.ctx = n2 || {}, this.match = !!r3;
         }
         next() {
-          this.stop = false, this.fromDefault = false, this.ignoreVal = void 0, this.isRoot = 0 === this.pI, this.check = void 0;
+          this.stop = false, this.fromDflt = false, this.ignoreVal = void 0, this.isRoot = 0 === this.pI, this.check = void 0;
           let e2 = this.nodes[this.pI];
           for (; +e2; )
-            this.dI--, this.ctx.log && -1 < this.dI && this.ctx.log("e" + (q(this.parents[this.pI]) ? "a" : "o"), this), this.pI = +e2, e2 = this.nodes[this.pI];
+            this.dI--, this.ctx.log && -1 < this.dI && this.ctx.log("e" + (_2(this.parents[this.pI]) ? "a" : "o"), this), this.pI = +e2, e2 = this.nodes[this.pI];
           e2 ? (this.node = e2, this.updateVal(this.vals[this.pI]), this.key = this.keys[this.pI], this.cI = this.pI, this.sI = this.pI + 1, this.parent = this.parents[this.pI], this.nextSibling = true, this.type = this.node.t, this.path[this.dI] = this.key, this.oval = this.val, this.curerr.length = 0) : this.stop = true;
         }
         updateVal(e2) {
-          this.val = e2, this.valType = typeof this.val, c === this.valType && isNaN(this.val) && (this.valType = u), this.isRoot && !this.match && (this.root = this.val);
+          this.val = e2, this.valType = typeof this.val, f === this.valType && isNaN(this.val) && (this.valType = a), this.isRoot && !this.match && (this.root = this.val);
         }
       }
-      class H extends TypeError {
-        constructor(e2, t2, n2, l2) {
-          var r3;
-          super((t2 = null == t2 ? "" : t2 + ": ") + n2.map((e3) => e3.t).join("\n")), this.gubu = true, this.name = "GubuError", this.code = e2, this.prefix = t2, this.desc = () => ({ name: "GubuError", code: e2, err: n2, ctx: l2 }), this.stack = null === (r3 = this.stack) || void 0 === r3 ? void 0 : r3.replace(/.*\/gubu\/gubu\.[tj]s.*\n/g, ""), this.props = n2.map((e3) => {
+      class K extends TypeError {
+        constructor(e2, t2, n2, r3) {
+          var l2;
+          super((t2 = null == t2 ? "" : t2 + ": ") + n2.map((e3) => e3.t).join("\n")), this.gubu = true, this.name = "GubuError", this.code = e2, this.prefix = t2, this.desc = () => ({ name: "GubuError", code: e2, err: n2, ctx: r3 }), this.stack = null === (l2 = this.stack) || void 0 === l2 ? void 0 : l2.replace(/.*\/gubu\/gubu\.[tj]s.*\n/g, ""), this.props = n2.map((e3) => {
             var t3;
             return { path: e3.p, what: e3.w, type: null === (t3 = e3.n) || void 0 === t3 ? void 0 : t3.t, value: e3.v };
           });
@@ -2518,378 +1094,389 @@ var __async = (__this, __arguments, generator) => {
           return Object.assign(Object.assign({}, this), { err: this.desc().err, name: this.name, message: this.message });
         }
       }
-      const U = { String: true, Number: true, Boolean: true, Object: true, Array: true, Function: true, Symbol: true, BigInt: true }, K = { string: "", number: 0, boolean: false, object: {}, array: [], symbol: Symbol(""), bigint: BigInt(0), null: null };
-      function Z(e2, t2, o2) {
-        var s2, a2, f2, g2;
-        if (Q === e2)
+      const Z = { String: true, Number: true, Boolean: true, Object: true, Array: true, Function: true, Symbol: true, BigInt: true }, Q = { string: "", number: 0, boolean: false, object: {}, array: [], symbol: Symbol(""), bigint: BigInt(0), null: null, regexp: /.*/ };
+      function X(e2, t2, s2) {
+        var u2, c2, p2, y2;
+        if (Y === e2)
           e2 = void 0;
-        else if (null != e2 && (null === (s2 = e2.$) || void 0 === s2 ? void 0 : s2.gubu$)) {
+        else if (null != e2 && (null === (u2 = e2.$) || void 0 === u2 ? void 0 : u2.gubu$)) {
           if (n === e2.$.gubu$)
             return e2.d = null == t2 ? e2.d : t2, e2;
           if (true === e2.$.gubu$) {
-            let l2 = Object.assign({}, e2);
-            return l2.$ = Object.assign(Object.assign({ v$: "6.0.1" }, l2.$), { gubu$: n }), l2.v = null != l2.v && v === typeof l2.v ? Object.assign({}, l2.v) : l2.v, l2.t = l2.t || typeof l2.v, h === l2.t && U[l2.v.name] && (l2.t = l2.v.name.toLowerCase(), l2.v = Me(K[l2.t]), l2.f = l2.v), l2.r = !!l2.r, l2.p = !!l2.p, l2.d = null == t2 ? null == l2.d ? -1 : l2.d : t2, l2.b = l2.b || [], l2.a = l2.a || [], l2.u = l2.u || {}, l2.m = l2.m || o2 || {}, l2;
+            let r3 = Object.assign({}, e2);
+            return r3.$ = Object.assign(Object.assign({ v$: "7.0.0" }, r3.$), { gubu$: n }), r3.v = null != r3.v && d === typeof r3.v ? Object.assign({}, r3.v) : r3.v, r3.t = r3.t || typeof r3.v, v === r3.t && Z[r3.v.name] && (r3.t = r3.v.name.toLowerCase(), r3.v = Pe(Q[r3.t]), r3.f = r3.v), r3.r = !!r3.r, r3.p = !!r3.p, r3.d = null == t2 ? null == r3.d ? -1 : r3.d : t2, r3.b = r3.b || [], r3.a = r3.a || [], r3.u = r3.u || {}, r3.m = r3.m || s2 || {}, r3;
           }
         }
-        let b2 = null === e2 ? $ : typeof e2;
-        b2 = m === b2 ? y : b2;
-        let I2 = e2, k2 = I2, j2 = r2, w2 = false, N2 = {}, V2 = [], R2 = [];
-        if (v === b2)
-          k2 = void 0, q(I2) ? (b2 = p, 1 === I2.length && (j2 = I2[0], I2 = [])) : null != I2 && Function !== I2.constructor && Object !== I2.constructor && null != I2.constructor ? (b2 = x, N2.n = I2.constructor.name, N2.i = I2.constructor, k2 = I2) : 0 === P(I2).length && (j2 = oe());
-        else if (h === b2)
-          if (U[e2.name])
-            b2 = e2.name.toLowerCase(), w2 = true, I2 = Me(K[b2]), k2 = I2, O === e2.name && (j2 = oe());
-          else if (I2.gubu === l || true === (null === (a2 = I2.$) || void 0 === a2 ? void 0 : a2.gubu)) {
-            let e3 = I2.node ? I2.node() : I2;
-            b2 = e3.t, I2 = e3.v, k2 = I2, w2 = e3.r, N2 = Object.assign({}, e3.u), V2 = [...e3.a], R2 = [...e3.b];
+        let $2 = null === e2 ? I : typeof e2;
+        $2 = m === $2 ? b : $2;
+        let k2 = e2, j2 = k2, w2 = l, O2 = false, V2 = {}, A2 = [], D2 = [];
+        if (d === $2)
+          j2 = void 0, _2(k2) ? ($2 = h, 1 === k2.length && (w2 = k2[0], k2 = [])) : null != k2 && Function !== k2.constructor && Object !== k2.constructor && null != k2.constructor ? ("[object RegExp]" === o.call(k2) ? ($2 = N, O2 = true) : ($2 = x, V2.n = k2.constructor.name, V2.i = k2.constructor), j2 = k2) : 0 === q(k2).length && (w2 = ue());
+        else if (v === $2)
+          if (Z[e2.name])
+            $2 = e2.name.toLowerCase(), O2 = true, k2 = Pe(Q[$2]), j2 = k2, S === e2.name && (w2 = ue());
+          else if (k2.gubu === r2 || true === (null === (c2 = k2.$) || void 0 === c2 ? void 0 : c2.gubu)) {
+            let e3 = k2.node ? k2.node() : k2;
+            $2 = e3.t, k2 = e3.v, j2 = k2, O2 = e3.r, V2 = Object.assign({}, e3.u), A2 = [...e3.a], D2 = [...e3.b];
           } else
-            S === I2.constructor.name && i.test(I2.name) && (b2 = x, w2 = true, N2.n = null === (g2 = null === (f2 = I2.prototype) || void 0 === f2 ? void 0 : f2.constructor) || void 0 === g2 ? void 0 : g2.name, N2.i = I2);
+            R === k2.constructor.name && i.test(k2.name) && ($2 = x, O2 = true, V2.n = null === (y2 = null === (p2 = k2.prototype) || void 0 === p2 ? void 0 : p2.constructor) || void 0 === y2 ? void 0 : y2.name, V2.i = k2);
         else
-          c === b2 && isNaN(I2) ? b2 = u : d === b2 && "" === I2 && (N2.empty = true);
-        let A2 = null == I2 || v !== b2 && p !== b2 ? I2 : Object.assign({}, I2);
-        return { $: l, t: b2, v: A2, f: k2, n: null != A2 && v === typeof A2 ? P(A2).length : 0, c: j2, r: w2, p: false, d: null == t2 ? -1 : t2, k: [], e: true, u: N2, a: V2, b: R2, m: o2 || {} };
+          f === $2 && isNaN(k2) ? $2 = a : g === $2 && "" === k2 && (V2.empty = true);
+        let E2 = null == k2 || d !== $2 && h !== $2 ? k2 : Object.assign({}, k2);
+        return { $: r2, t: $2, v: E2, f: j2, n: null != E2 && d === typeof E2 ? q(E2).length : 0, c: w2, r: O2, p: false, d: null == t2 ? -1 : t2, k: [], e: true, u: V2, a: A2, b: D2, m: s2 || {} };
       }
-      function Q(t2, i2) {
+      function Y(t2, i2) {
         const o2 = null == i2 ? {} : i2;
         o2.name = null == o2.name ? "G" + ("" + Math.random()).substring(2, 8) : "" + o2.name, o2.prefix = null == o2.prefix ? void 0 : o2.prefix;
         let s2 = o2.meta = o2.meta || {};
-        s2.active = true === s2.active || false, s2.suffix = d == typeof s2.suffix ? s2.suffix : "$$";
+        s2.active = true === s2.active || false, s2.suffix = g == typeof s2.suffix ? s2.suffix : "$$";
         let u2 = o2.keyexpr = o2.keyexpr || {};
         u2.active = false !== u2.active;
-        let c2 = Z(t2, 0);
-        function h2(e2, t3, n2) {
-          let l2 = new J(e2, c2, t3, n2);
-          for (; l2.next(), !l2.stop; ) {
-            let t4 = l2.node, n3 = false, i3 = false;
+        let a2 = X(t2, 0);
+        function f2(e2, t3, n2) {
+          let r3 = new U(e2, a2, t3, n2);
+          for (; r3.next(), !r3.stop; ) {
+            let t4 = r3.node, n3 = false, i3 = false;
             if (0 < t4.b.length)
               for (let e3 = 0; e3 < t4.b.length; e3++) {
-                let r3 = Y(t4.b[e3], l2);
-                t4 = l2.node, void 0 !== r3.done && (n3 = r3.done), i3 = i3 || !!r3.fatal;
+                let l2 = te(t4.b[e3], r3);
+                t4 = r3.node, void 0 !== l2.done && (n3 = l2.done), i3 = i3 || !!l2.fatal;
               }
             if (!n3) {
-              let n4 = true, i4 = void 0 === l2.val;
-              if (a === l2.type)
-                l2.curerr.push(Ge(a, l2, 1070));
-              else if (v === l2.type) {
+              let n4 = true, i4 = void 0 === r3.val;
+              if (c === r3.type)
+                r3.curerr.push(Be(c, r3, 1070));
+              else if (d === r3.type) {
                 let e3;
-                if (t4.r && i4 ? (l2.ignoreVal = true, l2.curerr.push(Ge(f, l2, 1010))) : i4 || null !== l2.val && v === l2.valType && !q(l2.val) ? !t4.p && i4 && void 0 !== t4.f ? (l2.updateVal(t4.f), l2.fromDefault = true, e3 = l2.val, n4 = false) : t4.p && i4 || (l2.updateVal(l2.val || (l2.fromDefault = true, {})), e3 = l2.val) : (l2.curerr.push(Ge(I, l2, 1020)), e3 = q(l2.val) ? l2.val : {}), n4 && (e3 = null == e3 && false === l2.ctx.err ? {} : e3, null != e3)) {
-                  l2.ctx.log && l2.ctx.log("so", l2);
-                  let n5 = false, i5 = P(t4.v), o4 = l2.nI;
+                if (t4.r && i4 ? (r3.ignoreVal = true, r3.curerr.push(Be(p, r3, 1010))) : i4 || null !== r3.val && d === r3.valType && !_2(r3.val) ? !t4.p && i4 && void 0 !== t4.f ? (r3.updateVal(t4.f), r3.fromDflt = true, e3 = r3.val, n4 = false) : t4.p && i4 || (r3.updateVal(r3.val || (r3.fromDflt = true, {})), e3 = r3.val) : (r3.curerr.push(Be(k, r3, 1020)), e3 = _2(r3.val) ? r3.val : {}), n4 && (e3 = null == e3 && false === r3.ctx.err ? {} : e3, null != e3)) {
+                  r3.ctx.log && r3.ctx.log("so", r3);
+                  let n5 = false, i5 = q(t4.v), o4 = r3.nI;
                   if (0 < i5.length) {
-                    n5 = true, l2.pI = o4;
+                    n5 = true, r3.pI = o4;
                     for (let n6 = 0; n6 < i5.length; n6++) {
-                      let r3, o5 = i5[n6];
+                      let l2, o5 = i5[n6];
                       if (s2.active && o5.endsWith(s2.suffix)) {
-                        if (r3 = { short: "" }, d === typeof t4.v[o5] ? r3.short = t4.v[o5] : r3 = Object.assign(Object.assign({}, r3), t4.v[o5]), delete t4.v[o5], n6++, i5.length <= n6)
+                        if (l2 = { short: "" }, g === typeof t4.v[o5] ? l2.short = t4.v[o5] : l2 = Object.assign(Object.assign({}, l2), t4.v[o5]), delete t4.v[o5], n6++, i5.length <= n6)
                           break;
                         if (i5[n6] !== o5.substring(0, o5.length - s2.suffix.length))
                           throw new Error("Invalid meta key: " + o5);
                         o5 = i5[n6];
                       }
-                      let a3 = o5, c3 = t4.v[o5];
+                      let a4 = o5, c2 = t4.v[o5];
                       if (u2.active) {
                         let e4 = /^\s*("(\\.|[^"\\])*"|[^\s]+):\s*(.*?)\s*$/.exec(o5);
-                        e4 && (a3 = e4[1], c3 = X({ src: e4[3], val: c3 }), delete t4.v[o5]);
+                        e4 && (a4 = e4[1], c2 = ee({ src: e4[3], val: c2 }), delete t4.v[o5]);
                       }
-                      let f2 = Z(c3, 1 + l2.dI, r3);
-                      t4.v[a3] = f2, t4.k.includes(a3) || t4.k.push(a3), l2.nodes[l2.nI] = f2, l2.vals[l2.nI] = e3[a3], l2.parents[l2.nI] = e3, l2.keys[l2.nI] = a3, l2.nI++;
+                      let f3 = X(c2, 1 + r3.dI, l2);
+                      t4.v[a4] = f3, t4.k.includes(a4) || t4.k.push(a4), r3.nodes[r3.nI] = f3, r3.vals[r3.nI] = e3[a4], r3.parents[r3.nI] = e3, r3.keys[r3.nI] = a4, r3.nI++;
                     }
                   }
-                  let a2 = P(e3).filter((e4) => void 0 === t4.v[e4]);
-                  if (0 < a2.length)
-                    if (r2 === t4.c)
-                      l2.ignoreVal = true, l2.curerr.push(Ge(k, l2, 1100, void 0, { k: a2 }));
+                  let a3 = q(e3).filter((e4) => void 0 === t4.v[e4]);
+                  if (0 < a3.length)
+                    if (l === t4.c)
+                      r3.ignoreVal = true, r3.curerr.push(Be(j, r3, 1100, void 0, { k: a3 }));
                     else {
-                      n5 = true, l2.pI = o4;
-                      for (let n6 of a2) {
-                        let r3 = t4.c = Z(t4.c, 1 + l2.dI);
-                        l2.nodes[l2.nI] = r3, l2.vals[l2.nI] = e3[n6], l2.parents[l2.nI] = e3, l2.keys[l2.nI] = n6, l2.nI++;
+                      n5 = true, r3.pI = o4;
+                      for (let n6 of a3) {
+                        let l2 = t4.c = X(t4.c, 1 + r3.dI);
+                        r3.nodes[r3.nI] = l2, r3.vals[r3.nI] = e3[n6], r3.parents[r3.nI] = e3, r3.keys[r3.nI] = n6, r3.nI++;
                       }
                     }
-                  n5 ? (l2.dI++, l2.nodes[l2.nI] = l2.sI, l2.parents[l2.nI] = e3, l2.nextSibling = false, l2.nI++) : l2.ctx.log && l2.ctx.log("eo", l2);
+                  n5 ? (r3.dI++, r3.nodes[r3.nI] = r3.sI, r3.parents[r3.nI] = e3, r3.nextSibling = false, r3.nI++) : r3.ctx.log && r3.ctx.log("eo", r3);
                 }
-              } else if (p === l2.type)
+              } else if (h === r3.type)
                 if (t4.r && i4)
-                  l2.ignoreVal = true, l2.curerr.push(Ge(f, l2, 1030));
-                else if (i4 || q(l2.val)) {
+                  r3.ignoreVal = true, r3.curerr.push(Be(p, r3, 1030));
+                else if (i4 || _2(r3.val)) {
                   if (!t4.p && i4 && void 0 !== t4.f)
-                    l2.updateVal(t4.f), l2.fromDefault = true;
-                  else if (!t4.p || null != l2.val) {
-                    l2.updateVal(l2.val || (l2.fromDefault = true, []));
-                    let n5 = r2 !== t4.c, i5 = 0 < l2.val.length, o4 = P(t4.v).filter((e3) => !isNaN(+e3)), s3 = 0 < o4.length;
-                    if (l2.ctx.log && l2.ctx.log("sa", l2), i5 || s3) {
-                      l2.pI = l2.nI;
+                    r3.updateVal(t4.f), r3.fromDflt = true;
+                  else if (!t4.p || null != r3.val) {
+                    r3.updateVal(r3.val || (r3.fromDflt = true, []));
+                    let n5 = l !== t4.c, i5 = 0 < r3.val.length, o4 = q(t4.v).filter((e3) => !isNaN(+e3)), s3 = 0 < o4.length;
+                    if (r3.ctx.log && r3.ctx.log("sa", r3), i5 || s3) {
+                      r3.pI = r3.nI;
                       let e3 = 0;
                       if (s3)
-                        if (o4.length < l2.val.length && !n5)
-                          l2.ignoreVal = true, l2.curerr.push(Ge(k, l2, 1090, void 0, { k: o4.length }));
+                        if (o4.length < r3.val.length && !n5)
+                          r3.ignoreVal = true, r3.curerr.push(Be(j, r3, 1090, void 0, { k: o4.length }));
                         else
                           for (; e3 < o4.length; e3++) {
-                            let n6 = t4.v[e3] = Z(t4.v[e3], 1 + l2.dI);
-                            l2.nodes[l2.nI] = n6, l2.vals[l2.nI] = l2.val[e3], l2.parents[l2.nI] = l2.val, l2.keys[l2.nI] = "" + e3, l2.nI++;
+                            let n6 = t4.v[e3] = X(t4.v[e3], 1 + r3.dI);
+                            r3.nodes[r3.nI] = n6, r3.vals[r3.nI] = r3.val[e3], r3.parents[r3.nI] = r3.val, r3.keys[r3.nI] = "" + e3, r3.nI++;
                           }
                       if (n5 && i5) {
-                        let n6 = t4.c = Z(t4.c, 1 + l2.dI);
-                        for (; e3 < l2.val.length; e3++)
-                          l2.nodes[l2.nI] = n6, l2.vals[l2.nI] = l2.val[e3], l2.parents[l2.nI] = l2.val, l2.keys[l2.nI] = "" + e3, l2.nI++;
+                        let n6 = t4.c = X(t4.c, 1 + r3.dI);
+                        for (; e3 < r3.val.length; e3++)
+                          r3.nodes[r3.nI] = n6, r3.vals[r3.nI] = r3.val[e3], r3.parents[r3.nI] = r3.val, r3.keys[r3.nI] = "" + e3, r3.nI++;
                       }
-                      l2.ignoreVal || (l2.dI++, l2.nodes[l2.nI] = l2.sI, l2.parents[l2.nI] = l2.val, l2.nextSibling = false, l2.nI++);
+                      r3.ignoreVal || (r3.dI++, r3.nodes[r3.nI] = r3.sI, r3.parents[r3.nI] = r3.val, r3.nextSibling = false, r3.nI++);
                     } else
-                      l2.ctx.log && n5 && null == e2 && l2.ctx.log("kv", Object.assign(Object.assign({}, l2), { key: 0, val: t4.c })), l2.ctx.log && l2.ctx.log("ea", l2);
+                      r3.ctx.log && n5 && null == e2 && r3.ctx.log("kv", Object.assign(Object.assign({}, r3), { key: 0, val: t4.c })), r3.ctx.log && r3.ctx.log("ea", r3);
                   }
                 } else
-                  l2.curerr.push(Ge(I, l2, 1040));
-              else if (y === l2.type || b === l2.type || void 0 === l2.val || l2.type === l2.valType || x === l2.type && t4.u.i && l2.val instanceof t4.u.i || $ === l2.type && null === l2.val)
-                if (void 0 === l2.val) {
-                  let e3 = l2.path[l2.dI];
-                  !t4.r || m === l2.type && l2.parent.hasOwnProperty(e3) ? void 0 !== t4.f && !t4.p || m === l2.type ? (l2.updateVal(t4.f), l2.fromDefault = true) : y === l2.type && (l2.ignoreVal = void 0 === l2.ignoreVal || l2.ignoreVal) : (l2.ignoreVal = true, l2.curerr.push(Ge(f, l2, 1060))), l2.ctx.log && l2.ctx.log("kv", l2);
+                  r3.curerr.push(Be(k, r3, 1040));
+              else if (N === r3.type)
+                i4 && !t4.r ? r3.ignoreVal = true : g !== r3.valType ? (r3.ignoreVal = true, r3.curerr.push(Be(k, r3, 1045))) : r3.val.match(t4.v) || (r3.ignoreVal = true, r3.curerr.push(Be(N, r3, 1045)));
+              else if (b === r3.type || $ === r3.type || void 0 === r3.val || r3.type === r3.valType || x === r3.type && t4.u.i && r3.val instanceof t4.u.i || I === r3.type && null === r3.val)
+                if (void 0 === r3.val) {
+                  let e3 = r3.path[r3.dI];
+                  !t4.r || m === r3.type && r3.parent.hasOwnProperty(e3) ? void 0 !== t4.f && !t4.p || m === r3.type ? (r3.updateVal(t4.f), r3.fromDflt = true) : b === r3.type && (r3.ignoreVal = void 0 === r3.ignoreVal || r3.ignoreVal) : (r3.ignoreVal = true, r3.curerr.push(Be(p, r3, 1060))), r3.ctx.log && r3.ctx.log("kv", r3);
                 } else
-                  d !== l2.type || "" !== l2.val || t4.u.empty || l2.curerr.push(Ge(f, l2, 1080)), l2.ctx.log && l2.ctx.log("kv", l2);
+                  g !== r3.type || "" !== r3.val || t4.u.empty || r3.curerr.push(Be(p, r3, 1080)), r3.ctx.log && r3.ctx.log("kv", r3);
               else
-                l2.curerr.push(Ge(I, l2, 1050));
+                r3.curerr.push(Be(k, r3, 1050));
             }
             if (0 < t4.a.length)
               for (let e3 = 0; e3 < t4.a.length; e3++) {
-                let r3 = Y(t4.a[e3], l2);
-                t4 = l2.node, void 0 !== r3.done && (n3 = r3.done), i3 = i3 || !!r3.fatal;
+                let l2 = te(t4.a[e3], r3);
+                t4 = r3.node, void 0 !== l2.done && (n3 = l2.done), i3 = i3 || !!l2.fatal;
               }
-            let o3 = l2.node.p ? false !== l2.ignoreVal : !!l2.ignoreVal;
-            !l2.match && null != l2.parent && !n3 && !o3 && (l2.parent[l2.key] = l2.val), l2.nextSibling && (l2.pI = l2.sI), (l2.node.e || i3) && l2.err.push(...l2.curerr);
+            let o3 = r3.node.p ? false !== r3.ignoreVal : !!r3.ignoreVal;
+            !r3.match && null != r3.parent && !n3 && !o3 && (r3.parent[r3.key] = r3.val), r3.nextSibling && (r3.pI = r3.sI), (r3.node.e || i3) && r3.err.push(...r3.curerr);
           }
-          if (0 < l2.err.length) {
-            if (q(l2.ctx.err))
-              l2.ctx.err.push(...l2.err);
-            else if (!l2.match && false !== l2.ctx.err)
-              throw new H(j, o2.prefix, l2.err, l2.ctx);
+          if (0 < r3.err.length) {
+            if (_2(r3.ctx.err))
+              r3.ctx.err.push(...r3.err);
+            else if (!r3.match && false !== r3.ctx.err)
+              throw new K(w, o2.prefix, r3.err, r3.ctx);
           }
-          return l2.match ? 0 === l2.err.length : l2.root;
+          return r3.match ? 0 === r3.err.length : r3.root;
         }
-        function g2(e2, t3) {
-          return h2(e2, t3, false);
+        function v2(e2, t3) {
+          return f2(e2, t3, false);
         }
-        g2.valid = function(e2, t3) {
+        v2.valid = function(e2, t3) {
           let n2 = t3 || {};
-          return n2.err = n2.err || [], h2(e2, n2, false), 0 === n2.err.length;
-        }, g2.match = (e2, t3) => h2(e2, t3 = t3 || {}, true), g2.error = (e2, t3) => {
+          return n2.err = n2.err || [], f2(e2, n2, false), 0 === n2.err.length;
+        }, v2.match = (e2, t3) => f2(e2, t3 = t3 || {}, true), v2.error = (e2, t3) => {
           let n2 = t3 || {};
-          return n2.err = n2.err || [], h2(e2, n2, false), n2.err;
-        }, g2.spec = () => (g2(void 0, { err: false }), W(Te(c2, (e2, t3) => n === t3 || t3, false, true))), g2.node = () => (g2.spec(), c2);
-        let w2 = "";
-        return g2.toString = () => (w2 = ne("" === w2 ? Te(c2 && c2.$ && (n === c2.$.gubu$ || true === c2.$.gubu$) ? c2.v : c2) : w2), `[Gubu ${o2.name} ${w2}]`), e.inspect && e.inspect.custom && (g2[e.inspect.custom] = g2.toString), g2.gubu = l, g2.spec(), g2;
+          return n2.err = n2.err || [], f2(e2, n2, false), n2.err;
+        }, v2.spec = () => (v2(void 0, { err: false }), J(Le(a2, (e2, t3) => n === t3 || t3, false, true))), v2.node = () => (v2.spec(), a2), v2.stringify = (e2) => {
+          let t3 = null == e2 ? a2 : e2.node && e2.node();
+          return t3 = null == t3 || !t3.$ || n !== t3.$.gubu$ && true !== t3.$.gubu$ ? t3 : t3.v, qe.stringify(t3);
+        };
+        let y2 = "";
+        return v2.toString = () => (y2 = le("" === y2 ? Le(null == a2 || !a2.$ || n !== a2.$.gubu$ && true !== a2.$.gubu$ ? a2 : a2.v) : y2), `[Gubu ${o2.name} ${y2}]`), e.inspect && e.inspect.custom && (v2[e.inspect.custom] = v2.toString), v2.gubu = r2, v2.spec(), v2;
       }
-      function X(e2) {
+      function ee(e2) {
         let t2 = false;
         if (null == e2.tokens) {
           t2 = true, e2.tokens = [];
-          let n3 = /\s*,?\s*([)(\.]|"(\\.|[^"\\])*"|\/(\\.|[^\/\\])*\/[a-z]?|[^)(,\s]+)\s*/g, l3 = null;
-          for (; l3 = n3.exec(e2.src); )
-            e2.tokens.push(l3[1]);
+          let n3 = /\s*,?\s*([)(\.]|"(\\.|[^"\\])*"|\/(\\.|[^\/\\])*\/[a-z]?|[^)(,\s]+)\s*/g, r4 = null;
+          for (; r4 = n3.exec(e2.src); )
+            e2.tokens.push(r4[1]);
         }
         e2.i = e2.i || 0;
-        let n2 = e2.tokens[e2.i], l2 = Fe[n2];
+        let n2 = e2.tokens[e2.i], r3 = ze[n2];
         if (")" === e2.tokens[e2.i])
           return e2.i++, e2.val;
         e2.i++;
-        let r3 = { Number, String, Boolean };
-        if (null == l2)
+        let l2 = { Number, String, Boolean };
+        if (null == r3)
           try {
-            return r3[n2] || (m === n2 ? void 0 : "NaN" === n2 ? NaN : n2.match(/^\/.+\/$/) ? new RegExp(n2.substring(1, n2.length - 1)) : W(n2));
+            return l2[n2] || (m === n2 ? void 0 : "NaN" === n2 ? NaN : n2.match(/^\/.+\/$/) ? new RegExp(n2.substring(1, n2.length - 1)) : J(n2));
           } catch (s2) {
             throw new SyntaxError(`Gubu: unexpected token ${n2} in builder expression ${e2.src}`);
           }
         "(" === e2.tokens[e2.i] && e2.i++;
         let i2 = [], o2 = null;
         for (; null != (o2 = e2.tokens[e2.i]) && ")" !== o2; ) {
-          let t3 = X(e2);
+          let t3 = ee(e2);
           i2.push(t3);
         }
-        return e2.i++, e2.val = l2.call(e2.val, ...i2), "." === e2.tokens[e2.i] ? (e2.i++, X(e2)) : t2 && e2.i < e2.tokens.length ? X(e2) : e2.val;
+        return e2.i++, e2.val = r3.call(e2.val, ...i2), "." === e2.tokens[e2.i] ? (e2.i++, ee(e2)) : t2 && e2.i < e2.tokens.length ? ee(e2) : e2.val;
       }
-      function Y(e2, t2) {
+      function te(e2, t2) {
         var n2;
-        let l2, r3 = {}, i2 = false;
+        let r3, l2 = {}, i2 = false;
         try {
-          i2 = !(void 0 !== t2.val || !(null === (n2 = e2.gubu$) || void 0 === n2 ? void 0 : n2.Check)) || (t2.check = e2, e2(t2.val, r3, t2));
+          i2 = !(void 0 !== t2.val || !(null === (n2 = e2.gubu$) || void 0 === n2 ? void 0 : n2.Check)) || (t2.check = e2, e2(t2.val, l2, t2));
         } catch (s2) {
-          l2 = s2;
+          r3 = s2;
         }
-        let o2 = q(r3.err) ? 0 < r3.err.length : null != r3.err;
+        let o2 = _2(l2.err) ? 0 < l2.err.length : null != l2.err;
         if (!i2 || o2) {
-          if (void 0 === t2.val && (t2.node.p || !t2.node.r) && true !== r3.done)
-            return delete r3.err, r3;
-          let n3 = r3.why || w, i3 = ee(t2);
-          if (d === typeof r3.err)
-            t2.curerr.push(Ce(t2, r3.err));
-          else if (v === typeof r3.err)
-            t2.curerr.push(...[r3.err].flat().filter((e3) => null != e3).map((e3) => (e3.p = null == e3.p ? i3 : e3.p, e3.m = null == e3.m ? 2010 : e3.m, e3)));
+          if (void 0 === t2.val && (t2.node.p || !t2.node.r) && true !== l2.done)
+            return delete l2.err, l2;
+          let n3 = l2.why || O, i3 = ne(t2);
+          if (g === typeof l2.err)
+            t2.curerr.push(Te(t2, l2.err));
+          else if (d === typeof l2.err)
+            t2.curerr.push(...[l2.err].flat().filter((e3) => null != e3).map((e3) => (e3.p = null == e3.p ? i3 : e3.p, e3.m = null == e3.m ? 2010 : e3.m, e3)));
           else {
-            let r4 = e2.name;
-            null != r4 && "" != r4 || (r4 = ne(e2.toString().replace(/[ \t\r\n]+/g, " "))), t2.curerr.push(Ge(n3, t2, 1045, void 0, { thrown: l2 }, r4));
+            let l3 = e2.name;
+            null != l3 && "" != l3 || (l3 = le(e2.toString().replace(/[ \t\r\n]+/g, " "))), t2.curerr.push(Be(n3, t2, 1045, void 0, { thrown: r3 }, l3));
           }
-          r3.done = null == r3.done || r3.done;
+          l2.done = null == l2.done || l2.done;
         }
-        return r3.hasOwnProperty("uval") ? (t2.updateVal(r3.uval), t2.ignoreVal = false) : void 0 === r3.val || Number.isNaN(r3.val) || (t2.updateVal(r3.val), t2.ignoreVal = false), void 0 !== r3.node && (t2.node = r3.node), void 0 !== r3.type && (t2.type = r3.type), r3;
+        return l2.hasOwnProperty("uval") ? (t2.updateVal(l2.uval), t2.ignoreVal = false) : void 0 === l2.val || Number.isNaN(l2.val) || (t2.updateVal(l2.val), t2.ignoreVal = false), void 0 !== l2.node && (t2.node = l2.node), void 0 !== l2.type && (t2.type = l2.type), l2;
       }
-      function ee(e2) {
+      function ne(e2) {
         return e2.path.slice(1, e2.dI + 1).filter((e3) => null != e3).join(".");
       }
-      function te(e2) {
-        return c === typeof e2 ? e2 : c === typeof (null == e2 ? void 0 : e2.length) ? e2.length : null != e2 && v === typeof e2 ? P(e2).length : NaN;
+      function re(e2) {
+        return f === typeof e2 ? e2 : f === typeof (null == e2 ? void 0 : e2.length) ? e2.length : null != e2 && d === typeof e2 ? q(e2).length : NaN;
       }
-      function ne(e2, t2) {
-        let n2 = String(e2), l2 = null == t2 || isNaN(t2) ? 30 : t2 < 0 ? 0 : ~~t2, r3 = null == e2 ? 0 : n2.length, i2 = null == e2 ? "" : n2.substring(0, r3);
-        return i2 = l2 < r3 ? i2.substring(0, l2 - 3) + "..." : i2, i2.substring(0, l2);
+      function le(e2, t2) {
+        let n2 = String(e2), r3 = null == t2 || isNaN(t2) ? 30 : t2 < 0 ? 0 : ~~t2, l2 = null == e2 ? 0 : n2.length, i2 = null == e2 ? "" : n2.substring(0, l2);
+        return i2 = r3 < l2 ? i2.substring(0, r3 - 3) + "..." : i2, i2.substring(0, r3);
       }
-      const le = function(e2) {
-        let t2 = Ee(this, e2);
+      const ie = function(e2) {
+        let t2 = Ge(this, e2);
         return t2.r = true, t2.p = false, void 0 === e2 && 1 === arguments.length && (t2.t = m, t2.v = void 0), t2;
-      }, re = function(e2) {
-        let t2 = Ee(this, e2);
-        return t2.c = oe(), t2;
-      }, ie = function(e2) {
-        let t2 = Ee(this, e2);
-        return t2.r = false, void 0 === e2 && 1 === arguments.length && (t2.t = m, t2.v = void 0), t2;
       }, oe = function(e2) {
-        let t2 = Ee(this, e2);
-        return t2.t = y, void 0 !== e2 && (t2.v = e2, t2.f = e2), t2;
-      }, se = function(e2, t2) {
-        let n2 = Ee(this, t2);
-        return n2.z = e2, n2;
+        let t2 = Ge(this, e2);
+        return t2.c = ue(), t2;
+      }, se = function(e2) {
+        let t2 = Ge(this, e2);
+        return t2.r = false, void 0 === e2 && 1 === arguments.length && (t2.t = m, t2.v = void 0), t2;
       }, ue = function(e2) {
-        let t2 = Ee(this, e2);
+        let t2 = Ge(this, e2);
+        return t2.t = b, void 0 !== e2 && (t2.v = e2, t2.f = e2), t2;
+      }, ae = function(e2, t2) {
+        let n2 = Ge(this, t2);
+        return n2.z = e2, n2;
+      }, ce = function(e2) {
+        let t2 = Ge(this, e2);
         return t2.r = false, t2.p = true, t2;
-      }, ae = function(e2) {
-        let t2 = Ee(this, e2);
+      }, fe = function(e2) {
+        let t2 = Ge(this, e2);
         return t2.r = false, t2.p = true, t2.e = false, t2.a.push(function(e3, t3, n2) {
           return 0 < n2.curerr.length && (t3.uval = void 0, t3.done = false), true;
         }), t2;
-      }, ce = function(e2) {
-        let t2 = Ee(this);
-        return t2.t = h, t2.v = e2, t2.f = e2, t2;
-      }, fe = function(e2, t2) {
-        let n2 = Ee(this, void 0 === t2 ? e2 : t2);
-        return n2.r = false, n2.f = e2, h === typeof e2 && U[e2.name] && (n2.t = e2.name.toLowerCase(), n2.f = Me(K[n2.t])), n2.p = false, n2;
       }, pe = function(e2) {
-        let t2 = Ee(this, e2);
+        let t2 = Ge(this);
+        return t2.t = v, t2.v = e2, t2.f = e2, t2;
+      }, he = function(e2, t2) {
+        let n2 = Ge(this, void 0 === t2 ? e2 : t2);
+        return n2.r = false, n2.f = e2, v === typeof e2 && Z[e2.name] && (n2.t = e2.name.toLowerCase(), n2.f = Pe(Q[n2.t])), n2.p = false, n2;
+      }, ve = function(e2) {
+        let t2 = Ge(this, e2);
         return t2.u.empty = true, t2;
-      }, he = function(e2) {
-        let t2 = Ee(this, e2);
-        return t2.t = a, t2;
-      }, ve = function(e2, t2) {
-        let n2 = Ee(this), l2 = c === typeof e2;
-        n2.t = d, l2 && null == t2 && (n2 = Z([]));
-        let r3 = null;
-        return h === typeof e2 && (r3 = e2, n2 = oe()), n2.b.push(function(n3, i2, o2) {
-          if (r3)
-            i2.val = r3(o2.path, o2);
-          else if (l2) {
+      }, de = function(e2) {
+        let t2 = Ge(this, e2);
+        return t2.t = c, t2;
+      }, ge = function(e2, t2) {
+        let n2 = Ge(this), r3 = f === typeof e2;
+        n2.t = g, r3 && null == t2 && (n2 = X([]));
+        let l2 = null;
+        return v === typeof e2 && (l2 = e2, n2 = ue()), n2.b.push(function(n3, i2, o2) {
+          if (l2)
+            i2.val = l2(o2.path, o2);
+          else if (r3) {
             let n4 = e2;
-            i2.val = o2.path.slice(o2.path.length - 1 - (0 <= n4 ? n4 : 0), o2.path.length - 1 + (0 <= n4 ? 0 : 1)), d === typeof t2 && (i2.val = i2.val.join(t2));
+            i2.val = o2.path.slice(o2.path.length - 1 - (0 <= n4 ? n4 : 0), o2.path.length - 1 + (0 <= n4 ? 0 : 1)), g === typeof t2 && (i2.val = i2.val.join(t2));
           } else
             null == e2 && (i2.val = o2.path[o2.path.length - 2]);
           return true;
         }), n2;
-      }, de = function(...e2) {
-        let t2 = Ee();
-        t2.t = b, t2.r = true;
-        let n2 = e2.map((e3) => Pe(e3));
-        return t2.u.list = e2, t2.b.push(function(t3, l2, r3) {
+      }, ye = function(...e2) {
+        let t2 = Ge();
+        t2.t = $, t2.r = true;
+        let n2 = e2.map((e3) => qe(e3));
+        return t2.u.list = e2, t2.b.push(function(t3, r3, l2) {
           let i2 = true;
           for (let e3 of n2) {
-            let n3 = Object.assign(Object.assign({}, r3.ctx), { err: [] });
+            let n3 = Object.assign(Object.assign({}, l2.ctx), { err: [] });
             e3(t3, n3), 0 < n3.err.length && (i2 = false);
           }
-          return i2 || (l2.why = A, l2.err = [Ce(r3, V + " " + F + M + L + " does not satisfy all of: " + e2.map((e3) => Te(e3, null, true)).join(", "))]), i2;
-        }), t2;
-      }, ge = function(...e2) {
-        let t2 = Ee();
-        t2.t = b, t2.r = true;
-        let n2 = e2.map((e3) => Pe(e3));
-        return t2.u.list = e2, t2.b.push(function(t3, l2, r3) {
-          let i2 = false;
-          for (let e3 of n2) {
-            let n3 = Object.assign(Object.assign({}, r3.ctx), { err: [] }), o2 = e3.match(t3, n3);
-            o2 && (l2.val = e3(t3, n3)), i2 || (i2 = o2);
-          }
-          return i2 || (l2.why = T, l2.err = [Ce(r3, V + " " + F + M + L + " does not satisfy any of: " + e2.map((e3) => Te(e3, null, true)).join(", "))]), i2;
+          return i2 || (r3.why = E, r3.err = [Te(l2, A + " " + z + P + F + " does not satisfy all of: " + e2.map((e3) => Le(e3, null, true)).join(", "))]), i2;
         }), t2;
       }, me = function(...e2) {
-        let t2 = Ee();
-        t2.t = b, t2.r = true;
-        let n2 = e2.map((e3) => Pe(e3));
-        return t2.u.list = e2, t2.b.push(function(t3, l2, r3) {
+        let t2 = Ge();
+        t2.t = $, t2.r = true;
+        let n2 = e2.map((e3) => qe(e3));
+        return t2.u.list = e2, t2.b.push(function(t3, r3, l2) {
+          let i2 = false;
+          for (let e3 of n2) {
+            let n3 = Object.assign(Object.assign({}, l2.ctx), { err: [] }), o2 = e3.match(t3, n3);
+            o2 && (r3.val = e3(t3, n3)), i2 || (i2 = o2);
+          }
+          return i2 || (r3.why = L, r3.err = [Te(l2, A + " " + z + P + F + " does not satisfy any of: " + e2.map((e3) => Le(e3, null, true)).join(", "))]), i2;
+        }), t2;
+      }, be = function(...e2) {
+        let t2 = Ge();
+        t2.t = $, t2.r = true;
+        let n2 = e2.map((e3) => qe(e3));
+        return t2.u.list = e2, t2.b.push(function(t3, r3, l2) {
           let i2 = 0;
           for (let e3 of n2) {
-            let n3 = Object.assign(Object.assign({}, r3.ctx), { err: [] });
+            let n3 = Object.assign(Object.assign({}, l2.ctx), { err: [] });
             if (e3.match(t3, n3)) {
-              i2++, l2.val = e3(t3, n3);
+              i2++, r3.val = e3(t3, n3);
               break;
             }
           }
-          return 1 !== i2 && (l2.why = B, l2.err = [Ce(r3, V + " " + F + M + L + " does not satisfy one of: " + e2.map((e3) => Te(e3, null, true)).join(", "))]), true;
+          return 1 !== i2 && (r3.why = M, r3.err = [Te(l2, A + " " + z + P + F + " does not satisfy one of: " + e2.map((e3) => Le(e3, null, true)).join(", "))]), true;
         }), t2;
-      }, ye = function(...e2) {
-        let t2 = Ee();
-        return t2.b.push(function(t3, n2, l2) {
-          for (let r3 = 0; r3 < e2.length; r3++)
-            if (t3 === e2[r3])
+      }, $e = function(...e2) {
+        let t2 = Ge();
+        return t2.b.push(function(t3, n2, r3) {
+          for (let l2 = 0; l2 < e2.length; l2++)
+            if (t3 === e2[l2])
               return true;
-          return n2.err = Ce(l2, V + " " + F + M + L + " must be exactly one of: " + l2.node.s + "."), n2.done = true, false;
-        }), t2.s = e2.map((e3) => Te(e3, null, true)).join(", "), t2;
-      }, be = function(e2, t2) {
-        let n2 = Ee(this, t2);
-        return n2.b.push(e2), n2;
+          if (r3.node.hasOwnProperty("f") && void 0 === t3) {
+            const t4 = r3.node.f;
+            for (let n3 = 0; n3 < e2.length; n3++)
+              if (t4 === e2[n3])
+                return true;
+          }
+          return n2.err = Te(r3, A + " " + z + P + F + " must be exactly one of: " + r3.node.s + "."), n2.done = true, false;
+        }), t2.s = e2.map((e3) => Le(e3, null, true)).join(", "), t2;
       }, xe = function(e2, t2) {
-        let n2 = Ee(this, t2);
+        let n2 = Ge(this, t2);
+        return n2.b.push(e2), n2;
+      }, Ie = function(e2, t2) {
+        let n2 = Ge(this, t2);
         return n2.a.push(e2), n2;
-      }, $e = function(e2, t2) {
-        let n2 = Ee(this, t2);
-        if (h === typeof e2) {
+      }, ke = function(e2, t2) {
+        let n2 = Ge(this, t2);
+        if (v === typeof e2) {
           let t3 = e2;
-          t3.gubu$ = t3.gubu$ || {}, t3.gubu$.Check = true, n2.b.push(e2), n2.s = (null == n2.s ? "" : n2.s + ";") + Te(e2, null, true), n2.r = true;
-        } else if (v === typeof e2) {
+          t3.gubu$ = t3.gubu$ || {}, t3.gubu$.Check = true, n2.b.push(e2), n2.s = (null == n2.s ? "" : n2.s + ";") + Le(e2, null, true), n2.r = true;
+        } else if (d === typeof e2) {
           if (Object.prototype.toString.call(e2).includes("RegExp")) {
             let t3 = (t4) => null != t4 && !Number.isNaN(t4) && !!String(t4).match(e2);
-            z(t3, s, { value: String(e2) }), z(t3, "gubu$", { value: { Check: true } }), n2.b.push(t3), n2.s = Te(e2), n2.r = true;
+            W(t3, u, { value: String(e2) }), W(t3, "gubu$", { value: { Check: true } }), n2.b.push(t3), n2.s = Le(e2), n2.r = true;
           }
         } else
-          d === typeof e2 && (n2.t = e2, n2.r = true);
+          g === typeof e2 && (n2.t = e2, n2.r = true);
         return n2;
-      }, Ie = function(e2) {
-        let t2 = Ee(this, e2);
-        return p === t2.t && r2 !== t2.c && 0 === t2.n ? (t2.v = [t2.c], t2.c = r2) : t2.c = r2, t2;
-      }, ke = function(e2, t2) {
-        let n2 = Ee(this, t2), l2 = d === typeof e2 ? e2 : (v === typeof e2 && e2 || {}).name;
-        return null != l2 && "" != l2 && n2.b.push(function(e3, t3, n3) {
-          return (n3.ctx.ref = n3.ctx.ref || {})[l2] = n3.node, true;
-        }), n2;
-      }, je = function(e2, t2) {
-        let n2 = Ee(this, t2), l2 = v === typeof e2 && e2 || {}, r3 = d === typeof e2 ? e2 : l2.name, i2 = !!l2.fill;
+      }, je = function(e2) {
+        let t2 = Ge(this, e2);
+        return h === t2.t && l !== t2.c && 0 === t2.n ? (t2.v = [t2.c], t2.c = l) : t2.c = l, t2;
+      }, we = function(e2, t2) {
+        let n2 = Ge(this, t2), r3 = g === typeof e2 ? e2 : (d === typeof e2 && e2 || {}).name;
         return null != r3 && "" != r3 && n2.b.push(function(e3, t3, n3) {
+          return (n3.ctx.ref = n3.ctx.ref || {})[r3] = n3.node, true;
+        }), n2;
+      }, Oe = function(e2, t2) {
+        let n2 = Ge(this, t2), r3 = d === typeof e2 && e2 || {}, l2 = g === typeof e2 ? e2 : r3.name, i2 = !!r3.fill;
+        return null != l2 && "" != l2 && n2.b.push(function(e3, t3, n3) {
           if (void 0 !== e3 || i2) {
             let e4 = n3.ctx.ref = n3.ctx.ref || {};
-            if (void 0 !== e4[r3]) {
-              let n4 = Object.assign({}, e4[r3]);
-              n4.t = n4.t || a, t3.node = n4, t3.type = n4.t;
+            if (void 0 !== e4[l2]) {
+              let n4 = Object.assign({}, e4[l2]);
+              n4.t = n4.t || c, t3.node = n4, t3.type = n4.t;
             }
           }
           return true;
         }), n2;
-      }, we = function(e2, t2) {
-        let n2 = Ee(this, t2), l2 = v === typeof e2 && e2 || {}, r3 = d === typeof e2 ? e2 : l2.name, i2 = g === typeof l2.keep ? l2.keep : void 0, o2 = q(l2.claim) ? l2.claim : [];
-        if (null != r3 && "" != r3) {
+      }, Ne = function(e2, t2) {
+        let n2 = Ge(this, t2), r3 = d === typeof e2 && e2 || {}, l2 = g === typeof e2 ? e2 : r3.name, i2 = y === typeof r3.keep ? r3.keep : void 0, o2 = _2(r3.claim) ? r3.claim : [];
+        if (null != l2 && "" != l2) {
           let e3 = (e4, t4, n3) => {
             if (void 0 === e4 && 0 < o2.length) {
-              n3.ctx.Rename = n3.ctx.Rename || {}, n3.ctx.Rename.fromDefault = n3.ctx.Rename.fromDefault || {};
+              n3.ctx.Rename = n3.ctx.Rename || {}, n3.ctx.Rename.fromDflt = n3.ctx.Rename.fromDflt || {};
               for (let e5 of o2) {
-                let l3 = n3.ctx.Rename.fromDefault[e5] || {};
-                if (void 0 !== n3.parent[e5] && !l3.yes) {
-                  t4.val = n3.parent[e5], n3.match || (n3.parent[r3] = t4.val), t4.node = l3.node;
+                let r4 = n3.ctx.Rename.fromDflt[e5] || {};
+                if (void 0 !== n3.parent[e5] && !r4.yes) {
+                  t4.val = n3.parent[e5], n3.match || (n3.parent[l2] = t4.val), t4.node = r4.node;
                   for (let e6 = 0; e6 < n3.err.length; e6++)
-                    n3.err[e6].k === l3.key && (n3.err.splice(e6, 1), e6--);
+                    n3.err[e6].k === r4.key && (n3.err.splice(e6, 1), e6--);
                   if (i2) {
                     let t5 = n3.cI + 1;
-                    n3.nodes.splice(t5, 0, Z(l3.dval)), n3.vals.splice(t5, 0, void 0), n3.parents.splice(t5, 0, n3.parent), n3.keys.splice(t5, 0, e5), n3.nI++, n3.pI++;
+                    n3.nodes.splice(t5, 0, X(r4.dval)), n3.vals.splice(t5, 0, void 0), n3.parents.splice(t5, 0, n3.parent), n3.keys.splice(t5, 0, e5), n3.nI++, n3.pI++;
                   } else
                     delete n3.parent[e5];
                   break;
@@ -2899,135 +1486,135 @@ var __async = (__this, __arguments, generator) => {
             }
             return true;
           };
-          z(e3, s, { value: "Rename:" + r3 }), n2.b.push(e3);
-          let t3 = (e4, t4, n3) => (n3.parent[r3] = e4, n3.match || i2 || n3.key === r3 || q(n3.parent) && false !== i2 || (delete n3.parent[n3.key], t4.done = true), n3.ctx.Rename = n3.ctx.Rename || {}, n3.ctx.Rename.fromDefault = n3.ctx.Rename.fromDefault || {}, n3.ctx.Rename.fromDefault[r3] = { yes: n3.fromDefault, key: n3.key, dval: n3.node.v, node: n3.node }, true);
-          z(t3, s, { value: "Rename:" + r3 }), n2.a.push(t3);
+          W(e3, u, { value: "Rename:" + l2 }), n2.b.push(e3);
+          let t3 = (e4, t4, n3) => (n3.parent[l2] = e4, n3.match || i2 || n3.key === l2 || _2(n3.parent) && false !== i2 || (delete n3.parent[n3.key], t4.done = true), n3.ctx.Rename = n3.ctx.Rename || {}, n3.ctx.Rename.fromDflt = n3.ctx.Rename.fromDflt || {}, n3.ctx.Rename.fromDflt[l2] = { yes: n3.fromDflt, key: n3.key, dval: n3.node.v, node: n3.node }, true);
+          W(t3, u, { value: "Rename:" + l2 }), n2.a.push(t3);
         }
         return n2;
-      }, Oe = function(e2, t2) {
-        let n2 = Ee(this, t2);
-        return n2.b.push(function(t3, n3, l2) {
-          let r3 = te(t3);
-          if (e2 <= r3)
-            return true;
-          l2.checkargs = { min: 1 };
-          let i2 = c === typeof t3 ? "" : "length ";
-          return n3.err = Ce(l2, V + " " + F + M + L + ` must be a minimum ${i2}of ${e2} (was ${r3}).`), false;
-        }), n2.s = C + "(" + e2 + (null == t2 ? "" : "," + Te(t2)) + ")", n2;
-      }, Ne = function(e2, t2) {
-        let n2 = Ee(this, t2);
-        return n2.b.push(function(t3, n3, l2) {
-          let r3 = te(t3);
-          if (r3 <= e2)
-            return true;
-          let i2 = c === typeof t3 ? "" : "length ";
-          return n3.err = Ce(l2, V + " " + F + M + L + ` must be a maximum ${i2}of ${e2} (was ${r3}).`), false;
-        }), n2.s = E + "(" + e2 + (null == t2 ? "" : "," + Te(t2)) + ")", n2;
       }, Se = function(e2, t2) {
-        let n2 = Ee(this, t2);
-        return n2.b.push(function(t3, n3, l2) {
-          let r3 = te(t3);
-          if (e2 < r3)
+        let n2 = Ge(this, t2);
+        return n2.b.push(function(t3, n3, r3) {
+          let l2 = re(t3);
+          if (e2 <= l2)
             return true;
-          let i2 = c === typeof t3 ? "be" : "have length";
-          return n3.err = Ce(l2, V + " " + F + M + L + ` must ${i2} above ${e2} (was ${r3}).`), false;
-        }), n2.s = R + "(" + e2 + (null == t2 ? "" : "," + Te(t2)) + ")", n2;
+          r3.checkargs = { min: 1 };
+          let i2 = f === typeof t3 ? "" : "length ";
+          return n3.err = Te(r3, A + " " + z + P + F + ` must be a minimum ${i2}of ${e2} (was ${l2}).`), false;
+        }), n2.s = T + "(" + e2 + (null == t2 ? "" : "," + Le(t2)) + ")", n2;
       }, Ve = function(e2, t2) {
-        let n2 = Ee(this, t2);
-        return n2.b.push(function(t3, n3, l2) {
-          let r3 = te(t3);
-          if (r3 < e2)
+        let n2 = Ge(this, t2);
+        return n2.b.push(function(t3, n3, r3) {
+          let l2 = re(t3);
+          if (l2 <= e2)
             return true;
-          let i2 = c === typeof t3 ? "be" : "have length";
-          return n3.err = Ce(l2, V + " " + F + M + L + ` must ${i2} below ${e2} (was ${r3}).`), false;
-        }), n2.s = D + "(" + e2 + (null == t2 ? "" : "," + Te(t2)) + ")", n2;
+          let i2 = f === typeof t3 ? "" : "length ";
+          return n3.err = Te(r3, A + " " + z + P + F + ` must be a maximum ${i2}of ${e2} (was ${l2}).`), false;
+        }), n2.s = G + "(" + e2 + (null == t2 ? "" : "," + Le(t2)) + ")", n2;
       }, Re = function(e2, t2) {
-        let n2 = Ee(this, t2 || oe());
-        return n2.b.push(function(t3, n3, l2) {
-          let r3 = te(t3);
-          if (e2 === r3)
+        let n2 = Ge(this, t2);
+        return n2.b.push(function(t3, n3, r3) {
+          let l2 = re(t3);
+          if (e2 < l2)
             return true;
-          let i2 = c === typeof t3 ? "" : " in length";
-          return n3.err = Ce(l2, V + " " + F + M + L + ` must be exactly ${e2}${i2} (was ${r3}).`), false;
-        }), n2.s = G + "(" + e2 + (null == t2 ? "" : "," + Te(t2)) + ")", n2;
+          let i2 = f === typeof t3 ? "be" : "have length";
+          return n3.err = Te(r3, A + " " + z + P + F + ` must ${i2} above ${e2} (was ${l2}).`), false;
+        }), n2.s = D + "(" + e2 + (null == t2 ? "" : "," + Le(t2)) + ")", n2;
       }, Ae = function(e2, t2) {
-        let n2 = Ee(this, t2 || {});
-        return n2.c = Z(e2), n2;
+        let n2 = Ge(this, t2);
+        return n2.b.push(function(t3, n3, r3) {
+          let l2 = re(t3);
+          if (l2 < e2)
+            return true;
+          let i2 = f === typeof t3 ? "be" : "have length";
+          return n3.err = Te(r3, A + " " + z + P + F + ` must ${i2} below ${e2} (was ${l2}).`), false;
+        }), n2.s = C + "(" + e2 + (null == t2 ? "" : "," + Le(t2)) + ")", n2;
       }, De = function(e2, t2) {
-        let n2 = Ee(this, t2 || []);
-        return n2.t = "array", n2.c = Z(e2), n2.m = n2.m || {}, n2.m.rest = true, n2;
+        let n2 = Ge(this, t2 || ue());
+        return n2.b.push(function(t3, n3, r3) {
+          let l2 = re(t3);
+          if (e2 === l2)
+            return true;
+          let i2 = f === typeof t3 ? "" : " in length";
+          return n3.err = Te(r3, A + " " + z + P + F + ` must be exactly ${e2}${i2} (was ${l2}).`), false;
+        }), n2.s = B + "(" + e2 + (null == t2 ? "" : "," + Le(t2)) + ")", n2;
+      }, Ee = function(e2, t2) {
+        let n2 = Ge(this, t2 || {});
+        return n2.c = X(e2), n2;
+      }, Ce = function(e2, t2) {
+        let n2 = Ge(this, t2 || []);
+        return n2.t = "array", n2.c = X(e2), n2.m = n2.m || {}, n2.m.rest = true, n2;
       };
-      function Ee(e2, t2) {
-        let n2 = Z(null == e2 || e2.window === e2 || e2.global === e2 ? t2 : e2);
-        return Object.assign(n2, { Above: Se, After: xe, Any: oe, Before: be, Below: Ve, Check: $e, Child: Ae, Closed: Ie, Define: ke, Empty: pe, Exact: ye, Fault: se, Ignore: ae, Len: Re, Max: Ne, Min: Oe, Never: he, Open: re, Refer: je, Rename: we, Required: le, Skip: ue, Rest: De });
+      function Ge(e2, t2) {
+        let n2 = X(null == e2 || e2.window === e2 || e2.global === e2 ? t2 : e2);
+        return Object.assign(n2, { Above: Re, After: Ie, Any: ue, Before: xe, Below: Ae, Check: ke, Child: Ee, Closed: je, Default: he, Define: we, Empty: ve, Exact: $e, Fault: ae, Ignore: fe, Len: De, Max: Ve, Min: Se, Never: de, Open: oe, Refer: Oe, Rename: Ne, Required: ie, Rest: Ce, Skip: ce });
       }
-      function Ce(e2, t2, n2, l2) {
-        return Ge(n2 || w, e2, 4e3, t2, l2);
+      function Te(e2, t2, n2, r3) {
+        return Be(n2 || O, e2, 4e3, t2, r3);
       }
-      function Ge(e2, t2, n2, l2, r3, i2) {
+      function Be(e2, t2, n2, r3, l2, i2) {
         var o2;
-        let s2 = { k: t2.key, n: t2.node, v: t2.val, p: ee(t2), w: e2, c: (null === (o2 = t2.check) || void 0 === o2 ? void 0 : o2.name) || "none", a: t2.checkargs || {}, m: n2, t: "", u: r3 || {} }, u2 = ne((void 0 === t2.val ? m : Te(t2.val)).replace(/"/g, ""));
-        if (null == (l2 = l2 || t2.node.z) || "" === l2) {
-          let n3 = u2.startsWith("[") ? p : u2.startsWith("{") ? v : null == t2.val || c === typeof t2.val && isNaN(t2.val) ? "value" : typeof t2.val, l3 = u2.startsWith("[") || q(t2.parents[t2.pI]) ? "index" : "property", o3 = "is", h2 = null == r3 ? void 0 : r3.k;
-          h2 = q(h2) ? (l3 = 1 < h2.length ? (o3 = "are", "properties") : l3, h2.join(", ")) : h2, s2.t = "Validation failed for " + (0 < s2.p.length ? `${l3} "${s2.p}" with ` : "") + `${n3} "${u2}" because ` + (I === e2 ? x === t2.node.t ? `the ${n3} is not an instance of ${t2.node.u.n}` : `the ${n3} is not of type ${t2.node.t}` : f === e2 ? "" === t2.val ? "an empty string is not allowed" : `the ${n3} is required` : "closed" === e2 ? `the ${l3} "${h2}" ${o3} not allowed` : a === e2 ? "no value is allowed" : `check "${null == i2 ? e2 : i2}" failed`) + (s2.u.thrown ? " (threw: " + s2.u.thrown.message + ")" : ".");
+        let s2 = { k: t2.key, n: t2.node, v: t2.val, p: ne(t2), w: e2, c: (null === (o2 = t2.check) || void 0 === o2 ? void 0 : o2.name) || "none", a: t2.checkargs || {}, m: n2, t: "", u: l2 || {} }, u2 = le((void 0 === t2.val ? m : Le(t2.val)).replace(/"/g, ""));
+        if (null == (r3 = r3 || t2.node.z) || "" === r3) {
+          let n3 = u2.startsWith("[") ? h : u2.startsWith("{") ? d : null == t2.val || f === typeof t2.val && isNaN(t2.val) ? "value" : typeof t2.val, r4 = u2.startsWith("[") || _2(t2.parents[t2.pI]) ? "index" : "property", o3 = "is", a2 = null == l2 ? void 0 : l2.k;
+          a2 = _2(a2) ? (r4 = 1 < a2.length ? (o3 = "are", "properties") : r4, a2.join(", ")) : a2, s2.t = "Validation failed for " + (0 < s2.p.length ? `${r4} "${s2.p}" with ` : "") + `${n3} "${u2}" because ` + (k === e2 ? x === t2.node.t ? `the ${n3} is not an instance of ${t2.node.u.n}` : `the ${n3} is not of type ${N === t2.node.t ? g : t2.node.t}` : p === e2 ? "" === t2.val ? "an empty string is not allowed" : `the ${n3} is required` : "closed" === e2 ? `the ${r4} "${a2}" ${o3} not allowed` : N === e2 ? "the string did not match " + t2.node.v : c === e2 ? "no value is allowed" : `check "${null == i2 ? e2 : i2}" failed`) + (s2.u.thrown ? " (threw: " + s2.u.thrown.message + ")" : ".");
         } else
-          s2.t = l2.replace(/\$VALUE/g, u2).replace(/\$PATH/g, s2.p);
+          s2.t = r3.replace(/\$VALUE/g, u2).replace(/\$PATH/g, s2.p);
         return s2;
       }
-      function Be(e2) {
-        return null != e2.s && "" !== e2.s ? e2.s : e2.r || void 0 === e2.v ? e2.t : e2.v;
-      }
-      function Te(e2, t2, l2, r3) {
-        let i2;
-        r3 || !e2 || !e2.$ || n !== e2.$.gubu$ && true !== e2.$.gubu$ || (e2 = Be(e2));
-        try {
-          i2 = _2(e2, (e3, l3) => {
-            var i3, o2;
-            if (t2 && (l3 = t2(e3, l3)), null != l3 && v === typeof l3 && l3.constructor && O !== l3.constructor.name && N !== l3.constructor.name)
-              l3 = h === typeof l3.toString ? l3.toString() : l3.constructor.name;
-            else if (h === typeof l3)
-              l3 = h === typeof Q[l3.name] && isNaN(+e3) ? void 0 : null != l3.name && "" !== l3.name ? l3.name : ne(l3.toString().replace(/[ \t\r\n]+/g, " "));
-            else if ("bigint" == typeof l3)
-              l3 = String(l3.toString());
-            else {
-              if (Number.isNaN(l3))
-                return "NaN";
-              true === r3 || true !== (null === (i3 = null == l3 ? void 0 : l3.$) || void 0 === i3 ? void 0 : i3.gubu$) && n !== (null === (o2 = null == l3 ? void 0 : l3.$) || void 0 === o2 ? void 0 : o2.gubu$) || (l3 = Be(l3));
-            }
-            return l3;
-          }), i2 = String(i2);
-        } catch (o2) {
-          i2 = _2(String(e2));
-        }
-        return true === l2 && (i2 = i2.replace(/^"/, "").replace(/"$/, "")), i2;
-      }
       function Me(e2) {
-        return null == e2 || v !== typeof e2 ? e2 : W(_2(e2));
+        return null != e2.s && "" !== e2.s ? e2.s : e2.r || void 0 === e2.v ? e2.t : "function" == typeof e2.v.constructor ? e2.v : e2.v.toString();
       }
-      const Le = (e2) => Z(Object.assign(Object.assign({}, e2), { $: { gubu$: true } })), Fe = { Above: Se, After: xe, All: de, Any: oe, Before: be, Below: Ve, Check: $e, Child: Ae, Closed: Ie, Default: fe, Define: ke, Empty: pe, Exact: ye, Fault: se, Func: ce, Ignore: ae, Key: ve, Len: Re, Max: Ne, Min: Oe, Never: he, One: me, Open: re, Optional: ie, Refer: je, Rename: we, Required: le, Skip: ue, Some: ge, Rest: De };
+      function Le(e2, t2, r3, l2) {
+        let i2;
+        l2 || !e2 || !e2.$ || n !== e2.$.gubu$ && true !== e2.$.gubu$ || (e2 = Me(e2));
+        try {
+          i2 = H(e2, (e3, r4) => {
+            var i3, s2;
+            if (t2 && (r4 = t2(e3, r4)), null != r4 && d === typeof r4 && r4.constructor && S !== r4.constructor.name && V !== r4.constructor.name)
+              r4 = "[object RegExp]" === o.call(r4) || v === typeof r4.toString ? r4.toString() : r4.constructor.name;
+            else if (v === typeof r4)
+              r4 = v === typeof Y[r4.name] && isNaN(+e3) ? void 0 : null != r4.name && "" !== r4.name ? r4.name : le(r4.toString().replace(/[ \t\r\n]+/g, " "));
+            else if ("bigint" == typeof r4)
+              r4 = String(r4.toString());
+            else {
+              if (Number.isNaN(r4))
+                return "NaN";
+              true === l2 || true !== (null === (i3 = null == r4 ? void 0 : r4.$) || void 0 === i3 ? void 0 : i3.gubu$) && n !== (null === (s2 = null == r4 ? void 0 : r4.$) || void 0 === s2 ? void 0 : s2.gubu$) || (r4 = Me(r4));
+            }
+            return r4;
+          }), i2 = String(i2);
+        } catch (s2) {
+          i2 = H(String(e2));
+        }
+        return true === r3 && (i2 = i2.replace(/^"/, "").replace(/"$/, "")), i2;
+      }
+      function Pe(e2) {
+        return null == e2 || d !== typeof e2 ? e2 : J(H(e2));
+      }
+      const Fe = (e2) => X(Object.assign(Object.assign({}, e2), { $: { gubu$: true } })), ze = { Above: Re, After: Ie, All: ye, Any: ue, Before: xe, Below: Ae, Check: ke, Child: Ee, Closed: je, Default: he, Define: we, Empty: ve, Exact: $e, Fault: ae, Func: pe, Ignore: fe, Key: ge, Len: De, Max: Ve, Min: Se, Never: de, One: be, Open: oe, Optional: se, Refer: Oe, Rename: Ne, Required: ie, Skip: ce, Some: me, Rest: Ce };
       if (m !== typeof window)
-        for (let We in Fe)
-          z(Fe[We], s, { value: We });
-      Object.assign(Q, Object.assign(Object.assign(Object.assign({ Gubu: Q }, Fe), Object.entries(Fe).reduce((e2, t2) => (e2["G" + t2[0]] = t2[1], e2), {})), { isShape: (e2) => e2 && l === e2.gubu, G$: Le, buildize: Ee, makeErr: Ce, stringify: Te, truncate: ne, nodize: Z, expr: X, MakeArgu: ze })), z(Q, s, { value: o });
-      const Pe = Q;
-      t.Gubu = Pe;
-      function ze(e2) {
-        return function(t2, n2, l2) {
-          let r3 = false;
-          d === typeof t2 && (r3 = true, l2 = n2, n2 = t2);
-          const i2 = Pe(l2 = l2 || n2, { prefix: e2 + (n2 = d === typeof n2 ? " (" + n2 + ")" : "") }), o2 = i2.node(), s2 = o2.k;
+        for (let Je in ze)
+          W(ze[Je], u, { value: Je });
+      Object.assign(Y, Object.assign(Object.assign(Object.assign({ Gubu: Y }, ze), Object.entries(ze).reduce((e2, t2) => (e2["G" + t2[0]] = t2[1], e2), {})), { isShape: (e2) => e2 && r2 === e2.gubu, G$: Fe, buildize: Ge, makeErr: Te, stringify: Le, truncate: le, nodize: X, expr: ee, MakeArgu: We })), W(Y, u, { value: s });
+      const qe = Y;
+      t.Gubu = qe;
+      function We(e2) {
+        return function(t2, n2, r3) {
+          let l2 = false;
+          g === typeof t2 && (l2 = true, r3 = n2, n2 = t2);
+          const i2 = qe(r3 = r3 || n2, { prefix: e2 + (n2 = g === typeof n2 ? " (" + n2 + ")" : "") }), o2 = i2.node(), s2 = o2.k;
           let u2 = t2, a2 = {}, c2 = 0, f2 = 0;
           for (; c2 < s2.length; c2++) {
             let e3 = o2.v[s2[c2]];
-            e3.p && (e3 = o2.v[s2[c2]] = ((t3) => xe(function(e4, n3, l3) {
-              if (0 < l3.curerr.length) {
+            e3.p && (e3 = o2.v[s2[c2]] = ((t3) => Ie(function(e4, n3, r4) {
+              if (0 < r4.curerr.length) {
                 f2++;
                 for (let e5 = s2.length - 1; e5 > t3; e5--)
-                  o2.v[s2[e5]].m.rest ? a2[s2[e5]].splice(o2.v[s2[e5]].m.rest_pos + t3 - e5, 0, a2[s2[e5 - 1]]) : (l3.vals[l3.pI + e5 - t3] = l3.vals[l3.pI + e5 - t3 - 1], a2[s2[e5]] = a2[s2[e5 - 1]]);
+                  o2.v[s2[e5]].m.rest ? a2[s2[e5]].splice(o2.v[s2[e5]].m.rest_pos + t3 - e5, 0, a2[s2[e5 - 1]]) : (r4.vals[r4.pI + e5 - t3] = r4.vals[r4.pI + e5 - t3 - 1], a2[s2[e5]] = a2[s2[e5 - 1]]);
                 n3.uval = void 0, n3.done = false;
               }
               return true;
-            }, e3))(c2), e3.e = false), c2 !== s2.length - 1 || o2.v[s2[c2]].m.rest || (o2.v[s2[c2]] = xe(function(e4, t3, n3) {
+            }, e3))(c2), e3.e = false), c2 !== s2.length - 1 || o2.v[s2[c2]].m.rest || (o2.v[s2[c2]] = Ie(function(e4, t3, n3) {
               return !(s2.length - f2 < u2.length && (0 === n3.curerr.length && (t3.err = `Too many arguments for type signature (was ${u2.length}, expected ${s2.length - f2})`), t3.fatal = true, 1));
             }, o2.v[s2[c2]]));
           }
@@ -3038,13 +1625,13 @@ var __async = (__this, __arguments, generator) => {
             }
             return a2;
           }
-          return r3 ? function(e3) {
+          return l2 ? function(e3) {
             return u2 = e3, a2 = {}, c2 = 0, f2 = 0, i2(p2(e3));
           } : i2(p2(t2));
         };
       }
-      const { Gubu: qe } = t;
-      return qe;
+      const { Gubu: _e } = t;
+      return _e;
     });
   })(gubu_min$2, gubu_min$2.exports);
   var gubu_minExports = gubu_min$2.exports;
@@ -3160,76 +1747,112 @@ var __async = (__this, __arguments, generator) => {
     return _extends.apply(this, arguments);
   }
   var propTypes$1 = { exports: {} };
-  var ReactPropTypesSecret_1;
-  var hasRequiredReactPropTypesSecret;
-  function requireReactPropTypesSecret() {
-    if (hasRequiredReactPropTypesSecret)
-      return ReactPropTypesSecret_1;
-    hasRequiredReactPropTypesSecret = 1;
-    "use strict";
-    var ReactPropTypesSecret = "SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED";
-    ReactPropTypesSecret_1 = ReactPropTypesSecret;
-    return ReactPropTypesSecret_1;
-  }
-  var factoryWithThrowingShims;
-  var hasRequiredFactoryWithThrowingShims;
-  function requireFactoryWithThrowingShims() {
-    if (hasRequiredFactoryWithThrowingShims)
-      return factoryWithThrowingShims;
-    hasRequiredFactoryWithThrowingShims = 1;
-    "use strict";
-    var ReactPropTypesSecret = requireReactPropTypesSecret();
-    function emptyFunction() {
-    }
-    function emptyFunctionWithReset() {
-    }
-    emptyFunctionWithReset.resetWarningCache = emptyFunction;
-    factoryWithThrowingShims = function() {
-      function shim(props, propName, componentName, location, propFullName, secret) {
-        if (secret === ReactPropTypesSecret) {
-          return;
-        }
-        var err = new Error(
-          "Calling PropTypes validators directly is not supported by the `prop-types` package. Use PropTypes.checkPropTypes() to call them. Read more at http://fb.me/use-check-prop-types"
-        );
-        err.name = "Invariant Violation";
-        throw err;
-      }
-      ;
-      shim.isRequired = shim;
-      function getShim() {
-        return shim;
-      }
-      ;
-      var ReactPropTypes = {
-        array: shim,
-        bigint: shim,
-        bool: shim,
-        func: shim,
-        number: shim,
-        object: shim,
-        string: shim,
-        symbol: shim,
-        any: shim,
-        arrayOf: getShim,
-        element: shim,
-        elementType: shim,
-        instanceOf: getShim,
-        node: shim,
-        objectOf: getShim,
-        oneOf: getShim,
-        oneOfType: getShim,
-        shape: getShim,
-        exact: getShim,
-        checkPropTypes: emptyFunctionWithReset,
-        resetWarningCache: emptyFunction
-      };
-      ReactPropTypes.PropTypes = ReactPropTypes;
-      return ReactPropTypes;
-    };
-    return factoryWithThrowingShims;
-  }
   var reactIs$3 = { exports: {} };
+  var reactIs_production_min$1 = {};
+  /** @license React v16.13.1
+   * react-is.production.min.js
+   *
+   * Copyright (c) Facebook, Inc. and its affiliates.
+   *
+   * This source code is licensed under the MIT license found in the
+   * LICENSE file in the root directory of this source tree.
+   */
+  var hasRequiredReactIs_production_min$1;
+  function requireReactIs_production_min$1() {
+    if (hasRequiredReactIs_production_min$1)
+      return reactIs_production_min$1;
+    hasRequiredReactIs_production_min$1 = 1;
+    "use strict";
+    var b = "function" === typeof Symbol && Symbol.for, c = b ? Symbol.for("react.element") : 60103, d = b ? Symbol.for("react.portal") : 60106, e = b ? Symbol.for("react.fragment") : 60107, f = b ? Symbol.for("react.strict_mode") : 60108, g = b ? Symbol.for("react.profiler") : 60114, h = b ? Symbol.for("react.provider") : 60109, k = b ? Symbol.for("react.context") : 60110, l = b ? Symbol.for("react.async_mode") : 60111, m = b ? Symbol.for("react.concurrent_mode") : 60111, n = b ? Symbol.for("react.forward_ref") : 60112, p = b ? Symbol.for("react.suspense") : 60113, q = b ? Symbol.for("react.suspense_list") : 60120, r2 = b ? Symbol.for("react.memo") : 60115, t = b ? Symbol.for("react.lazy") : 60116, v = b ? Symbol.for("react.block") : 60121, w = b ? Symbol.for("react.fundamental") : 60117, x = b ? Symbol.for("react.responder") : 60118, y = b ? Symbol.for("react.scope") : 60119;
+    function z(a) {
+      if ("object" === typeof a && null !== a) {
+        var u = a.$$typeof;
+        switch (u) {
+          case c:
+            switch (a = a.type, a) {
+              case l:
+              case m:
+              case e:
+              case g:
+              case f:
+              case p:
+                return a;
+              default:
+                switch (a = a && a.$$typeof, a) {
+                  case k:
+                  case n:
+                  case t:
+                  case r2:
+                  case h:
+                    return a;
+                  default:
+                    return u;
+                }
+            }
+          case d:
+            return u;
+        }
+      }
+    }
+    function A(a) {
+      return z(a) === m;
+    }
+    reactIs_production_min$1.AsyncMode = l;
+    reactIs_production_min$1.ConcurrentMode = m;
+    reactIs_production_min$1.ContextConsumer = k;
+    reactIs_production_min$1.ContextProvider = h;
+    reactIs_production_min$1.Element = c;
+    reactIs_production_min$1.ForwardRef = n;
+    reactIs_production_min$1.Fragment = e;
+    reactIs_production_min$1.Lazy = t;
+    reactIs_production_min$1.Memo = r2;
+    reactIs_production_min$1.Portal = d;
+    reactIs_production_min$1.Profiler = g;
+    reactIs_production_min$1.StrictMode = f;
+    reactIs_production_min$1.Suspense = p;
+    reactIs_production_min$1.isAsyncMode = function(a) {
+      return A(a) || z(a) === l;
+    };
+    reactIs_production_min$1.isConcurrentMode = A;
+    reactIs_production_min$1.isContextConsumer = function(a) {
+      return z(a) === k;
+    };
+    reactIs_production_min$1.isContextProvider = function(a) {
+      return z(a) === h;
+    };
+    reactIs_production_min$1.isElement = function(a) {
+      return "object" === typeof a && null !== a && a.$$typeof === c;
+    };
+    reactIs_production_min$1.isForwardRef = function(a) {
+      return z(a) === n;
+    };
+    reactIs_production_min$1.isFragment = function(a) {
+      return z(a) === e;
+    };
+    reactIs_production_min$1.isLazy = function(a) {
+      return z(a) === t;
+    };
+    reactIs_production_min$1.isMemo = function(a) {
+      return z(a) === r2;
+    };
+    reactIs_production_min$1.isPortal = function(a) {
+      return z(a) === d;
+    };
+    reactIs_production_min$1.isProfiler = function(a) {
+      return z(a) === g;
+    };
+    reactIs_production_min$1.isStrictMode = function(a) {
+      return z(a) === f;
+    };
+    reactIs_production_min$1.isSuspense = function(a) {
+      return z(a) === p;
+    };
+    reactIs_production_min$1.isValidElementType = function(a) {
+      return "string" === typeof a || "function" === typeof a || a === e || a === m || a === g || a === f || a === p || a === q || "object" === typeof a && null !== a && (a.$$typeof === t || a.$$typeof === r2 || a.$$typeof === h || a.$$typeof === k || a.$$typeof === n || a.$$typeof === w || a.$$typeof === x || a.$$typeof === y || a.$$typeof === v);
+    };
+    reactIs_production_min$1.typeOf = z;
+    return reactIs_production_min$1;
+  }
   var reactIs_development$1 = {};
   /** @license React v16.13.1
    * react-is.development.js
@@ -3395,111 +2018,6 @@ var __async = (__this, __arguments, generator) => {
     }
     return reactIs_development$1;
   }
-  var reactIs_production_min$1 = {};
-  /** @license React v16.13.1
-   * react-is.production.min.js
-   *
-   * Copyright (c) Facebook, Inc. and its affiliates.
-   *
-   * This source code is licensed under the MIT license found in the
-   * LICENSE file in the root directory of this source tree.
-   */
-  var hasRequiredReactIs_production_min$1;
-  function requireReactIs_production_min$1() {
-    if (hasRequiredReactIs_production_min$1)
-      return reactIs_production_min$1;
-    hasRequiredReactIs_production_min$1 = 1;
-    "use strict";
-    var b = "function" === typeof Symbol && Symbol.for, c = b ? Symbol.for("react.element") : 60103, d = b ? Symbol.for("react.portal") : 60106, e = b ? Symbol.for("react.fragment") : 60107, f = b ? Symbol.for("react.strict_mode") : 60108, g = b ? Symbol.for("react.profiler") : 60114, h = b ? Symbol.for("react.provider") : 60109, k = b ? Symbol.for("react.context") : 60110, l = b ? Symbol.for("react.async_mode") : 60111, m = b ? Symbol.for("react.concurrent_mode") : 60111, n = b ? Symbol.for("react.forward_ref") : 60112, p = b ? Symbol.for("react.suspense") : 60113, q = b ? Symbol.for("react.suspense_list") : 60120, r2 = b ? Symbol.for("react.memo") : 60115, t = b ? Symbol.for("react.lazy") : 60116, v = b ? Symbol.for("react.block") : 60121, w = b ? Symbol.for("react.fundamental") : 60117, x = b ? Symbol.for("react.responder") : 60118, y = b ? Symbol.for("react.scope") : 60119;
-    function z(a) {
-      if ("object" === typeof a && null !== a) {
-        var u = a.$$typeof;
-        switch (u) {
-          case c:
-            switch (a = a.type, a) {
-              case l:
-              case m:
-              case e:
-              case g:
-              case f:
-              case p:
-                return a;
-              default:
-                switch (a = a && a.$$typeof, a) {
-                  case k:
-                  case n:
-                  case t:
-                  case r2:
-                  case h:
-                    return a;
-                  default:
-                    return u;
-                }
-            }
-          case d:
-            return u;
-        }
-      }
-    }
-    function A(a) {
-      return z(a) === m;
-    }
-    reactIs_production_min$1.AsyncMode = l;
-    reactIs_production_min$1.ConcurrentMode = m;
-    reactIs_production_min$1.ContextConsumer = k;
-    reactIs_production_min$1.ContextProvider = h;
-    reactIs_production_min$1.Element = c;
-    reactIs_production_min$1.ForwardRef = n;
-    reactIs_production_min$1.Fragment = e;
-    reactIs_production_min$1.Lazy = t;
-    reactIs_production_min$1.Memo = r2;
-    reactIs_production_min$1.Portal = d;
-    reactIs_production_min$1.Profiler = g;
-    reactIs_production_min$1.StrictMode = f;
-    reactIs_production_min$1.Suspense = p;
-    reactIs_production_min$1.isAsyncMode = function(a) {
-      return A(a) || z(a) === l;
-    };
-    reactIs_production_min$1.isConcurrentMode = A;
-    reactIs_production_min$1.isContextConsumer = function(a) {
-      return z(a) === k;
-    };
-    reactIs_production_min$1.isContextProvider = function(a) {
-      return z(a) === h;
-    };
-    reactIs_production_min$1.isElement = function(a) {
-      return "object" === typeof a && null !== a && a.$$typeof === c;
-    };
-    reactIs_production_min$1.isForwardRef = function(a) {
-      return z(a) === n;
-    };
-    reactIs_production_min$1.isFragment = function(a) {
-      return z(a) === e;
-    };
-    reactIs_production_min$1.isLazy = function(a) {
-      return z(a) === t;
-    };
-    reactIs_production_min$1.isMemo = function(a) {
-      return z(a) === r2;
-    };
-    reactIs_production_min$1.isPortal = function(a) {
-      return z(a) === d;
-    };
-    reactIs_production_min$1.isProfiler = function(a) {
-      return z(a) === g;
-    };
-    reactIs_production_min$1.isStrictMode = function(a) {
-      return z(a) === f;
-    };
-    reactIs_production_min$1.isSuspense = function(a) {
-      return z(a) === p;
-    };
-    reactIs_production_min$1.isValidElementType = function(a) {
-      return "string" === typeof a || "function" === typeof a || a === e || a === m || a === g || a === f || a === p || a === q || "object" === typeof a && null !== a && (a.$$typeof === t || a.$$typeof === r2 || a.$$typeof === h || a.$$typeof === k || a.$$typeof === n || a.$$typeof === w || a.$$typeof === x || a.$$typeof === y || a.$$typeof === v);
-    };
-    reactIs_production_min$1.typeOf = z;
-    return reactIs_production_min$1;
-  }
   var reactIs$2 = reactIs$3.exports;
   var hasRequiredReactIs;
   function requireReactIs() {
@@ -3590,6 +2108,17 @@ var __async = (__this, __arguments, generator) => {
       return to;
     };
     return objectAssign;
+  }
+  var ReactPropTypesSecret_1;
+  var hasRequiredReactPropTypesSecret;
+  function requireReactPropTypesSecret() {
+    if (hasRequiredReactPropTypesSecret)
+      return ReactPropTypesSecret_1;
+    hasRequiredReactPropTypesSecret = 1;
+    "use strict";
+    var ReactPropTypesSecret = "SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED";
+    ReactPropTypesSecret_1 = ReactPropTypesSecret;
+    return ReactPropTypesSecret_1;
   }
   var has;
   var hasRequiredHas;
@@ -4110,6 +2639,64 @@ var __async = (__this, __arguments, generator) => {
     };
     return factoryWithTypeCheckers;
   }
+  var factoryWithThrowingShims;
+  var hasRequiredFactoryWithThrowingShims;
+  function requireFactoryWithThrowingShims() {
+    if (hasRequiredFactoryWithThrowingShims)
+      return factoryWithThrowingShims;
+    hasRequiredFactoryWithThrowingShims = 1;
+    "use strict";
+    var ReactPropTypesSecret = requireReactPropTypesSecret();
+    function emptyFunction() {
+    }
+    function emptyFunctionWithReset() {
+    }
+    emptyFunctionWithReset.resetWarningCache = emptyFunction;
+    factoryWithThrowingShims = function() {
+      function shim(props, propName, componentName, location, propFullName, secret) {
+        if (secret === ReactPropTypesSecret) {
+          return;
+        }
+        var err = new Error(
+          "Calling PropTypes validators directly is not supported by the `prop-types` package. Use PropTypes.checkPropTypes() to call them. Read more at http://fb.me/use-check-prop-types"
+        );
+        err.name = "Invariant Violation";
+        throw err;
+      }
+      ;
+      shim.isRequired = shim;
+      function getShim() {
+        return shim;
+      }
+      ;
+      var ReactPropTypes = {
+        array: shim,
+        bigint: shim,
+        bool: shim,
+        func: shim,
+        number: shim,
+        object: shim,
+        string: shim,
+        symbol: shim,
+        any: shim,
+        arrayOf: getShim,
+        element: shim,
+        elementType: shim,
+        instanceOf: getShim,
+        node: shim,
+        objectOf: getShim,
+        oneOf: getShim,
+        oneOfType: getShim,
+        shape: getShim,
+        exact: getShim,
+        checkPropTypes: emptyFunctionWithReset,
+        resetWarningCache: emptyFunction
+      };
+      ReactPropTypes.PropTypes = ReactPropTypes;
+      return ReactPropTypes;
+    };
+    return factoryWithThrowingShims;
+  }
   var propTypes = propTypes$1.exports;
   if (process.env.NODE_ENV !== "production") {
     var ReactIs = requireReactIs();
@@ -4148,7 +2735,11 @@ var __async = (__this, __arguments, generator) => {
     };
   }
   function isPlainObject(item) {
-    return item !== null && typeof item === "object" && item.constructor === Object;
+    if (typeof item !== "object" || item === null) {
+      return false;
+    }
+    const prototype = Object.getPrototypeOf(item);
+    return (prototype === null || prototype === Object.prototype || Object.getPrototypeOf(prototype) === null) && !(Symbol.toStringTag in item) && !(Symbol.iterator in item);
   }
   function deepClone(source) {
     if (!isPlainObject(source)) {
@@ -4257,6 +2848,114 @@ var __async = (__this, __arguments, generator) => {
     return "Minified MUI error #" + code + "; visit " + url + " for the full message.";
   }
   var reactIs$1 = { exports: {} };
+  var reactIs_production_min = {};
+  /**
+   * @license React
+   * react-is.production.min.js
+   *
+   * Copyright (c) Facebook, Inc. and its affiliates.
+   *
+   * This source code is licensed under the MIT license found in the
+   * LICENSE file in the root directory of this source tree.
+   */
+  var hasRequiredReactIs_production_min;
+  function requireReactIs_production_min() {
+    if (hasRequiredReactIs_production_min)
+      return reactIs_production_min;
+    hasRequiredReactIs_production_min = 1;
+    "use strict";
+    var b = Symbol.for("react.element"), c = Symbol.for("react.portal"), d = Symbol.for("react.fragment"), e = Symbol.for("react.strict_mode"), f = Symbol.for("react.profiler"), g = Symbol.for("react.provider"), h = Symbol.for("react.context"), k = Symbol.for("react.server_context"), l = Symbol.for("react.forward_ref"), m = Symbol.for("react.suspense"), n = Symbol.for("react.suspense_list"), p = Symbol.for("react.memo"), q = Symbol.for("react.lazy"), t = Symbol.for("react.offscreen"), u;
+    u = Symbol.for("react.module.reference");
+    function v(a) {
+      if ("object" === typeof a && null !== a) {
+        var r2 = a.$$typeof;
+        switch (r2) {
+          case b:
+            switch (a = a.type, a) {
+              case d:
+              case f:
+              case e:
+              case m:
+              case n:
+                return a;
+              default:
+                switch (a = a && a.$$typeof, a) {
+                  case k:
+                  case h:
+                  case l:
+                  case q:
+                  case p:
+                  case g:
+                    return a;
+                  default:
+                    return r2;
+                }
+            }
+          case c:
+            return r2;
+        }
+      }
+    }
+    reactIs_production_min.ContextConsumer = h;
+    reactIs_production_min.ContextProvider = g;
+    reactIs_production_min.Element = b;
+    reactIs_production_min.ForwardRef = l;
+    reactIs_production_min.Fragment = d;
+    reactIs_production_min.Lazy = q;
+    reactIs_production_min.Memo = p;
+    reactIs_production_min.Portal = c;
+    reactIs_production_min.Profiler = f;
+    reactIs_production_min.StrictMode = e;
+    reactIs_production_min.Suspense = m;
+    reactIs_production_min.SuspenseList = n;
+    reactIs_production_min.isAsyncMode = function() {
+      return false;
+    };
+    reactIs_production_min.isConcurrentMode = function() {
+      return false;
+    };
+    reactIs_production_min.isContextConsumer = function(a) {
+      return v(a) === h;
+    };
+    reactIs_production_min.isContextProvider = function(a) {
+      return v(a) === g;
+    };
+    reactIs_production_min.isElement = function(a) {
+      return "object" === typeof a && null !== a && a.$$typeof === b;
+    };
+    reactIs_production_min.isForwardRef = function(a) {
+      return v(a) === l;
+    };
+    reactIs_production_min.isFragment = function(a) {
+      return v(a) === d;
+    };
+    reactIs_production_min.isLazy = function(a) {
+      return v(a) === q;
+    };
+    reactIs_production_min.isMemo = function(a) {
+      return v(a) === p;
+    };
+    reactIs_production_min.isPortal = function(a) {
+      return v(a) === c;
+    };
+    reactIs_production_min.isProfiler = function(a) {
+      return v(a) === f;
+    };
+    reactIs_production_min.isStrictMode = function(a) {
+      return v(a) === e;
+    };
+    reactIs_production_min.isSuspense = function(a) {
+      return v(a) === m;
+    };
+    reactIs_production_min.isSuspenseList = function(a) {
+      return v(a) === n;
+    };
+    reactIs_production_min.isValidElementType = function(a) {
+      return "string" === typeof a || "function" === typeof a || a === d || a === f || a === e || a === m || a === n || a === t || "object" === typeof a && null !== a && (a.$$typeof === q || a.$$typeof === p || a.$$typeof === g || a.$$typeof === h || a.$$typeof === l || a.$$typeof === u || void 0 !== a.getModuleId) ? true : false;
+    };
+    reactIs_production_min.typeOf = v;
+    return reactIs_production_min;
+  }
   var reactIs_development = {};
   /**
    * @license React
@@ -4450,114 +3149,6 @@ var __async = (__this, __arguments, generator) => {
     }
     return reactIs_development;
   }
-  var reactIs_production_min = {};
-  /**
-   * @license React
-   * react-is.production.min.js
-   *
-   * Copyright (c) Facebook, Inc. and its affiliates.
-   *
-   * This source code is licensed under the MIT license found in the
-   * LICENSE file in the root directory of this source tree.
-   */
-  var hasRequiredReactIs_production_min;
-  function requireReactIs_production_min() {
-    if (hasRequiredReactIs_production_min)
-      return reactIs_production_min;
-    hasRequiredReactIs_production_min = 1;
-    "use strict";
-    var b = Symbol.for("react.element"), c = Symbol.for("react.portal"), d = Symbol.for("react.fragment"), e = Symbol.for("react.strict_mode"), f = Symbol.for("react.profiler"), g = Symbol.for("react.provider"), h = Symbol.for("react.context"), k = Symbol.for("react.server_context"), l = Symbol.for("react.forward_ref"), m = Symbol.for("react.suspense"), n = Symbol.for("react.suspense_list"), p = Symbol.for("react.memo"), q = Symbol.for("react.lazy"), t = Symbol.for("react.offscreen"), u;
-    u = Symbol.for("react.module.reference");
-    function v(a) {
-      if ("object" === typeof a && null !== a) {
-        var r2 = a.$$typeof;
-        switch (r2) {
-          case b:
-            switch (a = a.type, a) {
-              case d:
-              case f:
-              case e:
-              case m:
-              case n:
-                return a;
-              default:
-                switch (a = a && a.$$typeof, a) {
-                  case k:
-                  case h:
-                  case l:
-                  case q:
-                  case p:
-                  case g:
-                    return a;
-                  default:
-                    return r2;
-                }
-            }
-          case c:
-            return r2;
-        }
-      }
-    }
-    reactIs_production_min.ContextConsumer = h;
-    reactIs_production_min.ContextProvider = g;
-    reactIs_production_min.Element = b;
-    reactIs_production_min.ForwardRef = l;
-    reactIs_production_min.Fragment = d;
-    reactIs_production_min.Lazy = q;
-    reactIs_production_min.Memo = p;
-    reactIs_production_min.Portal = c;
-    reactIs_production_min.Profiler = f;
-    reactIs_production_min.StrictMode = e;
-    reactIs_production_min.Suspense = m;
-    reactIs_production_min.SuspenseList = n;
-    reactIs_production_min.isAsyncMode = function() {
-      return false;
-    };
-    reactIs_production_min.isConcurrentMode = function() {
-      return false;
-    };
-    reactIs_production_min.isContextConsumer = function(a) {
-      return v(a) === h;
-    };
-    reactIs_production_min.isContextProvider = function(a) {
-      return v(a) === g;
-    };
-    reactIs_production_min.isElement = function(a) {
-      return "object" === typeof a && null !== a && a.$$typeof === b;
-    };
-    reactIs_production_min.isForwardRef = function(a) {
-      return v(a) === l;
-    };
-    reactIs_production_min.isFragment = function(a) {
-      return v(a) === d;
-    };
-    reactIs_production_min.isLazy = function(a) {
-      return v(a) === q;
-    };
-    reactIs_production_min.isMemo = function(a) {
-      return v(a) === p;
-    };
-    reactIs_production_min.isPortal = function(a) {
-      return v(a) === c;
-    };
-    reactIs_production_min.isProfiler = function(a) {
-      return v(a) === f;
-    };
-    reactIs_production_min.isStrictMode = function(a) {
-      return v(a) === e;
-    };
-    reactIs_production_min.isSuspense = function(a) {
-      return v(a) === m;
-    };
-    reactIs_production_min.isSuspenseList = function(a) {
-      return v(a) === n;
-    };
-    reactIs_production_min.isValidElementType = function(a) {
-      return "string" === typeof a || "function" === typeof a || a === d || a === f || a === e || a === m || a === n || a === t || "object" === typeof a && null !== a && (a.$$typeof === q || a.$$typeof === p || a.$$typeof === g || a.$$typeof === h || a.$$typeof === l || a.$$typeof === u || void 0 !== a.getModuleId) ? true : false;
-    };
-    reactIs_production_min.typeOf = v;
-    return reactIs_production_min;
-  }
   var reactIs = reactIs$1.exports;
   "use strict";
   if (process.env.NODE_ENV === "production") {
@@ -4710,7 +3301,6 @@ var __async = (__this, __arguments, generator) => {
   "use client";
   const useEnhancedEffect = typeof window !== "undefined" ? React__namespace.useLayoutEffect : React__namespace.useEffect;
   "use client";
-  "use client";
   let globalId = 0;
   function useGlobalId(idOverride) {
     const [defaultId, setDefaultId] = React__namespace.useState(idOverride);
@@ -4731,7 +3321,6 @@ var __async = (__this, __arguments, generator) => {
     }
     return useGlobalId(idOverride);
   }
-  "use client";
   function unsupportedProp(props, propName, componentName, location, propFullName) {
     if (process.env.NODE_ENV === "production") {
       return null;
@@ -4777,7 +3366,6 @@ var __async = (__this, __arguments, generator) => {
     return [value, setValueIfUncontrolled];
   }
   "use client";
-  "use client";
   function useEventCallback(fn) {
     const ref = React__namespace.useRef(fn);
     useEnhancedEffect(() => {
@@ -4788,7 +3376,6 @@ var __async = (__this, __arguments, generator) => {
       (0, ref.current)(...args)
     )).current;
   }
-  "use client";
   "use client";
   function useForkRef(...refs) {
     return React__namespace.useMemo(() => {
@@ -4803,10 +3390,56 @@ var __async = (__this, __arguments, generator) => {
     }, refs);
   }
   "use client";
+  const UNINITIALIZED = {};
+  function useLazyRef(init2, initArg) {
+    const ref = React__namespace.useRef(UNINITIALIZED);
+    if (ref.current === UNINITIALIZED) {
+      ref.current = init2(initArg);
+    }
+    return ref;
+  }
+  "use client";
+  const EMPTY$1 = [];
+  function useOnMount(fn) {
+    React__namespace.useEffect(fn, EMPTY$1);
+  }
+  "use client";
+  class Timeout {
+    constructor() {
+      this.currentId = 0;
+      this.clear = () => {
+        if (this.currentId !== 0) {
+          clearTimeout(this.currentId);
+          this.currentId = 0;
+        }
+      };
+      this.disposeEffect = () => {
+        return this.clear;
+      };
+    }
+    static create() {
+      return new Timeout();
+    }
+    /**
+     * Executes `fn` after `delay`, clearing any previously scheduled call.
+     */
+    start(delay, fn) {
+      this.clear();
+      this.currentId = setTimeout(() => {
+        this.currentId = 0;
+        fn();
+      }, delay);
+    }
+  }
+  function useTimeout() {
+    const timeout = useLazyRef(Timeout.create).current;
+    useOnMount(timeout.disposeEffect);
+    return timeout;
+  }
   "use client";
   let hadKeyboardEvent = true;
   let hadFocusVisibleRecently = false;
-  let hadFocusVisibleRecentlyTimeout;
+  const hadFocusVisibleRecentlyTimeout = new Timeout();
   const inputTypesWhitelist = {
     text: true,
     search: true,
@@ -4888,10 +3521,9 @@ var __async = (__this, __arguments, generator) => {
     function handleBlurVisible() {
       if (isFocusVisibleRef.current) {
         hadFocusVisibleRecently = true;
-        window.clearTimeout(hadFocusVisibleRecentlyTimeout);
-        hadFocusVisibleRecentlyTimeout = window.setTimeout(() => {
+        hadFocusVisibleRecentlyTimeout.start(100, () => {
           hadFocusVisibleRecently = false;
-        }, 100);
+        });
         isFocusVisibleRef.current = false;
         return true;
       }
@@ -5093,7 +3725,7 @@ var __async = (__this, __arguments, generator) => {
     };
   };
   const ClassNameGenerator = createClassNameGenerator();
-  const globalStateClassesMapping = {
+  const globalStateClasses = {
     active: "active",
     checked: "checked",
     completed: "completed",
@@ -5107,18 +3739,30 @@ var __async = (__this, __arguments, generator) => {
     required: "required",
     selected: "selected"
   };
-  function generateUtilityClass(componentName, slot, globalStatePrefix = "Mui") {
-    const globalStateClass = globalStateClassesMapping[slot];
+  function generateUtilityClass$1(componentName, slot, globalStatePrefix = "Mui") {
+    const globalStateClass = globalStateClasses[slot];
     return globalStateClass ? `${globalStatePrefix}-${globalStateClass}` : `${ClassNameGenerator.generate(componentName)}-${slot}`;
   }
-  function generateUtilityClasses(componentName, slots, globalStatePrefix = "Mui") {
+  function isGlobalState$1(slot) {
+    return globalStateClasses[slot] !== void 0;
+  }
+  function generateUtilityClasses$1(componentName, slots, globalStatePrefix = "Mui") {
     const result = {};
     slots.forEach((slot) => {
-      result[slot] = generateUtilityClass(componentName, slot, globalStatePrefix);
+      result[slot] = generateUtilityClass$1(componentName, slot, globalStatePrefix);
     });
     return result;
   }
-  "use client";
+  function clamp$1(val, min2 = Number.MIN_SAFE_INTEGER, max2 = Number.MAX_SAFE_INTEGER) {
+    return Math.max(min2, Math.min(val, max2));
+  }
+  /**
+   * @mui/utils v5.15.9
+   *
+   * @license MIT
+   * This source code is licensed under the MIT license found in the
+   * LICENSE file in the root directory of this source tree.
+   */
   function sheetForTag(tag) {
     if (tag.sheet) {
       return tag.sheet;
@@ -6239,7 +4883,7 @@ var __async = (__this, __arguments, generator) => {
   } : void 0;
   "use client";
   "use client";
-  function isEmpty$4(obj) {
+  function isEmpty$3(obj) {
     return obj === void 0 || obj === null || Object.keys(obj).length === 0;
   }
   function GlobalStyles$2(props) {
@@ -6247,7 +4891,7 @@ var __async = (__this, __arguments, generator) => {
       styles: styles2,
       defaultTheme: defaultTheme2 = {}
     } = props;
-    const globalStyles = typeof styles2 === "function" ? (themeInput) => styles2(isEmpty$4(themeInput) ? defaultTheme2 : themeInput) : styles2;
+    const globalStyles = typeof styles2 === "function" ? (themeInput) => styles2(isEmpty$3(themeInput) ? defaultTheme2 : themeInput) : styles2;
     return /* @__PURE__ */ jsxRuntimeExports.jsx(react.Global, {
       styles: globalStyles
     });
@@ -6258,7 +4902,7 @@ var __async = (__this, __arguments, generator) => {
   } : void 0;
   "use client";
   /**
-   * @mui/styled-engine v5.15.3
+   * @mui/styled-engine v5.15.9
    *
    * @license MIT
    * This source code is licensed under the MIT license found in the
@@ -6285,7 +4929,7 @@ var __async = (__this, __arguments, generator) => {
       tag.__emotion_styles = processor(tag.__emotion_styles);
     }
   };
-  const _excluded$1f = ["values", "unit", "step"];
+  const _excluded$1e = ["values", "unit", "step"];
   const breakpointKeys = ["xs", "sm", "md", "lg", "xl"];
   const sortBreakpointsValues = (values2) => {
     const breakpointsAsArray = Object.keys(values2).map((key) => ({
@@ -6317,7 +4961,7 @@ var __async = (__this, __arguments, generator) => {
       },
       unit = "px",
       step = 5
-    } = breakpoints2, other = _objectWithoutPropertiesLoose(breakpoints2, _excluded$1f);
+    } = breakpoints2, other = _objectWithoutPropertiesLoose(breakpoints2, _excluded$1e);
     const sortedValues = sortBreakpointsValues(values2);
     const keys = Object.keys(sortedValues);
     function up(key) {
@@ -7346,14 +5990,27 @@ var __async = (__this, __arguments, generator) => {
   }
   const styleFunctionSx = unstable_createStyleFunctionSx();
   styleFunctionSx.filterProps = ["sx"];
-  const _excluded$1e = ["breakpoints", "palette", "spacing", "shape"];
+  function applyStyles$2(key, styles2) {
+    const theme = this;
+    if (theme.vars && typeof theme.getColorSchemeSelector === "function") {
+      const selector = theme.getColorSchemeSelector(key).replace(/(\[[^\]]+\])/, "*:where($1)");
+      return {
+        [selector]: styles2
+      };
+    }
+    if (theme.palette.mode === key) {
+      return styles2;
+    }
+    return {};
+  }
+  const _excluded$1d = ["breakpoints", "palette", "spacing", "shape"];
   function createTheme$1(options = {}, ...args) {
     const {
       breakpoints: breakpointsInput = {},
       palette: paletteInput = {},
       spacing: spacingInput,
       shape: shapeInput = {}
-    } = options, other = _objectWithoutPropertiesLoose(options, _excluded$1e);
+    } = options, other = _objectWithoutPropertiesLoose(options, _excluded$1d);
     const breakpoints2 = createBreakpoints(breakpointsInput);
     const spacing2 = createSpacing(spacingInput);
     let muiTheme = deepmerge({
@@ -7367,6 +6024,7 @@ var __async = (__this, __arguments, generator) => {
       spacing: spacing2,
       shape: _extends({}, shape, shapeInput)
     }, other);
+    muiTheme.applyStyles = applyStyles$2;
     muiTheme = args.reduce((acc, argument) => deepmerge(acc, argument), muiTheme);
     muiTheme.unstable_sxConfig = _extends({}, defaultSxConfig, other == null ? void 0 : other.unstable_sxConfig);
     muiTheme.unstable_sx = function sx(props) {
@@ -7403,10 +6061,10 @@ var __async = (__this, __arguments, generator) => {
     });
   }
   process.env.NODE_ENV !== "production" ? GlobalStyles$1.propTypes = {
-    // ----------------------------- Warning --------------------------------
-    // | These PropTypes are generated from the TypeScript type definitions |
-    // |     To update them edit TypeScript types and run "yarn proptypes"  |
-    // ----------------------------------------------------------------------
+    // ┌────────────────────────────── Warning ──────────────────────────────┐
+    // │ These PropTypes are generated from the TypeScript type definitions. │
+    // │ To update them, edit the TypeScript types and run `pnpm proptypes`. │
+    // └─────────────────────────────────────────────────────────────────────┘
     /**
      * @ignore
      */
@@ -7544,7 +6202,7 @@ var __async = (__this, __arguments, generator) => {
     themeKey: "typography"
   });
   const typography = compose(typographyVariant, fontFamily, fontSize, fontStyle, fontWeight, letterSpacing, lineHeight, textAlign, textTransform);
-  const _excluded$1d = ["sx"];
+  const _excluded$1c = ["sx"];
   const splitProps = (props) => {
     var _props$theme$unstable, _props$theme;
     const result = {
@@ -7564,7 +6222,7 @@ var __async = (__this, __arguments, generator) => {
   function extendSxProp(props) {
     const {
       sx: inSx
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1d);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1c);
     const {
       systemProps,
       otherProps
@@ -7628,7 +6286,7 @@ var __async = (__this, __arguments, generator) => {
     };
   }
   "use client";
-  const _excluded$1c = ["className", "component"];
+  const _excluded$1b = ["className", "component"];
   function createBox(options = {}) {
     const {
       themeId,
@@ -7644,7 +6302,7 @@ var __async = (__this, __arguments, generator) => {
       const _extendSxProp = extendSxProp(inProps), {
         className,
         component = "div"
-      } = _extendSxProp, other = _objectWithoutPropertiesLoose(_extendSxProp, _excluded$1c);
+      } = _extendSxProp, other = _objectWithoutPropertiesLoose(_extendSxProp, _excluded$1b);
       return /* @__PURE__ */ jsxRuntimeExports.jsx(BoxRoot, _extends({
         as: component,
         ref,
@@ -7654,17 +6312,17 @@ var __async = (__this, __arguments, generator) => {
     });
     return Box2;
   }
-  const boxClasses$1 = generateUtilityClasses("MuiBox", ["root"]);
+  const boxClasses$1 = generateUtilityClasses$1("MuiBox", ["root"]);
   "use client";
   const Box$1 = createBox({
     defaultClassName: boxClasses$1.root,
     generateClassName: ClassNameGenerator.generate
   });
   process.env.NODE_ENV !== "production" ? Box$1.propTypes = {
-    // ----------------------------- Warning --------------------------------
-    // | These PropTypes are generated from the TypeScript type definitions |
-    // |     To update them edit the d.ts file and run "yarn proptypes"     |
-    // ----------------------------------------------------------------------
+    // ┌────────────────────────────── Warning ──────────────────────────────┐
+    // │ These PropTypes are generated from the TypeScript type definitions. │
+    // │    To update them, edit the d.ts file and run `pnpm proptypes`.     │
+    // └─────────────────────────────────────────────────────────────────────┘
     /**
      * @ignore
      */
@@ -7680,25 +6338,7 @@ var __async = (__this, __arguments, generator) => {
     sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object])
   } : void 0;
   "use client";
-  const _excluded$1b = ["variant"];
-  function isEmpty$3(string) {
-    return string.length === 0;
-  }
-  function propsToClassKey(props) {
-    const {
-      variant
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1b);
-    let classKey = variant || "";
-    Object.keys(other).sort().forEach((key) => {
-      if (key === "color") {
-        classKey += isEmpty$3(classKey) ? props[key] : capitalize(props[key]);
-      } else {
-        classKey += `${isEmpty$3(classKey) ? key : capitalize(key)}${capitalize(props[key].toString())}`;
-      }
-    });
-    return classKey;
-  }
-  const _excluded$1a = ["name", "slot", "skipVariantsResolver", "skipSx", "overridesResolver"];
+  const _excluded$1a = ["ownerState"], _excluded2$8 = ["variants"], _excluded3$1 = ["name", "slot", "skipVariantsResolver", "skipSx", "overridesResolver"];
   function isEmpty$2(obj) {
     return Object.keys(obj).length === 0;
   }
@@ -7708,74 +6348,6 @@ var __async = (__this, __arguments, generator) => {
     // it's a lowercase character
     tag.charCodeAt(0) > 96;
   }
-  const getStyleOverrides = (name, theme) => {
-    if (theme.components && theme.components[name] && theme.components[name].styleOverrides) {
-      return theme.components[name].styleOverrides;
-    }
-    return null;
-  };
-  const transformVariants = (variants) => {
-    let numOfCallbacks = 0;
-    const variantsStyles = {};
-    if (variants) {
-      variants.forEach((definition) => {
-        let key = "";
-        if (typeof definition.props === "function") {
-          key = `callback${numOfCallbacks}`;
-          numOfCallbacks += 1;
-        } else {
-          key = propsToClassKey(definition.props);
-        }
-        variantsStyles[key] = definition.style;
-      });
-    }
-    return variantsStyles;
-  };
-  const getVariantStyles = (name, theme) => {
-    let variants = [];
-    if (theme && theme.components && theme.components[name] && theme.components[name].variants) {
-      variants = theme.components[name].variants;
-    }
-    return transformVariants(variants);
-  };
-  const variantsResolver = (props, styles2, variants) => {
-    const {
-      ownerState = {}
-    } = props;
-    const variantsStyles = [];
-    let numOfCallbacks = 0;
-    if (variants) {
-      variants.forEach((variant) => {
-        let isMatch = true;
-        if (typeof variant.props === "function") {
-          const propsToCheck = _extends({}, props, ownerState);
-          isMatch = variant.props(propsToCheck);
-        } else {
-          Object.keys(variant.props).forEach((key) => {
-            if (ownerState[key] !== variant.props[key] && props[key] !== variant.props[key]) {
-              isMatch = false;
-            }
-          });
-        }
-        if (isMatch) {
-          if (typeof variant.props === "function") {
-            variantsStyles.push(styles2[`callback${numOfCallbacks}`]);
-          } else {
-            variantsStyles.push(styles2[propsToClassKey(variant.props)]);
-          }
-        }
-        if (typeof variant.props === "function") {
-          numOfCallbacks += 1;
-        }
-      });
-    }
-    return variantsStyles;
-  };
-  const themeVariantsResolver = (props, styles2, theme, name) => {
-    var _theme$components;
-    const themeVariants = theme == null || (_theme$components = theme.components) == null || (_theme$components = _theme$components[name]) == null ? void 0 : _theme$components.variants;
-    return variantsResolver(props, styles2, themeVariants);
-  };
   function shouldForwardProp(prop) {
     return prop !== "ownerState" && prop !== "theme" && prop !== "sx" && prop !== "as";
   }
@@ -7799,29 +6371,49 @@ var __async = (__this, __arguments, generator) => {
     }
     return (props, styles2) => styles2[slot];
   }
-  const muiStyledFunctionResolver = ({
-    styledArg,
-    props,
-    defaultTheme: defaultTheme2,
-    themeId
-  }) => {
-    const resolvedStyles = styledArg(_extends({}, props, {
-      theme: resolveTheme(_extends({}, props, {
-        defaultTheme: defaultTheme2,
-        themeId
-      }))
-    }));
-    let optionalVariants;
-    if (resolvedStyles && resolvedStyles.variants) {
-      optionalVariants = resolvedStyles.variants;
-      delete resolvedStyles.variants;
+  function processStyleArg(callableStyle, _ref) {
+    let {
+      ownerState
+    } = _ref, props = _objectWithoutPropertiesLoose(_ref, _excluded$1a);
+    const resolvedStylesArg = typeof callableStyle === "function" ? callableStyle(_extends({
+      ownerState
+    }, props)) : callableStyle;
+    if (Array.isArray(resolvedStylesArg)) {
+      return resolvedStylesArg.flatMap((resolvedStyle) => processStyleArg(resolvedStyle, _extends({
+        ownerState
+      }, props)));
     }
-    if (optionalVariants) {
-      const variantsStyles = variantsResolver(props, transformVariants(optionalVariants), optionalVariants);
-      return [resolvedStyles, ...variantsStyles];
+    if (!!resolvedStylesArg && typeof resolvedStylesArg === "object" && Array.isArray(resolvedStylesArg.variants)) {
+      const {
+        variants = []
+      } = resolvedStylesArg, otherStyles = _objectWithoutPropertiesLoose(resolvedStylesArg, _excluded2$8);
+      let result = otherStyles;
+      variants.forEach((variant) => {
+        let isMatch = true;
+        if (typeof variant.props === "function") {
+          isMatch = variant.props(_extends({
+            ownerState
+          }, props));
+        } else {
+          Object.keys(variant.props).forEach((key) => {
+            if ((ownerState == null ? void 0 : ownerState[key]) !== variant.props[key] && props[key] !== variant.props[key]) {
+              isMatch = false;
+            }
+          });
+        }
+        if (isMatch) {
+          if (!Array.isArray(result)) {
+            result = [result];
+          }
+          result.push(typeof variant.style === "function" ? variant.style(_extends({
+            ownerState
+          }, props)) : variant.style);
+        }
+      });
+      return result;
     }
-    return resolvedStyles;
-  };
+    return resolvedStylesArg;
+  }
   function createStyled(input = {}) {
     const {
       themeId,
@@ -7848,7 +6440,7 @@ var __async = (__this, __arguments, generator) => {
         // TODO v6: remove `lowercaseFirstLetter()` in the next major release
         // For more details: https://github.com/mui/material-ui/pull/37908
         overridesResolver: overridesResolver2 = defaultOverridesResolver(lowercaseFirstLetter(componentSlot))
-      } = inputOptions, options = _objectWithoutPropertiesLoose(inputOptions, _excluded$1a);
+      } = inputOptions, options = _objectWithoutPropertiesLoose(inputOptions, _excluded3$1);
       const skipVariantsResolver = inputSkipVariantsResolver !== void 0 ? inputSkipVariantsResolver : (
         // TODO v6: remove `Root` in the next major release
         // For more details: https://github.com/mui/material-ui/pull/37908
@@ -7873,87 +6465,53 @@ var __async = (__this, __arguments, generator) => {
         shouldForwardProp: shouldForwardPropOption,
         label
       }, options));
-      const muiStyledResolver = (styleArg, ...expressions) => {
-        const expressionsWithDefaultTheme = expressions ? expressions.map((stylesArg) => {
-          if (typeof stylesArg === "function" && stylesArg.__emotion_real !== stylesArg) {
-            return (props) => muiStyledFunctionResolver({
-              styledArg: stylesArg,
-              props,
+      const transformStyleArg = (stylesArg) => {
+        if (typeof stylesArg === "function" && stylesArg.__emotion_real !== stylesArg || isPlainObject(stylesArg)) {
+          return (props) => processStyleArg(stylesArg, _extends({}, props, {
+            theme: resolveTheme({
+              theme: props.theme,
               defaultTheme: defaultTheme2,
               themeId
-            });
-          }
-          if (isPlainObject(stylesArg)) {
-            let transformedStylesArg = stylesArg;
-            let styledArgVariants;
-            if (stylesArg && stylesArg.variants) {
-              styledArgVariants = stylesArg.variants;
-              delete transformedStylesArg.variants;
-              transformedStylesArg = (props) => {
-                let result = stylesArg;
-                const variantStyles = variantsResolver(props, transformVariants(styledArgVariants), styledArgVariants);
-                variantStyles.forEach((variantStyle) => {
-                  result = deepmerge(result, variantStyle);
-                });
-                return result;
-              };
-            }
-            return transformedStylesArg;
-          }
-          return stylesArg;
-        }) : [];
-        let transformedStyleArg = styleArg;
-        if (isPlainObject(styleArg)) {
-          let styledArgVariants;
-          if (styleArg && styleArg.variants) {
-            styledArgVariants = styleArg.variants;
-            delete transformedStyleArg.variants;
-            transformedStyleArg = (props) => {
-              let result = styleArg;
-              const variantStyles = variantsResolver(props, transformVariants(styledArgVariants), styledArgVariants);
-              variantStyles.forEach((variantStyle) => {
-                result = deepmerge(result, variantStyle);
-              });
-              return result;
-            };
-          }
-        } else if (typeof styleArg === "function" && // On the server Emotion doesn't use React.forwardRef for creating components, so the created
-        // component stays as a function. This condition makes sure that we do not interpolate functions
-        // which are basically components used as a selectors.
-        styleArg.__emotion_real !== styleArg) {
-          transformedStyleArg = (props) => muiStyledFunctionResolver({
-            styledArg: styleArg,
-            props,
-            defaultTheme: defaultTheme2,
-            themeId
-          });
+            })
+          }));
         }
+        return stylesArg;
+      };
+      const muiStyledResolver = (styleArg, ...expressions) => {
+        let transformedStyleArg = transformStyleArg(styleArg);
+        const expressionsWithDefaultTheme = expressions ? expressions.map(transformStyleArg) : [];
         if (componentName && overridesResolver2) {
           expressionsWithDefaultTheme.push((props) => {
             const theme = resolveTheme(_extends({}, props, {
               defaultTheme: defaultTheme2,
               themeId
             }));
-            const styleOverrides = getStyleOverrides(componentName, theme);
-            if (styleOverrides) {
-              const resolvedStyleOverrides = {};
-              Object.entries(styleOverrides).forEach(([slotKey, slotStyle]) => {
-                resolvedStyleOverrides[slotKey] = typeof slotStyle === "function" ? slotStyle(_extends({}, props, {
-                  theme
-                })) : slotStyle;
-              });
-              return overridesResolver2(props, resolvedStyleOverrides);
+            if (!theme.components || !theme.components[componentName] || !theme.components[componentName].styleOverrides) {
+              return null;
             }
-            return null;
+            const styleOverrides = theme.components[componentName].styleOverrides;
+            const resolvedStyleOverrides = {};
+            Object.entries(styleOverrides).forEach(([slotKey, slotStyle]) => {
+              resolvedStyleOverrides[slotKey] = processStyleArg(slotStyle, _extends({}, props, {
+                theme
+              }));
+            });
+            return overridesResolver2(props, resolvedStyleOverrides);
           });
         }
         if (componentName && !skipVariantsResolver) {
           expressionsWithDefaultTheme.push((props) => {
+            var _theme$components;
             const theme = resolveTheme(_extends({}, props, {
               defaultTheme: defaultTheme2,
               themeId
             }));
-            return themeVariantsResolver(props, getVariantStyles(componentName, theme), theme, componentName);
+            const themeVariants = theme == null || (_theme$components = theme.components) == null || (_theme$components = _theme$components[componentName]) == null ? void 0 : _theme$components.variants;
+            return processStyleArg({
+              variants: themeVariants
+            }, _extends({}, props, {
+              theme
+            }));
           });
         }
         if (!skipSx) {
@@ -8018,13 +6576,13 @@ var __async = (__this, __arguments, generator) => {
     return mergedProps;
   }
   "use client";
-  function clamp$3(value, min2 = 0, max2 = 1) {
+  function clampWrapper(value, min2 = 0, max2 = 1) {
     if (process.env.NODE_ENV !== "production") {
       if (value < min2 || value > max2) {
         console.error(`MUI: The value provided ${value} is out of range [${min2}, ${max2}].`);
       }
     }
-    return Math.min(Math.max(min2, value), max2);
+    return clamp$1(value, min2, max2);
   }
   function hexToRgb(color2) {
     color2 = color2.slice(1);
@@ -8159,7 +6717,7 @@ The following color spaces are supported: srgb, display-p3, a98-rgb, prophoto-rg
   }
   function alpha(color2, value) {
     color2 = decomposeColor(color2);
-    value = clamp$3(value);
+    value = clampWrapper(value);
     if (color2.type === "rgb" || color2.type === "hsl") {
       color2.type += "a";
     }
@@ -8182,7 +6740,7 @@ The following color spaces are supported: srgb, display-p3, a98-rgb, prophoto-rg
   }
   function darken(color2, coefficient) {
     color2 = decomposeColor(color2);
-    coefficient = clamp$3(coefficient);
+    coefficient = clampWrapper(coefficient);
     if (color2.type.indexOf("hsl") !== -1) {
       color2.values[2] *= 1 - coefficient;
     } else if (color2.type.indexOf("rgb") !== -1 || color2.type.indexOf("color") !== -1) {
@@ -8204,7 +6762,7 @@ The following color spaces are supported: srgb, display-p3, a98-rgb, prophoto-rg
   }
   function lighten(color2, coefficient) {
     color2 = decomposeColor(color2);
-    coefficient = clamp$3(coefficient);
+    coefficient = clampWrapper(coefficient);
     if (color2.type.indexOf("hsl") !== -1) {
       color2.values[2] += (100 - color2.values[2]) * coefficient;
     } else if (color2.type.indexOf("rgb") !== -1) {
@@ -8240,6 +6798,16 @@ The following color spaces are supported: srgb, display-p3, a98-rgb, prophoto-rg
       }
       return color2;
     }
+  }
+  function blend(background, overlay, opacity, gamma = 1) {
+    const blendChannel = (b, o) => Math.round(__pow(__pow(b, 1 / gamma) * (1 - opacity) + __pow(o, 1 / gamma) * opacity, gamma));
+    const backgroundColor2 = decomposeColor(background);
+    const overlayColor = decomposeColor(overlay);
+    const rgb = [blendChannel(backgroundColor2.values[0], overlayColor.values[0]), blendChannel(backgroundColor2.values[1], overlayColor.values[1]), blendChannel(backgroundColor2.values[2], overlayColor.values[2])];
+    return recomposeColor({
+      type: "rgb",
+      values: rgb
+    });
   }
   const ThemeContext = /* @__PURE__ */ React__namespace.createContext(null);
   if (process.env.NODE_ENV !== "production") {
@@ -8303,7 +6871,7 @@ The following color spaces are supported: srgb, display-p3, a98-rgb, prophoto-rg
     process.env.NODE_ENV !== "production" ? ThemeProvider$2.propTypes = exactProp(ThemeProvider$2.propTypes) : void 0;
   }
   /**
-   * @mui/private-theming v5.15.3
+   * @mui/private-theming v5.15.9
    *
    * @license MIT
    * This source code is licensed under the MIT license found in the
@@ -8353,10 +6921,10 @@ The following color spaces are supported: srgb, display-p3, a98-rgb, prophoto-rg
     });
   }
   process.env.NODE_ENV !== "production" ? ThemeProvider$1.propTypes = {
-    // ----------------------------- Warning --------------------------------
-    // | These PropTypes are generated from the TypeScript type definitions |
-    // |     To update them edit the d.ts file and run "yarn proptypes"     |
-    // ----------------------------------------------------------------------
+    // ┌────────────────────────────── Warning ──────────────────────────────┐
+    // │ These PropTypes are generated from the TypeScript type definitions. │
+    // │    To update them, edit the d.ts file and run `pnpm proptypes`.     │
+    // └─────────────────────────────────────────────────────────────────────┘
     /**
      * Your component tree.
      */
@@ -9094,7 +7662,7 @@ try {
   });
   const useUtilityClasses$N = (ownerState, componentName) => {
     const getContainerUtilityClass2 = (slot) => {
-      return generateUtilityClass(componentName, slot);
+      return generateUtilityClass$1(componentName, slot);
     };
     const {
       classes,
@@ -9201,10 +7769,10 @@ try {
   "use client";
   const Container$1 = createContainer();
   process.env.NODE_ENV !== "production" ? Container$1.propTypes = {
-    // ----------------------------- Warning --------------------------------
-    // | These PropTypes are generated from the TypeScript type definitions |
-    // |     To update them edit TypeScript types and run "yarn proptypes"  |
-    // ----------------------------------------------------------------------
+    // ┌────────────────────────────── Warning ──────────────────────────────┐
+    // │ These PropTypes are generated from the TypeScript type definitions. │
+    // │ To update them, edit the TypeScript types and run `pnpm proptypes`. │
+    // └─────────────────────────────────────────────────────────────────────┘
     /**
      * @ignore
      */
@@ -9244,9 +7812,9 @@ try {
     sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object])
   } : void 0;
   function getContainerUtilityClass$1(slot) {
-    return generateUtilityClass("MuiContainer", slot);
+    return generateUtilityClass$1("MuiContainer", slot);
   }
-  const containerClasses$1 = generateUtilityClasses("MuiContainer", ["root", "disableGutters", "fixed", "maxWidthXs", "maxWidthSm", "maxWidthMd", "maxWidthLg", "maxWidthXl"]);
+  const containerClasses$1 = generateUtilityClasses$1("MuiContainer", ["root", "disableGutters", "fixed", "maxWidthXs", "maxWidthSm", "maxWidthMd", "maxWidthLg", "maxWidthXl"]);
   "use client";
   const filterBreakpointKeys = (breakpointsKeys, responsiveKeys) => breakpointsKeys.filter((key) => responsiveKeys.includes(key));
   const traverseBreakpoints = (breakpoints2, responsive, iterator) => {
@@ -9540,7 +8108,7 @@ try {
       const slots = {
         root: ["root", container && "container", wrap !== "wrap" && `wrap-xs-${String(wrap)}`, ...generateDirectionClasses(direction), ...generateSizeClassNames(gridSize), ...container ? generateSpacingClassNames(spacing2, theme.breakpoints.keys[0]) : []]
       };
-      return composeClasses(slots, (slot) => generateUtilityClass(componentName, slot), {});
+      return composeClasses(slots, (slot) => generateUtilityClass$1(componentName, slot), {});
     };
     const GridRoot = createStyledComponent(generateGridColumnsStyles, generateGridColumnSpacingStyles, generateGridRowSpacingStyles, generateGridSizeStyles, generateGridDirectionStyles, generateGridStyles, generateGridOffsetStyles);
     const Grid2 = /* @__PURE__ */ React__namespace.forwardRef(function Grid3(inProps, ref) {
@@ -9654,10 +8222,10 @@ try {
   "use client";
   const Grid = createGrid();
   process.env.NODE_ENV !== "production" ? Grid.propTypes = {
-    // ----------------------------- Warning --------------------------------
-    // | These PropTypes are generated from the TypeScript type definitions |
-    // |     To update them edit TypeScript types and run "yarn proptypes"  |
-    // ----------------------------------------------------------------------
+    // ┌────────────────────────────── Warning ──────────────────────────────┐
+    // │ These PropTypes are generated from the TypeScript type definitions. │
+    // │ To update them, edit the TypeScript types and run `pnpm proptypes`. │
+    // └─────────────────────────────────────────────────────────────────────┘
     /**
      * The content of the component.
      */
@@ -9814,13 +8382,13 @@ try {
     xsOffset: PropTypes.oneOfType([PropTypes.oneOf(["auto"]), PropTypes.number])
   } : void 0;
   function getGridUtilityClass(slot) {
-    return generateUtilityClass("MuiGrid", slot);
+    return generateUtilityClass$1("MuiGrid", slot);
   }
   const SPACINGS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   const DIRECTIONS = ["column-reverse", "column", "row-reverse", "row"];
   const WRAPS = ["nowrap", "wrap-reverse", "wrap"];
   const GRID_SIZES = ["auto", true, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-  const gridClasses = generateUtilityClasses("MuiGrid", [
+  const gridClasses = generateUtilityClasses$1("MuiGrid", [
     "root",
     "container",
     "item",
@@ -9947,7 +8515,7 @@ try {
       const slots = {
         root: ["root"]
       };
-      return composeClasses(slots, (slot) => generateUtilityClass(componentName, slot), {});
+      return composeClasses(slots, (slot) => generateUtilityClass$1(componentName, slot), {});
     };
     const StackRoot = createStyledComponent(style);
     const Stack2 = /* @__PURE__ */ React__namespace.forwardRef(function Grid2(inProps, ref) {
@@ -9989,10 +8557,10 @@ try {
   "use client";
   const Stack = createStack();
   process.env.NODE_ENV !== "production" ? Stack.propTypes = {
-    // ----------------------------- Warning --------------------------------
-    // | These PropTypes are generated from the TypeScript type definitions |
-    // |     To update them edit TypeScript types and run "yarn proptypes"  |
-    // ----------------------------------------------------------------------
+    // ┌────────────────────────────── Warning ──────────────────────────────┐
+    // │ These PropTypes are generated from the TypeScript type definitions. │
+    // │ To update them, edit the TypeScript types and run `pnpm proptypes`. │
+    // └─────────────────────────────────────────────────────────────────────┘
     /**
      * The content of the component.
      */
@@ -10033,10 +8601,9 @@ try {
     useFlexGap: PropTypes.bool
   } : void 0;
   function getStackUtilityClass(slot) {
-    return generateUtilityClass("MuiStack", slot);
+    return generateUtilityClass$1("MuiStack", slot);
   }
-  const stackClasses = generateUtilityClasses("MuiStack", ["root"]);
-  "use client";
+  const stackClasses = generateUtilityClasses$1("MuiStack", ["root"]);
   "use client";
   function experimental_sx$1() {
     throw new Error(process.env.NODE_ENV !== "production" ? `MUI: The \`experimental_sx\` has been moved to \`theme.unstable_sx\`.For more details, see https://github.com/mui/material-ui/pull/35150.` : formatMuiErrorMessage(20));
@@ -10666,7 +9233,7 @@ Please use another name.` : formatMuiErrorMessage(18));
           const child = node2[key];
           if (stateClasses.indexOf(key) !== -1 && Object.keys(child).length > 0) {
             if (process.env.NODE_ENV !== "production") {
-              const stateClass = generateUtilityClass("", key);
+              const stateClass = generateUtilityClass$1("", key);
               console.error([`MUI: The \`${component}\` component increases the CSS specificity of the \`${key}\` internal state.`, "You can not override it like this: ", JSON.stringify(node2, null, 2), "", `Instead, you need to use the '&.${stateClass}' syntax:`, JSON.stringify({
                 root: {
                   [`&.${stateClass}`]: child
@@ -10744,9 +9311,9 @@ Please use another name.` : formatMuiErrorMessage(18));
     return theme[THEME_ID] || theme;
   }
   function getPaperUtilityClass(slot) {
-    return generateUtilityClass("MuiPaper", slot);
+    return generateUtilityClass$1("MuiPaper", slot);
   }
-  const paperClasses = generateUtilityClasses("MuiPaper", ["root", "rounded", "outlined", "elevation", "elevation0", "elevation1", "elevation2", "elevation3", "elevation4", "elevation5", "elevation6", "elevation7", "elevation8", "elevation9", "elevation10", "elevation11", "elevation12", "elevation13", "elevation14", "elevation15", "elevation16", "elevation17", "elevation18", "elevation19", "elevation20", "elevation21", "elevation22", "elevation23", "elevation24"]);
+  const paperClasses = generateUtilityClasses$1("MuiPaper", ["root", "rounded", "outlined", "elevation", "elevation0", "elevation1", "elevation2", "elevation3", "elevation4", "elevation5", "elevation6", "elevation7", "elevation8", "elevation9", "elevation10", "elevation11", "elevation12", "elevation13", "elevation14", "elevation15", "elevation16", "elevation17", "elevation18", "elevation19", "elevation20", "elevation21", "elevation22", "elevation23", "elevation24"]);
   "use client";
   const _excluded$$ = ["className", "component", "elevation", "square", "variant"];
   const useUtilityClasses$M = (ownerState) => {
@@ -10824,10 +9391,10 @@ Please use another name.` : formatMuiErrorMessage(18));
     }, other));
   });
   process.env.NODE_ENV !== "production" ? Paper.propTypes = {
-    // ----------------------------- Warning --------------------------------
-    // | These PropTypes are generated from the TypeScript type definitions |
-    // |     To update them edit the d.ts file and run "yarn proptypes"     |
-    // ----------------------------------------------------------------------
+    // ┌────────────────────────────── Warning ──────────────────────────────┐
+    // │ These PropTypes are generated from the TypeScript type definitions. │
+    // │    To update them, edit the d.ts file and run `pnpm proptypes`.     │
+    // └─────────────────────────────────────────────────────────────────────┘
     /**
      * The content of the component.
      */
@@ -10877,9 +9444,9 @@ Please use another name.` : formatMuiErrorMessage(18));
   } : void 0;
   "use client";
   function getAppBarUtilityClass(slot) {
-    return generateUtilityClass("MuiAppBar", slot);
+    return generateUtilityClass$1("MuiAppBar", slot);
   }
-  const appBarClasses = generateUtilityClasses("MuiAppBar", ["root", "positionFixed", "positionAbsolute", "positionSticky", "positionStatic", "positionRelative", "colorDefault", "colorPrimary", "colorSecondary", "colorInherit", "colorTransparent", "colorError", "colorInfo", "colorSuccess", "colorWarning"]);
+  const appBarClasses = generateUtilityClasses$1("MuiAppBar", ["root", "positionFixed", "positionAbsolute", "positionSticky", "positionStatic", "positionRelative", "colorDefault", "colorPrimary", "colorSecondary", "colorInherit", "colorTransparent", "colorError", "colorInfo", "colorSuccess", "colorWarning"]);
   "use client";
   const _excluded$_ = ["className", "color", "enableColorOnDark", "position"];
   const useUtilityClasses$L = (ownerState) => {
@@ -11000,10 +9567,10 @@ Please use another name.` : formatMuiErrorMessage(18));
     }, other));
   });
   process.env.NODE_ENV !== "production" ? AppBar.propTypes = {
-    // ----------------------------- Warning --------------------------------
-    // | These PropTypes are generated from the TypeScript type definitions |
-    // |     To update them edit the d.ts file and run "yarn proptypes"     |
-    // ----------------------------------------------------------------------
+    // ┌────────────────────────────── Warning ──────────────────────────────┐
+    // │ These PropTypes are generated from the TypeScript type definitions. │
+    // │    To update them, edit the d.ts file and run `pnpm proptypes`.     │
+    // └─────────────────────────────────────────────────────────────────────┘
     /**
      * The content of the component.
      */
@@ -11042,9 +9609,9 @@ Please use another name.` : formatMuiErrorMessage(18));
   } : void 0;
   "use client";
   function getToolbarUtilityClass(slot) {
-    return generateUtilityClass("MuiToolbar", slot);
+    return generateUtilityClass$1("MuiToolbar", slot);
   }
-  const toolbarClasses = generateUtilityClasses("MuiToolbar", ["root", "gutters", "regular", "dense"]);
+  const toolbarClasses = generateUtilityClasses$1("MuiToolbar", ["root", "gutters", "regular", "dense"]);
   "use client";
   const _excluded$Z = ["className", "component", "disableGutters", "variant"];
   const useUtilityClasses$K = (ownerState) => {
@@ -11112,10 +9679,10 @@ Please use another name.` : formatMuiErrorMessage(18));
     }, other));
   });
   process.env.NODE_ENV !== "production" ? Toolbar.propTypes = {
-    // ----------------------------- Warning --------------------------------
-    // | These PropTypes are generated from the TypeScript type definitions |
-    // |     To update them edit the d.ts file and run "yarn proptypes"     |
-    // ----------------------------------------------------------------------
+    // ┌────────────────────────────── Warning ──────────────────────────────┐
+    // │ These PropTypes are generated from the TypeScript type definitions. │
+    // │    To update them, edit the d.ts file and run `pnpm proptypes`.     │
+    // └─────────────────────────────────────────────────────────────────────┘
     /**
      * The Toolbar children, usually a mixture of `IconButton`, `Button` and `Typography`.
      * The Toolbar is a flex container, allowing flex item properties to be used to lay out the children.
@@ -11149,7 +9716,6 @@ Please use another name.` : formatMuiErrorMessage(18));
      */
     variant: PropTypes.oneOfType([PropTypes.oneOf(["dense", "regular"]), PropTypes.string])
   } : void 0;
-  "use client";
   const CMPNAME$7 = "BasicAccountTool";
   console.log(CMPNAME$7, "1");
   const { Exact: Exact$2 } = gubu_minExports.Gubu;
@@ -11368,7 +9934,26 @@ Please use another name.` : formatMuiErrorMessage(18));
     );
   }
   function BasicList(props) {
-    return /* @__PURE__ */ jsxRuntimeExports.jsx(material.Box, { className: "vxg-BasicList", children: /* @__PURE__ */ jsxRuntimeExports.jsx("b", { children: "BasicList" }) });
+    const { ctx, spec } = props;
+    const { seneca, model } = ctx();
+    const slotName = spec.prefix + spec.name;
+    const canon = spec.ent;
+    const slotSelectors = seneca.export("Redux/slotSelectors");
+    let { selectItem, selectList, selectMeta } = slotSelectors(slotName);
+    let list = reactRedux.useSelector((state) => selectList(state));
+    React.useEffect(() => {
+      seneca.entity(canon).list$({ slot$: slotName });
+    }, []);
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(material.Box, { className: "vxg-BasicList", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { children: "BasicList" }),
+      list.map(
+        (item, index2) => /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
+          index2,
+          " ",
+          JSON.stringify(item)
+        ] }, item.id)
+      )
+    ] });
   }
   const filter = material.createFilterOptions();
   function BasicEdit(props) {
@@ -11381,7 +9966,7 @@ Please use another name.` : formatMuiErrorMessage(18));
     return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { children: "Loading..." }) });
   }
   const CMPNAME$3 = "BasicLed";
-  console.log(CMPNAME$3, "1");
+  console.log(CMPNAME$3, "2");
   const { Skip } = gubu_minExports.Gubu;
   const BasicLedSpecShape = gubu_minExports.Gubu({
     /*
@@ -11412,6 +9997,7 @@ Please use another name.` : formatMuiErrorMessage(18));
     console.log(CMPNAME$3, basicLedSpec);
     const name = basicLedSpec.name;
     const canon = basicLedSpec.spec.ent;
+    const slotName = "BasicLed_" + name;
     const led = reactRedux.useSelector((state) => state.main.view[name]);
     const ready = true === led.ready;
     const show = led.show;
@@ -11421,13 +10007,15 @@ Please use another name.` : formatMuiErrorMessage(18));
         this.fix({ view: name }).add(
           "aim:app,on:view,init:state,redux$:true",
           function(_msg, _reply, meta) {
-            let view = meta.custom.state().view[name];
+            const state = meta.custom.state();
+            let view = state.view[name];
             view.show = {
               list: true,
               edit: false
             };
             view.status = "init";
             view.ready = true;
+            this.export("Redux/entityPrepare")(state, slotName);
           }
         ).add(
           "aim:app,on:view,edit:start,redux$:true",
@@ -11446,7 +10034,7 @@ Please use another name.` : formatMuiErrorMessage(18));
               this.act("aim:app,on:view,view:track,edit:start,direct$:true", { item_id: msg.item_id });
               return yield this.entity(canon).load$({
                 id: msg.item_id,
-                slot$: "track"
+                slot$: slotName
               });
             });
           }
@@ -11460,10 +10048,16 @@ Please use another name.` : formatMuiErrorMessage(18));
       Object.defineProperty(ledplugin, "name", { value: "VxgBasicLed_" + name });
       seneca.use(ledplugin);
     }
+    const listSpec = {
+      name,
+      ent: canon,
+      prefix: "BasicLed_"
+    };
+    const editSpec = {};
     return ready ? /* @__PURE__ */ jsxRuntimeExports.jsxs(material.Box, { className: "vxg-BasicLed", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("b", { children: "BasicLed" }),
-      show.list ? /* @__PURE__ */ jsxRuntimeExports.jsx(BasicList, {}) : /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, {}),
-      show.edit ? /* @__PURE__ */ jsxRuntimeExports.jsx(BasicEdit, {}) : /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, {})
+      show.list ? /* @__PURE__ */ jsxRuntimeExports.jsx(BasicList, { ctx, spec: listSpec }) : /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, {}),
+      show.edit ? /* @__PURE__ */ jsxRuntimeExports.jsx(BasicEdit, { ctx, spec: editSpec }) : /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, {})
     ] }) : /* @__PURE__ */ jsxRuntimeExports.jsx(BasicLoading, {});
   }
   const CMPNAME$2 = "BasicSide";
@@ -11534,9 +10128,9 @@ Please use another name.` : formatMuiErrorMessage(18));
   const interopRequireDefault$1 = /* @__PURE__ */ getDefaultExportFromCjs(interopRequireDefaultExports);
   var createSvgIcon$1 = {};
   function getSvgIconUtilityClass(slot) {
-    return generateUtilityClass("MuiSvgIcon", slot);
+    return generateUtilityClass$1("MuiSvgIcon", slot);
   }
-  const svgIconClasses = generateUtilityClasses("MuiSvgIcon", ["root", "colorPrimary", "colorSecondary", "colorAction", "colorError", "colorDisabled", "fontSizeInherit", "fontSizeSmall", "fontSizeMedium", "fontSizeLarge"]);
+  const svgIconClasses = generateUtilityClasses$1("MuiSvgIcon", ["root", "colorPrimary", "colorSecondary", "colorAction", "colorError", "colorDisabled", "fontSizeInherit", "fontSizeSmall", "fontSizeMedium", "fontSizeLarge"]);
   "use client";
   const _excluded$Y = ["children", "className", "color", "component", "fontSize", "htmlColor", "inheritViewBox", "titleAccess", "viewBox"];
   const useUtilityClasses$J = (ownerState) => {
@@ -11637,10 +10231,10 @@ Please use another name.` : formatMuiErrorMessage(18));
     }));
   });
   process.env.NODE_ENV !== "production" ? SvgIcon.propTypes = {
-    // ----------------------------- Warning --------------------------------
-    // | These PropTypes are generated from the TypeScript type definitions |
-    // |     To update them edit the d.ts file and run "yarn proptypes"     |
-    // ----------------------------------------------------------------------
+    // ┌────────────────────────────── Warning ──────────────────────────────┐
+    // │ These PropTypes are generated from the TypeScript type definitions. │
+    // │    To update them, edit the d.ts file and run `pnpm proptypes`.     │
+    // └─────────────────────────────────────────────────────────────────────┘
     /**
      * Node passed into the SVG element.
      */
@@ -11792,11 +10386,10 @@ Please use another name.` : formatMuiErrorMessage(18));
   });
   var default_1 = ChevronLeft.default = void 0;
   var _createSvgIcon = _interopRequireDefault(requireCreateSvgIcon());
-  var _jsxRuntime = jsxRuntimeExports;
-  var _default = (0, _createSvgIcon.default)(/* @__PURE__ */ (0, _jsxRuntime.jsx)("path", {
+  var _jsxRuntime = requireJsxRuntime();
+  var _default = default_1 = ChevronLeft.default = (0, _createSvgIcon.default)(/* @__PURE__ */ (0, _jsxRuntime.jsx)("path", {
     d: "M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"
   }), "ChevronLeft");
-  default_1 = ChevronLeft.default = _default;
   const CMPNAME$1 = "BasicSide";
   console.log(CMPNAME$1, "1");
   const { Child: Child$1, Open, Required } = gubu_minExports.Gubu;
@@ -11951,7 +10544,7 @@ Please use another name.` : formatMuiErrorMessage(18));
       seneca.context.vxg.BasicAdmin = seneca.context.vxg.BasicAdmin || {};
       if (!seneca.context.vxg.BasicAdmin.preparing) {
         seneca.context.vxg.BasicAdmin.preparing = true;
-        seneca.use(SenecaEntity).use(BrowserStore).use(VxgSeneca);
+        seneca.use(VxgSeneca);
         yield seneca.ready(done);
       }
     });
@@ -15823,6 +14416,26 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }
     return componentProps;
   }
+  "use client";
+  function useRootElementName(parameters) {
+    const {
+      rootElementName: rootElementNameProp = "",
+      componentName
+    } = parameters;
+    const [rootElementName, setRootElementName] = React__namespace.useState(rootElementNameProp.toUpperCase());
+    if (process.env.NODE_ENV !== "production") {
+      React__namespace.useEffect(() => {
+        if (rootElementNameProp && rootElementName !== rootElementNameProp.toUpperCase()) {
+          console.error(`useRootElementName: the \`rootElementName\` prop of ${componentName ? `the ${componentName} component` : "a component"} expected the '${rootElementNameProp}' element, but a '${rootElementName.toLowerCase()}' was rendered instead`, "This may cause hydration issues in an SSR context, e.g. in a Next.js app");
+        }
+      }, [rootElementNameProp, rootElementName, componentName]);
+    }
+    const updateRootElementName = React__namespace.useCallback((instance) => {
+      var _instance$tagName;
+      setRootElementName((_instance$tagName = instance == null ? void 0 : instance.tagName) != null ? _instance$tagName : "");
+    }, []);
+    return [rootElementName, updateRootElementName];
+  }
   function omitEventHandlers(object) {
     if (object === void 0) {
       return {};
@@ -16277,10 +14890,32 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     };
   }
   "use client";
-  function getBadgeUtilityClass(slot) {
-    return generateUtilityClass("MuiBadge", slot);
+  const GLOBAL_CLASS_PREFIX = "base";
+  function buildStateClass(state) {
+    return `${GLOBAL_CLASS_PREFIX}--${state}`;
   }
-  const badgeClasses = generateUtilityClasses("MuiBadge", ["root", "badge", "invisible"]);
+  function buildSlotClass(componentName, slot) {
+    return `${GLOBAL_CLASS_PREFIX}-${componentName}-${slot}`;
+  }
+  function generateUtilityClass(componentName, slot) {
+    const globalStateClass = globalStateClasses[slot];
+    return globalStateClass ? buildStateClass(globalStateClass) : buildSlotClass(componentName, slot);
+  }
+  function isGlobalState(slot) {
+    return globalStateClasses[slot] !== void 0;
+  }
+  function generateUtilityClasses(componentName, slots) {
+    const result = {};
+    slots.forEach((slot) => {
+      result[slot] = generateUtilityClass(componentName, slot);
+    });
+    return result;
+  }
+  const COMPONENT_NAME$l = "Badge";
+  function getBadgeUtilityClass(slot) {
+    return generateUtilityClass(COMPONENT_NAME$l, slot);
+  }
+  const badgeClasses = generateUtilityClasses(COMPONENT_NAME$l, ["root", "badge", "invisible"]);
   "use client";
   const _excluded$S = ["badgeContent", "children", "invisible", "max", "slotProps", "slots", "showZero"];
   const useUtilityClasses$I = (ownerState) => {
@@ -16342,10 +14977,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }));
   });
   process.env.NODE_ENV !== "production" ? Badge.propTypes = {
-    // ----------------------------- Warning --------------------------------
-    // | These PropTypes are generated from the TypeScript type definitions |
-    // |     To update them edit TypeScript types and run "yarn proptypes"  |
-    // ----------------------------------------------------------------------
+    // ┌────────────────────────────── Warning ──────────────────────────────┐
+    // │ These PropTypes are generated from the TypeScript type definitions. │
+    // │ To update them, edit the TypeScript types and run `pnpm proptypes`. │
+    // └─────────────────────────────────────────────────────────────────────┘
     /**
      * The content rendered within the badge.
      */
@@ -16388,10 +15023,11 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     })
   } : void 0;
   "use client";
+  const COMPONENT_NAME$k = "Button";
   function getButtonUtilityClass$1(slot) {
-    return generateUtilityClass("MuiButton", slot);
+    return generateUtilityClass(COMPONENT_NAME$k, slot);
   }
-  const buttonClasses$1 = generateUtilityClasses("MuiButton", ["root", "active", "disabled", "focusVisible"]);
+  const buttonClasses$1 = generateUtilityClasses(COMPONENT_NAME$k, ["root", "active", "disabled", "focusVisible"]);
   "use client";
   function useButton(parameters = {}) {
     const {
@@ -16401,7 +15037,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       rootRef: externalRef,
       tabIndex,
       to,
-      type
+      type,
+      rootElementName: rootElementNameProp
     } = parameters;
     const buttonRef = React__namespace.useRef();
     const [active, setActive] = React__namespace.useState(false);
@@ -16418,7 +15055,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     React__namespace.useEffect(() => {
       isFocusVisibleRef.current = focusVisible;
     }, [focusVisible, isFocusVisibleRef]);
-    const [hostElementName, setHostElementName] = React__namespace.useState("");
+    const [rootElementName, updateRootElementName] = useRootElementName({
+      rootElementName: rootElementNameProp != null ? rootElementNameProp : href || to ? "a" : void 0,
+      componentName: "Button"
+    });
     const createHandleMouseLeave = (otherHandlers) => (event) => {
       var _otherHandlers$onMous;
       if (focusVisible) {
@@ -16449,7 +15089,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     };
     const isNativeButton = () => {
       const button = buttonRef.current;
-      return hostElementName === "BUTTON" || hostElementName === "INPUT" && ["button", "submit", "reset"].includes(button == null ? void 0 : button.type) || hostElementName === "A" && (button == null ? void 0 : button.href);
+      return rootElementName === "BUTTON" || rootElementName === "INPUT" && ["button", "submit", "reset"].includes(button == null ? void 0 : button.type) || rootElementName === "A" && (button == null ? void 0 : button.href);
     };
     const createHandleClick = (otherHandlers) => (event) => {
       if (!disabled) {
@@ -16498,23 +15138,27 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         (_otherHandlers$onClic3 = otherHandlers.onClick) == null || _otherHandlers$onClic3.call(otherHandlers, event);
       }
     };
-    const updateHostElementName = React__namespace.useCallback((instance) => {
-      var _instance$tagName;
-      setHostElementName((_instance$tagName = instance == null ? void 0 : instance.tagName) != null ? _instance$tagName : "");
-    }, []);
-    const handleRef = useForkRef(updateHostElementName, externalRef, focusVisibleRef, buttonRef);
+    const handleRef = useForkRef(updateRootElementName, externalRef, focusVisibleRef, buttonRef);
     const buttonProps = {};
     if (tabIndex !== void 0) {
       buttonProps.tabIndex = tabIndex;
     }
-    if (hostElementName === "BUTTON") {
+    if (rootElementName === "BUTTON") {
       buttonProps.type = type != null ? type : "button";
       if (focusableWhenDisabled) {
         buttonProps["aria-disabled"] = disabled;
       } else {
         buttonProps.disabled = disabled;
       }
-    } else if (hostElementName !== "") {
+    } else if (rootElementName === "INPUT") {
+      if (type && ["button", "submit", "reset"].includes(type)) {
+        if (focusableWhenDisabled) {
+          buttonProps["aria-disabled"] = disabled;
+        } else {
+          buttonProps.disabled = disabled;
+        }
+      }
+    } else if (rootElementName !== "") {
       if (!href && !to) {
         buttonProps.role = "button";
         buttonProps.tabIndex = tabIndex != null ? tabIndex : 0;
@@ -16551,7 +15195,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   "use client";
   "use client";
-  const _excluded$R = ["action", "children", "disabled", "focusableWhenDisabled", "onFocusVisible", "slotProps", "slots"];
+  const _excluded$R = ["action", "children", "disabled", "focusableWhenDisabled", "onFocusVisible", "slotProps", "slots", "rootElementName"];
   const useUtilityClasses$H = (ownerState) => {
     const {
       active,
@@ -16570,16 +15214,24 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       children,
       focusableWhenDisabled = false,
       slotProps = {},
-      slots = {}
+      slots = {},
+      rootElementName: rootElementNameProp = "button"
     } = props, other = _objectWithoutPropertiesLoose(props, _excluded$R);
     const buttonRef = React__namespace.useRef();
+    let rootElementName = rootElementNameProp;
+    if (typeof slots.root === "string") {
+      rootElementName = slots.root;
+    } else if (other.href || other.to) {
+      rootElementName = "a";
+    }
     const {
       active,
       focusVisible,
       setFocusVisible,
       getRootProps
     } = useButton(_extends({}, props, {
-      focusableWhenDisabled
+      focusableWhenDisabled,
+      rootElementName
     }));
     React__namespace.useImperativeHandle(action, () => ({
       focusVisible: () => {
@@ -16611,10 +15263,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }));
   });
   process.env.NODE_ENV !== "production" ? Button$1.propTypes = {
-    // ----------------------------- Warning --------------------------------
-    // | These PropTypes are generated from the TypeScript type definitions |
-    // |     To update them edit TypeScript types and run "yarn proptypes"  |
-    // ----------------------------------------------------------------------
+    // ┌────────────────────────────── Warning ──────────────────────────────┐
+    // │ These PropTypes are generated from the TypeScript type definitions. │
+    // │ To update them, edit the TypeScript types and run `pnpm proptypes`. │
+    // └─────────────────────────────────────────────────────────────────────┘
     /**
      * A ref for imperative actions. It currently only supports `focusVisible()` action.
      */
@@ -16649,6 +15301,11 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * @ignore
      */
     onFocusVisible: PropTypes.func,
+    /**
+     * The HTML element that is ultimately rendered, for example 'button' or 'a'
+     * @default 'button'
+     */
+    rootElementName: PropTypes.string,
     /**
      * The props used for each slot inside the Button.
      * @default {}
@@ -16777,10 +15434,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     });
   }
   process.env.NODE_ENV !== "production" ? ClickAwayListener.propTypes = {
-    // ----------------------------- Warning --------------------------------
-    // | These PropTypes are generated from the TypeScript type definitions |
-    // |     To update them edit TypeScript types and run "yarn proptypes"  |
-    // ----------------------------------------------------------------------
+    // ┌────────────────────────────── Warning ──────────────────────────────┐
+    // │ These PropTypes are generated from the TypeScript type definitions. │
+    // │ To update them, edit the TypeScript types and run `pnpm proptypes`. │
+    // └─────────────────────────────────────────────────────────────────────┘
     /**
      * The wrapped element.
      */
@@ -16912,23 +15569,28 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     switch (action.type) {
       case DropdownActionTypes.blur:
         return {
-          open: false
+          open: false,
+          changeReason: action.event
         };
       case DropdownActionTypes.escapeKeyDown:
         return {
-          open: false
+          open: false,
+          changeReason: action.event
         };
       case DropdownActionTypes.toggle:
         return {
-          open: !state.open
+          open: !state.open,
+          changeReason: action.event
         };
       case DropdownActionTypes.open:
         return {
-          open: true
+          open: true,
+          changeReason: action.event
         };
       case DropdownActionTypes.close:
         return {
-          open: false
+          open: false,
+          changeReason: action.event
         };
       default:
         throw new Error(`Unhandled action`);
@@ -16957,9 +15619,11 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const [state, dispatch] = useControllableReducer({
       controlledProps,
       initialState: defaultOpen ? {
-        open: true
+        open: true,
+        changeReason: null
       } : {
-        open: false
+        open: false,
+        changeReason: null
       },
       onStateChange: handleStateChange,
       reducer: dropdownReducer,
@@ -17004,10 +15668,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     });
   }
   process.env.NODE_ENV !== "production" ? Dropdown.propTypes = {
-    // ----------------------------- Warning --------------------------------
-    // | These PropTypes are generated from the TypeScript type definitions |
-    // |     To update them edit TypeScript types and run "yarn proptypes"  |
-    // ----------------------------------------------------------------------
+    // ┌────────────────────────────── Warning ──────────────────────────────┐
+    // │ These PropTypes are generated from the TypeScript type definitions. │
+    // │ To update them, edit the TypeScript types and run `pnpm proptypes`. │
+    // └─────────────────────────────────────────────────────────────────────┘
     /**
      * @ignore
      */
@@ -17243,10 +15907,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     });
   }
   process.env.NODE_ENV !== "production" ? FocusTrap.propTypes = {
-    // ----------------------------- Warning --------------------------------
-    // | These PropTypes are generated from the TypeScript type definitions |
-    // |     To update them edit TypeScript types and run "yarn proptypes"  |
-    // ----------------------------------------------------------------------
+    // ┌────────────────────────────── Warning ──────────────────────────────┐
+    // │ These PropTypes are generated from the TypeScript type definitions. │
+    // │ To update them, edit the TypeScript types and run `pnpm proptypes`. │
+    // └─────────────────────────────────────────────────────────────────────┘
     /**
      * A single child content element.
      */
@@ -17303,10 +15967,11 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   if (process.env.NODE_ENV !== "production") {
     FormControlContext$1.displayName = "FormControlContext";
   }
+  const COMPONENT_NAME$j = "FormControl";
   function getFormControlUtilityClass(slot) {
-    return generateUtilityClass("MuiFormControl", slot);
+    return generateUtilityClass(COMPONENT_NAME$j, slot);
   }
-  const formControlClasses$1 = generateUtilityClasses("MuiFormControl", ["root", "disabled", "error", "filled", "focused", "required"]);
+  const formControlClasses$1 = generateUtilityClasses(COMPONENT_NAME$j, ["root", "disabled", "error", "filled", "focused", "required"]);
   "use client";
   const _excluded$Q = ["defaultValue", "children", "disabled", "error", "onChange", "required", "slotProps", "slots", "value"];
   function hasValue$1(value) {
@@ -17400,10 +16065,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     });
   });
   process.env.NODE_ENV !== "production" ? FormControl$1.propTypes = {
-    // ----------------------------- Warning --------------------------------
-    // | These PropTypes are generated from the TypeScript type definitions |
-    // |     To update them edit TypeScript types and run "yarn proptypes"  |
-    // ----------------------------------------------------------------------
+    // ┌────────────────────────────── Warning ──────────────────────────────┐
+    // │ These PropTypes are generated from the TypeScript type definitions. │
+    // │ To update them, edit the TypeScript types and run `pnpm proptypes`. │
+    // └─────────────────────────────────────────────────────────────────────┘
     /**
      * The content of the component.
      */
@@ -17459,10 +16124,11 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   function useFormControlContext() {
     return React__namespace.useContext(FormControlContext$1);
   }
+  const COMPONENT_NAME$i = "Input";
   function getInputUtilityClass$1(slot) {
-    return generateUtilityClass("MuiInput", slot);
+    return generateUtilityClass(COMPONENT_NAME$i, slot);
   }
-  const inputClasses$1 = generateUtilityClasses("MuiInput", ["root", "formControl", "focused", "disabled", "error", "multiline", "input", "inputMultiline", "inputTypeSearch", "adornedStart", "adornedEnd"]);
+  const inputClasses$1 = generateUtilityClasses(COMPONENT_NAME$i, ["root", "formControl", "focused", "disabled", "error", "multiline", "input", "inputMultiline", "inputTypeSearch", "adornedStart", "adornedEnd"]);
   "use client";
   function useInput(parameters = {}) {
     const {
@@ -17740,10 +16406,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }));
   });
   process.env.NODE_ENV !== "production" ? Input$1.propTypes = {
-    // ----------------------------- Warning --------------------------------
-    // | These PropTypes are generated from the TypeScript type definitions |
-    // |     To update them edit TypeScript types and run "yarn proptypes"  |
-    // ----------------------------------------------------------------------
+    // ┌────────────────────────────── Warning ──────────────────────────────┐
+    // │ These PropTypes are generated from the TypeScript type definitions. │
+    // │ To update them, edit the TypeScript types and run `pnpm proptypes`. │
+    // └─────────────────────────────────────────────────────────────────────┘
     /**
      * @ignore
      */
@@ -17784,7 +16450,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      */
     endAdornment: PropTypes.node,
     /**
-     * If `true`, the `input` will indicate an error by setting the `aria-invalid` attribute on the input and the `Mui-error` class on the root element.
+     * If `true`, the `input` will indicate an error by setting the `aria-invalid` attribute on the input and the `baseui--error` class on the root element.
      * The prop defaults to the value (`false`) inherited from the parent FormControl component.
      */
     error: PropTypes.bool,
@@ -17890,10 +16556,11 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     value: PropTypes.any
   } : void 0;
   "use client";
+  const COMPONENT_NAME$h = "Menu";
   function getMenuUtilityClass$1(slot) {
-    return generateUtilityClass("MuiMenu", slot);
+    return generateUtilityClass(COMPONENT_NAME$h, slot);
   }
-  const menuClasses$1 = generateUtilityClasses("MuiMenu", ["root", "listbox", "expanded"]);
+  const menuClasses$1 = generateUtilityClasses(COMPONENT_NAME$h, ["root", "listbox", "expanded"]);
   const ListActionTypes = {
     blur: "list:blur",
     focus: "list:focus",
@@ -17902,6 +16569,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     itemsChange: "list:itemsChange",
     keyDown: "list:keyDown",
     resetHighlight: "list:resetHighlight",
+    highlightLast: "list:highlightLast",
     textNavigation: "list:textNavigation",
     clearSelection: "list:clearSelection"
   };
@@ -18154,6 +16822,11 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       highlightedValue: moveHighlight(null, "reset", context)
     });
   }
+  function handleHighlightLast(state, context) {
+    return _extends({}, state, {
+      highlightedValue: moveHighlight(null, "end", context)
+    });
+  }
   function handleClearSelection(state, context) {
     return _extends({}, state, {
       selectedValues: [],
@@ -18178,6 +16851,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         return handleItemsChange(action.items, action.previousItems, state, context);
       case ListActionTypes.resetHighlight:
         return handleResetHighlight(state, context);
+      case ListActionTypes.highlightLast:
+        return handleHighlightLast(state, context);
       case ListActionTypes.clearSelection:
         return handleClearSelection(state, context);
       default:
@@ -18480,7 +17155,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   "use client";
   function menuReducer(state, action) {
     if (action.type === ListActionTypes.itemHover) {
-      return state;
+      return _extends({}, state, {
+        highlightedValue: action.item
+      });
     }
     const newState = listReducer(state, action);
     if (newState.highlightedValue === null && action.context.items.length > 0) {
@@ -18619,7 +17296,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     registerTrigger: () => {
     },
     state: {
-      open: true
+      open: true,
+      changeReason: null
     },
     triggerElement: null
   };
@@ -18639,7 +17317,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const listboxId = (_useId = useId(idParam)) != null ? _useId : "";
     const {
       state: {
-        open
+        open,
+        changeReason
       },
       dispatch: menuDispatch,
       triggerElement,
@@ -18699,6 +17378,14 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     useEnhancedEffect(() => {
       registerPopup(listboxId);
     }, [listboxId, registerPopup]);
+    useEnhancedEffect(() => {
+      if (open && (changeReason == null ? void 0 : changeReason.type) === "keydown" && changeReason.key === "ArrowUp") {
+        listDispatch({
+          type: ListActionTypes.highlightLast,
+          event: changeReason
+        });
+      }
+    }, [open, changeReason, listDispatch]);
     React__namespace.useEffect(() => {
       if (open && autoFocus && highlightedValue && !isInitiallyOpen.current) {
         var _subitems$get5;
@@ -18798,567 +17485,1369 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     });
   }
   "use client";
-  var top = "top";
-  var bottom = "bottom";
-  var right = "right";
-  var left = "left";
-  var auto = "auto";
-  var basePlacements = [top, bottom, right, left];
-  var start = "start";
-  var end = "end";
-  var clippingParents = "clippingParents";
-  var viewport = "viewport";
-  var popper = "popper";
-  var reference = "reference";
-  var variationPlacements = /* @__PURE__ */ basePlacements.reduce(function(acc, placement) {
-    return acc.concat([placement + "-" + start, placement + "-" + end]);
-  }, []);
-  var placements$1 = /* @__PURE__ */ [].concat(basePlacements, [auto]).reduce(function(acc, placement) {
-    return acc.concat([placement, placement + "-" + start, placement + "-" + end]);
-  }, []);
-  var beforeRead = "beforeRead";
-  var read = "read";
-  var afterRead = "afterRead";
-  var beforeMain = "beforeMain";
-  var main = "main";
-  var afterMain = "afterMain";
-  var beforeWrite = "beforeWrite";
-  var write = "write";
-  var afterWrite = "afterWrite";
-  var modifierPhases = [beforeRead, read, afterRead, beforeMain, main, afterMain, beforeWrite, write, afterWrite];
-  function getNodeName$1(element) {
-    return element ? (element.nodeName || "").toLowerCase() : null;
+  const sides = ["top", "right", "bottom", "left"];
+  const alignments = ["start", "end"];
+  const placements$1 = /* @__PURE__ */ sides.reduce((acc, side) => acc.concat(side, side + "-" + alignments[0], side + "-" + alignments[1]), []);
+  const min$1 = Math.min;
+  const max$1 = Math.max;
+  const round$1 = Math.round;
+  const floor = Math.floor;
+  const createCoords = (v) => ({
+    x: v,
+    y: v
+  });
+  const oppositeSideMap = {
+    left: "right",
+    right: "left",
+    bottom: "top",
+    top: "bottom"
+  };
+  const oppositeAlignmentMap = {
+    start: "end",
+    end: "start"
+  };
+  function clamp(start2, value, end2) {
+    return max$1(start2, min$1(value, end2));
+  }
+  function evaluate(value, param) {
+    return typeof value === "function" ? value(param) : value;
+  }
+  function getSide(placement) {
+    return placement.split("-")[0];
+  }
+  function getAlignment(placement) {
+    return placement.split("-")[1];
+  }
+  function getOppositeAxis(axis) {
+    return axis === "x" ? "y" : "x";
+  }
+  function getAxisLength(axis) {
+    return axis === "y" ? "height" : "width";
+  }
+  function getSideAxis(placement) {
+    return ["top", "bottom"].includes(getSide(placement)) ? "y" : "x";
+  }
+  function getAlignmentAxis(placement) {
+    return getOppositeAxis(getSideAxis(placement));
+  }
+  function getAlignmentSides(placement, rects, rtl) {
+    if (rtl === void 0) {
+      rtl = false;
+    }
+    const alignment = getAlignment(placement);
+    const alignmentAxis = getAlignmentAxis(placement);
+    const length2 = getAxisLength(alignmentAxis);
+    let mainAlignmentSide = alignmentAxis === "x" ? alignment === (rtl ? "end" : "start") ? "right" : "left" : alignment === "start" ? "bottom" : "top";
+    if (rects.reference[length2] > rects.floating[length2]) {
+      mainAlignmentSide = getOppositePlacement$1(mainAlignmentSide);
+    }
+    return [mainAlignmentSide, getOppositePlacement$1(mainAlignmentSide)];
+  }
+  function getExpandedPlacements(placement) {
+    const oppositePlacement = getOppositePlacement$1(placement);
+    return [getOppositeAlignmentPlacement(placement), oppositePlacement, getOppositeAlignmentPlacement(oppositePlacement)];
+  }
+  function getOppositeAlignmentPlacement(placement) {
+    return placement.replace(/start|end/g, (alignment) => oppositeAlignmentMap[alignment]);
+  }
+  function getSideList(side, isStart, rtl) {
+    const lr = ["left", "right"];
+    const rl = ["right", "left"];
+    const tb = ["top", "bottom"];
+    const bt = ["bottom", "top"];
+    switch (side) {
+      case "top":
+      case "bottom":
+        if (rtl)
+          return isStart ? rl : lr;
+        return isStart ? lr : rl;
+      case "left":
+      case "right":
+        return isStart ? tb : bt;
+      default:
+        return [];
+    }
+  }
+  function getOppositeAxisPlacements(placement, flipAlignment, direction, rtl) {
+    const alignment = getAlignment(placement);
+    let list = getSideList(getSide(placement), direction === "start", rtl);
+    if (alignment) {
+      list = list.map((side) => side + "-" + alignment);
+      if (flipAlignment) {
+        list = list.concat(list.map(getOppositeAlignmentPlacement));
+      }
+    }
+    return list;
+  }
+  function getOppositePlacement$1(placement) {
+    return placement.replace(/left|right|bottom|top/g, (side) => oppositeSideMap[side]);
+  }
+  function expandPaddingObject(padding2) {
+    return __spreadValues({
+      top: 0,
+      right: 0,
+      bottom: 0,
+      left: 0
+    }, padding2);
+  }
+  function getPaddingObject(padding2) {
+    return typeof padding2 !== "number" ? expandPaddingObject(padding2) : {
+      top: padding2,
+      right: padding2,
+      bottom: padding2,
+      left: padding2
+    };
+  }
+  function rectToClientRect$1(rect) {
+    return __spreadProps(__spreadValues({}, rect), {
+      top: rect.y,
+      left: rect.x,
+      right: rect.x + rect.width,
+      bottom: rect.y + rect.height
+    });
+  }
+  function computeCoordsFromPlacement(_ref, placement, rtl) {
+    let {
+      reference: reference2,
+      floating
+    } = _ref;
+    const sideAxis = getSideAxis(placement);
+    const alignmentAxis = getAlignmentAxis(placement);
+    const alignLength = getAxisLength(alignmentAxis);
+    const side = getSide(placement);
+    const isVertical = sideAxis === "y";
+    const commonX = reference2.x + reference2.width / 2 - floating.width / 2;
+    const commonY = reference2.y + reference2.height / 2 - floating.height / 2;
+    const commonAlign = reference2[alignLength] / 2 - floating[alignLength] / 2;
+    let coords;
+    switch (side) {
+      case "top":
+        coords = {
+          x: commonX,
+          y: reference2.y - floating.height
+        };
+        break;
+      case "bottom":
+        coords = {
+          x: commonX,
+          y: reference2.y + reference2.height
+        };
+        break;
+      case "right":
+        coords = {
+          x: reference2.x + reference2.width,
+          y: commonY
+        };
+        break;
+      case "left":
+        coords = {
+          x: reference2.x - floating.width,
+          y: commonY
+        };
+        break;
+      default:
+        coords = {
+          x: reference2.x,
+          y: reference2.y
+        };
+    }
+    switch (getAlignment(placement)) {
+      case "start":
+        coords[alignmentAxis] -= commonAlign * (rtl && isVertical ? -1 : 1);
+        break;
+      case "end":
+        coords[alignmentAxis] += commonAlign * (rtl && isVertical ? -1 : 1);
+        break;
+    }
+    return coords;
+  }
+  const computePosition$1 = (reference2, floating, config2) => __async(this, null, function* () {
+    const {
+      placement = "bottom",
+      strategy = "absolute",
+      middleware: middleware2 = [],
+      platform: platform2
+    } = config2;
+    const validMiddleware = middleware2.filter(Boolean);
+    const rtl = yield platform2.isRTL == null ? void 0 : platform2.isRTL(floating);
+    let rects = yield platform2.getElementRects({
+      reference: reference2,
+      floating,
+      strategy
+    });
+    let {
+      x,
+      y
+    } = computeCoordsFromPlacement(rects, placement, rtl);
+    let statefulPlacement = placement;
+    let middlewareData = {};
+    let resetCount = 0;
+    for (let i = 0; i < validMiddleware.length; i++) {
+      const {
+        name,
+        fn
+      } = validMiddleware[i];
+      const {
+        x: nextX,
+        y: nextY,
+        data,
+        reset
+      } = yield fn({
+        x,
+        y,
+        initialPlacement: placement,
+        placement: statefulPlacement,
+        strategy,
+        middlewareData,
+        rects,
+        platform: platform2,
+        elements: {
+          reference: reference2,
+          floating
+        }
+      });
+      x = nextX != null ? nextX : x;
+      y = nextY != null ? nextY : y;
+      middlewareData = __spreadProps(__spreadValues({}, middlewareData), {
+        [name]: __spreadValues(__spreadValues({}, middlewareData[name]), data)
+      });
+      if (reset && resetCount <= 50) {
+        resetCount++;
+        if (typeof reset === "object") {
+          if (reset.placement) {
+            statefulPlacement = reset.placement;
+          }
+          if (reset.rects) {
+            rects = reset.rects === true ? yield platform2.getElementRects({
+              reference: reference2,
+              floating,
+              strategy
+            }) : reset.rects;
+          }
+          ({
+            x,
+            y
+          } = computeCoordsFromPlacement(rects, statefulPlacement, rtl));
+        }
+        i = -1;
+      }
+    }
+    return {
+      x,
+      y,
+      placement: statefulPlacement,
+      strategy,
+      middlewareData
+    };
+  });
+  function detectOverflow$1(state, options) {
+    return __async(this, null, function* () {
+      var _await$platform$isEle;
+      if (options === void 0) {
+        options = {};
+      }
+      const {
+        x,
+        y,
+        platform: platform2,
+        rects,
+        elements,
+        strategy
+      } = state;
+      const {
+        boundary = "clippingAncestors",
+        rootBoundary = "viewport",
+        elementContext = "floating",
+        altBoundary = false,
+        padding: padding2 = 0
+      } = evaluate(options, state);
+      const paddingObject = getPaddingObject(padding2);
+      const altContext = elementContext === "floating" ? "reference" : "floating";
+      const element = elements[altBoundary ? altContext : elementContext];
+      const clippingClientRect = rectToClientRect$1(yield platform2.getClippingRect({
+        element: ((_await$platform$isEle = yield platform2.isElement == null ? void 0 : platform2.isElement(element)) != null ? _await$platform$isEle : true) ? element : element.contextElement || (yield platform2.getDocumentElement == null ? void 0 : platform2.getDocumentElement(elements.floating)),
+        boundary,
+        rootBoundary,
+        strategy
+      }));
+      const rect = elementContext === "floating" ? __spreadProps(__spreadValues({}, rects.floating), {
+        x,
+        y
+      }) : rects.reference;
+      const offsetParent = yield platform2.getOffsetParent == null ? void 0 : platform2.getOffsetParent(elements.floating);
+      const offsetScale = (yield platform2.isElement == null ? void 0 : platform2.isElement(offsetParent)) ? (yield platform2.getScale == null ? void 0 : platform2.getScale(offsetParent)) || {
+        x: 1,
+        y: 1
+      } : {
+        x: 1,
+        y: 1
+      };
+      const elementClientRect = rectToClientRect$1(platform2.convertOffsetParentRelativeRectToViewportRelativeRect ? yield platform2.convertOffsetParentRelativeRectToViewportRelativeRect({
+        elements,
+        rect,
+        offsetParent,
+        strategy
+      }) : rect);
+      return {
+        top: (clippingClientRect.top - elementClientRect.top + paddingObject.top) / offsetScale.y,
+        bottom: (elementClientRect.bottom - clippingClientRect.bottom + paddingObject.bottom) / offsetScale.y,
+        left: (clippingClientRect.left - elementClientRect.left + paddingObject.left) / offsetScale.x,
+        right: (elementClientRect.right - clippingClientRect.right + paddingObject.right) / offsetScale.x
+      };
+    });
+  }
+  const arrow$4 = (options) => ({
+    name: "arrow",
+    options,
+    fn(state) {
+      return __async(this, null, function* () {
+        const {
+          x,
+          y,
+          placement,
+          rects,
+          platform: platform2,
+          elements,
+          middlewareData
+        } = state;
+        const {
+          element,
+          padding: padding2 = 0
+        } = evaluate(options, state) || {};
+        if (element == null) {
+          return {};
+        }
+        const paddingObject = getPaddingObject(padding2);
+        const coords = {
+          x,
+          y
+        };
+        const axis = getAlignmentAxis(placement);
+        const length2 = getAxisLength(axis);
+        const arrowDimensions = yield platform2.getDimensions(element);
+        const isYAxis = axis === "y";
+        const minProp = isYAxis ? "top" : "left";
+        const maxProp = isYAxis ? "bottom" : "right";
+        const clientProp = isYAxis ? "clientHeight" : "clientWidth";
+        const endDiff = rects.reference[length2] + rects.reference[axis] - coords[axis] - rects.floating[length2];
+        const startDiff = coords[axis] - rects.reference[axis];
+        const arrowOffsetParent = yield platform2.getOffsetParent == null ? void 0 : platform2.getOffsetParent(element);
+        let clientSize = arrowOffsetParent ? arrowOffsetParent[clientProp] : 0;
+        if (!clientSize || !(yield platform2.isElement == null ? void 0 : platform2.isElement(arrowOffsetParent))) {
+          clientSize = elements.floating[clientProp] || rects.floating[length2];
+        }
+        const centerToReference = endDiff / 2 - startDiff / 2;
+        const largestPossiblePadding = clientSize / 2 - arrowDimensions[length2] / 2 - 1;
+        const minPadding = min$1(paddingObject[minProp], largestPossiblePadding);
+        const maxPadding = min$1(paddingObject[maxProp], largestPossiblePadding);
+        const min$1$1 = minPadding;
+        const max2 = clientSize - arrowDimensions[length2] - maxPadding;
+        const center = clientSize / 2 - arrowDimensions[length2] / 2 + centerToReference;
+        const offset2 = clamp(min$1$1, center, max2);
+        const shouldAddOffset = !middlewareData.arrow && getAlignment(placement) != null && center !== offset2 && rects.reference[length2] / 2 - (center < min$1$1 ? minPadding : maxPadding) - arrowDimensions[length2] / 2 < 0;
+        const alignmentOffset = shouldAddOffset ? center < min$1$1 ? center - min$1$1 : center - max2 : 0;
+        return {
+          [axis]: coords[axis] + alignmentOffset,
+          data: __spreadValues({
+            [axis]: offset2,
+            centerOffset: center - offset2 - alignmentOffset
+          }, shouldAddOffset && {
+            alignmentOffset
+          }),
+          reset: shouldAddOffset
+        };
+      });
+    }
+  });
+  function getPlacementList(alignment, autoAlignment, allowedPlacements) {
+    const allowedPlacementsSortedByAlignment = alignment ? [...allowedPlacements.filter((placement) => getAlignment(placement) === alignment), ...allowedPlacements.filter((placement) => getAlignment(placement) !== alignment)] : allowedPlacements.filter((placement) => getSide(placement) === placement);
+    return allowedPlacementsSortedByAlignment.filter((placement) => {
+      if (alignment) {
+        return getAlignment(placement) === alignment || (autoAlignment ? getOppositeAlignmentPlacement(placement) !== placement : false);
+      }
+      return true;
+    });
+  }
+  const autoPlacement$1 = function(options) {
+    if (options === void 0) {
+      options = {};
+    }
+    return {
+      name: "autoPlacement",
+      options,
+      fn(state) {
+        return __async(this, null, function* () {
+          var _middlewareData$autoP, _middlewareData$autoP2, _placementsThatFitOnE;
+          const {
+            rects,
+            middlewareData,
+            placement,
+            platform: platform2,
+            elements
+          } = state;
+          const _a2 = evaluate(options, state), {
+            crossAxis = false,
+            alignment,
+            allowedPlacements = placements$1,
+            autoAlignment = true
+          } = _a2, detectOverflowOptions = __objRest(_a2, [
+            "crossAxis",
+            "alignment",
+            "allowedPlacements",
+            "autoAlignment"
+          ]);
+          const placements$1$1 = alignment !== void 0 || allowedPlacements === placements$1 ? getPlacementList(alignment || null, autoAlignment, allowedPlacements) : allowedPlacements;
+          const overflow2 = yield detectOverflow$1(state, detectOverflowOptions);
+          const currentIndex = ((_middlewareData$autoP = middlewareData.autoPlacement) == null ? void 0 : _middlewareData$autoP.index) || 0;
+          const currentPlacement = placements$1$1[currentIndex];
+          if (currentPlacement == null) {
+            return {};
+          }
+          const alignmentSides = getAlignmentSides(currentPlacement, rects, yield platform2.isRTL == null ? void 0 : platform2.isRTL(elements.floating));
+          if (placement !== currentPlacement) {
+            return {
+              reset: {
+                placement: placements$1$1[0]
+              }
+            };
+          }
+          const currentOverflows = [overflow2[getSide(currentPlacement)], overflow2[alignmentSides[0]], overflow2[alignmentSides[1]]];
+          const allOverflows = [...((_middlewareData$autoP2 = middlewareData.autoPlacement) == null ? void 0 : _middlewareData$autoP2.overflows) || [], {
+            placement: currentPlacement,
+            overflows: currentOverflows
+          }];
+          const nextPlacement = placements$1$1[currentIndex + 1];
+          if (nextPlacement) {
+            return {
+              data: {
+                index: currentIndex + 1,
+                overflows: allOverflows
+              },
+              reset: {
+                placement: nextPlacement
+              }
+            };
+          }
+          const placementsSortedByMostSpace = allOverflows.map((d) => {
+            const alignment2 = getAlignment(d.placement);
+            return [d.placement, alignment2 && crossAxis ? (
+              // Check along the mainAxis and main crossAxis side.
+              d.overflows.slice(0, 2).reduce((acc, v) => acc + v, 0)
+            ) : (
+              // Check only the mainAxis.
+              d.overflows[0]
+            ), d.overflows];
+          }).sort((a, b) => a[1] - b[1]);
+          const placementsThatFitOnEachSide = placementsSortedByMostSpace.filter((d) => d[2].slice(
+            0,
+            // Aligned placements should not check their opposite crossAxis
+            // side.
+            getAlignment(d[0]) ? 2 : 3
+          ).every((v) => v <= 0));
+          const resetPlacement = ((_placementsThatFitOnE = placementsThatFitOnEachSide[0]) == null ? void 0 : _placementsThatFitOnE[0]) || placementsSortedByMostSpace[0][0];
+          if (resetPlacement !== placement) {
+            return {
+              data: {
+                index: currentIndex + 1,
+                overflows: allOverflows
+              },
+              reset: {
+                placement: resetPlacement
+              }
+            };
+          }
+          return {};
+        });
+      }
+    };
+  };
+  const flip$3 = function(options) {
+    if (options === void 0) {
+      options = {};
+    }
+    return {
+      name: "flip",
+      options,
+      fn(state) {
+        return __async(this, null, function* () {
+          var _middlewareData$arrow, _middlewareData$flip;
+          const {
+            placement,
+            middlewareData,
+            rects,
+            initialPlacement,
+            platform: platform2,
+            elements
+          } = state;
+          const _a2 = evaluate(options, state), {
+            mainAxis: checkMainAxis = true,
+            crossAxis: checkCrossAxis = true,
+            fallbackPlacements: specifiedFallbackPlacements,
+            fallbackStrategy = "bestFit",
+            fallbackAxisSideDirection = "none",
+            flipAlignment = true
+          } = _a2, detectOverflowOptions = __objRest(_a2, [
+            "mainAxis",
+            "crossAxis",
+            "fallbackPlacements",
+            "fallbackStrategy",
+            "fallbackAxisSideDirection",
+            "flipAlignment"
+          ]);
+          if ((_middlewareData$arrow = middlewareData.arrow) != null && _middlewareData$arrow.alignmentOffset) {
+            return {};
+          }
+          const side = getSide(placement);
+          const isBasePlacement = getSide(initialPlacement) === initialPlacement;
+          const rtl = yield platform2.isRTL == null ? void 0 : platform2.isRTL(elements.floating);
+          const fallbackPlacements = specifiedFallbackPlacements || (isBasePlacement || !flipAlignment ? [getOppositePlacement$1(initialPlacement)] : getExpandedPlacements(initialPlacement));
+          if (!specifiedFallbackPlacements && fallbackAxisSideDirection !== "none") {
+            fallbackPlacements.push(...getOppositeAxisPlacements(initialPlacement, flipAlignment, fallbackAxisSideDirection, rtl));
+          }
+          const placements2 = [initialPlacement, ...fallbackPlacements];
+          const overflow2 = yield detectOverflow$1(state, detectOverflowOptions);
+          const overflows = [];
+          let overflowsData = ((_middlewareData$flip = middlewareData.flip) == null ? void 0 : _middlewareData$flip.overflows) || [];
+          if (checkMainAxis) {
+            overflows.push(overflow2[side]);
+          }
+          if (checkCrossAxis) {
+            const sides2 = getAlignmentSides(placement, rects, rtl);
+            overflows.push(overflow2[sides2[0]], overflow2[sides2[1]]);
+          }
+          overflowsData = [...overflowsData, {
+            placement,
+            overflows
+          }];
+          if (!overflows.every((side2) => side2 <= 0)) {
+            var _middlewareData$flip2, _overflowsData$filter;
+            const nextIndex = (((_middlewareData$flip2 = middlewareData.flip) == null ? void 0 : _middlewareData$flip2.index) || 0) + 1;
+            const nextPlacement = placements2[nextIndex];
+            if (nextPlacement) {
+              return {
+                data: {
+                  index: nextIndex,
+                  overflows: overflowsData
+                },
+                reset: {
+                  placement: nextPlacement
+                }
+              };
+            }
+            let resetPlacement = (_overflowsData$filter = overflowsData.filter((d) => d.overflows[0] <= 0).sort((a, b) => a.overflows[1] - b.overflows[1])[0]) == null ? void 0 : _overflowsData$filter.placement;
+            if (!resetPlacement) {
+              switch (fallbackStrategy) {
+                case "bestFit": {
+                  var _overflowsData$map$so;
+                  const placement2 = (_overflowsData$map$so = overflowsData.map((d) => [d.placement, d.overflows.filter((overflow3) => overflow3 > 0).reduce((acc, overflow3) => acc + overflow3, 0)]).sort((a, b) => a[1] - b[1])[0]) == null ? void 0 : _overflowsData$map$so[0];
+                  if (placement2) {
+                    resetPlacement = placement2;
+                  }
+                  break;
+                }
+                case "initialPlacement":
+                  resetPlacement = initialPlacement;
+                  break;
+              }
+            }
+            if (placement !== resetPlacement) {
+              return {
+                reset: {
+                  placement: resetPlacement
+                }
+              };
+            }
+          }
+          return {};
+        });
+      }
+    };
+  };
+  function getSideOffsets$1(overflow2, rect) {
+    return {
+      top: overflow2.top - rect.height,
+      right: overflow2.right - rect.width,
+      bottom: overflow2.bottom - rect.height,
+      left: overflow2.left - rect.width
+    };
+  }
+  function isAnySideFullyClipped$1(overflow2) {
+    return sides.some((side) => overflow2[side] >= 0);
+  }
+  const hide$3 = function(options) {
+    if (options === void 0) {
+      options = {};
+    }
+    return {
+      name: "hide",
+      options,
+      fn(state) {
+        return __async(this, null, function* () {
+          const {
+            rects
+          } = state;
+          const _a2 = evaluate(options, state), {
+            strategy = "referenceHidden"
+          } = _a2, detectOverflowOptions = __objRest(_a2, [
+            "strategy"
+          ]);
+          switch (strategy) {
+            case "referenceHidden": {
+              const overflow2 = yield detectOverflow$1(state, __spreadProps(__spreadValues({}, detectOverflowOptions), {
+                elementContext: "reference"
+              }));
+              const offsets = getSideOffsets$1(overflow2, rects.reference);
+              return {
+                data: {
+                  referenceHiddenOffsets: offsets,
+                  referenceHidden: isAnySideFullyClipped$1(offsets)
+                }
+              };
+            }
+            case "escaped": {
+              const overflow2 = yield detectOverflow$1(state, __spreadProps(__spreadValues({}, detectOverflowOptions), {
+                altBoundary: true
+              }));
+              const offsets = getSideOffsets$1(overflow2, rects.floating);
+              return {
+                data: {
+                  escapedOffsets: offsets,
+                  escaped: isAnySideFullyClipped$1(offsets)
+                }
+              };
+            }
+            default: {
+              return {};
+            }
+          }
+        });
+      }
+    };
+  };
+  function getBoundingRect(rects) {
+    const minX = min$1(...rects.map((rect) => rect.left));
+    const minY = min$1(...rects.map((rect) => rect.top));
+    const maxX = max$1(...rects.map((rect) => rect.right));
+    const maxY = max$1(...rects.map((rect) => rect.bottom));
+    return {
+      x: minX,
+      y: minY,
+      width: maxX - minX,
+      height: maxY - minY
+    };
+  }
+  function getRectsByLine(rects) {
+    const sortedRects = rects.slice().sort((a, b) => a.y - b.y);
+    const groups = [];
+    let prevRect = null;
+    for (let i = 0; i < sortedRects.length; i++) {
+      const rect = sortedRects[i];
+      if (!prevRect || rect.y - prevRect.y > prevRect.height / 2) {
+        groups.push([rect]);
+      } else {
+        groups[groups.length - 1].push(rect);
+      }
+      prevRect = rect;
+    }
+    return groups.map((rect) => rectToClientRect$1(getBoundingRect(rect)));
+  }
+  const inline$1 = function(options) {
+    if (options === void 0) {
+      options = {};
+    }
+    return {
+      name: "inline",
+      options,
+      fn(state) {
+        return __async(this, null, function* () {
+          const {
+            placement,
+            elements,
+            rects,
+            platform: platform2,
+            strategy
+          } = state;
+          const {
+            padding: padding2 = 2,
+            x,
+            y
+          } = evaluate(options, state);
+          const nativeClientRects = Array.from((yield platform2.getClientRects == null ? void 0 : platform2.getClientRects(elements.reference)) || []);
+          const clientRects = getRectsByLine(nativeClientRects);
+          const fallback = rectToClientRect$1(getBoundingRect(nativeClientRects));
+          const paddingObject = getPaddingObject(padding2);
+          function getBoundingClientRect2() {
+            if (clientRects.length === 2 && clientRects[0].left > clientRects[1].right && x != null && y != null) {
+              return clientRects.find((rect) => x > rect.left - paddingObject.left && x < rect.right + paddingObject.right && y > rect.top - paddingObject.top && y < rect.bottom + paddingObject.bottom) || fallback;
+            }
+            if (clientRects.length >= 2) {
+              if (getSideAxis(placement) === "y") {
+                const firstRect = clientRects[0];
+                const lastRect = clientRects[clientRects.length - 1];
+                const isTop = getSide(placement) === "top";
+                const top3 = firstRect.top;
+                const bottom3 = lastRect.bottom;
+                const left3 = isTop ? firstRect.left : lastRect.left;
+                const right3 = isTop ? firstRect.right : lastRect.right;
+                const width3 = right3 - left3;
+                const height3 = bottom3 - top3;
+                return {
+                  top: top3,
+                  bottom: bottom3,
+                  left: left3,
+                  right: right3,
+                  width: width3,
+                  height: height3,
+                  x: left3,
+                  y: top3
+                };
+              }
+              const isLeftSide = getSide(placement) === "left";
+              const maxRight = max$1(...clientRects.map((rect) => rect.right));
+              const minLeft = min$1(...clientRects.map((rect) => rect.left));
+              const measureRects = clientRects.filter((rect) => isLeftSide ? rect.left === minLeft : rect.right === maxRight);
+              const top2 = measureRects[0].top;
+              const bottom2 = measureRects[measureRects.length - 1].bottom;
+              const left2 = minLeft;
+              const right2 = maxRight;
+              const width2 = right2 - left2;
+              const height2 = bottom2 - top2;
+              return {
+                top: top2,
+                bottom: bottom2,
+                left: left2,
+                right: right2,
+                width: width2,
+                height: height2,
+                x: left2,
+                y: top2
+              };
+            }
+            return fallback;
+          }
+          const resetRects = yield platform2.getElementRects({
+            reference: {
+              getBoundingClientRect: getBoundingClientRect2
+            },
+            floating: elements.floating,
+            strategy
+          });
+          if (rects.reference.x !== resetRects.reference.x || rects.reference.y !== resetRects.reference.y || rects.reference.width !== resetRects.reference.width || rects.reference.height !== resetRects.reference.height) {
+            return {
+              reset: {
+                rects: resetRects
+              }
+            };
+          }
+          return {};
+        });
+      }
+    };
+  };
+  function convertValueToCoords(state, options) {
+    return __async(this, null, function* () {
+      const {
+        placement,
+        platform: platform2,
+        elements
+      } = state;
+      const rtl = yield platform2.isRTL == null ? void 0 : platform2.isRTL(elements.floating);
+      const side = getSide(placement);
+      const alignment = getAlignment(placement);
+      const isVertical = getSideAxis(placement) === "y";
+      const mainAxisMulti = ["left", "top"].includes(side) ? -1 : 1;
+      const crossAxisMulti = rtl && isVertical ? -1 : 1;
+      const rawValue = evaluate(options, state);
+      let {
+        mainAxis,
+        crossAxis,
+        alignmentAxis
+      } = typeof rawValue === "number" ? {
+        mainAxis: rawValue,
+        crossAxis: 0,
+        alignmentAxis: null
+      } : __spreadValues({
+        mainAxis: 0,
+        crossAxis: 0,
+        alignmentAxis: null
+      }, rawValue);
+      if (alignment && typeof alignmentAxis === "number") {
+        crossAxis = alignment === "end" ? alignmentAxis * -1 : alignmentAxis;
+      }
+      return isVertical ? {
+        x: crossAxis * crossAxisMulti,
+        y: mainAxis * mainAxisMulti
+      } : {
+        x: mainAxis * mainAxisMulti,
+        y: crossAxis * crossAxisMulti
+      };
+    });
+  }
+  const offset$2 = function(options) {
+    if (options === void 0) {
+      options = 0;
+    }
+    return {
+      name: "offset",
+      options,
+      fn(state) {
+        return __async(this, null, function* () {
+          var _middlewareData$offse, _middlewareData$arrow;
+          const {
+            x,
+            y,
+            placement,
+            middlewareData
+          } = state;
+          const diffCoords = yield convertValueToCoords(state, options);
+          if (placement === ((_middlewareData$offse = middlewareData.offset) == null ? void 0 : _middlewareData$offse.placement) && (_middlewareData$arrow = middlewareData.arrow) != null && _middlewareData$arrow.alignmentOffset) {
+            return {};
+          }
+          return {
+            x: x + diffCoords.x,
+            y: y + diffCoords.y,
+            data: __spreadProps(__spreadValues({}, diffCoords), {
+              placement
+            })
+          };
+        });
+      }
+    };
+  };
+  const shift$1 = function(options) {
+    if (options === void 0) {
+      options = {};
+    }
+    return {
+      name: "shift",
+      options,
+      fn(state) {
+        return __async(this, null, function* () {
+          const {
+            x,
+            y,
+            placement
+          } = state;
+          const _a2 = evaluate(options, state), {
+            mainAxis: checkMainAxis = true,
+            crossAxis: checkCrossAxis = false,
+            limiter = {
+              fn: (_ref) => {
+                let {
+                  x: x2,
+                  y: y2
+                } = _ref;
+                return {
+                  x: x2,
+                  y: y2
+                };
+              }
+            }
+          } = _a2, detectOverflowOptions = __objRest(_a2, [
+            "mainAxis",
+            "crossAxis",
+            "limiter"
+          ]);
+          const coords = {
+            x,
+            y
+          };
+          const overflow2 = yield detectOverflow$1(state, detectOverflowOptions);
+          const crossAxis = getSideAxis(getSide(placement));
+          const mainAxis = getOppositeAxis(crossAxis);
+          let mainAxisCoord = coords[mainAxis];
+          let crossAxisCoord = coords[crossAxis];
+          if (checkMainAxis) {
+            const minSide = mainAxis === "y" ? "top" : "left";
+            const maxSide = mainAxis === "y" ? "bottom" : "right";
+            const min2 = mainAxisCoord + overflow2[minSide];
+            const max2 = mainAxisCoord - overflow2[maxSide];
+            mainAxisCoord = clamp(min2, mainAxisCoord, max2);
+          }
+          if (checkCrossAxis) {
+            const minSide = crossAxis === "y" ? "top" : "left";
+            const maxSide = crossAxis === "y" ? "bottom" : "right";
+            const min2 = crossAxisCoord + overflow2[minSide];
+            const max2 = crossAxisCoord - overflow2[maxSide];
+            crossAxisCoord = clamp(min2, crossAxisCoord, max2);
+          }
+          const limitedCoords = limiter.fn(__spreadProps(__spreadValues({}, state), {
+            [mainAxis]: mainAxisCoord,
+            [crossAxis]: crossAxisCoord
+          }));
+          return __spreadProps(__spreadValues({}, limitedCoords), {
+            data: {
+              x: limitedCoords.x - x,
+              y: limitedCoords.y - y
+            }
+          });
+        });
+      }
+    };
+  };
+  const limitShift$1 = function(options) {
+    if (options === void 0) {
+      options = {};
+    }
+    return {
+      options,
+      fn(state) {
+        const {
+          x,
+          y,
+          placement,
+          rects,
+          middlewareData
+        } = state;
+        const {
+          offset: offset2 = 0,
+          mainAxis: checkMainAxis = true,
+          crossAxis: checkCrossAxis = true
+        } = evaluate(options, state);
+        const coords = {
+          x,
+          y
+        };
+        const crossAxis = getSideAxis(placement);
+        const mainAxis = getOppositeAxis(crossAxis);
+        let mainAxisCoord = coords[mainAxis];
+        let crossAxisCoord = coords[crossAxis];
+        const rawOffset = evaluate(offset2, state);
+        const computedOffset = typeof rawOffset === "number" ? {
+          mainAxis: rawOffset,
+          crossAxis: 0
+        } : __spreadValues({
+          mainAxis: 0,
+          crossAxis: 0
+        }, rawOffset);
+        if (checkMainAxis) {
+          const len = mainAxis === "y" ? "height" : "width";
+          const limitMin = rects.reference[mainAxis] - rects.floating[len] + computedOffset.mainAxis;
+          const limitMax = rects.reference[mainAxis] + rects.reference[len] - computedOffset.mainAxis;
+          if (mainAxisCoord < limitMin) {
+            mainAxisCoord = limitMin;
+          } else if (mainAxisCoord > limitMax) {
+            mainAxisCoord = limitMax;
+          }
+        }
+        if (checkCrossAxis) {
+          var _middlewareData$offse, _middlewareData$offse2;
+          const len = mainAxis === "y" ? "width" : "height";
+          const isOriginSide = ["top", "left"].includes(getSide(placement));
+          const limitMin = rects.reference[crossAxis] - rects.floating[len] + (isOriginSide ? ((_middlewareData$offse = middlewareData.offset) == null ? void 0 : _middlewareData$offse[crossAxis]) || 0 : 0) + (isOriginSide ? 0 : computedOffset.crossAxis);
+          const limitMax = rects.reference[crossAxis] + rects.reference[len] + (isOriginSide ? 0 : ((_middlewareData$offse2 = middlewareData.offset) == null ? void 0 : _middlewareData$offse2[crossAxis]) || 0) - (isOriginSide ? computedOffset.crossAxis : 0);
+          if (crossAxisCoord < limitMin) {
+            crossAxisCoord = limitMin;
+          } else if (crossAxisCoord > limitMax) {
+            crossAxisCoord = limitMax;
+          }
+        }
+        return {
+          [mainAxis]: mainAxisCoord,
+          [crossAxis]: crossAxisCoord
+        };
+      }
+    };
+  };
+  const size$1 = function(options) {
+    if (options === void 0) {
+      options = {};
+    }
+    return {
+      name: "size",
+      options,
+      fn(state) {
+        return __async(this, null, function* () {
+          const {
+            placement,
+            rects,
+            platform: platform2,
+            elements
+          } = state;
+          const _a2 = evaluate(options, state), {
+            apply = () => {
+            }
+          } = _a2, detectOverflowOptions = __objRest(_a2, [
+            "apply"
+          ]);
+          const overflow2 = yield detectOverflow$1(state, detectOverflowOptions);
+          const side = getSide(placement);
+          const alignment = getAlignment(placement);
+          const isYAxis = getSideAxis(placement) === "y";
+          const {
+            width: width2,
+            height: height2
+          } = rects.floating;
+          let heightSide;
+          let widthSide;
+          if (side === "top" || side === "bottom") {
+            heightSide = side;
+            widthSide = alignment === ((yield platform2.isRTL == null ? void 0 : platform2.isRTL(elements.floating)) ? "start" : "end") ? "left" : "right";
+          } else {
+            widthSide = side;
+            heightSide = alignment === "end" ? "top" : "bottom";
+          }
+          const overflowAvailableHeight = height2 - overflow2[heightSide];
+          const overflowAvailableWidth = width2 - overflow2[widthSide];
+          const noShift = !state.middlewareData.shift;
+          let availableHeight = overflowAvailableHeight;
+          let availableWidth = overflowAvailableWidth;
+          if (isYAxis) {
+            const maximumClippingWidth = width2 - overflow2.left - overflow2.right;
+            availableWidth = alignment || noShift ? min$1(overflowAvailableWidth, maximumClippingWidth) : maximumClippingWidth;
+          } else {
+            const maximumClippingHeight = height2 - overflow2.top - overflow2.bottom;
+            availableHeight = alignment || noShift ? min$1(overflowAvailableHeight, maximumClippingHeight) : maximumClippingHeight;
+          }
+          if (noShift && !alignment) {
+            const xMin = max$1(overflow2.left, 0);
+            const xMax = max$1(overflow2.right, 0);
+            const yMin = max$1(overflow2.top, 0);
+            const yMax = max$1(overflow2.bottom, 0);
+            if (isYAxis) {
+              availableWidth = width2 - 2 * (xMin !== 0 || xMax !== 0 ? xMin + xMax : max$1(overflow2.left, overflow2.right));
+            } else {
+              availableHeight = height2 - 2 * (yMin !== 0 || yMax !== 0 ? yMin + yMax : max$1(overflow2.top, overflow2.bottom));
+            }
+          }
+          yield apply(__spreadProps(__spreadValues({}, state), {
+            availableWidth,
+            availableHeight
+          }));
+          const nextDimensions = yield platform2.getDimensions(elements.floating);
+          if (width2 !== nextDimensions.width || height2 !== nextDimensions.height) {
+            return {
+              reset: {
+                rects: true
+              }
+            };
+          }
+          return {};
+        });
+      }
+    };
+  };
+  function getNodeName$1(node2) {
+    if (isNode(node2)) {
+      return (node2.nodeName || "").toLowerCase();
+    }
+    return "#document";
   }
   function getWindow$1(node2) {
-    if (node2 == null) {
-      return window;
-    }
-    if (node2.toString() !== "[object Window]") {
-      var ownerDocument2 = node2.ownerDocument;
-      return ownerDocument2 ? ownerDocument2.defaultView || window : window;
-    }
-    return node2;
+    var _node$ownerDocument;
+    return (node2 == null || (_node$ownerDocument = node2.ownerDocument) == null ? void 0 : _node$ownerDocument.defaultView) || window;
   }
-  function isElement$1(node2) {
-    var OwnElement = getWindow$1(node2).Element;
-    return node2 instanceof OwnElement || node2 instanceof Element;
+  function getDocumentElement$1(node2) {
+    var _ref;
+    return (_ref = (isNode(node2) ? node2.ownerDocument : node2.document) || window.document) == null ? void 0 : _ref.documentElement;
   }
-  function isHTMLElement$2(node2) {
-    var OwnElement = getWindow$1(node2).HTMLElement;
-    return node2 instanceof OwnElement || node2 instanceof HTMLElement;
+  function isNode(value) {
+    return value instanceof Node || value instanceof getWindow$1(value).Node;
   }
-  function isShadowRoot$1(node2) {
+  function isElement$1(value) {
+    return value instanceof Element || value instanceof getWindow$1(value).Element;
+  }
+  function isHTMLElement$2(value) {
+    return value instanceof HTMLElement || value instanceof getWindow$1(value).HTMLElement;
+  }
+  function isShadowRoot$1(value) {
     if (typeof ShadowRoot === "undefined") {
       return false;
     }
-    var OwnElement = getWindow$1(node2).ShadowRoot;
-    return node2 instanceof OwnElement || node2 instanceof ShadowRoot;
+    return value instanceof ShadowRoot || value instanceof getWindow$1(value).ShadowRoot;
   }
-  function applyStyles(_ref) {
-    var state = _ref.state;
-    Object.keys(state.elements).forEach(function(name) {
-      var style2 = state.styles[name] || {};
-      var attributes = state.attributes[name] || {};
-      var element = state.elements[name];
-      if (!isHTMLElement$2(element) || !getNodeName$1(element)) {
-        return;
+  function isOverflowElement(element) {
+    const {
+      overflow: overflow2,
+      overflowX,
+      overflowY,
+      display: display2
+    } = getComputedStyle$1(element);
+    return /auto|scroll|overlay|hidden|clip/.test(overflow2 + overflowY + overflowX) && !["inline", "contents"].includes(display2);
+  }
+  function isTableElement$1(element) {
+    return ["table", "td", "th"].includes(getNodeName$1(element));
+  }
+  function isContainingBlock(element) {
+    const webkit = isWebKit();
+    const css = getComputedStyle$1(element);
+    return css.transform !== "none" || css.perspective !== "none" || (css.containerType ? css.containerType !== "normal" : false) || !webkit && (css.backdropFilter ? css.backdropFilter !== "none" : false) || !webkit && (css.filter ? css.filter !== "none" : false) || ["transform", "perspective", "filter"].some((value) => (css.willChange || "").includes(value)) || ["paint", "layout", "strict", "content"].some((value) => (css.contain || "").includes(value));
+  }
+  function getContainingBlock$1(element) {
+    let currentNode = getParentNode$1(element);
+    while (isHTMLElement$2(currentNode) && !isLastTraversableNode(currentNode)) {
+      if (isContainingBlock(currentNode)) {
+        return currentNode;
+      } else {
+        currentNode = getParentNode$1(currentNode);
       }
-      Object.assign(element.style, style2);
-      Object.keys(attributes).forEach(function(name2) {
-        var value = attributes[name2];
-        if (value === false) {
-          element.removeAttribute(name2);
-        } else {
-          element.setAttribute(name2, value === true ? "" : value);
-        }
-      });
-    });
-  }
-  function effect$2(_ref2) {
-    var state = _ref2.state;
-    var initialStyles = {
-      popper: {
-        position: state.options.strategy,
-        left: "0",
-        top: "0",
-        margin: "0"
-      },
-      arrow: {
-        position: "absolute"
-      },
-      reference: {}
-    };
-    Object.assign(state.elements.popper.style, initialStyles.popper);
-    state.styles = initialStyles;
-    if (state.elements.arrow) {
-      Object.assign(state.elements.arrow.style, initialStyles.arrow);
     }
-    return function() {
-      Object.keys(state.elements).forEach(function(name) {
-        var element = state.elements[name];
-        var attributes = state.attributes[name] || {};
-        var styleProperties = Object.keys(state.styles.hasOwnProperty(name) ? state.styles[name] : initialStyles[name]);
-        var style2 = styleProperties.reduce(function(style3, property) {
-          style3[property] = "";
-          return style3;
-        }, {});
-        if (!isHTMLElement$2(element) || !getNodeName$1(element)) {
-          return;
-        }
-        Object.assign(element.style, style2);
-        Object.keys(attributes).forEach(function(attribute) {
-          element.removeAttribute(attribute);
-        });
-      });
+    return null;
+  }
+  function isWebKit() {
+    if (typeof CSS === "undefined" || !CSS.supports)
+      return false;
+    return CSS.supports("-webkit-backdrop-filter", "none");
+  }
+  function isLastTraversableNode(node2) {
+    return ["html", "body", "#document"].includes(getNodeName$1(node2));
+  }
+  function getComputedStyle$1(element) {
+    return getWindow$1(element).getComputedStyle(element);
+  }
+  function getNodeScroll$1(element) {
+    if (isElement$1(element)) {
+      return {
+        scrollLeft: element.scrollLeft,
+        scrollTop: element.scrollTop
+      };
+    }
+    return {
+      scrollLeft: element.pageXOffset,
+      scrollTop: element.pageYOffset
     };
   }
-  const applyStyles$1 = {
-    name: "applyStyles",
-    enabled: true,
-    phase: "write",
-    fn: applyStyles,
-    effect: effect$2,
-    requires: ["computeStyles"]
-  };
-  function getBasePlacement(placement) {
-    return placement.split("-")[0];
-  }
-  var max$1 = Math.max;
-  var min$1 = Math.min;
-  var round$1 = Math.round;
-  function getUAString() {
-    var uaData = navigator.userAgentData;
-    if (uaData != null && uaData.brands && Array.isArray(uaData.brands)) {
-      return uaData.brands.map(function(item) {
-        return item.brand + "/" + item.version;
-      }).join(" ");
+  function getParentNode$1(node2) {
+    if (getNodeName$1(node2) === "html") {
+      return node2;
     }
-    return navigator.userAgent;
+    const result = (
+      // Step into the shadow DOM of the parent of a slotted node.
+      node2.assignedSlot || // DOM Element detected.
+      node2.parentNode || // ShadowRoot detected.
+      isShadowRoot$1(node2) && node2.host || // Fallback.
+      getDocumentElement$1(node2)
+    );
+    return isShadowRoot$1(result) ? result.host : result;
   }
-  function isLayoutViewport() {
-    return !/^((?!chrome|android).)*safari/i.test(getUAString());
+  function getNearestOverflowAncestor(node2) {
+    const parentNode = getParentNode$1(node2);
+    if (isLastTraversableNode(parentNode)) {
+      return node2.ownerDocument ? node2.ownerDocument.body : node2.body;
+    }
+    if (isHTMLElement$2(parentNode) && isOverflowElement(parentNode)) {
+      return parentNode;
+    }
+    return getNearestOverflowAncestor(parentNode);
   }
-  function getBoundingClientRect$1(element, includeScale, isFixedStrategy) {
+  function getOverflowAncestors(node2, list, traverseIframes) {
+    var _node$ownerDocument2;
+    if (list === void 0) {
+      list = [];
+    }
+    if (traverseIframes === void 0) {
+      traverseIframes = true;
+    }
+    const scrollableAncestor = getNearestOverflowAncestor(node2);
+    const isBody = scrollableAncestor === ((_node$ownerDocument2 = node2.ownerDocument) == null ? void 0 : _node$ownerDocument2.body);
+    const win = getWindow$1(scrollableAncestor);
+    if (isBody) {
+      return list.concat(win, win.visualViewport || [], isOverflowElement(scrollableAncestor) ? scrollableAncestor : [], win.frameElement && traverseIframes ? getOverflowAncestors(win.frameElement) : []);
+    }
+    return list.concat(scrollableAncestor, getOverflowAncestors(scrollableAncestor, [], traverseIframes));
+  }
+  function getCssDimensions(element) {
+    const css = getComputedStyle$1(element);
+    let width2 = parseFloat(css.width) || 0;
+    let height2 = parseFloat(css.height) || 0;
+    const hasOffset = isHTMLElement$2(element);
+    const offsetWidth = hasOffset ? element.offsetWidth : width2;
+    const offsetHeight = hasOffset ? element.offsetHeight : height2;
+    const shouldFallback = round$1(width2) !== offsetWidth || round$1(height2) !== offsetHeight;
+    if (shouldFallback) {
+      width2 = offsetWidth;
+      height2 = offsetHeight;
+    }
+    return {
+      width: width2,
+      height: height2,
+      $: shouldFallback
+    };
+  }
+  function unwrapElement(element) {
+    return !isElement$1(element) ? element.contextElement : element;
+  }
+  function getScale$1(element) {
+    const domElement = unwrapElement(element);
+    if (!isHTMLElement$2(domElement)) {
+      return createCoords(1);
+    }
+    const rect = domElement.getBoundingClientRect();
+    const {
+      width: width2,
+      height: height2,
+      $
+    } = getCssDimensions(domElement);
+    let x = ($ ? round$1(rect.width) : rect.width) / width2;
+    let y = ($ ? round$1(rect.height) : rect.height) / height2;
+    if (!x || !Number.isFinite(x)) {
+      x = 1;
+    }
+    if (!y || !Number.isFinite(y)) {
+      y = 1;
+    }
+    return {
+      x,
+      y
+    };
+  }
+  const noOffsets = /* @__PURE__ */ createCoords(0);
+  function getVisualOffsets(element) {
+    const win = getWindow$1(element);
+    if (!isWebKit() || !win.visualViewport) {
+      return noOffsets;
+    }
+    return {
+      x: win.visualViewport.offsetLeft,
+      y: win.visualViewport.offsetTop
+    };
+  }
+  function shouldAddVisualOffsets(element, isFixed, floatingOffsetParent) {
+    if (isFixed === void 0) {
+      isFixed = false;
+    }
+    if (!floatingOffsetParent || isFixed && floatingOffsetParent !== getWindow$1(element)) {
+      return false;
+    }
+    return isFixed;
+  }
+  function getBoundingClientRect$1(element, includeScale, isFixedStrategy, offsetParent) {
     if (includeScale === void 0) {
       includeScale = false;
     }
     if (isFixedStrategy === void 0) {
       isFixedStrategy = false;
     }
-    var clientRect = element.getBoundingClientRect();
-    var scaleX = 1;
-    var scaleY = 1;
-    if (includeScale && isHTMLElement$2(element)) {
-      scaleX = element.offsetWidth > 0 ? round$1(clientRect.width) / element.offsetWidth || 1 : 1;
-      scaleY = element.offsetHeight > 0 ? round$1(clientRect.height) / element.offsetHeight || 1 : 1;
+    const clientRect = element.getBoundingClientRect();
+    const domElement = unwrapElement(element);
+    let scale = createCoords(1);
+    if (includeScale) {
+      if (offsetParent) {
+        if (isElement$1(offsetParent)) {
+          scale = getScale$1(offsetParent);
+        }
+      } else {
+        scale = getScale$1(element);
+      }
     }
-    var _ref = isElement$1(element) ? getWindow$1(element) : window, visualViewport = _ref.visualViewport;
-    var addVisualOffsets = !isLayoutViewport() && isFixedStrategy;
-    var x = (clientRect.left + (addVisualOffsets && visualViewport ? visualViewport.offsetLeft : 0)) / scaleX;
-    var y = (clientRect.top + (addVisualOffsets && visualViewport ? visualViewport.offsetTop : 0)) / scaleY;
-    var width2 = clientRect.width / scaleX;
-    var height2 = clientRect.height / scaleY;
+    const visualOffsets = shouldAddVisualOffsets(domElement, isFixedStrategy, offsetParent) ? getVisualOffsets(domElement) : createCoords(0);
+    let x = (clientRect.left + visualOffsets.x) / scale.x;
+    let y = (clientRect.top + visualOffsets.y) / scale.y;
+    let width2 = clientRect.width / scale.x;
+    let height2 = clientRect.height / scale.y;
+    if (domElement) {
+      const win = getWindow$1(domElement);
+      const offsetWin = offsetParent && isElement$1(offsetParent) ? getWindow$1(offsetParent) : offsetParent;
+      let currentWin = win;
+      let currentIFrame = currentWin.frameElement;
+      while (currentIFrame && offsetParent && offsetWin !== currentWin) {
+        const iframeScale = getScale$1(currentIFrame);
+        const iframeRect = currentIFrame.getBoundingClientRect();
+        const css = getComputedStyle$1(currentIFrame);
+        const left2 = iframeRect.left + (currentIFrame.clientLeft + parseFloat(css.paddingLeft)) * iframeScale.x;
+        const top2 = iframeRect.top + (currentIFrame.clientTop + parseFloat(css.paddingTop)) * iframeScale.y;
+        x *= iframeScale.x;
+        y *= iframeScale.y;
+        width2 *= iframeScale.x;
+        height2 *= iframeScale.y;
+        x += left2;
+        y += top2;
+        currentWin = getWindow$1(currentIFrame);
+        currentIFrame = currentWin.frameElement;
+      }
+    }
+    return rectToClientRect$1({
+      width: width2,
+      height: height2,
+      x,
+      y
+    });
+  }
+  const topLayerSelectors = [":popover-open", ":modal"];
+  function isTopLayer(floating) {
+    return topLayerSelectors.some((selector) => {
+      try {
+        return floating.matches(selector);
+      } catch (e) {
+        return false;
+      }
+    });
+  }
+  function convertOffsetParentRelativeRectToViewportRelativeRect(_ref) {
+    let {
+      elements,
+      rect,
+      offsetParent,
+      strategy
+    } = _ref;
+    const isFixed = strategy === "fixed";
+    const documentElement = getDocumentElement$1(offsetParent);
+    const topLayer = elements ? isTopLayer(elements.floating) : false;
+    if (offsetParent === documentElement || topLayer && isFixed) {
+      return rect;
+    }
+    let scroll = {
+      scrollLeft: 0,
+      scrollTop: 0
+    };
+    let scale = createCoords(1);
+    const offsets = createCoords(0);
+    const isOffsetParentAnElement = isHTMLElement$2(offsetParent);
+    if (isOffsetParentAnElement || !isOffsetParentAnElement && !isFixed) {
+      if (getNodeName$1(offsetParent) !== "body" || isOverflowElement(documentElement)) {
+        scroll = getNodeScroll$1(offsetParent);
+      }
+      if (isHTMLElement$2(offsetParent)) {
+        const offsetRect = getBoundingClientRect$1(offsetParent);
+        scale = getScale$1(offsetParent);
+        offsets.x = offsetRect.x + offsetParent.clientLeft;
+        offsets.y = offsetRect.y + offsetParent.clientTop;
+      }
+    }
+    return {
+      width: rect.width * scale.x,
+      height: rect.height * scale.y,
+      x: rect.x * scale.x - scroll.scrollLeft * scale.x + offsets.x,
+      y: rect.y * scale.y - scroll.scrollTop * scale.y + offsets.y
+    };
+  }
+  function getClientRects(element) {
+    return Array.from(element.getClientRects());
+  }
+  function getWindowScrollBarX$1(element) {
+    return getBoundingClientRect$1(getDocumentElement$1(element)).left + getNodeScroll$1(element).scrollLeft;
+  }
+  function getDocumentRect$1(element) {
+    const html = getDocumentElement$1(element);
+    const scroll = getNodeScroll$1(element);
+    const body = element.ownerDocument.body;
+    const width2 = max$1(html.scrollWidth, html.clientWidth, body.scrollWidth, body.clientWidth);
+    const height2 = max$1(html.scrollHeight, html.clientHeight, body.scrollHeight, body.clientHeight);
+    let x = -scroll.scrollLeft + getWindowScrollBarX$1(element);
+    const y = -scroll.scrollTop;
+    if (getComputedStyle$1(body).direction === "rtl") {
+      x += max$1(html.clientWidth, body.clientWidth) - width2;
+    }
     return {
       width: width2,
       height: height2,
-      top: y,
-      right: x + width2,
-      bottom: y + height2,
-      left: x,
       x,
       y
     };
-  }
-  function getLayoutRect(element) {
-    var clientRect = getBoundingClientRect$1(element);
-    var width2 = element.offsetWidth;
-    var height2 = element.offsetHeight;
-    if (Math.abs(clientRect.width - width2) <= 1) {
-      width2 = clientRect.width;
-    }
-    if (Math.abs(clientRect.height - height2) <= 1) {
-      height2 = clientRect.height;
-    }
-    return {
-      x: element.offsetLeft,
-      y: element.offsetTop,
-      width: width2,
-      height: height2
-    };
-  }
-  function contains(parent, child) {
-    var rootNode = child.getRootNode && child.getRootNode();
-    if (parent.contains(child)) {
-      return true;
-    } else if (rootNode && isShadowRoot$1(rootNode)) {
-      var next2 = child;
-      do {
-        if (next2 && parent.isSameNode(next2)) {
-          return true;
-        }
-        next2 = next2.parentNode || next2.host;
-      } while (next2);
-    }
-    return false;
-  }
-  function getComputedStyle$1(element) {
-    return getWindow$1(element).getComputedStyle(element);
-  }
-  function isTableElement$1(element) {
-    return ["table", "td", "th"].indexOf(getNodeName$1(element)) >= 0;
-  }
-  function getDocumentElement$1(element) {
-    return ((isElement$1(element) ? element.ownerDocument : (
-      // $FlowFixMe[prop-missing]
-      element.document
-    )) || window.document).documentElement;
-  }
-  function getParentNode$1(element) {
-    if (getNodeName$1(element) === "html") {
-      return element;
-    }
-    return (
-      // this is a quicker (but less type safe) way to save quite some bytes from the bundle
-      // $FlowFixMe[incompatible-return]
-      // $FlowFixMe[prop-missing]
-      element.assignedSlot || // step into the shadow DOM of the parent of a slotted node
-      element.parentNode || // DOM Element detected
-      (isShadowRoot$1(element) ? element.host : null) || // ShadowRoot detected
-      // $FlowFixMe[incompatible-call]: HTMLElement is a Node
-      getDocumentElement$1(element)
-    );
-  }
-  function getTrueOffsetParent$1(element) {
-    if (!isHTMLElement$2(element) || // https://github.com/popperjs/popper-core/issues/837
-    getComputedStyle$1(element).position === "fixed") {
-      return null;
-    }
-    return element.offsetParent;
-  }
-  function getContainingBlock$1(element) {
-    var isFirefox = /firefox/i.test(getUAString());
-    var isIE = /Trident/i.test(getUAString());
-    if (isIE && isHTMLElement$2(element)) {
-      var elementCss = getComputedStyle$1(element);
-      if (elementCss.position === "fixed") {
-        return null;
-      }
-    }
-    var currentNode = getParentNode$1(element);
-    if (isShadowRoot$1(currentNode)) {
-      currentNode = currentNode.host;
-    }
-    while (isHTMLElement$2(currentNode) && ["html", "body"].indexOf(getNodeName$1(currentNode)) < 0) {
-      var css = getComputedStyle$1(currentNode);
-      if (css.transform !== "none" || css.perspective !== "none" || css.contain === "paint" || ["transform", "perspective"].indexOf(css.willChange) !== -1 || isFirefox && css.willChange === "filter" || isFirefox && css.filter && css.filter !== "none") {
-        return currentNode;
-      } else {
-        currentNode = currentNode.parentNode;
-      }
-    }
-    return null;
-  }
-  function getOffsetParent$1(element) {
-    var window2 = getWindow$1(element);
-    var offsetParent = getTrueOffsetParent$1(element);
-    while (offsetParent && isTableElement$1(offsetParent) && getComputedStyle$1(offsetParent).position === "static") {
-      offsetParent = getTrueOffsetParent$1(offsetParent);
-    }
-    if (offsetParent && (getNodeName$1(offsetParent) === "html" || getNodeName$1(offsetParent) === "body" && getComputedStyle$1(offsetParent).position === "static")) {
-      return window2;
-    }
-    return offsetParent || getContainingBlock$1(element) || window2;
-  }
-  function getMainAxisFromPlacement(placement) {
-    return ["top", "bottom"].indexOf(placement) >= 0 ? "x" : "y";
-  }
-  function within(min2, value, max2) {
-    return max$1(min2, min$1(value, max2));
-  }
-  function withinMaxClamp(min2, value, max2) {
-    var v = within(min2, value, max2);
-    return v > max2 ? max2 : v;
-  }
-  function getFreshSideObject() {
-    return {
-      top: 0,
-      right: 0,
-      bottom: 0,
-      left: 0
-    };
-  }
-  function mergePaddingObject(paddingObject) {
-    return Object.assign({}, getFreshSideObject(), paddingObject);
-  }
-  function expandToHashMap(value, keys) {
-    return keys.reduce(function(hashMap, key) {
-      hashMap[key] = value;
-      return hashMap;
-    }, {});
-  }
-  var toPaddingObject = function toPaddingObject2(padding2, state) {
-    padding2 = typeof padding2 === "function" ? padding2(Object.assign({}, state.rects, {
-      placement: state.placement
-    })) : padding2;
-    return mergePaddingObject(typeof padding2 !== "number" ? padding2 : expandToHashMap(padding2, basePlacements));
-  };
-  function arrow$3(_ref) {
-    var _state$modifiersData$;
-    var state = _ref.state, name = _ref.name, options = _ref.options;
-    var arrowElement = state.elements.arrow;
-    var popperOffsets2 = state.modifiersData.popperOffsets;
-    var basePlacement = getBasePlacement(state.placement);
-    var axis = getMainAxisFromPlacement(basePlacement);
-    var isVertical = [left, right].indexOf(basePlacement) >= 0;
-    var len = isVertical ? "height" : "width";
-    if (!arrowElement || !popperOffsets2) {
-      return;
-    }
-    var paddingObject = toPaddingObject(options.padding, state);
-    var arrowRect = getLayoutRect(arrowElement);
-    var minProp = axis === "y" ? top : left;
-    var maxProp = axis === "y" ? bottom : right;
-    var endDiff = state.rects.reference[len] + state.rects.reference[axis] - popperOffsets2[axis] - state.rects.popper[len];
-    var startDiff = popperOffsets2[axis] - state.rects.reference[axis];
-    var arrowOffsetParent = getOffsetParent$1(arrowElement);
-    var clientSize = arrowOffsetParent ? axis === "y" ? arrowOffsetParent.clientHeight || 0 : arrowOffsetParent.clientWidth || 0 : 0;
-    var centerToReference = endDiff / 2 - startDiff / 2;
-    var min2 = paddingObject[minProp];
-    var max2 = clientSize - arrowRect[len] - paddingObject[maxProp];
-    var center = clientSize / 2 - arrowRect[len] / 2 + centerToReference;
-    var offset2 = within(min2, center, max2);
-    var axisProp = axis;
-    state.modifiersData[name] = (_state$modifiersData$ = {}, _state$modifiersData$[axisProp] = offset2, _state$modifiersData$.centerOffset = offset2 - center, _state$modifiersData$);
-  }
-  function effect$1(_ref2) {
-    var state = _ref2.state, options = _ref2.options;
-    var _options$element = options.element, arrowElement = _options$element === void 0 ? "[data-popper-arrow]" : _options$element;
-    if (arrowElement == null) {
-      return;
-    }
-    if (typeof arrowElement === "string") {
-      arrowElement = state.elements.popper.querySelector(arrowElement);
-      if (!arrowElement) {
-        return;
-      }
-    }
-    if (!contains(state.elements.popper, arrowElement)) {
-      return;
-    }
-    state.elements.arrow = arrowElement;
-  }
-  const arrow$4 = {
-    name: "arrow",
-    enabled: true,
-    phase: "main",
-    fn: arrow$3,
-    effect: effect$1,
-    requires: ["popperOffsets"],
-    requiresIfExists: ["preventOverflow"]
-  };
-  function getVariation(placement) {
-    return placement.split("-")[1];
-  }
-  var unsetSides = {
-    top: "auto",
-    right: "auto",
-    bottom: "auto",
-    left: "auto"
-  };
-  function roundOffsetsByDPR(_ref, win) {
-    var x = _ref.x, y = _ref.y;
-    var dpr = win.devicePixelRatio || 1;
-    return {
-      x: round$1(x * dpr) / dpr || 0,
-      y: round$1(y * dpr) / dpr || 0
-    };
-  }
-  function mapToStyles(_ref2) {
-    var _Object$assign2;
-    var popper2 = _ref2.popper, popperRect = _ref2.popperRect, placement = _ref2.placement, variation = _ref2.variation, offsets = _ref2.offsets, position2 = _ref2.position, gpuAcceleration = _ref2.gpuAcceleration, adaptive = _ref2.adaptive, roundOffsets = _ref2.roundOffsets, isFixed = _ref2.isFixed;
-    var _offsets$x = offsets.x, x = _offsets$x === void 0 ? 0 : _offsets$x, _offsets$y = offsets.y, y = _offsets$y === void 0 ? 0 : _offsets$y;
-    var _ref3 = typeof roundOffsets === "function" ? roundOffsets({
-      x,
-      y
-    }) : {
-      x,
-      y
-    };
-    x = _ref3.x;
-    y = _ref3.y;
-    var hasX = offsets.hasOwnProperty("x");
-    var hasY = offsets.hasOwnProperty("y");
-    var sideX = left;
-    var sideY = top;
-    var win = window;
-    if (adaptive) {
-      var offsetParent = getOffsetParent$1(popper2);
-      var heightProp = "clientHeight";
-      var widthProp = "clientWidth";
-      if (offsetParent === getWindow$1(popper2)) {
-        offsetParent = getDocumentElement$1(popper2);
-        if (getComputedStyle$1(offsetParent).position !== "static" && position2 === "absolute") {
-          heightProp = "scrollHeight";
-          widthProp = "scrollWidth";
-        }
-      }
-      offsetParent = offsetParent;
-      if (placement === top || (placement === left || placement === right) && variation === end) {
-        sideY = bottom;
-        var offsetY = isFixed && offsetParent === win && win.visualViewport ? win.visualViewport.height : (
-          // $FlowFixMe[prop-missing]
-          offsetParent[heightProp]
-        );
-        y -= offsetY - popperRect.height;
-        y *= gpuAcceleration ? 1 : -1;
-      }
-      if (placement === left || (placement === top || placement === bottom) && variation === end) {
-        sideX = right;
-        var offsetX = isFixed && offsetParent === win && win.visualViewport ? win.visualViewport.width : (
-          // $FlowFixMe[prop-missing]
-          offsetParent[widthProp]
-        );
-        x -= offsetX - popperRect.width;
-        x *= gpuAcceleration ? 1 : -1;
-      }
-    }
-    var commonStyles = Object.assign({
-      position: position2
-    }, adaptive && unsetSides);
-    var _ref4 = roundOffsets === true ? roundOffsetsByDPR({
-      x,
-      y
-    }, getWindow$1(popper2)) : {
-      x,
-      y
-    };
-    x = _ref4.x;
-    y = _ref4.y;
-    if (gpuAcceleration) {
-      var _Object$assign;
-      return Object.assign({}, commonStyles, (_Object$assign = {}, _Object$assign[sideY] = hasY ? "0" : "", _Object$assign[sideX] = hasX ? "0" : "", _Object$assign.transform = (win.devicePixelRatio || 1) <= 1 ? "translate(" + x + "px, " + y + "px)" : "translate3d(" + x + "px, " + y + "px, 0)", _Object$assign));
-    }
-    return Object.assign({}, commonStyles, (_Object$assign2 = {}, _Object$assign2[sideY] = hasY ? y + "px" : "", _Object$assign2[sideX] = hasX ? x + "px" : "", _Object$assign2.transform = "", _Object$assign2));
-  }
-  function computeStyles(_ref5) {
-    var state = _ref5.state, options = _ref5.options;
-    var _options$gpuAccelerat = options.gpuAcceleration, gpuAcceleration = _options$gpuAccelerat === void 0 ? true : _options$gpuAccelerat, _options$adaptive = options.adaptive, adaptive = _options$adaptive === void 0 ? true : _options$adaptive, _options$roundOffsets = options.roundOffsets, roundOffsets = _options$roundOffsets === void 0 ? true : _options$roundOffsets;
-    var commonStyles = {
-      placement: getBasePlacement(state.placement),
-      variation: getVariation(state.placement),
-      popper: state.elements.popper,
-      popperRect: state.rects.popper,
-      gpuAcceleration,
-      isFixed: state.options.strategy === "fixed"
-    };
-    if (state.modifiersData.popperOffsets != null) {
-      state.styles.popper = Object.assign({}, state.styles.popper, mapToStyles(Object.assign({}, commonStyles, {
-        offsets: state.modifiersData.popperOffsets,
-        position: state.options.strategy,
-        adaptive,
-        roundOffsets
-      })));
-    }
-    if (state.modifiersData.arrow != null) {
-      state.styles.arrow = Object.assign({}, state.styles.arrow, mapToStyles(Object.assign({}, commonStyles, {
-        offsets: state.modifiersData.arrow,
-        position: "absolute",
-        adaptive: false,
-        roundOffsets
-      })));
-    }
-    state.attributes.popper = Object.assign({}, state.attributes.popper, {
-      "data-popper-placement": state.placement
-    });
-  }
-  const computeStyles$1 = {
-    name: "computeStyles",
-    enabled: true,
-    phase: "beforeWrite",
-    fn: computeStyles,
-    data: {}
-  };
-  var passive = {
-    passive: true
-  };
-  function effect(_ref) {
-    var state = _ref.state, instance = _ref.instance, options = _ref.options;
-    var _options$scroll = options.scroll, scroll = _options$scroll === void 0 ? true : _options$scroll, _options$resize = options.resize, resize = _options$resize === void 0 ? true : _options$resize;
-    var window2 = getWindow$1(state.elements.popper);
-    var scrollParents = [].concat(state.scrollParents.reference, state.scrollParents.popper);
-    if (scroll) {
-      scrollParents.forEach(function(scrollParent) {
-        scrollParent.addEventListener("scroll", instance.update, passive);
-      });
-    }
-    if (resize) {
-      window2.addEventListener("resize", instance.update, passive);
-    }
-    return function() {
-      if (scroll) {
-        scrollParents.forEach(function(scrollParent) {
-          scrollParent.removeEventListener("scroll", instance.update, passive);
-        });
-      }
-      if (resize) {
-        window2.removeEventListener("resize", instance.update, passive);
-      }
-    };
-  }
-  const eventListeners = {
-    name: "eventListeners",
-    enabled: true,
-    phase: "write",
-    fn: function fn() {
-    },
-    effect,
-    data: {}
-  };
-  var hash$1 = {
-    left: "right",
-    right: "left",
-    bottom: "top",
-    top: "bottom"
-  };
-  function getOppositePlacement$1(placement) {
-    return placement.replace(/left|right|bottom|top/g, function(matched) {
-      return hash$1[matched];
-    });
-  }
-  var hash = {
-    start: "end",
-    end: "start"
-  };
-  function getOppositeVariationPlacement(placement) {
-    return placement.replace(/start|end/g, function(matched) {
-      return hash[matched];
-    });
-  }
-  function getWindowScroll(node2) {
-    var win = getWindow$1(node2);
-    var scrollLeft = win.pageXOffset;
-    var scrollTop = win.pageYOffset;
-    return {
-      scrollLeft,
-      scrollTop
-    };
-  }
-  function getWindowScrollBarX$1(element) {
-    return getBoundingClientRect$1(getDocumentElement$1(element)).left + getWindowScroll(element).scrollLeft;
   }
   function getViewportRect$1(element, strategy) {
-    var win = getWindow$1(element);
-    var html = getDocumentElement$1(element);
-    var visualViewport = win.visualViewport;
-    var width2 = html.clientWidth;
-    var height2 = html.clientHeight;
-    var x = 0;
-    var y = 0;
+    const win = getWindow$1(element);
+    const html = getDocumentElement$1(element);
+    const visualViewport = win.visualViewport;
+    let width2 = html.clientWidth;
+    let height2 = html.clientHeight;
+    let x = 0;
+    let y = 0;
     if (visualViewport) {
       width2 = visualViewport.width;
       height2 = visualViewport.height;
-      var layoutViewport = isLayoutViewport();
-      if (layoutViewport || !layoutViewport && strategy === "fixed") {
+      const visualViewportBased = isWebKit();
+      if (!visualViewportBased || visualViewportBased && strategy === "fixed") {
         x = visualViewport.offsetLeft;
         y = visualViewport.offsetTop;
       }
@@ -19366,22 +18855,19 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     return {
       width: width2,
       height: height2,
-      x: x + getWindowScrollBarX$1(element),
+      x,
       y
     };
   }
-  function getDocumentRect$1(element) {
-    var _element$ownerDocumen;
-    var html = getDocumentElement$1(element);
-    var winScroll = getWindowScroll(element);
-    var body = (_element$ownerDocumen = element.ownerDocument) == null ? void 0 : _element$ownerDocumen.body;
-    var width2 = max$1(html.scrollWidth, html.clientWidth, body ? body.scrollWidth : 0, body ? body.clientWidth : 0);
-    var height2 = max$1(html.scrollHeight, html.clientHeight, body ? body.scrollHeight : 0, body ? body.clientHeight : 0);
-    var x = -winScroll.scrollLeft + getWindowScrollBarX$1(element);
-    var y = -winScroll.scrollTop;
-    if (getComputedStyle$1(body || html).direction === "rtl") {
-      x += max$1(html.clientWidth, body ? body.clientWidth : 0) - width2;
-    }
+  function getInnerBoundingClientRect$1(element, strategy) {
+    const clientRect = getBoundingClientRect$1(element, true, strategy === "fixed");
+    const top2 = clientRect.top + element.clientTop;
+    const left2 = clientRect.left + element.clientLeft;
+    const scale = isHTMLElement$2(element) ? getScale$1(element) : createCoords(1);
+    const width2 = element.clientWidth * scale.x;
+    const height2 = element.clientHeight * scale.y;
+    const x = left2 * scale.x;
+    const y = top2 * scale.y;
     return {
       width: width2,
       height: height2,
@@ -19389,770 +18875,571 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       y
     };
   }
-  function isScrollParent(element) {
-    var _getComputedStyle = getComputedStyle$1(element), overflow2 = _getComputedStyle.overflow, overflowX = _getComputedStyle.overflowX, overflowY = _getComputedStyle.overflowY;
-    return /auto|scroll|overlay|hidden/.test(overflow2 + overflowY + overflowX);
-  }
-  function getScrollParent(node2) {
-    if (["html", "body", "#document"].indexOf(getNodeName$1(node2)) >= 0) {
-      return node2.ownerDocument.body;
+  function getClientRectFromClippingAncestor(element, clippingAncestor, strategy) {
+    let rect;
+    if (clippingAncestor === "viewport") {
+      rect = getViewportRect$1(element, strategy);
+    } else if (clippingAncestor === "document") {
+      rect = getDocumentRect$1(getDocumentElement$1(element));
+    } else if (isElement$1(clippingAncestor)) {
+      rect = getInnerBoundingClientRect$1(clippingAncestor, strategy);
+    } else {
+      const visualOffsets = getVisualOffsets(element);
+      rect = __spreadProps(__spreadValues({}, clippingAncestor), {
+        x: clippingAncestor.x - visualOffsets.x,
+        y: clippingAncestor.y - visualOffsets.y
+      });
     }
-    if (isHTMLElement$2(node2) && isScrollParent(node2)) {
-      return node2;
+    return rectToClientRect$1(rect);
+  }
+  function hasFixedPositionAncestor(element, stopNode) {
+    const parentNode = getParentNode$1(element);
+    if (parentNode === stopNode || !isElement$1(parentNode) || isLastTraversableNode(parentNode)) {
+      return false;
     }
-    return getScrollParent(getParentNode$1(node2));
+    return getComputedStyle$1(parentNode).position === "fixed" || hasFixedPositionAncestor(parentNode, stopNode);
   }
-  function listScrollParents(element, list) {
-    var _element$ownerDocumen;
-    if (list === void 0) {
-      list = [];
+  function getClippingElementAncestors(element, cache2) {
+    const cachedResult = cache2.get(element);
+    if (cachedResult) {
+      return cachedResult;
     }
-    var scrollParent = getScrollParent(element);
-    var isBody = scrollParent === ((_element$ownerDocumen = element.ownerDocument) == null ? void 0 : _element$ownerDocumen.body);
-    var win = getWindow$1(scrollParent);
-    var target = isBody ? [win].concat(win.visualViewport || [], isScrollParent(scrollParent) ? scrollParent : []) : scrollParent;
-    var updatedList = list.concat(target);
-    return isBody ? updatedList : (
-      // $FlowFixMe[incompatible-call]: isBody tells us target will be an HTMLElement here
-      updatedList.concat(listScrollParents(getParentNode$1(target)))
-    );
-  }
-  function rectToClientRect$1(rect) {
-    return Object.assign({}, rect, {
-      left: rect.x,
-      top: rect.y,
-      right: rect.x + rect.width,
-      bottom: rect.y + rect.height
-    });
-  }
-  function getInnerBoundingClientRect$1(element, strategy) {
-    var rect = getBoundingClientRect$1(element, false, strategy === "fixed");
-    rect.top = rect.top + element.clientTop;
-    rect.left = rect.left + element.clientLeft;
-    rect.bottom = rect.top + element.clientHeight;
-    rect.right = rect.left + element.clientWidth;
-    rect.width = element.clientWidth;
-    rect.height = element.clientHeight;
-    rect.x = rect.left;
-    rect.y = rect.top;
-    return rect;
-  }
-  function getClientRectFromMixedType(element, clippingParent, strategy) {
-    return clippingParent === viewport ? rectToClientRect$1(getViewportRect$1(element, strategy)) : isElement$1(clippingParent) ? getInnerBoundingClientRect$1(clippingParent, strategy) : rectToClientRect$1(getDocumentRect$1(getDocumentElement$1(element)));
-  }
-  function getClippingParents(element) {
-    var clippingParents2 = listScrollParents(getParentNode$1(element));
-    var canEscapeClipping = ["absolute", "fixed"].indexOf(getComputedStyle$1(element).position) >= 0;
-    var clipperElement = canEscapeClipping && isHTMLElement$2(element) ? getOffsetParent$1(element) : element;
-    if (!isElement$1(clipperElement)) {
-      return [];
+    let result = getOverflowAncestors(element, [], false).filter((el) => isElement$1(el) && getNodeName$1(el) !== "body");
+    let currentContainingBlockComputedStyle = null;
+    const elementIsFixed = getComputedStyle$1(element).position === "fixed";
+    let currentNode = elementIsFixed ? getParentNode$1(element) : element;
+    while (isElement$1(currentNode) && !isLastTraversableNode(currentNode)) {
+      const computedStyle = getComputedStyle$1(currentNode);
+      const currentNodeIsContaining = isContainingBlock(currentNode);
+      if (!currentNodeIsContaining && computedStyle.position === "fixed") {
+        currentContainingBlockComputedStyle = null;
+      }
+      const shouldDropCurrentNode = elementIsFixed ? !currentNodeIsContaining && !currentContainingBlockComputedStyle : !currentNodeIsContaining && computedStyle.position === "static" && !!currentContainingBlockComputedStyle && ["absolute", "fixed"].includes(currentContainingBlockComputedStyle.position) || isOverflowElement(currentNode) && !currentNodeIsContaining && hasFixedPositionAncestor(element, currentNode);
+      if (shouldDropCurrentNode) {
+        result = result.filter((ancestor) => ancestor !== currentNode);
+      } else {
+        currentContainingBlockComputedStyle = computedStyle;
+      }
+      currentNode = getParentNode$1(currentNode);
     }
-    return clippingParents2.filter(function(clippingParent) {
-      return isElement$1(clippingParent) && contains(clippingParent, clipperElement) && getNodeName$1(clippingParent) !== "body";
-    });
+    cache2.set(element, result);
+    return result;
   }
-  function getClippingRect$1(element, boundary, rootBoundary, strategy) {
-    var mainClippingParents = boundary === "clippingParents" ? getClippingParents(element) : [].concat(boundary);
-    var clippingParents2 = [].concat(mainClippingParents, [rootBoundary]);
-    var firstClippingParent = clippingParents2[0];
-    var clippingRect = clippingParents2.reduce(function(accRect, clippingParent) {
-      var rect = getClientRectFromMixedType(element, clippingParent, strategy);
+  function getClippingRect$1(_ref) {
+    let {
+      element,
+      boundary,
+      rootBoundary,
+      strategy
+    } = _ref;
+    const elementClippingAncestors = boundary === "clippingAncestors" ? getClippingElementAncestors(element, this._c) : [].concat(boundary);
+    const clippingAncestors = [...elementClippingAncestors, rootBoundary];
+    const firstClippingAncestor = clippingAncestors[0];
+    const clippingRect = clippingAncestors.reduce((accRect, clippingAncestor) => {
+      const rect = getClientRectFromClippingAncestor(element, clippingAncestor, strategy);
       accRect.top = max$1(rect.top, accRect.top);
       accRect.right = min$1(rect.right, accRect.right);
       accRect.bottom = min$1(rect.bottom, accRect.bottom);
       accRect.left = max$1(rect.left, accRect.left);
       return accRect;
-    }, getClientRectFromMixedType(element, firstClippingParent, strategy));
-    clippingRect.width = clippingRect.right - clippingRect.left;
-    clippingRect.height = clippingRect.bottom - clippingRect.top;
-    clippingRect.x = clippingRect.left;
-    clippingRect.y = clippingRect.top;
-    return clippingRect;
-  }
-  function computeOffsets(_ref) {
-    var reference2 = _ref.reference, element = _ref.element, placement = _ref.placement;
-    var basePlacement = placement ? getBasePlacement(placement) : null;
-    var variation = placement ? getVariation(placement) : null;
-    var commonX = reference2.x + reference2.width / 2 - element.width / 2;
-    var commonY = reference2.y + reference2.height / 2 - element.height / 2;
-    var offsets;
-    switch (basePlacement) {
-      case top:
-        offsets = {
-          x: commonX,
-          y: reference2.y - element.height
-        };
-        break;
-      case bottom:
-        offsets = {
-          x: commonX,
-          y: reference2.y + reference2.height
-        };
-        break;
-      case right:
-        offsets = {
-          x: reference2.x + reference2.width,
-          y: commonY
-        };
-        break;
-      case left:
-        offsets = {
-          x: reference2.x - element.width,
-          y: commonY
-        };
-        break;
-      default:
-        offsets = {
-          x: reference2.x,
-          y: reference2.y
-        };
-    }
-    var mainAxis = basePlacement ? getMainAxisFromPlacement(basePlacement) : null;
-    if (mainAxis != null) {
-      var len = mainAxis === "y" ? "height" : "width";
-      switch (variation) {
-        case start:
-          offsets[mainAxis] = offsets[mainAxis] - (reference2[len] / 2 - element[len] / 2);
-          break;
-        case end:
-          offsets[mainAxis] = offsets[mainAxis] + (reference2[len] / 2 - element[len] / 2);
-          break;
-        default:
-      }
-    }
-    return offsets;
-  }
-  function detectOverflow$1(state, options) {
-    if (options === void 0) {
-      options = {};
-    }
-    var _options = options, _options$placement = _options.placement, placement = _options$placement === void 0 ? state.placement : _options$placement, _options$strategy = _options.strategy, strategy = _options$strategy === void 0 ? state.strategy : _options$strategy, _options$boundary = _options.boundary, boundary = _options$boundary === void 0 ? clippingParents : _options$boundary, _options$rootBoundary = _options.rootBoundary, rootBoundary = _options$rootBoundary === void 0 ? viewport : _options$rootBoundary, _options$elementConte = _options.elementContext, elementContext = _options$elementConte === void 0 ? popper : _options$elementConte, _options$altBoundary = _options.altBoundary, altBoundary = _options$altBoundary === void 0 ? false : _options$altBoundary, _options$padding = _options.padding, padding2 = _options$padding === void 0 ? 0 : _options$padding;
-    var paddingObject = mergePaddingObject(typeof padding2 !== "number" ? padding2 : expandToHashMap(padding2, basePlacements));
-    var altContext = elementContext === popper ? reference : popper;
-    var popperRect = state.rects.popper;
-    var element = state.elements[altBoundary ? altContext : elementContext];
-    var clippingClientRect = getClippingRect$1(isElement$1(element) ? element : element.contextElement || getDocumentElement$1(state.elements.popper), boundary, rootBoundary, strategy);
-    var referenceClientRect = getBoundingClientRect$1(state.elements.reference);
-    var popperOffsets2 = computeOffsets({
-      reference: referenceClientRect,
-      element: popperRect,
-      strategy: "absolute",
-      placement
-    });
-    var popperClientRect = rectToClientRect$1(Object.assign({}, popperRect, popperOffsets2));
-    var elementClientRect = elementContext === popper ? popperClientRect : referenceClientRect;
-    var overflowOffsets = {
-      top: clippingClientRect.top - elementClientRect.top + paddingObject.top,
-      bottom: elementClientRect.bottom - clippingClientRect.bottom + paddingObject.bottom,
-      left: clippingClientRect.left - elementClientRect.left + paddingObject.left,
-      right: elementClientRect.right - clippingClientRect.right + paddingObject.right
-    };
-    var offsetData = state.modifiersData.offset;
-    if (elementContext === popper && offsetData) {
-      var offset2 = offsetData[placement];
-      Object.keys(overflowOffsets).forEach(function(key) {
-        var multiply = [right, bottom].indexOf(key) >= 0 ? 1 : -1;
-        var axis = [top, bottom].indexOf(key) >= 0 ? "y" : "x";
-        overflowOffsets[key] += offset2[axis] * multiply;
-      });
-    }
-    return overflowOffsets;
-  }
-  function computeAutoPlacement(state, options) {
-    if (options === void 0) {
-      options = {};
-    }
-    var _options = options, placement = _options.placement, boundary = _options.boundary, rootBoundary = _options.rootBoundary, padding2 = _options.padding, flipVariations = _options.flipVariations, _options$allowedAutoP = _options.allowedAutoPlacements, allowedAutoPlacements = _options$allowedAutoP === void 0 ? placements$1 : _options$allowedAutoP;
-    var variation = getVariation(placement);
-    var placements2 = variation ? flipVariations ? variationPlacements : variationPlacements.filter(function(placement2) {
-      return getVariation(placement2) === variation;
-    }) : basePlacements;
-    var allowedPlacements = placements2.filter(function(placement2) {
-      return allowedAutoPlacements.indexOf(placement2) >= 0;
-    });
-    if (allowedPlacements.length === 0) {
-      allowedPlacements = placements2;
-    }
-    var overflows = allowedPlacements.reduce(function(acc, placement2) {
-      acc[placement2] = detectOverflow$1(state, {
-        placement: placement2,
-        boundary,
-        rootBoundary,
-        padding: padding2
-      })[getBasePlacement(placement2)];
-      return acc;
-    }, {});
-    return Object.keys(overflows).sort(function(a, b) {
-      return overflows[a] - overflows[b];
-    });
-  }
-  function getExpandedFallbackPlacements(placement) {
-    if (getBasePlacement(placement) === auto) {
-      return [];
-    }
-    var oppositePlacement = getOppositePlacement$1(placement);
-    return [getOppositeVariationPlacement(placement), oppositePlacement, getOppositeVariationPlacement(oppositePlacement)];
-  }
-  function flip$2(_ref) {
-    var state = _ref.state, options = _ref.options, name = _ref.name;
-    if (state.modifiersData[name]._skip) {
-      return;
-    }
-    var _options$mainAxis = options.mainAxis, checkMainAxis = _options$mainAxis === void 0 ? true : _options$mainAxis, _options$altAxis = options.altAxis, checkAltAxis = _options$altAxis === void 0 ? true : _options$altAxis, specifiedFallbackPlacements = options.fallbackPlacements, padding2 = options.padding, boundary = options.boundary, rootBoundary = options.rootBoundary, altBoundary = options.altBoundary, _options$flipVariatio = options.flipVariations, flipVariations = _options$flipVariatio === void 0 ? true : _options$flipVariatio, allowedAutoPlacements = options.allowedAutoPlacements;
-    var preferredPlacement = state.options.placement;
-    var basePlacement = getBasePlacement(preferredPlacement);
-    var isBasePlacement = basePlacement === preferredPlacement;
-    var fallbackPlacements = specifiedFallbackPlacements || (isBasePlacement || !flipVariations ? [getOppositePlacement$1(preferredPlacement)] : getExpandedFallbackPlacements(preferredPlacement));
-    var placements2 = [preferredPlacement].concat(fallbackPlacements).reduce(function(acc, placement2) {
-      return acc.concat(getBasePlacement(placement2) === auto ? computeAutoPlacement(state, {
-        placement: placement2,
-        boundary,
-        rootBoundary,
-        padding: padding2,
-        flipVariations,
-        allowedAutoPlacements
-      }) : placement2);
-    }, []);
-    var referenceRect = state.rects.reference;
-    var popperRect = state.rects.popper;
-    var checksMap = /* @__PURE__ */ new Map();
-    var makeFallbackChecks = true;
-    var firstFittingPlacement = placements2[0];
-    for (var i = 0; i < placements2.length; i++) {
-      var placement = placements2[i];
-      var _basePlacement = getBasePlacement(placement);
-      var isStartVariation = getVariation(placement) === start;
-      var isVertical = [top, bottom].indexOf(_basePlacement) >= 0;
-      var len = isVertical ? "width" : "height";
-      var overflow2 = detectOverflow$1(state, {
-        placement,
-        boundary,
-        rootBoundary,
-        altBoundary,
-        padding: padding2
-      });
-      var mainVariationSide = isVertical ? isStartVariation ? right : left : isStartVariation ? bottom : top;
-      if (referenceRect[len] > popperRect[len]) {
-        mainVariationSide = getOppositePlacement$1(mainVariationSide);
-      }
-      var altVariationSide = getOppositePlacement$1(mainVariationSide);
-      var checks = [];
-      if (checkMainAxis) {
-        checks.push(overflow2[_basePlacement] <= 0);
-      }
-      if (checkAltAxis) {
-        checks.push(overflow2[mainVariationSide] <= 0, overflow2[altVariationSide] <= 0);
-      }
-      if (checks.every(function(check) {
-        return check;
-      })) {
-        firstFittingPlacement = placement;
-        makeFallbackChecks = false;
-        break;
-      }
-      checksMap.set(placement, checks);
-    }
-    if (makeFallbackChecks) {
-      var numberOfChecks = flipVariations ? 3 : 1;
-      var _loop = function _loop2(_i2) {
-        var fittingPlacement = placements2.find(function(placement2) {
-          var checks2 = checksMap.get(placement2);
-          if (checks2) {
-            return checks2.slice(0, _i2).every(function(check) {
-              return check;
-            });
-          }
-        });
-        if (fittingPlacement) {
-          firstFittingPlacement = fittingPlacement;
-          return "break";
-        }
-      };
-      for (var _i = numberOfChecks; _i > 0; _i--) {
-        var _ret = _loop(_i);
-        if (_ret === "break")
-          break;
-      }
-    }
-    if (state.placement !== firstFittingPlacement) {
-      state.modifiersData[name]._skip = true;
-      state.placement = firstFittingPlacement;
-      state.reset = true;
-    }
-  }
-  const flip$3 = {
-    name: "flip",
-    enabled: true,
-    phase: "main",
-    fn: flip$2,
-    requiresIfExists: ["offset"],
-    data: {
-      _skip: false
-    }
-  };
-  function getSideOffsets$1(overflow2, rect, preventedOffsets) {
-    if (preventedOffsets === void 0) {
-      preventedOffsets = {
-        x: 0,
-        y: 0
-      };
-    }
+    }, getClientRectFromClippingAncestor(element, firstClippingAncestor, strategy));
     return {
-      top: overflow2.top - rect.height - preventedOffsets.y,
-      right: overflow2.right - rect.width + preventedOffsets.x,
-      bottom: overflow2.bottom - rect.height + preventedOffsets.y,
-      left: overflow2.left - rect.width - preventedOffsets.x
+      width: clippingRect.right - clippingRect.left,
+      height: clippingRect.bottom - clippingRect.top,
+      x: clippingRect.left,
+      y: clippingRect.top
     };
   }
-  function isAnySideFullyClipped$1(overflow2) {
-    return [top, right, bottom, left].some(function(side) {
-      return overflow2[side] >= 0;
-    });
-  }
-  function hide$2(_ref) {
-    var state = _ref.state, name = _ref.name;
-    var referenceRect = state.rects.reference;
-    var popperRect = state.rects.popper;
-    var preventedOffsets = state.modifiersData.preventOverflow;
-    var referenceOverflow = detectOverflow$1(state, {
-      elementContext: "reference"
-    });
-    var popperAltOverflow = detectOverflow$1(state, {
-      altBoundary: true
-    });
-    var referenceClippingOffsets = getSideOffsets$1(referenceOverflow, referenceRect);
-    var popperEscapeOffsets = getSideOffsets$1(popperAltOverflow, popperRect, preventedOffsets);
-    var isReferenceHidden = isAnySideFullyClipped$1(referenceClippingOffsets);
-    var hasPopperEscaped = isAnySideFullyClipped$1(popperEscapeOffsets);
-    state.modifiersData[name] = {
-      referenceClippingOffsets,
-      popperEscapeOffsets,
-      isReferenceHidden,
-      hasPopperEscaped
-    };
-    state.attributes.popper = Object.assign({}, state.attributes.popper, {
-      "data-popper-reference-hidden": isReferenceHidden,
-      "data-popper-escaped": hasPopperEscaped
-    });
-  }
-  const hide$3 = {
-    name: "hide",
-    enabled: true,
-    phase: "main",
-    requiresIfExists: ["preventOverflow"],
-    fn: hide$2
-  };
-  function distanceAndSkiddingToXY(placement, rects, offset2) {
-    var basePlacement = getBasePlacement(placement);
-    var invertDistance = [left, top].indexOf(basePlacement) >= 0 ? -1 : 1;
-    var _ref = typeof offset2 === "function" ? offset2(Object.assign({}, rects, {
-      placement
-    })) : offset2, skidding = _ref[0], distance = _ref[1];
-    skidding = skidding || 0;
-    distance = (distance || 0) * invertDistance;
-    return [left, right].indexOf(basePlacement) >= 0 ? {
-      x: distance,
-      y: skidding
-    } : {
-      x: skidding,
-      y: distance
-    };
-  }
-  function offset$1(_ref2) {
-    var state = _ref2.state, options = _ref2.options, name = _ref2.name;
-    var _options$offset = options.offset, offset2 = _options$offset === void 0 ? [0, 0] : _options$offset;
-    var data = placements$1.reduce(function(acc, placement) {
-      acc[placement] = distanceAndSkiddingToXY(placement, state.rects, offset2);
-      return acc;
-    }, {});
-    var _data$state$placement = data[state.placement], x = _data$state$placement.x, y = _data$state$placement.y;
-    if (state.modifiersData.popperOffsets != null) {
-      state.modifiersData.popperOffsets.x += x;
-      state.modifiersData.popperOffsets.y += y;
-    }
-    state.modifiersData[name] = data;
-  }
-  const offset$2 = {
-    name: "offset",
-    enabled: true,
-    phase: "main",
-    requires: ["popperOffsets"],
-    fn: offset$1
-  };
-  function popperOffsets(_ref) {
-    var state = _ref.state, name = _ref.name;
-    state.modifiersData[name] = computeOffsets({
-      reference: state.rects.reference,
-      element: state.rects.popper,
-      strategy: "absolute",
-      placement: state.placement
-    });
-  }
-  const popperOffsets$1 = {
-    name: "popperOffsets",
-    enabled: true,
-    phase: "read",
-    fn: popperOffsets,
-    data: {}
-  };
-  function getAltAxis(axis) {
-    return axis === "x" ? "y" : "x";
-  }
-  function preventOverflow(_ref) {
-    var state = _ref.state, options = _ref.options, name = _ref.name;
-    var _options$mainAxis = options.mainAxis, checkMainAxis = _options$mainAxis === void 0 ? true : _options$mainAxis, _options$altAxis = options.altAxis, checkAltAxis = _options$altAxis === void 0 ? false : _options$altAxis, boundary = options.boundary, rootBoundary = options.rootBoundary, altBoundary = options.altBoundary, padding2 = options.padding, _options$tether = options.tether, tether = _options$tether === void 0 ? true : _options$tether, _options$tetherOffset = options.tetherOffset, tetherOffset = _options$tetherOffset === void 0 ? 0 : _options$tetherOffset;
-    var overflow2 = detectOverflow$1(state, {
-      boundary,
-      rootBoundary,
-      padding: padding2,
-      altBoundary
-    });
-    var basePlacement = getBasePlacement(state.placement);
-    var variation = getVariation(state.placement);
-    var isBasePlacement = !variation;
-    var mainAxis = getMainAxisFromPlacement(basePlacement);
-    var altAxis = getAltAxis(mainAxis);
-    var popperOffsets2 = state.modifiersData.popperOffsets;
-    var referenceRect = state.rects.reference;
-    var popperRect = state.rects.popper;
-    var tetherOffsetValue = typeof tetherOffset === "function" ? tetherOffset(Object.assign({}, state.rects, {
-      placement: state.placement
-    })) : tetherOffset;
-    var normalizedTetherOffsetValue = typeof tetherOffsetValue === "number" ? {
-      mainAxis: tetherOffsetValue,
-      altAxis: tetherOffsetValue
-    } : Object.assign({
-      mainAxis: 0,
-      altAxis: 0
-    }, tetherOffsetValue);
-    var offsetModifierState = state.modifiersData.offset ? state.modifiersData.offset[state.placement] : null;
-    var data = {
-      x: 0,
-      y: 0
-    };
-    if (!popperOffsets2) {
-      return;
-    }
-    if (checkMainAxis) {
-      var _offsetModifierState$;
-      var mainSide = mainAxis === "y" ? top : left;
-      var altSide = mainAxis === "y" ? bottom : right;
-      var len = mainAxis === "y" ? "height" : "width";
-      var offset2 = popperOffsets2[mainAxis];
-      var min2 = offset2 + overflow2[mainSide];
-      var max2 = offset2 - overflow2[altSide];
-      var additive = tether ? -popperRect[len] / 2 : 0;
-      var minLen = variation === start ? referenceRect[len] : popperRect[len];
-      var maxLen = variation === start ? -popperRect[len] : -referenceRect[len];
-      var arrowElement = state.elements.arrow;
-      var arrowRect = tether && arrowElement ? getLayoutRect(arrowElement) : {
-        width: 0,
-        height: 0
-      };
-      var arrowPaddingObject = state.modifiersData["arrow#persistent"] ? state.modifiersData["arrow#persistent"].padding : getFreshSideObject();
-      var arrowPaddingMin = arrowPaddingObject[mainSide];
-      var arrowPaddingMax = arrowPaddingObject[altSide];
-      var arrowLen = within(0, referenceRect[len], arrowRect[len]);
-      var minOffset = isBasePlacement ? referenceRect[len] / 2 - additive - arrowLen - arrowPaddingMin - normalizedTetherOffsetValue.mainAxis : minLen - arrowLen - arrowPaddingMin - normalizedTetherOffsetValue.mainAxis;
-      var maxOffset = isBasePlacement ? -referenceRect[len] / 2 + additive + arrowLen + arrowPaddingMax + normalizedTetherOffsetValue.mainAxis : maxLen + arrowLen + arrowPaddingMax + normalizedTetherOffsetValue.mainAxis;
-      var arrowOffsetParent = state.elements.arrow && getOffsetParent$1(state.elements.arrow);
-      var clientOffset = arrowOffsetParent ? mainAxis === "y" ? arrowOffsetParent.clientTop || 0 : arrowOffsetParent.clientLeft || 0 : 0;
-      var offsetModifierValue = (_offsetModifierState$ = offsetModifierState == null ? void 0 : offsetModifierState[mainAxis]) != null ? _offsetModifierState$ : 0;
-      var tetherMin = offset2 + minOffset - offsetModifierValue - clientOffset;
-      var tetherMax = offset2 + maxOffset - offsetModifierValue;
-      var preventedOffset = within(tether ? min$1(min2, tetherMin) : min2, offset2, tether ? max$1(max2, tetherMax) : max2);
-      popperOffsets2[mainAxis] = preventedOffset;
-      data[mainAxis] = preventedOffset - offset2;
-    }
-    if (checkAltAxis) {
-      var _offsetModifierState$2;
-      var _mainSide = mainAxis === "x" ? top : left;
-      var _altSide = mainAxis === "x" ? bottom : right;
-      var _offset = popperOffsets2[altAxis];
-      var _len = altAxis === "y" ? "height" : "width";
-      var _min = _offset + overflow2[_mainSide];
-      var _max = _offset - overflow2[_altSide];
-      var isOriginSide = [top, left].indexOf(basePlacement) !== -1;
-      var _offsetModifierValue = (_offsetModifierState$2 = offsetModifierState == null ? void 0 : offsetModifierState[altAxis]) != null ? _offsetModifierState$2 : 0;
-      var _tetherMin = isOriginSide ? _min : _offset - referenceRect[_len] - popperRect[_len] - _offsetModifierValue + normalizedTetherOffsetValue.altAxis;
-      var _tetherMax = isOriginSide ? _offset + referenceRect[_len] + popperRect[_len] - _offsetModifierValue - normalizedTetherOffsetValue.altAxis : _max;
-      var _preventedOffset = tether && isOriginSide ? withinMaxClamp(_tetherMin, _offset, _tetherMax) : within(tether ? _tetherMin : _min, _offset, tether ? _tetherMax : _max);
-      popperOffsets2[altAxis] = _preventedOffset;
-      data[altAxis] = _preventedOffset - _offset;
-    }
-    state.modifiersData[name] = data;
-  }
-  const preventOverflow$1 = {
-    name: "preventOverflow",
-    enabled: true,
-    phase: "main",
-    fn: preventOverflow,
-    requiresIfExists: ["offset"]
-  };
-  function getHTMLElementScroll(element) {
+  function getDimensions(element) {
+    const {
+      width: width2,
+      height: height2
+    } = getCssDimensions(element);
     return {
-      scrollLeft: element.scrollLeft,
-      scrollTop: element.scrollTop
+      width: width2,
+      height: height2
     };
   }
-  function getNodeScroll$1(node2) {
-    if (node2 === getWindow$1(node2) || !isHTMLElement$2(node2)) {
-      return getWindowScroll(node2);
-    } else {
-      return getHTMLElementScroll(node2);
-    }
-  }
-  function isElementScaled(element) {
-    var rect = element.getBoundingClientRect();
-    var scaleX = round$1(rect.width) / element.offsetWidth || 1;
-    var scaleY = round$1(rect.height) / element.offsetHeight || 1;
-    return scaleX !== 1 || scaleY !== 1;
-  }
-  function getCompositeRect(elementOrVirtualElement, offsetParent, isFixed) {
-    if (isFixed === void 0) {
-      isFixed = false;
-    }
-    var isOffsetParentAnElement = isHTMLElement$2(offsetParent);
-    var offsetParentIsScaled = isHTMLElement$2(offsetParent) && isElementScaled(offsetParent);
-    var documentElement = getDocumentElement$1(offsetParent);
-    var rect = getBoundingClientRect$1(elementOrVirtualElement, offsetParentIsScaled, isFixed);
-    var scroll = {
+  function getRectRelativeToOffsetParent(element, offsetParent, strategy) {
+    const isOffsetParentAnElement = isHTMLElement$2(offsetParent);
+    const documentElement = getDocumentElement$1(offsetParent);
+    const isFixed = strategy === "fixed";
+    const rect = getBoundingClientRect$1(element, true, isFixed, offsetParent);
+    let scroll = {
       scrollLeft: 0,
       scrollTop: 0
     };
-    var offsets = {
-      x: 0,
-      y: 0
-    };
+    const offsets = createCoords(0);
     if (isOffsetParentAnElement || !isOffsetParentAnElement && !isFixed) {
-      if (getNodeName$1(offsetParent) !== "body" || // https://github.com/popperjs/popper-core/issues/1078
-      isScrollParent(documentElement)) {
+      if (getNodeName$1(offsetParent) !== "body" || isOverflowElement(documentElement)) {
         scroll = getNodeScroll$1(offsetParent);
       }
-      if (isHTMLElement$2(offsetParent)) {
-        offsets = getBoundingClientRect$1(offsetParent, true);
-        offsets.x += offsetParent.clientLeft;
-        offsets.y += offsetParent.clientTop;
+      if (isOffsetParentAnElement) {
+        const offsetRect = getBoundingClientRect$1(offsetParent, true, isFixed, offsetParent);
+        offsets.x = offsetRect.x + offsetParent.clientLeft;
+        offsets.y = offsetRect.y + offsetParent.clientTop;
       } else if (documentElement) {
         offsets.x = getWindowScrollBarX$1(documentElement);
       }
     }
+    const x = rect.left + scroll.scrollLeft - offsets.x;
+    const y = rect.top + scroll.scrollTop - offsets.y;
     return {
-      x: rect.left + scroll.scrollLeft - offsets.x,
-      y: rect.top + scroll.scrollTop - offsets.y,
+      x,
+      y,
       width: rect.width,
       height: rect.height
     };
   }
-  function order(modifiers) {
-    var map = /* @__PURE__ */ new Map();
-    var visited = /* @__PURE__ */ new Set();
-    var result = [];
-    modifiers.forEach(function(modifier) {
-      map.set(modifier.name, modifier);
-    });
-    function sort(modifier) {
-      visited.add(modifier.name);
-      var requires = [].concat(modifier.requires || [], modifier.requiresIfExists || []);
-      requires.forEach(function(dep) {
-        if (!visited.has(dep)) {
-          var depModifier = map.get(dep);
-          if (depModifier) {
-            sort(depModifier);
-          }
-        }
-      });
-      result.push(modifier);
+  function getTrueOffsetParent$1(element, polyfill) {
+    if (!isHTMLElement$2(element) || getComputedStyle$1(element).position === "fixed") {
+      return null;
     }
-    modifiers.forEach(function(modifier) {
-      if (!visited.has(modifier.name)) {
-        sort(modifier);
-      }
+    if (polyfill) {
+      return polyfill(element);
+    }
+    return element.offsetParent;
+  }
+  function getOffsetParent$1(element, polyfill) {
+    const window2 = getWindow$1(element);
+    if (!isHTMLElement$2(element) || isTopLayer(element)) {
+      return window2;
+    }
+    let offsetParent = getTrueOffsetParent$1(element, polyfill);
+    while (offsetParent && isTableElement$1(offsetParent) && getComputedStyle$1(offsetParent).position === "static") {
+      offsetParent = getTrueOffsetParent$1(offsetParent, polyfill);
+    }
+    if (offsetParent && (getNodeName$1(offsetParent) === "html" || getNodeName$1(offsetParent) === "body" && getComputedStyle$1(offsetParent).position === "static" && !isContainingBlock(offsetParent))) {
+      return window2;
+    }
+    return offsetParent || getContainingBlock$1(element) || window2;
+  }
+  const getElementRects = function(data) {
+    return __async(this, null, function* () {
+      const getOffsetParentFn = this.getOffsetParent || getOffsetParent$1;
+      const getDimensionsFn = this.getDimensions;
+      return {
+        reference: getRectRelativeToOffsetParent(data.reference, yield getOffsetParentFn(data.floating), data.strategy),
+        floating: __spreadValues({
+          x: 0,
+          y: 0
+        }, yield getDimensionsFn(data.floating))
+      };
     });
-    return result;
-  }
-  function orderModifiers(modifiers) {
-    var orderedModifiers = order(modifiers);
-    return modifierPhases.reduce(function(acc, phase) {
-      return acc.concat(orderedModifiers.filter(function(modifier) {
-        return modifier.phase === phase;
-      }));
-    }, []);
-  }
-  function debounce(fn) {
-    var pending;
-    return function() {
-      if (!pending) {
-        pending = new Promise(function(resolve) {
-          Promise.resolve().then(function() {
-            pending = void 0;
-            resolve(fn());
-          });
-        });
-      }
-      return pending;
-    };
-  }
-  function mergeByName(modifiers) {
-    var merged = modifiers.reduce(function(merged2, current) {
-      var existing = merged2[current.name];
-      merged2[current.name] = existing ? Object.assign({}, existing, current, {
-        options: Object.assign({}, existing.options, current.options),
-        data: Object.assign({}, existing.data, current.data)
-      }) : current;
-      return merged2;
-    }, {});
-    return Object.keys(merged).map(function(key) {
-      return merged[key];
-    });
-  }
-  var DEFAULT_OPTIONS = {
-    placement: "bottom",
-    modifiers: [],
-    strategy: "absolute"
   };
-  function areValidElements() {
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-    return !args.some(function(element) {
-      return !(element && typeof element.getBoundingClientRect === "function");
-    });
+  function isRTL(element) {
+    return getComputedStyle$1(element).direction === "rtl";
   }
-  function popperGenerator(generatorOptions) {
-    if (generatorOptions === void 0) {
-      generatorOptions = {};
+  const platform = {
+    convertOffsetParentRelativeRectToViewportRelativeRect,
+    getDocumentElement: getDocumentElement$1,
+    getClippingRect: getClippingRect$1,
+    getOffsetParent: getOffsetParent$1,
+    getElementRects,
+    getClientRects,
+    getDimensions,
+    getScale: getScale$1,
+    isElement: isElement$1,
+    isRTL
+  };
+  function observeMove(element, onMove) {
+    let io = null;
+    let timeoutId;
+    const root = getDocumentElement$1(element);
+    function cleanup() {
+      var _io;
+      clearTimeout(timeoutId);
+      (_io = io) == null || _io.disconnect();
+      io = null;
     }
-    var _generatorOptions = generatorOptions, _generatorOptions$def = _generatorOptions.defaultModifiers, defaultModifiers2 = _generatorOptions$def === void 0 ? [] : _generatorOptions$def, _generatorOptions$def2 = _generatorOptions.defaultOptions, defaultOptions = _generatorOptions$def2 === void 0 ? DEFAULT_OPTIONS : _generatorOptions$def2;
-    return function createPopper2(reference2, popper2, options) {
-      if (options === void 0) {
-        options = defaultOptions;
+    function refresh(skip, threshold) {
+      if (skip === void 0) {
+        skip = false;
       }
-      var state = {
-        placement: "bottom",
-        orderedModifiers: [],
-        options: Object.assign({}, DEFAULT_OPTIONS, defaultOptions),
-        modifiersData: {},
-        elements: {
-          reference: reference2,
-          popper: popper2
-        },
-        attributes: {},
-        styles: {}
-      };
-      var effectCleanupFns = [];
-      var isDestroyed = false;
-      var instance = {
-        state,
-        setOptions: function setOptions(setOptionsAction) {
-          var options2 = typeof setOptionsAction === "function" ? setOptionsAction(state.options) : setOptionsAction;
-          cleanupModifierEffects();
-          state.options = Object.assign({}, defaultOptions, state.options, options2);
-          state.scrollParents = {
-            reference: isElement$1(reference2) ? listScrollParents(reference2) : reference2.contextElement ? listScrollParents(reference2.contextElement) : [],
-            popper: listScrollParents(popper2)
-          };
-          var orderedModifiers = orderModifiers(mergeByName([].concat(defaultModifiers2, state.options.modifiers)));
-          state.orderedModifiers = orderedModifiers.filter(function(m) {
-            return m.enabled;
-          });
-          runModifierEffects();
-          return instance.update();
-        },
-        // Sync update – it will always be executed, even if not necessary. This
-        // is useful for low frequency updates where sync behavior simplifies the
-        // logic.
-        // For high frequency updates (e.g. `resize` and `scroll` events), always
-        // prefer the async Popper#update method
-        forceUpdate: function forceUpdate() {
-          if (isDestroyed) {
-            return;
-          }
-          var _state$elements = state.elements, reference3 = _state$elements.reference, popper3 = _state$elements.popper;
-          if (!areValidElements(reference3, popper3)) {
-            return;
-          }
-          state.rects = {
-            reference: getCompositeRect(reference3, getOffsetParent$1(popper3), state.options.strategy === "fixed"),
-            popper: getLayoutRect(popper3)
-          };
-          state.reset = false;
-          state.placement = state.options.placement;
-          state.orderedModifiers.forEach(function(modifier) {
-            return state.modifiersData[modifier.name] = Object.assign({}, modifier.data);
-          });
-          for (var index2 = 0; index2 < state.orderedModifiers.length; index2++) {
-            if (state.reset === true) {
-              state.reset = false;
-              index2 = -1;
-              continue;
-            }
-            var _state$orderedModifie = state.orderedModifiers[index2], fn = _state$orderedModifie.fn, _state$orderedModifie2 = _state$orderedModifie.options, _options = _state$orderedModifie2 === void 0 ? {} : _state$orderedModifie2, name = _state$orderedModifie.name;
-            if (typeof fn === "function") {
-              state = fn({
-                state,
-                options: _options,
-                name,
-                instance
-              }) || state;
-            }
-          }
-        },
-        // Async and optimistically optimized update – it will not be executed if
-        // not necessary (debounced to run at most once-per-tick)
-        update: debounce(function() {
-          return new Promise(function(resolve) {
-            instance.forceUpdate();
-            resolve(state);
-          });
-        }),
-        destroy: function destroy() {
-          cleanupModifierEffects();
-          isDestroyed = true;
-        }
-      };
-      if (!areValidElements(reference2, popper2)) {
-        return instance;
+      if (threshold === void 0) {
+        threshold = 1;
       }
-      instance.setOptions(options).then(function(state2) {
-        if (!isDestroyed && options.onFirstUpdate) {
-          options.onFirstUpdate(state2);
+      cleanup();
+      const {
+        left: left2,
+        top: top2,
+        width: width2,
+        height: height2
+      } = element.getBoundingClientRect();
+      if (!skip) {
+        onMove();
+      }
+      if (!width2 || !height2) {
+        return;
+      }
+      const insetTop = floor(top2);
+      const insetRight = floor(root.clientWidth - (left2 + width2));
+      const insetBottom = floor(root.clientHeight - (top2 + height2));
+      const insetLeft = floor(left2);
+      const rootMargin = -insetTop + "px " + -insetRight + "px " + -insetBottom + "px " + -insetLeft + "px";
+      const options = {
+        rootMargin,
+        threshold: max$1(0, min$1(1, threshold)) || 1
+      };
+      let isFirstUpdate = true;
+      function handleObserve(entries) {
+        const ratio = entries[0].intersectionRatio;
+        if (ratio !== threshold) {
+          if (!isFirstUpdate) {
+            return refresh();
+          }
+          if (!ratio) {
+            timeoutId = setTimeout(() => {
+              refresh(false, 1e-7);
+            }, 100);
+          } else {
+            refresh(false, ratio);
+          }
         }
+        isFirstUpdate = false;
+      }
+      try {
+        io = new IntersectionObserver(handleObserve, __spreadProps(__spreadValues({}, options), {
+          // Handle <iframe>s
+          root: root.ownerDocument
+        }));
+      } catch (e) {
+        io = new IntersectionObserver(handleObserve, options);
+      }
+      io.observe(element);
+    }
+    refresh(true);
+    return cleanup;
+  }
+  function autoUpdate(reference2, floating, update, options) {
+    if (options === void 0) {
+      options = {};
+    }
+    const {
+      ancestorScroll = true,
+      ancestorResize = true,
+      elementResize = typeof ResizeObserver === "function",
+      layoutShift = typeof IntersectionObserver === "function",
+      animationFrame = false
+    } = options;
+    const referenceEl = unwrapElement(reference2);
+    const ancestors = ancestorScroll || ancestorResize ? [...referenceEl ? getOverflowAncestors(referenceEl) : [], ...getOverflowAncestors(floating)] : [];
+    ancestors.forEach((ancestor) => {
+      ancestorScroll && ancestor.addEventListener("scroll", update, {
+        passive: true
       });
-      function runModifierEffects() {
-        state.orderedModifiers.forEach(function(_ref) {
-          var name = _ref.name, _ref$options = _ref.options, options2 = _ref$options === void 0 ? {} : _ref$options, effect2 = _ref.effect;
-          if (typeof effect2 === "function") {
-            var cleanupFn = effect2({
-              state,
-              name,
-              instance,
-              options: options2
-            });
-            var noopFn = function noopFn2() {
-            };
-            effectCleanupFns.push(cleanupFn || noopFn);
-          }
-        });
+      ancestorResize && ancestor.addEventListener("resize", update);
+    });
+    const cleanupIo = referenceEl && layoutShift ? observeMove(referenceEl, update) : null;
+    let reobserveFrame = -1;
+    let resizeObserver = null;
+    if (elementResize) {
+      resizeObserver = new ResizeObserver((_ref) => {
+        let [firstEntry] = _ref;
+        if (firstEntry && firstEntry.target === referenceEl && resizeObserver) {
+          resizeObserver.unobserve(floating);
+          cancelAnimationFrame(reobserveFrame);
+          reobserveFrame = requestAnimationFrame(() => {
+            var _resizeObserver;
+            (_resizeObserver = resizeObserver) == null || _resizeObserver.observe(floating);
+          });
+        }
+        update();
+      });
+      if (referenceEl && !animationFrame) {
+        resizeObserver.observe(referenceEl);
       }
-      function cleanupModifierEffects() {
-        effectCleanupFns.forEach(function(fn) {
-          return fn();
-        });
-        effectCleanupFns = [];
+      resizeObserver.observe(floating);
+    }
+    let frameId;
+    let prevRefRect = animationFrame ? getBoundingClientRect$1(reference2) : null;
+    if (animationFrame) {
+      frameLoop();
+    }
+    function frameLoop() {
+      const nextRefRect = getBoundingClientRect$1(reference2);
+      if (prevRefRect && (nextRefRect.x !== prevRefRect.x || nextRefRect.y !== prevRefRect.y || nextRefRect.width !== prevRefRect.width || nextRefRect.height !== prevRefRect.height)) {
+        update();
       }
-      return instance;
+      prevRefRect = nextRefRect;
+      frameId = requestAnimationFrame(frameLoop);
+    }
+    update();
+    return () => {
+      var _resizeObserver2;
+      ancestors.forEach((ancestor) => {
+        ancestorScroll && ancestor.removeEventListener("scroll", update);
+        ancestorResize && ancestor.removeEventListener("resize", update);
+      });
+      cleanupIo == null || cleanupIo();
+      (_resizeObserver2 = resizeObserver) == null || _resizeObserver2.disconnect();
+      resizeObserver = null;
+      if (animationFrame) {
+        cancelAnimationFrame(frameId);
+      }
     };
   }
-  var createPopper$2 = /* @__PURE__ */ popperGenerator();
-  var defaultModifiers$1 = [eventListeners, popperOffsets$1, computeStyles$1, applyStyles$1];
-  var createPopper$1 = /* @__PURE__ */ popperGenerator({
-    defaultModifiers: defaultModifiers$1
-  });
-  var defaultModifiers = [eventListeners, popperOffsets$1, computeStyles$1, applyStyles$1, offset$2, flip$3, preventOverflow$1, arrow$4, hide$3];
-  var createPopper = /* @__PURE__ */ popperGenerator({
-    defaultModifiers
-  });
+  const autoPlacement = autoPlacement$1;
+  const shift = shift$1;
+  const flip$2 = flip$3;
+  const size = size$1;
+  const hide$2 = hide$3;
+  const arrow$3 = arrow$4;
+  const inline = inline$1;
+  const limitShift = limitShift$1;
+  const computePosition = (reference2, floating, options) => {
+    const cache2 = /* @__PURE__ */ new Map();
+    const mergedOptions = __spreadValues({
+      platform
+    }, options);
+    const platformWithCache = __spreadProps(__spreadValues({}, mergedOptions.platform), {
+      _c: cache2
+    });
+    return computePosition$1(reference2, floating, __spreadProps(__spreadValues({}, mergedOptions), {
+      platform: platformWithCache
+    }));
+  };
+  const arrow$2 = (options) => {
+    function isRef(value) {
+      return {}.hasOwnProperty.call(value, "current");
+    }
+    return {
+      name: "arrow",
+      options,
+      fn(state) {
+        const {
+          element,
+          padding: padding2
+        } = typeof options === "function" ? options(state) : options;
+        if (element && isRef(element)) {
+          if (element.current != null) {
+            return arrow$3({
+              element: element.current,
+              padding: padding2
+            }).fn(state);
+          }
+          return {};
+        }
+        if (element) {
+          return arrow$3({
+            element,
+            padding: padding2
+          }).fn(state);
+        }
+        return {};
+      }
+    };
+  };
+  var index = typeof document !== "undefined" ? React.useLayoutEffect : React.useEffect;
+  function deepEqual(a, b) {
+    if (a === b) {
+      return true;
+    }
+    if (typeof a !== typeof b) {
+      return false;
+    }
+    if (typeof a === "function" && a.toString() === b.toString()) {
+      return true;
+    }
+    let length2;
+    let i;
+    let keys;
+    if (a && b && typeof a === "object") {
+      if (Array.isArray(a)) {
+        length2 = a.length;
+        if (length2 !== b.length)
+          return false;
+        for (i = length2; i-- !== 0; ) {
+          if (!deepEqual(a[i], b[i])) {
+            return false;
+          }
+        }
+        return true;
+      }
+      keys = Object.keys(a);
+      length2 = keys.length;
+      if (length2 !== Object.keys(b).length) {
+        return false;
+      }
+      for (i = length2; i-- !== 0; ) {
+        if (!{}.hasOwnProperty.call(b, keys[i])) {
+          return false;
+        }
+      }
+      for (i = length2; i-- !== 0; ) {
+        const key = keys[i];
+        if (key === "_owner" && a.$$typeof) {
+          continue;
+        }
+        if (!deepEqual(a[key], b[key])) {
+          return false;
+        }
+      }
+      return true;
+    }
+    return a !== a && b !== b;
+  }
+  function getDPR(element) {
+    if (typeof window === "undefined") {
+      return 1;
+    }
+    const win = element.ownerDocument.defaultView || window;
+    return win.devicePixelRatio || 1;
+  }
+  function roundByDPR(element, value) {
+    const dpr = getDPR(element);
+    return Math.round(value * dpr) / dpr;
+  }
+  function useLatestRef(value) {
+    const ref = React__namespace.useRef(value);
+    index(() => {
+      ref.current = value;
+    });
+    return ref;
+  }
+  function useFloating(options) {
+    if (options === void 0) {
+      options = {};
+    }
+    const {
+      placement = "bottom",
+      strategy = "absolute",
+      middleware: middleware2 = [],
+      platform: platform2,
+      elements: {
+        reference: externalReference,
+        floating: externalFloating
+      } = {},
+      transform = true,
+      whileElementsMounted,
+      open
+    } = options;
+    const [data, setData] = React__namespace.useState({
+      x: 0,
+      y: 0,
+      strategy,
+      placement,
+      middlewareData: {},
+      isPositioned: false
+    });
+    const [latestMiddleware, setLatestMiddleware] = React__namespace.useState(middleware2);
+    if (!deepEqual(latestMiddleware, middleware2)) {
+      setLatestMiddleware(middleware2);
+    }
+    const [_reference, _setReference] = React__namespace.useState(null);
+    const [_floating, _setFloating] = React__namespace.useState(null);
+    const setReference = React__namespace.useCallback((node2) => {
+      if (node2 !== referenceRef.current) {
+        referenceRef.current = node2;
+        _setReference(node2);
+      }
+    }, []);
+    const setFloating = React__namespace.useCallback((node2) => {
+      if (node2 !== floatingRef.current) {
+        floatingRef.current = node2;
+        _setFloating(node2);
+      }
+    }, []);
+    const referenceEl = externalReference || _reference;
+    const floatingEl = externalFloating || _floating;
+    const referenceRef = React__namespace.useRef(null);
+    const floatingRef = React__namespace.useRef(null);
+    const dataRef = React__namespace.useRef(data);
+    const hasWhileElementsMounted = whileElementsMounted != null;
+    const whileElementsMountedRef = useLatestRef(whileElementsMounted);
+    const platformRef = useLatestRef(platform2);
+    const update = React__namespace.useCallback(() => {
+      if (!referenceRef.current || !floatingRef.current) {
+        return;
+      }
+      const config2 = {
+        placement,
+        strategy,
+        middleware: latestMiddleware
+      };
+      if (platformRef.current) {
+        config2.platform = platformRef.current;
+      }
+      computePosition(referenceRef.current, floatingRef.current, config2).then((data2) => {
+        const fullData = __spreadProps(__spreadValues({}, data2), {
+          isPositioned: true
+        });
+        if (isMountedRef.current && !deepEqual(dataRef.current, fullData)) {
+          dataRef.current = fullData;
+          ReactDOM__namespace.flushSync(() => {
+            setData(fullData);
+          });
+        }
+      });
+    }, [latestMiddleware, placement, strategy, platformRef]);
+    index(() => {
+      if (open === false && dataRef.current.isPositioned) {
+        dataRef.current.isPositioned = false;
+        setData((data2) => __spreadProps(__spreadValues({}, data2), {
+          isPositioned: false
+        }));
+      }
+    }, [open]);
+    const isMountedRef = React__namespace.useRef(false);
+    index(() => {
+      isMountedRef.current = true;
+      return () => {
+        isMountedRef.current = false;
+      };
+    }, []);
+    index(() => {
+      if (referenceEl)
+        referenceRef.current = referenceEl;
+      if (floatingEl)
+        floatingRef.current = floatingEl;
+      if (referenceEl && floatingEl) {
+        if (whileElementsMountedRef.current) {
+          return whileElementsMountedRef.current(referenceEl, floatingEl, update);
+        }
+        update();
+      }
+    }, [referenceEl, floatingEl, update, whileElementsMountedRef, hasWhileElementsMounted]);
+    const refs = React__namespace.useMemo(() => ({
+      reference: referenceRef,
+      floating: floatingRef,
+      setReference,
+      setFloating
+    }), [setReference, setFloating]);
+    const elements = React__namespace.useMemo(() => ({
+      reference: referenceEl,
+      floating: floatingEl
+    }), [referenceEl, floatingEl]);
+    const floatingStyles = React__namespace.useMemo(() => {
+      const initialStyles = {
+        position: strategy,
+        left: 0,
+        top: 0
+      };
+      if (!elements.floating) {
+        return initialStyles;
+      }
+      const x = roundByDPR(elements.floating, data.x);
+      const y = roundByDPR(elements.floating, data.y);
+      if (transform) {
+        return __spreadValues(__spreadProps(__spreadValues({}, initialStyles), {
+          transform: "translate(" + x + "px, " + y + "px)"
+        }), getDPR(elements.floating) >= 1.5 && {
+          willChange: "transform"
+        });
+      }
+      return {
+        position: strategy,
+        left: x,
+        top: y
+      };
+    }, [strategy, transform, elements.floating, data.x, data.y]);
+    return React__namespace.useMemo(() => __spreadProps(__spreadValues({}, data), {
+      update,
+      refs,
+      elements,
+      floatingStyles
+    }), [data, update, refs, elements, floatingStyles]);
+  }
   "use client";
   function getContainer(container) {
     return typeof container === "function" ? container() : container;
@@ -20195,10 +19482,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     });
   });
   process.env.NODE_ENV !== "production" ? Portal.propTypes = {
-    // ----------------------------- Warning --------------------------------
-    // | These PropTypes are generated from the TypeScript type definitions |
-    // |     To update them edit TypeScript types and run "yarn proptypes"  |
-    // ----------------------------------------------------------------------
+    // ┌────────────────────────────── Warning ──────────────────────────────┐
+    // │ These PropTypes are generated from the TypeScript type definitions. │
+    // │ To update them, edit the TypeScript types and run `pnpm proptypes`. │
+    // └─────────────────────────────────────────────────────────────────────┘
     /**
      * The children to render into the `container`.
      */
@@ -20224,350 +19511,281 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     Portal["propTypes"] = exactProp(Portal.propTypes);
   }
   "use client";
-  function getPopperUtilityClass(slot) {
-    return generateUtilityClass("MuiPopper", slot);
+  const COMPONENT_NAME$g = "Popup";
+  function getPopupUtilityClass(slot) {
+    return generateUtilityClass(COMPONENT_NAME$g, slot);
   }
-  const popperClasses = generateUtilityClasses("MuiPopper", ["root"]);
+  const popupClasses = generateUtilityClasses(COMPONENT_NAME$g, ["root", "open"]);
+  const TransitionContext = /* @__PURE__ */ React__namespace.createContext(null);
   "use client";
-  const _excluded$O = ["anchorEl", "children", "direction", "disablePortal", "modifiers", "open", "placement", "popperOptions", "popperRef", "slotProps", "slots", "TransitionProps", "ownerState"], _excluded2$4 = ["anchorEl", "children", "container", "direction", "disablePortal", "keepMounted", "modifiers", "open", "placement", "popperOptions", "popperRef", "style", "transition", "slotProps", "slots"];
-  function flipPlacement(placement, direction) {
-    if (direction === "ltr") {
-      return placement;
+  function useTransitionStateManager() {
+    const transitionContext = React__namespace.useContext(TransitionContext);
+    if (!transitionContext) {
+      throw new Error("Missing transition context");
     }
-    switch (placement) {
-      case "bottom-end":
-        return "bottom-start";
-      case "bottom-start":
-        return "bottom-end";
-      case "top-end":
-        return "top-start";
-      case "top-start":
-        return "top-end";
-      default:
-        return placement;
-    }
-  }
-  function resolveAnchorEl$1(anchorEl) {
-    return typeof anchorEl === "function" ? anchorEl() : anchorEl;
-  }
-  function isHTMLElement$1(element) {
-    return element.nodeType !== void 0;
-  }
-  function isVirtualElement(element) {
-    return !isHTMLElement$1(element);
-  }
-  const useUtilityClasses$E = () => {
-    const slots = {
-      root: ["root"]
+    const {
+      registerTransition,
+      requestedEnter,
+      onExited
+    } = transitionContext;
+    React__namespace.useEffect(() => {
+      return registerTransition();
+    }, [registerTransition]);
+    return {
+      onExited,
+      requestedEnter
     };
-    return composeClasses(slots, useClassNamesOverride(getPopperUtilityClass));
-  };
-  const defaultPopperOptions = {};
-  const PopperTooltip = /* @__PURE__ */ React__namespace.forwardRef(function PopperTooltip2(props, forwardedRef) {
+  }
+  "use client";
+  function useTransitionTrigger(requestEnter) {
+    const [exitTransitionFinished, setExitTransitionFinished] = React__namespace.useState(true);
+    const hasPendingExitTransition = React__namespace.useRef(false);
+    const registeredTransitions = React__namespace.useRef(0);
+    const [hasTransition, setHasTransition] = React__namespace.useState(false);
+    const previousRequestEnter = React__namespace.useRef(requestEnter);
+    React__namespace.useEffect(() => {
+      if (!requestEnter && // checking registeredTransitions.current instead of hasTransition to avoid this effect re-firing whenever hasTransition changes
+      registeredTransitions.current > 0 && // prevents waiting for a pending transition right after mounting
+      previousRequestEnter.current !== requestEnter) {
+        hasPendingExitTransition.current = true;
+        setExitTransitionFinished(false);
+      }
+      previousRequestEnter.current = requestEnter;
+    }, [requestEnter]);
+    const handleExited = React__namespace.useCallback(() => {
+      hasPendingExitTransition.current = false;
+      setExitTransitionFinished(true);
+    }, []);
+    const registerTransition = React__namespace.useCallback(() => {
+      registeredTransitions.current += 1;
+      setHasTransition(true);
+      return () => {
+        registeredTransitions.current -= 1;
+        if (registeredTransitions.current === 0) {
+          setHasTransition(false);
+        }
+      };
+    }, []);
+    let hasExited;
+    if (!hasTransition) {
+      hasExited = !requestEnter;
+    } else if (requestEnter) {
+      hasExited = false;
+    } else {
+      hasExited = !hasPendingExitTransition.current && exitTransitionFinished;
+    }
+    const contextValue = React__namespace.useMemo(() => ({
+      requestedEnter: requestEnter,
+      onExited: handleExited,
+      registerTransition,
+      hasExited
+    }), [handleExited, requestEnter, registerTransition, hasExited]);
+    return {
+      contextValue,
+      hasExited
+    };
+  }
+  const PopupContext = /* @__PURE__ */ React__namespace.createContext(null);
+  "use client";
+  const _excluded$O = ["anchor", "children", "container", "disablePortal", "keepMounted", "middleware", "offset", "open", "placement", "slotProps", "slots", "strategy"];
+  function useUtilityClasses$E(ownerState) {
+    const {
+      open
+    } = ownerState;
+    const slots = {
+      root: ["root", open && "open"]
+    };
+    return composeClasses(slots, useClassNamesOverride(getPopupUtilityClass));
+  }
+  function resolveAnchor(anchor) {
+    return typeof anchor === "function" ? anchor() : anchor;
+  }
+  const Popup = /* @__PURE__ */ React__namespace.forwardRef(function Popup2(props, forwardedRef) {
     var _slots$root;
     const {
-      anchorEl,
+      anchor: anchorProp,
       children,
-      direction,
-      disablePortal,
-      modifiers,
-      open,
-      placement: initialPlacement,
-      popperOptions,
-      popperRef: popperRefProp,
+      container,
+      disablePortal = false,
+      keepMounted = false,
+      middleware: middleware2,
+      offset: offsetProp = 0,
+      open = false,
+      placement = "bottom",
       slotProps = {},
       slots = {},
-      TransitionProps
-      // @ts-ignore internal logic
-      // prevent from spreading to DOM, it can come from the parent component e.g. Select.
+      strategy = "absolute"
     } = props, other = _objectWithoutPropertiesLoose(props, _excluded$O);
-    const tooltipRef = React__namespace.useRef(null);
-    const ownRef = useForkRef(tooltipRef, forwardedRef);
-    const popperRef = React__namespace.useRef(null);
-    const handlePopperRef = useForkRef(popperRef, popperRefProp);
-    const handlePopperRefRef = React__namespace.useRef(handlePopperRef);
-    useEnhancedEffect(() => {
-      handlePopperRefRef.current = handlePopperRef;
-    }, [handlePopperRef]);
-    React__namespace.useImperativeHandle(popperRefProp, () => popperRef.current, []);
-    const rtlPlacement = flipPlacement(initialPlacement, direction);
-    const [placement, setPlacement] = React__namespace.useState(rtlPlacement);
-    const [resolvedAnchorElement, setResolvedAnchorElement] = React__namespace.useState(resolveAnchorEl$1(anchorEl));
-    React__namespace.useEffect(() => {
-      if (popperRef.current) {
-        popperRef.current.forceUpdate();
-      }
+    const {
+      refs,
+      elements,
+      floatingStyles,
+      update,
+      placement: finalPlacement
+    } = useFloating({
+      elements: {
+        reference: resolveAnchor(anchorProp)
+      },
+      open,
+      middleware: middleware2 != null ? middleware2 : [offset$2(offsetProp != null ? offsetProp : 0), flip$2(), shift()],
+      placement,
+      strategy,
+      whileElementsMounted: !keepMounted ? autoUpdate : void 0
     });
-    React__namespace.useEffect(() => {
-      if (anchorEl) {
-        setResolvedAnchorElement(resolveAnchorEl$1(anchorEl));
-      }
-    }, [anchorEl]);
+    const handleRef = useForkRef(refs.setFloating, forwardedRef);
     useEnhancedEffect(() => {
-      if (!resolvedAnchorElement || !open) {
-        return void 0;
+      if (keepMounted && open && elements.reference && elements.floating) {
+        const cleanup = autoUpdate(elements.reference, elements.floating, update);
+        return cleanup;
       }
-      const handlePopperUpdate = (data) => {
-        setPlacement(data.placement);
-      };
-      if (process.env.NODE_ENV !== "production") {
-        if (resolvedAnchorElement && isHTMLElement$1(resolvedAnchorElement) && resolvedAnchorElement.nodeType === 1) {
-          const box = resolvedAnchorElement.getBoundingClientRect();
-          if (process.env.NODE_ENV !== "test" && box.top === 0 && box.left === 0 && box.right === 0 && box.bottom === 0) {
-            console.warn(["MUI: The `anchorEl` prop provided to the component is invalid.", "The anchor element should be part of the document layout.", "Make sure the element is present in the document or that it's not display none."].join("\n"));
-          }
-        }
-      }
-      let popperModifiers = [{
-        name: "preventOverflow",
-        options: {
-          altBoundary: disablePortal
-        }
-      }, {
-        name: "flip",
-        options: {
-          altBoundary: disablePortal
-        }
-      }, {
-        name: "onUpdate",
-        enabled: true,
-        phase: "afterWrite",
-        fn: ({
-          state
-        }) => {
-          handlePopperUpdate(state);
-        }
-      }];
-      if (modifiers != null) {
-        popperModifiers = popperModifiers.concat(modifiers);
-      }
-      if (popperOptions && popperOptions.modifiers != null) {
-        popperModifiers = popperModifiers.concat(popperOptions.modifiers);
-      }
-      const popper2 = createPopper(resolvedAnchorElement, tooltipRef.current, _extends({
-        placement: rtlPlacement
-      }, popperOptions, {
-        modifiers: popperModifiers
-      }));
-      handlePopperRefRef.current(popper2);
-      return () => {
-        popper2.destroy();
-        handlePopperRefRef.current(null);
-      };
-    }, [resolvedAnchorElement, disablePortal, modifiers, open, popperOptions, rtlPlacement]);
-    const childProps = {
-      placement
-    };
-    if (TransitionProps !== null) {
-      childProps.TransitionProps = TransitionProps;
-    }
-    const classes = useUtilityClasses$E();
-    const Root = (_slots$root = slots.root) != null ? _slots$root : "div";
+      return void 0;
+    }, [keepMounted, open, elements, update]);
+    const ownerState = _extends({}, props, {
+      disablePortal,
+      keepMounted,
+      offset: offset$2,
+      open,
+      placement,
+      finalPlacement,
+      strategy
+    });
+    const {
+      contextValue,
+      hasExited: hasTransitionExited
+    } = useTransitionTrigger(open);
+    const visibility2 = keepMounted && hasTransitionExited ? "hidden" : void 0;
+    const classes = useUtilityClasses$E(ownerState);
+    const Root = (_slots$root = slots == null ? void 0 : slots.root) != null ? _slots$root : "div";
     const rootProps = useSlotProps({
       elementType: Root,
       externalSlotProps: slotProps.root,
       externalForwardedProps: other,
+      ownerState,
+      className: classes.root,
       additionalProps: {
+        ref: handleRef,
         role: "tooltip",
-        ref: ownRef
-      },
-      ownerState: props,
-      className: classes.root
+        style: _extends({}, floatingStyles, {
+          visibility: visibility2
+        })
+      }
     });
-    return /* @__PURE__ */ jsxRuntimeExports.jsx(Root, _extends({}, rootProps, {
-      children: typeof children === "function" ? children(childProps) : children
-    }));
-  });
-  const Popper = /* @__PURE__ */ React__namespace.forwardRef(function Popper2(props, forwardedRef) {
-    const {
-      anchorEl,
-      children,
-      container: containerProp,
-      direction = "ltr",
-      disablePortal = false,
-      keepMounted = false,
-      modifiers,
-      open,
-      placement = "bottom",
-      popperOptions = defaultPopperOptions,
-      popperRef,
-      style: style2,
-      transition = false,
-      slotProps = {},
-      slots = {}
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded2$4);
-    const [exited, setExited] = React__namespace.useState(true);
-    const handleEnter = () => {
-      setExited(false);
-    };
-    const handleExited = () => {
-      setExited(true);
-    };
-    if (!keepMounted && !open && (!transition || exited)) {
+    const popupContextValue = React__namespace.useMemo(() => ({
+      placement: finalPlacement
+    }), [finalPlacement]);
+    const shouldRender = keepMounted || !hasTransitionExited;
+    if (!shouldRender) {
       return null;
     }
-    let container;
-    if (containerProp) {
-      container = containerProp;
-    } else if (anchorEl) {
-      const resolvedAnchorEl = resolveAnchorEl$1(anchorEl);
-      container = resolvedAnchorEl && isHTMLElement$1(resolvedAnchorEl) ? ownerDocument(resolvedAnchorEl).body : ownerDocument(null).body;
-    }
-    const display2 = !open && keepMounted && (!transition || exited) ? "none" : void 0;
-    const transitionProps = transition ? {
-      in: open,
-      onEnter: handleEnter,
-      onExited: handleExited
-    } : void 0;
     return /* @__PURE__ */ jsxRuntimeExports.jsx(Portal, {
       disablePortal,
       container,
-      children: /* @__PURE__ */ jsxRuntimeExports.jsx(PopperTooltip, _extends({
-        anchorEl,
-        direction,
-        disablePortal,
-        modifiers,
-        ref: forwardedRef,
-        open: transition ? !exited : open,
-        placement,
-        popperOptions,
-        popperRef,
-        slotProps,
-        slots
-      }, other, {
-        style: _extends({
-          // Prevents scroll issue, waiting for Popper.js to add this style once initiated.
-          position: "fixed",
-          // Fix Popper.js display issue
-          top: 0,
-          left: 0,
-          display: display2
-        }, style2),
-        TransitionProps: transitionProps,
-        children
-      }))
+      children: /* @__PURE__ */ jsxRuntimeExports.jsx(PopupContext.Provider, {
+        value: popupContextValue,
+        children: /* @__PURE__ */ jsxRuntimeExports.jsx(TransitionContext.Provider, {
+          value: contextValue,
+          children: /* @__PURE__ */ jsxRuntimeExports.jsx(Root, _extends({}, rootProps, {
+            children
+          }))
+        })
+      })
     });
   });
-  process.env.NODE_ENV !== "production" ? Popper.propTypes = {
-    // ----------------------------- Warning --------------------------------
-    // | These PropTypes are generated from the TypeScript type definitions |
-    // |     To update them edit TypeScript types and run "yarn proptypes"  |
-    // ----------------------------------------------------------------------
+  process.env.NODE_ENV !== "production" ? Popup.propTypes = {
+    // ┌────────────────────────────── Warning ──────────────────────────────┐
+    // │ These PropTypes are generated from the TypeScript type definitions. │
+    // │ To update them, edit the TypeScript types and run `pnpm proptypes`. │
+    // └─────────────────────────────────────────────────────────────────────┘
     /**
-     * An HTML element, [virtualElement](https://popper.js.org/docs/v2/virtual-elements/),
+     * An HTML element, [virtual element](https://floating-ui.com/docs/virtual-elements),
      * or a function that returns either.
-     * It's used to set the position of the popper.
-     * The return value will passed as the reference object of the Popper instance.
+     * It's used to set the position of the popup.
      */
-    anchorEl: chainPropTypes(PropTypes.oneOfType([HTMLElementType, PropTypes.object, PropTypes.func]), (props) => {
-      if (props.open) {
-        const resolvedAnchorEl = resolveAnchorEl$1(props.anchorEl);
-        if (resolvedAnchorEl && isHTMLElement$1(resolvedAnchorEl) && resolvedAnchorEl.nodeType === 1) {
-          const box = resolvedAnchorEl.getBoundingClientRect();
-          if (process.env.NODE_ENV !== "test" && box.top === 0 && box.left === 0 && box.right === 0 && box.bottom === 0) {
-            return new Error(["MUI: The `anchorEl` prop provided to the component is invalid.", "The anchor element should be part of the document layout.", "Make sure the element is present in the document or that it's not display none."].join("\n"));
-          }
-        } else if (!resolvedAnchorEl || typeof resolvedAnchorEl.getBoundingClientRect !== "function" || isVirtualElement(resolvedAnchorEl) && resolvedAnchorEl.contextElement != null && resolvedAnchorEl.contextElement.nodeType !== 1) {
-          return new Error(["MUI: The `anchorEl` prop provided to the component is invalid.", "It should be an HTML element instance or a virtualElement ", "(https://popper.js.org/docs/v2/virtual-elements/)."].join("\n"));
-        }
-      }
-      return null;
-    }),
+    anchor: PropTypes.oneOfType([HTMLElementType, PropTypes.object, PropTypes.func]),
     /**
-     * Popper render function or node.
+     * @ignore
      */
     children: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
     /**
-     * An HTML element or function that returns one.
-     * The `container` will have the portal children appended to it.
-     *
-     * You can also provide a callback, which is called in a React layout effect.
-     * This lets you set the container from a ref, and also makes server-side rendering possible.
-     *
-     * By default, it uses the body of the top-level document object,
-     * so it's simply `document.body` most of the time.
+     * An HTML element or function that returns one. The container will have the portal children appended to it.
+     * By default, it uses the body of the top-level document object, so it's `document.body` in these cases.
      */
     container: PropTypes.oneOfType([HTMLElementType, PropTypes.func]),
     /**
-     * Direction of the text.
-     * @default 'ltr'
-     */
-    direction: PropTypes.oneOf(["ltr", "rtl"]),
-    /**
-     * The `children` will be under the DOM hierarchy of the parent component.
+     * If `true`, the popup will be rendered where it is defined, without the use of portals.
      * @default false
      */
     disablePortal: PropTypes.bool,
     /**
-     * Always keep the children in the DOM.
-     * This prop can be useful in SEO situation or
-     * when you want to maximize the responsiveness of the Popper.
+     * If `true`, the popup will exist in the DOM even if it's closed.
+     * Its visibility will be controlled by the `visibility` CSS property.
+     *
+     * Otherwise, a closed popup will be removed from the DOM.
+     *
      * @default false
      */
     keepMounted: PropTypes.bool,
     /**
-     * Popper.js is based on a "plugin-like" architecture,
-     * most of its features are fully encapsulated "modifiers".
+     * Collection of Floating UI middleware to use when positioning the popup.
+     * If not provided, the [`offset`](https://floating-ui.com/docs/offset)
+     * and [`flip`](https://floating-ui.com/docs/flip) functions will be used.
      *
-     * A modifier is a function that is called each time Popper.js needs to
-     * compute the position of the popper.
-     * For this reason, modifiers should be very performant to avoid bottlenecks.
-     * To learn how to create a modifier, [read the modifiers documentation](https://popper.js.org/docs/v2/modifiers/).
+     * @see https://floating-ui.com/docs/computePosition#middleware
      */
-    modifiers: PropTypes.arrayOf(PropTypes.shape({
-      data: PropTypes.object,
-      effect: PropTypes.func,
-      enabled: PropTypes.bool,
-      fn: PropTypes.func,
-      name: PropTypes.any,
-      options: PropTypes.object,
-      phase: PropTypes.oneOf(["afterMain", "afterRead", "afterWrite", "beforeMain", "beforeRead", "beforeWrite", "main", "read", "write"]),
-      requires: PropTypes.arrayOf(PropTypes.string),
-      requiresIfExists: PropTypes.arrayOf(PropTypes.string)
-    })),
+    middleware: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.oneOf([false]), PropTypes.shape({
+      fn: PropTypes.func.isRequired,
+      name: PropTypes.string.isRequired,
+      options: PropTypes.any
+    })])),
     /**
-     * If `true`, the component is shown.
+     * Distance between a popup and the trigger element.
+     * This prop is ignored when custom `middleware` is provided.
+     *
+     * @default 0
+     * @see https://floating-ui.com/docs/offset
      */
-    open: PropTypes.bool.isRequired,
+    offset: PropTypes.oneOfType([PropTypes.func, PropTypes.number, PropTypes.shape({
+      alignmentAxis: PropTypes.number,
+      crossAxis: PropTypes.number,
+      mainAxis: PropTypes.number
+    })]),
     /**
-     * Popper placement.
+     * If `true`, the popup is visible.
+     *
+     * @default false
+     */
+    open: PropTypes.bool,
+    /**
+     * Determines where to place the popup relative to the trigger element.
+     *
      * @default 'bottom'
+     * @see https://floating-ui.com/docs/computePosition#placement
      */
-    placement: PropTypes.oneOf(["auto-end", "auto-start", "auto", "bottom-end", "bottom-start", "bottom", "left-end", "left-start", "left", "right-end", "right-start", "right", "top-end", "top-start", "top"]),
+    placement: PropTypes.oneOf(["bottom-end", "bottom-start", "bottom", "left-end", "left-start", "left", "right-end", "right-start", "right", "top-end", "top-start", "top"]),
     /**
-     * Options provided to the [`Popper.js`](https://popper.js.org/docs/v2/constructors/#options) instance.
-     * @default {}
-     */
-    popperOptions: PropTypes.shape({
-      modifiers: PropTypes.array,
-      onFirstUpdate: PropTypes.func,
-      placement: PropTypes.oneOf(["auto-end", "auto-start", "auto", "bottom-end", "bottom-start", "bottom", "left-end", "left-start", "left", "right-end", "right-start", "right", "top-end", "top-start", "top"]),
-      strategy: PropTypes.oneOf(["absolute", "fixed"])
-    }),
-    /**
-     * A ref that points to the used popper instance.
-     */
-    popperRef: refType,
-    /**
-     * The props used for each slot inside the Popper.
+     * The props used for each slot inside the Popup.
+     *
      * @default {}
      */
     slotProps: PropTypes.shape({
       root: PropTypes.oneOfType([PropTypes.func, PropTypes.object])
     }),
     /**
-     * The components used for each slot inside the Popper.
+     * The components used for each slot inside the Popup.
      * Either a string to use a HTML element or a component.
+     *
      * @default {}
      */
     slots: PropTypes.shape({
       root: PropTypes.elementType
     }),
     /**
-     * Help supporting a react-transition-group/Transition component.
-     * @default false
+     * The type of CSS position property to use (absolute or fixed).
+     *
+     * @default 'absolute'
+     * @see https://floating-ui.com/docs/computePosition#strategy
      */
-    transition: PropTypes.bool
+    strategy: PropTypes.oneOf(["absolute", "fixed"])
   } : void 0;
   "use client";
   "use client";
@@ -20644,9 +19862,11 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         }))
       }));
     }
-    return /* @__PURE__ */ jsxRuntimeExports.jsx(Popper, _extends({}, rootProps, {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(Popup, _extends({
+      keepMounted: true
+    }, rootProps, {
       open,
-      anchorEl: anchor,
+      anchor,
       slots: {
         root: Root
       },
@@ -20659,10 +19879,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }));
   });
   process.env.NODE_ENV !== "production" ? Menu$1.propTypes = {
-    // ----------------------------- Warning --------------------------------
-    // | These PropTypes are generated from the TypeScript type definitions |
-    // |     To update them edit TypeScript types and run "yarn proptypes"  |
-    // ----------------------------------------------------------------------
+    // ┌────────────────────────────── Warning ──────────────────────────────┐
+    // │ These PropTypes are generated from the TypeScript type definitions. │
+    // │ To update them, edit the TypeScript types and run `pnpm proptypes`. │
+    // └─────────────────────────────────────────────────────────────────────┘
     /**
      * A ref with imperative actions that can be performed on the menu.
      */
@@ -20759,7 +19979,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     });
     const getRootProps = (externalProps = {}) => {
       const externalEventHandlers = extractEventHandlers(externalProps);
-      const getCombinedProps = combineHooksSlotProps(getButtonRootProps, getOwnRootProps);
+      const getCombinedProps = combineHooksSlotProps(getOwnRootProps, getButtonRootProps);
       return _extends({
         "aria-haspopup": "menu",
         "aria-expanded": state.open,
@@ -20778,10 +19998,11 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     };
   }
   "use client";
+  const COMPONENT_NAME$f = "MenuButton";
   function getMenuButtonUtilityClass(slot) {
-    return generateUtilityClass("MuiMenuButton", slot);
+    return generateUtilityClass(COMPONENT_NAME$f, slot);
   }
-  const menuButtonClasses = generateUtilityClasses("MuiMenuButton", ["root", "active", "disabled", "expanded"]);
+  const menuButtonClasses = generateUtilityClasses(COMPONENT_NAME$f, ["root", "active", "disabled", "expanded"]);
   "use client";
   const _excluded$M = ["children", "disabled", "label", "slots", "slotProps", "focusableWhenDisabled"];
   const useUtilityClasses$C = (ownerState) => {
@@ -20837,10 +20058,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }));
   });
   process.env.NODE_ENV !== "production" ? MenuButton.propTypes = {
-    // ----------------------------- Warning --------------------------------
-    // | These PropTypes are generated from the TypeScript type definitions |
-    // |     To update them edit TypeScript types and run "yarn proptypes"  |
-    // ----------------------------------------------------------------------
+    // ┌────────────────────────────── Warning ──────────────────────────────┐
+    // │ These PropTypes are generated from the TypeScript type definitions. │
+    // │ To update them, edit the TypeScript types and run `pnpm proptypes`. │
+    // └─────────────────────────────────────────────────────────────────────┘
     /**
      * @ignore
      */
@@ -20880,10 +20101,11 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     })
   } : void 0;
   "use client";
+  const COMPONENT_NAME$e = "MenuItem";
   function getMenuItemUtilityClass(slot) {
-    return generateUtilityClass("MuiMenuItem", slot);
+    return generateUtilityClass(COMPONENT_NAME$e, slot);
   }
-  const menuItemClasses = generateUtilityClasses("MuiMenuItem", ["root", "disabled", "focusVisible"]);
+  const menuItemClasses = generateUtilityClasses(COMPONENT_NAME$e, ["root", "disabled", "focusVisible"]);
   "use client";
   function idGenerator(existingKeys) {
     return `menu-item-${existingKeys.size}`;
@@ -20897,7 +20119,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     registerTrigger: () => {
     },
     state: {
-      open: true
+      open: true,
+      changeReason: null
     },
     triggerElement: null
   };
@@ -20907,7 +20130,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       disabled = false,
       id: idParam,
       rootRef: externalRef,
-      label
+      label,
+      disableFocusOnHover = false
     } = params;
     const id = useId(idParam);
     const itemRef = React__namespace.useRef(null);
@@ -20924,7 +20148,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       getRootProps: getListRootProps,
       highlighted
     } = useListItem({
-      item: id
+      item: id,
+      handlePointerOverEvents: !disableFocusOnHover
     });
     const {
       index: index2,
@@ -21104,10 +20329,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     });
   });
   process.env.NODE_ENV !== "production" ? MenuItem.propTypes = {
-    // ----------------------------- Warning --------------------------------
-    // | These PropTypes are generated from the TypeScript type definitions |
-    // |     To update them edit TypeScript types and run "yarn proptypes"  |
-    // ----------------------------------------------------------------------
+    // ┌────────────────────────────── Warning ──────────────────────────────┐
+    // │ These PropTypes are generated from the TypeScript type definitions. │
+    // │ To update them, edit the TypeScript types and run `pnpm proptypes`. │
+    // └─────────────────────────────────────────────────────────────────────┘
     /**
      * @ignore
      */
@@ -21121,6 +20346,12 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * @default false
      */
     disabled: PropTypes.bool,
+    /**
+     * If `true`, the menu item won't receive focus when the mouse moves over it.
+     *
+     * @default false
+     */
+    disableFocusOnHover: PropTypes.bool,
     /**
      * A text representation of the menu item's content.
      * Used for keyboard text navigation matching.
@@ -21147,10 +20378,11 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     })
   } : void 0;
   "use client";
+  const COMPONENT_NAME$d = "Modal";
   function getModalUtilityClass$1(slot) {
-    return generateUtilityClass("MuiModal", slot);
+    return generateUtilityClass(COMPONENT_NAME$d, slot);
   }
-  const modalClasses$1 = generateUtilityClasses("MuiModal", ["root", "hidden", "backdrop"]);
+  const modalClasses$1 = generateUtilityClasses(COMPONENT_NAME$d, ["root", "hidden", "backdrop"]);
   "use client";
   const _excluded$K = ["children", "closeAfterTransition", "container", "disableAutoFocus", "disableEnforceFocus", "disableEscapeKeyDown", "disablePortal", "disableRestoreFocus", "disableScrollLock", "hideBackdrop", "keepMounted", "onBackdropClick", "onClose", "onKeyDown", "open", "onTransitionEnter", "onTransitionExited", "slotProps", "slots"];
   const useUtilityClasses$A = (ownerState) => {
@@ -21270,10 +20502,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     });
   });
   process.env.NODE_ENV !== "production" ? Modal$1.propTypes = {
-    // ----------------------------- Warning --------------------------------
-    // | These PropTypes are generated from the TypeScript type definitions |
-    // |     To update them edit TypeScript types and run "yarn proptypes"  |
-    // ----------------------------------------------------------------------
+    // ┌────────────────────────────── Warning ──────────────────────────────┐
+    // │ These PropTypes are generated from the TypeScript type definitions. │
+    // │ To update them, edit the TypeScript types and run `pnpm proptypes`. │
+    // └─────────────────────────────────────────────────────────────────────┘
     /**
      * A single child content element.
      */
@@ -21411,10 +20643,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     });
   }
   process.env.NODE_ENV !== "production" ? NoSsr.propTypes = {
-    // ----------------------------- Warning --------------------------------
-    // | These PropTypes are generated from the TypeScript type definitions |
-    // |     To update them edit TypeScript types and run "yarn proptypes"  |
-    // ----------------------------------------------------------------------
+    // ┌────────────────────────────── Warning ──────────────────────────────┐
+    // │ These PropTypes are generated from the TypeScript type definitions. │
+    // │ To update them, edit the TypeScript types and run `pnpm proptypes`. │
+    // └─────────────────────────────────────────────────────────────────────┘
     /**
      * You can wrap a node.
      */
@@ -21435,27 +20667,130 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     NoSsr["propTypes"] = exactProp(NoSsr.propTypes);
   }
   "use client";
+  const COMPONENT_NAME$c = "NumberInput";
   function getNumberInputUtilityClass(slot) {
-    return generateUtilityClass("MuiNumberInput", slot);
+    return generateUtilityClass(COMPONENT_NAME$c, slot);
   }
-  const numberInputClasses = generateUtilityClasses("MuiNumberInput", ["root", "formControl", "focused", "disabled", "readOnly", "error", "input", "incrementButton", "decrementButton", "adornedStart", "adornedEnd"]);
-  function simpleClamp(val, min2 = Number.MIN_SAFE_INTEGER, max2 = Number.MAX_SAFE_INTEGER) {
-    return Math.max(min2, Math.min(val, max2));
-  }
-  function clamp$2(val, min2 = Number.MIN_SAFE_INTEGER, max2 = Number.MAX_SAFE_INTEGER, stepProp = NaN) {
+  const numberInputClasses = generateUtilityClasses(COMPONENT_NAME$c, ["root", "formControl", "focused", "disabled", "readOnly", "error", "input", "incrementButton", "decrementButton", "adornedStart", "adornedEnd"]);
+  const NumberInputActionTypes = {
+    clamp: "numberInput:clamp",
+    inputChange: "numberInput:inputChange",
+    increment: "numberInput:increment",
+    decrement: "numberInput:decrement",
+    decrementToMin: "numberInput:decrementToMin",
+    incrementToMax: "numberInput:incrementToMax",
+    resetInputValue: "numberInput:resetInputValue"
+  };
+  function clampStepwise(val, min2 = Number.MIN_SAFE_INTEGER, max2 = Number.MAX_SAFE_INTEGER, stepProp = NaN) {
     if (Number.isNaN(stepProp)) {
-      return simpleClamp(val, min2, max2);
+      return clamp$1(val, min2, max2);
     }
     const step = stepProp || 1;
     const remainder = val % step;
     const positivity = Math.sign(remainder);
     if (Math.abs(remainder) > step / 2) {
-      return simpleClamp(val + positivity * (step - Math.abs(remainder)), min2, max2);
+      return clamp$1(val + positivity * (step - Math.abs(remainder)), min2, max2);
     }
-    return simpleClamp(val - positivity * Math.abs(remainder), min2, max2);
+    return clamp$1(val - positivity * Math.abs(remainder), min2, max2);
   }
   function isNumber(val) {
     return typeof val === "number" && !Number.isNaN(val) && Number.isFinite(val);
+  }
+  function getClampedValues(rawValue, context) {
+    const {
+      min: min2,
+      max: max2,
+      step
+    } = context;
+    const clampedValue = rawValue === null ? null : clampStepwise(rawValue, min2, max2, step);
+    const newInputValue = clampedValue === null ? "" : String(clampedValue);
+    return {
+      value: clampedValue,
+      inputValue: newInputValue
+    };
+  }
+  function stepValue(state, context, direction, multiplier) {
+    const {
+      value
+    } = state;
+    const {
+      step = 1,
+      min: min2,
+      max: max2
+    } = context;
+    if (isNumber(value)) {
+      return {
+        up: value + (step != null ? step : 1) * multiplier,
+        down: value - (step != null ? step : 1) * multiplier
+      }[direction];
+    }
+    return {
+      up: min2 != null ? min2 : 1,
+      down: max2 != null ? max2 : -1
+    }[direction];
+  }
+  function handleClamp(state, context, inputValue) {
+    const {
+      getInputValueAsString: getInputValueAsString2
+    } = context;
+    const numberValueAsString = getInputValueAsString2(inputValue);
+    const intermediateValue = numberValueAsString === "" || numberValueAsString === "-" ? null : parseInt(numberValueAsString, 10);
+    const clampedValues = getClampedValues(intermediateValue, context);
+    return _extends({}, state, clampedValues);
+  }
+  function handleInputChange(state, context, inputValue) {
+    const {
+      getInputValueAsString: getInputValueAsString2
+    } = context;
+    const numberValueAsString = getInputValueAsString2(inputValue);
+    if (numberValueAsString.match(/^-?\d+?$/) || numberValueAsString === "" || numberValueAsString === "-") {
+      return _extends({}, state, {
+        inputValue: numberValueAsString
+      });
+    }
+    return state;
+  }
+  function handleStep(state, context, applyMultiplier, direction) {
+    const multiplier = applyMultiplier ? context.shiftMultiplier : 1;
+    const newValue = stepValue(state, context, direction, multiplier);
+    const clampedValues = getClampedValues(newValue, context);
+    return _extends({}, state, clampedValues);
+  }
+  function handleToMinOrMax(state, context, to) {
+    const newValue = context[to];
+    if (!isNumber(newValue)) {
+      return state;
+    }
+    return _extends({}, state, {
+      value: newValue,
+      inputValue: String(newValue)
+    });
+  }
+  function numberInputReducer(state, action) {
+    const {
+      type,
+      context
+    } = action;
+    switch (type) {
+      case NumberInputActionTypes.clamp:
+        return handleClamp(state, context, action.inputValue);
+      case NumberInputActionTypes.inputChange:
+        return handleInputChange(state, context, action.inputValue);
+      case NumberInputActionTypes.increment:
+        return handleStep(state, context, action.applyMultiplier, "up");
+      case NumberInputActionTypes.decrement:
+        return handleStep(state, context, action.applyMultiplier, "down");
+      case NumberInputActionTypes.incrementToMax:
+        return handleToMinOrMax(state, context, "max");
+      case NumberInputActionTypes.decrementToMin:
+        return handleToMinOrMax(state, context, "min");
+      case NumberInputActionTypes.resetInputValue:
+        return _extends({}, state, {
+          inputValue: String(state.value)
+        });
+      default:
+        return state;
+    }
   }
   "use client";
   const STEP_KEYS = ["ArrowUp", "ArrowDown", "PageUp", "PageDown"];
@@ -21464,6 +20799,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     return v ? String(v.trim()) : String(v);
   }
   function useNumberInput(parameters) {
+    var _ref;
     const {
       min: min2,
       max: max2,
@@ -21480,7 +20816,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       readOnly: readOnlyProp = false,
       value: valueProp,
       inputRef: inputRefProp,
-      inputId: inputIdProp
+      inputId: inputIdProp,
+      componentName = "useNumberInput"
     } = parameters;
     const formControlContext = useFormControlContext();
     const {
@@ -21497,18 +20834,65 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const handleInputRef = useForkRef(inputRef, inputRefProp, handleInputRefWarning);
     const inputId = useId(inputIdProp);
     const [focused, setFocused] = React__namespace.useState(false);
-    const [value, setValue] = useControlled({
-      controlled: valueProp,
-      default: defaultValueProp,
-      name: "NumberInput"
+    const handleStateChange = React__namespace.useCallback((event, field, fieldValue, reason) => {
+      if (field === "value" && typeof fieldValue !== "string") {
+        switch (reason) {
+          case "numberInput:clamp":
+            onChange == null || onChange(event, fieldValue);
+            break;
+          case "numberInput:increment":
+          case "numberInput:decrement":
+          case "numberInput:incrementToMax":
+          case "numberInput:decrementToMin":
+            onChange == null || onChange(event, fieldValue);
+            break;
+          default:
+            break;
+        }
+      }
+    }, [onChange]);
+    const numberInputActionContext = React__namespace.useMemo(() => {
+      return {
+        min: min2,
+        max: max2,
+        step,
+        shiftMultiplier,
+        getInputValueAsString
+      };
+    }, [min2, max2, step, shiftMultiplier]);
+    const initialValue = (_ref = valueProp != null ? valueProp : defaultValueProp) != null ? _ref : null;
+    const initialState = {
+      value: initialValue,
+      inputValue: initialValue ? String(initialValue) : ""
+    };
+    const controlledState = React__namespace.useMemo(() => ({
+      value: valueProp
+    }), [valueProp]);
+    const [state, dispatch] = useControllableReducer({
+      reducer: numberInputReducer,
+      controlledProps: controlledState,
+      initialState,
+      onStateChange: handleStateChange,
+      actionContext: React__namespace.useMemo(() => numberInputActionContext, [numberInputActionContext]),
+      componentName
     });
-    const [dirtyValue, setDirtyValue] = React__namespace.useState(value ? String(value) : void 0);
+    const {
+      value,
+      inputValue
+    } = state;
     React__namespace.useEffect(() => {
       if (!formControlContext && disabledProp && focused) {
         setFocused(false);
         onBlur == null || onBlur();
       }
     }, [formControlContext, disabledProp, focused, onBlur]);
+    React__namespace.useEffect(() => {
+      if (isControlled && isNumber(value)) {
+        dispatch({
+          type: NumberInputActionTypes.resetInputValue
+        });
+      }
+    }, [value, dispatch, isControlled]);
     const createHandleFocus = (otherHandlers) => (event) => {
       var _otherHandlers$onFocu;
       (_otherHandlers$onFocu = otherHandlers.onFocus) == null || _otherHandlers$onFocu.call(otherHandlers, event);
@@ -21521,22 +20905,6 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       }
       setFocused(true);
     };
-    const handleValueChange = () => (event, val) => {
-      let newValue;
-      if (val === void 0) {
-        newValue = val;
-        setDirtyValue("");
-      } else {
-        newValue = clamp$2(val, min2, max2, step);
-        setDirtyValue(String(newValue));
-      }
-      setValue(newValue);
-      if (isNumber(newValue)) {
-        onChange == null || onChange(event, newValue);
-      } else {
-        onChange == null || onChange(event, void 0);
-      }
-    };
     const createHandleInputChange = (otherHandlers) => (event) => {
       var _formControlContext$o2, _otherHandlers$onInpu;
       if (!isControlled && event.target === null) {
@@ -21547,31 +20915,24 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       if (event.defaultMuiPrevented || event.defaultPrevented) {
         return;
       }
-      const val = getInputValueAsString(event.currentTarget.value);
-      if (val === "" || val === "-") {
-        setDirtyValue(val);
-        setValue(void 0);
-      }
-      if (val.match(/^-?\d+?$/)) {
-        setDirtyValue(val);
-        setValue(parseInt(val, 10));
-      }
+      dispatch({
+        type: NumberInputActionTypes.inputChange,
+        event,
+        inputValue: event.currentTarget.value
+      });
     };
     const createHandleBlur = (otherHandlers) => (event) => {
       var _otherHandlers$onBlur;
+      formControlContext == null || formControlContext.onBlur();
       (_otherHandlers$onBlur = otherHandlers.onBlur) == null || _otherHandlers$onBlur.call(otherHandlers, event);
       if (event.defaultMuiPrevented || event.defaultPrevented) {
         return;
       }
-      const val = getInputValueAsString(event.currentTarget.value);
-      if (val === "" || val === "-") {
-        handleValueChange()(event, void 0);
-      } else {
-        handleValueChange()(event, parseInt(val, 10));
-      }
-      if (formControlContext && formControlContext.onBlur) {
-        formControlContext.onBlur();
-      }
+      dispatch({
+        type: NumberInputActionTypes.clamp,
+        event,
+        inputValue: event.currentTarget.value
+      });
       setFocused(false);
     };
     const createHandleClick = (otherHandlers) => (event) => {
@@ -21584,21 +20945,17 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         inputRef.current.focus();
       }
     };
-    const handleStep = (direction) => (event) => {
-      let newValue;
-      if (isNumber(value)) {
-        const multiplier = event.shiftKey || event.key === "PageUp" || event.key === "PageDown" ? shiftMultiplier : 1;
-        newValue = {
-          up: value + (step != null ? step : 1) * multiplier,
-          down: value - (step != null ? step : 1) * multiplier
-        }[direction];
-      } else {
-        newValue = {
-          up: min2 != null ? min2 : 0,
-          down: max2 != null ? max2 : 0
-        }[direction];
-      }
-      handleValueChange()(event, newValue);
+    const handleStep2 = (direction) => (event) => {
+      const applyMultiplier = Boolean(event.shiftKey);
+      const actionType = {
+        up: NumberInputActionTypes.increment,
+        down: NumberInputActionTypes.decrement
+      }[direction];
+      dispatch({
+        type: actionType,
+        event,
+        applyMultiplier
+      });
     };
     const createHandleKeyDown = (otherHandlers) => (event) => {
       var _otherHandlers$onKeyD;
@@ -21606,26 +20963,52 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       if (event.defaultMuiPrevented || event.defaultPrevented) {
         return;
       }
-      if (event.defaultPrevented) {
-        return;
-      }
       if (SUPPORTED_KEYS.includes(event.key)) {
         event.preventDefault();
       }
-      if (STEP_KEYS.includes(event.key)) {
-        const direction = {
-          ArrowUp: "up",
-          ArrowDown: "down",
-          PageUp: "up",
-          PageDown: "down"
-        }[event.key];
-        handleStep(direction)(event);
-      }
-      if (event.key === "Home" && isNumber(max2)) {
-        handleValueChange()(event, max2);
-      }
-      if (event.key === "End" && isNumber(min2)) {
-        handleValueChange()(event, min2);
+      switch (event.key) {
+        case "ArrowUp":
+          dispatch({
+            type: NumberInputActionTypes.increment,
+            event,
+            applyMultiplier: !!event.shiftKey
+          });
+          break;
+        case "ArrowDown":
+          dispatch({
+            type: NumberInputActionTypes.decrement,
+            event,
+            applyMultiplier: !!event.shiftKey
+          });
+          break;
+        case "PageUp":
+          dispatch({
+            type: NumberInputActionTypes.increment,
+            event,
+            applyMultiplier: true
+          });
+          break;
+        case "PageDown":
+          dispatch({
+            type: NumberInputActionTypes.decrement,
+            event,
+            applyMultiplier: true
+          });
+          break;
+        case "Home":
+          dispatch({
+            type: NumberInputActionTypes.incrementToMax,
+            event
+          });
+          break;
+        case "End":
+          dispatch({
+            type: NumberInputActionTypes.decrementToMin,
+            event
+          });
+          break;
+        default:
+          break;
       }
     };
     const getRootProps = (externalProps = {}) => {
@@ -21642,7 +21025,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       });
     };
     const getInputProps = (externalProps = {}) => {
-      var _ref;
+      var _ref2;
       const propsEventHandlers = {
         onBlur,
         onFocus,
@@ -21663,7 +21046,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         onBlur: createHandleBlur(externalEventHandlers),
         onKeyDown: createHandleKeyDown(externalEventHandlers)
       });
-      const displayValue = (_ref = focused ? dirtyValue : value) != null ? _ref : "";
+      const displayValue = (_ref2 = focused ? inputValue : value) != null ? _ref2 : "";
       delete externalProps.onInputChange;
       return _extends({
         type: "text",
@@ -21702,7 +21085,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         disabled: isIncrementDisabled,
         "aria-disabled": isIncrementDisabled,
         onMouseDown: handleStepperButtonMouseDown,
-        onClick: handleStep("up")
+        onClick: handleStep2("up")
       });
     };
     const isDecrementDisabled = disabledProp || (isNumber(value) ? value <= (min2 != null ? min2 : Number.MIN_SAFE_INTEGER) : false);
@@ -21711,7 +21094,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         disabled: isDecrementDisabled,
         "aria-disabled": isDecrementDisabled,
         onMouseDown: handleStepperButtonMouseDown,
-        onClick: handleStep("down")
+        onClick: handleStep2("down")
       });
     };
     return {
@@ -21724,10 +21107,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       getDecrementButtonProps,
       getRootProps,
       required: requiredProp,
-      value: focused ? dirtyValue : value,
+      value,
+      inputValue,
       isIncrementDisabled,
-      isDecrementDisabled,
-      inputValue: dirtyValue
+      isDecrementDisabled
     };
   }
   "use client";
@@ -21804,7 +21187,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       required,
       readOnly,
       value,
-      inputId: id
+      inputId: id,
+      componentName: "NumberInput"
     });
     const ownerState = _extends({}, props, {
       disabled: disabledState,
@@ -21860,10 +21244,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }));
   });
   process.env.NODE_ENV !== "production" ? NumberInput.propTypes = {
-    // ----------------------------- Warning --------------------------------
-    // | These PropTypes are generated from the TypeScript type definitions |
-    // |     To update them edit TypeScript types and run "yarn proptypes"  |
-    // ----------------------------------------------------------------------
+    // ┌────────────────────────────── Warning ──────────────────────────────┐
+    // │ These PropTypes are generated from the TypeScript type definitions. │
+    // │ To update them, edit the TypeScript types and run `pnpm proptypes`. │
+    // └─────────────────────────────────────────────────────────────────────┘
     /**
      * @ignore
      */
@@ -21875,7 +21259,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     /**
      * The default value. Use when the component is not controlled.
      */
-    defaultValue: PropTypes.any,
+    defaultValue: PropTypes.number,
     /**
      * If `true`, the component is disabled.
      * The prop defaults to the value (`false`) inherited from the parent FormControl component.
@@ -21886,7 +21270,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      */
     endAdornment: PropTypes.node,
     /**
-     * If `true`, the `input` will indicate an error by setting the `aria-invalid` attribute on the input and the `Mui-error` class on the root element.
+     * If `true`, the `input` will indicate an error by setting the `aria-invalid` attribute on the input and the `baseui--error` class on the root element.
      */
     error: PropTypes.bool,
     /**
@@ -21977,14 +21361,16 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     step: PropTypes.number,
     /**
      * The current value. Use when the component is controlled.
+     * @default null
      */
     value: PropTypes.number
   } : void 0;
   "use client";
+  const COMPONENT_NAME$b = "OptionGroup";
   function getOptionGroupUtilityClass(slot) {
-    return generateUtilityClass("MuiOptionGroup", slot);
+    return generateUtilityClass(COMPONENT_NAME$b, slot);
   }
-  const optionGroupClasses = generateUtilityClasses("MuiOptionGroup", ["root", "disabled", "label", "list"]);
+  const optionGroupClasses = generateUtilityClasses(COMPONENT_NAME$b, ["root", "disabled", "label", "list"]);
   "use client";
   const _excluded$I = ["disabled", "slotProps", "slots"];
   function useUtilityClasses$y(disabled) {
@@ -22036,10 +21422,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }));
   });
   process.env.NODE_ENV !== "production" ? OptionGroup.propTypes = {
-    // ----------------------------- Warning --------------------------------
-    // | These PropTypes are generated from the TypeScript type definitions |
-    // |     To update them edit TypeScript types and run "yarn proptypes"  |
-    // ----------------------------------------------------------------------
+    // ┌────────────────────────────── Warning ──────────────────────────────┐
+    // │ These PropTypes are generated from the TypeScript type definitions. │
+    // │ To update them, edit the TypeScript types and run `pnpm proptypes`. │
+    // └─────────────────────────────────────────────────────────────────────┘
     /**
      * @ignore
      */
@@ -22078,10 +21464,11 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     })
   } : void 0;
   "use client";
+  const COMPONENT_NAME$a = "Option";
   function getOptionUtilityClass(slot) {
-    return generateUtilityClass("MuiOption", slot);
+    return generateUtilityClass(COMPONENT_NAME$a, slot);
   }
-  const optionClasses = generateUtilityClasses("MuiOption", ["root", "disabled", "selected", "highlighted"]);
+  const optionClasses = generateUtilityClasses(COMPONENT_NAME$a, ["root", "disabled", "selected", "highlighted"]);
   "use client";
   function useOption(params) {
     const {
@@ -22208,7 +21595,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const Root = (_slots$root = slots.root) != null ? _slots$root : "li";
     const optionRef = React__namespace.useRef(null);
     const combinedRef = useForkRef(optionRef, forwardedRef);
-    const computedLabel = label != null ? label : typeof children === "string" ? children : (_optionRef$current = optionRef.current) == null ? void 0 : _optionRef$current.innerText;
+    const computedLabel = label != null ? label : typeof children === "string" ? children : (_optionRef$current = optionRef.current) == null || (_optionRef$current = _optionRef$current.textContent) == null ? void 0 : _optionRef$current.trim();
     const {
       getRootProps,
       selected,
@@ -22254,10 +21641,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     });
   });
   process.env.NODE_ENV !== "production" ? Option.propTypes = {
-    // ----------------------------- Warning --------------------------------
-    // | These PropTypes are generated from the TypeScript type definitions |
-    // |     To update them edit TypeScript types and run "yarn proptypes"  |
-    // ----------------------------------------------------------------------
+    // ┌────────────────────────────── Warning ──────────────────────────────┐
+    // │ These PropTypes are generated from the TypeScript type definitions. │
+    // │ To update them, edit the TypeScript types and run `pnpm proptypes`. │
+    // └─────────────────────────────────────────────────────────────────────┘
     /**
      * @ignore
      */
@@ -22297,1354 +21684,567 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     value: PropTypes.any.isRequired
   } : void 0;
   "use client";
-  const sides = ["top", "right", "bottom", "left"];
-  const alignments = ["start", "end"];
-  const placements = /* @__PURE__ */ sides.reduce((acc, side) => acc.concat(side, side + "-" + alignments[0], side + "-" + alignments[1]), []);
-  const min = Math.min;
-  const max = Math.max;
-  const round = Math.round;
-  const floor = Math.floor;
-  const createCoords = (v) => ({
-    x: v,
-    y: v
-  });
-  const oppositeSideMap = {
-    left: "right",
-    right: "left",
-    bottom: "top",
-    top: "bottom"
-  };
-  const oppositeAlignmentMap = {
-    start: "end",
-    end: "start"
-  };
-  function clamp$1(start2, value, end2) {
-    return max(start2, min(value, end2));
-  }
-  function evaluate(value, param) {
-    return typeof value === "function" ? value(param) : value;
-  }
-  function getSide(placement) {
-    return placement.split("-")[0];
-  }
-  function getAlignment(placement) {
-    return placement.split("-")[1];
-  }
-  function getOppositeAxis(axis) {
-    return axis === "x" ? "y" : "x";
-  }
-  function getAxisLength(axis) {
-    return axis === "y" ? "height" : "width";
-  }
-  function getSideAxis(placement) {
-    return ["top", "bottom"].includes(getSide(placement)) ? "y" : "x";
-  }
-  function getAlignmentAxis(placement) {
-    return getOppositeAxis(getSideAxis(placement));
-  }
-  function getAlignmentSides(placement, rects, rtl) {
-    if (rtl === void 0) {
-      rtl = false;
-    }
-    const alignment = getAlignment(placement);
-    const alignmentAxis = getAlignmentAxis(placement);
-    const length2 = getAxisLength(alignmentAxis);
-    let mainAlignmentSide = alignmentAxis === "x" ? alignment === (rtl ? "end" : "start") ? "right" : "left" : alignment === "start" ? "bottom" : "top";
-    if (rects.reference[length2] > rects.floating[length2]) {
-      mainAlignmentSide = getOppositePlacement(mainAlignmentSide);
-    }
-    return [mainAlignmentSide, getOppositePlacement(mainAlignmentSide)];
-  }
-  function getExpandedPlacements(placement) {
-    const oppositePlacement = getOppositePlacement(placement);
-    return [getOppositeAlignmentPlacement(placement), oppositePlacement, getOppositeAlignmentPlacement(oppositePlacement)];
-  }
-  function getOppositeAlignmentPlacement(placement) {
-    return placement.replace(/start|end/g, (alignment) => oppositeAlignmentMap[alignment]);
-  }
-  function getSideList(side, isStart, rtl) {
-    const lr = ["left", "right"];
-    const rl = ["right", "left"];
-    const tb = ["top", "bottom"];
-    const bt = ["bottom", "top"];
-    switch (side) {
-      case "top":
-      case "bottom":
-        if (rtl)
-          return isStart ? rl : lr;
-        return isStart ? lr : rl;
-      case "left":
-      case "right":
-        return isStart ? tb : bt;
-      default:
-        return [];
-    }
-  }
-  function getOppositeAxisPlacements(placement, flipAlignment, direction, rtl) {
-    const alignment = getAlignment(placement);
-    let list = getSideList(getSide(placement), direction === "start", rtl);
-    if (alignment) {
-      list = list.map((side) => side + "-" + alignment);
-      if (flipAlignment) {
-        list = list.concat(list.map(getOppositeAlignmentPlacement));
-      }
-    }
-    return list;
-  }
-  function getOppositePlacement(placement) {
-    return placement.replace(/left|right|bottom|top/g, (side) => oppositeSideMap[side]);
-  }
-  function expandPaddingObject(padding2) {
-    return __spreadValues({
-      top: 0,
-      right: 0,
-      bottom: 0,
-      left: 0
-    }, padding2);
-  }
-  function getPaddingObject(padding2) {
-    return typeof padding2 !== "number" ? expandPaddingObject(padding2) : {
-      top: padding2,
-      right: padding2,
-      bottom: padding2,
-      left: padding2
-    };
-  }
-  function rectToClientRect(rect) {
-    return __spreadProps(__spreadValues({}, rect), {
-      top: rect.y,
-      left: rect.x,
-      right: rect.x + rect.width,
-      bottom: rect.y + rect.height
-    });
-  }
-  function computeCoordsFromPlacement(_ref, placement, rtl) {
-    let {
-      reference: reference2,
-      floating
-    } = _ref;
-    const sideAxis = getSideAxis(placement);
-    const alignmentAxis = getAlignmentAxis(placement);
-    const alignLength = getAxisLength(alignmentAxis);
-    const side = getSide(placement);
-    const isVertical = sideAxis === "y";
-    const commonX = reference2.x + reference2.width / 2 - floating.width / 2;
-    const commonY = reference2.y + reference2.height / 2 - floating.height / 2;
-    const commonAlign = reference2[alignLength] / 2 - floating[alignLength] / 2;
-    let coords;
-    switch (side) {
-      case "top":
-        coords = {
-          x: commonX,
-          y: reference2.y - floating.height
-        };
-        break;
-      case "bottom":
-        coords = {
-          x: commonX,
-          y: reference2.y + reference2.height
-        };
-        break;
-      case "right":
-        coords = {
-          x: reference2.x + reference2.width,
-          y: commonY
-        };
-        break;
-      case "left":
-        coords = {
-          x: reference2.x - floating.width,
-          y: commonY
-        };
-        break;
-      default:
-        coords = {
-          x: reference2.x,
-          y: reference2.y
-        };
-    }
-    switch (getAlignment(placement)) {
-      case "start":
-        coords[alignmentAxis] -= commonAlign * (rtl && isVertical ? -1 : 1);
-        break;
-      case "end":
-        coords[alignmentAxis] += commonAlign * (rtl && isVertical ? -1 : 1);
-        break;
-    }
-    return coords;
-  }
-  const computePosition$1 = (reference2, floating, config2) => __async(this, null, function* () {
-    const {
-      placement = "bottom",
-      strategy = "absolute",
-      middleware: middleware2 = [],
-      platform: platform2
-    } = config2;
-    const validMiddleware = middleware2.filter(Boolean);
-    const rtl = yield platform2.isRTL == null ? void 0 : platform2.isRTL(floating);
-    let rects = yield platform2.getElementRects({
-      reference: reference2,
-      floating,
-      strategy
-    });
-    let {
-      x,
-      y
-    } = computeCoordsFromPlacement(rects, placement, rtl);
-    let statefulPlacement = placement;
-    let middlewareData = {};
-    let resetCount = 0;
-    for (let i = 0; i < validMiddleware.length; i++) {
-      const {
-        name,
-        fn
-      } = validMiddleware[i];
-      const {
-        x: nextX,
-        y: nextY,
-        data,
-        reset
-      } = yield fn({
-        x,
-        y,
-        initialPlacement: placement,
-        placement: statefulPlacement,
-        strategy,
-        middlewareData,
-        rects,
-        platform: platform2,
-        elements: {
-          reference: reference2,
-          floating
-        }
-      });
-      x = nextX != null ? nextX : x;
-      y = nextY != null ? nextY : y;
-      middlewareData = __spreadProps(__spreadValues({}, middlewareData), {
-        [name]: __spreadValues(__spreadValues({}, middlewareData[name]), data)
-      });
-      if (reset && resetCount <= 50) {
-        resetCount++;
-        if (typeof reset === "object") {
-          if (reset.placement) {
-            statefulPlacement = reset.placement;
-          }
-          if (reset.rects) {
-            rects = reset.rects === true ? yield platform2.getElementRects({
-              reference: reference2,
-              floating,
-              strategy
-            }) : reset.rects;
-          }
-          ({
-            x,
-            y
-          } = computeCoordsFromPlacement(rects, statefulPlacement, rtl));
-        }
-        i = -1;
-        continue;
-      }
-    }
-    return {
-      x,
-      y,
-      placement: statefulPlacement,
-      strategy,
-      middlewareData
-    };
-  });
-  function detectOverflow(state, options) {
-    return __async(this, null, function* () {
-      var _await$platform$isEle;
-      if (options === void 0) {
-        options = {};
-      }
-      const {
-        x,
-        y,
-        platform: platform2,
-        rects,
-        elements,
-        strategy
-      } = state;
-      const {
-        boundary = "clippingAncestors",
-        rootBoundary = "viewport",
-        elementContext = "floating",
-        altBoundary = false,
-        padding: padding2 = 0
-      } = evaluate(options, state);
-      const paddingObject = getPaddingObject(padding2);
-      const altContext = elementContext === "floating" ? "reference" : "floating";
-      const element = elements[altBoundary ? altContext : elementContext];
-      const clippingClientRect = rectToClientRect(yield platform2.getClippingRect({
-        element: ((_await$platform$isEle = yield platform2.isElement == null ? void 0 : platform2.isElement(element)) != null ? _await$platform$isEle : true) ? element : element.contextElement || (yield platform2.getDocumentElement == null ? void 0 : platform2.getDocumentElement(elements.floating)),
-        boundary,
-        rootBoundary,
-        strategy
-      }));
-      const rect = elementContext === "floating" ? __spreadProps(__spreadValues({}, rects.floating), {
-        x,
-        y
-      }) : rects.reference;
-      const offsetParent = yield platform2.getOffsetParent == null ? void 0 : platform2.getOffsetParent(elements.floating);
-      const offsetScale = (yield platform2.isElement == null ? void 0 : platform2.isElement(offsetParent)) ? (yield platform2.getScale == null ? void 0 : platform2.getScale(offsetParent)) || {
-        x: 1,
-        y: 1
-      } : {
-        x: 1,
-        y: 1
-      };
-      const elementClientRect = rectToClientRect(platform2.convertOffsetParentRelativeRectToViewportRelativeRect ? yield platform2.convertOffsetParentRelativeRectToViewportRelativeRect({
-        rect,
-        offsetParent,
-        strategy
-      }) : rect);
-      return {
-        top: (clippingClientRect.top - elementClientRect.top + paddingObject.top) / offsetScale.y,
-        bottom: (elementClientRect.bottom - clippingClientRect.bottom + paddingObject.bottom) / offsetScale.y,
-        left: (clippingClientRect.left - elementClientRect.left + paddingObject.left) / offsetScale.x,
-        right: (elementClientRect.right - clippingClientRect.right + paddingObject.right) / offsetScale.x
-      };
-    });
-  }
-  const arrow$2 = (options) => ({
-    name: "arrow",
-    options,
-    fn(state) {
-      return __async(this, null, function* () {
-        const {
-          x,
-          y,
-          placement,
-          rects,
-          platform: platform2,
-          elements,
-          middlewareData
-        } = state;
-        const {
-          element,
-          padding: padding2 = 0
-        } = evaluate(options, state) || {};
-        if (element == null) {
-          return {};
-        }
-        const paddingObject = getPaddingObject(padding2);
-        const coords = {
-          x,
-          y
-        };
-        const axis = getAlignmentAxis(placement);
-        const length2 = getAxisLength(axis);
-        const arrowDimensions = yield platform2.getDimensions(element);
-        const isYAxis = axis === "y";
-        const minProp = isYAxis ? "top" : "left";
-        const maxProp = isYAxis ? "bottom" : "right";
-        const clientProp = isYAxis ? "clientHeight" : "clientWidth";
-        const endDiff = rects.reference[length2] + rects.reference[axis] - coords[axis] - rects.floating[length2];
-        const startDiff = coords[axis] - rects.reference[axis];
-        const arrowOffsetParent = yield platform2.getOffsetParent == null ? void 0 : platform2.getOffsetParent(element);
-        let clientSize = arrowOffsetParent ? arrowOffsetParent[clientProp] : 0;
-        if (!clientSize || !(yield platform2.isElement == null ? void 0 : platform2.isElement(arrowOffsetParent))) {
-          clientSize = elements.floating[clientProp] || rects.floating[length2];
-        }
-        const centerToReference = endDiff / 2 - startDiff / 2;
-        const largestPossiblePadding = clientSize / 2 - arrowDimensions[length2] / 2 - 1;
-        const minPadding = min(paddingObject[minProp], largestPossiblePadding);
-        const maxPadding = min(paddingObject[maxProp], largestPossiblePadding);
-        const min$12 = minPadding;
-        const max2 = clientSize - arrowDimensions[length2] - maxPadding;
-        const center = clientSize / 2 - arrowDimensions[length2] / 2 + centerToReference;
-        const offset2 = clamp$1(min$12, center, max2);
-        const shouldAddOffset = !middlewareData.arrow && getAlignment(placement) != null && center != offset2 && rects.reference[length2] / 2 - (center < min$12 ? minPadding : maxPadding) - arrowDimensions[length2] / 2 < 0;
-        const alignmentOffset = shouldAddOffset ? center < min$12 ? center - min$12 : center - max2 : 0;
-        return {
-          [axis]: coords[axis] + alignmentOffset,
-          data: __spreadValues({
-            [axis]: offset2,
-            centerOffset: center - offset2 - alignmentOffset
-          }, shouldAddOffset && {
-            alignmentOffset
-          }),
-          reset: shouldAddOffset
-        };
-      });
-    }
-  });
-  function getPlacementList(alignment, autoAlignment, allowedPlacements) {
-    const allowedPlacementsSortedByAlignment = alignment ? [...allowedPlacements.filter((placement) => getAlignment(placement) === alignment), ...allowedPlacements.filter((placement) => getAlignment(placement) !== alignment)] : allowedPlacements.filter((placement) => getSide(placement) === placement);
-    return allowedPlacementsSortedByAlignment.filter((placement) => {
-      if (alignment) {
-        return getAlignment(placement) === alignment || (autoAlignment ? getOppositeAlignmentPlacement(placement) !== placement : false);
-      }
-      return true;
-    });
-  }
-  const autoPlacement$1 = function(options) {
-    if (options === void 0) {
-      options = {};
-    }
-    return {
-      name: "autoPlacement",
-      options,
-      fn(state) {
-        return __async(this, null, function* () {
-          var _middlewareData$autoP, _middlewareData$autoP2, _placementsThatFitOnE;
-          const {
-            rects,
-            middlewareData,
-            placement,
-            platform: platform2,
-            elements
-          } = state;
-          const _a2 = evaluate(options, state), {
-            crossAxis = false,
-            alignment,
-            allowedPlacements = placements,
-            autoAlignment = true
-          } = _a2, detectOverflowOptions = __objRest(_a2, [
-            "crossAxis",
-            "alignment",
-            "allowedPlacements",
-            "autoAlignment"
-          ]);
-          const placements$12 = alignment !== void 0 || allowedPlacements === placements ? getPlacementList(alignment || null, autoAlignment, allowedPlacements) : allowedPlacements;
-          const overflow2 = yield detectOverflow(state, detectOverflowOptions);
-          const currentIndex = ((_middlewareData$autoP = middlewareData.autoPlacement) == null ? void 0 : _middlewareData$autoP.index) || 0;
-          const currentPlacement = placements$12[currentIndex];
-          if (currentPlacement == null) {
-            return {};
-          }
-          const alignmentSides = getAlignmentSides(currentPlacement, rects, yield platform2.isRTL == null ? void 0 : platform2.isRTL(elements.floating));
-          if (placement !== currentPlacement) {
-            return {
-              reset: {
-                placement: placements$12[0]
-              }
-            };
-          }
-          const currentOverflows = [overflow2[getSide(currentPlacement)], overflow2[alignmentSides[0]], overflow2[alignmentSides[1]]];
-          const allOverflows = [...((_middlewareData$autoP2 = middlewareData.autoPlacement) == null ? void 0 : _middlewareData$autoP2.overflows) || [], {
-            placement: currentPlacement,
-            overflows: currentOverflows
-          }];
-          const nextPlacement = placements$12[currentIndex + 1];
-          if (nextPlacement) {
-            return {
-              data: {
-                index: currentIndex + 1,
-                overflows: allOverflows
-              },
-              reset: {
-                placement: nextPlacement
-              }
-            };
-          }
-          const placementsSortedByMostSpace = allOverflows.map((d) => {
-            const alignment2 = getAlignment(d.placement);
-            return [d.placement, alignment2 && crossAxis ? (
-              // Check along the mainAxis and main crossAxis side.
-              d.overflows.slice(0, 2).reduce((acc, v) => acc + v, 0)
-            ) : (
-              // Check only the mainAxis.
-              d.overflows[0]
-            ), d.overflows];
-          }).sort((a, b) => a[1] - b[1]);
-          const placementsThatFitOnEachSide = placementsSortedByMostSpace.filter((d) => d[2].slice(
-            0,
-            // Aligned placements should not check their opposite crossAxis
-            // side.
-            getAlignment(d[0]) ? 2 : 3
-          ).every((v) => v <= 0));
-          const resetPlacement = ((_placementsThatFitOnE = placementsThatFitOnEachSide[0]) == null ? void 0 : _placementsThatFitOnE[0]) || placementsSortedByMostSpace[0][0];
-          if (resetPlacement !== placement) {
-            return {
-              data: {
-                index: currentIndex + 1,
-                overflows: allOverflows
-              },
-              reset: {
-                placement: resetPlacement
-              }
-            };
-          }
-          return {};
-        });
-      }
-    };
-  };
-  const flip$1 = function(options) {
-    if (options === void 0) {
-      options = {};
-    }
-    return {
-      name: "flip",
-      options,
-      fn(state) {
-        return __async(this, null, function* () {
-          var _middlewareData$arrow, _middlewareData$flip;
-          const {
-            placement,
-            middlewareData,
-            rects,
-            initialPlacement,
-            platform: platform2,
-            elements
-          } = state;
-          const _a2 = evaluate(options, state), {
-            mainAxis: checkMainAxis = true,
-            crossAxis: checkCrossAxis = true,
-            fallbackPlacements: specifiedFallbackPlacements,
-            fallbackStrategy = "bestFit",
-            fallbackAxisSideDirection = "none",
-            flipAlignment = true
-          } = _a2, detectOverflowOptions = __objRest(_a2, [
-            "mainAxis",
-            "crossAxis",
-            "fallbackPlacements",
-            "fallbackStrategy",
-            "fallbackAxisSideDirection",
-            "flipAlignment"
-          ]);
-          if ((_middlewareData$arrow = middlewareData.arrow) != null && _middlewareData$arrow.alignmentOffset) {
-            return {};
-          }
-          const side = getSide(placement);
-          const isBasePlacement = getSide(initialPlacement) === initialPlacement;
-          const rtl = yield platform2.isRTL == null ? void 0 : platform2.isRTL(elements.floating);
-          const fallbackPlacements = specifiedFallbackPlacements || (isBasePlacement || !flipAlignment ? [getOppositePlacement(initialPlacement)] : getExpandedPlacements(initialPlacement));
-          if (!specifiedFallbackPlacements && fallbackAxisSideDirection !== "none") {
-            fallbackPlacements.push(...getOppositeAxisPlacements(initialPlacement, flipAlignment, fallbackAxisSideDirection, rtl));
-          }
-          const placements2 = [initialPlacement, ...fallbackPlacements];
-          const overflow2 = yield detectOverflow(state, detectOverflowOptions);
-          const overflows = [];
-          let overflowsData = ((_middlewareData$flip = middlewareData.flip) == null ? void 0 : _middlewareData$flip.overflows) || [];
-          if (checkMainAxis) {
-            overflows.push(overflow2[side]);
-          }
-          if (checkCrossAxis) {
-            const sides2 = getAlignmentSides(placement, rects, rtl);
-            overflows.push(overflow2[sides2[0]], overflow2[sides2[1]]);
-          }
-          overflowsData = [...overflowsData, {
-            placement,
-            overflows
-          }];
-          if (!overflows.every((side2) => side2 <= 0)) {
-            var _middlewareData$flip2, _overflowsData$filter;
-            const nextIndex = (((_middlewareData$flip2 = middlewareData.flip) == null ? void 0 : _middlewareData$flip2.index) || 0) + 1;
-            const nextPlacement = placements2[nextIndex];
-            if (nextPlacement) {
-              return {
-                data: {
-                  index: nextIndex,
-                  overflows: overflowsData
-                },
-                reset: {
-                  placement: nextPlacement
-                }
-              };
-            }
-            let resetPlacement = (_overflowsData$filter = overflowsData.filter((d) => d.overflows[0] <= 0).sort((a, b) => a.overflows[1] - b.overflows[1])[0]) == null ? void 0 : _overflowsData$filter.placement;
-            if (!resetPlacement) {
-              switch (fallbackStrategy) {
-                case "bestFit": {
-                  var _overflowsData$map$so;
-                  const placement2 = (_overflowsData$map$so = overflowsData.map((d) => [d.placement, d.overflows.filter((overflow3) => overflow3 > 0).reduce((acc, overflow3) => acc + overflow3, 0)]).sort((a, b) => a[1] - b[1])[0]) == null ? void 0 : _overflowsData$map$so[0];
-                  if (placement2) {
-                    resetPlacement = placement2;
-                  }
-                  break;
-                }
-                case "initialPlacement":
-                  resetPlacement = initialPlacement;
-                  break;
-              }
-            }
-            if (placement !== resetPlacement) {
-              return {
-                reset: {
-                  placement: resetPlacement
-                }
-              };
-            }
-          }
-          return {};
-        });
-      }
-    };
-  };
-  function getSideOffsets(overflow2, rect) {
-    return {
-      top: overflow2.top - rect.height,
-      right: overflow2.right - rect.width,
-      bottom: overflow2.bottom - rect.height,
-      left: overflow2.left - rect.width
-    };
-  }
-  function isAnySideFullyClipped(overflow2) {
-    return sides.some((side) => overflow2[side] >= 0);
-  }
-  const hide$1 = function(options) {
-    if (options === void 0) {
-      options = {};
-    }
-    return {
-      name: "hide",
-      options,
-      fn(state) {
-        return __async(this, null, function* () {
-          const {
-            rects
-          } = state;
-          const _a2 = evaluate(options, state), {
-            strategy = "referenceHidden"
-          } = _a2, detectOverflowOptions = __objRest(_a2, [
-            "strategy"
-          ]);
-          switch (strategy) {
-            case "referenceHidden": {
-              const overflow2 = yield detectOverflow(state, __spreadProps(__spreadValues({}, detectOverflowOptions), {
-                elementContext: "reference"
-              }));
-              const offsets = getSideOffsets(overflow2, rects.reference);
-              return {
-                data: {
-                  referenceHiddenOffsets: offsets,
-                  referenceHidden: isAnySideFullyClipped(offsets)
-                }
-              };
-            }
-            case "escaped": {
-              const overflow2 = yield detectOverflow(state, __spreadProps(__spreadValues({}, detectOverflowOptions), {
-                altBoundary: true
-              }));
-              const offsets = getSideOffsets(overflow2, rects.floating);
-              return {
-                data: {
-                  escapedOffsets: offsets,
-                  escaped: isAnySideFullyClipped(offsets)
-                }
-              };
-            }
-            default: {
-              return {};
-            }
-          }
-        });
-      }
-    };
-  };
-  function getBoundingRect(rects) {
-    const minX = min(...rects.map((rect) => rect.left));
-    const minY = min(...rects.map((rect) => rect.top));
-    const maxX = max(...rects.map((rect) => rect.right));
-    const maxY = max(...rects.map((rect) => rect.bottom));
-    return {
-      x: minX,
-      y: minY,
-      width: maxX - minX,
-      height: maxY - minY
-    };
-  }
-  function getRectsByLine(rects) {
-    const sortedRects = rects.slice().sort((a, b) => a.y - b.y);
-    const groups = [];
-    let prevRect = null;
-    for (let i = 0; i < sortedRects.length; i++) {
-      const rect = sortedRects[i];
-      if (!prevRect || rect.y - prevRect.y > prevRect.height / 2) {
-        groups.push([rect]);
-      } else {
-        groups[groups.length - 1].push(rect);
-      }
-      prevRect = rect;
-    }
-    return groups.map((rect) => rectToClientRect(getBoundingRect(rect)));
-  }
-  const inline$1 = function(options) {
-    if (options === void 0) {
-      options = {};
-    }
-    return {
-      name: "inline",
-      options,
-      fn(state) {
-        return __async(this, null, function* () {
-          const {
-            placement,
-            elements,
-            rects,
-            platform: platform2,
-            strategy
-          } = state;
-          const {
-            padding: padding2 = 2,
-            x,
-            y
-          } = evaluate(options, state);
-          const nativeClientRects = Array.from((yield platform2.getClientRects == null ? void 0 : platform2.getClientRects(elements.reference)) || []);
-          const clientRects = getRectsByLine(nativeClientRects);
-          const fallback = rectToClientRect(getBoundingRect(nativeClientRects));
-          const paddingObject = getPaddingObject(padding2);
-          function getBoundingClientRect2() {
-            if (clientRects.length === 2 && clientRects[0].left > clientRects[1].right && x != null && y != null) {
-              return clientRects.find((rect) => x > rect.left - paddingObject.left && x < rect.right + paddingObject.right && y > rect.top - paddingObject.top && y < rect.bottom + paddingObject.bottom) || fallback;
-            }
-            if (clientRects.length >= 2) {
-              if (getSideAxis(placement) === "y") {
-                const firstRect = clientRects[0];
-                const lastRect = clientRects[clientRects.length - 1];
-                const isTop = getSide(placement) === "top";
-                const top3 = firstRect.top;
-                const bottom3 = lastRect.bottom;
-                const left3 = isTop ? firstRect.left : lastRect.left;
-                const right3 = isTop ? firstRect.right : lastRect.right;
-                const width3 = right3 - left3;
-                const height3 = bottom3 - top3;
-                return {
-                  top: top3,
-                  bottom: bottom3,
-                  left: left3,
-                  right: right3,
-                  width: width3,
-                  height: height3,
-                  x: left3,
-                  y: top3
-                };
-              }
-              const isLeftSide = getSide(placement) === "left";
-              const maxRight = max(...clientRects.map((rect) => rect.right));
-              const minLeft = min(...clientRects.map((rect) => rect.left));
-              const measureRects = clientRects.filter((rect) => isLeftSide ? rect.left === minLeft : rect.right === maxRight);
-              const top2 = measureRects[0].top;
-              const bottom2 = measureRects[measureRects.length - 1].bottom;
-              const left2 = minLeft;
-              const right2 = maxRight;
-              const width2 = right2 - left2;
-              const height2 = bottom2 - top2;
-              return {
-                top: top2,
-                bottom: bottom2,
-                left: left2,
-                right: right2,
-                width: width2,
-                height: height2,
-                x: left2,
-                y: top2
-              };
-            }
-            return fallback;
-          }
-          const resetRects = yield platform2.getElementRects({
-            reference: {
-              getBoundingClientRect: getBoundingClientRect2
-            },
-            floating: elements.floating,
-            strategy
-          });
-          if (rects.reference.x !== resetRects.reference.x || rects.reference.y !== resetRects.reference.y || rects.reference.width !== resetRects.reference.width || rects.reference.height !== resetRects.reference.height) {
-            return {
-              reset: {
-                rects: resetRects
-              }
-            };
-          }
-          return {};
-        });
-      }
-    };
-  };
-  function convertValueToCoords(state, options) {
-    return __async(this, null, function* () {
-      const {
-        placement,
-        platform: platform2,
-        elements
-      } = state;
-      const rtl = yield platform2.isRTL == null ? void 0 : platform2.isRTL(elements.floating);
-      const side = getSide(placement);
-      const alignment = getAlignment(placement);
-      const isVertical = getSideAxis(placement) === "y";
-      const mainAxisMulti = ["left", "top"].includes(side) ? -1 : 1;
-      const crossAxisMulti = rtl && isVertical ? -1 : 1;
-      const rawValue = evaluate(options, state);
-      let {
-        mainAxis,
-        crossAxis,
-        alignmentAxis
-      } = typeof rawValue === "number" ? {
-        mainAxis: rawValue,
-        crossAxis: 0,
-        alignmentAxis: null
-      } : __spreadValues({
-        mainAxis: 0,
-        crossAxis: 0,
-        alignmentAxis: null
-      }, rawValue);
-      if (alignment && typeof alignmentAxis === "number") {
-        crossAxis = alignment === "end" ? alignmentAxis * -1 : alignmentAxis;
-      }
-      return isVertical ? {
-        x: crossAxis * crossAxisMulti,
-        y: mainAxis * mainAxisMulti
-      } : {
-        x: mainAxis * mainAxisMulti,
-        y: crossAxis * crossAxisMulti
-      };
-    });
-  }
-  const offset = function(options) {
-    if (options === void 0) {
-      options = 0;
-    }
-    return {
-      name: "offset",
-      options,
-      fn(state) {
-        return __async(this, null, function* () {
-          var _middlewareData$offse, _middlewareData$arrow;
-          const {
-            x,
-            y,
-            placement,
-            middlewareData
-          } = state;
-          const diffCoords = yield convertValueToCoords(state, options);
-          if (placement === ((_middlewareData$offse = middlewareData.offset) == null ? void 0 : _middlewareData$offse.placement) && (_middlewareData$arrow = middlewareData.arrow) != null && _middlewareData$arrow.alignmentOffset) {
-            return {};
-          }
-          return {
-            x: x + diffCoords.x,
-            y: y + diffCoords.y,
-            data: __spreadProps(__spreadValues({}, diffCoords), {
-              placement
-            })
-          };
-        });
-      }
-    };
-  };
-  const shift$1 = function(options) {
-    if (options === void 0) {
-      options = {};
-    }
-    return {
-      name: "shift",
-      options,
-      fn(state) {
-        return __async(this, null, function* () {
-          const {
-            x,
-            y,
-            placement
-          } = state;
-          const _a2 = evaluate(options, state), {
-            mainAxis: checkMainAxis = true,
-            crossAxis: checkCrossAxis = false,
-            limiter = {
-              fn: (_ref) => {
-                let {
-                  x: x2,
-                  y: y2
-                } = _ref;
-                return {
-                  x: x2,
-                  y: y2
-                };
-              }
-            }
-          } = _a2, detectOverflowOptions = __objRest(_a2, [
-            "mainAxis",
-            "crossAxis",
-            "limiter"
-          ]);
-          const coords = {
-            x,
-            y
-          };
-          const overflow2 = yield detectOverflow(state, detectOverflowOptions);
-          const crossAxis = getSideAxis(getSide(placement));
-          const mainAxis = getOppositeAxis(crossAxis);
-          let mainAxisCoord = coords[mainAxis];
-          let crossAxisCoord = coords[crossAxis];
-          if (checkMainAxis) {
-            const minSide = mainAxis === "y" ? "top" : "left";
-            const maxSide = mainAxis === "y" ? "bottom" : "right";
-            const min2 = mainAxisCoord + overflow2[minSide];
-            const max2 = mainAxisCoord - overflow2[maxSide];
-            mainAxisCoord = clamp$1(min2, mainAxisCoord, max2);
-          }
-          if (checkCrossAxis) {
-            const minSide = crossAxis === "y" ? "top" : "left";
-            const maxSide = crossAxis === "y" ? "bottom" : "right";
-            const min2 = crossAxisCoord + overflow2[minSide];
-            const max2 = crossAxisCoord - overflow2[maxSide];
-            crossAxisCoord = clamp$1(min2, crossAxisCoord, max2);
-          }
-          const limitedCoords = limiter.fn(__spreadProps(__spreadValues({}, state), {
-            [mainAxis]: mainAxisCoord,
-            [crossAxis]: crossAxisCoord
-          }));
-          return __spreadProps(__spreadValues({}, limitedCoords), {
-            data: {
-              x: limitedCoords.x - x,
-              y: limitedCoords.y - y
-            }
-          });
-        });
-      }
-    };
-  };
-  const limitShift$1 = function(options) {
-    if (options === void 0) {
-      options = {};
-    }
-    return {
-      options,
-      fn(state) {
-        const {
-          x,
-          y,
-          placement,
-          rects,
-          middlewareData
-        } = state;
-        const {
-          offset: offset2 = 0,
-          mainAxis: checkMainAxis = true,
-          crossAxis: checkCrossAxis = true
-        } = evaluate(options, state);
-        const coords = {
-          x,
-          y
-        };
-        const crossAxis = getSideAxis(placement);
-        const mainAxis = getOppositeAxis(crossAxis);
-        let mainAxisCoord = coords[mainAxis];
-        let crossAxisCoord = coords[crossAxis];
-        const rawOffset = evaluate(offset2, state);
-        const computedOffset = typeof rawOffset === "number" ? {
-          mainAxis: rawOffset,
-          crossAxis: 0
-        } : __spreadValues({
-          mainAxis: 0,
-          crossAxis: 0
-        }, rawOffset);
-        if (checkMainAxis) {
-          const len = mainAxis === "y" ? "height" : "width";
-          const limitMin = rects.reference[mainAxis] - rects.floating[len] + computedOffset.mainAxis;
-          const limitMax = rects.reference[mainAxis] + rects.reference[len] - computedOffset.mainAxis;
-          if (mainAxisCoord < limitMin) {
-            mainAxisCoord = limitMin;
-          } else if (mainAxisCoord > limitMax) {
-            mainAxisCoord = limitMax;
-          }
-        }
-        if (checkCrossAxis) {
-          var _middlewareData$offse, _middlewareData$offse2;
-          const len = mainAxis === "y" ? "width" : "height";
-          const isOriginSide = ["top", "left"].includes(getSide(placement));
-          const limitMin = rects.reference[crossAxis] - rects.floating[len] + (isOriginSide ? ((_middlewareData$offse = middlewareData.offset) == null ? void 0 : _middlewareData$offse[crossAxis]) || 0 : 0) + (isOriginSide ? 0 : computedOffset.crossAxis);
-          const limitMax = rects.reference[crossAxis] + rects.reference[len] + (isOriginSide ? 0 : ((_middlewareData$offse2 = middlewareData.offset) == null ? void 0 : _middlewareData$offse2[crossAxis]) || 0) - (isOriginSide ? computedOffset.crossAxis : 0);
-          if (crossAxisCoord < limitMin) {
-            crossAxisCoord = limitMin;
-          } else if (crossAxisCoord > limitMax) {
-            crossAxisCoord = limitMax;
-          }
-        }
-        return {
-          [mainAxis]: mainAxisCoord,
-          [crossAxis]: crossAxisCoord
-        };
-      }
-    };
-  };
-  const size$1 = function(options) {
-    if (options === void 0) {
-      options = {};
-    }
-    return {
-      name: "size",
-      options,
-      fn(state) {
-        return __async(this, null, function* () {
-          const {
-            placement,
-            rects,
-            platform: platform2,
-            elements
-          } = state;
-          const _a2 = evaluate(options, state), {
-            apply = () => {
-            }
-          } = _a2, detectOverflowOptions = __objRest(_a2, [
-            "apply"
-          ]);
-          const overflow2 = yield detectOverflow(state, detectOverflowOptions);
-          const side = getSide(placement);
-          const alignment = getAlignment(placement);
-          const isYAxis = getSideAxis(placement) === "y";
-          const {
-            width: width2,
-            height: height2
-          } = rects.floating;
-          let heightSide;
-          let widthSide;
-          if (side === "top" || side === "bottom") {
-            heightSide = side;
-            widthSide = alignment === ((yield platform2.isRTL == null ? void 0 : platform2.isRTL(elements.floating)) ? "start" : "end") ? "left" : "right";
-          } else {
-            widthSide = side;
-            heightSide = alignment === "end" ? "top" : "bottom";
-          }
-          const overflowAvailableHeight = height2 - overflow2[heightSide];
-          const overflowAvailableWidth = width2 - overflow2[widthSide];
-          const noShift = !state.middlewareData.shift;
-          let availableHeight = overflowAvailableHeight;
-          let availableWidth = overflowAvailableWidth;
-          if (isYAxis) {
-            const maximumClippingWidth = width2 - overflow2.left - overflow2.right;
-            availableWidth = alignment || noShift ? min(overflowAvailableWidth, maximumClippingWidth) : maximumClippingWidth;
-          } else {
-            const maximumClippingHeight = height2 - overflow2.top - overflow2.bottom;
-            availableHeight = alignment || noShift ? min(overflowAvailableHeight, maximumClippingHeight) : maximumClippingHeight;
-          }
-          if (noShift && !alignment) {
-            const xMin = max(overflow2.left, 0);
-            const xMax = max(overflow2.right, 0);
-            const yMin = max(overflow2.top, 0);
-            const yMax = max(overflow2.bottom, 0);
-            if (isYAxis) {
-              availableWidth = width2 - 2 * (xMin !== 0 || xMax !== 0 ? xMin + xMax : max(overflow2.left, overflow2.right));
-            } else {
-              availableHeight = height2 - 2 * (yMin !== 0 || yMax !== 0 ? yMin + yMax : max(overflow2.top, overflow2.bottom));
-            }
-          }
-          yield apply(__spreadProps(__spreadValues({}, state), {
-            availableWidth,
-            availableHeight
-          }));
-          const nextDimensions = yield platform2.getDimensions(elements.floating);
-          if (width2 !== nextDimensions.width || height2 !== nextDimensions.height) {
-            return {
-              reset: {
-                rects: true
-              }
-            };
-          }
-          return {};
-        });
-      }
-    };
-  };
-  function getNodeName(node2) {
-    if (isNode(node2)) {
-      return (node2.nodeName || "").toLowerCase();
-    }
-    return "#document";
+  var top = "top";
+  var bottom = "bottom";
+  var right = "right";
+  var left = "left";
+  var auto = "auto";
+  var basePlacements = [top, bottom, right, left];
+  var start = "start";
+  var end = "end";
+  var clippingParents = "clippingParents";
+  var viewport = "viewport";
+  var popper = "popper";
+  var reference = "reference";
+  var variationPlacements = /* @__PURE__ */ basePlacements.reduce(function(acc, placement) {
+    return acc.concat([placement + "-" + start, placement + "-" + end]);
+  }, []);
+  var placements = /* @__PURE__ */ [].concat(basePlacements, [auto]).reduce(function(acc, placement) {
+    return acc.concat([placement, placement + "-" + start, placement + "-" + end]);
+  }, []);
+  var beforeRead = "beforeRead";
+  var read = "read";
+  var afterRead = "afterRead";
+  var beforeMain = "beforeMain";
+  var main = "main";
+  var afterMain = "afterMain";
+  var beforeWrite = "beforeWrite";
+  var write = "write";
+  var afterWrite = "afterWrite";
+  var modifierPhases = [beforeRead, read, afterRead, beforeMain, main, afterMain, beforeWrite, write, afterWrite];
+  function getNodeName(element) {
+    return element ? (element.nodeName || "").toLowerCase() : null;
   }
   function getWindow(node2) {
-    var _node$ownerDocument;
-    return (node2 == null || (_node$ownerDocument = node2.ownerDocument) == null ? void 0 : _node$ownerDocument.defaultView) || window;
+    if (node2 == null) {
+      return window;
+    }
+    if (node2.toString() !== "[object Window]") {
+      var ownerDocument2 = node2.ownerDocument;
+      return ownerDocument2 ? ownerDocument2.defaultView || window : window;
+    }
+    return node2;
   }
-  function getDocumentElement(node2) {
-    var _ref;
-    return (_ref = (isNode(node2) ? node2.ownerDocument : node2.document) || window.document) == null ? void 0 : _ref.documentElement;
+  function isElement(node2) {
+    var OwnElement = getWindow(node2).Element;
+    return node2 instanceof OwnElement || node2 instanceof Element;
   }
-  function isNode(value) {
-    return value instanceof Node || value instanceof getWindow(value).Node;
+  function isHTMLElement$1(node2) {
+    var OwnElement = getWindow(node2).HTMLElement;
+    return node2 instanceof OwnElement || node2 instanceof HTMLElement;
   }
-  function isElement(value) {
-    return value instanceof Element || value instanceof getWindow(value).Element;
-  }
-  function isHTMLElement(value) {
-    return value instanceof HTMLElement || value instanceof getWindow(value).HTMLElement;
-  }
-  function isShadowRoot(value) {
+  function isShadowRoot(node2) {
     if (typeof ShadowRoot === "undefined") {
       return false;
     }
-    return value instanceof ShadowRoot || value instanceof getWindow(value).ShadowRoot;
+    var OwnElement = getWindow(node2).ShadowRoot;
+    return node2 instanceof OwnElement || node2 instanceof ShadowRoot;
   }
-  function isOverflowElement(element) {
-    const {
-      overflow: overflow2,
-      overflowX,
-      overflowY,
-      display: display2
-    } = getComputedStyle(element);
-    return /auto|scroll|overlay|hidden|clip/.test(overflow2 + overflowY + overflowX) && !["inline", "contents"].includes(display2);
-  }
-  function isTableElement(element) {
-    return ["table", "td", "th"].includes(getNodeName(element));
-  }
-  function isContainingBlock(element) {
-    const webkit = isWebKit();
-    const css = getComputedStyle(element);
-    return css.transform !== "none" || css.perspective !== "none" || (css.containerType ? css.containerType !== "normal" : false) || !webkit && (css.backdropFilter ? css.backdropFilter !== "none" : false) || !webkit && (css.filter ? css.filter !== "none" : false) || ["transform", "perspective", "filter"].some((value) => (css.willChange || "").includes(value)) || ["paint", "layout", "strict", "content"].some((value) => (css.contain || "").includes(value));
-  }
-  function getContainingBlock(element) {
-    let currentNode = getParentNode(element);
-    while (isHTMLElement(currentNode) && !isLastTraversableNode(currentNode)) {
-      if (isContainingBlock(currentNode)) {
-        return currentNode;
-      } else {
-        currentNode = getParentNode(currentNode);
+  function applyStyles(_ref) {
+    var state = _ref.state;
+    Object.keys(state.elements).forEach(function(name) {
+      var style2 = state.styles[name] || {};
+      var attributes = state.attributes[name] || {};
+      var element = state.elements[name];
+      if (!isHTMLElement$1(element) || !getNodeName(element)) {
+        return;
       }
+      Object.assign(element.style, style2);
+      Object.keys(attributes).forEach(function(name2) {
+        var value = attributes[name2];
+        if (value === false) {
+          element.removeAttribute(name2);
+        } else {
+          element.setAttribute(name2, value === true ? "" : value);
+        }
+      });
+    });
+  }
+  function effect$2(_ref2) {
+    var state = _ref2.state;
+    var initialStyles = {
+      popper: {
+        position: state.options.strategy,
+        left: "0",
+        top: "0",
+        margin: "0"
+      },
+      arrow: {
+        position: "absolute"
+      },
+      reference: {}
+    };
+    Object.assign(state.elements.popper.style, initialStyles.popper);
+    state.styles = initialStyles;
+    if (state.elements.arrow) {
+      Object.assign(state.elements.arrow.style, initialStyles.arrow);
     }
-    return null;
-  }
-  function isWebKit() {
-    if (typeof CSS === "undefined" || !CSS.supports)
-      return false;
-    return CSS.supports("-webkit-backdrop-filter", "none");
-  }
-  function isLastTraversableNode(node2) {
-    return ["html", "body", "#document"].includes(getNodeName(node2));
-  }
-  function getComputedStyle(element) {
-    return getWindow(element).getComputedStyle(element);
-  }
-  function getNodeScroll(element) {
-    if (isElement(element)) {
-      return {
-        scrollLeft: element.scrollLeft,
-        scrollTop: element.scrollTop
-      };
-    }
-    return {
-      scrollLeft: element.pageXOffset,
-      scrollTop: element.pageYOffset
+    return function() {
+      Object.keys(state.elements).forEach(function(name) {
+        var element = state.elements[name];
+        var attributes = state.attributes[name] || {};
+        var styleProperties = Object.keys(state.styles.hasOwnProperty(name) ? state.styles[name] : initialStyles[name]);
+        var style2 = styleProperties.reduce(function(style3, property) {
+          style3[property] = "";
+          return style3;
+        }, {});
+        if (!isHTMLElement$1(element) || !getNodeName(element)) {
+          return;
+        }
+        Object.assign(element.style, style2);
+        Object.keys(attributes).forEach(function(attribute) {
+          element.removeAttribute(attribute);
+        });
+      });
     };
   }
-  function getParentNode(node2) {
-    if (getNodeName(node2) === "html") {
-      return node2;
-    }
-    const result = (
-      // Step into the shadow DOM of the parent of a slotted node.
-      node2.assignedSlot || // DOM Element detected.
-      node2.parentNode || // ShadowRoot detected.
-      isShadowRoot(node2) && node2.host || // Fallback.
-      getDocumentElement(node2)
-    );
-    return isShadowRoot(result) ? result.host : result;
+  const applyStyles$1 = {
+    name: "applyStyles",
+    enabled: true,
+    phase: "write",
+    fn: applyStyles,
+    effect: effect$2,
+    requires: ["computeStyles"]
+  };
+  function getBasePlacement(placement) {
+    return placement.split("-")[0];
   }
-  function getNearestOverflowAncestor(node2) {
-    const parentNode = getParentNode(node2);
-    if (isLastTraversableNode(parentNode)) {
-      return node2.ownerDocument ? node2.ownerDocument.body : node2.body;
+  var max = Math.max;
+  var min = Math.min;
+  var round = Math.round;
+  function getUAString() {
+    var uaData = navigator.userAgentData;
+    if (uaData != null && uaData.brands && Array.isArray(uaData.brands)) {
+      return uaData.brands.map(function(item) {
+        return item.brand + "/" + item.version;
+      }).join(" ");
     }
-    if (isHTMLElement(parentNode) && isOverflowElement(parentNode)) {
-      return parentNode;
-    }
-    return getNearestOverflowAncestor(parentNode);
+    return navigator.userAgent;
   }
-  function getOverflowAncestors(node2, list, traverseIframes) {
-    var _node$ownerDocument2;
-    if (list === void 0) {
-      list = [];
-    }
-    if (traverseIframes === void 0) {
-      traverseIframes = true;
-    }
-    const scrollableAncestor = getNearestOverflowAncestor(node2);
-    const isBody = scrollableAncestor === ((_node$ownerDocument2 = node2.ownerDocument) == null ? void 0 : _node$ownerDocument2.body);
-    const win = getWindow(scrollableAncestor);
-    if (isBody) {
-      return list.concat(win, win.visualViewport || [], isOverflowElement(scrollableAncestor) ? scrollableAncestor : [], win.frameElement && traverseIframes ? getOverflowAncestors(win.frameElement) : []);
-    }
-    return list.concat(scrollableAncestor, getOverflowAncestors(scrollableAncestor, [], traverseIframes));
+  function isLayoutViewport() {
+    return !/^((?!chrome|android).)*safari/i.test(getUAString());
   }
-  function getCssDimensions(element) {
-    const css = getComputedStyle(element);
-    let width2 = parseFloat(css.width) || 0;
-    let height2 = parseFloat(css.height) || 0;
-    const hasOffset = isHTMLElement(element);
-    const offsetWidth = hasOffset ? element.offsetWidth : width2;
-    const offsetHeight = hasOffset ? element.offsetHeight : height2;
-    const shouldFallback = round(width2) !== offsetWidth || round(height2) !== offsetHeight;
-    if (shouldFallback) {
-      width2 = offsetWidth;
-      height2 = offsetHeight;
-    }
-    return {
-      width: width2,
-      height: height2,
-      $: shouldFallback
-    };
-  }
-  function unwrapElement(element) {
-    return !isElement(element) ? element.contextElement : element;
-  }
-  function getScale$1(element) {
-    const domElement = unwrapElement(element);
-    if (!isHTMLElement(domElement)) {
-      return createCoords(1);
-    }
-    const rect = domElement.getBoundingClientRect();
-    const {
-      width: width2,
-      height: height2,
-      $
-    } = getCssDimensions(domElement);
-    let x = ($ ? round(rect.width) : rect.width) / width2;
-    let y = ($ ? round(rect.height) : rect.height) / height2;
-    if (!x || !Number.isFinite(x)) {
-      x = 1;
-    }
-    if (!y || !Number.isFinite(y)) {
-      y = 1;
-    }
-    return {
-      x,
-      y
-    };
-  }
-  const noOffsets = /* @__PURE__ */ createCoords(0);
-  function getVisualOffsets(element) {
-    const win = getWindow(element);
-    if (!isWebKit() || !win.visualViewport) {
-      return noOffsets;
-    }
-    return {
-      x: win.visualViewport.offsetLeft,
-      y: win.visualViewport.offsetTop
-    };
-  }
-  function shouldAddVisualOffsets(element, isFixed, floatingOffsetParent) {
-    if (isFixed === void 0) {
-      isFixed = false;
-    }
-    if (!floatingOffsetParent || isFixed && floatingOffsetParent !== getWindow(element)) {
-      return false;
-    }
-    return isFixed;
-  }
-  function getBoundingClientRect(element, includeScale, isFixedStrategy, offsetParent) {
+  function getBoundingClientRect(element, includeScale, isFixedStrategy) {
     if (includeScale === void 0) {
       includeScale = false;
     }
     if (isFixedStrategy === void 0) {
       isFixedStrategy = false;
     }
-    const clientRect = element.getBoundingClientRect();
-    const domElement = unwrapElement(element);
-    let scale = createCoords(1);
-    if (includeScale) {
-      if (offsetParent) {
-        if (isElement(offsetParent)) {
-          scale = getScale$1(offsetParent);
-        }
-      } else {
-        scale = getScale$1(element);
-      }
+    var clientRect = element.getBoundingClientRect();
+    var scaleX = 1;
+    var scaleY = 1;
+    if (includeScale && isHTMLElement$1(element)) {
+      scaleX = element.offsetWidth > 0 ? round(clientRect.width) / element.offsetWidth || 1 : 1;
+      scaleY = element.offsetHeight > 0 ? round(clientRect.height) / element.offsetHeight || 1 : 1;
     }
-    const visualOffsets = shouldAddVisualOffsets(domElement, isFixedStrategy, offsetParent) ? getVisualOffsets(domElement) : createCoords(0);
-    let x = (clientRect.left + visualOffsets.x) / scale.x;
-    let y = (clientRect.top + visualOffsets.y) / scale.y;
-    let width2 = clientRect.width / scale.x;
-    let height2 = clientRect.height / scale.y;
-    if (domElement) {
-      const win = getWindow(domElement);
-      const offsetWin = offsetParent && isElement(offsetParent) ? getWindow(offsetParent) : offsetParent;
-      let currentIFrame = win.frameElement;
-      while (currentIFrame && offsetParent && offsetWin !== win) {
-        const iframeScale = getScale$1(currentIFrame);
-        const iframeRect = currentIFrame.getBoundingClientRect();
-        const css = getComputedStyle(currentIFrame);
-        const left2 = iframeRect.left + (currentIFrame.clientLeft + parseFloat(css.paddingLeft)) * iframeScale.x;
-        const top2 = iframeRect.top + (currentIFrame.clientTop + parseFloat(css.paddingTop)) * iframeScale.y;
-        x *= iframeScale.x;
-        y *= iframeScale.y;
-        width2 *= iframeScale.x;
-        height2 *= iframeScale.y;
-        x += left2;
-        y += top2;
-        currentIFrame = getWindow(currentIFrame).frameElement;
-      }
-    }
-    return rectToClientRect({
+    var _ref = isElement(element) ? getWindow(element) : window, visualViewport = _ref.visualViewport;
+    var addVisualOffsets = !isLayoutViewport() && isFixedStrategy;
+    var x = (clientRect.left + (addVisualOffsets && visualViewport ? visualViewport.offsetLeft : 0)) / scaleX;
+    var y = (clientRect.top + (addVisualOffsets && visualViewport ? visualViewport.offsetTop : 0)) / scaleY;
+    var width2 = clientRect.width / scaleX;
+    var height2 = clientRect.height / scaleY;
+    return {
       width: width2,
       height: height2,
+      top: y,
+      right: x + width2,
+      bottom: y + height2,
+      left: x,
       x,
       y
+    };
+  }
+  function getLayoutRect(element) {
+    var clientRect = getBoundingClientRect(element);
+    var width2 = element.offsetWidth;
+    var height2 = element.offsetHeight;
+    if (Math.abs(clientRect.width - width2) <= 1) {
+      width2 = clientRect.width;
+    }
+    if (Math.abs(clientRect.height - height2) <= 1) {
+      height2 = clientRect.height;
+    }
+    return {
+      x: element.offsetLeft,
+      y: element.offsetTop,
+      width: width2,
+      height: height2
+    };
+  }
+  function contains(parent, child) {
+    var rootNode = child.getRootNode && child.getRootNode();
+    if (parent.contains(child)) {
+      return true;
+    } else if (rootNode && isShadowRoot(rootNode)) {
+      var next2 = child;
+      do {
+        if (next2 && parent.isSameNode(next2)) {
+          return true;
+        }
+        next2 = next2.parentNode || next2.host;
+      } while (next2);
+    }
+    return false;
+  }
+  function getComputedStyle(element) {
+    return getWindow(element).getComputedStyle(element);
+  }
+  function isTableElement(element) {
+    return ["table", "td", "th"].indexOf(getNodeName(element)) >= 0;
+  }
+  function getDocumentElement(element) {
+    return ((isElement(element) ? element.ownerDocument : (
+      // $FlowFixMe[prop-missing]
+      element.document
+    )) || window.document).documentElement;
+  }
+  function getParentNode(element) {
+    if (getNodeName(element) === "html") {
+      return element;
+    }
+    return (
+      // this is a quicker (but less type safe) way to save quite some bytes from the bundle
+      // $FlowFixMe[incompatible-return]
+      // $FlowFixMe[prop-missing]
+      element.assignedSlot || // step into the shadow DOM of the parent of a slotted node
+      element.parentNode || // DOM Element detected
+      (isShadowRoot(element) ? element.host : null) || // ShadowRoot detected
+      // $FlowFixMe[incompatible-call]: HTMLElement is a Node
+      getDocumentElement(element)
+    );
+  }
+  function getTrueOffsetParent(element) {
+    if (!isHTMLElement$1(element) || // https://github.com/popperjs/popper-core/issues/837
+    getComputedStyle(element).position === "fixed") {
+      return null;
+    }
+    return element.offsetParent;
+  }
+  function getContainingBlock(element) {
+    var isFirefox = /firefox/i.test(getUAString());
+    var isIE = /Trident/i.test(getUAString());
+    if (isIE && isHTMLElement$1(element)) {
+      var elementCss = getComputedStyle(element);
+      if (elementCss.position === "fixed") {
+        return null;
+      }
+    }
+    var currentNode = getParentNode(element);
+    if (isShadowRoot(currentNode)) {
+      currentNode = currentNode.host;
+    }
+    while (isHTMLElement$1(currentNode) && ["html", "body"].indexOf(getNodeName(currentNode)) < 0) {
+      var css = getComputedStyle(currentNode);
+      if (css.transform !== "none" || css.perspective !== "none" || css.contain === "paint" || ["transform", "perspective"].indexOf(css.willChange) !== -1 || isFirefox && css.willChange === "filter" || isFirefox && css.filter && css.filter !== "none") {
+        return currentNode;
+      } else {
+        currentNode = currentNode.parentNode;
+      }
+    }
+    return null;
+  }
+  function getOffsetParent(element) {
+    var window2 = getWindow(element);
+    var offsetParent = getTrueOffsetParent(element);
+    while (offsetParent && isTableElement(offsetParent) && getComputedStyle(offsetParent).position === "static") {
+      offsetParent = getTrueOffsetParent(offsetParent);
+    }
+    if (offsetParent && (getNodeName(offsetParent) === "html" || getNodeName(offsetParent) === "body" && getComputedStyle(offsetParent).position === "static")) {
+      return window2;
+    }
+    return offsetParent || getContainingBlock(element) || window2;
+  }
+  function getMainAxisFromPlacement(placement) {
+    return ["top", "bottom"].indexOf(placement) >= 0 ? "x" : "y";
+  }
+  function within(min$12, value, max$12) {
+    return max(min$12, min(value, max$12));
+  }
+  function withinMaxClamp(min2, value, max2) {
+    var v = within(min2, value, max2);
+    return v > max2 ? max2 : v;
+  }
+  function getFreshSideObject() {
+    return {
+      top: 0,
+      right: 0,
+      bottom: 0,
+      left: 0
+    };
+  }
+  function mergePaddingObject(paddingObject) {
+    return Object.assign({}, getFreshSideObject(), paddingObject);
+  }
+  function expandToHashMap(value, keys) {
+    return keys.reduce(function(hashMap, key) {
+      hashMap[key] = value;
+      return hashMap;
+    }, {});
+  }
+  var toPaddingObject = function toPaddingObject2(padding2, state) {
+    padding2 = typeof padding2 === "function" ? padding2(Object.assign({}, state.rects, {
+      placement: state.placement
+    })) : padding2;
+    return mergePaddingObject(typeof padding2 !== "number" ? padding2 : expandToHashMap(padding2, basePlacements));
+  };
+  function arrow(_ref) {
+    var _state$modifiersData$;
+    var state = _ref.state, name = _ref.name, options = _ref.options;
+    var arrowElement = state.elements.arrow;
+    var popperOffsets2 = state.modifiersData.popperOffsets;
+    var basePlacement = getBasePlacement(state.placement);
+    var axis = getMainAxisFromPlacement(basePlacement);
+    var isVertical = [left, right].indexOf(basePlacement) >= 0;
+    var len = isVertical ? "height" : "width";
+    if (!arrowElement || !popperOffsets2) {
+      return;
+    }
+    var paddingObject = toPaddingObject(options.padding, state);
+    var arrowRect = getLayoutRect(arrowElement);
+    var minProp = axis === "y" ? top : left;
+    var maxProp = axis === "y" ? bottom : right;
+    var endDiff = state.rects.reference[len] + state.rects.reference[axis] - popperOffsets2[axis] - state.rects.popper[len];
+    var startDiff = popperOffsets2[axis] - state.rects.reference[axis];
+    var arrowOffsetParent = getOffsetParent(arrowElement);
+    var clientSize = arrowOffsetParent ? axis === "y" ? arrowOffsetParent.clientHeight || 0 : arrowOffsetParent.clientWidth || 0 : 0;
+    var centerToReference = endDiff / 2 - startDiff / 2;
+    var min2 = paddingObject[minProp];
+    var max2 = clientSize - arrowRect[len] - paddingObject[maxProp];
+    var center = clientSize / 2 - arrowRect[len] / 2 + centerToReference;
+    var offset2 = within(min2, center, max2);
+    var axisProp = axis;
+    state.modifiersData[name] = (_state$modifiersData$ = {}, _state$modifiersData$[axisProp] = offset2, _state$modifiersData$.centerOffset = offset2 - center, _state$modifiersData$);
+  }
+  function effect$1(_ref2) {
+    var state = _ref2.state, options = _ref2.options;
+    var _options$element = options.element, arrowElement = _options$element === void 0 ? "[data-popper-arrow]" : _options$element;
+    if (arrowElement == null) {
+      return;
+    }
+    if (typeof arrowElement === "string") {
+      arrowElement = state.elements.popper.querySelector(arrowElement);
+      if (!arrowElement) {
+        return;
+      }
+    }
+    if (!contains(state.elements.popper, arrowElement)) {
+      return;
+    }
+    state.elements.arrow = arrowElement;
+  }
+  const arrow$1 = {
+    name: "arrow",
+    enabled: true,
+    phase: "main",
+    fn: arrow,
+    effect: effect$1,
+    requires: ["popperOffsets"],
+    requiresIfExists: ["preventOverflow"]
+  };
+  function getVariation(placement) {
+    return placement.split("-")[1];
+  }
+  var unsetSides = {
+    top: "auto",
+    right: "auto",
+    bottom: "auto",
+    left: "auto"
+  };
+  function roundOffsetsByDPR(_ref, win) {
+    var x = _ref.x, y = _ref.y;
+    var dpr = win.devicePixelRatio || 1;
+    return {
+      x: round(x * dpr) / dpr || 0,
+      y: round(y * dpr) / dpr || 0
+    };
+  }
+  function mapToStyles(_ref2) {
+    var _Object$assign2;
+    var popper2 = _ref2.popper, popperRect = _ref2.popperRect, placement = _ref2.placement, variation = _ref2.variation, offsets = _ref2.offsets, position2 = _ref2.position, gpuAcceleration = _ref2.gpuAcceleration, adaptive = _ref2.adaptive, roundOffsets = _ref2.roundOffsets, isFixed = _ref2.isFixed;
+    var _offsets$x = offsets.x, x = _offsets$x === void 0 ? 0 : _offsets$x, _offsets$y = offsets.y, y = _offsets$y === void 0 ? 0 : _offsets$y;
+    var _ref3 = typeof roundOffsets === "function" ? roundOffsets({
+      x,
+      y
+    }) : {
+      x,
+      y
+    };
+    x = _ref3.x;
+    y = _ref3.y;
+    var hasX = offsets.hasOwnProperty("x");
+    var hasY = offsets.hasOwnProperty("y");
+    var sideX = left;
+    var sideY = top;
+    var win = window;
+    if (adaptive) {
+      var offsetParent = getOffsetParent(popper2);
+      var heightProp = "clientHeight";
+      var widthProp = "clientWidth";
+      if (offsetParent === getWindow(popper2)) {
+        offsetParent = getDocumentElement(popper2);
+        if (getComputedStyle(offsetParent).position !== "static" && position2 === "absolute") {
+          heightProp = "scrollHeight";
+          widthProp = "scrollWidth";
+        }
+      }
+      offsetParent = offsetParent;
+      if (placement === top || (placement === left || placement === right) && variation === end) {
+        sideY = bottom;
+        var offsetY = isFixed && offsetParent === win && win.visualViewport ? win.visualViewport.height : (
+          // $FlowFixMe[prop-missing]
+          offsetParent[heightProp]
+        );
+        y -= offsetY - popperRect.height;
+        y *= gpuAcceleration ? 1 : -1;
+      }
+      if (placement === left || (placement === top || placement === bottom) && variation === end) {
+        sideX = right;
+        var offsetX = isFixed && offsetParent === win && win.visualViewport ? win.visualViewport.width : (
+          // $FlowFixMe[prop-missing]
+          offsetParent[widthProp]
+        );
+        x -= offsetX - popperRect.width;
+        x *= gpuAcceleration ? 1 : -1;
+      }
+    }
+    var commonStyles = Object.assign({
+      position: position2
+    }, adaptive && unsetSides);
+    var _ref4 = roundOffsets === true ? roundOffsetsByDPR({
+      x,
+      y
+    }, getWindow(popper2)) : {
+      x,
+      y
+    };
+    x = _ref4.x;
+    y = _ref4.y;
+    if (gpuAcceleration) {
+      var _Object$assign;
+      return Object.assign({}, commonStyles, (_Object$assign = {}, _Object$assign[sideY] = hasY ? "0" : "", _Object$assign[sideX] = hasX ? "0" : "", _Object$assign.transform = (win.devicePixelRatio || 1) <= 1 ? "translate(" + x + "px, " + y + "px)" : "translate3d(" + x + "px, " + y + "px, 0)", _Object$assign));
+    }
+    return Object.assign({}, commonStyles, (_Object$assign2 = {}, _Object$assign2[sideY] = hasY ? y + "px" : "", _Object$assign2[sideX] = hasX ? x + "px" : "", _Object$assign2.transform = "", _Object$assign2));
+  }
+  function computeStyles(_ref5) {
+    var state = _ref5.state, options = _ref5.options;
+    var _options$gpuAccelerat = options.gpuAcceleration, gpuAcceleration = _options$gpuAccelerat === void 0 ? true : _options$gpuAccelerat, _options$adaptive = options.adaptive, adaptive = _options$adaptive === void 0 ? true : _options$adaptive, _options$roundOffsets = options.roundOffsets, roundOffsets = _options$roundOffsets === void 0 ? true : _options$roundOffsets;
+    var commonStyles = {
+      placement: getBasePlacement(state.placement),
+      variation: getVariation(state.placement),
+      popper: state.elements.popper,
+      popperRect: state.rects.popper,
+      gpuAcceleration,
+      isFixed: state.options.strategy === "fixed"
+    };
+    if (state.modifiersData.popperOffsets != null) {
+      state.styles.popper = Object.assign({}, state.styles.popper, mapToStyles(Object.assign({}, commonStyles, {
+        offsets: state.modifiersData.popperOffsets,
+        position: state.options.strategy,
+        adaptive,
+        roundOffsets
+      })));
+    }
+    if (state.modifiersData.arrow != null) {
+      state.styles.arrow = Object.assign({}, state.styles.arrow, mapToStyles(Object.assign({}, commonStyles, {
+        offsets: state.modifiersData.arrow,
+        position: "absolute",
+        adaptive: false,
+        roundOffsets
+      })));
+    }
+    state.attributes.popper = Object.assign({}, state.attributes.popper, {
+      "data-popper-placement": state.placement
     });
   }
-  function convertOffsetParentRelativeRectToViewportRelativeRect(_ref) {
-    let {
-      rect,
-      offsetParent,
-      strategy
-    } = _ref;
-    const isOffsetParentAnElement = isHTMLElement(offsetParent);
-    const documentElement = getDocumentElement(offsetParent);
-    if (offsetParent === documentElement) {
-      return rect;
+  const computeStyles$1 = {
+    name: "computeStyles",
+    enabled: true,
+    phase: "beforeWrite",
+    fn: computeStyles,
+    data: {}
+  };
+  var passive = {
+    passive: true
+  };
+  function effect(_ref) {
+    var state = _ref.state, instance = _ref.instance, options = _ref.options;
+    var _options$scroll = options.scroll, scroll = _options$scroll === void 0 ? true : _options$scroll, _options$resize = options.resize, resize = _options$resize === void 0 ? true : _options$resize;
+    var window2 = getWindow(state.elements.popper);
+    var scrollParents = [].concat(state.scrollParents.reference, state.scrollParents.popper);
+    if (scroll) {
+      scrollParents.forEach(function(scrollParent) {
+        scrollParent.addEventListener("scroll", instance.update, passive);
+      });
     }
-    let scroll = {
-      scrollLeft: 0,
-      scrollTop: 0
-    };
-    let scale = createCoords(1);
-    const offsets = createCoords(0);
-    if (isOffsetParentAnElement || !isOffsetParentAnElement && strategy !== "fixed") {
-      if (getNodeName(offsetParent) !== "body" || isOverflowElement(documentElement)) {
-        scroll = getNodeScroll(offsetParent);
-      }
-      if (isHTMLElement(offsetParent)) {
-        const offsetRect = getBoundingClientRect(offsetParent);
-        scale = getScale$1(offsetParent);
-        offsets.x = offsetRect.x + offsetParent.clientLeft;
-        offsets.y = offsetRect.y + offsetParent.clientTop;
-      }
+    if (resize) {
+      window2.addEventListener("resize", instance.update, passive);
     }
-    return {
-      width: rect.width * scale.x,
-      height: rect.height * scale.y,
-      x: rect.x * scale.x - scroll.scrollLeft * scale.x + offsets.x,
-      y: rect.y * scale.y - scroll.scrollTop * scale.y + offsets.y
+    return function() {
+      if (scroll) {
+        scrollParents.forEach(function(scrollParent) {
+          scrollParent.removeEventListener("scroll", instance.update, passive);
+        });
+      }
+      if (resize) {
+        window2.removeEventListener("resize", instance.update, passive);
+      }
     };
   }
-  function getClientRects(element) {
-    return Array.from(element.getClientRects());
+  const eventListeners = {
+    name: "eventListeners",
+    enabled: true,
+    phase: "write",
+    fn: function fn() {
+    },
+    effect,
+    data: {}
+  };
+  var hash$1 = {
+    left: "right",
+    right: "left",
+    bottom: "top",
+    top: "bottom"
+  };
+  function getOppositePlacement(placement) {
+    return placement.replace(/left|right|bottom|top/g, function(matched) {
+      return hash$1[matched];
+    });
+  }
+  var hash = {
+    start: "end",
+    end: "start"
+  };
+  function getOppositeVariationPlacement(placement) {
+    return placement.replace(/start|end/g, function(matched) {
+      return hash[matched];
+    });
+  }
+  function getWindowScroll(node2) {
+    var win = getWindow(node2);
+    var scrollLeft = win.pageXOffset;
+    var scrollTop = win.pageYOffset;
+    return {
+      scrollLeft,
+      scrollTop
+    };
   }
   function getWindowScrollBarX(element) {
-    return getBoundingClientRect(getDocumentElement(element)).left + getNodeScroll(element).scrollLeft;
-  }
-  function getDocumentRect(element) {
-    const html = getDocumentElement(element);
-    const scroll = getNodeScroll(element);
-    const body = element.ownerDocument.body;
-    const width2 = max(html.scrollWidth, html.clientWidth, body.scrollWidth, body.clientWidth);
-    const height2 = max(html.scrollHeight, html.clientHeight, body.scrollHeight, body.clientHeight);
-    let x = -scroll.scrollLeft + getWindowScrollBarX(element);
-    const y = -scroll.scrollTop;
-    if (getComputedStyle(body).direction === "rtl") {
-      x += max(html.clientWidth, body.clientWidth) - width2;
-    }
-    return {
-      width: width2,
-      height: height2,
-      x,
-      y
-    };
+    return getBoundingClientRect(getDocumentElement(element)).left + getWindowScroll(element).scrollLeft;
   }
   function getViewportRect(element, strategy) {
-    const win = getWindow(element);
-    const html = getDocumentElement(element);
-    const visualViewport = win.visualViewport;
-    let width2 = html.clientWidth;
-    let height2 = html.clientHeight;
-    let x = 0;
-    let y = 0;
+    var win = getWindow(element);
+    var html = getDocumentElement(element);
+    var visualViewport = win.visualViewport;
+    var width2 = html.clientWidth;
+    var height2 = html.clientHeight;
+    var x = 0;
+    var y = 0;
     if (visualViewport) {
       width2 = visualViewport.width;
       height2 = visualViewport.height;
-      const visualViewportBased = isWebKit();
-      if (!visualViewportBased || visualViewportBased && strategy === "fixed") {
+      var layoutViewport = isLayoutViewport();
+      if (layoutViewport || !layoutViewport && strategy === "fixed") {
         x = visualViewport.offsetLeft;
         y = visualViewport.offsetTop;
       }
@@ -23652,19 +22252,22 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     return {
       width: width2,
       height: height2,
-      x,
+      x: x + getWindowScrollBarX(element),
       y
     };
   }
-  function getInnerBoundingClientRect(element, strategy) {
-    const clientRect = getBoundingClientRect(element, true, strategy === "fixed");
-    const top2 = clientRect.top + element.clientTop;
-    const left2 = clientRect.left + element.clientLeft;
-    const scale = isHTMLElement(element) ? getScale$1(element) : createCoords(1);
-    const width2 = element.clientWidth * scale.x;
-    const height2 = element.clientHeight * scale.y;
-    const x = left2 * scale.x;
-    const y = top2 * scale.y;
+  function getDocumentRect(element) {
+    var _element$ownerDocumen;
+    var html = getDocumentElement(element);
+    var winScroll = getWindowScroll(element);
+    var body = (_element$ownerDocumen = element.ownerDocument) == null ? void 0 : _element$ownerDocumen.body;
+    var width2 = max(html.scrollWidth, html.clientWidth, body ? body.scrollWidth : 0, body ? body.clientWidth : 0);
+    var height2 = max(html.scrollHeight, html.clientHeight, body ? body.scrollHeight : 0, body ? body.clientHeight : 0);
+    var x = -winScroll.scrollLeft + getWindowScrollBarX(element);
+    var y = -winScroll.scrollTop;
+    if (getComputedStyle(body || html).direction === "rtl") {
+      x += max(html.clientWidth, body ? body.clientWidth : 0) - width2;
+    }
     return {
       width: width2,
       height: height2,
@@ -23672,109 +22275,550 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       y
     };
   }
-  function getClientRectFromClippingAncestor(element, clippingAncestor, strategy) {
-    let rect;
-    if (clippingAncestor === "viewport") {
-      rect = getViewportRect(element, strategy);
-    } else if (clippingAncestor === "document") {
-      rect = getDocumentRect(getDocumentElement(element));
-    } else if (isElement(clippingAncestor)) {
-      rect = getInnerBoundingClientRect(clippingAncestor, strategy);
-    } else {
-      const visualOffsets = getVisualOffsets(element);
-      rect = __spreadProps(__spreadValues({}, clippingAncestor), {
-        x: clippingAncestor.x - visualOffsets.x,
-        y: clippingAncestor.y - visualOffsets.y
-      });
-    }
-    return rectToClientRect(rect);
+  function isScrollParent(element) {
+    var _getComputedStyle = getComputedStyle(element), overflow2 = _getComputedStyle.overflow, overflowX = _getComputedStyle.overflowX, overflowY = _getComputedStyle.overflowY;
+    return /auto|scroll|overlay|hidden/.test(overflow2 + overflowY + overflowX);
   }
-  function hasFixedPositionAncestor(element, stopNode) {
-    const parentNode = getParentNode(element);
-    if (parentNode === stopNode || !isElement(parentNode) || isLastTraversableNode(parentNode)) {
-      return false;
+  function getScrollParent(node2) {
+    if (["html", "body", "#document"].indexOf(getNodeName(node2)) >= 0) {
+      return node2.ownerDocument.body;
     }
-    return getComputedStyle(parentNode).position === "fixed" || hasFixedPositionAncestor(parentNode, stopNode);
+    if (isHTMLElement$1(node2) && isScrollParent(node2)) {
+      return node2;
+    }
+    return getScrollParent(getParentNode(node2));
   }
-  function getClippingElementAncestors(element, cache2) {
-    const cachedResult = cache2.get(element);
-    if (cachedResult) {
-      return cachedResult;
+  function listScrollParents(element, list) {
+    var _element$ownerDocumen;
+    if (list === void 0) {
+      list = [];
     }
-    let result = getOverflowAncestors(element, [], false).filter((el) => isElement(el) && getNodeName(el) !== "body");
-    let currentContainingBlockComputedStyle = null;
-    const elementIsFixed = getComputedStyle(element).position === "fixed";
-    let currentNode = elementIsFixed ? getParentNode(element) : element;
-    while (isElement(currentNode) && !isLastTraversableNode(currentNode)) {
-      const computedStyle = getComputedStyle(currentNode);
-      const currentNodeIsContaining = isContainingBlock(currentNode);
-      if (!currentNodeIsContaining && computedStyle.position === "fixed") {
-        currentContainingBlockComputedStyle = null;
-      }
-      const shouldDropCurrentNode = elementIsFixed ? !currentNodeIsContaining && !currentContainingBlockComputedStyle : !currentNodeIsContaining && computedStyle.position === "static" && !!currentContainingBlockComputedStyle && ["absolute", "fixed"].includes(currentContainingBlockComputedStyle.position) || isOverflowElement(currentNode) && !currentNodeIsContaining && hasFixedPositionAncestor(element, currentNode);
-      if (shouldDropCurrentNode) {
-        result = result.filter((ancestor) => ancestor !== currentNode);
-      } else {
-        currentContainingBlockComputedStyle = computedStyle;
-      }
-      currentNode = getParentNode(currentNode);
-    }
-    cache2.set(element, result);
-    return result;
+    var scrollParent = getScrollParent(element);
+    var isBody = scrollParent === ((_element$ownerDocumen = element.ownerDocument) == null ? void 0 : _element$ownerDocumen.body);
+    var win = getWindow(scrollParent);
+    var target = isBody ? [win].concat(win.visualViewport || [], isScrollParent(scrollParent) ? scrollParent : []) : scrollParent;
+    var updatedList = list.concat(target);
+    return isBody ? updatedList : (
+      // $FlowFixMe[incompatible-call]: isBody tells us target will be an HTMLElement here
+      updatedList.concat(listScrollParents(getParentNode(target)))
+    );
   }
-  function getClippingRect(_ref) {
-    let {
-      element,
-      boundary,
-      rootBoundary,
-      strategy
-    } = _ref;
-    const elementClippingAncestors = boundary === "clippingAncestors" ? getClippingElementAncestors(element, this._c) : [].concat(boundary);
-    const clippingAncestors = [...elementClippingAncestors, rootBoundary];
-    const firstClippingAncestor = clippingAncestors[0];
-    const clippingRect = clippingAncestors.reduce((accRect, clippingAncestor) => {
-      const rect = getClientRectFromClippingAncestor(element, clippingAncestor, strategy);
+  function rectToClientRect(rect) {
+    return Object.assign({}, rect, {
+      left: rect.x,
+      top: rect.y,
+      right: rect.x + rect.width,
+      bottom: rect.y + rect.height
+    });
+  }
+  function getInnerBoundingClientRect(element, strategy) {
+    var rect = getBoundingClientRect(element, false, strategy === "fixed");
+    rect.top = rect.top + element.clientTop;
+    rect.left = rect.left + element.clientLeft;
+    rect.bottom = rect.top + element.clientHeight;
+    rect.right = rect.left + element.clientWidth;
+    rect.width = element.clientWidth;
+    rect.height = element.clientHeight;
+    rect.x = rect.left;
+    rect.y = rect.top;
+    return rect;
+  }
+  function getClientRectFromMixedType(element, clippingParent, strategy) {
+    return clippingParent === viewport ? rectToClientRect(getViewportRect(element, strategy)) : isElement(clippingParent) ? getInnerBoundingClientRect(clippingParent, strategy) : rectToClientRect(getDocumentRect(getDocumentElement(element)));
+  }
+  function getClippingParents(element) {
+    var clippingParents2 = listScrollParents(getParentNode(element));
+    var canEscapeClipping = ["absolute", "fixed"].indexOf(getComputedStyle(element).position) >= 0;
+    var clipperElement = canEscapeClipping && isHTMLElement$1(element) ? getOffsetParent(element) : element;
+    if (!isElement(clipperElement)) {
+      return [];
+    }
+    return clippingParents2.filter(function(clippingParent) {
+      return isElement(clippingParent) && contains(clippingParent, clipperElement) && getNodeName(clippingParent) !== "body";
+    });
+  }
+  function getClippingRect(element, boundary, rootBoundary, strategy) {
+    var mainClippingParents = boundary === "clippingParents" ? getClippingParents(element) : [].concat(boundary);
+    var clippingParents2 = [].concat(mainClippingParents, [rootBoundary]);
+    var firstClippingParent = clippingParents2[0];
+    var clippingRect = clippingParents2.reduce(function(accRect, clippingParent) {
+      var rect = getClientRectFromMixedType(element, clippingParent, strategy);
       accRect.top = max(rect.top, accRect.top);
       accRect.right = min(rect.right, accRect.right);
       accRect.bottom = min(rect.bottom, accRect.bottom);
       accRect.left = max(rect.left, accRect.left);
       return accRect;
-    }, getClientRectFromClippingAncestor(element, firstClippingAncestor, strategy));
+    }, getClientRectFromMixedType(element, firstClippingParent, strategy));
+    clippingRect.width = clippingRect.right - clippingRect.left;
+    clippingRect.height = clippingRect.bottom - clippingRect.top;
+    clippingRect.x = clippingRect.left;
+    clippingRect.y = clippingRect.top;
+    return clippingRect;
+  }
+  function computeOffsets(_ref) {
+    var reference2 = _ref.reference, element = _ref.element, placement = _ref.placement;
+    var basePlacement = placement ? getBasePlacement(placement) : null;
+    var variation = placement ? getVariation(placement) : null;
+    var commonX = reference2.x + reference2.width / 2 - element.width / 2;
+    var commonY = reference2.y + reference2.height / 2 - element.height / 2;
+    var offsets;
+    switch (basePlacement) {
+      case top:
+        offsets = {
+          x: commonX,
+          y: reference2.y - element.height
+        };
+        break;
+      case bottom:
+        offsets = {
+          x: commonX,
+          y: reference2.y + reference2.height
+        };
+        break;
+      case right:
+        offsets = {
+          x: reference2.x + reference2.width,
+          y: commonY
+        };
+        break;
+      case left:
+        offsets = {
+          x: reference2.x - element.width,
+          y: commonY
+        };
+        break;
+      default:
+        offsets = {
+          x: reference2.x,
+          y: reference2.y
+        };
+    }
+    var mainAxis = basePlacement ? getMainAxisFromPlacement(basePlacement) : null;
+    if (mainAxis != null) {
+      var len = mainAxis === "y" ? "height" : "width";
+      switch (variation) {
+        case start:
+          offsets[mainAxis] = offsets[mainAxis] - (reference2[len] / 2 - element[len] / 2);
+          break;
+        case end:
+          offsets[mainAxis] = offsets[mainAxis] + (reference2[len] / 2 - element[len] / 2);
+          break;
+        default:
+      }
+    }
+    return offsets;
+  }
+  function detectOverflow(state, options) {
+    if (options === void 0) {
+      options = {};
+    }
+    var _options = options, _options$placement = _options.placement, placement = _options$placement === void 0 ? state.placement : _options$placement, _options$strategy = _options.strategy, strategy = _options$strategy === void 0 ? state.strategy : _options$strategy, _options$boundary = _options.boundary, boundary = _options$boundary === void 0 ? clippingParents : _options$boundary, _options$rootBoundary = _options.rootBoundary, rootBoundary = _options$rootBoundary === void 0 ? viewport : _options$rootBoundary, _options$elementConte = _options.elementContext, elementContext = _options$elementConte === void 0 ? popper : _options$elementConte, _options$altBoundary = _options.altBoundary, altBoundary = _options$altBoundary === void 0 ? false : _options$altBoundary, _options$padding = _options.padding, padding2 = _options$padding === void 0 ? 0 : _options$padding;
+    var paddingObject = mergePaddingObject(typeof padding2 !== "number" ? padding2 : expandToHashMap(padding2, basePlacements));
+    var altContext = elementContext === popper ? reference : popper;
+    var popperRect = state.rects.popper;
+    var element = state.elements[altBoundary ? altContext : elementContext];
+    var clippingClientRect = getClippingRect(isElement(element) ? element : element.contextElement || getDocumentElement(state.elements.popper), boundary, rootBoundary, strategy);
+    var referenceClientRect = getBoundingClientRect(state.elements.reference);
+    var popperOffsets2 = computeOffsets({
+      reference: referenceClientRect,
+      element: popperRect,
+      strategy: "absolute",
+      placement
+    });
+    var popperClientRect = rectToClientRect(Object.assign({}, popperRect, popperOffsets2));
+    var elementClientRect = elementContext === popper ? popperClientRect : referenceClientRect;
+    var overflowOffsets = {
+      top: clippingClientRect.top - elementClientRect.top + paddingObject.top,
+      bottom: elementClientRect.bottom - clippingClientRect.bottom + paddingObject.bottom,
+      left: clippingClientRect.left - elementClientRect.left + paddingObject.left,
+      right: elementClientRect.right - clippingClientRect.right + paddingObject.right
+    };
+    var offsetData = state.modifiersData.offset;
+    if (elementContext === popper && offsetData) {
+      var offset2 = offsetData[placement];
+      Object.keys(overflowOffsets).forEach(function(key) {
+        var multiply = [right, bottom].indexOf(key) >= 0 ? 1 : -1;
+        var axis = [top, bottom].indexOf(key) >= 0 ? "y" : "x";
+        overflowOffsets[key] += offset2[axis] * multiply;
+      });
+    }
+    return overflowOffsets;
+  }
+  function computeAutoPlacement(state, options) {
+    if (options === void 0) {
+      options = {};
+    }
+    var _options = options, placement = _options.placement, boundary = _options.boundary, rootBoundary = _options.rootBoundary, padding2 = _options.padding, flipVariations = _options.flipVariations, _options$allowedAutoP = _options.allowedAutoPlacements, allowedAutoPlacements = _options$allowedAutoP === void 0 ? placements : _options$allowedAutoP;
+    var variation = getVariation(placement);
+    var placements$12 = variation ? flipVariations ? variationPlacements : variationPlacements.filter(function(placement2) {
+      return getVariation(placement2) === variation;
+    }) : basePlacements;
+    var allowedPlacements = placements$12.filter(function(placement2) {
+      return allowedAutoPlacements.indexOf(placement2) >= 0;
+    });
+    if (allowedPlacements.length === 0) {
+      allowedPlacements = placements$12;
+    }
+    var overflows = allowedPlacements.reduce(function(acc, placement2) {
+      acc[placement2] = detectOverflow(state, {
+        placement: placement2,
+        boundary,
+        rootBoundary,
+        padding: padding2
+      })[getBasePlacement(placement2)];
+      return acc;
+    }, {});
+    return Object.keys(overflows).sort(function(a, b) {
+      return overflows[a] - overflows[b];
+    });
+  }
+  function getExpandedFallbackPlacements(placement) {
+    if (getBasePlacement(placement) === auto) {
+      return [];
+    }
+    var oppositePlacement = getOppositePlacement(placement);
+    return [getOppositeVariationPlacement(placement), oppositePlacement, getOppositeVariationPlacement(oppositePlacement)];
+  }
+  function flip(_ref) {
+    var state = _ref.state, options = _ref.options, name = _ref.name;
+    if (state.modifiersData[name]._skip) {
+      return;
+    }
+    var _options$mainAxis = options.mainAxis, checkMainAxis = _options$mainAxis === void 0 ? true : _options$mainAxis, _options$altAxis = options.altAxis, checkAltAxis = _options$altAxis === void 0 ? true : _options$altAxis, specifiedFallbackPlacements = options.fallbackPlacements, padding2 = options.padding, boundary = options.boundary, rootBoundary = options.rootBoundary, altBoundary = options.altBoundary, _options$flipVariatio = options.flipVariations, flipVariations = _options$flipVariatio === void 0 ? true : _options$flipVariatio, allowedAutoPlacements = options.allowedAutoPlacements;
+    var preferredPlacement = state.options.placement;
+    var basePlacement = getBasePlacement(preferredPlacement);
+    var isBasePlacement = basePlacement === preferredPlacement;
+    var fallbackPlacements = specifiedFallbackPlacements || (isBasePlacement || !flipVariations ? [getOppositePlacement(preferredPlacement)] : getExpandedFallbackPlacements(preferredPlacement));
+    var placements2 = [preferredPlacement].concat(fallbackPlacements).reduce(function(acc, placement2) {
+      return acc.concat(getBasePlacement(placement2) === auto ? computeAutoPlacement(state, {
+        placement: placement2,
+        boundary,
+        rootBoundary,
+        padding: padding2,
+        flipVariations,
+        allowedAutoPlacements
+      }) : placement2);
+    }, []);
+    var referenceRect = state.rects.reference;
+    var popperRect = state.rects.popper;
+    var checksMap = /* @__PURE__ */ new Map();
+    var makeFallbackChecks = true;
+    var firstFittingPlacement = placements2[0];
+    for (var i = 0; i < placements2.length; i++) {
+      var placement = placements2[i];
+      var _basePlacement = getBasePlacement(placement);
+      var isStartVariation = getVariation(placement) === start;
+      var isVertical = [top, bottom].indexOf(_basePlacement) >= 0;
+      var len = isVertical ? "width" : "height";
+      var overflow2 = detectOverflow(state, {
+        placement,
+        boundary,
+        rootBoundary,
+        altBoundary,
+        padding: padding2
+      });
+      var mainVariationSide = isVertical ? isStartVariation ? right : left : isStartVariation ? bottom : top;
+      if (referenceRect[len] > popperRect[len]) {
+        mainVariationSide = getOppositePlacement(mainVariationSide);
+      }
+      var altVariationSide = getOppositePlacement(mainVariationSide);
+      var checks = [];
+      if (checkMainAxis) {
+        checks.push(overflow2[_basePlacement] <= 0);
+      }
+      if (checkAltAxis) {
+        checks.push(overflow2[mainVariationSide] <= 0, overflow2[altVariationSide] <= 0);
+      }
+      if (checks.every(function(check) {
+        return check;
+      })) {
+        firstFittingPlacement = placement;
+        makeFallbackChecks = false;
+        break;
+      }
+      checksMap.set(placement, checks);
+    }
+    if (makeFallbackChecks) {
+      var numberOfChecks = flipVariations ? 3 : 1;
+      var _loop = function _loop2(_i2) {
+        var fittingPlacement = placements2.find(function(placement2) {
+          var checks2 = checksMap.get(placement2);
+          if (checks2) {
+            return checks2.slice(0, _i2).every(function(check) {
+              return check;
+            });
+          }
+        });
+        if (fittingPlacement) {
+          firstFittingPlacement = fittingPlacement;
+          return "break";
+        }
+      };
+      for (var _i = numberOfChecks; _i > 0; _i--) {
+        var _ret = _loop(_i);
+        if (_ret === "break")
+          break;
+      }
+    }
+    if (state.placement !== firstFittingPlacement) {
+      state.modifiersData[name]._skip = true;
+      state.placement = firstFittingPlacement;
+      state.reset = true;
+    }
+  }
+  const flip$1 = {
+    name: "flip",
+    enabled: true,
+    phase: "main",
+    fn: flip,
+    requiresIfExists: ["offset"],
+    data: {
+      _skip: false
+    }
+  };
+  function getSideOffsets(overflow2, rect, preventedOffsets) {
+    if (preventedOffsets === void 0) {
+      preventedOffsets = {
+        x: 0,
+        y: 0
+      };
+    }
     return {
-      width: clippingRect.right - clippingRect.left,
-      height: clippingRect.bottom - clippingRect.top,
-      x: clippingRect.left,
-      y: clippingRect.top
+      top: overflow2.top - rect.height - preventedOffsets.y,
+      right: overflow2.right - rect.width + preventedOffsets.x,
+      bottom: overflow2.bottom - rect.height + preventedOffsets.y,
+      left: overflow2.left - rect.width - preventedOffsets.x
     };
   }
-  function getDimensions(element) {
-    const {
-      width: width2,
-      height: height2
-    } = getCssDimensions(element);
-    return {
-      width: width2,
-      height: height2
+  function isAnySideFullyClipped(overflow2) {
+    return [top, right, bottom, left].some(function(side) {
+      return overflow2[side] >= 0;
+    });
+  }
+  function hide(_ref) {
+    var state = _ref.state, name = _ref.name;
+    var referenceRect = state.rects.reference;
+    var popperRect = state.rects.popper;
+    var preventedOffsets = state.modifiersData.preventOverflow;
+    var referenceOverflow = detectOverflow(state, {
+      elementContext: "reference"
+    });
+    var popperAltOverflow = detectOverflow(state, {
+      altBoundary: true
+    });
+    var referenceClippingOffsets = getSideOffsets(referenceOverflow, referenceRect);
+    var popperEscapeOffsets = getSideOffsets(popperAltOverflow, popperRect, preventedOffsets);
+    var isReferenceHidden = isAnySideFullyClipped(referenceClippingOffsets);
+    var hasPopperEscaped = isAnySideFullyClipped(popperEscapeOffsets);
+    state.modifiersData[name] = {
+      referenceClippingOffsets,
+      popperEscapeOffsets,
+      isReferenceHidden,
+      hasPopperEscaped
+    };
+    state.attributes.popper = Object.assign({}, state.attributes.popper, {
+      "data-popper-reference-hidden": isReferenceHidden,
+      "data-popper-escaped": hasPopperEscaped
+    });
+  }
+  const hide$1 = {
+    name: "hide",
+    enabled: true,
+    phase: "main",
+    requiresIfExists: ["preventOverflow"],
+    fn: hide
+  };
+  function distanceAndSkiddingToXY(placement, rects, offset2) {
+    var basePlacement = getBasePlacement(placement);
+    var invertDistance = [left, top].indexOf(basePlacement) >= 0 ? -1 : 1;
+    var _ref = typeof offset2 === "function" ? offset2(Object.assign({}, rects, {
+      placement
+    })) : offset2, skidding = _ref[0], distance = _ref[1];
+    skidding = skidding || 0;
+    distance = (distance || 0) * invertDistance;
+    return [left, right].indexOf(basePlacement) >= 0 ? {
+      x: distance,
+      y: skidding
+    } : {
+      x: skidding,
+      y: distance
     };
   }
-  function getRectRelativeToOffsetParent(element, offsetParent, strategy) {
-    const isOffsetParentAnElement = isHTMLElement(offsetParent);
-    const documentElement = getDocumentElement(offsetParent);
-    const isFixed = strategy === "fixed";
-    const rect = getBoundingClientRect(element, true, isFixed, offsetParent);
-    let scroll = {
+  function offset(_ref2) {
+    var state = _ref2.state, options = _ref2.options, name = _ref2.name;
+    var _options$offset = options.offset, offset2 = _options$offset === void 0 ? [0, 0] : _options$offset;
+    var data = placements.reduce(function(acc, placement) {
+      acc[placement] = distanceAndSkiddingToXY(placement, state.rects, offset2);
+      return acc;
+    }, {});
+    var _data$state$placement = data[state.placement], x = _data$state$placement.x, y = _data$state$placement.y;
+    if (state.modifiersData.popperOffsets != null) {
+      state.modifiersData.popperOffsets.x += x;
+      state.modifiersData.popperOffsets.y += y;
+    }
+    state.modifiersData[name] = data;
+  }
+  const offset$1 = {
+    name: "offset",
+    enabled: true,
+    phase: "main",
+    requires: ["popperOffsets"],
+    fn: offset
+  };
+  function popperOffsets(_ref) {
+    var state = _ref.state, name = _ref.name;
+    state.modifiersData[name] = computeOffsets({
+      reference: state.rects.reference,
+      element: state.rects.popper,
+      strategy: "absolute",
+      placement: state.placement
+    });
+  }
+  const popperOffsets$1 = {
+    name: "popperOffsets",
+    enabled: true,
+    phase: "read",
+    fn: popperOffsets,
+    data: {}
+  };
+  function getAltAxis(axis) {
+    return axis === "x" ? "y" : "x";
+  }
+  function preventOverflow(_ref) {
+    var state = _ref.state, options = _ref.options, name = _ref.name;
+    var _options$mainAxis = options.mainAxis, checkMainAxis = _options$mainAxis === void 0 ? true : _options$mainAxis, _options$altAxis = options.altAxis, checkAltAxis = _options$altAxis === void 0 ? false : _options$altAxis, boundary = options.boundary, rootBoundary = options.rootBoundary, altBoundary = options.altBoundary, padding2 = options.padding, _options$tether = options.tether, tether = _options$tether === void 0 ? true : _options$tether, _options$tetherOffset = options.tetherOffset, tetherOffset = _options$tetherOffset === void 0 ? 0 : _options$tetherOffset;
+    var overflow2 = detectOverflow(state, {
+      boundary,
+      rootBoundary,
+      padding: padding2,
+      altBoundary
+    });
+    var basePlacement = getBasePlacement(state.placement);
+    var variation = getVariation(state.placement);
+    var isBasePlacement = !variation;
+    var mainAxis = getMainAxisFromPlacement(basePlacement);
+    var altAxis = getAltAxis(mainAxis);
+    var popperOffsets2 = state.modifiersData.popperOffsets;
+    var referenceRect = state.rects.reference;
+    var popperRect = state.rects.popper;
+    var tetherOffsetValue = typeof tetherOffset === "function" ? tetherOffset(Object.assign({}, state.rects, {
+      placement: state.placement
+    })) : tetherOffset;
+    var normalizedTetherOffsetValue = typeof tetherOffsetValue === "number" ? {
+      mainAxis: tetherOffsetValue,
+      altAxis: tetherOffsetValue
+    } : Object.assign({
+      mainAxis: 0,
+      altAxis: 0
+    }, tetherOffsetValue);
+    var offsetModifierState = state.modifiersData.offset ? state.modifiersData.offset[state.placement] : null;
+    var data = {
+      x: 0,
+      y: 0
+    };
+    if (!popperOffsets2) {
+      return;
+    }
+    if (checkMainAxis) {
+      var _offsetModifierState$;
+      var mainSide = mainAxis === "y" ? top : left;
+      var altSide = mainAxis === "y" ? bottom : right;
+      var len = mainAxis === "y" ? "height" : "width";
+      var offset2 = popperOffsets2[mainAxis];
+      var min$12 = offset2 + overflow2[mainSide];
+      var max$12 = offset2 - overflow2[altSide];
+      var additive = tether ? -popperRect[len] / 2 : 0;
+      var minLen = variation === start ? referenceRect[len] : popperRect[len];
+      var maxLen = variation === start ? -popperRect[len] : -referenceRect[len];
+      var arrowElement = state.elements.arrow;
+      var arrowRect = tether && arrowElement ? getLayoutRect(arrowElement) : {
+        width: 0,
+        height: 0
+      };
+      var arrowPaddingObject = state.modifiersData["arrow#persistent"] ? state.modifiersData["arrow#persistent"].padding : getFreshSideObject();
+      var arrowPaddingMin = arrowPaddingObject[mainSide];
+      var arrowPaddingMax = arrowPaddingObject[altSide];
+      var arrowLen = within(0, referenceRect[len], arrowRect[len]);
+      var minOffset = isBasePlacement ? referenceRect[len] / 2 - additive - arrowLen - arrowPaddingMin - normalizedTetherOffsetValue.mainAxis : minLen - arrowLen - arrowPaddingMin - normalizedTetherOffsetValue.mainAxis;
+      var maxOffset = isBasePlacement ? -referenceRect[len] / 2 + additive + arrowLen + arrowPaddingMax + normalizedTetherOffsetValue.mainAxis : maxLen + arrowLen + arrowPaddingMax + normalizedTetherOffsetValue.mainAxis;
+      var arrowOffsetParent = state.elements.arrow && getOffsetParent(state.elements.arrow);
+      var clientOffset = arrowOffsetParent ? mainAxis === "y" ? arrowOffsetParent.clientTop || 0 : arrowOffsetParent.clientLeft || 0 : 0;
+      var offsetModifierValue = (_offsetModifierState$ = offsetModifierState == null ? void 0 : offsetModifierState[mainAxis]) != null ? _offsetModifierState$ : 0;
+      var tetherMin = offset2 + minOffset - offsetModifierValue - clientOffset;
+      var tetherMax = offset2 + maxOffset - offsetModifierValue;
+      var preventedOffset = within(tether ? min(min$12, tetherMin) : min$12, offset2, tether ? max(max$12, tetherMax) : max$12);
+      popperOffsets2[mainAxis] = preventedOffset;
+      data[mainAxis] = preventedOffset - offset2;
+    }
+    if (checkAltAxis) {
+      var _offsetModifierState$2;
+      var _mainSide = mainAxis === "x" ? top : left;
+      var _altSide = mainAxis === "x" ? bottom : right;
+      var _offset = popperOffsets2[altAxis];
+      var _len = altAxis === "y" ? "height" : "width";
+      var _min = _offset + overflow2[_mainSide];
+      var _max = _offset - overflow2[_altSide];
+      var isOriginSide = [top, left].indexOf(basePlacement) !== -1;
+      var _offsetModifierValue = (_offsetModifierState$2 = offsetModifierState == null ? void 0 : offsetModifierState[altAxis]) != null ? _offsetModifierState$2 : 0;
+      var _tetherMin = isOriginSide ? _min : _offset - referenceRect[_len] - popperRect[_len] - _offsetModifierValue + normalizedTetherOffsetValue.altAxis;
+      var _tetherMax = isOriginSide ? _offset + referenceRect[_len] + popperRect[_len] - _offsetModifierValue - normalizedTetherOffsetValue.altAxis : _max;
+      var _preventedOffset = tether && isOriginSide ? withinMaxClamp(_tetherMin, _offset, _tetherMax) : within(tether ? _tetherMin : _min, _offset, tether ? _tetherMax : _max);
+      popperOffsets2[altAxis] = _preventedOffset;
+      data[altAxis] = _preventedOffset - _offset;
+    }
+    state.modifiersData[name] = data;
+  }
+  const preventOverflow$1 = {
+    name: "preventOverflow",
+    enabled: true,
+    phase: "main",
+    fn: preventOverflow,
+    requiresIfExists: ["offset"]
+  };
+  function getHTMLElementScroll(element) {
+    return {
+      scrollLeft: element.scrollLeft,
+      scrollTop: element.scrollTop
+    };
+  }
+  function getNodeScroll(node2) {
+    if (node2 === getWindow(node2) || !isHTMLElement$1(node2)) {
+      return getWindowScroll(node2);
+    } else {
+      return getHTMLElementScroll(node2);
+    }
+  }
+  function isElementScaled(element) {
+    var rect = element.getBoundingClientRect();
+    var scaleX = round(rect.width) / element.offsetWidth || 1;
+    var scaleY = round(rect.height) / element.offsetHeight || 1;
+    return scaleX !== 1 || scaleY !== 1;
+  }
+  function getCompositeRect(elementOrVirtualElement, offsetParent, isFixed) {
+    if (isFixed === void 0) {
+      isFixed = false;
+    }
+    var isOffsetParentAnElement = isHTMLElement$1(offsetParent);
+    var offsetParentIsScaled = isHTMLElement$1(offsetParent) && isElementScaled(offsetParent);
+    var documentElement = getDocumentElement(offsetParent);
+    var rect = getBoundingClientRect(elementOrVirtualElement, offsetParentIsScaled, isFixed);
+    var scroll = {
       scrollLeft: 0,
       scrollTop: 0
     };
-    const offsets = createCoords(0);
+    var offsets = {
+      x: 0,
+      y: 0
+    };
     if (isOffsetParentAnElement || !isOffsetParentAnElement && !isFixed) {
-      if (getNodeName(offsetParent) !== "body" || isOverflowElement(documentElement)) {
+      if (getNodeName(offsetParent) !== "body" || // https://github.com/popperjs/popper-core/issues/1078
+      isScrollParent(documentElement)) {
         scroll = getNodeScroll(offsetParent);
       }
-      if (isOffsetParentAnElement) {
-        const offsetRect = getBoundingClientRect(offsetParent, true, isFixed, offsetParent);
-        offsets.x = offsetRect.x + offsetParent.clientLeft;
-        offsets.y = offsetRect.y + offsetParent.clientTop;
+      if (isHTMLElement$1(offsetParent)) {
+        offsets = getBoundingClientRect(offsetParent, true);
+        offsets.x += offsetParent.clientLeft;
+        offsets.y += offsetParent.clientTop;
       } else if (documentElement) {
         offsets.x = getWindowScrollBarX(documentElement);
       }
@@ -23786,771 +22830,560 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       height: rect.height
     };
   }
-  function getTrueOffsetParent(element, polyfill) {
-    if (!isHTMLElement(element) || getComputedStyle(element).position === "fixed") {
-      return null;
-    }
-    if (polyfill) {
-      return polyfill(element);
-    }
-    return element.offsetParent;
-  }
-  function getOffsetParent(element, polyfill) {
-    const window2 = getWindow(element);
-    if (!isHTMLElement(element)) {
-      return window2;
-    }
-    let offsetParent = getTrueOffsetParent(element, polyfill);
-    while (offsetParent && isTableElement(offsetParent) && getComputedStyle(offsetParent).position === "static") {
-      offsetParent = getTrueOffsetParent(offsetParent, polyfill);
-    }
-    if (offsetParent && (getNodeName(offsetParent) === "html" || getNodeName(offsetParent) === "body" && getComputedStyle(offsetParent).position === "static" && !isContainingBlock(offsetParent))) {
-      return window2;
-    }
-    return offsetParent || getContainingBlock(element) || window2;
-  }
-  const getElementRects = function(_ref) {
-    return __async(this, null, function* () {
-      let {
-        reference: reference2,
-        floating,
-        strategy
-      } = _ref;
-      const getOffsetParentFn = this.getOffsetParent || getOffsetParent;
-      const getDimensionsFn = this.getDimensions;
-      return {
-        reference: getRectRelativeToOffsetParent(reference2, yield getOffsetParentFn(floating), strategy),
-        floating: __spreadValues({
-          x: 0,
-          y: 0
-        }, yield getDimensionsFn(floating))
-      };
+  function order(modifiers) {
+    var map = /* @__PURE__ */ new Map();
+    var visited = /* @__PURE__ */ new Set();
+    var result = [];
+    modifiers.forEach(function(modifier) {
+      map.set(modifier.name, modifier);
     });
-  };
-  function isRTL(element) {
-    return getComputedStyle(element).direction === "rtl";
-  }
-  const platform = {
-    convertOffsetParentRelativeRectToViewportRelativeRect,
-    getDocumentElement,
-    getClippingRect,
-    getOffsetParent,
-    getElementRects,
-    getClientRects,
-    getDimensions,
-    getScale: getScale$1,
-    isElement,
-    isRTL
-  };
-  function observeMove(element, onMove) {
-    let io = null;
-    let timeoutId;
-    const root = getDocumentElement(element);
-    function cleanup() {
-      clearTimeout(timeoutId);
-      io && io.disconnect();
-      io = null;
-    }
-    function refresh(skip, threshold) {
-      if (skip === void 0) {
-        skip = false;
-      }
-      if (threshold === void 0) {
-        threshold = 1;
-      }
-      cleanup();
-      const {
-        left: left2,
-        top: top2,
-        width: width2,
-        height: height2
-      } = element.getBoundingClientRect();
-      if (!skip) {
-        onMove();
-      }
-      if (!width2 || !height2) {
-        return;
-      }
-      const insetTop = floor(top2);
-      const insetRight = floor(root.clientWidth - (left2 + width2));
-      const insetBottom = floor(root.clientHeight - (top2 + height2));
-      const insetLeft = floor(left2);
-      const rootMargin = -insetTop + "px " + -insetRight + "px " + -insetBottom + "px " + -insetLeft + "px";
-      const options = {
-        rootMargin,
-        threshold: max(0, min(1, threshold)) || 1
-      };
-      let isFirstUpdate = true;
-      function handleObserve(entries) {
-        const ratio = entries[0].intersectionRatio;
-        if (ratio !== threshold) {
-          if (!isFirstUpdate) {
-            return refresh();
-          }
-          if (!ratio) {
-            timeoutId = setTimeout(() => {
-              refresh(false, 1e-7);
-            }, 100);
-          } else {
-            refresh(false, ratio);
+    function sort(modifier) {
+      visited.add(modifier.name);
+      var requires = [].concat(modifier.requires || [], modifier.requiresIfExists || []);
+      requires.forEach(function(dep) {
+        if (!visited.has(dep)) {
+          var depModifier = map.get(dep);
+          if (depModifier) {
+            sort(depModifier);
           }
         }
-        isFirstUpdate = false;
-      }
-      try {
-        io = new IntersectionObserver(handleObserve, __spreadProps(__spreadValues({}, options), {
-          // Handle <iframe>s
-          root: root.ownerDocument
-        }));
-      } catch (e) {
-        io = new IntersectionObserver(handleObserve, options);
-      }
-      io.observe(element);
-    }
-    refresh(true);
-    return cleanup;
-  }
-  function autoUpdate(reference2, floating, update, options) {
-    if (options === void 0) {
-      options = {};
-    }
-    const {
-      ancestorScroll = true,
-      ancestorResize = true,
-      elementResize = typeof ResizeObserver === "function",
-      layoutShift = typeof IntersectionObserver === "function",
-      animationFrame = false
-    } = options;
-    const referenceEl = unwrapElement(reference2);
-    const ancestors = ancestorScroll || ancestorResize ? [...referenceEl ? getOverflowAncestors(referenceEl) : [], ...getOverflowAncestors(floating)] : [];
-    ancestors.forEach((ancestor) => {
-      ancestorScroll && ancestor.addEventListener("scroll", update, {
-        passive: true
       });
-      ancestorResize && ancestor.addEventListener("resize", update);
+      result.push(modifier);
+    }
+    modifiers.forEach(function(modifier) {
+      if (!visited.has(modifier.name)) {
+        sort(modifier);
+      }
     });
-    const cleanupIo = referenceEl && layoutShift ? observeMove(referenceEl, update) : null;
-    let reobserveFrame = -1;
-    let resizeObserver = null;
-    if (elementResize) {
-      resizeObserver = new ResizeObserver((_ref) => {
-        let [firstEntry] = _ref;
-        if (firstEntry && firstEntry.target === referenceEl && resizeObserver) {
-          resizeObserver.unobserve(floating);
-          cancelAnimationFrame(reobserveFrame);
-          reobserveFrame = requestAnimationFrame(() => {
-            resizeObserver && resizeObserver.observe(floating);
-          });
-        }
-        update();
-      });
-      if (referenceEl && !animationFrame) {
-        resizeObserver.observe(referenceEl);
-      }
-      resizeObserver.observe(floating);
-    }
-    let frameId;
-    let prevRefRect = animationFrame ? getBoundingClientRect(reference2) : null;
-    if (animationFrame) {
-      frameLoop();
-    }
-    function frameLoop() {
-      const nextRefRect = getBoundingClientRect(reference2);
-      if (prevRefRect && (nextRefRect.x !== prevRefRect.x || nextRefRect.y !== prevRefRect.y || nextRefRect.width !== prevRefRect.width || nextRefRect.height !== prevRefRect.height)) {
-        update();
-      }
-      prevRefRect = nextRefRect;
-      frameId = requestAnimationFrame(frameLoop);
-    }
-    update();
-    return () => {
-      ancestors.forEach((ancestor) => {
-        ancestorScroll && ancestor.removeEventListener("scroll", update);
-        ancestorResize && ancestor.removeEventListener("resize", update);
-      });
-      cleanupIo && cleanupIo();
-      resizeObserver && resizeObserver.disconnect();
-      resizeObserver = null;
-      if (animationFrame) {
-        cancelAnimationFrame(frameId);
-      }
-    };
+    return result;
   }
-  const autoPlacement = autoPlacement$1;
-  const shift = shift$1;
-  const flip = flip$1;
-  const size = size$1;
-  const hide = hide$1;
-  const arrow$1 = arrow$2;
-  const inline = inline$1;
-  const limitShift = limitShift$1;
-  const computePosition = (reference2, floating, options) => {
-    const cache2 = /* @__PURE__ */ new Map();
-    const mergedOptions = __spreadValues({
-      platform
-    }, options);
-    const platformWithCache = __spreadProps(__spreadValues({}, mergedOptions.platform), {
-      _c: cache2
-    });
-    return computePosition$1(reference2, floating, __spreadProps(__spreadValues({}, mergedOptions), {
-      platform: platformWithCache
-    }));
-  };
-  const arrow = (options) => {
-    function isRef(value) {
-      return {}.hasOwnProperty.call(value, "current");
-    }
-    return {
-      name: "arrow",
-      options,
-      fn(state) {
-        const {
-          element,
-          padding: padding2
-        } = typeof options === "function" ? options(state) : options;
-        if (element && isRef(element)) {
-          if (element.current != null) {
-            return arrow$1({
-              element: element.current,
-              padding: padding2
-            }).fn(state);
-          }
-          return {};
-        } else if (element) {
-          return arrow$1({
-            element,
-            padding: padding2
-          }).fn(state);
-        }
-        return {};
-      }
-    };
-  };
-  var index = typeof document !== "undefined" ? React.useLayoutEffect : React.useEffect;
-  function deepEqual(a, b) {
-    if (a === b) {
-      return true;
-    }
-    if (typeof a !== typeof b) {
-      return false;
-    }
-    if (typeof a === "function" && a.toString() === b.toString()) {
-      return true;
-    }
-    let length2, i, keys;
-    if (a && b && typeof a == "object") {
-      if (Array.isArray(a)) {
-        length2 = a.length;
-        if (length2 != b.length)
-          return false;
-        for (i = length2; i-- !== 0; ) {
-          if (!deepEqual(a[i], b[i])) {
-            return false;
-          }
-        }
-        return true;
-      }
-      keys = Object.keys(a);
-      length2 = keys.length;
-      if (length2 !== Object.keys(b).length) {
-        return false;
-      }
-      for (i = length2; i-- !== 0; ) {
-        if (!{}.hasOwnProperty.call(b, keys[i])) {
-          return false;
-        }
-      }
-      for (i = length2; i-- !== 0; ) {
-        const key = keys[i];
-        if (key === "_owner" && a.$$typeof) {
-          continue;
-        }
-        if (!deepEqual(a[key], b[key])) {
-          return false;
-        }
-      }
-      return true;
-    }
-    return a !== a && b !== b;
-  }
-  function getDPR(element) {
-    if (typeof window === "undefined") {
-      return 1;
-    }
-    const win = element.ownerDocument.defaultView || window;
-    return win.devicePixelRatio || 1;
-  }
-  function roundByDPR(element, value) {
-    const dpr = getDPR(element);
-    return Math.round(value * dpr) / dpr;
-  }
-  function useLatestRef(value) {
-    const ref = React__namespace.useRef(value);
-    index(() => {
-      ref.current = value;
-    });
-    return ref;
-  }
-  function useFloating(options) {
-    if (options === void 0) {
-      options = {};
-    }
-    const {
-      placement = "bottom",
-      strategy = "absolute",
-      middleware: middleware2 = [],
-      platform: platform2,
-      elements: {
-        reference: externalReference,
-        floating: externalFloating
-      } = {},
-      transform = true,
-      whileElementsMounted,
-      open
-    } = options;
-    const [data, setData] = React__namespace.useState({
-      x: 0,
-      y: 0,
-      strategy,
-      placement,
-      middlewareData: {},
-      isPositioned: false
-    });
-    const [latestMiddleware, setLatestMiddleware] = React__namespace.useState(middleware2);
-    if (!deepEqual(latestMiddleware, middleware2)) {
-      setLatestMiddleware(middleware2);
-    }
-    const [_reference, _setReference] = React__namespace.useState(null);
-    const [_floating, _setFloating] = React__namespace.useState(null);
-    const setReference = React__namespace.useCallback((node2) => {
-      if (node2 != referenceRef.current) {
-        referenceRef.current = node2;
-        _setReference(node2);
-      }
-    }, [_setReference]);
-    const setFloating = React__namespace.useCallback((node2) => {
-      if (node2 !== floatingRef.current) {
-        floatingRef.current = node2;
-        _setFloating(node2);
-      }
-    }, [_setFloating]);
-    const referenceEl = externalReference || _reference;
-    const floatingEl = externalFloating || _floating;
-    const referenceRef = React__namespace.useRef(null);
-    const floatingRef = React__namespace.useRef(null);
-    const dataRef = React__namespace.useRef(data);
-    const whileElementsMountedRef = useLatestRef(whileElementsMounted);
-    const platformRef = useLatestRef(platform2);
-    const update = React__namespace.useCallback(() => {
-      if (!referenceRef.current || !floatingRef.current) {
-        return;
-      }
-      const config2 = {
-        placement,
-        strategy,
-        middleware: latestMiddleware
-      };
-      if (platformRef.current) {
-        config2.platform = platformRef.current;
-      }
-      computePosition(referenceRef.current, floatingRef.current, config2).then((data2) => {
-        const fullData = __spreadProps(__spreadValues({}, data2), {
-          isPositioned: true
-        });
-        if (isMountedRef.current && !deepEqual(dataRef.current, fullData)) {
-          dataRef.current = fullData;
-          ReactDOM__namespace.flushSync(() => {
-            setData(fullData);
-          });
-        }
-      });
-    }, [latestMiddleware, placement, strategy, platformRef]);
-    index(() => {
-      if (open === false && dataRef.current.isPositioned) {
-        dataRef.current.isPositioned = false;
-        setData((data2) => __spreadProps(__spreadValues({}, data2), {
-          isPositioned: false
-        }));
-      }
-    }, [open]);
-    const isMountedRef = React__namespace.useRef(false);
-    index(() => {
-      isMountedRef.current = true;
-      return () => {
-        isMountedRef.current = false;
-      };
+  function orderModifiers(modifiers) {
+    var orderedModifiers = order(modifiers);
+    return modifierPhases.reduce(function(acc, phase) {
+      return acc.concat(orderedModifiers.filter(function(modifier) {
+        return modifier.phase === phase;
+      }));
     }, []);
-    index(() => {
-      if (referenceEl)
-        referenceRef.current = referenceEl;
-      if (floatingEl)
-        floatingRef.current = floatingEl;
-      if (referenceEl && floatingEl) {
-        if (whileElementsMountedRef.current) {
-          return whileElementsMountedRef.current(referenceEl, floatingEl, update);
-        } else {
-          update();
-        }
-      }
-    }, [referenceEl, floatingEl, update, whileElementsMountedRef]);
-    const refs = React__namespace.useMemo(() => ({
-      reference: referenceRef,
-      floating: floatingRef,
-      setReference,
-      setFloating
-    }), [setReference, setFloating]);
-    const elements = React__namespace.useMemo(() => ({
-      reference: referenceEl,
-      floating: floatingEl
-    }), [referenceEl, floatingEl]);
-    const floatingStyles = React__namespace.useMemo(() => {
-      const initialStyles = {
-        position: strategy,
-        left: 0,
-        top: 0
-      };
-      if (!elements.floating) {
-        return initialStyles;
-      }
-      const x = roundByDPR(elements.floating, data.x);
-      const y = roundByDPR(elements.floating, data.y);
-      if (transform) {
-        return __spreadValues(__spreadProps(__spreadValues({}, initialStyles), {
-          transform: "translate(" + x + "px, " + y + "px)"
-        }), getDPR(elements.floating) >= 1.5 && {
-          willChange: "transform"
+  }
+  function debounce(fn) {
+    var pending;
+    return function() {
+      if (!pending) {
+        pending = new Promise(function(resolve) {
+          Promise.resolve().then(function() {
+            pending = void 0;
+            resolve(fn());
+          });
         });
       }
-      return {
-        position: strategy,
-        left: x,
-        top: y
-      };
-    }, [strategy, transform, elements.floating, data.x, data.y]);
-    return React__namespace.useMemo(() => __spreadProps(__spreadValues({}, data), {
-      update,
-      refs,
-      elements,
-      floatingStyles
-    }), [data, update, refs, elements, floatingStyles]);
-  }
-  function getPopupUtilityClass(slot) {
-    return generateUtilityClass("MuiPopup", slot);
-  }
-  const popupClasses = generateUtilityClasses("MuiPopup", ["root", "open"]);
-  const TransitionContext = /* @__PURE__ */ React__namespace.createContext(null);
-  "use client";
-  function useTransitionStateManager() {
-    const transitionContext = React__namespace.useContext(TransitionContext);
-    if (!transitionContext) {
-      throw new Error("Missing transition context");
-    }
-    const {
-      registerTransition,
-      requestedEnter,
-      onEntering,
-      onEntered,
-      onExiting,
-      onExited
-    } = transitionContext;
-    React__namespace.useEffect(() => {
-      return registerTransition();
-    }, [registerTransition]);
-    return {
-      onEntering,
-      onEntered,
-      onExiting,
-      onExited,
-      requestedEnter
+      return pending;
     };
   }
-  "use client";
-  function useTransitionTrigger(requestEnter) {
-    const [state, dispatch] = React__namespace.useReducer(transitionStateReducer, {
-      elementExited: !requestEnter,
-      inProgress: false
+  function mergeByName(modifiers) {
+    var merged = modifiers.reduce(function(merged2, current) {
+      var existing = merged2[current.name];
+      merged2[current.name] = existing ? Object.assign({}, existing, current, {
+        options: Object.assign({}, existing.options, current.options),
+        data: Object.assign({}, existing.data, current.data)
+      }) : current;
+      return merged2;
+    }, {});
+    return Object.keys(merged).map(function(key) {
+      return merged[key];
     });
-    const hasTransition = React__namespace.useRef(false);
-    const handleEntering = React__namespace.useCallback(() => {
-      dispatch("entering");
-    }, []);
-    const handleEntered = React__namespace.useCallback(() => {
-      dispatch("entered");
-    }, []);
-    const handleExiting = React__namespace.useCallback(() => {
-      dispatch("exiting");
-    }, []);
-    const handleExited = React__namespace.useCallback(() => {
-      dispatch("exited");
-    }, []);
-    React__namespace.useEffect(() => {
-      if (!hasTransition.current) {
-        if (requestEnter) {
-          dispatch("entered");
-        } else {
-          dispatch("exited");
-        }
+  }
+  var DEFAULT_OPTIONS = {
+    placement: "bottom",
+    modifiers: [],
+    strategy: "absolute"
+  };
+  function areValidElements() {
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+    return !args.some(function(element) {
+      return !(element && typeof element.getBoundingClientRect === "function");
+    });
+  }
+  function popperGenerator(generatorOptions) {
+    if (generatorOptions === void 0) {
+      generatorOptions = {};
+    }
+    var _generatorOptions = generatorOptions, _generatorOptions$def = _generatorOptions.defaultModifiers, defaultModifiers2 = _generatorOptions$def === void 0 ? [] : _generatorOptions$def, _generatorOptions$def2 = _generatorOptions.defaultOptions, defaultOptions = _generatorOptions$def2 === void 0 ? DEFAULT_OPTIONS : _generatorOptions$def2;
+    return function createPopper2(reference2, popper2, options) {
+      if (options === void 0) {
+        options = defaultOptions;
       }
-    }, [requestEnter]);
-    const registerTransition = React__namespace.useCallback(() => {
-      hasTransition.current = true;
-      return () => {
-        hasTransition.current = false;
+      var state = {
+        placement: "bottom",
+        orderedModifiers: [],
+        options: Object.assign({}, DEFAULT_OPTIONS, defaultOptions),
+        modifiersData: {},
+        elements: {
+          reference: reference2,
+          popper: popper2
+        },
+        attributes: {},
+        styles: {}
       };
-    }, []);
-    const contextValue = React__namespace.useMemo(() => ({
-      requestedEnter: requestEnter,
-      onEntering: handleEntering,
-      onEntered: handleEntered,
-      onExiting: handleExiting,
-      onExited: handleExited,
-      registerTransition,
-      hasExited: state.elementExited
-    }), [handleEntering, handleEntered, handleExiting, handleExited, requestEnter, registerTransition, state.elementExited]);
-    return {
-      contextValue,
-      hasExited: state.elementExited,
-      transitionInProgress: state.inProgress
+      var effectCleanupFns = [];
+      var isDestroyed = false;
+      var instance = {
+        state,
+        setOptions: function setOptions(setOptionsAction) {
+          var options2 = typeof setOptionsAction === "function" ? setOptionsAction(state.options) : setOptionsAction;
+          cleanupModifierEffects();
+          state.options = Object.assign({}, defaultOptions, state.options, options2);
+          state.scrollParents = {
+            reference: isElement(reference2) ? listScrollParents(reference2) : reference2.contextElement ? listScrollParents(reference2.contextElement) : [],
+            popper: listScrollParents(popper2)
+          };
+          var orderedModifiers = orderModifiers(mergeByName([].concat(defaultModifiers2, state.options.modifiers)));
+          state.orderedModifiers = orderedModifiers.filter(function(m) {
+            return m.enabled;
+          });
+          runModifierEffects();
+          return instance.update();
+        },
+        // Sync update – it will always be executed, even if not necessary. This
+        // is useful for low frequency updates where sync behavior simplifies the
+        // logic.
+        // For high frequency updates (e.g. `resize` and `scroll` events), always
+        // prefer the async Popper#update method
+        forceUpdate: function forceUpdate() {
+          if (isDestroyed) {
+            return;
+          }
+          var _state$elements = state.elements, reference3 = _state$elements.reference, popper3 = _state$elements.popper;
+          if (!areValidElements(reference3, popper3)) {
+            return;
+          }
+          state.rects = {
+            reference: getCompositeRect(reference3, getOffsetParent(popper3), state.options.strategy === "fixed"),
+            popper: getLayoutRect(popper3)
+          };
+          state.reset = false;
+          state.placement = state.options.placement;
+          state.orderedModifiers.forEach(function(modifier) {
+            return state.modifiersData[modifier.name] = Object.assign({}, modifier.data);
+          });
+          for (var index2 = 0; index2 < state.orderedModifiers.length; index2++) {
+            if (state.reset === true) {
+              state.reset = false;
+              index2 = -1;
+              continue;
+            }
+            var _state$orderedModifie = state.orderedModifiers[index2], fn = _state$orderedModifie.fn, _state$orderedModifie2 = _state$orderedModifie.options, _options = _state$orderedModifie2 === void 0 ? {} : _state$orderedModifie2, name = _state$orderedModifie.name;
+            if (typeof fn === "function") {
+              state = fn({
+                state,
+                options: _options,
+                name,
+                instance
+              }) || state;
+            }
+          }
+        },
+        // Async and optimistically optimized update – it will not be executed if
+        // not necessary (debounced to run at most once-per-tick)
+        update: debounce(function() {
+          return new Promise(function(resolve) {
+            instance.forceUpdate();
+            resolve(state);
+          });
+        }),
+        destroy: function destroy() {
+          cleanupModifierEffects();
+          isDestroyed = true;
+        }
+      };
+      if (!areValidElements(reference2, popper2)) {
+        return instance;
+      }
+      instance.setOptions(options).then(function(state2) {
+        if (!isDestroyed && options.onFirstUpdate) {
+          options.onFirstUpdate(state2);
+        }
+      });
+      function runModifierEffects() {
+        state.orderedModifiers.forEach(function(_ref) {
+          var name = _ref.name, _ref$options = _ref.options, options2 = _ref$options === void 0 ? {} : _ref$options, effect2 = _ref.effect;
+          if (typeof effect2 === "function") {
+            var cleanupFn = effect2({
+              state,
+              name,
+              instance,
+              options: options2
+            });
+            var noopFn = function noopFn2() {
+            };
+            effectCleanupFns.push(cleanupFn || noopFn);
+          }
+        });
+      }
+      function cleanupModifierEffects() {
+        effectCleanupFns.forEach(function(fn) {
+          return fn();
+        });
+        effectCleanupFns = [];
+      }
+      return instance;
     };
   }
-  function transitionStateReducer(_2, action) {
-    switch (action) {
-      case "entering":
-        return {
-          elementExited: false,
-          inProgress: true
-        };
-      case "entered":
-        return {
-          elementExited: false,
-          inProgress: false
-        };
-      case "exiting":
-        return {
-          elementExited: false,
-          inProgress: true
-        };
-      case "exited":
-        return {
-          elementExited: true,
-          inProgress: false
-        };
+  var createPopper$2 = /* @__PURE__ */ popperGenerator();
+  var defaultModifiers$1 = [eventListeners, popperOffsets$1, computeStyles$1, applyStyles$1];
+  var createPopper$1 = /* @__PURE__ */ popperGenerator({
+    defaultModifiers: defaultModifiers$1
+  });
+  var defaultModifiers = [eventListeners, popperOffsets$1, computeStyles$1, applyStyles$1, offset$1, flip$1, preventOverflow$1, arrow$1, hide$1];
+  var createPopper = /* @__PURE__ */ popperGenerator({
+    defaultModifiers
+  });
+  const COMPONENT_NAME$9 = "Popper";
+  function getPopperUtilityClass(slot) {
+    return generateUtilityClass(COMPONENT_NAME$9, slot);
+  }
+  const popperClasses = generateUtilityClasses(COMPONENT_NAME$9, ["root"]);
+  "use client";
+  const _excluded$G = ["anchorEl", "children", "direction", "disablePortal", "modifiers", "open", "placement", "popperOptions", "popperRef", "slotProps", "slots", "TransitionProps", "ownerState"], _excluded2$4 = ["anchorEl", "children", "container", "direction", "disablePortal", "keepMounted", "modifiers", "open", "placement", "popperOptions", "popperRef", "style", "transition", "slotProps", "slots"];
+  function flipPlacement(placement, direction) {
+    if (direction === "ltr") {
+      return placement;
+    }
+    switch (placement) {
+      case "bottom-end":
+        return "bottom-start";
+      case "bottom-start":
+        return "bottom-end";
+      case "top-end":
+        return "top-start";
+      case "top-start":
+        return "top-end";
       default:
-        throw new Error(`Unhandled action: ${action}`);
+        return placement;
     }
   }
-  const PopupContext = /* @__PURE__ */ React__namespace.createContext(null);
-  "use client";
-  const _excluded$G = ["anchor", "children", "container", "disablePortal", "keepMounted", "middleware", "offset", "open", "placement", "slotProps", "slots", "strategy", "withTransition"];
-  function useUtilityClasses$w(ownerState) {
-    const {
-      open
-    } = ownerState;
+  function resolveAnchorEl$1(anchorEl) {
+    return typeof anchorEl === "function" ? anchorEl() : anchorEl;
+  }
+  function isHTMLElement(element) {
+    return element.nodeType !== void 0;
+  }
+  function isVirtualElement(element) {
+    return !isHTMLElement(element);
+  }
+  const useUtilityClasses$w = () => {
     const slots = {
-      root: ["root", open && "open"]
+      root: ["root"]
     };
-    return composeClasses(slots, useClassNamesOverride(getPopupUtilityClass));
-  }
-  function resolveAnchor(anchor) {
-    return typeof anchor === "function" ? anchor() : anchor;
-  }
-  const Popup = /* @__PURE__ */ React__namespace.forwardRef(function Popup2(props, forwardedRef) {
+    return composeClasses(slots, useClassNamesOverride(getPopperUtilityClass));
+  };
+  const defaultPopperOptions = {};
+  const PopperTooltip = /* @__PURE__ */ React__namespace.forwardRef(function PopperTooltip2(props, forwardedRef) {
     var _slots$root;
     const {
-      anchor: anchorProp,
+      anchorEl,
       children,
-      container,
-      disablePortal = false,
-      keepMounted = false,
-      middleware: middleware2,
-      offset: offsetProp = 0,
-      open = false,
-      placement = "bottom",
+      direction,
+      disablePortal,
+      modifiers,
+      open,
+      placement: initialPlacement,
+      popperOptions,
+      popperRef: popperRefProp,
       slotProps = {},
       slots = {},
-      strategy = "absolute",
-      withTransition = false
+      TransitionProps
+      // @ts-ignore internal logic
+      // prevent from spreading to DOM, it can come from the parent component e.g. Select.
     } = props, other = _objectWithoutPropertiesLoose(props, _excluded$G);
-    const {
-      refs,
-      elements,
-      floatingStyles,
-      update,
-      placement: finalPlacement
-    } = useFloating({
-      elements: {
-        reference: resolveAnchor(anchorProp)
-      },
-      open,
-      middleware: middleware2 != null ? middleware2 : [offset(offsetProp != null ? offsetProp : 0), flip(), shift()],
-      placement,
-      strategy,
-      whileElementsMounted: !keepMounted ? autoUpdate : void 0
-    });
-    const handleRef = useForkRef(refs.setFloating, forwardedRef);
+    const tooltipRef = React__namespace.useRef(null);
+    const ownRef = useForkRef(tooltipRef, forwardedRef);
+    const popperRef = React__namespace.useRef(null);
+    const handlePopperRef = useForkRef(popperRef, popperRefProp);
+    const handlePopperRefRef = React__namespace.useRef(handlePopperRef);
     useEnhancedEffect(() => {
-      if (keepMounted && open && elements.reference && elements.floating) {
-        const cleanup = autoUpdate(elements.reference, elements.floating, update);
-        return cleanup;
+      handlePopperRefRef.current = handlePopperRef;
+    }, [handlePopperRef]);
+    React__namespace.useImperativeHandle(popperRefProp, () => popperRef.current, []);
+    const rtlPlacement = flipPlacement(initialPlacement, direction);
+    const [placement, setPlacement] = React__namespace.useState(rtlPlacement);
+    const [resolvedAnchorElement, setResolvedAnchorElement] = React__namespace.useState(resolveAnchorEl$1(anchorEl));
+    React__namespace.useEffect(() => {
+      if (popperRef.current) {
+        popperRef.current.forceUpdate();
       }
-      return void 0;
-    }, [keepMounted, open, elements, update]);
-    const ownerState = _extends({}, props, {
-      disablePortal,
-      keepMounted,
-      offset,
-      open,
-      placement,
-      finalPlacement,
-      strategy,
-      withTransition
     });
-    const {
-      contextValue,
-      hasExited: hasTransitionExited
-    } = useTransitionTrigger(open);
-    const visibility2 = keepMounted && hasTransitionExited ? "hidden" : void 0;
-    const classes = useUtilityClasses$w(ownerState);
-    const Root = (_slots$root = slots == null ? void 0 : slots.root) != null ? _slots$root : "div";
+    React__namespace.useEffect(() => {
+      if (anchorEl) {
+        setResolvedAnchorElement(resolveAnchorEl$1(anchorEl));
+      }
+    }, [anchorEl]);
+    useEnhancedEffect(() => {
+      if (!resolvedAnchorElement || !open) {
+        return void 0;
+      }
+      const handlePopperUpdate = (data) => {
+        setPlacement(data.placement);
+      };
+      if (process.env.NODE_ENV !== "production") {
+        if (resolvedAnchorElement && isHTMLElement(resolvedAnchorElement) && resolvedAnchorElement.nodeType === 1) {
+          const box = resolvedAnchorElement.getBoundingClientRect();
+          if (process.env.NODE_ENV !== "test" && box.top === 0 && box.left === 0 && box.right === 0 && box.bottom === 0) {
+            console.warn(["MUI: The `anchorEl` prop provided to the component is invalid.", "The anchor element should be part of the document layout.", "Make sure the element is present in the document or that it's not display none."].join("\n"));
+          }
+        }
+      }
+      let popperModifiers = [{
+        name: "preventOverflow",
+        options: {
+          altBoundary: disablePortal
+        }
+      }, {
+        name: "flip",
+        options: {
+          altBoundary: disablePortal
+        }
+      }, {
+        name: "onUpdate",
+        enabled: true,
+        phase: "afterWrite",
+        fn: ({
+          state
+        }) => {
+          handlePopperUpdate(state);
+        }
+      }];
+      if (modifiers != null) {
+        popperModifiers = popperModifiers.concat(modifiers);
+      }
+      if (popperOptions && popperOptions.modifiers != null) {
+        popperModifiers = popperModifiers.concat(popperOptions.modifiers);
+      }
+      const popper2 = createPopper(resolvedAnchorElement, tooltipRef.current, _extends({
+        placement: rtlPlacement
+      }, popperOptions, {
+        modifiers: popperModifiers
+      }));
+      handlePopperRefRef.current(popper2);
+      return () => {
+        popper2.destroy();
+        handlePopperRefRef.current(null);
+      };
+    }, [resolvedAnchorElement, disablePortal, modifiers, open, popperOptions, rtlPlacement]);
+    const childProps = {
+      placement
+    };
+    if (TransitionProps !== null) {
+      childProps.TransitionProps = TransitionProps;
+    }
+    const classes = useUtilityClasses$w();
+    const Root = (_slots$root = slots.root) != null ? _slots$root : "div";
     const rootProps = useSlotProps({
       elementType: Root,
       externalSlotProps: slotProps.root,
       externalForwardedProps: other,
-      ownerState,
-      className: classes.root,
       additionalProps: {
-        ref: handleRef,
         role: "tooltip",
-        style: _extends({}, floatingStyles, {
-          visibility: visibility2
-        })
-      }
+        ref: ownRef
+      },
+      ownerState: props,
+      className: classes.root
     });
-    const popupContextValue = React__namespace.useMemo(() => ({
-      placement: finalPlacement
-    }), [finalPlacement]);
-    const shouldRender = keepMounted || !hasTransitionExited;
-    if (!shouldRender) {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(Root, _extends({}, rootProps, {
+      children: typeof children === "function" ? children(childProps) : children
+    }));
+  });
+  const Popper = /* @__PURE__ */ React__namespace.forwardRef(function Popper2(props, forwardedRef) {
+    const {
+      anchorEl,
+      children,
+      container: containerProp,
+      direction = "ltr",
+      disablePortal = false,
+      keepMounted = false,
+      modifiers,
+      open,
+      placement = "bottom",
+      popperOptions = defaultPopperOptions,
+      popperRef,
+      style: style2,
+      transition = false,
+      slotProps = {},
+      slots = {}
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded2$4);
+    const [exited, setExited] = React__namespace.useState(true);
+    const handleEnter = () => {
+      setExited(false);
+    };
+    const handleExited = () => {
+      setExited(true);
+    };
+    if (!keepMounted && !open && (!transition || exited)) {
       return null;
     }
+    let container;
+    if (containerProp) {
+      container = containerProp;
+    } else if (anchorEl) {
+      const resolvedAnchorEl = resolveAnchorEl$1(anchorEl);
+      container = resolvedAnchorEl && isHTMLElement(resolvedAnchorEl) ? ownerDocument(resolvedAnchorEl).body : ownerDocument(null).body;
+    }
+    const display2 = !open && keepMounted && (!transition || exited) ? "none" : void 0;
+    const transitionProps = transition ? {
+      in: open,
+      onEnter: handleEnter,
+      onExited: handleExited
+    } : void 0;
     return /* @__PURE__ */ jsxRuntimeExports.jsx(Portal, {
       disablePortal,
       container,
-      children: /* @__PURE__ */ jsxRuntimeExports.jsx(PopupContext.Provider, {
-        value: popupContextValue,
-        children: /* @__PURE__ */ jsxRuntimeExports.jsx(TransitionContext.Provider, {
-          value: contextValue,
-          children: /* @__PURE__ */ jsxRuntimeExports.jsx(Root, _extends({}, rootProps, {
-            children
-          }))
-        })
-      })
+      children: /* @__PURE__ */ jsxRuntimeExports.jsx(PopperTooltip, _extends({
+        anchorEl,
+        direction,
+        disablePortal,
+        modifiers,
+        ref: forwardedRef,
+        open: transition ? !exited : open,
+        placement,
+        popperOptions,
+        popperRef,
+        slotProps,
+        slots
+      }, other, {
+        style: _extends({
+          // Prevents scroll issue, waiting for Popper.js to add this style once initiated.
+          position: "fixed",
+          // Fix Popper.js display issue
+          top: 0,
+          left: 0,
+          display: display2
+        }, style2),
+        TransitionProps: transitionProps,
+        children
+      }))
     });
   });
-  process.env.NODE_ENV !== "production" ? Popup.propTypes = {
-    // ----------------------------- Warning --------------------------------
-    // | These PropTypes are generated from the TypeScript type definitions |
-    // |     To update them edit TypeScript types and run "yarn proptypes"  |
-    // ----------------------------------------------------------------------
+  process.env.NODE_ENV !== "production" ? Popper.propTypes = {
+    // ┌────────────────────────────── Warning ──────────────────────────────┐
+    // │ These PropTypes are generated from the TypeScript type definitions. │
+    // │ To update them, edit the TypeScript types and run `pnpm proptypes`. │
+    // └─────────────────────────────────────────────────────────────────────┘
     /**
-     * An HTML element, [virtual element](https://floating-ui.com/docs/virtual-elements),
+     * An HTML element, [virtualElement](https://popper.js.org/docs/v2/virtual-elements/),
      * or a function that returns either.
-     * It's used to set the position of the popup.
+     * It's used to set the position of the popper.
+     * The return value will passed as the reference object of the Popper instance.
      */
-    anchor: PropTypes.oneOfType([HTMLElementType, PropTypes.object, PropTypes.func]),
+    anchorEl: chainPropTypes(PropTypes.oneOfType([HTMLElementType, PropTypes.object, PropTypes.func]), (props) => {
+      if (props.open) {
+        const resolvedAnchorEl = resolveAnchorEl$1(props.anchorEl);
+        if (resolvedAnchorEl && isHTMLElement(resolvedAnchorEl) && resolvedAnchorEl.nodeType === 1) {
+          const box = resolvedAnchorEl.getBoundingClientRect();
+          if (process.env.NODE_ENV !== "test" && box.top === 0 && box.left === 0 && box.right === 0 && box.bottom === 0) {
+            return new Error(["MUI: The `anchorEl` prop provided to the component is invalid.", "The anchor element should be part of the document layout.", "Make sure the element is present in the document or that it's not display none."].join("\n"));
+          }
+        } else if (!resolvedAnchorEl || typeof resolvedAnchorEl.getBoundingClientRect !== "function" || isVirtualElement(resolvedAnchorEl) && resolvedAnchorEl.contextElement != null && resolvedAnchorEl.contextElement.nodeType !== 1) {
+          return new Error(["MUI: The `anchorEl` prop provided to the component is invalid.", "It should be an HTML element instance or a virtualElement ", "(https://popper.js.org/docs/v2/virtual-elements/)."].join("\n"));
+        }
+      }
+      return null;
+    }),
     /**
-     * @ignore
+     * Popper render function or node.
      */
     children: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
     /**
-     * An HTML element or function that returns one. The container will have the portal children appended to it.
-     * By default, it uses the body of the top-level document object, so it's `document.body` in these cases.
+     * An HTML element or function that returns one.
+     * The `container` will have the portal children appended to it.
+     *
+     * You can also provide a callback, which is called in a React layout effect.
+     * This lets you set the container from a ref, and also makes server-side rendering possible.
+     *
+     * By default, it uses the body of the top-level document object,
+     * so it's simply `document.body` most of the time.
      */
     container: PropTypes.oneOfType([HTMLElementType, PropTypes.func]),
     /**
-     * If `true`, the popup will be rendered where it is defined, without the use of portals.
+     * Direction of the text.
+     * @default 'ltr'
+     */
+    direction: PropTypes.oneOf(["ltr", "rtl"]),
+    /**
+     * The `children` will be under the DOM hierarchy of the parent component.
      * @default false
      */
     disablePortal: PropTypes.bool,
     /**
-     * If `true`, the popup will exist in the DOM even if it's closed.
-     * Its visibility will be controlled by the `display` CSS property.
-     *
-     * Otherwise, a closed popup will be removed from the DOM.
-     *
+     * Always keep the children in the DOM.
+     * This prop can be useful in SEO situation or
+     * when you want to maximize the responsiveness of the Popper.
      * @default false
      */
     keepMounted: PropTypes.bool,
     /**
-     * Collection of Floating UI middleware to use when positioning the popup.
-     * If not provided, the [`offset`](https://floating-ui.com/docs/offset)
-     * and [`flip`](https://floating-ui.com/docs/flip) functions will be used.
+     * Popper.js is based on a "plugin-like" architecture,
+     * most of its features are fully encapsulated "modifiers".
      *
-     * @see https://floating-ui.com/docs/computePosition#middleware
+     * A modifier is a function that is called each time Popper.js needs to
+     * compute the position of the popper.
+     * For this reason, modifiers should be very performant to avoid bottlenecks.
+     * To learn how to create a modifier, [read the modifiers documentation](https://popper.js.org/docs/v2/modifiers/).
      */
-    middleware: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.oneOf([false]), PropTypes.shape({
-      fn: PropTypes.func.isRequired,
-      name: PropTypes.string.isRequired,
-      options: PropTypes.any
-    })])),
+    modifiers: PropTypes.arrayOf(PropTypes.shape({
+      data: PropTypes.object,
+      effect: PropTypes.func,
+      enabled: PropTypes.bool,
+      fn: PropTypes.func,
+      name: PropTypes.any,
+      options: PropTypes.object,
+      phase: PropTypes.oneOf(["afterMain", "afterRead", "afterWrite", "beforeMain", "beforeRead", "beforeWrite", "main", "read", "write"]),
+      requires: PropTypes.arrayOf(PropTypes.string),
+      requiresIfExists: PropTypes.arrayOf(PropTypes.string)
+    })),
     /**
-     * Distance between a popup and the trigger element.
-     * This prop is ignored when custom `middleware` is provided.
-     *
-     * @default 0
-     * @see https://floating-ui.com/docs/offset
+     * If `true`, the component is shown.
      */
-    offset: PropTypes.oneOfType([PropTypes.func, PropTypes.number, PropTypes.shape({
-      alignmentAxis: PropTypes.number,
-      crossAxis: PropTypes.number,
-      mainAxis: PropTypes.number
-    })]),
+    open: PropTypes.bool.isRequired,
     /**
-     * If `true`, the popup is visible.
-     *
-     * @default false
-     */
-    open: PropTypes.bool,
-    /**
-     * Determines where to place the popup relative to the trigger element.
-     *
+     * Popper placement.
      * @default 'bottom'
-     * @see https://floating-ui.com/docs/computePosition#placement
      */
-    placement: PropTypes.oneOf(["bottom-end", "bottom-start", "bottom", "left-end", "left-start", "left", "right-end", "right-start", "right", "top-end", "top-start", "top"]),
+    placement: PropTypes.oneOf(["auto-end", "auto-start", "auto", "bottom-end", "bottom-start", "bottom", "left-end", "left-start", "left", "right-end", "right-start", "right", "top-end", "top-start", "top"]),
     /**
-     * The props used for each slot inside the Popup.
-     *
+     * Options provided to the [`Popper.js`](https://popper.js.org/docs/v2/constructors/#options) instance.
+     * @default {}
+     */
+    popperOptions: PropTypes.shape({
+      modifiers: PropTypes.array,
+      onFirstUpdate: PropTypes.func,
+      placement: PropTypes.oneOf(["auto-end", "auto-start", "auto", "bottom-end", "bottom-start", "bottom", "left-end", "left-start", "left", "right-end", "right-start", "right", "top-end", "top-start", "top"]),
+      strategy: PropTypes.oneOf(["absolute", "fixed"])
+    }),
+    /**
+     * A ref that points to the used popper instance.
+     */
+    popperRef: refType,
+    /**
+     * The props used for each slot inside the Popper.
      * @default {}
      */
     slotProps: PropTypes.shape({
       root: PropTypes.oneOfType([PropTypes.func, PropTypes.object])
     }),
     /**
-     * The components used for each slot inside the Popup.
+     * The components used for each slot inside the Popper.
      * Either a string to use a HTML element or a component.
-     *
      * @default {}
      */
     slots: PropTypes.shape({
       root: PropTypes.elementType
     }),
     /**
-     * The type of CSS position property to use (absolute or fixed).
-     *
-     * @default 'absolute'
-     * @see https://floating-ui.com/docs/computePosition#strategy
-     */
-    strategy: PropTypes.oneOf(["absolute", "fixed"]),
-    /**
-     * If `true`, the popup will not disappear immediately when it needs to be closed
-     * but wait until the exit transition has finished.
-     * In such a case, a function form of `children` must be used and `onExited`
-     * callback function must be called when the transition or animation finish.
-     *
+     * Help supporting a react-transition-group/Transition component.
      * @default false
      */
-    withTransition: PropTypes.bool
+    transition: PropTypes.bool
   } : void 0;
   "use client";
   const SelectActionTypes = {
@@ -24633,19 +23466,6 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     return newState;
   }
   "use client";
-  const visuallyHiddenStyle = {
-    clip: "rect(1px, 1px, 1px, 1px)",
-    clipPath: "inset(50%)",
-    height: "1px",
-    width: "1px",
-    margin: "-1px",
-    overflow: "hidden",
-    padding: 0,
-    position: "absolute",
-    left: "50%",
-    bottom: 0
-    // to display the native browser validation error at the bottom of the Select.
-  };
   function defaultFormValueProvider(selectedOption) {
     if (Array.isArray(selectedOption)) {
       if (selectedOption.length === 0) {
@@ -24888,7 +23708,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     };
     const getButtonProps = (externalProps = {}) => {
       const externalEventHandlers = extractEventHandlers(externalProps);
-      const combinedProps = combineHooksSlotProps(getButtonRootProps, getSelectTriggerProps);
+      const combinedProps = combineHooksSlotProps(getSelectTriggerProps, getButtonRootProps);
       return _extends({}, externalProps, combinedProps(externalEventHandlers));
     };
     const createListboxHandleBlur = (otherHandlers) => (event) => {
@@ -24959,7 +23779,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         "aria-hidden": true,
         required: required ? true : void 0,
         value: getSerializedValue(selectedOptionsMetadata),
-        style: visuallyHiddenStyle
+        style: visuallyHidden
       }, externalProps, {
         onChange: createHandleHiddenInputChange(externalEventHandlers)
       });
@@ -25014,10 +23834,11 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     });
   }
   "use client";
+  const COMPONENT_NAME$8 = "Select";
   function getSelectUtilityClass(slot) {
-    return generateUtilityClass("MuiSelect", slot);
+    return generateUtilityClass(COMPONENT_NAME$8, slot);
   }
-  const selectClasses$1 = generateUtilityClasses("MuiSelect", ["root", "button", "listbox", "popper", "active", "expanded", "disabled", "focusVisible"]);
+  const selectClasses$1 = generateUtilityClasses(COMPONENT_NAME$8, ["root", "button", "listbox", "popup", "active", "expanded", "disabled", "focusVisible"]);
   "use client";
   var _span$4;
   const _excluded$F = ["areOptionsEqual", "autoComplete", "autoFocus", "children", "defaultValue", "defaultListboxOpen", "disabled", "getSerializedValue", "listboxId", "listboxOpen", "multiple", "name", "required", "onChange", "onListboxOpenChange", "getOptionAsString", "renderValue", "placeholder", "slotProps", "slots", "value"];
@@ -25040,12 +23861,12 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const slots = {
       root: ["root", disabled && "disabled", focusVisible && "focusVisible", active && "active", open && "expanded"],
       listbox: ["listbox", disabled && "disabled"],
-      popper: ["popper"]
+      popup: ["popup"]
     };
     return composeClasses(slots, useClassNamesOverride(getSelectUtilityClass));
   }
   const Select$1 = /* @__PURE__ */ React__namespace.forwardRef(function Select2(props, forwardedRef) {
-    var _slots$root, _slots$listbox, _slots$popper, _ref, _renderValue;
+    var _slots$root, _slots$listbox, _slots$popup, _ref, _renderValue;
     const {
       areOptionsEqual,
       autoComplete,
@@ -25075,7 +23896,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const listboxRef = React__namespace.useRef(null);
     const Button2 = (_slots$root = slots.root) != null ? _slots$root : "button";
     const ListboxRoot = (_slots$listbox = slots.listbox) != null ? _slots$listbox : "ul";
-    const PopperComponent = (_slots$popper = slots.popper) != null ? _slots$popper : Popper;
+    const PopupComponent = (_slots$popup = slots.popup) != null ? _slots$popup : "div";
     const handleButtonRefChange = React__namespace.useCallback((element) => {
       setButtonDefined(element != null);
     }, []);
@@ -25143,18 +23964,18 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       ownerState,
       className: classes.listbox
     });
-    const popperProps = useSlotProps({
-      elementType: PopperComponent,
-      externalSlotProps: slotProps.popper,
+    const popupProps = useSlotProps({
+      elementType: PopupComponent,
+      externalSlotProps: slotProps.popup,
       additionalProps: {
-        anchorEl: buttonRef.current,
+        anchor: buttonRef.current,
         keepMounted: true,
         open,
         placement: "bottom-start",
         role: void 0
       },
       ownerState,
-      className: classes.popper
+      className: classes.popup
     });
     let selectedOptionsMetadata;
     if (multiple) {
@@ -25173,7 +23994,11 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
             children: "​"
           }))
         )
-      })), buttonDefined && /* @__PURE__ */ jsxRuntimeExports.jsx(PopperComponent, _extends({}, popperProps, {
+      })), buttonDefined && /* @__PURE__ */ jsxRuntimeExports.jsx(Popup, _extends({
+        slots: {
+          root: PopupComponent
+        }
+      }, popupProps, {
         children: /* @__PURE__ */ jsxRuntimeExports.jsx(ListboxRoot, _extends({}, listboxProps, {
           children: /* @__PURE__ */ jsxRuntimeExports.jsx(SelectProvider, {
             value: contextValue,
@@ -25186,10 +24011,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     });
   });
   process.env.NODE_ENV !== "production" ? Select$1.propTypes = {
-    // ----------------------------- Warning --------------------------------
-    // | These PropTypes are generated from the TypeScript type definitions |
-    // |     To update them edit TypeScript types and run "yarn proptypes"  |
-    // ----------------------------------------------------------------------
+    // ┌────────────────────────────── Warning ──────────────────────────────┐
+    // │ These PropTypes are generated from the TypeScript type definitions. │
+    // │ To update them, edit the TypeScript types and run `pnpm proptypes`. │
+    // └─────────────────────────────────────────────────────────────────────┘
     /**
      * A function used to determine if two options' values are equal.
      * By default, reference equality is used.
@@ -25293,7 +24118,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      */
     slotProps: PropTypes.shape({
       listbox: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
-      popper: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+      popup: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
       root: PropTypes.oneOfType([PropTypes.func, PropTypes.object])
     }),
     /**
@@ -25303,7 +24128,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      */
     slots: PropTypes.shape({
       listbox: PropTypes.elementType,
-      popper: PropTypes.elementType,
+      popup: PropTypes.elementType,
       root: PropTypes.elementType
     }),
     /**
@@ -25313,20 +24138,15 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     value: PropTypes.any
   } : void 0;
   "use client";
+  const COMPONENT_NAME$7 = "Slider";
   function getSliderUtilityClass(slot) {
-    return generateUtilityClass("MuiSlider", slot);
+    return generateUtilityClass(COMPONENT_NAME$7, slot);
   }
-  const sliderClasses = generateUtilityClasses("MuiSlider", ["root", "active", "focusVisible", "disabled", "dragging", "marked", "vertical", "trackInverted", "trackFalse", "rail", "track", "mark", "markActive", "markLabel", "markLabelActive", "thumb"]);
+  const sliderClasses = generateUtilityClasses(COMPONENT_NAME$7, ["root", "active", "focusVisible", "disabled", "dragging", "marked", "vertical", "trackInverted", "trackFalse", "rail", "track", "mark", "markActive", "markLabel", "markLabelActive", "thumb"]);
   "use client";
   const INTENTIONAL_DRAG_COUNT_THRESHOLD = 2;
   function asc(a, b) {
     return a - b;
-  }
-  function clamp(value, min2, max2) {
-    if (value == null) {
-      return min2;
-    }
-    return Math.min(Math.max(min2, value), max2);
   }
   function findClosest(values2, currentValue) {
     var _values$reduce;
@@ -25470,6 +24290,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       rootRef: ref,
       scale = Identity$1,
       step = 1,
+      shiftStep = 10,
       tabIndex,
       value: valueProp
     } = parameters;
@@ -25497,7 +24318,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     });
     const range = Array.isArray(valueDerived);
     let values2 = range ? valueDerived.slice().sort(asc) : [valueDerived];
-    values2 = values2.map((value) => clamp(value, min2, max2));
+    values2 = values2.map((value) => value == null ? min2 : clamp$1(value, min2, max2));
     const marks = marksProp === true && step !== null ? [...Array(Math.floor((max2 - min2) / step) + 1)].map((_2, index2) => ({
       value: min2 + step * index2
     })) : marksProp || [];
@@ -25531,25 +24352,11 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       setOpen(-1);
       otherHandlers == null || (_otherHandlers$onBlur = otherHandlers.onBlur) == null || _otherHandlers$onBlur.call(otherHandlers, event);
     };
-    useEnhancedEffect(() => {
-      if (disabled && sliderRef.current.contains(document.activeElement)) {
-        var _document$activeEleme;
-        (_document$activeEleme = document.activeElement) == null || _document$activeEleme.blur();
-      }
-    }, [disabled]);
-    if (disabled && active !== -1) {
-      setActive(-1);
-    }
-    if (disabled && focusedThumbIndex !== -1) {
-      setFocusedThumbIndex(-1);
-    }
-    const createHandleHiddenInputChange = (otherHandlers) => (event) => {
-      var _otherHandlers$onChan;
-      (_otherHandlers$onChan = otherHandlers.onChange) == null || _otherHandlers$onChan.call(otherHandlers, event);
+    const changeValue = (event, valueInput) => {
       const index2 = Number(event.currentTarget.getAttribute("data-index"));
       const value = values2[index2];
       const marksIndex = marksValues.indexOf(value);
-      let newValue = event.target.valueAsNumber;
+      let newValue = valueInput;
       if (marks && step == null) {
         const maxMarksValue = marksValues[marksValues.length - 1];
         if (newValue > maxMarksValue) {
@@ -25560,10 +24367,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           newValue = newValue < value ? marksValues[marksIndex - 1] : marksValues[marksIndex + 1];
         }
       }
-      newValue = clamp(newValue, min2, max2);
+      newValue = clamp$1(newValue, min2, max2);
       if (range) {
         if (disableSwap) {
-          newValue = clamp(newValue, values2[index2 - 1] || -Infinity, values2[index2 + 1] || Infinity);
+          newValue = clamp$1(newValue, values2[index2 - 1] || -Infinity, values2[index2 + 1] || Infinity);
         }
         const previousValue = newValue;
         newValue = setValueIndex({
@@ -25588,6 +24395,41 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       if (onChangeCommitted) {
         onChangeCommitted(event, newValue);
       }
+    };
+    const createHandleHiddenInputKeyDown = (otherHandlers) => (event) => {
+      var _otherHandlers$onKeyD;
+      if (step !== null) {
+        const index2 = Number(event.currentTarget.getAttribute("data-index"));
+        const value = values2[index2];
+        let newValue = null;
+        if ((event.key === "ArrowLeft" || event.key === "ArrowDown") && event.shiftKey || event.key === "PageDown") {
+          newValue = Math.max(value - shiftStep, min2);
+        } else if ((event.key === "ArrowRight" || event.key === "ArrowUp") && event.shiftKey || event.key === "PageUp") {
+          newValue = Math.min(value + shiftStep, max2);
+        }
+        if (newValue !== null) {
+          changeValue(event, newValue);
+          event.preventDefault();
+        }
+      }
+      otherHandlers == null || (_otherHandlers$onKeyD = otherHandlers.onKeyDown) == null || _otherHandlers$onKeyD.call(otherHandlers, event);
+    };
+    useEnhancedEffect(() => {
+      if (disabled && sliderRef.current.contains(document.activeElement)) {
+        var _document$activeEleme;
+        (_document$activeEleme = document.activeElement) == null || _document$activeEleme.blur();
+      }
+    }, [disabled]);
+    if (disabled && active !== -1) {
+      setActive(-1);
+    }
+    if (disabled && focusedThumbIndex !== -1) {
+      setFocusedThumbIndex(-1);
+    }
+    const createHandleHiddenInputChange = (otherHandlers) => (event) => {
+      var _otherHandlers$onChan;
+      (_otherHandlers$onChan = otherHandlers.onChange) == null || _otherHandlers$onChan.call(otherHandlers, event);
+      changeValue(event, event.target.valueAsNumber);
     };
     const previousIndex = React__namespace.useRef();
     let axis = orientation;
@@ -25624,7 +24466,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         const closestIndex = findClosest(marksValues, newValue);
         newValue = marksValues[closestIndex];
       }
-      newValue = clamp(newValue, min2, max2);
+      newValue = clamp$1(newValue, min2, max2);
       let activeIndex = 0;
       if (range) {
         if (!move) {
@@ -25633,7 +24475,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           activeIndex = previousIndex.current;
         }
         if (disableSwap) {
-          newValue = clamp(newValue, values2[activeIndex - 1] || -Infinity, values2[activeIndex + 1] || Infinity);
+          newValue = clamp$1(newValue, values2[activeIndex - 1] || -Infinity, values2[activeIndex + 1] || Infinity);
         }
         const previousValue = newValue;
         newValue = setValueIndex({
@@ -25846,7 +24688,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       const ownEventHandlers = {
         onChange: createHandleHiddenInputChange(externalHandlers || {}),
         onFocus: createHandleHiddenInputFocus(externalHandlers || {}),
-        onBlur: createHandleHiddenInputBlur(externalHandlers || {})
+        onBlur: createHandleHiddenInputBlur(externalHandlers || {}),
+        onKeyDown: createHandleHiddenInputKeyDown(externalHandlers || {})
       };
       const mergedEventHandlers = _extends({}, externalHandlers, ownEventHandlers);
       return _extends({
@@ -25891,7 +24734,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   "use client";
   "use client";
-  const _excluded$E = ["aria-label", "aria-valuetext", "aria-labelledby", "className", "disableSwap", "disabled", "getAriaLabel", "getAriaValueText", "marks", "max", "min", "name", "onChange", "onChangeCommitted", "orientation", "scale", "step", "tabIndex", "track", "value", "valueLabelFormat", "isRtl", "defaultValue", "slotProps", "slots"];
+  const _excluded$E = ["aria-label", "aria-valuetext", "aria-labelledby", "className", "disableSwap", "disabled", "getAriaLabel", "getAriaValueText", "marks", "max", "min", "name", "onChange", "onChangeCommitted", "orientation", "shiftStep", "scale", "step", "tabIndex", "track", "value", "valueLabelFormat", "isRtl", "defaultValue", "slotProps", "slots"];
   function Identity(x) {
     return x;
   }
@@ -25934,6 +24777,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       max: max2 = 100,
       min: min2 = 0,
       orientation = "horizontal",
+      shiftStep = 10,
       scale = Identity,
       step = 1,
       track = "normal",
@@ -25954,6 +24798,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       orientation,
       scale,
       step,
+      shiftStep,
       track,
       valueLabelFormat
     });
@@ -26103,10 +24948,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }));
   });
   process.env.NODE_ENV !== "production" ? Slider.propTypes = {
-    // ----------------------------- Warning --------------------------------
-    // | These PropTypes are generated from the TypeScript type definitions |
-    // |     To update them edit TypeScript types and run "yarn proptypes"  |
-    // ----------------------------------------------------------------------
+    // ┌────────────────────────────── Warning ──────────────────────────────┐
+    // │ These PropTypes are generated from the TypeScript type definitions. │
+    // │ To update them, edit the TypeScript types and run `pnpm proptypes`. │
+    // └─────────────────────────────────────────────────────────────────────┘
     /**
      * The label of the slider.
      */
@@ -26223,6 +25068,11 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      */
     scale: PropTypes.func,
     /**
+     * The granularity with which the slider can step through values when using Page Up/Page Down or Shift + Arrow Up/Arrow Down.
+     * @default 10
+     */
+    shiftStep: PropTypes.number,
+    /**
      * The props used for each slot inside the Slider.
      * @default {}
      */
@@ -26294,10 +25144,11 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     valueLabelFormat: PropTypes.oneOfType([PropTypes.func, PropTypes.string])
   } : void 0;
   "use client";
+  const COMPONENT_NAME$6 = "Snackbar";
   function getSnackbarUtilityClass(slot) {
-    return generateUtilityClass("MuiSnackbar", slot);
+    return generateUtilityClass(COMPONENT_NAME$6, slot);
   }
-  const snackbarClasses = generateUtilityClasses("MuiSnackbar", ["root"]);
+  const snackbarClasses = generateUtilityClasses(COMPONENT_NAME$6, ["root"]);
   "use client";
   function useSnackbar(parameters = {}) {
     const {
@@ -26307,7 +25158,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       open,
       resumeHideDuration
     } = parameters;
-    const timerAutoHide = React__namespace.useRef();
+    const timerAutoHide = useTimeout();
     React__namespace.useEffect(() => {
       if (!open) {
         return void 0;
@@ -26331,25 +25182,20 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       if (!onClose || autoHideDurationParam == null) {
         return;
       }
-      clearTimeout(timerAutoHide.current);
-      timerAutoHide.current = setTimeout(() => {
+      timerAutoHide.start(autoHideDurationParam, () => {
         handleClose(null, "timeout");
-      }, autoHideDurationParam);
+      });
     });
     React__namespace.useEffect(() => {
       if (open) {
         setAutoHideTimer(autoHideDuration);
       }
-      return () => {
-        clearTimeout(timerAutoHide.current);
-      };
-    }, [open, autoHideDuration, setAutoHideTimer]);
+      return timerAutoHide.clear;
+    }, [open, autoHideDuration, setAutoHideTimer, timerAutoHide]);
     const handleClickAway = (event) => {
       onClose == null || onClose(event, "clickaway");
     };
-    const handlePause = () => {
-      clearTimeout(timerAutoHide.current);
-    };
+    const handlePause = timerAutoHide.clear;
     const handleResume = React__namespace.useCallback(() => {
       if (autoHideDuration != null) {
         setAutoHideTimer(resumeHideDuration != null ? resumeHideDuration : autoHideDuration * 0.5);
@@ -26385,7 +25231,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         };
       }
       return void 0;
-    }, [disableWindowBlurListener, handleResume, open]);
+    }, [disableWindowBlurListener, open, handleResume, handlePause]);
     const getRootProps = (externalProps = {}) => {
       const externalEventHandlers = _extends({}, extractEventHandlers(parameters), extractEventHandlers(externalProps));
       return _extends({
@@ -26468,10 +25314,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }));
   });
   process.env.NODE_ENV !== "production" ? Snackbar.propTypes = {
-    // ----------------------------- Warning --------------------------------
-    // | These PropTypes are generated from the TypeScript type definitions |
-    // |     To update them edit TypeScript types and run "yarn proptypes"  |
-    // ----------------------------------------------------------------------
+    // ┌────────────────────────────── Warning ──────────────────────────────┐
+    // │ These PropTypes are generated from the TypeScript type definitions. │
+    // │ To update them, edit the TypeScript types and run `pnpm proptypes`. │
+    // └─────────────────────────────────────────────────────────────────────┘
     /**
      * The number of milliseconds to wait before automatically calling the
      * `onClose` function. `onClose` should then set the state of the `open`
@@ -26628,10 +25474,11 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     };
   }
   "use client";
+  const COMPONENT_NAME$5 = "Switch";
   function getSwitchUtilityClass(slot) {
-    return generateUtilityClass("MuiSwitch", slot);
+    return generateUtilityClass(COMPONENT_NAME$5, slot);
   }
-  const switchClasses = generateUtilityClasses("MuiSwitch", ["root", "input", "track", "thumb", "checked", "disabled", "focusVisible", "readOnly"]);
+  const switchClasses = generateUtilityClasses(COMPONENT_NAME$5, ["root", "input", "track", "thumb", "checked", "disabled", "focusVisible", "readOnly"]);
   "use client";
   const _excluded$C = ["checked", "defaultChecked", "disabled", "onBlur", "onChange", "onFocus", "onFocusVisible", "readOnly", "required", "slotProps", "slots"];
   const useUtilityClasses$s = (ownerState) => {
@@ -26707,10 +25554,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }));
   });
   process.env.NODE_ENV !== "production" ? Switch.propTypes = {
-    // ----------------------------- Warning --------------------------------
-    // | These PropTypes are generated from the TypeScript type definitions |
-    // |     To update them edit TypeScript types and run "yarn proptypes"  |
-    // ----------------------------------------------------------------------
+    // ┌────────────────────────────── Warning ──────────────────────────────┐
+    // │ These PropTypes are generated from the TypeScript type definitions. │
+    // │ To update them, edit the TypeScript types and run `pnpm proptypes`. │
+    // └─────────────────────────────────────────────────────────────────────┘
     /**
      * If `true`, the component is checked.
      */
@@ -26905,10 +25752,11 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       }))]
     }));
   });
+  const COMPONENT_NAME$4 = "TablePagination";
   function getTablePaginationUtilityClass(slot) {
-    return generateUtilityClass("MuiTablePagination", slot);
+    return generateUtilityClass(COMPONENT_NAME$4, slot);
   }
-  const tablePaginationClasses = generateUtilityClasses("MuiTablePagination", ["root", "toolbar", "spacer", "selectLabel", "selectRoot", "select", "selectIcon", "input", "menuItem", "displayedRows", "actions"]);
+  const tablePaginationClasses = generateUtilityClasses(COMPONENT_NAME$4, ["root", "toolbar", "spacer", "selectLabel", "selectRoot", "select", "selectIcon", "input", "menuItem", "displayedRows", "actions"]);
   "use client";
   const _excluded$A = ["colSpan", "count", "getItemAriaLabel", "labelDisplayedRows", "labelId", "labelRowsPerPage", "onPageChange", "onRowsPerPageChange", "page", "rowsPerPage", "rowsPerPageOptions", "selectId", "slotProps", "slots"];
   function defaultLabelDisplayedRows({
@@ -27070,10 +25918,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }));
   });
   process.env.NODE_ENV !== "production" ? TablePagination.propTypes = {
-    // ----------------------------- Warning --------------------------------
-    // | These PropTypes are generated from the TypeScript type definitions |
-    // |     To update them edit TypeScript types and run "yarn proptypes"  |
-    // ----------------------------------------------------------------------
+    // ┌────────────────────────────── Warning ──────────────────────────────┐
+    // │ These PropTypes are generated from the TypeScript type definitions. │
+    // │ To update them, edit the TypeScript types and run `pnpm proptypes`. │
+    // └─────────────────────────────────────────────────────────────────────┘
     /**
      * @ignore
      */
@@ -27199,14 +26047,16 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     })
   } : void 0;
   "use client";
+  const COMPONENT_NAME$3 = "TabPanel";
   function getTabPanelUtilityClass(slot) {
-    return generateUtilityClass("MuiTabPanel", slot);
+    return generateUtilityClass(COMPONENT_NAME$3, slot);
   }
-  const tabPanelClasses = generateUtilityClasses("MuiTabPanel", ["root", "hidden"]);
+  const tabPanelClasses = generateUtilityClasses(COMPONENT_NAME$3, ["root", "hidden"]);
+  const COMPONENT_NAME$2 = "Tabs";
   function getTabsUtilityClass(slot) {
-    return generateUtilityClass("MuiTabs", slot);
+    return generateUtilityClass(COMPONENT_NAME$2, slot);
   }
-  const tabsClasses = generateUtilityClasses("MuiTabs", ["root", "horizontal", "vertical"]);
+  const tabsClasses = generateUtilityClasses(COMPONENT_NAME$2, ["root", "horizontal", "vertical"]);
   "use client";
   function useTabs(parameters) {
     const {
@@ -27356,10 +26206,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }));
   });
   process.env.NODE_ENV !== "production" ? Tabs.propTypes = {
-    // ----------------------------- Warning --------------------------------
-    // | These PropTypes are generated from the TypeScript type definitions |
-    // |     To update them edit TypeScript types and run "yarn proptypes"  |
-    // ----------------------------------------------------------------------
+    // ┌────────────────────────────── Warning ──────────────────────────────┐
+    // │ These PropTypes are generated from the TypeScript type definitions. │
+    // │ To update them, edit the TypeScript types and run `pnpm proptypes`. │
+    // └─────────────────────────────────────────────────────────────────────┘
     /**
      * The content of the component.
      */
@@ -27502,10 +26352,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }));
   });
   process.env.NODE_ENV !== "production" ? TabPanel.propTypes = {
-    // ----------------------------- Warning --------------------------------
-    // | These PropTypes are generated from the TypeScript type definitions |
-    // |     To update them edit TypeScript types and run "yarn proptypes"  |
-    // ----------------------------------------------------------------------
+    // ┌────────────────────────────── Warning ──────────────────────────────┐
+    // │ These PropTypes are generated from the TypeScript type definitions. │
+    // │ To update them, edit the TypeScript types and run `pnpm proptypes`. │
+    // └─────────────────────────────────────────────────────────────────────┘
     /**
      * The content of the component.
      */
@@ -27537,10 +26387,11 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     value: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
   } : void 0;
   "use client";
+  const COMPONENT_NAME$1 = "TabsList";
   function getTabsListUtilityClass(slot) {
-    return generateUtilityClass("MuiTabsList", slot);
+    return generateUtilityClass(COMPONENT_NAME$1, slot);
   }
-  const tabsListClasses = generateUtilityClasses("MuiTabsList", ["root", "horizontal", "vertical"]);
+  const tabsListClasses = generateUtilityClasses(COMPONENT_NAME$1, ["root", "horizontal", "vertical"]);
   const TabsListActionTypes = {
     valueChange: "valueChange"
   };
@@ -27761,10 +26612,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     });
   });
   process.env.NODE_ENV !== "production" ? TabsList.propTypes = {
-    // ----------------------------- Warning --------------------------------
-    // | These PropTypes are generated from the TypeScript type definitions |
-    // |     To update them edit TypeScript types and run "yarn proptypes"  |
-    // ----------------------------------------------------------------------
+    // ┌────────────────────────────── Warning ──────────────────────────────┐
+    // │ These PropTypes are generated from the TypeScript type definitions. │
+    // │ To update them, edit the TypeScript types and run `pnpm proptypes`. │
+    // └─────────────────────────────────────────────────────────────────────┘
     /**
      * The content of the component.
      */
@@ -27790,10 +26641,11 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     })
   } : void 0;
   "use client";
+  const COMPONENT_NAME = "Tab";
   function getTabUtilityClass(slot) {
-    return generateUtilityClass("MuiTab", slot);
+    return generateUtilityClass(COMPONENT_NAME, slot);
   }
-  const tabClasses = generateUtilityClasses("MuiTab", ["root", "selected", "disabled"]);
+  const tabClasses = generateUtilityClasses(COMPONENT_NAME, ["root", "selected", "disabled"]);
   "use client";
   function tabValueGenerator(otherTabValues) {
     return otherTabValues.size;
@@ -27924,10 +26776,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }));
   });
   process.env.NODE_ENV !== "production" ? Tab.propTypes = {
-    // ----------------------------- Warning --------------------------------
-    // | These PropTypes are generated from the TypeScript type definitions |
-    // |     To update them edit TypeScript types and run "yarn proptypes"  |
-    // ----------------------------------------------------------------------
+    // ┌────────────────────────────── Warning ──────────────────────────────┐
+    // │ These PropTypes are generated from the TypeScript type definitions. │
+    // │ To update them, edit the TypeScript types and run `pnpm proptypes`. │
+    // └─────────────────────────────────────────────────────────────────────┘
     /**
      * A ref for imperative actions. It currently only supports `focusVisible()` action.
      */
@@ -28153,10 +27005,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     });
   });
   process.env.NODE_ENV !== "production" ? TextareaAutosize.propTypes = {
-    // ----------------------------- Warning --------------------------------
-    // | These PropTypes are generated from the TypeScript type definitions |
-    // |     To update them edit TypeScript types and run "yarn proptypes"  |
-    // ----------------------------------------------------------------------
+    // ┌────────────────────────────── Warning ──────────────────────────────┐
+    // │ These PropTypes are generated from the TypeScript type definitions. │
+    // │ To update them, edit the TypeScript types and run `pnpm proptypes`. │
+    // └─────────────────────────────────────────────────────────────────────┘
     /**
      * @ignore
      */
@@ -28201,29 +27053,22 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     } = props, other = _objectWithoutPropertiesLoose(props, _excluded$u);
     const {
       requestedEnter,
-      onEntering,
-      onEntered,
-      onExiting,
       onExited
     } = useTransitionStateManager();
     const hasExited = React__namespace.useRef(true);
     React__namespace.useEffect(() => {
       if (requestedEnter && hasExited.current) {
-        onEntering();
         hasExited.current = false;
-      } else if (!requestedEnter && !hasExited.current) {
-        onExiting();
       }
-    }, [onEntering, onExiting, requestedEnter]);
+    }, [requestedEnter]);
     const handleAnimationEnd = React__namespace.useCallback((event) => {
       if (event.animationName === exitAnimationName) {
         onExited();
         hasExited.current = true;
       } else if (event.animationName === enterAnimationName) {
-        onEntered();
         hasExited.current = false;
       }
-    }, [onExited, onEntered, exitAnimationName, enterAnimationName]);
+    }, [onExited, exitAnimationName, enterAnimationName]);
     return /* @__PURE__ */ jsxRuntimeExports.jsx("div", _extends({
       onAnimationEnd: handleAnimationEnd,
       className: clsx(className, requestedEnter ? enterClassName : exitClassName)
@@ -28240,58 +27085,42 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     exitClassName: PropTypes.string
   } : void 0;
   "use client";
-  const _excluded$t = ["children", "className", "lastTransitionedPropertyOnEnter", "lastTransitionedPropertyOnExit", "enterClassName", "exitClassName"];
-  function CssTransition(props) {
+  const _excluded$t = ["children", "className", "lastTransitionedPropertyOnExit", "enterClassName", "exitClassName"];
+  const CssTransition = /* @__PURE__ */ React__namespace.forwardRef(function CssTransition2(props, forwardedRef) {
     const {
       children,
       className,
-      lastTransitionedPropertyOnEnter,
       lastTransitionedPropertyOnExit,
       enterClassName,
       exitClassName
     } = props, other = _objectWithoutPropertiesLoose(props, _excluded$t);
     const {
       requestedEnter,
-      onEntering,
-      onEntered,
-      onExiting,
       onExited
     } = useTransitionStateManager();
-    const [isEntering, setIsEntering] = React__namespace.useState(!requestedEnter);
+    const [isEntering, setIsEntering] = React__namespace.useState(false);
     React__namespace.useEffect(() => {
       if (requestedEnter) {
         requestAnimationFrame(() => {
           setIsEntering(true);
         });
       } else {
-        requestAnimationFrame(() => {
-          setIsEntering(false);
-        });
+        setIsEntering(false);
       }
-    });
-    React__namespace.useEffect(() => {
-      if (requestedEnter) {
-        onEntering();
-      } else {
-        onExiting();
-      }
-    }, [requestedEnter, onEntering, onExiting]);
+    }, [requestedEnter]);
     const handleTransitionEnd = React__namespace.useCallback((event) => {
-      if (requestedEnter) {
-        if (lastTransitionedPropertyOnEnter == null || event.propertyName === lastTransitionedPropertyOnEnter) {
-          onEntered();
-        }
-      } else if (lastTransitionedPropertyOnExit == null || event.propertyName === lastTransitionedPropertyOnExit) {
+      if (!requestedEnter && (lastTransitionedPropertyOnExit == null || event.propertyName === lastTransitionedPropertyOnExit)) {
         onExited();
       }
-    }, [onExited, onEntered, requestedEnter, lastTransitionedPropertyOnEnter, lastTransitionedPropertyOnExit]);
+    }, [onExited, requestedEnter, lastTransitionedPropertyOnExit]);
     return /* @__PURE__ */ jsxRuntimeExports.jsx("div", _extends({
       onTransitionEnd: handleTransitionEnd,
       className: clsx(className, isEntering ? enterClassName : exitClassName)
     }, other, {
+      ref: forwardedRef,
       children
     }));
-  }
+  });
   process.env.NODE_ENV !== "production" ? CssTransition.propTypes = {
     children: PropTypes.node,
     className: PropTypes.string,
@@ -29013,7 +27842,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       }
       handleClose(event, "blur");
     };
-    const handleInputChange = (event) => {
+    const handleInputChange2 = (event) => {
       const newValue = event.target.value;
       if (inputValue !== newValue) {
         setInputValueState(newValue);
@@ -29138,7 +27967,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         value: inputValue,
         onBlur: handleBlur2,
         onFocus: handleFocus,
-        onChange: handleInputChange,
+        onChange: handleInputChange2,
         onMouseDown: handleInputMouseDown,
         // if open then this is handled imperatively so don't let react override
         // only have an opinion about this when closed
@@ -29217,15 +28046,13 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     };
   }
   "use client";
-  "use client";
   /**
-   * @mui/base v5.0.0-beta.30
+   * @mui/base v5.0.0-beta.36
    *
    * @license MIT
    * This source code is licensed under the MIT license found in the
    * LICENSE file in the root directory of this source tree.
    */
-  "use client";
   function _setPrototypeOf(o, p) {
     _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf2(o2, p2) {
       o2.__proto__ = p2;
@@ -30555,10 +29382,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }));
   });
   process.env.NODE_ENV !== "production" ? Fade.propTypes = {
-    // ----------------------------- Warning --------------------------------
-    // | These PropTypes are generated from the TypeScript type definitions |
-    // |     To update them edit the d.ts file and run "yarn proptypes"     |
-    // ----------------------------------------------------------------------
+    // ┌────────────────────────────── Warning ──────────────────────────────┐
+    // │ These PropTypes are generated from the TypeScript type definitions. │
+    // │    To update them, edit the d.ts file and run `pnpm proptypes`.     │
+    // └─────────────────────────────────────────────────────────────────────┘
     /**
      * Add a custom transition end trigger. Called with the transitioning DOM
      * node and a done callback. Allows for more fine grained transition end
@@ -30631,9 +29458,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   } : void 0;
   "use client";
   function getBackdropUtilityClass(slot) {
-    return generateUtilityClass("MuiBackdrop", slot);
+    return generateUtilityClass$1("MuiBackdrop", slot);
   }
-  const backdropClasses = generateUtilityClasses("MuiBackdrop", ["root", "invisible"]);
+  const backdropClasses = generateUtilityClasses$1("MuiBackdrop", ["root", "invisible"]);
   "use client";
   const _excluded$r = ["children", "className", "component", "components", "componentsProps", "invisible", "open", "slotProps", "slots", "TransitionComponent", "transitionDuration"];
   const useUtilityClasses$m = (ownerState) => {
@@ -30713,10 +29540,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }));
   });
   process.env.NODE_ENV !== "production" ? Backdrop.propTypes = {
-    // ----------------------------- Warning --------------------------------
-    // | These PropTypes are generated from the TypeScript type definitions |
-    // |     To update them edit the d.ts file and run "yarn proptypes"     |
-    // ----------------------------------------------------------------------
+    // ┌────────────────────────────── Warning ──────────────────────────────┐
+    // │ These PropTypes are generated from the TypeScript type definitions. │
+    // │    To update them, edit the d.ts file and run `pnpm proptypes`.     │
+    // └─────────────────────────────────────────────────────────────────────┘
     /**
      * The content of the component.
      */
@@ -30810,9 +29637,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   } : void 0;
   "use client";
   function getModalUtilityClass(slot) {
-    return generateUtilityClass("MuiModal", slot);
+    return generateUtilityClass$1("MuiModal", slot);
   }
-  const modalClasses = generateUtilityClasses("MuiModal", ["root", "hidden", "backdrop"]);
+  const modalClasses = generateUtilityClasses$1("MuiModal", ["root", "hidden", "backdrop"]);
   "use client";
   const _excluded$q = ["BackdropComponent", "BackdropProps", "classes", "className", "closeAfterTransition", "children", "container", "component", "components", "componentsProps", "disableAutoFocus", "disableEnforceFocus", "disableEscapeKeyDown", "disablePortal", "disableRestoreFocus", "disableScrollLock", "hideBackdrop", "keepMounted", "onBackdropClick", "onClose", "onTransitionEnter", "onTransitionExited", "open", "slotProps", "slots", "theme"];
   const useUtilityClasses$l = (ownerState) => {
@@ -30981,10 +29808,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     });
   });
   process.env.NODE_ENV !== "production" ? Modal.propTypes = {
-    // ----------------------------- Warning --------------------------------
-    // | These PropTypes are generated from the TypeScript type definitions |
-    // |     To update them edit the d.ts file and run "yarn proptypes"     |
-    // ----------------------------------------------------------------------
+    // ┌────────────────────────────── Warning ──────────────────────────────┐
+    // │ These PropTypes are generated from the TypeScript type definitions. │
+    // │    To update them, edit the d.ts file and run `pnpm proptypes`.     │
+    // └─────────────────────────────────────────────────────────────────────┘
     /**
      * A backdrop component. This prop enables custom backdrop rendering.
      * @deprecated Use `slots.backdrop` instead. While this prop currently works, it will be removed in the next major version.
@@ -31358,10 +30185,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }));
   });
   process.env.NODE_ENV !== "production" ? Slide.propTypes = {
-    // ----------------------------- Warning --------------------------------
-    // | These PropTypes are generated from the TypeScript type definitions |
-    // |     To update them edit the d.ts file and run "yarn proptypes"     |
-    // ----------------------------------------------------------------------
+    // ┌────────────────────────────── Warning ──────────────────────────────┐
+    // │ These PropTypes are generated from the TypeScript type definitions. │
+    // │    To update them, edit the d.ts file and run `pnpm proptypes`.     │
+    // └─────────────────────────────────────────────────────────────────────┘
     /**
      * Add a custom transition end trigger. Called with the transitioning DOM
      * node and a done callback. Allows for more fine grained transition end
@@ -31461,9 +30288,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   } : void 0;
   "use client";
   function getDrawerUtilityClass(slot) {
-    return generateUtilityClass("MuiDrawer", slot);
+    return generateUtilityClass$1("MuiDrawer", slot);
   }
-  const drawerClasses = generateUtilityClasses("MuiDrawer", ["root", "docked", "paper", "paperAnchorLeft", "paperAnchorRight", "paperAnchorTop", "paperAnchorBottom", "paperAnchorDockedLeft", "paperAnchorDockedRight", "paperAnchorDockedTop", "paperAnchorDockedBottom", "modal"]);
+  const drawerClasses = generateUtilityClasses$1("MuiDrawer", ["root", "docked", "paper", "paperAnchorLeft", "paperAnchorRight", "paperAnchorTop", "paperAnchorBottom", "paperAnchorDockedLeft", "paperAnchorDockedRight", "paperAnchorDockedTop", "paperAnchorDockedBottom", "modal"]);
   "use client";
   const _excluded$o = ["BackdropProps"], _excluded2$3 = ["anchor", "BackdropProps", "children", "className", "elevation", "hideBackdrop", "ModalProps", "onClose", "open", "PaperProps", "SlideProps", "TransitionComponent", "transitionDuration", "variant"];
   const overridesResolver = (props, styles2) => {
@@ -31661,10 +30488,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }));
   });
   process.env.NODE_ENV !== "production" ? Drawer.propTypes = {
-    // ----------------------------- Warning --------------------------------
-    // | These PropTypes are generated from the TypeScript type definitions |
-    // |     To update them edit the d.ts file and run "yarn proptypes"     |
-    // ----------------------------------------------------------------------
+    // ┌────────────────────────────── Warning ──────────────────────────────┐
+    // │ These PropTypes are generated from the TypeScript type definitions. │
+    // │    To update them, edit the d.ts file and run `pnpm proptypes`.     │
+    // └─────────────────────────────────────────────────────────────────────┘
     /**
      * Side from which the drawer will appear.
      * @default 'left'
@@ -31888,9 +30715,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     timeout: PropTypes.number.isRequired
   } : void 0;
   function getTouchRippleUtilityClass(slot) {
-    return generateUtilityClass("MuiTouchRipple", slot);
+    return generateUtilityClass$1("MuiTouchRipple", slot);
   }
-  const touchRippleClasses = generateUtilityClasses("MuiTouchRipple", ["root", "ripple", "rippleVisible", "ripplePulsate", "child", "childLeaving", "childPulsate"]);
+  const touchRippleClasses = generateUtilityClasses$1("MuiTouchRipple", ["root", "ripple", "rippleVisible", "ripplePulsate", "child", "childLeaving", "childPulsate"]);
   "use client";
   const _excluded$n = ["center", "classes", "className"];
   let _ = (t) => t, _t, _t2, _t3, _t4;
@@ -32018,16 +30845,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       }
     }, [ripples]);
     const ignoringMouseDown = React__namespace.useRef(false);
-    const startTimer = React__namespace.useRef(0);
+    const startTimer = useTimeout();
     const startTimerCommit = React__namespace.useRef(null);
     const container = React__namespace.useRef(null);
-    React__namespace.useEffect(() => {
-      return () => {
-        if (startTimer.current) {
-          clearTimeout(startTimer.current);
-        }
-      };
-    }, []);
     const startCommit = React__namespace.useCallback((params) => {
       const {
         pulsate: pulsate2,
@@ -32111,12 +30931,12 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
               cb
             });
           };
-          startTimer.current = setTimeout(() => {
+          startTimer.start(DELAY_RIPPLE, () => {
             if (startTimerCommit.current) {
               startTimerCommit.current();
               startTimerCommit.current = null;
             }
-          }, DELAY_RIPPLE);
+          });
         }
       } else {
         startCommit({
@@ -32127,18 +30947,18 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           cb
         });
       }
-    }, [centerProp, startCommit]);
+    }, [centerProp, startCommit, startTimer]);
     const pulsate = React__namespace.useCallback(() => {
       start2({}, {
         pulsate: true
       });
     }, [start2]);
     const stop = React__namespace.useCallback((event, cb) => {
-      clearTimeout(startTimer.current);
+      startTimer.clear();
       if ((event == null ? void 0 : event.type) === "touchend" && startTimerCommit.current) {
         startTimerCommit.current();
         startTimerCommit.current = null;
-        startTimer.current = setTimeout(() => {
+        startTimer.start(0, () => {
           stop(event, cb);
         });
         return;
@@ -32151,7 +30971,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         return oldRipples;
       });
       rippleCallback.current = cb;
-    }, []);
+    }, [startTimer]);
     React__namespace.useImperativeHandle(ref, () => ({
       pulsate,
       start: start2,
@@ -32185,9 +31005,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     className: PropTypes.string
   } : void 0;
   function getButtonBaseUtilityClass(slot) {
-    return generateUtilityClass("MuiButtonBase", slot);
+    return generateUtilityClass$1("MuiButtonBase", slot);
   }
-  const buttonBaseClasses = generateUtilityClasses("MuiButtonBase", ["root", "disabled", "focusVisible"]);
+  const buttonBaseClasses = generateUtilityClasses$1("MuiButtonBase", ["root", "disabled", "focusVisible"]);
   "use client";
   const _excluded$m = ["action", "centerRipple", "children", "className", "component", "disabled", "disableRipple", "disableTouchRipple", "focusRipple", "focusVisibleClassName", "LinkComponent", "onBlur", "onClick", "onContextMenu", "onDragLeave", "onFocus", "onFocusVisible", "onKeyDown", "onKeyUp", "onMouseDown", "onMouseLeave", "onMouseUp", "onTouchEnd", "onTouchMove", "onTouchStart", "tabIndex", "TouchRippleProps", "touchRippleRef", "type"];
   const useUtilityClasses$j = (ownerState) => {
@@ -32470,10 +31290,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }));
   });
   process.env.NODE_ENV !== "production" ? ButtonBase.propTypes = {
-    // ----------------------------- Warning --------------------------------
-    // | These PropTypes are generated from the TypeScript type definitions |
-    // |     To update them edit the d.ts file and run "yarn proptypes"     |
-    // ----------------------------------------------------------------------
+    // ┌────────────────────────────── Warning ──────────────────────────────┐
+    // │ These PropTypes are generated from the TypeScript type definitions. │
+    // │    To update them, edit the d.ts file and run `pnpm proptypes`.     │
+    // └─────────────────────────────────────────────────────────────────────┘
     /**
      * A ref for imperative actions.
      * It currently only supports `focusVisible()` action.
@@ -32629,9 +31449,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   } : void 0;
   "use client";
   function getButtonUtilityClass(slot) {
-    return generateUtilityClass("MuiButton", slot);
+    return generateUtilityClass$1("MuiButton", slot);
   }
-  const buttonClasses = generateUtilityClasses("MuiButton", ["root", "text", "textInherit", "textPrimary", "textSecondary", "textSuccess", "textError", "textInfo", "textWarning", "outlined", "outlinedInherit", "outlinedPrimary", "outlinedSecondary", "outlinedSuccess", "outlinedError", "outlinedInfo", "outlinedWarning", "contained", "containedInherit", "containedPrimary", "containedSecondary", "containedSuccess", "containedError", "containedInfo", "containedWarning", "disableElevation", "focusVisible", "disabled", "colorInherit", "textSizeSmall", "textSizeMedium", "textSizeLarge", "outlinedSizeSmall", "outlinedSizeMedium", "outlinedSizeLarge", "containedSizeSmall", "containedSizeMedium", "containedSizeLarge", "sizeMedium", "sizeSmall", "sizeLarge", "fullWidth", "startIcon", "endIcon", "iconSizeSmall", "iconSizeMedium", "iconSizeLarge"]);
+  const buttonClasses = generateUtilityClasses$1("MuiButton", ["root", "text", "textInherit", "textPrimary", "textSecondary", "textSuccess", "textError", "textInfo", "textWarning", "outlined", "outlinedInherit", "outlinedPrimary", "outlinedSecondary", "outlinedSuccess", "outlinedError", "outlinedInfo", "outlinedWarning", "contained", "containedInherit", "containedPrimary", "containedSecondary", "containedSuccess", "containedError", "containedInfo", "containedWarning", "disableElevation", "focusVisible", "disabled", "colorInherit", "textSizeSmall", "textSizeMedium", "textSizeLarge", "outlinedSizeSmall", "outlinedSizeMedium", "outlinedSizeLarge", "containedSizeSmall", "containedSizeMedium", "containedSizeLarge", "sizeMedium", "sizeSmall", "sizeLarge", "fullWidth", "startIcon", "endIcon", "iconSizeSmall", "iconSizeMedium", "iconSizeLarge"]);
   const ButtonGroupContext = /* @__PURE__ */ React__namespace.createContext({});
   if (process.env.NODE_ENV !== "production") {
     ButtonGroupContext.displayName = "ButtonGroupContext";
@@ -32906,10 +31726,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }));
   });
   process.env.NODE_ENV !== "production" ? Button.propTypes = {
-    // ----------------------------- Warning --------------------------------
-    // | These PropTypes are generated from the TypeScript type definitions |
-    // |     To update them edit the d.ts file and run "yarn proptypes"     |
-    // ----------------------------------------------------------------------
+    // ┌────────────────────────────── Warning ──────────────────────────────┐
+    // │ These PropTypes are generated from the TypeScript type definitions. │
+    // │    To update them, edit the d.ts file and run `pnpm proptypes`.     │
+    // └─────────────────────────────────────────────────────────────────────┘
     /**
      * The content of the component.
      */
@@ -33031,10 +31851,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }));
   }
   process.env.NODE_ENV !== "production" ? GlobalStyles.propTypes = {
-    // ----------------------------- Warning --------------------------------
-    // | These PropTypes are generated from the TypeScript type definitions |
-    // |     To update them edit the d.ts file and run "yarn proptypes"     |
-    // ----------------------------------------------------------------------
+    // ┌────────────────────────────── Warning ──────────────────────────────┐
+    // │ These PropTypes are generated from the TypeScript type definitions. │
+    // │    To update them, edit the d.ts file and run `pnpm proptypes`.     │
+    // └─────────────────────────────────────────────────────────────────────┘
     /**
      * The styles you want to apply globally.
      */
@@ -33050,9 +31870,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     return obj.startAdornment;
   }
   function getInputBaseUtilityClass(slot) {
-    return generateUtilityClass("MuiInputBase", slot);
+    return generateUtilityClass$1("MuiInputBase", slot);
   }
-  const inputBaseClasses = generateUtilityClasses("MuiInputBase", ["root", "formControl", "focused", "disabled", "adornedStart", "adornedEnd", "error", "sizeSmall", "multiline", "colorSecondary", "fullWidth", "hiddenLabel", "readOnly", "input", "inputSizeSmall", "inputMultiline", "inputTypeSearch", "inputAdornedStart", "inputAdornedEnd", "inputHiddenLabel"]);
+  const inputBaseClasses = generateUtilityClasses$1("MuiInputBase", ["root", "formControl", "focused", "disabled", "adornedStart", "adornedEnd", "error", "sizeSmall", "multiline", "colorSecondary", "fullWidth", "hiddenLabel", "readOnly", "input", "inputSizeSmall", "inputMultiline", "inputTypeSearch", "inputAdornedStart", "inputAdornedEnd", "inputHiddenLabel"]);
   "use client";
   const _excluded$k = ["aria-describedby", "autoComplete", "autoFocus", "className", "color", "components", "componentsProps", "defaultValue", "disabled", "disableInjectingGlobalStyles", "endAdornment", "error", "fullWidth", "id", "inputComponent", "inputProps", "inputRef", "margin", "maxRows", "minRows", "multiline", "name", "onBlur", "onChange", "onClick", "onFocus", "onKeyDown", "onKeyUp", "placeholder", "readOnly", "renderSuffix", "rows", "size", "slotProps", "slots", "startAdornment", "type", "value"];
   const rootOverridesResolver = (props, styles2) => {
@@ -33490,10 +32310,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     });
   });
   process.env.NODE_ENV !== "production" ? InputBase.propTypes = {
-    // ----------------------------- Warning --------------------------------
-    // | These PropTypes are generated from the TypeScript type definitions |
-    // |     To update them edit the d.ts file and run "yarn proptypes"     |
-    // ----------------------------------------------------------------------
+    // ┌────────────────────────────── Warning ──────────────────────────────┐
+    // │ These PropTypes are generated from the TypeScript type definitions. │
+    // │    To update them, edit the d.ts file and run `pnpm proptypes`.     │
+    // └─────────────────────────────────────────────────────────────────────┘
     /**
      * @ignore
      */
@@ -33721,9 +32541,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   } : void 0;
   "use client";
   function getInputUtilityClass(slot) {
-    return generateUtilityClass("MuiInput", slot);
+    return generateUtilityClass$1("MuiInput", slot);
   }
-  const inputClasses = _extends({}, inputBaseClasses, generateUtilityClasses("MuiInput", ["root", "underline", "input"]));
+  const inputClasses = _extends({}, inputBaseClasses, generateUtilityClasses$1("MuiInput", ["root", "underline", "input"]));
   "use client";
   const _excluded$j = ["disableUnderline", "components", "componentsProps", "fullWidth", "inputComponent", "multiline", "slotProps", "slots", "type"];
   const useUtilityClasses$g = (ownerState) => {
@@ -33866,10 +32686,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }));
   });
   process.env.NODE_ENV !== "production" ? Input.propTypes = {
-    // ----------------------------- Warning --------------------------------
-    // | These PropTypes are generated from the TypeScript type definitions |
-    // |     To update them edit the d.ts file and run "yarn proptypes"     |
-    // ----------------------------------------------------------------------
+    // ┌────────────────────────────── Warning ──────────────────────────────┐
+    // │ These PropTypes are generated from the TypeScript type definitions. │
+    // │    To update them, edit the d.ts file and run `pnpm proptypes`.     │
+    // └─────────────────────────────────────────────────────────────────────┘
     /**
      * This prop helps users to fill forms faster, especially on mobile devices.
      * The name can be confusing, as it's more like an autofill.
@@ -34054,9 +32874,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   Input.muiName = "Input";
   "use client";
   function getFilledInputUtilityClass(slot) {
-    return generateUtilityClass("MuiFilledInput", slot);
+    return generateUtilityClass$1("MuiFilledInput", slot);
   }
-  const filledInputClasses = _extends({}, inputBaseClasses, generateUtilityClasses("MuiFilledInput", ["root", "underline", "input"]));
+  const filledInputClasses = _extends({}, inputBaseClasses, generateUtilityClasses$1("MuiFilledInput", ["root", "underline", "input"]));
   "use client";
   const _excluded$i = ["disableUnderline", "components", "componentsProps", "fullWidth", "hiddenLabel", "inputComponent", "multiline", "slotProps", "slots", "type"];
   const useUtilityClasses$f = (ownerState) => {
@@ -34279,10 +33099,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }));
   });
   process.env.NODE_ENV !== "production" ? FilledInput.propTypes = {
-    // ----------------------------- Warning --------------------------------
-    // | These PropTypes are generated from the TypeScript type definitions |
-    // |     To update them edit the d.ts file and run "yarn proptypes"     |
-    // ----------------------------------------------------------------------
+    // ┌────────────────────────────── Warning ──────────────────────────────┐
+    // │ These PropTypes are generated from the TypeScript type definitions. │
+    // │    To update them, edit the d.ts file and run `pnpm proptypes`.     │
+    // └─────────────────────────────────────────────────────────────────────┘
     /**
      * This prop helps users to fill forms faster, especially on mobile devices.
      * The name can be confusing, as it's more like an autofill.
@@ -34600,9 +33420,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     style: PropTypes.object
   } : void 0;
   function getOutlinedInputUtilityClass(slot) {
-    return generateUtilityClass("MuiOutlinedInput", slot);
+    return generateUtilityClass$1("MuiOutlinedInput", slot);
   }
-  const outlinedInputClasses = _extends({}, inputBaseClasses, generateUtilityClasses("MuiOutlinedInput", ["root", "notchedOutline", "input"]));
+  const outlinedInputClasses = _extends({}, inputBaseClasses, generateUtilityClasses$1("MuiOutlinedInput", ["root", "notchedOutline", "input"]));
   "use client";
   const _excluded$g = ["components", "fullWidth", "inputComponent", "label", "multiline", "notched", "slots", "type"];
   const useUtilityClasses$e = (ownerState) => {
@@ -34769,10 +33589,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }));
   });
   process.env.NODE_ENV !== "production" ? OutlinedInput.propTypes = {
-    // ----------------------------- Warning --------------------------------
-    // | These PropTypes are generated from the TypeScript type definitions |
-    // |     To update them edit the d.ts file and run "yarn proptypes"     |
-    // ----------------------------------------------------------------------
+    // ┌────────────────────────────── Warning ──────────────────────────────┐
+    // │ These PropTypes are generated from the TypeScript type definitions. │
+    // │    To update them, edit the d.ts file and run `pnpm proptypes`.     │
+    // └─────────────────────────────────────────────────────────────────────┘
     /**
      * This prop helps users to fill forms faster, especially on mobile devices.
      * The name can be confusing, as it's more like an autofill.
@@ -34937,9 +33757,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   OutlinedInput.muiName = "Input";
   "use client";
   function getFormLabelUtilityClasses(slot) {
-    return generateUtilityClass("MuiFormLabel", slot);
+    return generateUtilityClass$1("MuiFormLabel", slot);
   }
-  const formLabelClasses = generateUtilityClasses("MuiFormLabel", ["root", "colorSecondary", "focused", "disabled", "error", "filled", "required", "asterisk"]);
+  const formLabelClasses = generateUtilityClasses$1("MuiFormLabel", ["root", "colorSecondary", "focused", "disabled", "error", "filled", "required", "asterisk"]);
   "use client";
   const _excluded$f = ["children", "className", "color", "component", "disabled", "error", "filled", "focused", "required"];
   const useUtilityClasses$d = (ownerState) => {
@@ -35037,10 +33857,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }));
   });
   process.env.NODE_ENV !== "production" ? FormLabel.propTypes = {
-    // ----------------------------- Warning --------------------------------
-    // | These PropTypes are generated from the TypeScript type definitions |
-    // |     To update them edit the d.ts file and run "yarn proptypes"     |
-    // ----------------------------------------------------------------------
+    // ┌────────────────────────────── Warning ──────────────────────────────┐
+    // │ These PropTypes are generated from the TypeScript type definitions. │
+    // │    To update them, edit the d.ts file and run `pnpm proptypes`.     │
+    // └─────────────────────────────────────────────────────────────────────┘
     /**
      * The content of the component.
      */
@@ -35091,9 +33911,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   } : void 0;
   "use client";
   function getInputLabelUtilityClasses(slot) {
-    return generateUtilityClass("MuiInputLabel", slot);
+    return generateUtilityClass$1("MuiInputLabel", slot);
   }
-  const inputLabelClasses = generateUtilityClasses("MuiInputLabel", ["root", "focused", "disabled", "error", "required", "asterisk", "formControl", "sizeSmall", "shrink", "animated", "standard", "filled", "outlined"]);
+  const inputLabelClasses = generateUtilityClasses$1("MuiInputLabel", ["root", "focused", "disabled", "error", "required", "asterisk", "formControl", "sizeSmall", "shrink", "animated", "standard", "filled", "outlined"]);
   "use client";
   const _excluded$e = ["disableAnimation", "margin", "shrink", "variant", "className"];
   const useUtilityClasses$c = (ownerState) => {
@@ -35227,10 +34047,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }));
   });
   process.env.NODE_ENV !== "production" ? InputLabel.propTypes = {
-    // ----------------------------- Warning --------------------------------
-    // | These PropTypes are generated from the TypeScript type definitions |
-    // |     To update them edit the d.ts file and run "yarn proptypes"     |
-    // ----------------------------------------------------------------------
+    // ┌────────────────────────────── Warning ──────────────────────────────┐
+    // │ These PropTypes are generated from the TypeScript type definitions. │
+    // │    To update them, edit the d.ts file and run `pnpm proptypes`.     │
+    // └─────────────────────────────────────────────────────────────────────┘
     /**
      * The content of the component.
      */
@@ -35295,9 +34115,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   } : void 0;
   "use client";
   function getFormControlUtilityClasses(slot) {
-    return generateUtilityClass("MuiFormControl", slot);
+    return generateUtilityClass$1("MuiFormControl", slot);
   }
-  const formControlClasses = generateUtilityClasses("MuiFormControl", ["root", "marginNone", "marginNormal", "marginDense", "fullWidth", "disabled"]);
+  const formControlClasses = generateUtilityClasses$1("MuiFormControl", ["root", "marginNone", "marginNormal", "marginDense", "fullWidth", "disabled"]);
   "use client";
   const _excluded$d = ["children", "className", "color", "component", "disabled", "error", "focused", "fullWidth", "hiddenLabel", "margin", "required", "size", "variant"];
   const useUtilityClasses$b = (ownerState) => {
@@ -35462,10 +34282,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     });
   });
   process.env.NODE_ENV !== "production" ? FormControl.propTypes = {
-    // ----------------------------- Warning --------------------------------
-    // | These PropTypes are generated from the TypeScript type definitions |
-    // |     To update them edit the d.ts file and run "yarn proptypes"     |
-    // ----------------------------------------------------------------------
+    // ┌────────────────────────────── Warning ──────────────────────────────┐
+    // │ These PropTypes are generated from the TypeScript type definitions. │
+    // │    To update them, edit the d.ts file and run `pnpm proptypes`.     │
+    // └─────────────────────────────────────────────────────────────────────┘
     /**
      * The content of the component.
      */
@@ -35543,9 +34363,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   } : void 0;
   "use client";
   function getFormHelperTextUtilityClasses(slot) {
-    return generateUtilityClass("MuiFormHelperText", slot);
+    return generateUtilityClass$1("MuiFormHelperText", slot);
   }
-  const formHelperTextClasses = generateUtilityClasses("MuiFormHelperText", ["root", "error", "disabled", "sizeSmall", "sizeMedium", "contained", "focused", "filled", "required"]);
+  const formHelperTextClasses = generateUtilityClasses$1("MuiFormHelperText", ["root", "error", "disabled", "sizeSmall", "sizeMedium", "contained", "focused", "filled", "required"]);
   "use client";
   var _span$1;
   const _excluded$c = ["children", "className", "component", "disabled", "error", "filled", "focused", "margin", "required", "variant"];
@@ -35641,10 +34461,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }));
   });
   process.env.NODE_ENV !== "production" ? FormHelperText.propTypes = {
-    // ----------------------------- Warning --------------------------------
-    // | These PropTypes are generated from the TypeScript type definitions |
-    // |     To update them edit the d.ts file and run "yarn proptypes"     |
-    // ----------------------------------------------------------------------
+    // ┌────────────────────────────── Warning ──────────────────────────────┐
+    // │ These PropTypes are generated from the TypeScript type definitions. │
+    // │    To update them, edit the d.ts file and run `pnpm proptypes`.     │
+    // └─────────────────────────────────────────────────────────────────────┘
     /**
      * The content of the component.
      *
@@ -35705,9 +34525,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     ListContext.displayName = "ListContext";
   }
   function getListUtilityClass(slot) {
-    return generateUtilityClass("MuiList", slot);
+    return generateUtilityClass$1("MuiList", slot);
   }
-  const listClasses = generateUtilityClasses("MuiList", ["root", "padding", "dense", "subheader"]);
+  const listClasses = generateUtilityClasses$1("MuiList", ["root", "padding", "dense", "subheader"]);
   "use client";
   const _excluded$b = ["children", "className", "component", "dense", "disablePadding", "subheader"];
   const useUtilityClasses$9 = (ownerState) => {
@@ -35779,10 +34599,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     });
   });
   process.env.NODE_ENV !== "production" ? List.propTypes = {
-    // ----------------------------- Warning --------------------------------
-    // | These PropTypes are generated from the TypeScript type definitions |
-    // |     To update them edit the d.ts file and run "yarn proptypes"     |
-    // ----------------------------------------------------------------------
+    // ┌────────────────────────────── Warning ──────────────────────────────┐
+    // │ These PropTypes are generated from the TypeScript type definitions. │
+    // │    To update them, edit the d.ts file and run `pnpm proptypes`.     │
+    // └─────────────────────────────────────────────────────────────────────┘
     /**
      * The content of the component.
      */
@@ -36013,10 +34833,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }));
   });
   process.env.NODE_ENV !== "production" ? MenuList.propTypes = {
-    // ----------------------------- Warning --------------------------------
-    // | These PropTypes are generated from the TypeScript type definitions |
-    // |     To update them edit the d.ts file and run "yarn proptypes"     |
-    // ----------------------------------------------------------------------
+    // ┌────────────────────────────── Warning ──────────────────────────────┐
+    // │ These PropTypes are generated from the TypeScript type definitions. │
+    // │    To update them, edit the d.ts file and run `pnpm proptypes`.     │
+    // └─────────────────────────────────────────────────────────────────────┘
     /**
      * If `true`, will focus the `[role="menu"]` container and move into tab order.
      * @default false
@@ -36092,7 +34912,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       // eslint-disable-next-line react/prop-types
       TransitionComponent = Transition
     } = props, other = _objectWithoutPropertiesLoose(props, _excluded$9);
-    const timer = React__namespace.useRef();
+    const timer = useTimeout();
     const autoTimeout = React__namespace.useRef();
     const theme = useTheme();
     const nodeRef = React__namespace.useRef(null);
@@ -36178,17 +34998,12 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const handleExited = normalizedTransitionCallback(onExited);
     const handleAddEndListener = (next2) => {
       if (timeout === "auto") {
-        timer.current = setTimeout(next2, autoTimeout.current || 0);
+        timer.start(autoTimeout.current || 0, next2);
       }
       if (addEndListener) {
         addEndListener(nodeRef.current, next2);
       }
     };
-    React__namespace.useEffect(() => {
-      return () => {
-        clearTimeout(timer.current);
-      };
-    }, []);
     return /* @__PURE__ */ jsxRuntimeExports.jsx(TransitionComponent, _extends({
       appear,
       in: inProp,
@@ -36215,10 +35030,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }));
   });
   process.env.NODE_ENV !== "production" ? Grow.propTypes = {
-    // ----------------------------- Warning --------------------------------
-    // | These PropTypes are generated from the TypeScript type definitions |
-    // |     To update them edit the d.ts file and run "yarn proptypes"     |
-    // ----------------------------------------------------------------------
+    // ┌────────────────────────────── Warning ──────────────────────────────┐
+    // │ These PropTypes are generated from the TypeScript type definitions. │
+    // │    To update them, edit the d.ts file and run `pnpm proptypes`.     │
+    // └─────────────────────────────────────────────────────────────────────┘
     /**
      * Add a custom transition end trigger. Called with the transitioning DOM
      * node and a done callback. Allows for more fine grained transition end
@@ -36291,9 +35106,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   Grow.muiSupportAuto = true;
   "use client";
   function getPopoverUtilityClass(slot) {
-    return generateUtilityClass("MuiPopover", slot);
+    return generateUtilityClass$1("MuiPopover", slot);
   }
-  const popoverClasses = generateUtilityClasses("MuiPopover", ["root", "paper"]);
+  const popoverClasses = generateUtilityClasses$1("MuiPopover", ["root", "paper"]);
   "use client";
   const _excluded$8 = ["onEntering"], _excluded2$2 = ["action", "anchorEl", "anchorOrigin", "anchorPosition", "anchorReference", "children", "className", "container", "elevation", "marginThreshold", "open", "PaperProps", "slots", "slotProps", "transformOrigin", "TransitionComponent", "transitionDuration", "TransitionProps", "disableScrollLock"], _excluded3 = ["slotProps"];
   function getOffsetTop(rect, vertical) {
@@ -36598,10 +35413,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }));
   });
   process.env.NODE_ENV !== "production" ? Popover.propTypes = {
-    // ----------------------------- Warning --------------------------------
-    // | These PropTypes are generated from the TypeScript type definitions |
-    // |     To update them edit the d.ts file and run "yarn proptypes"     |
-    // ----------------------------------------------------------------------
+    // ┌────────────────────────────── Warning ──────────────────────────────┐
+    // │ These PropTypes are generated from the TypeScript type definitions. │
+    // │    To update them, edit the d.ts file and run `pnpm proptypes`.     │
+    // └─────────────────────────────────────────────────────────────────────┘
     /**
      * A ref for imperative actions.
      * It currently only supports updatePosition() action.
@@ -36776,9 +35591,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   } : void 0;
   "use client";
   function getMenuUtilityClass(slot) {
-    return generateUtilityClass("MuiMenu", slot);
+    return generateUtilityClass$1("MuiMenu", slot);
   }
-  const menuClasses = generateUtilityClasses("MuiMenu", ["root", "paper", "list"]);
+  const menuClasses = generateUtilityClasses$1("MuiMenu", ["root", "paper", "list"]);
   "use client";
   const _excluded$7 = ["onEntering"], _excluded2$1 = ["autoFocus", "children", "className", "disableAutoFocusItem", "MenuListProps", "onClose", "open", "PaperProps", "PopoverClasses", "transitionDuration", "TransitionProps", "variant", "slots", "slotProps"];
   const RTL_ORIGIN = {
@@ -36950,10 +35765,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }));
   });
   process.env.NODE_ENV !== "production" ? Menu.propTypes = {
-    // ----------------------------- Warning --------------------------------
-    // | These PropTypes are generated from the TypeScript type definitions |
-    // |     To update them edit the d.ts file and run "yarn proptypes"     |
-    // ----------------------------------------------------------------------
+    // ┌────────────────────────────── Warning ──────────────────────────────┐
+    // │ These PropTypes are generated from the TypeScript type definitions. │
+    // │    To update them, edit the d.ts file and run `pnpm proptypes`.     │
+    // └─────────────────────────────────────────────────────────────────────┘
     /**
      * An HTML element, or a function that returns one.
      * It's used to set the position of the menu.
@@ -37056,9 +35871,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     variant: PropTypes.oneOf(["menu", "selectedMenu"])
   } : void 0;
   function getNativeSelectUtilityClasses(slot) {
-    return generateUtilityClass("MuiNativeSelect", slot);
+    return generateUtilityClass$1("MuiNativeSelect", slot);
   }
-  const nativeSelectClasses = generateUtilityClasses("MuiNativeSelect", ["root", "select", "multiple", "filled", "outlined", "standard", "disabled", "icon", "iconOpen", "iconFilled", "iconOutlined", "iconStandard", "nativeInput", "error"]);
+  const nativeSelectClasses = generateUtilityClasses$1("MuiNativeSelect", ["root", "select", "multiple", "filled", "outlined", "standard", "disabled", "icon", "iconOpen", "iconFilled", "iconOutlined", "iconStandard", "nativeInput", "error"]);
   "use client";
   const _excluded$6 = ["className", "disabled", "error", "IconComponent", "inputRef", "variant"];
   const useUtilityClasses$6 = (ownerState) => {
@@ -37262,9 +36077,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     variant: PropTypes.oneOf(["standard", "outlined", "filled"])
   } : void 0;
   function getSelectUtilityClasses(slot) {
-    return generateUtilityClass("MuiSelect", slot);
+    return generateUtilityClass$1("MuiSelect", slot);
   }
-  const selectClasses = generateUtilityClasses("MuiSelect", ["root", "select", "multiple", "filled", "outlined", "standard", "disabled", "focused", "icon", "iconOpen", "iconFilled", "iconOutlined", "iconStandard", "nativeInput", "error"]);
+  const selectClasses = generateUtilityClasses$1("MuiSelect", ["root", "select", "multiple", "filled", "outlined", "standard", "disabled", "focused", "icon", "iconOpen", "iconFilled", "iconOutlined", "iconStandard", "nativeInput", "error"]);
   "use client";
   var _span;
   const _excluded$5 = ["aria-describedby", "aria-label", "autoFocus", "autoWidth", "children", "className", "defaultOpen", "defaultValue", "disabled", "displayEmpty", "error", "IconComponent", "inputRef", "labelId", "MenuProps", "multiple", "name", "onBlur", "onChange", "onClose", "onFocus", "onOpen", "open", "readOnly", "renderValue", "SelectDisplayProps", "tabIndex", "type", "value", "variant"];
@@ -37981,7 +36796,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         }, inputProps, {
           classes: inputProps ? deepmerge(restOfClasses, inputProps.classes) : restOfClasses
         }, input ? input.props.inputProps : {})
-      }, multiple && native && variant === "outlined" ? {
+      }, (multiple && native || displayEmpty) && variant === "outlined" ? {
         notched: true
       } : {}, {
         ref: inputComponentRef,
@@ -37992,10 +36807,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     });
   });
   process.env.NODE_ENV !== "production" ? Select.propTypes = {
-    // ----------------------------- Warning --------------------------------
-    // | These PropTypes are generated from the TypeScript type definitions |
-    // |     To update them edit the d.ts file and run "yarn proptypes"     |
-    // ----------------------------------------------------------------------
+    // ┌────────────────────────────── Warning ──────────────────────────────┐
+    // │ These PropTypes are generated from the TypeScript type definitions. │
+    // │    To update them, edit the d.ts file and run `pnpm proptypes`.     │
+    // └─────────────────────────────────────────────────────────────────────┘
     /**
      * If `true`, the width of the popover will automatically be set according to the items inside the
      * menu, otherwise it will be at least the width of the select input.
@@ -38141,9 +36956,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   Select.muiName = "Select";
   "use client";
   function getTextFieldUtilityClass(slot) {
-    return generateUtilityClass("MuiTextField", slot);
+    return generateUtilityClass$1("MuiTextField", slot);
   }
-  const textFieldClasses = generateUtilityClasses("MuiTextField", ["root"]);
+  const textFieldClasses = generateUtilityClasses$1("MuiTextField", ["root"]);
   "use client";
   const _excluded$3 = ["autoComplete", "autoFocus", "children", "className", "color", "defaultValue", "disabled", "error", "FormHelperTextProps", "fullWidth", "helperText", "id", "InputLabelProps", "inputProps", "InputProps", "inputRef", "label", "maxRows", "minRows", "multiline", "name", "onBlur", "onChange", "onFocus", "placeholder", "required", "rows", "select", "SelectProps", "type", "value", "variant"];
   const variantComponent = {
@@ -38291,10 +37106,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }));
   });
   process.env.NODE_ENV !== "production" ? TextField.propTypes = {
-    // ----------------------------- Warning --------------------------------
-    // | These PropTypes are generated from the TypeScript type definitions |
-    // |     To update them edit the d.ts file and run "yarn proptypes"     |
-    // ----------------------------------------------------------------------
+    // ┌────────────────────────────── Warning ──────────────────────────────┐
+    // │ These PropTypes are generated from the TypeScript type definitions. │
+    // │    To update them, edit the d.ts file and run `pnpm proptypes`.     │
+    // └─────────────────────────────────────────────────────────────────────┘
     /**
      * This prop helps users to fill forms faster, especially on mobile devices.
      * The name can be confusing, as it's more like an autofill.
@@ -38464,7 +37279,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     variant: PropTypes.oneOf(["filled", "outlined", "standard"])
   } : void 0;
   "use client";
-  const boxClasses = generateUtilityClasses("MuiBox", ["root"]);
+  const boxClasses = generateUtilityClasses$1("MuiBox", ["root"]);
   "use client";
   const defaultTheme = createTheme();
   const Box = createBox({
@@ -38474,10 +37289,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     generateClassName: ClassNameGenerator.generate
   });
   process.env.NODE_ENV !== "production" ? Box.propTypes = {
-    // ----------------------------- Warning --------------------------------
-    // | These PropTypes are generated from the TypeScript type definitions |
-    // |     To update them edit the d.ts file and run "yarn proptypes"     |
-    // ----------------------------------------------------------------------
+    // ┌────────────────────────────── Warning ──────────────────────────────┐
+    // │ These PropTypes are generated from the TypeScript type definitions. │
+    // │    To update them, edit the d.ts file and run `pnpm proptypes`.     │
+    // └─────────────────────────────────────────────────────────────────────┘
     /**
      * @ignore
      */
@@ -38494,9 +37309,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   } : void 0;
   "use client";
   function getTypographyUtilityClass(slot) {
-    return generateUtilityClass("MuiTypography", slot);
+    return generateUtilityClass$1("MuiTypography", slot);
   }
-  const typographyClasses = generateUtilityClasses("MuiTypography", ["root", "h1", "h2", "h3", "h4", "h5", "h6", "subtitle1", "subtitle2", "body1", "body2", "inherit", "button", "caption", "overline", "alignLeft", "alignRight", "alignCenter", "alignJustify", "noWrap", "gutterBottom", "paragraph"]);
+  const typographyClasses = generateUtilityClasses$1("MuiTypography", ["root", "h1", "h2", "h3", "h4", "h5", "h6", "subtitle1", "subtitle2", "body1", "body2", "inherit", "button", "caption", "overline", "alignLeft", "alignRight", "alignCenter", "alignJustify", "noWrap", "gutterBottom", "paragraph"]);
   "use client";
   const _excluded$2 = ["align", "className", "component", "gutterBottom", "noWrap", "paragraph", "variant", "variantMapping"];
   const useUtilityClasses$2 = (ownerState) => {
@@ -38604,10 +37419,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }, other));
   });
   process.env.NODE_ENV !== "production" ? Typography.propTypes = {
-    // ----------------------------- Warning --------------------------------
-    // | These PropTypes are generated from the TypeScript type definitions |
-    // |     To update them edit the d.ts file and run "yarn proptypes"     |
-    // ----------------------------------------------------------------------
+    // ┌────────────────────────────── Warning ──────────────────────────────┐
+    // │ These PropTypes are generated from the TypeScript type definitions. │
+    // │    To update them, edit the d.ts file and run `pnpm proptypes`.     │
+    // └─────────────────────────────────────────────────────────────────────┘
     /**
      * Set the text-align on the component.
      * @default 'inherit'
@@ -38697,10 +37512,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     })
   });
   process.env.NODE_ENV !== "production" ? Container.propTypes = {
-    // ----------------------------- Warning --------------------------------
-    // | These PropTypes are generated from the TypeScript type definitions |
-    // |     To update them edit the d.ts file and run "yarn proptypes"     |
-    // ----------------------------------------------------------------------
+    // ┌────────────────────────────── Warning ──────────────────────────────┐
+    // │ These PropTypes are generated from the TypeScript type definitions. │
+    // │    To update them, edit the d.ts file and run `pnpm proptypes`.     │
+    // └─────────────────────────────────────────────────────────────────────┘
     /**
      * @ignore
      */
@@ -38740,18 +37555,18 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object])
   } : void 0;
   function getContainerUtilityClass(slot) {
-    return generateUtilityClass("MuiContainer", slot);
+    return generateUtilityClass$1("MuiContainer", slot);
   }
-  const containerClasses = generateUtilityClasses("MuiContainer", ["root", "disableGutters", "fixed", "maxWidthXs", "maxWidthSm", "maxWidthMd", "maxWidthLg", "maxWidthXl"]);
+  const containerClasses = generateUtilityClasses$1("MuiContainer", ["root", "disableGutters", "fixed", "maxWidthXs", "maxWidthSm", "maxWidthMd", "maxWidthLg", "maxWidthXl"]);
   "use client";
   function getAlertUtilityClass(slot) {
-    return generateUtilityClass("MuiAlert", slot);
+    return generateUtilityClass$1("MuiAlert", slot);
   }
-  const alertClasses = generateUtilityClasses("MuiAlert", ["root", "action", "icon", "message", "filled", "filledSuccess", "filledInfo", "filledWarning", "filledError", "outlined", "outlinedSuccess", "outlinedInfo", "outlinedWarning", "outlinedError", "standard", "standardSuccess", "standardInfo", "standardWarning", "standardError"]);
+  const alertClasses = generateUtilityClasses$1("MuiAlert", ["root", "action", "icon", "message", "filled", "filledSuccess", "filledInfo", "filledWarning", "filledError", "outlined", "outlinedSuccess", "outlinedInfo", "outlinedWarning", "outlinedError", "standard", "standardSuccess", "standardInfo", "standardWarning", "standardError"]);
   function getIconButtonUtilityClass(slot) {
-    return generateUtilityClass("MuiIconButton", slot);
+    return generateUtilityClass$1("MuiIconButton", slot);
   }
-  const iconButtonClasses = generateUtilityClasses("MuiIconButton", ["root", "disabled", "colorInherit", "colorPrimary", "colorSecondary", "colorError", "colorInfo", "colorSuccess", "colorWarning", "edgeStart", "edgeEnd", "sizeSmall", "sizeMedium", "sizeLarge"]);
+  const iconButtonClasses = generateUtilityClasses$1("MuiIconButton", ["root", "disabled", "colorInherit", "colorPrimary", "colorSecondary", "colorError", "colorInfo", "colorSuccess", "colorWarning", "edgeStart", "edgeEnd", "sizeSmall", "sizeMedium", "sizeLarge"]);
   "use client";
   const _excluded$1 = ["edge", "children", "className", "color", "disabled", "disableFocusRipple", "size"];
   const useUtilityClasses$1 = (ownerState) => {
@@ -38869,10 +37684,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }));
   });
   process.env.NODE_ENV !== "production" ? IconButton.propTypes = {
-    // ----------------------------- Warning --------------------------------
-    // | These PropTypes are generated from the TypeScript type definitions |
-    // |     To update them edit the d.ts file and run "yarn proptypes"     |
-    // ----------------------------------------------------------------------
+    // ┌────────────────────────────── Warning ──────────────────────────────┐
+    // │ These PropTypes are generated from the TypeScript type definitions. │
+    // │    To update them, edit the d.ts file and run `pnpm proptypes`.     │
+    // └─────────────────────────────────────────────────────────────────────┘
     /**
      * The icon to display.
      */
@@ -39134,10 +37949,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }));
   });
   process.env.NODE_ENV !== "production" ? Alert.propTypes = {
-    // ----------------------------- Warning --------------------------------
-    // | These PropTypes are generated from the TypeScript type definitions |
-    // |     To update them edit the d.ts file and run "yarn proptypes"     |
-    // ----------------------------------------------------------------------
+    // ┌────────────────────────────── Warning ──────────────────────────────┐
+    // │ These PropTypes are generated from the TypeScript type definitions. │
+    // │    To update them, edit the d.ts file and run `pnpm proptypes`.     │
+    // └─────────────────────────────────────────────────────────────────────┘
     /**
      * The action to display. It renders after the message, at the end of the alert.
      */
@@ -39225,7 +38040,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * The severity of the alert. This defines the color and icon used.
      * @default 'success'
      */
-    severity: PropTypes.oneOf(["error", "info", "success", "warning"]),
+    severity: PropTypes.oneOfType([PropTypes.oneOf(["error", "info", "success", "warning"]), PropTypes.string]),
     /**
      * The extra props for the slot components.
      * You can override the existing props or add new ones.

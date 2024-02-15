@@ -1,8 +1,11 @@
 
 
 import React, {
-  // useMemo
+  useEffect,
 } from 'react'
+
+import { useSelector } from 'react-redux'
+
 
 import {
   // useTheme,
@@ -20,11 +23,31 @@ import { Box } from '@mui/material'
 
 // import { DataGrid } from '@mui/x-data-grid'
 
-function BasicList (props: any) {
 
+
+function BasicList (props: any) {
+  const { ctx, spec } = props
+  const { seneca, model } = ctx()
+
+  const slotName = spec.prefix+spec.name
+  const canon = spec.ent
+  
+  const slotSelectors = seneca.export('Redux/slotSelectors')
+  let { selectItem, selectList, selectMeta } = slotSelectors(slotName)
+
+  let list = useSelector((state:any)=>selectList(state))
+
+  useEffect(()=>{
+    seneca.entity(canon).list$({slot$:slotName})
+  },[])
+  
   return (
     <Box className='vxg-BasicList'>
-      <b>BasicList</b>
+      <h3>BasicList</h3>
+
+      { list.map((item:any, index:number)=>
+        <p key={item.id}>{index} {JSON.stringify(item)}</p>
+      )}
     </Box>
   )
   
