@@ -64,6 +64,8 @@ function VxgSeneca(this: any) {
     })
 }
 
+// TODO: cmap,vmap probably belong in @voxgig/model utils
+
 // Map child objects to new child objects
 function cmap(o: any, p: any) {
   return Object

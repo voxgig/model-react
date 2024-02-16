@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
-import { useParams, Link } from 'react-router-dom'
+import { useParams, useRoutes, Link } from 'react-router-dom'
 
 import {
   Box,
@@ -56,12 +56,15 @@ function BasicMain (props: any) {
   // const viewMap = model.app.web.frame.private.view
   const viewSpec = basicMainSpec.view[viewName]
   const kind = viewSpec?.kind
+
+  // console.log(CMPNAME, 'view', params, viewSpec)
   
   const View =
     'custom' === kind ? cmp[viewSpec.cmp] :
     'led' === kind ? BasicLed :
     ()=><div>LOADING</div>
-
+  
+  
   return (
     <Box
       className='vxg-BasicMain'

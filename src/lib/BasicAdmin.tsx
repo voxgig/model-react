@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 
-
 import { Box, Container } from '@mui/material'
 
 import SenecaEntity from 'seneca-entity'
@@ -48,15 +47,16 @@ function Loading() {
 
 function BasicAdmin (props: BasicProps) {
   const { ctx, spec } = props
-  const { seneca, model } = ctx()
-
+  const ctxval = ctx()
+  const { model } = ctxval
+  
   const [ready, setReady] = useState('init')
   
   useEffect(()=>{
     if('init' !== ready) {
       return
     }
-    init(seneca, ()=>{
+    init(ctxval, ()=>{
       console.log('BasicAdmin init done')
       setReady('done')
     })
@@ -109,19 +109,19 @@ function BasicAdmin (props: BasicProps) {
 
 
 
-async function init(seneca: any, done: any) {
+async function init(ctx: any, done: any) {
   console.log('BasicAdmin init')
 
+  const { seneca, router } = ctx
+  
   seneca.context.vxg = (seneca.context.vxg || {})
   seneca.context.vxg.BasicAdmin = (seneca.context.vxg.BasicAdmin || {})
 
   // Only setup Seneca once
   if(!seneca.context.vxg.BasicAdmin.preparing) {
     seneca.context.vxg.BasicAdmin.preparing = true
-
+    
     seneca
-      // .use(SenecaEntity)
-    // .use(BrowserStore)
       .use(VxgSeneca)
     await seneca.ready(done)
   }

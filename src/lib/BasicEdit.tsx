@@ -1,4 +1,9 @@
-import { useEffect } from 'react'
+import React, { useEffect } from 'react'
+
+import { useSelector } from 'react-redux'
+
+import { useParams } from 'react-router-dom'
+
 
 import {
   Grid,
@@ -11,15 +16,44 @@ import {
 
 import { useForm, Controller } from 'react-hook-form'
 
-import BasicButton from './BasicButton'
+// import BasicButton from './BasicButton'
 
-const filter = createFilterOptions()
+// const filter = createFilterOptions()
+
+
+const CMPNAME = 'BasicEdit'
+console.log(CMPNAME,'1')
+
 
 function BasicEdit (props: any) {
+  const { ctx, spec } = props
+  const { seneca, model } = ctx()
 
+  const name = spec.name
+  const slotName = spec.prefix+spec.name
+  const canon = spec.ent
+  
+  const slotSelectors = seneca.export('Redux/slotSelectors')
+  let { selectItem, selectList, selectMeta } = slotSelectors(slotName)
+
+  let item = useSelector((state:any)=>selectItem(state))
+
+  const params: any = useParams()
+
+  console.log(CMPNAME, 'params', params, item)
+
+  useEffect(()=>{
+    if(null == item) {
+      seneca.act('aim:app,on:view,edit:item', {
+        view: name,
+        item_id: params.item
+      })
+    }
+  },[])
+  
   return (
     <Box className='vxg-BasicEdit'>
-      <b>BasicEdit</b>
+      <p>ITEM: {slotName} { JSON.stringify(item) }</p>
     </Box>
   )
 

@@ -16,12 +16,12 @@ import {
 
 import {
   MaterialReactTable,
-  // type MRT_ColumnDef
+  useMaterialReactTable,
+  type MRT_ColumnDef,
 } from 'material-react-table'
 
 import { Box } from '@mui/material'
 
-// import { DataGrid } from '@mui/x-data-grid'
 
 
 
@@ -29,25 +29,62 @@ function BasicList (props: any) {
   const { ctx, spec } = props
   const { seneca, model } = ctx()
 
+  const name = spec.name
   const slotName = spec.prefix+spec.name
   const canon = spec.ent
   
   const slotSelectors = seneca.export('Redux/slotSelectors')
   let { selectItem, selectList, selectMeta } = slotSelectors(slotName)
 
-  let list = useSelector((state:any)=>selectList(state))
+  let data = useSelector((state:any)=>selectList(state))
 
   useEffect(()=>{
     seneca.entity(canon).list$({slot$:slotName})
   },[])
+
+
+  const columns = [
+    {
+      accessorKey: 'id',
+      header: 'ID',
+    },
+    {
+      accessorKey: 'name',
+      header: 'Name',
+    },
+  ]
+
+  
+  const table = useMaterialReactTable({
+    columns,
+    data,
+
+    muiTableBodyRowProps: ({ row }) => ({
+      onClick: () => {
+        let entdata = row.original
+        console.info('ROW', entdata)
+        seneca.act('aim:app,on:view,edit:item', {
+          view: name,
+          item_id: entdata.id
+        })
+      },
+      sx: {
+        cursor: 'pointer',
+      },
+    }),
+  })
   
   return (
     <Box className='vxg-BasicList'>
       <h3>BasicList</h3>
 
-      { list.map((item:any, index:number)=>
+      <MaterialReactTable
+        table={table}
+      />
+      
+      { /* list.map((item:any, index:number)=>
         <p key={item.id}>{index} {JSON.stringify(item)}</p>
-      )}
+      ) */ }
     </Box>
   )
   
