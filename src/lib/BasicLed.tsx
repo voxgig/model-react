@@ -10,9 +10,8 @@ import { Gubu } from 'gubu'
 
 import type { BasicProps, Spec } from './basic-types'
 
-import { BasicHeadTool } from './BasicHeadTool'
-import { BasicList } from './BasicList'
-import { BasicEdit } from './BasicEdit'
+import { BasicEntityList } from './BasicEntityList'
+import { BasicEntityEdit } from './BasicEntityEdit'
 import { BasicLoading } from './BasicLoading'
 
 import { VxgBasicLedPlugin } from './VxgBasicLedPlugin'
@@ -38,7 +37,7 @@ function BasicLed (props: any) {
   console.log(CMPNAME,basicLedSpec)
   
   const name = basicLedSpec.name
-  const canon = basicLedSpec.spec.ent
+  const canon = basicLedSpec.def.ent
 
   const navigate = useNavigate()
   
@@ -58,24 +57,14 @@ function BasicLed (props: any) {
     })
   }
 
-  const listSpec = {
-    name,
-    ent: canon,
-    prefix: 'BasicLed_',
-  }
+  const subspec = seneca.export('VxgBasicLedPlugin$'+name+'/spec')
   
-  const editSpec = {
-    name,
-    ent: canon,
-    prefix: 'BasicLed_',
-  }
-
   return (
     ready ?
     <Box className="vxg-BasicLed">
       <Routes>
-        <Route path="/" element={<BasicList ctx={ctx} spec={listSpec} />} />
-        <Route path="/edit/:item" element={<BasicEdit ctx={ctx} spec={editSpec} />} />
+        <Route path="/" element={<BasicEntityList ctx={ctx} spec={subspec.list} />} />
+        <Route path="/edit/:item" element={<BasicEntityEdit ctx={ctx} spec={subspec.edit} />} />
       </Routes>
     </Box>
       :

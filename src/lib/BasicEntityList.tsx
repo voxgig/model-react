@@ -22,12 +22,26 @@ import {
 
 import { Box } from '@mui/material'
 
+import type { Spec } from './basic-types'
+
+import { Gubu } from 'gubu'
 
 
+const CMPNAME = 'BasicEntityList'
+console.log(CMPNAME,'1')
 
-function BasicList (props: any) {
+
+const { Open } = Gubu
+const BasicEntityListSpecShape = Gubu(Open({
+}), {prefix: CMPNAME})
+
+
+function BasicEntityList (props: any) {
   const { ctx, spec } = props
   const { seneca, model } = ctx()
+
+  const basicEntityListSpec: Spec = BasicEntityListSpecShape(spec)
+  console.log(CMPNAME,basicEntityListSpec)
 
   const name = spec.name
   const slotName = spec.prefix+spec.name
@@ -76,15 +90,9 @@ function BasicList (props: any) {
   
   return (
     <Box className='vxg-BasicList'>
-      <h3>BasicList</h3>
-
       <MaterialReactTable
         table={table}
       />
-      
-      { /* list.map((item:any, index:number)=>
-        <p key={item.id}>{index} {JSON.stringify(item)}</p>
-      ) */ }
     </Box>
   )
   
@@ -173,5 +181,5 @@ function BasicList (props: any) {
 }
 
 export {
-  BasicList
+  BasicEntityList
 }

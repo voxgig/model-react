@@ -1025,15 +1025,22 @@ function requireReactJsxRuntime_development() {
   }
   return reactJsxRuntime_development;
 }
-var jsxRuntime = jsxRuntime$2.exports;
-"use strict";
-if (process.env.NODE_ENV === "production") {
-  jsxRuntime$2.exports = requireReactJsxRuntime_production_min();
-} else {
-  jsxRuntime$2.exports = requireReactJsxRuntime_development();
+var jsxRuntime$1 = jsxRuntime$2.exports;
+var hasRequiredJsxRuntime;
+function requireJsxRuntime() {
+  if (hasRequiredJsxRuntime)
+    return jsxRuntime$2.exports;
+  hasRequiredJsxRuntime = 1;
+  "use strict";
+  if (process.env.NODE_ENV === "production") {
+    jsxRuntime$2.exports = requireReactJsxRuntime_production_min();
+  } else {
+    jsxRuntime$2.exports = requireReactJsxRuntime_development();
+  }
+  return jsxRuntime$2.exports;
 }
-var jsxRuntimeExports = jsxRuntime$2.exports;
-const jsxRuntime$1 = /* @__PURE__ */ getDefaultExportFromCjs(jsxRuntimeExports);
+var jsxRuntimeExports = requireJsxRuntime();
+const jsxRuntime = /* @__PURE__ */ getDefaultExportFromCjs(jsxRuntimeExports);
 var gubu_min$2 = { exports: {} };
 var gubu_min = gubu_min$2.exports;
 (function(module, exports) {
@@ -2716,7 +2723,7 @@ function chainPropTypes(propType1, propType2) {
     return propType1(...args) || propType2(...args);
   };
 }
-function isPlainObject(item) {
+function isPlainObject$1(item) {
   if (typeof item !== "object" || item === null) {
     return false;
   }
@@ -2724,7 +2731,7 @@ function isPlainObject(item) {
   return (prototype === null || prototype === Object.prototype || Object.getPrototypeOf(prototype) === null) && !(Symbol.toStringTag in item) && !(Symbol.iterator in item);
 }
 function deepClone(source) {
-  if (!isPlainObject(source)) {
+  if (!isPlainObject$1(source)) {
     return source;
   }
   const output = {};
@@ -2737,15 +2744,15 @@ function deepmerge(target, source, options = {
   clone: true
 }) {
   const output = options.clone ? _extends$2({}, target) : target;
-  if (isPlainObject(target) && isPlainObject(source)) {
+  if (isPlainObject$1(target) && isPlainObject$1(source)) {
     Object.keys(source).forEach((key) => {
       if (key === "__proto__") {
         return;
       }
-      if (isPlainObject(source[key]) && key in target && isPlainObject(target[key])) {
+      if (isPlainObject$1(source[key]) && key in target && isPlainObject$1(target[key])) {
         output[key] = deepmerge(target[key], source[key], options);
       } else if (options.clone) {
-        output[key] = isPlainObject(source[key]) ? deepClone(source[key]) : source[key];
+        output[key] = isPlainObject$1(source[key]) ? deepClone(source[key]) : source[key];
       } else {
         output[key] = source[key];
       }
@@ -3798,7 +3805,7 @@ var StyleSheet = /* @__PURE__ */ function() {
   _proto.hydrate = function hydrate(nodes) {
     nodes.forEach(this._insertTag);
   };
-  _proto.insert = function insert(rule) {
+  _proto.insert = function insert2(rule) {
     if (this.ctr % (this.isSpeedy ? 65e3 : 1) === 0) {
       this._insertTag(createStyleElement(this));
     }
@@ -4800,11 +4807,11 @@ var createCache = function createCache2(options) {
     var stylis = function stylis2(styles2) {
       return serialize(compile(styles2), serializer);
     };
-    _insert = function insert(selector, serialized, sheet, shouldCache) {
+    _insert = function insert2(selector, serialized, sheet, shouldCache) {
       currentSheet = sheet;
       if (process.env.NODE_ENV !== "production" && serialized.map !== void 0) {
         currentSheet = {
-          insert: function insert2(rule) {
+          insert: function insert3(rule) {
             sheet.insert(rule + serialized.map);
           }
         };
@@ -6215,7 +6222,7 @@ function extendSxProp(props) {
   } else if (typeof inSx === "function") {
     finalSx = (...args) => {
       const result = inSx(...args);
-      if (!isPlainObject(result)) {
+      if (!isPlainObject$1(result)) {
         return systemProps;
       }
       return _extends$2({}, systemProps, result);
@@ -6448,7 +6455,7 @@ function createStyled(input = {}) {
       label
     }, options));
     const transformStyleArg = (stylesArg) => {
-      if (typeof stylesArg === "function" && stylesArg.__emotion_real !== stylesArg || isPlainObject(stylesArg)) {
+      if (typeof stylesArg === "function" && stylesArg.__emotion_real !== stylesArg || isPlainObject$1(stylesArg)) {
         return (props) => processStyleArg(stylesArg, _extends$2({}, props, {
           theme: resolveTheme({
             theme: props.theme,
@@ -9141,18 +9148,18 @@ function createTransitions(inputTransitions) {
       delay = 0
     } = options, other = _objectWithoutPropertiesLoose(options, _excluded$2k);
     if (process.env.NODE_ENV !== "production") {
-      const isString = (value) => typeof value === "string";
+      const isString2 = (value) => typeof value === "string";
       const isNumber2 = (value) => !isNaN(parseFloat(value));
-      if (!isString(props) && !Array.isArray(props)) {
+      if (!isString2(props) && !Array.isArray(props)) {
         console.error('MUI: Argument "props" must be a string or Array.');
       }
-      if (!isNumber2(durationOption) && !isString(durationOption)) {
+      if (!isNumber2(durationOption) && !isString2(durationOption)) {
         console.error(`MUI: Argument "duration" must be a number or a string but found ${durationOption}.`);
       }
-      if (!isString(easingOption)) {
+      if (!isString2(easingOption)) {
         console.error('MUI: Argument "easing" must be a string.');
       }
-      if (!isNumber2(delay) && !isString(delay)) {
+      if (!isNumber2(delay) && !isString2(delay)) {
         console.error('MUI: Argument "delay" must be a number or a string.');
       }
       if (typeof options !== "object") {
@@ -9698,8 +9705,8 @@ process.env.NODE_ENV !== "production" ? Toolbar.propTypes = {
    */
   variant: PropTypes.oneOfType([PropTypes.oneOf(["dense", "regular"]), PropTypes.string])
 } : void 0;
-const CMPNAME$8 = "BasicAccountTool";
-console.log(CMPNAME$8, "1");
+const CMPNAME$a = "BasicAccountTool";
+console.log(CMPNAME$a, "1");
 const { Exact: Exact$2 } = gubu_minExports.Gubu;
 const BasicAccountToolSpecShape = gubu_minExports.Gubu({
   name: String,
@@ -9709,7 +9716,7 @@ const BasicAccountToolSpecShape = gubu_minExports.Gubu({
   attr: {},
   sx: {},
   style: {}
-}, { prefix: CMPNAME$8 });
+}, { prefix: CMPNAME$a });
 function BasicAccountTool(props) {
   var _a;
   const { ctx, spec } = props;
@@ -9783,8 +9790,8 @@ function stringAvatar(s) {
     children: `${parts.join("")}`
   };
 }
-const CMPNAME$7 = "BasicHeadTool";
-console.log(CMPNAME$7, "1");
+const CMPNAME$9 = "BasicHeadTool";
+console.log(CMPNAME$9, "1");
 const { Exact: Exact$1 } = gubu_minExports.Gubu;
 const BasicHeadToolSpecShape = gubu_minExports.Gubu({
   name: String,
@@ -9794,7 +9801,7 @@ const BasicHeadToolSpecShape = gubu_minExports.Gubu({
   attr: {},
   sx: {},
   style: {}
-}, { prefix: CMPNAME$7 });
+}, { prefix: CMPNAME$9 });
 function BasicHeadTool(props) {
   const { ctx, spec } = props;
   const { seneca } = ctx();
@@ -9803,7 +9810,7 @@ function BasicHeadTool(props) {
   const { name, kind, attr, sx, style: style2 } = basicHeadToolSpec;
   let tool = /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, {});
   if ("" === kind) {
-    console.warn(CMPNAME$7, "empty-tool-kind", basicHeadToolSpec);
+    console.warn(CMPNAME$9, "empty-tool-kind", basicHeadToolSpec);
   } else if ("logo" === kind) {
     tool = /* @__PURE__ */ jsxRuntimeExports.jsxs(
       "div",
@@ -9820,7 +9827,7 @@ function BasicHeadTool(props) {
             {
               href: "/",
               style: style2,
-              className: `vxg-${CMPNAME$7}-logo`,
+              className: `vxg-${CMPNAME$9}-logo`,
               children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: attr.img })
             }
           ),
@@ -9852,18 +9859,18 @@ function BasicHeadTool(props) {
   } else if ("account" === kind) {
     tool = /* @__PURE__ */ jsxRuntimeExports.jsx(BasicAccountTool, { ctx, spec });
   } else {
-    console.warn(CMPNAME$7, "unknown-tool-kind", kind, basicHeadToolSpec);
+    console.warn(CMPNAME$9, "unknown-tool-kind", kind, basicHeadToolSpec);
   }
   return tool;
 }
-const CMPNAME$6 = "BasicHead";
-console.log(CMPNAME$6, "1");
-const { Child: Child$3, Exact, Open: Open$3, Required: Required$1 } = gubu_minExports.Gubu;
+const CMPNAME$8 = "BasicHead";
+console.log(CMPNAME$8, "1");
+const { Child: Child$3, Exact, Open: Open$6, Required: Required$1 } = gubu_minExports.Gubu;
 const BasicHeadSpecShape = gubu_minExports.Gubu({
   head: {
     name: String,
     active: Boolean,
-    tool: Child$3(Open$3({
+    tool: Child$3(Open$6({
       align: Exact("left", "right")
     }))
   },
@@ -9873,7 +9880,7 @@ const BasicHeadSpecShape = gubu_minExports.Gubu({
     AppBar: {},
     ToolBar: {}
   }
-}, { prefix: CMPNAME$6 });
+}, { prefix: CMPNAME$8 });
 function BasicHead(props) {
   const { ctx, spec } = props;
   const { seneca } = ctx();
@@ -9939,7 +9946,7 @@ function makeStateUpdater(key, instance) {
     });
   };
 }
-function isFunction(d) {
+function isFunction$1(d) {
   return d instanceof Function;
 }
 function isNumberArray(d) {
@@ -10795,7 +10802,7 @@ const Filters = {
     };
     column2.getFilterFn = () => {
       var _table$options$filter, _table$options$filter2;
-      return isFunction(column2.columnDef.filterFn) ? column2.columnDef.filterFn : column2.columnDef.filterFn === "auto" ? column2.getAutoFilterFn() : (
+      return isFunction$1(column2.columnDef.filterFn) ? column2.columnDef.filterFn : column2.columnDef.filterFn === "auto" ? column2.getAutoFilterFn() : (
         // @ts-ignore
         (_table$options$filter = (_table$options$filter2 = table.options.filterFns) == null ? void 0 : _table$options$filter2[column2.columnDef.filterFn]) != null ? _table$options$filter : filterFns[column2.columnDef.filterFn]
       );
@@ -10880,7 +10887,7 @@ const Filters = {
       const {
         globalFilterFn
       } = table.options;
-      return isFunction(globalFilterFn) ? globalFilterFn : globalFilterFn === "auto" ? table.getGlobalAutoFilterFn() : (
+      return isFunction$1(globalFilterFn) ? globalFilterFn : globalFilterFn === "auto" ? table.getGlobalAutoFilterFn() : (
         // @ts-ignore
         (_table$options$filter3 = (_table$options$filter4 = table.options.filterFns) == null ? void 0 : _table$options$filter4[globalFilterFn]) != null ? _table$options$filter3 : filterFns[globalFilterFn]
       );
@@ -11106,7 +11113,7 @@ const Grouping = {
       if (!column2) {
         throw new Error();
       }
-      return isFunction(column2.columnDef.aggregationFn) ? column2.columnDef.aggregationFn : column2.columnDef.aggregationFn === "auto" ? column2.getAutoAggregationFn() : (_table$options$aggreg = (_table$options$aggreg2 = table.options.aggregationFns) == null ? void 0 : _table$options$aggreg2[column2.columnDef.aggregationFn]) != null ? _table$options$aggreg : aggregationFns[column2.columnDef.aggregationFn];
+      return isFunction$1(column2.columnDef.aggregationFn) ? column2.columnDef.aggregationFn : column2.columnDef.aggregationFn === "auto" ? column2.getAutoAggregationFn() : (_table$options$aggreg = (_table$options$aggreg2 = table.options.aggregationFns) == null ? void 0 : _table$options$aggreg2[column2.columnDef.aggregationFn]) != null ? _table$options$aggreg : aggregationFns[column2.columnDef.aggregationFn];
     };
   },
   createTable: (table) => {
@@ -11932,20 +11939,20 @@ const Sorting = {
   createColumn: (column2, table) => {
     column2.getAutoSortingFn = () => {
       const firstRows = table.getFilteredRowModel().flatRows.slice(10);
-      let isString = false;
+      let isString2 = false;
       for (const row of firstRows) {
         const value = row == null ? void 0 : row.getValue(column2.id);
         if (Object.prototype.toString.call(value) === "[object Date]") {
           return sortingFns.datetime;
         }
         if (typeof value === "string") {
-          isString = true;
+          isString2 = true;
           if (value.split(reSplitAlphaNumeric).length > 1) {
             return sortingFns.alphanumeric;
           }
         }
       }
-      if (isString) {
+      if (isString2) {
         return sortingFns.text;
       }
       return sortingFns.basic;
@@ -11963,7 +11970,7 @@ const Sorting = {
       if (!column2) {
         throw new Error();
       }
-      return isFunction(column2.columnDef.sortingFn) ? column2.columnDef.sortingFn : column2.columnDef.sortingFn === "auto" ? column2.getAutoSortingFn() : (_table$options$sortin = (_table$options$sortin2 = table.options.sortingFns) == null ? void 0 : _table$options$sortin2[column2.columnDef.sortingFn]) != null ? _table$options$sortin : sortingFns[column2.columnDef.sortingFn];
+      return isFunction$1(column2.columnDef.sortingFn) ? column2.columnDef.sortingFn : column2.columnDef.sortingFn === "auto" ? column2.getAutoSortingFn() : (_table$options$sortin = (_table$options$sortin2 = table.options.sortingFns) == null ? void 0 : _table$options$sortin2[column2.columnDef.sortingFn]) != null ? _table$options$sortin : sortingFns[column2.columnDef.sortingFn];
     };
     column2.toggleSorting = (desc, multi) => {
       const nextSortingOrder = column2.getNextSortingOrder();
@@ -12173,14 +12180,14 @@ function createTable(options) {
   let table = {
     _features: features
   };
-  const defaultOptions = table._features.reduce((obj, feature) => {
+  const defaultOptions2 = table._features.reduce((obj, feature) => {
     return Object.assign(obj, feature.getDefaultOptions == null ? void 0 : feature.getDefaultOptions(table));
   }, {});
   const mergeOptions = (options2) => {
     if (table.options.mergeOptions) {
-      return table.options.mergeOptions(defaultOptions, options2);
+      return table.options.mergeOptions(defaultOptions2, options2);
     }
-    return __spreadValues(__spreadValues({}, defaultOptions), options2);
+    return __spreadValues(__spreadValues({}, defaultOptions2), options2);
   };
   const coreInitialState = {};
   let initialState = __spreadValues(__spreadValues({}, coreInitialState), (_options$initialState = options.initialState) != null ? _options$initialState : {});
@@ -12192,7 +12199,7 @@ function createTable(options) {
   let queuedTimeout = false;
   const coreInstance = {
     _features: features,
-    options: __spreadValues(__spreadValues({}, defaultOptions), options),
+    options: __spreadValues(__spreadValues({}, defaultOptions2), options),
     initialState,
     _queue: (cb) => {
       queued.push(cb);
@@ -19650,7 +19657,7 @@ function isNode(value) {
 function isElement$1(value) {
   return value instanceof Element || value instanceof getWindow$1(value).Element;
 }
-function isHTMLElement$2(value) {
+function isHTMLElement$3(value) {
   return value instanceof HTMLElement || value instanceof getWindow$1(value).HTMLElement;
 }
 function isShadowRoot$1(value) {
@@ -19678,7 +19685,7 @@ function isContainingBlock(element) {
 }
 function getContainingBlock$1(element) {
   let currentNode = getParentNode$1(element);
-  while (isHTMLElement$2(currentNode) && !isLastTraversableNode(currentNode)) {
+  while (isHTMLElement$3(currentNode) && !isLastTraversableNode(currentNode)) {
     if (isContainingBlock(currentNode)) {
       return currentNode;
     } else {
@@ -19728,7 +19735,7 @@ function getNearestOverflowAncestor(node2) {
   if (isLastTraversableNode(parentNode)) {
     return node2.ownerDocument ? node2.ownerDocument.body : node2.body;
   }
-  if (isHTMLElement$2(parentNode) && isOverflowElement(parentNode)) {
+  if (isHTMLElement$3(parentNode) && isOverflowElement(parentNode)) {
     return parentNode;
   }
   return getNearestOverflowAncestor(parentNode);
@@ -19753,7 +19760,7 @@ function getCssDimensions(element) {
   const css2 = getComputedStyle$1(element);
   let width2 = parseFloat(css2.width) || 0;
   let height2 = parseFloat(css2.height) || 0;
-  const hasOffset = isHTMLElement$2(element);
+  const hasOffset = isHTMLElement$3(element);
   const offsetWidth = hasOffset ? element.offsetWidth : width2;
   const offsetHeight = hasOffset ? element.offsetHeight : height2;
   const shouldFallback = round$2(width2) !== offsetWidth || round$2(height2) !== offsetHeight;
@@ -19772,7 +19779,7 @@ function unwrapElement(element) {
 }
 function getScale$1(element) {
   const domElement = unwrapElement(element);
-  if (!isHTMLElement$2(domElement)) {
+  if (!isHTMLElement$3(domElement)) {
     return createCoords(1);
   }
   const rect = domElement.getBoundingClientRect();
@@ -19895,12 +19902,12 @@ function convertOffsetParentRelativeRectToViewportRelativeRect(_ref) {
   };
   let scale = createCoords(1);
   const offsets = createCoords(0);
-  const isOffsetParentAnElement = isHTMLElement$2(offsetParent);
+  const isOffsetParentAnElement = isHTMLElement$3(offsetParent);
   if (isOffsetParentAnElement || !isOffsetParentAnElement && !isFixed) {
     if (getNodeName$1(offsetParent) !== "body" || isOverflowElement(documentElement)) {
       scroll = getNodeScroll$1(offsetParent);
     }
-    if (isHTMLElement$2(offsetParent)) {
+    if (isHTMLElement$3(offsetParent)) {
       const offsetRect = getBoundingClientRect$1(offsetParent);
       scale = getScale$1(offsetParent);
       offsets.x = offsetRect.x + offsetParent.clientLeft;
@@ -19966,7 +19973,7 @@ function getInnerBoundingClientRect$1(element, strategy) {
   const clientRect = getBoundingClientRect$1(element, true, strategy === "fixed");
   const top2 = clientRect.top + element.clientTop;
   const left2 = clientRect.left + element.clientLeft;
-  const scale = isHTMLElement$2(element) ? getScale$1(element) : createCoords(1);
+  const scale = isHTMLElement$3(element) ? getScale$1(element) : createCoords(1);
   const width2 = element.clientWidth * scale.x;
   const height2 = element.clientHeight * scale.y;
   const x = left2 * scale.x;
@@ -20064,7 +20071,7 @@ function getDimensions(element) {
   };
 }
 function getRectRelativeToOffsetParent(element, offsetParent, strategy) {
-  const isOffsetParentAnElement = isHTMLElement$2(offsetParent);
+  const isOffsetParentAnElement = isHTMLElement$3(offsetParent);
   const documentElement = getDocumentElement$1(offsetParent);
   const isFixed = strategy === "fixed";
   const rect = getBoundingClientRect$1(element, true, isFixed, offsetParent);
@@ -20095,7 +20102,7 @@ function getRectRelativeToOffsetParent(element, offsetParent, strategy) {
   };
 }
 function getTrueOffsetParent$1(element, polyfill) {
-  if (!isHTMLElement$2(element) || getComputedStyle$1(element).position === "fixed") {
+  if (!isHTMLElement$3(element) || getComputedStyle$1(element).position === "fixed") {
     return null;
   }
   if (polyfill) {
@@ -20105,7 +20112,7 @@ function getTrueOffsetParent$1(element, polyfill) {
 }
 function getOffsetParent$1(element, polyfill) {
   const window2 = getWindow$1(element);
-  if (!isHTMLElement$2(element) || isTopLayer(element)) {
+  if (!isHTMLElement$3(element) || isTopLayer(element)) {
     return window2;
   }
   let offsetParent = getTrueOffsetParent$1(element, polyfill);
@@ -20334,7 +20341,7 @@ const arrow$2 = (options) => {
   };
 };
 var index = typeof document !== "undefined" ? useLayoutEffect : useEffect;
-function deepEqual(a, b) {
+function deepEqual$1(a, b) {
   if (a === b) {
     return true;
   }
@@ -20353,7 +20360,7 @@ function deepEqual(a, b) {
       if (length2 !== b.length)
         return false;
       for (i = length2; i-- !== 0; ) {
-        if (!deepEqual(a[i], b[i])) {
+        if (!deepEqual$1(a[i], b[i])) {
           return false;
         }
       }
@@ -20374,7 +20381,7 @@ function deepEqual(a, b) {
       if (key === "_owner" && a.$$typeof) {
         continue;
       }
-      if (!deepEqual(a[key], b[key])) {
+      if (!deepEqual$1(a[key], b[key])) {
         return false;
       }
     }
@@ -20426,7 +20433,7 @@ function useFloating(options) {
     isPositioned: false
   });
   const [latestMiddleware, setLatestMiddleware] = React.useState(middleware2);
-  if (!deepEqual(latestMiddleware, middleware2)) {
+  if (!deepEqual$1(latestMiddleware, middleware2)) {
     setLatestMiddleware(middleware2);
   }
   const [_reference, _setReference] = React.useState(null);
@@ -20467,7 +20474,7 @@ function useFloating(options) {
       const fullData = __spreadProps(__spreadValues({}, data2), {
         isPositioned: true
       });
-      if (isMountedRef.current && !deepEqual(dataRef.current, fullData)) {
+      if (isMountedRef.current && !deepEqual$1(dataRef.current, fullData)) {
         dataRef.current = fullData;
         ReactDOM.flushSync(() => {
           setData(fullData);
@@ -23173,7 +23180,7 @@ function isElement(node2) {
   var OwnElement = getWindow(node2).Element;
   return node2 instanceof OwnElement || node2 instanceof Element;
 }
-function isHTMLElement$1(node2) {
+function isHTMLElement$2(node2) {
   var OwnElement = getWindow(node2).HTMLElement;
   return node2 instanceof OwnElement || node2 instanceof HTMLElement;
 }
@@ -23190,7 +23197,7 @@ function applyStyles(_ref) {
     var style2 = state.styles[name] || {};
     var attributes = state.attributes[name] || {};
     var element = state.elements[name];
-    if (!isHTMLElement$1(element) || !getNodeName(element)) {
+    if (!isHTMLElement$2(element) || !getNodeName(element)) {
       return;
     }
     Object.assign(element.style, style2);
@@ -23232,7 +23239,7 @@ function effect$2(_ref2) {
         style3[property] = "";
         return style3;
       }, {});
-      if (!isHTMLElement$1(element) || !getNodeName(element)) {
+      if (!isHTMLElement$2(element) || !getNodeName(element)) {
         return;
       }
       Object.assign(element.style, style2);
@@ -23278,7 +23285,7 @@ function getBoundingClientRect(element, includeScale, isFixedStrategy) {
   var clientRect = element.getBoundingClientRect();
   var scaleX = 1;
   var scaleY = 1;
-  if (includeScale && isHTMLElement$1(element)) {
+  if (includeScale && isHTMLElement$2(element)) {
     scaleX = element.offsetWidth > 0 ? round$1(clientRect.width) / element.offsetWidth || 1 : 1;
     scaleY = element.offsetHeight > 0 ? round$1(clientRect.height) / element.offsetHeight || 1 : 1;
   }
@@ -23359,7 +23366,7 @@ function getParentNode(element) {
   );
 }
 function getTrueOffsetParent(element) {
-  if (!isHTMLElement$1(element) || // https://github.com/popperjs/popper-core/issues/837
+  if (!isHTMLElement$2(element) || // https://github.com/popperjs/popper-core/issues/837
   getComputedStyle(element).position === "fixed") {
     return null;
   }
@@ -23368,7 +23375,7 @@ function getTrueOffsetParent(element) {
 function getContainingBlock(element) {
   var isFirefox = /firefox/i.test(getUAString());
   var isIE = /Trident/i.test(getUAString());
-  if (isIE && isHTMLElement$1(element)) {
+  if (isIE && isHTMLElement$2(element)) {
     var elementCss = getComputedStyle(element);
     if (elementCss.position === "fixed") {
       return null;
@@ -23378,7 +23385,7 @@ function getContainingBlock(element) {
   if (isShadowRoot(currentNode)) {
     currentNode = currentNode.host;
   }
-  while (isHTMLElement$1(currentNode) && ["html", "body"].indexOf(getNodeName(currentNode)) < 0) {
+  while (isHTMLElement$2(currentNode) && ["html", "body"].indexOf(getNodeName(currentNode)) < 0) {
     var css2 = getComputedStyle(currentNode);
     if (css2.transform !== "none" || css2.perspective !== "none" || css2.contain === "paint" || ["transform", "perspective"].indexOf(css2.willChange) !== -1 || isFirefox && css2.willChange === "filter" || isFirefox && css2.filter && css2.filter !== "none") {
       return currentNode;
@@ -23727,7 +23734,7 @@ function getScrollParent(node2) {
   if (["html", "body", "#document"].indexOf(getNodeName(node2)) >= 0) {
     return node2.ownerDocument.body;
   }
-  if (isHTMLElement$1(node2) && isScrollParent(node2)) {
+  if (isHTMLElement$2(node2) && isScrollParent(node2)) {
     return node2;
   }
   return getScrollParent(getParentNode(node2));
@@ -23773,7 +23780,7 @@ function getClientRectFromMixedType(element, clippingParent, strategy) {
 function getClippingParents(element) {
   var clippingParents2 = listScrollParents(getParentNode(element));
   var canEscapeClipping = ["absolute", "fixed"].indexOf(getComputedStyle(element).position) >= 0;
-  var clipperElement = canEscapeClipping && isHTMLElement$1(element) ? getOffsetParent(element) : element;
+  var clipperElement = canEscapeClipping && isHTMLElement$2(element) ? getOffsetParent(element) : element;
   if (!isElement(clipperElement)) {
     return [];
   }
@@ -24226,7 +24233,7 @@ function getHTMLElementScroll(element) {
   };
 }
 function getNodeScroll(node2) {
-  if (node2 === getWindow(node2) || !isHTMLElement$1(node2)) {
+  if (node2 === getWindow(node2) || !isHTMLElement$2(node2)) {
     return getWindowScroll(node2);
   } else {
     return getHTMLElementScroll(node2);
@@ -24242,8 +24249,8 @@ function getCompositeRect(elementOrVirtualElement, offsetParent, isFixed) {
   if (isFixed === void 0) {
     isFixed = false;
   }
-  var isOffsetParentAnElement = isHTMLElement$1(offsetParent);
-  var offsetParentIsScaled = isHTMLElement$1(offsetParent) && isElementScaled(offsetParent);
+  var isOffsetParentAnElement = isHTMLElement$2(offsetParent);
+  var offsetParentIsScaled = isHTMLElement$2(offsetParent) && isElementScaled(offsetParent);
   var documentElement = getDocumentElement(offsetParent);
   var rect = getBoundingClientRect(elementOrVirtualElement, offsetParentIsScaled, isFixed);
   var scroll = {
@@ -24259,7 +24266,7 @@ function getCompositeRect(elementOrVirtualElement, offsetParent, isFixed) {
     isScrollParent(documentElement)) {
       scroll = getNodeScroll(offsetParent);
     }
-    if (isHTMLElement$1(offsetParent)) {
+    if (isHTMLElement$2(offsetParent)) {
       offsets = getBoundingClientRect(offsetParent, true);
       offsets.x += offsetParent.clientLeft;
       offsets.y += offsetParent.clientTop;
@@ -24353,15 +24360,15 @@ function popperGenerator(generatorOptions) {
   if (generatorOptions === void 0) {
     generatorOptions = {};
   }
-  var _generatorOptions = generatorOptions, _generatorOptions$def = _generatorOptions.defaultModifiers, defaultModifiers2 = _generatorOptions$def === void 0 ? [] : _generatorOptions$def, _generatorOptions$def2 = _generatorOptions.defaultOptions, defaultOptions = _generatorOptions$def2 === void 0 ? DEFAULT_OPTIONS : _generatorOptions$def2;
+  var _generatorOptions = generatorOptions, _generatorOptions$def = _generatorOptions.defaultModifiers, defaultModifiers2 = _generatorOptions$def === void 0 ? [] : _generatorOptions$def, _generatorOptions$def2 = _generatorOptions.defaultOptions, defaultOptions2 = _generatorOptions$def2 === void 0 ? DEFAULT_OPTIONS : _generatorOptions$def2;
   return function createPopper2(reference2, popper2, options) {
     if (options === void 0) {
-      options = defaultOptions;
+      options = defaultOptions2;
     }
     var state = {
       placement: "bottom",
       orderedModifiers: [],
-      options: Object.assign({}, DEFAULT_OPTIONS, defaultOptions),
+      options: Object.assign({}, DEFAULT_OPTIONS, defaultOptions2),
       modifiersData: {},
       elements: {
         reference: reference2,
@@ -24377,7 +24384,7 @@ function popperGenerator(generatorOptions) {
       setOptions: function setOptions(setOptionsAction) {
         var options2 = typeof setOptionsAction === "function" ? setOptionsAction(state.options) : setOptionsAction;
         cleanupModifierEffects();
-        state.options = Object.assign({}, defaultOptions, state.options, options2);
+        state.options = Object.assign({}, defaultOptions2, state.options, options2);
         state.scrollParents = {
           reference: isElement(reference2) ? listScrollParents(reference2) : reference2.contextElement ? listScrollParents(reference2.contextElement) : [],
           popper: listScrollParents(popper2)
@@ -24510,11 +24517,11 @@ function flipPlacement(placement, direction) {
 function resolveAnchorEl$1(anchorEl) {
   return typeof anchorEl === "function" ? anchorEl() : anchorEl;
 }
-function isHTMLElement(element) {
+function isHTMLElement$1(element) {
   return element.nodeType !== void 0;
 }
 function isVirtualElement(element) {
-  return !isHTMLElement(element);
+  return !isHTMLElement$1(element);
 }
 const useUtilityClasses$1A = () => {
   const slots = {
@@ -24571,7 +24578,7 @@ const PopperTooltip = /* @__PURE__ */ React.forwardRef(function PopperTooltip2(p
       setPlacement(data.placement);
     };
     if (process.env.NODE_ENV !== "production") {
-      if (resolvedAnchorElement && isHTMLElement(resolvedAnchorElement) && resolvedAnchorElement.nodeType === 1) {
+      if (resolvedAnchorElement && isHTMLElement$1(resolvedAnchorElement) && resolvedAnchorElement.nodeType === 1) {
         const box = resolvedAnchorElement.getBoundingClientRect();
         if (process.env.NODE_ENV !== "test" && box.top === 0 && box.left === 0 && box.right === 0 && box.bottom === 0) {
           console.warn(["MUI: The `anchorEl` prop provided to the component is invalid.", "The anchor element should be part of the document layout.", "Make sure the element is present in the document or that it's not display none."].join("\n"));
@@ -24671,7 +24678,7 @@ const Popper$1 = /* @__PURE__ */ React.forwardRef(function Popper(props, forward
     container = containerProp;
   } else if (anchorEl) {
     const resolvedAnchorEl = resolveAnchorEl$1(anchorEl);
-    container = resolvedAnchorEl && isHTMLElement(resolvedAnchorEl) ? ownerDocument(resolvedAnchorEl).body : ownerDocument(null).body;
+    container = resolvedAnchorEl && isHTMLElement$1(resolvedAnchorEl) ? ownerDocument(resolvedAnchorEl).body : ownerDocument(null).body;
   }
   const display2 = !open && keepMounted && (!transition || exited) ? "none" : void 0;
   const transitionProps = transition ? {
@@ -24722,7 +24729,7 @@ process.env.NODE_ENV !== "production" ? Popper$1.propTypes = {
   anchorEl: chainPropTypes(PropTypes.oneOfType([HTMLElementType, PropTypes.object, PropTypes.func]), (props) => {
     if (props.open) {
       const resolvedAnchorEl = resolveAnchorEl$1(props.anchorEl);
-      if (resolvedAnchorEl && isHTMLElement(resolvedAnchorEl) && resolvedAnchorEl.nodeType === 1) {
+      if (resolvedAnchorEl && isHTMLElement$1(resolvedAnchorEl) && resolvedAnchorEl.nodeType === 1) {
         const box = resolvedAnchorEl.getBoundingClientRect();
         if (process.env.NODE_ENV !== "test" && box.top === 0 && box.left === 0 && box.right === 0 && box.bottom === 0) {
           return new Error(["MUI: The `anchorEl` prop provided to the component is invalid.", "The anchor element should be part of the document layout.", "Make sure the element is present in the document or that it's not display none."].join("\n"));
@@ -35661,7 +35668,7 @@ Object.defineProperty(ArrowDownward, "__esModule", {
 });
 var default_1$x = ArrowDownward.default = void 0;
 var _createSvgIcon$x = _interopRequireDefault$x(requireCreateSvgIcon());
-var _jsxRuntime$x = jsxRuntimeExports;
+var _jsxRuntime$x = requireJsxRuntime();
 var _default$x = default_1$x = ArrowDownward.default = (0, _createSvgIcon$x.default)(/* @__PURE__ */ (0, _jsxRuntime$x.jsx)("path", {
   d: "m20 12-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8z"
 }), "ArrowDownward");
@@ -35674,7 +35681,7 @@ Object.defineProperty(ArrowRight, "__esModule", {
 });
 var default_1$w = ArrowRight.default = void 0;
 var _createSvgIcon$w = _interopRequireDefault$w(requireCreateSvgIcon());
-var _jsxRuntime$w = jsxRuntimeExports;
+var _jsxRuntime$w = requireJsxRuntime();
 var _default$w = default_1$w = ArrowRight.default = (0, _createSvgIcon$w.default)(/* @__PURE__ */ (0, _jsxRuntime$w.jsx)("path", {
   d: "m10 17 5-5-5-5z"
 }), "ArrowRight");
@@ -35687,7 +35694,7 @@ Object.defineProperty(Cancel, "__esModule", {
 });
 var default_1$v = Cancel.default = void 0;
 var _createSvgIcon$v = _interopRequireDefault$v(requireCreateSvgIcon());
-var _jsxRuntime$v = jsxRuntimeExports;
+var _jsxRuntime$v = requireJsxRuntime();
 var _default$v = default_1$v = Cancel.default = (0, _createSvgIcon$v.default)(/* @__PURE__ */ (0, _jsxRuntime$v.jsx)("path", {
   d: "M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2m5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12z"
 }), "Cancel");
@@ -35700,7 +35707,7 @@ Object.defineProperty(ChevronLeft, "__esModule", {
 });
 var default_1$u = ChevronLeft.default = void 0;
 var _createSvgIcon$u = _interopRequireDefault$u(requireCreateSvgIcon());
-var _jsxRuntime$u = jsxRuntimeExports;
+var _jsxRuntime$u = requireJsxRuntime();
 var _default$u = default_1$u = ChevronLeft.default = (0, _createSvgIcon$u.default)(/* @__PURE__ */ (0, _jsxRuntime$u.jsx)("path", {
   d: "M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"
 }), "ChevronLeft");
@@ -35713,7 +35720,7 @@ Object.defineProperty(ChevronRight, "__esModule", {
 });
 var default_1$t = ChevronRight.default = void 0;
 var _createSvgIcon$t = _interopRequireDefault$t(requireCreateSvgIcon());
-var _jsxRuntime$t = jsxRuntimeExports;
+var _jsxRuntime$t = requireJsxRuntime();
 var _default$t = default_1$t = ChevronRight.default = (0, _createSvgIcon$t.default)(/* @__PURE__ */ (0, _jsxRuntime$t.jsx)("path", {
   d: "M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
 }), "ChevronRight");
@@ -35726,7 +35733,7 @@ Object.defineProperty(ClearAll, "__esModule", {
 });
 var default_1$s = ClearAll.default = void 0;
 var _createSvgIcon$s = _interopRequireDefault$s(requireCreateSvgIcon());
-var _jsxRuntime$s = jsxRuntimeExports;
+var _jsxRuntime$s = requireJsxRuntime();
 var _default$s = default_1$s = ClearAll.default = (0, _createSvgIcon$s.default)(/* @__PURE__ */ (0, _jsxRuntime$s.jsx)("path", {
   d: "M5 13h14v-2H5zm-2 4h14v-2H3zM7 7v2h14V7z"
 }), "ClearAll");
@@ -35739,7 +35746,7 @@ Object.defineProperty(Close, "__esModule", {
 });
 var default_1$r = Close.default = void 0;
 var _createSvgIcon$r = _interopRequireDefault$r(requireCreateSvgIcon());
-var _jsxRuntime$r = jsxRuntimeExports;
+var _jsxRuntime$r = requireJsxRuntime();
 var _default$r = default_1$r = Close.default = (0, _createSvgIcon$r.default)(/* @__PURE__ */ (0, _jsxRuntime$r.jsx)("path", {
   d: "M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
 }), "Close");
@@ -35752,7 +35759,7 @@ Object.defineProperty(ContentCopy, "__esModule", {
 });
 var default_1$q = ContentCopy.default = void 0;
 var _createSvgIcon$q = _interopRequireDefault$q(requireCreateSvgIcon());
-var _jsxRuntime$q = jsxRuntimeExports;
+var _jsxRuntime$q = requireJsxRuntime();
 var _default$q = default_1$q = ContentCopy.default = (0, _createSvgIcon$q.default)(/* @__PURE__ */ (0, _jsxRuntime$q.jsx)("path", {
   d: "M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2m0 16H8V7h11z"
 }), "ContentCopy");
@@ -35765,7 +35772,7 @@ Object.defineProperty(DensityLarge, "__esModule", {
 });
 var default_1$p = DensityLarge.default = void 0;
 var _createSvgIcon$p = _interopRequireDefault$p(requireCreateSvgIcon());
-var _jsxRuntime$p = jsxRuntimeExports;
+var _jsxRuntime$p = requireJsxRuntime();
 var _default$p = default_1$p = DensityLarge.default = (0, _createSvgIcon$p.default)(/* @__PURE__ */ (0, _jsxRuntime$p.jsx)("path", {
   d: "M3 3h18v2H3zm0 16h18v2H3z"
 }), "DensityLarge");
@@ -35778,7 +35785,7 @@ Object.defineProperty(DensityMedium, "__esModule", {
 });
 var default_1$o = DensityMedium.default = void 0;
 var _createSvgIcon$o = _interopRequireDefault$o(requireCreateSvgIcon());
-var _jsxRuntime$o = jsxRuntimeExports;
+var _jsxRuntime$o = requireJsxRuntime();
 var _default$o = default_1$o = DensityMedium.default = (0, _createSvgIcon$o.default)(/* @__PURE__ */ (0, _jsxRuntime$o.jsx)("path", {
   d: "M3 3h18v2H3zm0 16h18v2H3zm0-8h18v2H3z"
 }), "DensityMedium");
@@ -35791,7 +35798,7 @@ Object.defineProperty(DensitySmall, "__esModule", {
 });
 var default_1$n = DensitySmall.default = void 0;
 var _createSvgIcon$n = _interopRequireDefault$n(requireCreateSvgIcon());
-var _jsxRuntime$n = jsxRuntimeExports;
+var _jsxRuntime$n = requireJsxRuntime();
 var _default$n = default_1$n = DensitySmall.default = (0, _createSvgIcon$n.default)(/* @__PURE__ */ (0, _jsxRuntime$n.jsx)("path", {
   d: "M3 2h18v2H3zm0 18h18v2H3zm0-6h18v2H3zm0-6h18v2H3z"
 }), "DensitySmall");
@@ -35804,7 +35811,7 @@ Object.defineProperty(DragHandle, "__esModule", {
 });
 var default_1$m = DragHandle.default = void 0;
 var _createSvgIcon$m = _interopRequireDefault$m(requireCreateSvgIcon());
-var _jsxRuntime$m = jsxRuntimeExports;
+var _jsxRuntime$m = requireJsxRuntime();
 var _default$m = default_1$m = DragHandle.default = (0, _createSvgIcon$m.default)(/* @__PURE__ */ (0, _jsxRuntime$m.jsx)("path", {
   d: "M20 9H4v2h16zM4 15h16v-2H4z"
 }), "DragHandle");
@@ -35817,7 +35824,7 @@ Object.defineProperty(DynamicFeed, "__esModule", {
 });
 var default_1$l = DynamicFeed.default = void 0;
 var _createSvgIcon$l = _interopRequireDefault$l(requireCreateSvgIcon());
-var _jsxRuntime$l = jsxRuntimeExports;
+var _jsxRuntime$l = requireJsxRuntime();
 var _default$l = default_1$l = DynamicFeed.default = (0, _createSvgIcon$l.default)([/* @__PURE__ */ (0, _jsxRuntime$l.jsx)("path", {
   d: "M8 8H6v7c0 1.1.9 2 2 2h9v-2H8z"
 }, "0"), /* @__PURE__ */ (0, _jsxRuntime$l.jsx)("path", {
@@ -35832,7 +35839,7 @@ Object.defineProperty(Edit, "__esModule", {
 });
 var default_1$k = Edit.default = void 0;
 var _createSvgIcon$k = _interopRequireDefault$k(requireCreateSvgIcon());
-var _jsxRuntime$k = jsxRuntimeExports;
+var _jsxRuntime$k = requireJsxRuntime();
 var _default$k = default_1$k = Edit.default = (0, _createSvgIcon$k.default)(/* @__PURE__ */ (0, _jsxRuntime$k.jsx)("path", {
   d: "M3 17.25V21h3.75L17.81 9.94l-3.75-3.75zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75z"
 }), "Edit");
@@ -35845,7 +35852,7 @@ Object.defineProperty(ExpandMore, "__esModule", {
 });
 var default_1$j = ExpandMore.default = void 0;
 var _createSvgIcon$j = _interopRequireDefault$j(requireCreateSvgIcon());
-var _jsxRuntime$j = jsxRuntimeExports;
+var _jsxRuntime$j = requireJsxRuntime();
 var _default$j = default_1$j = ExpandMore.default = (0, _createSvgIcon$j.default)(/* @__PURE__ */ (0, _jsxRuntime$j.jsx)("path", {
   d: "M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
 }), "ExpandMore");
@@ -35858,7 +35865,7 @@ Object.defineProperty(FilterAlt, "__esModule", {
 });
 var default_1$i = FilterAlt.default = void 0;
 var _createSvgIcon$i = _interopRequireDefault$i(requireCreateSvgIcon());
-var _jsxRuntime$i = jsxRuntimeExports;
+var _jsxRuntime$i = requireJsxRuntime();
 var _default$i = default_1$i = FilterAlt.default = (0, _createSvgIcon$i.default)(/* @__PURE__ */ (0, _jsxRuntime$i.jsx)("path", {
   d: "M4.25 5.61C6.27 8.2 10 13 10 13v6c0 .55.45 1 1 1h2c.55 0 1-.45 1-1v-6s3.72-4.8 5.74-7.39c.51-.66.04-1.61-.79-1.61H5.04c-.83 0-1.3.95-.79 1.61"
 }), "FilterAlt");
@@ -35871,7 +35878,7 @@ Object.defineProperty(FilterList, "__esModule", {
 });
 var default_1$h = FilterList.default = void 0;
 var _createSvgIcon$h = _interopRequireDefault$h(requireCreateSvgIcon());
-var _jsxRuntime$h = jsxRuntimeExports;
+var _jsxRuntime$h = requireJsxRuntime();
 var _default$h = default_1$h = FilterList.default = (0, _createSvgIcon$h.default)(/* @__PURE__ */ (0, _jsxRuntime$h.jsx)("path", {
   d: "M10 18h4v-2h-4zM3 6v2h18V6zm3 7h12v-2H6z"
 }), "FilterList");
@@ -35884,7 +35891,7 @@ Object.defineProperty(FilterListOff, "__esModule", {
 });
 var default_1$g = FilterListOff.default = void 0;
 var _createSvgIcon$g = _interopRequireDefault$g(requireCreateSvgIcon());
-var _jsxRuntime$g = jsxRuntimeExports;
+var _jsxRuntime$g = requireJsxRuntime();
 var _default$g = default_1$g = FilterListOff.default = (0, _createSvgIcon$g.default)(/* @__PURE__ */ (0, _jsxRuntime$g.jsx)("path", {
   d: "M10.83 8H21V6H8.83zm5 5H18v-2h-4.17zM14 16.83V18h-4v-2h3.17l-3-3H6v-2h2.17l-3-3H3V6h.17L1.39 4.22 2.8 2.81l18.38 18.38-1.41 1.41z"
 }), "FilterListOff");
@@ -35897,7 +35904,7 @@ Object.defineProperty(FirstPage, "__esModule", {
 });
 var default_1$f = FirstPage.default = void 0;
 var _createSvgIcon$f = _interopRequireDefault$f(requireCreateSvgIcon());
-var _jsxRuntime$f = jsxRuntimeExports;
+var _jsxRuntime$f = requireJsxRuntime();
 var _default$f = default_1$f = FirstPage.default = (0, _createSvgIcon$f.default)(/* @__PURE__ */ (0, _jsxRuntime$f.jsx)("path", {
   d: "M18.41 16.59 13.82 12l4.59-4.59L17 6l-6 6 6 6zM6 6h2v12H6z"
 }), "FirstPage");
@@ -35910,7 +35917,7 @@ Object.defineProperty(Fullscreen, "__esModule", {
 });
 var default_1$e = Fullscreen.default = void 0;
 var _createSvgIcon$e = _interopRequireDefault$e(requireCreateSvgIcon());
-var _jsxRuntime$e = jsxRuntimeExports;
+var _jsxRuntime$e = requireJsxRuntime();
 var _default$e = default_1$e = Fullscreen.default = (0, _createSvgIcon$e.default)(/* @__PURE__ */ (0, _jsxRuntime$e.jsx)("path", {
   d: "M7 14H5v5h5v-2H7zm-2-4h2V7h3V5H5zm12 7h-3v2h5v-5h-2zM14 5v2h3v3h2V5z"
 }), "Fullscreen");
@@ -35923,7 +35930,7 @@ Object.defineProperty(FullscreenExit, "__esModule", {
 });
 var default_1$d = FullscreenExit.default = void 0;
 var _createSvgIcon$d = _interopRequireDefault$d(requireCreateSvgIcon());
-var _jsxRuntime$d = jsxRuntimeExports;
+var _jsxRuntime$d = requireJsxRuntime();
 var _default$d = default_1$d = FullscreenExit.default = (0, _createSvgIcon$d.default)(/* @__PURE__ */ (0, _jsxRuntime$d.jsx)("path", {
   d: "M5 16h3v3h2v-5H5zm3-8H5v2h5V5H8zm6 11h2v-3h3v-2h-5zm2-11V5h-2v5h5V8z"
 }), "FullscreenExit");
@@ -35936,7 +35943,7 @@ Object.defineProperty(KeyboardDoubleArrowDown, "__esModule", {
 });
 var default_1$c = KeyboardDoubleArrowDown.default = void 0;
 var _createSvgIcon$c = _interopRequireDefault$c(requireCreateSvgIcon());
-var _jsxRuntime$c = jsxRuntimeExports;
+var _jsxRuntime$c = requireJsxRuntime();
 var _default$c = default_1$c = KeyboardDoubleArrowDown.default = (0, _createSvgIcon$c.default)([/* @__PURE__ */ (0, _jsxRuntime$c.jsx)("path", {
   d: "M18 6.41 16.59 5 12 9.58 7.41 5 6 6.41l6 6z"
 }, "0"), /* @__PURE__ */ (0, _jsxRuntime$c.jsx)("path", {
@@ -35951,7 +35958,7 @@ Object.defineProperty(LastPage, "__esModule", {
 });
 var default_1$b = LastPage.default = void 0;
 var _createSvgIcon$b = _interopRequireDefault$b(requireCreateSvgIcon());
-var _jsxRuntime$b = jsxRuntimeExports;
+var _jsxRuntime$b = requireJsxRuntime();
 var _default$b = default_1$b = LastPage.default = (0, _createSvgIcon$b.default)(/* @__PURE__ */ (0, _jsxRuntime$b.jsx)("path", {
   d: "M5.59 7.41 10.18 12l-4.59 4.59L7 18l6-6-6-6zM16 6h2v12h-2z"
 }), "LastPage");
@@ -35964,7 +35971,7 @@ Object.defineProperty(MoreHoriz, "__esModule", {
 });
 var default_1$a = MoreHoriz.default = void 0;
 var _createSvgIcon$a = _interopRequireDefault$a(requireCreateSvgIcon());
-var _jsxRuntime$a = jsxRuntimeExports;
+var _jsxRuntime$a = requireJsxRuntime();
 var _default$a = default_1$a = MoreHoriz.default = (0, _createSvgIcon$a.default)(/* @__PURE__ */ (0, _jsxRuntime$a.jsx)("path", {
   d: "M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
 }), "MoreHoriz");
@@ -35977,7 +35984,7 @@ Object.defineProperty(MoreVert, "__esModule", {
 });
 var default_1$9 = MoreVert.default = void 0;
 var _createSvgIcon$9 = _interopRequireDefault$9(requireCreateSvgIcon());
-var _jsxRuntime$9 = jsxRuntimeExports;
+var _jsxRuntime$9 = requireJsxRuntime();
 var _default$9 = default_1$9 = MoreVert.default = (0, _createSvgIcon$9.default)(/* @__PURE__ */ (0, _jsxRuntime$9.jsx)("path", {
   d: "M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2m0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
 }), "MoreVert");
@@ -35990,7 +35997,7 @@ Object.defineProperty(PushPin, "__esModule", {
 });
 var default_1$8 = PushPin.default = void 0;
 var _createSvgIcon$8 = _interopRequireDefault$8(requireCreateSvgIcon());
-var _jsxRuntime$8 = jsxRuntimeExports;
+var _jsxRuntime$8 = requireJsxRuntime();
 var _default$8 = default_1$8 = PushPin.default = (0, _createSvgIcon$8.default)(/* @__PURE__ */ (0, _jsxRuntime$8.jsx)("path", {
   fillRule: "evenodd",
   d: "M16 9V4h1c.55 0 1-.45 1-1s-.45-1-1-1H7c-.55 0-1 .45-1 1s.45 1 1 1h1v5c0 1.66-1.34 3-3 3v2h5.97v7l1 1 1-1v-7H19v-2c-1.66 0-3-1.34-3-3"
@@ -36004,7 +36011,7 @@ Object.defineProperty(RestartAlt, "__esModule", {
 });
 var default_1$7 = RestartAlt.default = void 0;
 var _createSvgIcon$7 = _interopRequireDefault$7(requireCreateSvgIcon());
-var _jsxRuntime$7 = jsxRuntimeExports;
+var _jsxRuntime$7 = requireJsxRuntime();
 var _default$7 = default_1$7 = RestartAlt.default = (0, _createSvgIcon$7.default)(/* @__PURE__ */ (0, _jsxRuntime$7.jsx)("path", {
   d: "M12 5V2L8 6l4 4V7c3.31 0 6 2.69 6 6 0 2.97-2.17 5.43-5 5.91v2.02c3.95-.49 7-3.85 7-7.93 0-4.42-3.58-8-8-8m-6 8c0-1.65.67-3.15 1.76-4.24L6.34 7.34C4.9 8.79 4 10.79 4 13c0 4.08 3.05 7.44 7 7.93v-2.02c-2.83-.48-5-2.94-5-5.91"
 }), "RestartAlt");
@@ -36017,7 +36024,7 @@ Object.defineProperty(Save, "__esModule", {
 });
 var default_1$6 = Save.default = void 0;
 var _createSvgIcon$6 = _interopRequireDefault$6(requireCreateSvgIcon());
-var _jsxRuntime$6 = jsxRuntimeExports;
+var _jsxRuntime$6 = requireJsxRuntime();
 var _default$6 = default_1$6 = Save.default = (0, _createSvgIcon$6.default)(/* @__PURE__ */ (0, _jsxRuntime$6.jsx)("path", {
   d: "M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3m3-10H5V5h10z"
 }), "Save");
@@ -36030,7 +36037,7 @@ Object.defineProperty(Search, "__esModule", {
 });
 var default_1$5 = Search.default = void 0;
 var _createSvgIcon$5 = _interopRequireDefault$5(requireCreateSvgIcon());
-var _jsxRuntime$5 = jsxRuntimeExports;
+var _jsxRuntime$5 = requireJsxRuntime();
 var _default$5 = default_1$5 = Search.default = (0, _createSvgIcon$5.default)(/* @__PURE__ */ (0, _jsxRuntime$5.jsx)("path", {
   d: "M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"
 }), "Search");
@@ -36043,7 +36050,7 @@ Object.defineProperty(SearchOff, "__esModule", {
 });
 var default_1$4 = SearchOff.default = void 0;
 var _createSvgIcon$4 = _interopRequireDefault$4(requireCreateSvgIcon());
-var _jsxRuntime$4 = jsxRuntimeExports;
+var _jsxRuntime$4 = requireJsxRuntime();
 var _default$4 = default_1$4 = SearchOff.default = (0, _createSvgIcon$4.default)([/* @__PURE__ */ (0, _jsxRuntime$4.jsx)("path", {
   d: "M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3 6.08 3 3.28 5.64 3.03 9h2.02C5.3 6.75 7.18 5 9.5 5 11.99 5 14 7.01 14 9.5S11.99 14 9.5 14c-.17 0-.33-.03-.5-.05v2.02c.17.02.33.03.5.03 1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19z"
 }, "0"), /* @__PURE__ */ (0, _jsxRuntime$4.jsx)("path", {
@@ -36058,7 +36065,7 @@ Object.defineProperty(Sort, "__esModule", {
 });
 var default_1$3 = Sort.default = void 0;
 var _createSvgIcon$3 = _interopRequireDefault$3(requireCreateSvgIcon());
-var _jsxRuntime$3 = jsxRuntimeExports;
+var _jsxRuntime$3 = requireJsxRuntime();
 var _default$3 = default_1$3 = Sort.default = (0, _createSvgIcon$3.default)(/* @__PURE__ */ (0, _jsxRuntime$3.jsx)("path", {
   d: "M3 18h6v-2H3zM3 6v2h18V6zm0 7h12v-2H3z"
 }), "Sort");
@@ -36071,7 +36078,7 @@ Object.defineProperty(SyncAlt, "__esModule", {
 });
 var default_1$2 = SyncAlt.default = void 0;
 var _createSvgIcon$2 = _interopRequireDefault$2(requireCreateSvgIcon());
-var _jsxRuntime$2 = jsxRuntimeExports;
+var _jsxRuntime$2 = requireJsxRuntime();
 var _default$2 = default_1$2 = SyncAlt.default = (0, _createSvgIcon$2.default)(/* @__PURE__ */ (0, _jsxRuntime$2.jsx)("path", {
   d: "m18 12 4-4-4-4v3H3v2h15zM6 12l-4 4 4 4v-3h15v-2H6z"
 }), "SyncAlt");
@@ -36084,7 +36091,7 @@ Object.defineProperty(ViewColumn, "__esModule", {
 });
 var default_1$1 = ViewColumn.default = void 0;
 var _createSvgIcon$1 = _interopRequireDefault$1(requireCreateSvgIcon());
-var _jsxRuntime$1 = jsxRuntimeExports;
+var _jsxRuntime$1 = requireJsxRuntime();
 var _default$1 = default_1$1 = ViewColumn.default = (0, _createSvgIcon$1.default)(/* @__PURE__ */ (0, _jsxRuntime$1.jsx)("path", {
   d: "M14.67 5v14H9.33V5zm1 14H21V5h-5.33zm-7.34 0V5H3v14z"
 }), "ViewColumn");
@@ -36097,7 +36104,7 @@ Object.defineProperty(VisibilityOff, "__esModule", {
 });
 var default_1 = VisibilityOff.default = void 0;
 var _createSvgIcon = _interopRequireDefault(requireCreateSvgIcon());
-var _jsxRuntime = jsxRuntimeExports;
+var _jsxRuntime = requireJsxRuntime();
 var _default = default_1 = VisibilityOff.default = (0, _createSvgIcon.default)(/* @__PURE__ */ (0, _jsxRuntime.jsx)("path", {
   d: "M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7M2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2m4.31-.78 3.15 3.15.02-.16c0-1.66-1.34-3-3-3z"
 }), "VisibilityOff");
@@ -36350,7 +36357,7 @@ var Virtualizer = function Virtualizer2(_opts) {
   this.measureElementCache = /* @__PURE__ */ new Map();
   this.observer = /* @__PURE__ */ function() {
     var _ro = null;
-    var get = function get2() {
+    var get2 = function get3() {
       if (_ro) {
         return _ro;
       } else if (typeof ResizeObserver !== "undefined") {
@@ -36366,17 +36373,17 @@ var Virtualizer = function Virtualizer2(_opts) {
     return {
       disconnect: function disconnect() {
         var _get;
-        return (_get = get()) == null ? void 0 : _get.disconnect();
+        return (_get = get2()) == null ? void 0 : _get.disconnect();
       },
       observe: function observe(target) {
         var _get2;
-        return (_get2 = get()) == null ? void 0 : _get2.observe(target, {
+        return (_get2 = get2()) == null ? void 0 : _get2.observe(target, {
           box: "border-box"
         });
       },
       unobserve: function unobserve(target) {
         var _get3;
-        return (_get3 = get()) == null ? void 0 : _get3.unobserve(target);
+        return (_get3 = get2()) == null ? void 0 : _get3.unobserve(target);
       }
     };
   }();
@@ -68987,9 +68994,15 @@ const MaterialReactTable = (props) => {
   }
   return jsxRuntimeExports.jsx(MRT_TablePaper, { table });
 };
-function BasicList(props) {
+const CMPNAME$7 = "BasicEntityList";
+console.log(CMPNAME$7, "1");
+const { Open: Open$5 } = gubu_minExports.Gubu;
+const BasicEntityListSpecShape = gubu_minExports.Gubu(Open$5({}), { prefix: CMPNAME$7 });
+function BasicEntityList(props) {
   const { ctx, spec } = props;
   const { seneca, model } = ctx();
+  const basicEntityListSpec = BasicEntityListSpecShape(spec);
+  console.log(CMPNAME$7, basicEntityListSpec);
   const name = spec.name;
   const slotName = spec.prefix + spec.name;
   const canon = spec.ent;
@@ -69026,29 +69039,1868 @@ function BasicList(props) {
       }
     })
   });
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs(Box$2, { className: "vxg-BasicList", children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { children: "BasicList" }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx(
-      MaterialReactTable,
-      {
-        table
-      }
-    )
-  ] });
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(Box$2, { className: "vxg-BasicList", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+    MaterialReactTable,
+    {
+      table
+    }
+  ) });
 }
-const CMPNAME$5 = "BasicEdit";
-console.log(CMPNAME$5, "1");
-function BasicEdit(props) {
+var isCheckBoxInput = (element) => element.type === "checkbox";
+var isDateObject = (value) => value instanceof Date;
+var isNullOrUndefined = (value) => value == null;
+const isObjectType = (value) => typeof value === "object";
+var isObject = (value) => !isNullOrUndefined(value) && !Array.isArray(value) && isObjectType(value) && !isDateObject(value);
+var getEventValue = (event) => isObject(event) && event.target ? isCheckBoxInput(event.target) ? event.target.checked : event.target.value : event;
+var getNodeParentName = (name) => name.substring(0, name.search(/\.\d+(\.|$)/)) || name;
+var isNameInFieldArray = (names, name) => names.has(getNodeParentName(name));
+var isPlainObject = (tempObject) => {
+  const prototypeCopy = tempObject.constructor && tempObject.constructor.prototype;
+  return isObject(prototypeCopy) && prototypeCopy.hasOwnProperty("isPrototypeOf");
+};
+var isWeb = typeof window !== "undefined" && typeof window.HTMLElement !== "undefined" && typeof document !== "undefined";
+function cloneObject(data) {
+  let copy2;
+  const isArray = Array.isArray(data);
+  if (data instanceof Date) {
+    copy2 = new Date(data);
+  } else if (data instanceof Set) {
+    copy2 = new Set(data);
+  } else if (!(isWeb && (data instanceof Blob || data instanceof FileList)) && (isArray || isObject(data))) {
+    copy2 = isArray ? [] : {};
+    if (!isArray && !isPlainObject(data)) {
+      copy2 = data;
+    } else {
+      for (const key in data) {
+        if (data.hasOwnProperty(key)) {
+          copy2[key] = cloneObject(data[key]);
+        }
+      }
+    }
+  } else {
+    return data;
+  }
+  return copy2;
+}
+var compact = (value) => Array.isArray(value) ? value.filter(Boolean) : [];
+var isUndefined = (val) => val === void 0;
+var get = (object, path, defaultValue) => {
+  if (!path || !isObject(object)) {
+    return defaultValue;
+  }
+  const result = compact(path.split(/[,[\].]+?/)).reduce((result2, key) => isNullOrUndefined(result2) ? result2 : result2[key], object);
+  return isUndefined(result) || result === object ? isUndefined(object[path]) ? defaultValue : object[path] : result;
+};
+var isBoolean = (value) => typeof value === "boolean";
+const EVENTS = {
+  BLUR: "blur",
+  FOCUS_OUT: "focusout",
+  CHANGE: "change"
+};
+const VALIDATION_MODE = {
+  onBlur: "onBlur",
+  onChange: "onChange",
+  onSubmit: "onSubmit",
+  onTouched: "onTouched",
+  all: "all"
+};
+const INPUT_VALIDATION_RULES = {
+  max: "max",
+  min: "min",
+  maxLength: "maxLength",
+  minLength: "minLength",
+  pattern: "pattern",
+  required: "required",
+  validate: "validate"
+};
+const HookFormContext = React__default.createContext(null);
+const useFormContext = () => React__default.useContext(HookFormContext);
+const FormProvider = (props) => {
+  const _a = props, { children: children2 } = _a, data = __objRest(_a, ["children"]);
+  return React__default.createElement(HookFormContext.Provider, { value: data }, children2);
+};
+var getProxyFormState = (formState, control, localProxyFormState, isRoot = true) => {
+  const result = {
+    defaultValues: control._defaultValues
+  };
+  for (const key in formState) {
+    Object.defineProperty(result, key, {
+      get: () => {
+        const _key = key;
+        if (control._proxyFormState[_key] !== VALIDATION_MODE.all) {
+          control._proxyFormState[_key] = !isRoot || VALIDATION_MODE.all;
+        }
+        localProxyFormState && (localProxyFormState[_key] = true);
+        return formState[_key];
+      }
+    });
+  }
+  return result;
+};
+var isEmptyObject = (value) => isObject(value) && !Object.keys(value).length;
+var shouldRenderFormState = (formStateData, _proxyFormState, updateFormState, isRoot) => {
+  updateFormState(formStateData);
+  const _a = formStateData, { name } = _a, formState = __objRest(_a, ["name"]);
+  return isEmptyObject(formState) || Object.keys(formState).length >= Object.keys(_proxyFormState).length || Object.keys(formState).find((key) => _proxyFormState[key] === (!isRoot || VALIDATION_MODE.all));
+};
+var convertToArrayPayload = (value) => Array.isArray(value) ? value : [value];
+var shouldSubscribeByName = (name, signalName, exact) => !name || !signalName || name === signalName || convertToArrayPayload(name).some((currentName) => currentName && (exact ? currentName === signalName : currentName.startsWith(signalName) || signalName.startsWith(currentName)));
+function useSubscribe(props) {
+  const _props = React__default.useRef(props);
+  _props.current = props;
+  React__default.useEffect(() => {
+    const subscription = !props.disabled && _props.current.subject && _props.current.subject.subscribe({
+      next: _props.current.next
+    });
+    return () => {
+      subscription && subscription.unsubscribe();
+    };
+  }, [props.disabled]);
+}
+function useFormState(props) {
+  const methods = useFormContext();
+  const { control = methods.control, disabled, name, exact } = props || {};
+  const [formState, updateFormState] = React__default.useState(control._formState);
+  const _mounted = React__default.useRef(true);
+  const _localProxyFormState = React__default.useRef({
+    isDirty: false,
+    isLoading: false,
+    dirtyFields: false,
+    touchedFields: false,
+    isValidating: false,
+    isValid: false,
+    errors: false
+  });
+  const _name = React__default.useRef(name);
+  _name.current = name;
+  useSubscribe({
+    disabled,
+    next: (value) => _mounted.current && shouldSubscribeByName(_name.current, value.name, exact) && shouldRenderFormState(value, _localProxyFormState.current, control._updateFormState) && updateFormState(__spreadValues(__spreadValues({}, control._formState), value)),
+    subject: control._subjects.state
+  });
+  React__default.useEffect(() => {
+    _mounted.current = true;
+    _localProxyFormState.current.isValid && control._updateValid(true);
+    return () => {
+      _mounted.current = false;
+    };
+  }, [control]);
+  return getProxyFormState(formState, control, _localProxyFormState.current, false);
+}
+var isString = (value) => typeof value === "string";
+var generateWatchOutput = (names, _names, formValues, isGlobal, defaultValue) => {
+  if (isString(names)) {
+    isGlobal && _names.watch.add(names);
+    return get(formValues, names, defaultValue);
+  }
+  if (Array.isArray(names)) {
+    return names.map((fieldName) => (isGlobal && _names.watch.add(fieldName), get(formValues, fieldName)));
+  }
+  isGlobal && (_names.watchAll = true);
+  return formValues;
+};
+function useWatch(props) {
+  const methods = useFormContext();
+  const { control = methods.control, name, defaultValue, disabled, exact } = props || {};
+  const _name = React__default.useRef(name);
+  _name.current = name;
+  useSubscribe({
+    disabled,
+    subject: control._subjects.values,
+    next: (formState) => {
+      if (shouldSubscribeByName(_name.current, formState.name, exact)) {
+        updateValue(cloneObject(generateWatchOutput(_name.current, control._names, formState.values || control._formValues, false, defaultValue)));
+      }
+    }
+  });
+  const [value, updateValue] = React__default.useState(control._getWatch(name, defaultValue));
+  React__default.useEffect(() => control._removeUnmounted());
+  return value;
+}
+var isKey = (value) => /^\w*$/.test(value);
+var stringToPath = (input) => compact(input.replace(/["|']|\]/g, "").split(/\.|\[/));
+var set = (object, path, value) => {
+  let index2 = -1;
+  const tempPath = isKey(path) ? [path] : stringToPath(path);
+  const length2 = tempPath.length;
+  const lastIndex = length2 - 1;
+  while (++index2 < length2) {
+    const key = tempPath[index2];
+    let newValue = value;
+    if (index2 !== lastIndex) {
+      const objValue = object[key];
+      newValue = isObject(objValue) || Array.isArray(objValue) ? objValue : !isNaN(+tempPath[index2 + 1]) ? [] : {};
+    }
+    object[key] = newValue;
+    object = object[key];
+  }
+  return object;
+};
+function useController(props) {
+  const methods = useFormContext();
+  const { name, disabled, control = methods.control, shouldUnregister } = props;
+  const isArrayField = isNameInFieldArray(control._names.array, name);
+  const value = useWatch({
+    control,
+    name,
+    defaultValue: get(control._formValues, name, get(control._defaultValues, name, props.defaultValue)),
+    exact: true
+  });
+  const formState = useFormState({
+    control,
+    name
+  });
+  const _registerProps = React__default.useRef(control.register(name, __spreadValues(__spreadProps(__spreadValues({}, props.rules), {
+    value
+  }), isBoolean(props.disabled) ? { disabled: props.disabled } : {})));
+  React__default.useEffect(() => {
+    const _shouldUnregisterField = control._options.shouldUnregister || shouldUnregister;
+    const updateMounted = (name2, value2) => {
+      const field = get(control._fields, name2);
+      if (field) {
+        field._f.mount = value2;
+      }
+    };
+    updateMounted(name, true);
+    if (_shouldUnregisterField) {
+      const value2 = cloneObject(get(control._options.defaultValues, name));
+      set(control._defaultValues, name, value2);
+      if (isUndefined(get(control._formValues, name))) {
+        set(control._formValues, name, value2);
+      }
+    }
+    return () => {
+      (isArrayField ? _shouldUnregisterField && !control._state.action : _shouldUnregisterField) ? control.unregister(name) : updateMounted(name, false);
+    };
+  }, [name, control, isArrayField, shouldUnregister]);
+  React__default.useEffect(() => {
+    if (get(control._fields, name)) {
+      control._updateDisabledField({
+        disabled,
+        fields: control._fields,
+        name,
+        value: get(control._fields, name)._f.value
+      });
+    }
+  }, [disabled, name, control]);
+  return {
+    field: __spreadProps(__spreadValues({
+      name,
+      value
+    }, isBoolean(disabled) || formState.disabled ? { disabled: formState.disabled || disabled } : {}), {
+      onChange: React__default.useCallback((event) => _registerProps.current.onChange({
+        target: {
+          value: getEventValue(event),
+          name
+        },
+        type: EVENTS.CHANGE
+      }), [name]),
+      onBlur: React__default.useCallback(() => _registerProps.current.onBlur({
+        target: {
+          value: get(control._formValues, name),
+          name
+        },
+        type: EVENTS.BLUR
+      }), [name, control]),
+      ref: (elm) => {
+        const field = get(control._fields, name);
+        if (field && elm) {
+          field._f.ref = {
+            focus: () => elm.focus(),
+            select: () => elm.select(),
+            setCustomValidity: (message) => elm.setCustomValidity(message),
+            reportValidity: () => elm.reportValidity()
+          };
+        }
+      }
+    }),
+    formState,
+    fieldState: Object.defineProperties({}, {
+      invalid: {
+        enumerable: true,
+        get: () => !!get(formState.errors, name)
+      },
+      isDirty: {
+        enumerable: true,
+        get: () => !!get(formState.dirtyFields, name)
+      },
+      isTouched: {
+        enumerable: true,
+        get: () => !!get(formState.touchedFields, name)
+      },
+      error: {
+        enumerable: true,
+        get: () => get(formState.errors, name)
+      }
+    })
+  };
+}
+const Controller = (props) => props.render(useController(props));
+const POST_REQUEST = "post";
+function Form(props) {
+  const methods = useFormContext();
+  const [mounted, setMounted] = React__default.useState(false);
+  const _a = props, { control = methods.control, onSubmit, children: children2, action, method = POST_REQUEST, headers, encType, onError, render, onSuccess, validateStatus } = _a, rest = __objRest(_a, ["control", "onSubmit", "children", "action", "method", "headers", "encType", "onError", "render", "onSuccess", "validateStatus"]);
+  const submit = (event) => __async(this, null, function* () {
+    let hasError = false;
+    let type = "";
+    yield control.handleSubmit((data) => __async(this, null, function* () {
+      const formData = new FormData();
+      let formDataJson = "";
+      try {
+        formDataJson = JSON.stringify(data);
+      } catch (_a2) {
+      }
+      for (const name of control._names.mount) {
+        formData.append(name, get(data, name));
+      }
+      if (onSubmit) {
+        yield onSubmit({
+          data,
+          event,
+          method,
+          formData,
+          formDataJson
+        });
+      }
+      if (action) {
+        try {
+          const shouldStringifySubmissionData = [
+            headers && headers["Content-Type"],
+            encType
+          ].some((value) => value && value.includes("json"));
+          const response = yield fetch(action, {
+            method,
+            headers: __spreadValues(__spreadValues({}, headers), encType ? { "Content-Type": encType } : {}),
+            body: shouldStringifySubmissionData ? formDataJson : formData
+          });
+          if (response && (validateStatus ? !validateStatus(response.status) : response.status < 200 || response.status >= 300)) {
+            hasError = true;
+            onError && onError({ response });
+            type = String(response.status);
+          } else {
+            onSuccess && onSuccess({ response });
+          }
+        } catch (error) {
+          hasError = true;
+          onError && onError({ error });
+        }
+      }
+    }))(event);
+    if (hasError && props.control) {
+      props.control._subjects.state.next({
+        isSubmitSuccessful: false
+      });
+      props.control.setError("root.server", {
+        type
+      });
+    }
+  });
+  React__default.useEffect(() => {
+    setMounted(true);
+  }, []);
+  return render ? React__default.createElement(React__default.Fragment, null, render({
+    submit
+  })) : React__default.createElement("form", __spreadValues({ noValidate: mounted, action, method, encType, onSubmit: submit }, rest), children2);
+}
+var appendErrors = (name, validateAllFieldCriteria, errors, type, message) => validateAllFieldCriteria ? __spreadProps(__spreadValues({}, errors[name]), {
+  types: __spreadProps(__spreadValues({}, errors[name] && errors[name].types ? errors[name].types : {}), {
+    [type]: message || true
+  })
+}) : {};
+var generateId = () => {
+  const d = typeof performance === "undefined" ? Date.now() : performance.now() * 1e3;
+  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
+    const r2 = (Math.random() * 16 + d) % 16 | 0;
+    return (c == "x" ? r2 : r2 & 3 | 8).toString(16);
+  });
+};
+var getFocusFieldName = (name, index2, options = {}) => options.shouldFocus || isUndefined(options.shouldFocus) ? options.focusName || `${name}.${isUndefined(options.focusIndex) ? index2 : options.focusIndex}.` : "";
+var getValidationModes = (mode) => ({
+  isOnSubmit: !mode || mode === VALIDATION_MODE.onSubmit,
+  isOnBlur: mode === VALIDATION_MODE.onBlur,
+  isOnChange: mode === VALIDATION_MODE.onChange,
+  isOnAll: mode === VALIDATION_MODE.all,
+  isOnTouch: mode === VALIDATION_MODE.onTouched
+});
+var isWatched = (name, _names, isBlurEvent) => !isBlurEvent && (_names.watchAll || _names.watch.has(name) || [..._names.watch].some((watchName) => name.startsWith(watchName) && /^\.\w+/.test(name.slice(watchName.length))));
+const iterateFieldsByAction = (fields, action, fieldsNames, abortEarly) => {
+  for (const key of fieldsNames || Object.keys(fields)) {
+    const field = get(fields, key);
+    if (field) {
+      const _a = field, { _f } = _a, currentField = __objRest(_a, ["_f"]);
+      if (_f) {
+        if (_f.refs && _f.refs[0] && action(_f.refs[0], key) && !abortEarly) {
+          break;
+        } else if (_f.ref && action(_f.ref, _f.name) && !abortEarly) {
+          break;
+        } else {
+          iterateFieldsByAction(currentField, action);
+        }
+      } else if (isObject(currentField)) {
+        iterateFieldsByAction(currentField, action);
+      }
+    }
+  }
+};
+var updateFieldArrayRootError = (errors, error, name) => {
+  const fieldArrayErrors = compact(get(errors, name));
+  set(fieldArrayErrors, "root", error[name]);
+  set(errors, name, fieldArrayErrors);
+  return errors;
+};
+var isFileInput = (element) => element.type === "file";
+var isFunction = (value) => typeof value === "function";
+var isHTMLElement = (value) => {
+  if (!isWeb) {
+    return false;
+  }
+  const owner = value ? value.ownerDocument : 0;
+  return value instanceof (owner && owner.defaultView ? owner.defaultView.HTMLElement : HTMLElement);
+};
+var isMessage = (value) => isString(value);
+var isRadioInput = (element) => element.type === "radio";
+var isRegex = (value) => value instanceof RegExp;
+const defaultResult = {
+  value: false,
+  isValid: false
+};
+const validResult = { value: true, isValid: true };
+var getCheckboxValue = (options) => {
+  if (Array.isArray(options)) {
+    if (options.length > 1) {
+      const values2 = options.filter((option) => option && option.checked && !option.disabled).map((option) => option.value);
+      return { value: values2, isValid: !!values2.length };
+    }
+    return options[0].checked && !options[0].disabled ? (
+      // @ts-expect-error expected to work in the browser
+      options[0].attributes && !isUndefined(options[0].attributes.value) ? isUndefined(options[0].value) || options[0].value === "" ? validResult : { value: options[0].value, isValid: true } : validResult
+    ) : defaultResult;
+  }
+  return defaultResult;
+};
+const defaultReturn = {
+  isValid: false,
+  value: null
+};
+var getRadioValue = (options) => Array.isArray(options) ? options.reduce((previous, option) => option && option.checked && !option.disabled ? {
+  isValid: true,
+  value: option.value
+} : previous, defaultReturn) : defaultReturn;
+function getValidateError(result, ref, type = "validate") {
+  if (isMessage(result) || Array.isArray(result) && result.every(isMessage) || isBoolean(result) && !result) {
+    return {
+      type,
+      message: isMessage(result) ? result : "",
+      ref
+    };
+  }
+}
+var getValueAndMessage = (validationData) => isObject(validationData) && !isRegex(validationData) ? validationData : {
+  value: validationData,
+  message: ""
+};
+var validateField = (field, formValues, validateAllFieldCriteria, shouldUseNativeValidation, isFieldArray) => __async(void 0, null, function* () {
+  const { ref, refs, required, maxLength, minLength, min: min2, max: max2, pattern, validate, name, valueAsNumber, mount, disabled } = field._f;
+  const inputValue = get(formValues, name);
+  if (!mount || disabled) {
+    return {};
+  }
+  const inputRef = refs ? refs[0] : ref;
+  const setCustomValidity = (message) => {
+    if (shouldUseNativeValidation && inputRef.reportValidity) {
+      inputRef.setCustomValidity(isBoolean(message) ? "" : message || "");
+      inputRef.reportValidity();
+    }
+  };
+  const error = {};
+  const isRadio = isRadioInput(ref);
+  const isCheckBox = isCheckBoxInput(ref);
+  const isRadioOrCheckbox2 = isRadio || isCheckBox;
+  const isEmpty2 = (valueAsNumber || isFileInput(ref)) && isUndefined(ref.value) && isUndefined(inputValue) || isHTMLElement(ref) && ref.value === "" || inputValue === "" || Array.isArray(inputValue) && !inputValue.length;
+  const appendErrorsCurry = appendErrors.bind(null, name, validateAllFieldCriteria, error);
+  const getMinMaxMessage = (exceedMax, maxLengthMessage, minLengthMessage, maxType = INPUT_VALIDATION_RULES.maxLength, minType = INPUT_VALIDATION_RULES.minLength) => {
+    const message = exceedMax ? maxLengthMessage : minLengthMessage;
+    error[name] = __spreadValues({
+      type: exceedMax ? maxType : minType,
+      message,
+      ref
+    }, appendErrorsCurry(exceedMax ? maxType : minType, message));
+  };
+  if (isFieldArray ? !Array.isArray(inputValue) || !inputValue.length : required && (!isRadioOrCheckbox2 && (isEmpty2 || isNullOrUndefined(inputValue)) || isBoolean(inputValue) && !inputValue || isCheckBox && !getCheckboxValue(refs).isValid || isRadio && !getRadioValue(refs).isValid)) {
+    const { value, message } = isMessage(required) ? { value: !!required, message: required } : getValueAndMessage(required);
+    if (value) {
+      error[name] = __spreadValues({
+        type: INPUT_VALIDATION_RULES.required,
+        message,
+        ref: inputRef
+      }, appendErrorsCurry(INPUT_VALIDATION_RULES.required, message));
+      if (!validateAllFieldCriteria) {
+        setCustomValidity(message);
+        return error;
+      }
+    }
+  }
+  if (!isEmpty2 && (!isNullOrUndefined(min2) || !isNullOrUndefined(max2))) {
+    let exceedMax;
+    let exceedMin;
+    const maxOutput = getValueAndMessage(max2);
+    const minOutput = getValueAndMessage(min2);
+    if (!isNullOrUndefined(inputValue) && !isNaN(inputValue)) {
+      const valueNumber = ref.valueAsNumber || (inputValue ? +inputValue : inputValue);
+      if (!isNullOrUndefined(maxOutput.value)) {
+        exceedMax = valueNumber > maxOutput.value;
+      }
+      if (!isNullOrUndefined(minOutput.value)) {
+        exceedMin = valueNumber < minOutput.value;
+      }
+    } else {
+      const valueDate = ref.valueAsDate || new Date(inputValue);
+      const convertTimeToDate = (time) => /* @__PURE__ */ new Date((/* @__PURE__ */ new Date()).toDateString() + " " + time);
+      const isTime = ref.type == "time";
+      const isWeek = ref.type == "week";
+      if (isString(maxOutput.value) && inputValue) {
+        exceedMax = isTime ? convertTimeToDate(inputValue) > convertTimeToDate(maxOutput.value) : isWeek ? inputValue > maxOutput.value : valueDate > new Date(maxOutput.value);
+      }
+      if (isString(minOutput.value) && inputValue) {
+        exceedMin = isTime ? convertTimeToDate(inputValue) < convertTimeToDate(minOutput.value) : isWeek ? inputValue < minOutput.value : valueDate < new Date(minOutput.value);
+      }
+    }
+    if (exceedMax || exceedMin) {
+      getMinMaxMessage(!!exceedMax, maxOutput.message, minOutput.message, INPUT_VALIDATION_RULES.max, INPUT_VALIDATION_RULES.min);
+      if (!validateAllFieldCriteria) {
+        setCustomValidity(error[name].message);
+        return error;
+      }
+    }
+  }
+  if ((maxLength || minLength) && !isEmpty2 && (isString(inputValue) || isFieldArray && Array.isArray(inputValue))) {
+    const maxLengthOutput = getValueAndMessage(maxLength);
+    const minLengthOutput = getValueAndMessage(minLength);
+    const exceedMax = !isNullOrUndefined(maxLengthOutput.value) && inputValue.length > +maxLengthOutput.value;
+    const exceedMin = !isNullOrUndefined(minLengthOutput.value) && inputValue.length < +minLengthOutput.value;
+    if (exceedMax || exceedMin) {
+      getMinMaxMessage(exceedMax, maxLengthOutput.message, minLengthOutput.message);
+      if (!validateAllFieldCriteria) {
+        setCustomValidity(error[name].message);
+        return error;
+      }
+    }
+  }
+  if (pattern && !isEmpty2 && isString(inputValue)) {
+    const { value: patternValue, message } = getValueAndMessage(pattern);
+    if (isRegex(patternValue) && !inputValue.match(patternValue)) {
+      error[name] = __spreadValues({
+        type: INPUT_VALIDATION_RULES.pattern,
+        message,
+        ref
+      }, appendErrorsCurry(INPUT_VALIDATION_RULES.pattern, message));
+      if (!validateAllFieldCriteria) {
+        setCustomValidity(message);
+        return error;
+      }
+    }
+  }
+  if (validate) {
+    if (isFunction(validate)) {
+      const result = yield validate(inputValue, formValues);
+      const validateError = getValidateError(result, inputRef);
+      if (validateError) {
+        error[name] = __spreadValues(__spreadValues({}, validateError), appendErrorsCurry(INPUT_VALIDATION_RULES.validate, validateError.message));
+        if (!validateAllFieldCriteria) {
+          setCustomValidity(validateError.message);
+          return error;
+        }
+      }
+    } else if (isObject(validate)) {
+      let validationResult = {};
+      for (const key in validate) {
+        if (!isEmptyObject(validationResult) && !validateAllFieldCriteria) {
+          break;
+        }
+        const validateError = getValidateError(yield validate[key](inputValue, formValues), inputRef, key);
+        if (validateError) {
+          validationResult = __spreadValues(__spreadValues({}, validateError), appendErrorsCurry(key, validateError.message));
+          setCustomValidity(validateError.message);
+          if (validateAllFieldCriteria) {
+            error[name] = validationResult;
+          }
+        }
+      }
+      if (!isEmptyObject(validationResult)) {
+        error[name] = __spreadValues({
+          ref: inputRef
+        }, validationResult);
+        if (!validateAllFieldCriteria) {
+          return error;
+        }
+      }
+    }
+  }
+  setCustomValidity(true);
+  return error;
+});
+var appendAt = (data, value) => [
+  ...data,
+  ...convertToArrayPayload(value)
+];
+var fillEmptyArray = (value) => Array.isArray(value) ? value.map(() => void 0) : void 0;
+function insert(data, index2, value) {
+  return [
+    ...data.slice(0, index2),
+    ...convertToArrayPayload(value),
+    ...data.slice(index2)
+  ];
+}
+var moveArrayAt = (data, from2, to) => {
+  if (!Array.isArray(data)) {
+    return [];
+  }
+  if (isUndefined(data[to])) {
+    data[to] = void 0;
+  }
+  data.splice(to, 0, data.splice(from2, 1)[0]);
+  return data;
+};
+var prependAt = (data, value) => [
+  ...convertToArrayPayload(value),
+  ...convertToArrayPayload(data)
+];
+function removeAtIndexes(data, indexes) {
+  let i = 0;
+  const temp = [...data];
+  for (const index2 of indexes) {
+    temp.splice(index2 - i, 1);
+    i++;
+  }
+  return compact(temp).length ? temp : [];
+}
+var removeArrayAt = (data, index2) => isUndefined(index2) ? [] : removeAtIndexes(data, convertToArrayPayload(index2).sort((a, b) => a - b));
+var swapArrayAt = (data, indexA, indexB) => {
+  [data[indexA], data[indexB]] = [data[indexB], data[indexA]];
+};
+function baseGet(object, updatePath) {
+  const length2 = updatePath.slice(0, -1).length;
+  let index2 = 0;
+  while (index2 < length2) {
+    object = isUndefined(object) ? index2++ : object[updatePath[index2++]];
+  }
+  return object;
+}
+function isEmptyArray(obj) {
+  for (const key in obj) {
+    if (obj.hasOwnProperty(key) && !isUndefined(obj[key])) {
+      return false;
+    }
+  }
+  return true;
+}
+function unset(object, path) {
+  const paths = Array.isArray(path) ? path : isKey(path) ? [path] : stringToPath(path);
+  const childObject = paths.length === 1 ? object : baseGet(object, paths);
+  const index2 = paths.length - 1;
+  const key = paths[index2];
+  if (childObject) {
+    delete childObject[key];
+  }
+  if (index2 !== 0 && (isObject(childObject) && isEmptyObject(childObject) || Array.isArray(childObject) && isEmptyArray(childObject))) {
+    unset(object, paths.slice(0, -1));
+  }
+  return object;
+}
+var updateAt = (fieldValues, index2, value) => {
+  fieldValues[index2] = value;
+  return fieldValues;
+};
+function useFieldArray(props) {
+  const methods = useFormContext();
+  const { control = methods.control, name, keyName = "id", shouldUnregister } = props;
+  const [fields, setFields] = React__default.useState(control._getFieldArray(name));
+  const ids = React__default.useRef(control._getFieldArray(name).map(generateId));
+  const _fieldIds = React__default.useRef(fields);
+  const _name = React__default.useRef(name);
+  const _actioned = React__default.useRef(false);
+  _name.current = name;
+  _fieldIds.current = fields;
+  control._names.array.add(name);
+  props.rules && control.register(name, props.rules);
+  useSubscribe({
+    next: ({ values: values2, name: fieldArrayName }) => {
+      if (fieldArrayName === _name.current || !fieldArrayName) {
+        const fieldValues = get(values2, _name.current);
+        if (Array.isArray(fieldValues)) {
+          setFields(fieldValues);
+          ids.current = fieldValues.map(generateId);
+        }
+      }
+    },
+    subject: control._subjects.array
+  });
+  const updateValues = React__default.useCallback((updatedFieldArrayValues) => {
+    _actioned.current = true;
+    control._updateFieldArray(name, updatedFieldArrayValues);
+  }, [control, name]);
+  const append2 = (value, options) => {
+    const appendValue = convertToArrayPayload(cloneObject(value));
+    const updatedFieldArrayValues = appendAt(control._getFieldArray(name), appendValue);
+    control._names.focus = getFocusFieldName(name, updatedFieldArrayValues.length - 1, options);
+    ids.current = appendAt(ids.current, appendValue.map(generateId));
+    updateValues(updatedFieldArrayValues);
+    setFields(updatedFieldArrayValues);
+    control._updateFieldArray(name, updatedFieldArrayValues, appendAt, {
+      argA: fillEmptyArray(value)
+    });
+  };
+  const prepend = (value, options) => {
+    const prependValue = convertToArrayPayload(cloneObject(value));
+    const updatedFieldArrayValues = prependAt(control._getFieldArray(name), prependValue);
+    control._names.focus = getFocusFieldName(name, 0, options);
+    ids.current = prependAt(ids.current, prependValue.map(generateId));
+    updateValues(updatedFieldArrayValues);
+    setFields(updatedFieldArrayValues);
+    control._updateFieldArray(name, updatedFieldArrayValues, prependAt, {
+      argA: fillEmptyArray(value)
+    });
+  };
+  const remove = (index2) => {
+    const updatedFieldArrayValues = removeArrayAt(control._getFieldArray(name), index2);
+    ids.current = removeArrayAt(ids.current, index2);
+    updateValues(updatedFieldArrayValues);
+    setFields(updatedFieldArrayValues);
+    control._updateFieldArray(name, updatedFieldArrayValues, removeArrayAt, {
+      argA: index2
+    });
+  };
+  const insert$1 = (index2, value, options) => {
+    const insertValue = convertToArrayPayload(cloneObject(value));
+    const updatedFieldArrayValues = insert(control._getFieldArray(name), index2, insertValue);
+    control._names.focus = getFocusFieldName(name, index2, options);
+    ids.current = insert(ids.current, index2, insertValue.map(generateId));
+    updateValues(updatedFieldArrayValues);
+    setFields(updatedFieldArrayValues);
+    control._updateFieldArray(name, updatedFieldArrayValues, insert, {
+      argA: index2,
+      argB: fillEmptyArray(value)
+    });
+  };
+  const swap = (indexA, indexB) => {
+    const updatedFieldArrayValues = control._getFieldArray(name);
+    swapArrayAt(updatedFieldArrayValues, indexA, indexB);
+    swapArrayAt(ids.current, indexA, indexB);
+    updateValues(updatedFieldArrayValues);
+    setFields(updatedFieldArrayValues);
+    control._updateFieldArray(name, updatedFieldArrayValues, swapArrayAt, {
+      argA: indexA,
+      argB: indexB
+    }, false);
+  };
+  const move = (from2, to) => {
+    const updatedFieldArrayValues = control._getFieldArray(name);
+    moveArrayAt(updatedFieldArrayValues, from2, to);
+    moveArrayAt(ids.current, from2, to);
+    updateValues(updatedFieldArrayValues);
+    setFields(updatedFieldArrayValues);
+    control._updateFieldArray(name, updatedFieldArrayValues, moveArrayAt, {
+      argA: from2,
+      argB: to
+    }, false);
+  };
+  const update = (index2, value) => {
+    const updateValue = cloneObject(value);
+    const updatedFieldArrayValues = updateAt(control._getFieldArray(name), index2, updateValue);
+    ids.current = [...updatedFieldArrayValues].map((item, i) => !item || i === index2 ? generateId() : ids.current[i]);
+    updateValues(updatedFieldArrayValues);
+    setFields([...updatedFieldArrayValues]);
+    control._updateFieldArray(name, updatedFieldArrayValues, updateAt, {
+      argA: index2,
+      argB: updateValue
+    }, true, false);
+  };
+  const replace2 = (value) => {
+    const updatedFieldArrayValues = convertToArrayPayload(cloneObject(value));
+    ids.current = updatedFieldArrayValues.map(generateId);
+    updateValues([...updatedFieldArrayValues]);
+    setFields([...updatedFieldArrayValues]);
+    control._updateFieldArray(name, [...updatedFieldArrayValues], (data) => data, {}, true, false);
+  };
+  React__default.useEffect(() => {
+    control._state.action = false;
+    isWatched(name, control._names) && control._subjects.state.next(__spreadValues({}, control._formState));
+    if (_actioned.current && (!getValidationModes(control._options.mode).isOnSubmit || control._formState.isSubmitted)) {
+      if (control._options.resolver) {
+        control._executeSchema([name]).then((result) => {
+          const error = get(result.errors, name);
+          const existingError = get(control._formState.errors, name);
+          if (existingError ? !error && existingError.type || error && (existingError.type !== error.type || existingError.message !== error.message) : error && error.type) {
+            error ? set(control._formState.errors, name, error) : unset(control._formState.errors, name);
+            control._subjects.state.next({
+              errors: control._formState.errors
+            });
+          }
+        });
+      } else {
+        const field = get(control._fields, name);
+        if (field && field._f && !(getValidationModes(control._options.reValidateMode).isOnSubmit && getValidationModes(control._options.mode).isOnSubmit)) {
+          validateField(field, control._formValues, control._options.criteriaMode === VALIDATION_MODE.all, control._options.shouldUseNativeValidation, true).then((error) => !isEmptyObject(error) && control._subjects.state.next({
+            errors: updateFieldArrayRootError(control._formState.errors, error, name)
+          }));
+        }
+      }
+    }
+    control._subjects.values.next({
+      name,
+      values: __spreadValues({}, control._formValues)
+    });
+    control._names.focus && iterateFieldsByAction(control._fields, (ref, key) => {
+      if (control._names.focus && key.startsWith(control._names.focus) && ref.focus) {
+        ref.focus();
+        return 1;
+      }
+      return;
+    });
+    control._names.focus = "";
+    control._updateValid();
+    _actioned.current = false;
+  }, [fields, name, control]);
+  React__default.useEffect(() => {
+    !get(control._formValues, name) && control._updateFieldArray(name);
+    return () => {
+      (control._options.shouldUnregister || shouldUnregister) && control.unregister(name);
+    };
+  }, [name, control, keyName, shouldUnregister]);
+  return {
+    swap: React__default.useCallback(swap, [updateValues, name, control]),
+    move: React__default.useCallback(move, [updateValues, name, control]),
+    prepend: React__default.useCallback(prepend, [updateValues, name, control]),
+    append: React__default.useCallback(append2, [updateValues, name, control]),
+    remove: React__default.useCallback(remove, [updateValues, name, control]),
+    insert: React__default.useCallback(insert$1, [updateValues, name, control]),
+    update: React__default.useCallback(update, [updateValues, name, control]),
+    replace: React__default.useCallback(replace2, [updateValues, name, control]),
+    fields: React__default.useMemo(() => fields.map((field, index2) => __spreadProps(__spreadValues({}, field), {
+      [keyName]: ids.current[index2] || generateId()
+    })), [fields, keyName])
+  };
+}
+var createSubject = () => {
+  let _observers = [];
+  const next2 = (value) => {
+    for (const observer of _observers) {
+      observer.next && observer.next(value);
+    }
+  };
+  const subscribe = (observer) => {
+    _observers.push(observer);
+    return {
+      unsubscribe: () => {
+        _observers = _observers.filter((o) => o !== observer);
+      }
+    };
+  };
+  const unsubscribe = () => {
+    _observers = [];
+  };
+  return {
+    get observers() {
+      return _observers;
+    },
+    next: next2,
+    subscribe,
+    unsubscribe
+  };
+};
+var isPrimitive = (value) => isNullOrUndefined(value) || !isObjectType(value);
+function deepEqual(object1, object2) {
+  if (isPrimitive(object1) || isPrimitive(object2)) {
+    return object1 === object2;
+  }
+  if (isDateObject(object1) && isDateObject(object2)) {
+    return object1.getTime() === object2.getTime();
+  }
+  const keys1 = Object.keys(object1);
+  const keys2 = Object.keys(object2);
+  if (keys1.length !== keys2.length) {
+    return false;
+  }
+  for (const key of keys1) {
+    const val1 = object1[key];
+    if (!keys2.includes(key)) {
+      return false;
+    }
+    if (key !== "ref") {
+      const val2 = object2[key];
+      if (isDateObject(val1) && isDateObject(val2) || isObject(val1) && isObject(val2) || Array.isArray(val1) && Array.isArray(val2) ? !deepEqual(val1, val2) : val1 !== val2) {
+        return false;
+      }
+    }
+  }
+  return true;
+}
+var isMultipleSelect = (element) => element.type === `select-multiple`;
+var isRadioOrCheckbox = (ref) => isRadioInput(ref) || isCheckBoxInput(ref);
+var live = (ref) => isHTMLElement(ref) && ref.isConnected;
+var objectHasFunction = (data) => {
+  for (const key in data) {
+    if (isFunction(data[key])) {
+      return true;
+    }
+  }
+  return false;
+};
+function markFieldsDirty(data, fields = {}) {
+  const isParentNodeArray = Array.isArray(data);
+  if (isObject(data) || isParentNodeArray) {
+    for (const key in data) {
+      if (Array.isArray(data[key]) || isObject(data[key]) && !objectHasFunction(data[key])) {
+        fields[key] = Array.isArray(data[key]) ? [] : {};
+        markFieldsDirty(data[key], fields[key]);
+      } else if (!isNullOrUndefined(data[key])) {
+        fields[key] = true;
+      }
+    }
+  }
+  return fields;
+}
+function getDirtyFieldsFromDefaultValues(data, formValues, dirtyFieldsFromValues) {
+  const isParentNodeArray = Array.isArray(data);
+  if (isObject(data) || isParentNodeArray) {
+    for (const key in data) {
+      if (Array.isArray(data[key]) || isObject(data[key]) && !objectHasFunction(data[key])) {
+        if (isUndefined(formValues) || isPrimitive(dirtyFieldsFromValues[key])) {
+          dirtyFieldsFromValues[key] = Array.isArray(data[key]) ? markFieldsDirty(data[key], []) : __spreadValues({}, markFieldsDirty(data[key]));
+        } else {
+          getDirtyFieldsFromDefaultValues(data[key], isNullOrUndefined(formValues) ? {} : formValues[key], dirtyFieldsFromValues[key]);
+        }
+      } else {
+        dirtyFieldsFromValues[key] = !deepEqual(data[key], formValues[key]);
+      }
+    }
+  }
+  return dirtyFieldsFromValues;
+}
+var getDirtyFields = (defaultValues, formValues) => getDirtyFieldsFromDefaultValues(defaultValues, formValues, markFieldsDirty(formValues));
+var getFieldValueAs = (value, { valueAsNumber, valueAsDate, setValueAs }) => isUndefined(value) ? value : valueAsNumber ? value === "" ? NaN : value ? +value : value : valueAsDate && isString(value) ? new Date(value) : setValueAs ? setValueAs(value) : value;
+function getFieldValue(_f) {
+  const ref = _f.ref;
+  if (_f.refs ? _f.refs.every((ref2) => ref2.disabled) : ref.disabled) {
+    return;
+  }
+  if (isFileInput(ref)) {
+    return ref.files;
+  }
+  if (isRadioInput(ref)) {
+    return getRadioValue(_f.refs).value;
+  }
+  if (isMultipleSelect(ref)) {
+    return [...ref.selectedOptions].map(({ value }) => value);
+  }
+  if (isCheckBoxInput(ref)) {
+    return getCheckboxValue(_f.refs).value;
+  }
+  return getFieldValueAs(isUndefined(ref.value) ? _f.ref.value : ref.value, _f);
+}
+var getResolverOptions = (fieldsNames, _fields, criteriaMode, shouldUseNativeValidation) => {
+  const fields = {};
+  for (const name of fieldsNames) {
+    const field = get(_fields, name);
+    field && set(fields, name, field._f);
+  }
+  return {
+    criteriaMode,
+    names: [...fieldsNames],
+    fields,
+    shouldUseNativeValidation
+  };
+};
+var getRuleValue = (rule) => isUndefined(rule) ? rule : isRegex(rule) ? rule.source : isObject(rule) ? isRegex(rule.value) ? rule.value.source : rule.value : rule;
+var hasValidation = (options) => options.mount && (options.required || options.min || options.max || options.maxLength || options.minLength || options.pattern || options.validate);
+function schemaErrorLookup(errors, _fields, name) {
+  const error = get(errors, name);
+  if (error || isKey(name)) {
+    return {
+      error,
+      name
+    };
+  }
+  const names = name.split(".");
+  while (names.length) {
+    const fieldName = names.join(".");
+    const field = get(_fields, fieldName);
+    const foundError = get(errors, fieldName);
+    if (field && !Array.isArray(field) && name !== fieldName) {
+      return { name };
+    }
+    if (foundError && foundError.type) {
+      return {
+        name: fieldName,
+        error: foundError
+      };
+    }
+    names.pop();
+  }
+  return {
+    name
+  };
+}
+var skipValidation = (isBlurEvent, isTouched, isSubmitted, reValidateMode, mode) => {
+  if (mode.isOnAll) {
+    return false;
+  } else if (!isSubmitted && mode.isOnTouch) {
+    return !(isTouched || isBlurEvent);
+  } else if (isSubmitted ? reValidateMode.isOnBlur : mode.isOnBlur) {
+    return !isBlurEvent;
+  } else if (isSubmitted ? reValidateMode.isOnChange : mode.isOnChange) {
+    return isBlurEvent;
+  }
+  return true;
+};
+var unsetEmptyArray = (ref, name) => !compact(get(ref, name)).length && unset(ref, name);
+const defaultOptions = {
+  mode: VALIDATION_MODE.onSubmit,
+  reValidateMode: VALIDATION_MODE.onChange,
+  shouldFocusError: true
+};
+function createFormControl(props = {}, flushRootRender) {
+  let _options = __spreadValues(__spreadValues({}, defaultOptions), props);
+  let _formState = {
+    submitCount: 0,
+    isDirty: false,
+    isLoading: isFunction(_options.defaultValues),
+    isValidating: false,
+    isSubmitted: false,
+    isSubmitting: false,
+    isSubmitSuccessful: false,
+    isValid: false,
+    touchedFields: {},
+    dirtyFields: {},
+    errors: _options.errors || {},
+    disabled: _options.disabled || false
+  };
+  let _fields = {};
+  let _defaultValues = isObject(_options.values) || isObject(_options.defaultValues) ? cloneObject(_options.values || _options.defaultValues) || {} : {};
+  let _formValues = _options.shouldUnregister ? {} : cloneObject(_defaultValues);
+  let _state = {
+    action: false,
+    mount: false,
+    watch: false
+  };
+  let _names = {
+    mount: /* @__PURE__ */ new Set(),
+    unMount: /* @__PURE__ */ new Set(),
+    array: /* @__PURE__ */ new Set(),
+    watch: /* @__PURE__ */ new Set()
+  };
+  let delayErrorCallback;
+  let timer = 0;
+  const _proxyFormState = {
+    isDirty: false,
+    dirtyFields: false,
+    touchedFields: false,
+    isValidating: false,
+    isValid: false,
+    errors: false
+  };
+  const _subjects = {
+    values: createSubject(),
+    array: createSubject(),
+    state: createSubject()
+  };
+  const validationModeBeforeSubmit = getValidationModes(_options.mode);
+  const validationModeAfterSubmit = getValidationModes(_options.reValidateMode);
+  const shouldDisplayAllAssociatedErrors = _options.criteriaMode === VALIDATION_MODE.all;
+  const debounce2 = (callback) => (wait) => {
+    clearTimeout(timer);
+    timer = setTimeout(callback, wait);
+  };
+  const _updateValid = (shouldUpdateValid) => __async(this, null, function* () {
+    if (_proxyFormState.isValid || shouldUpdateValid) {
+      const isValid = _options.resolver ? isEmptyObject((yield _executeSchema()).errors) : yield executeBuiltInValidation(_fields, true);
+      if (isValid !== _formState.isValid) {
+        _subjects.state.next({
+          isValid
+        });
+      }
+    }
+  });
+  const _updateIsValidating = (value) => _proxyFormState.isValidating && _subjects.state.next({
+    isValidating: value
+  });
+  const _updateFieldArray = (name, values2 = [], method, args, shouldSetValues = true, shouldUpdateFieldsAndState = true) => {
+    if (args && method) {
+      _state.action = true;
+      if (shouldUpdateFieldsAndState && Array.isArray(get(_fields, name))) {
+        const fieldValues = method(get(_fields, name), args.argA, args.argB);
+        shouldSetValues && set(_fields, name, fieldValues);
+      }
+      if (shouldUpdateFieldsAndState && Array.isArray(get(_formState.errors, name))) {
+        const errors = method(get(_formState.errors, name), args.argA, args.argB);
+        shouldSetValues && set(_formState.errors, name, errors);
+        unsetEmptyArray(_formState.errors, name);
+      }
+      if (_proxyFormState.touchedFields && shouldUpdateFieldsAndState && Array.isArray(get(_formState.touchedFields, name))) {
+        const touchedFields = method(get(_formState.touchedFields, name), args.argA, args.argB);
+        shouldSetValues && set(_formState.touchedFields, name, touchedFields);
+      }
+      if (_proxyFormState.dirtyFields) {
+        _formState.dirtyFields = getDirtyFields(_defaultValues, _formValues);
+      }
+      _subjects.state.next({
+        name,
+        isDirty: _getDirty(name, values2),
+        dirtyFields: _formState.dirtyFields,
+        errors: _formState.errors,
+        isValid: _formState.isValid
+      });
+    } else {
+      set(_formValues, name, values2);
+    }
+  };
+  const updateErrors = (name, error) => {
+    set(_formState.errors, name, error);
+    _subjects.state.next({
+      errors: _formState.errors
+    });
+  };
+  const _setErrors = (errors) => {
+    _formState.errors = errors;
+    _subjects.state.next({
+      errors: _formState.errors,
+      isValid: false
+    });
+  };
+  const updateValidAndValue = (name, shouldSkipSetValueAs, value, ref) => {
+    const field = get(_fields, name);
+    if (field) {
+      const defaultValue = get(_formValues, name, isUndefined(value) ? get(_defaultValues, name) : value);
+      isUndefined(defaultValue) || ref && ref.defaultChecked || shouldSkipSetValueAs ? set(_formValues, name, shouldSkipSetValueAs ? defaultValue : getFieldValue(field._f)) : setFieldValue(name, defaultValue);
+      _state.mount && _updateValid();
+    }
+  };
+  const updateTouchAndDirty = (name, fieldValue, isBlurEvent, shouldDirty, shouldRender) => {
+    let shouldUpdateField = false;
+    let isPreviousDirty = false;
+    const output = {
+      name
+    };
+    const disabledField = !!(get(_fields, name) && get(_fields, name)._f.disabled);
+    if (!isBlurEvent || shouldDirty) {
+      if (_proxyFormState.isDirty) {
+        isPreviousDirty = _formState.isDirty;
+        _formState.isDirty = output.isDirty = _getDirty();
+        shouldUpdateField = isPreviousDirty !== output.isDirty;
+      }
+      const isCurrentFieldPristine = disabledField || deepEqual(get(_defaultValues, name), fieldValue);
+      isPreviousDirty = !!(!disabledField && get(_formState.dirtyFields, name));
+      isCurrentFieldPristine || disabledField ? unset(_formState.dirtyFields, name) : set(_formState.dirtyFields, name, true);
+      output.dirtyFields = _formState.dirtyFields;
+      shouldUpdateField = shouldUpdateField || _proxyFormState.dirtyFields && isPreviousDirty !== !isCurrentFieldPristine;
+    }
+    if (isBlurEvent) {
+      const isPreviousFieldTouched = get(_formState.touchedFields, name);
+      if (!isPreviousFieldTouched) {
+        set(_formState.touchedFields, name, isBlurEvent);
+        output.touchedFields = _formState.touchedFields;
+        shouldUpdateField = shouldUpdateField || _proxyFormState.touchedFields && isPreviousFieldTouched !== isBlurEvent;
+      }
+    }
+    shouldUpdateField && shouldRender && _subjects.state.next(output);
+    return shouldUpdateField ? output : {};
+  };
+  const shouldRenderByError = (name, isValid, error, fieldState) => {
+    const previousFieldError = get(_formState.errors, name);
+    const shouldUpdateValid = _proxyFormState.isValid && isBoolean(isValid) && _formState.isValid !== isValid;
+    if (props.delayError && error) {
+      delayErrorCallback = debounce2(() => updateErrors(name, error));
+      delayErrorCallback(props.delayError);
+    } else {
+      clearTimeout(timer);
+      delayErrorCallback = null;
+      error ? set(_formState.errors, name, error) : unset(_formState.errors, name);
+    }
+    if ((error ? !deepEqual(previousFieldError, error) : previousFieldError) || !isEmptyObject(fieldState) || shouldUpdateValid) {
+      const updatedFormState = __spreadProps(__spreadValues(__spreadValues({}, fieldState), shouldUpdateValid && isBoolean(isValid) ? { isValid } : {}), {
+        errors: _formState.errors,
+        name
+      });
+      _formState = __spreadValues(__spreadValues({}, _formState), updatedFormState);
+      _subjects.state.next(updatedFormState);
+    }
+    _updateIsValidating(false);
+  };
+  const _executeSchema = (name) => __async(this, null, function* () {
+    return _options.resolver(_formValues, _options.context, getResolverOptions(name || _names.mount, _fields, _options.criteriaMode, _options.shouldUseNativeValidation));
+  });
+  const executeSchemaAndUpdateState = (names) => __async(this, null, function* () {
+    const { errors } = yield _executeSchema(names);
+    if (names) {
+      for (const name of names) {
+        const error = get(errors, name);
+        error ? set(_formState.errors, name, error) : unset(_formState.errors, name);
+      }
+    } else {
+      _formState.errors = errors;
+    }
+    return errors;
+  });
+  const executeBuiltInValidation = (_0, _1, ..._2) => __async(this, [_0, _1, ..._2], function* (fields, shouldOnlyCheckValid, context = {
+    valid: true
+  }) {
+    for (const name in fields) {
+      const field = fields[name];
+      if (field) {
+        const _a = field, { _f } = _a, fieldValue = __objRest(_a, ["_f"]);
+        if (_f) {
+          const isFieldArrayRoot = _names.array.has(_f.name);
+          const fieldError = yield validateField(field, _formValues, shouldDisplayAllAssociatedErrors, _options.shouldUseNativeValidation && !shouldOnlyCheckValid, isFieldArrayRoot);
+          if (fieldError[_f.name]) {
+            context.valid = false;
+            if (shouldOnlyCheckValid) {
+              break;
+            }
+          }
+          !shouldOnlyCheckValid && (get(fieldError, _f.name) ? isFieldArrayRoot ? updateFieldArrayRootError(_formState.errors, fieldError, _f.name) : set(_formState.errors, _f.name, fieldError[_f.name]) : unset(_formState.errors, _f.name));
+        }
+        fieldValue && (yield executeBuiltInValidation(fieldValue, shouldOnlyCheckValid, context));
+      }
+    }
+    return context.valid;
+  });
+  const _removeUnmounted = () => {
+    for (const name of _names.unMount) {
+      const field = get(_fields, name);
+      field && (field._f.refs ? field._f.refs.every((ref) => !live(ref)) : !live(field._f.ref)) && unregister(name);
+    }
+    _names.unMount = /* @__PURE__ */ new Set();
+  };
+  const _getDirty = (name, data) => (name && data && set(_formValues, name, data), !deepEqual(getValues(), _defaultValues));
+  const _getWatch = (names, defaultValue, isGlobal) => generateWatchOutput(names, _names, __spreadValues({}, _state.mount ? _formValues : isUndefined(defaultValue) ? _defaultValues : isString(names) ? { [names]: defaultValue } : defaultValue), isGlobal, defaultValue);
+  const _getFieldArray = (name) => compact(get(_state.mount ? _formValues : _defaultValues, name, props.shouldUnregister ? get(_defaultValues, name, []) : []));
+  const setFieldValue = (name, value, options = {}) => {
+    const field = get(_fields, name);
+    let fieldValue = value;
+    if (field) {
+      const fieldReference = field._f;
+      if (fieldReference) {
+        !fieldReference.disabled && set(_formValues, name, getFieldValueAs(value, fieldReference));
+        fieldValue = isHTMLElement(fieldReference.ref) && isNullOrUndefined(value) ? "" : value;
+        if (isMultipleSelect(fieldReference.ref)) {
+          [...fieldReference.ref.options].forEach((optionRef) => optionRef.selected = fieldValue.includes(optionRef.value));
+        } else if (fieldReference.refs) {
+          if (isCheckBoxInput(fieldReference.ref)) {
+            fieldReference.refs.length > 1 ? fieldReference.refs.forEach((checkboxRef) => (!checkboxRef.defaultChecked || !checkboxRef.disabled) && (checkboxRef.checked = Array.isArray(fieldValue) ? !!fieldValue.find((data) => data === checkboxRef.value) : fieldValue === checkboxRef.value)) : fieldReference.refs[0] && (fieldReference.refs[0].checked = !!fieldValue);
+          } else {
+            fieldReference.refs.forEach((radioRef) => radioRef.checked = radioRef.value === fieldValue);
+          }
+        } else if (isFileInput(fieldReference.ref)) {
+          fieldReference.ref.value = "";
+        } else {
+          fieldReference.ref.value = fieldValue;
+          if (!fieldReference.ref.type) {
+            _subjects.values.next({
+              name,
+              values: __spreadValues({}, _formValues)
+            });
+          }
+        }
+      }
+    }
+    (options.shouldDirty || options.shouldTouch) && updateTouchAndDirty(name, fieldValue, options.shouldTouch, options.shouldDirty, true);
+    options.shouldValidate && trigger(name);
+  };
+  const setValues = (name, value, options) => {
+    for (const fieldKey in value) {
+      const fieldValue = value[fieldKey];
+      const fieldName = `${name}.${fieldKey}`;
+      const field = get(_fields, fieldName);
+      (_names.array.has(name) || !isPrimitive(fieldValue) || field && !field._f) && !isDateObject(fieldValue) ? setValues(fieldName, fieldValue, options) : setFieldValue(fieldName, fieldValue, options);
+    }
+  };
+  const setValue = (name, value, options = {}) => {
+    const field = get(_fields, name);
+    const isFieldArray = _names.array.has(name);
+    const cloneValue = cloneObject(value);
+    set(_formValues, name, cloneValue);
+    if (isFieldArray) {
+      _subjects.array.next({
+        name,
+        values: __spreadValues({}, _formValues)
+      });
+      if ((_proxyFormState.isDirty || _proxyFormState.dirtyFields) && options.shouldDirty) {
+        _subjects.state.next({
+          name,
+          dirtyFields: getDirtyFields(_defaultValues, _formValues),
+          isDirty: _getDirty(name, cloneValue)
+        });
+      }
+    } else {
+      field && !field._f && !isNullOrUndefined(cloneValue) ? setValues(name, cloneValue, options) : setFieldValue(name, cloneValue, options);
+    }
+    isWatched(name, _names) && _subjects.state.next(__spreadValues({}, _formState));
+    _subjects.values.next({
+      name,
+      values: __spreadValues({}, _formValues)
+    });
+    !_state.mount && flushRootRender();
+  };
+  const onChange = (event) => __async(this, null, function* () {
+    const target = event.target;
+    let name = target.name;
+    let isFieldValueUpdated = true;
+    const field = get(_fields, name);
+    const getCurrentFieldValue = () => target.type ? getFieldValue(field._f) : getEventValue(event);
+    const _updateIsFieldValueUpdated = (fieldValue) => {
+      isFieldValueUpdated = Number.isNaN(fieldValue) || fieldValue === get(_formValues, name, fieldValue);
+    };
+    if (field) {
+      let error;
+      let isValid;
+      const fieldValue = getCurrentFieldValue();
+      const isBlurEvent = event.type === EVENTS.BLUR || event.type === EVENTS.FOCUS_OUT;
+      const shouldSkipValidation = !hasValidation(field._f) && !_options.resolver && !get(_formState.errors, name) && !field._f.deps || skipValidation(isBlurEvent, get(_formState.touchedFields, name), _formState.isSubmitted, validationModeAfterSubmit, validationModeBeforeSubmit);
+      const watched = isWatched(name, _names, isBlurEvent);
+      set(_formValues, name, fieldValue);
+      if (isBlurEvent) {
+        field._f.onBlur && field._f.onBlur(event);
+        delayErrorCallback && delayErrorCallback(0);
+      } else if (field._f.onChange) {
+        field._f.onChange(event);
+      }
+      const fieldState = updateTouchAndDirty(name, fieldValue, isBlurEvent, false);
+      const shouldRender = !isEmptyObject(fieldState) || watched;
+      !isBlurEvent && _subjects.values.next({
+        name,
+        type: event.type,
+        values: __spreadValues({}, _formValues)
+      });
+      if (shouldSkipValidation) {
+        _proxyFormState.isValid && _updateValid();
+        return shouldRender && _subjects.state.next(__spreadValues({ name }, watched ? {} : fieldState));
+      }
+      !isBlurEvent && watched && _subjects.state.next(__spreadValues({}, _formState));
+      _updateIsValidating(true);
+      if (_options.resolver) {
+        const { errors } = yield _executeSchema([name]);
+        _updateIsFieldValueUpdated(fieldValue);
+        if (isFieldValueUpdated) {
+          const previousErrorLookupResult = schemaErrorLookup(_formState.errors, _fields, name);
+          const errorLookupResult = schemaErrorLookup(errors, _fields, previousErrorLookupResult.name || name);
+          error = errorLookupResult.error;
+          name = errorLookupResult.name;
+          isValid = isEmptyObject(errors);
+        }
+      } else {
+        error = (yield validateField(field, _formValues, shouldDisplayAllAssociatedErrors, _options.shouldUseNativeValidation))[name];
+        _updateIsFieldValueUpdated(fieldValue);
+        if (isFieldValueUpdated) {
+          if (error) {
+            isValid = false;
+          } else if (_proxyFormState.isValid) {
+            isValid = yield executeBuiltInValidation(_fields, true);
+          }
+        }
+      }
+      if (isFieldValueUpdated) {
+        field._f.deps && trigger(field._f.deps);
+        shouldRenderByError(name, isValid, error, fieldState);
+      }
+    }
+  });
+  const _focusInput = (ref, key) => {
+    if (get(_formState.errors, key) && ref.focus) {
+      ref.focus();
+      return 1;
+    }
+    return;
+  };
+  const trigger = (_0, ..._1) => __async(this, [_0, ..._1], function* (name, options = {}) {
+    let isValid;
+    let validationResult;
+    const fieldNames = convertToArrayPayload(name);
+    _updateIsValidating(true);
+    if (_options.resolver) {
+      const errors = yield executeSchemaAndUpdateState(isUndefined(name) ? name : fieldNames);
+      isValid = isEmptyObject(errors);
+      validationResult = name ? !fieldNames.some((name2) => get(errors, name2)) : isValid;
+    } else if (name) {
+      validationResult = (yield Promise.all(fieldNames.map((fieldName) => __async(this, null, function* () {
+        const field = get(_fields, fieldName);
+        return yield executeBuiltInValidation(field && field._f ? { [fieldName]: field } : field);
+      })))).every(Boolean);
+      !(!validationResult && !_formState.isValid) && _updateValid();
+    } else {
+      validationResult = isValid = yield executeBuiltInValidation(_fields);
+    }
+    _subjects.state.next(__spreadProps(__spreadValues(__spreadValues({}, !isString(name) || _proxyFormState.isValid && isValid !== _formState.isValid ? {} : { name }), _options.resolver || !name ? { isValid } : {}), {
+      errors: _formState.errors,
+      isValidating: false
+    }));
+    options.shouldFocus && !validationResult && iterateFieldsByAction(_fields, _focusInput, name ? fieldNames : _names.mount);
+    return validationResult;
+  });
+  const getValues = (fieldNames) => {
+    const values2 = __spreadValues(__spreadValues({}, _defaultValues), _state.mount ? _formValues : {});
+    return isUndefined(fieldNames) ? values2 : isString(fieldNames) ? get(values2, fieldNames) : fieldNames.map((name) => get(values2, name));
+  };
+  const getFieldState = (name, formState) => ({
+    invalid: !!get((formState || _formState).errors, name),
+    isDirty: !!get((formState || _formState).dirtyFields, name),
+    isTouched: !!get((formState || _formState).touchedFields, name),
+    error: get((formState || _formState).errors, name)
+  });
+  const clearErrors = (name) => {
+    name && convertToArrayPayload(name).forEach((inputName) => unset(_formState.errors, inputName));
+    _subjects.state.next({
+      errors: name ? _formState.errors : {}
+    });
+  };
+  const setError = (name, error, options) => {
+    const ref = (get(_fields, name, { _f: {} })._f || {}).ref;
+    set(_formState.errors, name, __spreadProps(__spreadValues({}, error), {
+      ref
+    }));
+    _subjects.state.next({
+      name,
+      errors: _formState.errors,
+      isValid: false
+    });
+    options && options.shouldFocus && ref && ref.focus && ref.focus();
+  };
+  const watch = (name, defaultValue) => isFunction(name) ? _subjects.values.subscribe({
+    next: (payload) => name(_getWatch(void 0, defaultValue), payload)
+  }) : _getWatch(name, defaultValue, true);
+  const unregister = (name, options = {}) => {
+    for (const fieldName of name ? convertToArrayPayload(name) : _names.mount) {
+      _names.mount.delete(fieldName);
+      _names.array.delete(fieldName);
+      if (!options.keepValue) {
+        unset(_fields, fieldName);
+        unset(_formValues, fieldName);
+      }
+      !options.keepError && unset(_formState.errors, fieldName);
+      !options.keepDirty && unset(_formState.dirtyFields, fieldName);
+      !options.keepTouched && unset(_formState.touchedFields, fieldName);
+      !_options.shouldUnregister && !options.keepDefaultValue && unset(_defaultValues, fieldName);
+    }
+    _subjects.values.next({
+      values: __spreadValues({}, _formValues)
+    });
+    _subjects.state.next(__spreadValues(__spreadValues({}, _formState), !options.keepDirty ? {} : { isDirty: _getDirty() }));
+    !options.keepIsValid && _updateValid();
+  };
+  const _updateDisabledField = ({ disabled, name, field, fields, value }) => {
+    if (isBoolean(disabled)) {
+      const inputValue = disabled ? void 0 : isUndefined(value) ? getFieldValue(field ? field._f : get(fields, name)._f) : value;
+      set(_formValues, name, inputValue);
+      updateTouchAndDirty(name, inputValue, false, false, true);
+    }
+  };
+  const register = (name, options = {}) => {
+    let field = get(_fields, name);
+    const disabledIsDefined = isBoolean(options.disabled);
+    set(_fields, name, __spreadProps(__spreadValues({}, field || {}), {
+      _f: __spreadValues(__spreadProps(__spreadValues({}, field && field._f ? field._f : { ref: { name } }), {
+        name,
+        mount: true
+      }), options)
+    }));
+    _names.mount.add(name);
+    if (field) {
+      _updateDisabledField({
+        field,
+        disabled: options.disabled,
+        name,
+        value: options.value
+      });
+    } else {
+      updateValidAndValue(name, true, options.value);
+    }
+    return __spreadProps(__spreadValues(__spreadValues({}, disabledIsDefined ? { disabled: options.disabled } : {}), _options.progressive ? {
+      required: !!options.required,
+      min: getRuleValue(options.min),
+      max: getRuleValue(options.max),
+      minLength: getRuleValue(options.minLength),
+      maxLength: getRuleValue(options.maxLength),
+      pattern: getRuleValue(options.pattern)
+    } : {}), {
+      name,
+      onChange,
+      onBlur: onChange,
+      ref: (ref) => {
+        if (ref) {
+          register(name, options);
+          field = get(_fields, name);
+          const fieldRef = isUndefined(ref.value) ? ref.querySelectorAll ? ref.querySelectorAll("input,select,textarea")[0] || ref : ref : ref;
+          const radioOrCheckbox = isRadioOrCheckbox(fieldRef);
+          const refs = field._f.refs || [];
+          if (radioOrCheckbox ? refs.find((option) => option === fieldRef) : fieldRef === field._f.ref) {
+            return;
+          }
+          set(_fields, name, {
+            _f: __spreadValues(__spreadValues({}, field._f), radioOrCheckbox ? {
+              refs: [
+                ...refs.filter(live),
+                fieldRef,
+                ...Array.isArray(get(_defaultValues, name)) ? [{}] : []
+              ],
+              ref: { type: fieldRef.type, name }
+            } : { ref: fieldRef })
+          });
+          updateValidAndValue(name, false, void 0, fieldRef);
+        } else {
+          field = get(_fields, name, {});
+          if (field._f) {
+            field._f.mount = false;
+          }
+          (_options.shouldUnregister || options.shouldUnregister) && !(isNameInFieldArray(_names.array, name) && _state.action) && _names.unMount.add(name);
+        }
+      }
+    });
+  };
+  const _focusError = () => _options.shouldFocusError && iterateFieldsByAction(_fields, _focusInput, _names.mount);
+  const _disableForm = (disabled) => {
+    if (isBoolean(disabled)) {
+      _subjects.state.next({ disabled });
+      iterateFieldsByAction(_fields, (ref, name) => {
+        let requiredDisabledState = disabled;
+        const currentField = get(_fields, name);
+        if (currentField && isBoolean(currentField._f.disabled)) {
+          requiredDisabledState || (requiredDisabledState = currentField._f.disabled);
+        }
+        ref.disabled = requiredDisabledState;
+      }, 0, false);
+    }
+  };
+  const handleSubmit = (onValid, onInvalid) => (e) => __async(this, null, function* () {
+    let onValidError = void 0;
+    if (e) {
+      e.preventDefault && e.preventDefault();
+      e.persist && e.persist();
+    }
+    let fieldValues = cloneObject(_formValues);
+    _subjects.state.next({
+      isSubmitting: true
+    });
+    if (_options.resolver) {
+      const { errors, values: values2 } = yield _executeSchema();
+      _formState.errors = errors;
+      fieldValues = values2;
+    } else {
+      yield executeBuiltInValidation(_fields);
+    }
+    unset(_formState.errors, "root");
+    if (isEmptyObject(_formState.errors)) {
+      _subjects.state.next({
+        errors: {}
+      });
+      try {
+        yield onValid(fieldValues, e);
+      } catch (error) {
+        onValidError = error;
+      }
+    } else {
+      if (onInvalid) {
+        yield onInvalid(__spreadValues({}, _formState.errors), e);
+      }
+      _focusError();
+      setTimeout(_focusError);
+    }
+    _subjects.state.next({
+      isSubmitted: true,
+      isSubmitting: false,
+      isSubmitSuccessful: isEmptyObject(_formState.errors) && !onValidError,
+      submitCount: _formState.submitCount + 1,
+      errors: _formState.errors
+    });
+    if (onValidError) {
+      throw onValidError;
+    }
+  });
+  const resetField = (name, options = {}) => {
+    if (get(_fields, name)) {
+      if (isUndefined(options.defaultValue)) {
+        setValue(name, cloneObject(get(_defaultValues, name)));
+      } else {
+        setValue(name, options.defaultValue);
+        set(_defaultValues, name, cloneObject(options.defaultValue));
+      }
+      if (!options.keepTouched) {
+        unset(_formState.touchedFields, name);
+      }
+      if (!options.keepDirty) {
+        unset(_formState.dirtyFields, name);
+        _formState.isDirty = options.defaultValue ? _getDirty(name, cloneObject(get(_defaultValues, name))) : _getDirty();
+      }
+      if (!options.keepError) {
+        unset(_formState.errors, name);
+        _proxyFormState.isValid && _updateValid();
+      }
+      _subjects.state.next(__spreadValues({}, _formState));
+    }
+  };
+  const _reset = (formValues, keepStateOptions = {}) => {
+    const updatedValues = formValues ? cloneObject(formValues) : _defaultValues;
+    const cloneUpdatedValues = cloneObject(updatedValues);
+    const values2 = formValues && !isEmptyObject(formValues) ? cloneUpdatedValues : _defaultValues;
+    if (!keepStateOptions.keepDefaultValues) {
+      _defaultValues = updatedValues;
+    }
+    if (!keepStateOptions.keepValues) {
+      if (keepStateOptions.keepDirtyValues) {
+        for (const fieldName of _names.mount) {
+          get(_formState.dirtyFields, fieldName) ? set(values2, fieldName, get(_formValues, fieldName)) : setValue(fieldName, get(values2, fieldName));
+        }
+      } else {
+        if (isWeb && isUndefined(formValues)) {
+          for (const name of _names.mount) {
+            const field = get(_fields, name);
+            if (field && field._f) {
+              const fieldReference = Array.isArray(field._f.refs) ? field._f.refs[0] : field._f.ref;
+              if (isHTMLElement(fieldReference)) {
+                const form = fieldReference.closest("form");
+                if (form) {
+                  form.reset();
+                  break;
+                }
+              }
+            }
+          }
+        }
+        _fields = {};
+      }
+      _formValues = props.shouldUnregister ? keepStateOptions.keepDefaultValues ? cloneObject(_defaultValues) : {} : cloneObject(values2);
+      _subjects.array.next({
+        values: __spreadValues({}, values2)
+      });
+      _subjects.values.next({
+        values: __spreadValues({}, values2)
+      });
+    }
+    _names = {
+      mount: /* @__PURE__ */ new Set(),
+      unMount: /* @__PURE__ */ new Set(),
+      array: /* @__PURE__ */ new Set(),
+      watch: /* @__PURE__ */ new Set(),
+      watchAll: false,
+      focus: ""
+    };
+    !_state.mount && flushRootRender();
+    _state.mount = !_proxyFormState.isValid || !!keepStateOptions.keepIsValid || !!keepStateOptions.keepDirtyValues;
+    _state.watch = !!props.shouldUnregister;
+    _subjects.state.next({
+      submitCount: keepStateOptions.keepSubmitCount ? _formState.submitCount : 0,
+      isDirty: keepStateOptions.keepDirty ? _formState.isDirty : !!(keepStateOptions.keepDefaultValues && !deepEqual(formValues, _defaultValues)),
+      isSubmitted: keepStateOptions.keepIsSubmitted ? _formState.isSubmitted : false,
+      dirtyFields: keepStateOptions.keepDirtyValues ? keepStateOptions.keepDefaultValues && _formValues ? getDirtyFields(_defaultValues, _formValues) : _formState.dirtyFields : keepStateOptions.keepDefaultValues && formValues ? getDirtyFields(_defaultValues, formValues) : {},
+      touchedFields: keepStateOptions.keepTouched ? _formState.touchedFields : {},
+      errors: keepStateOptions.keepErrors ? _formState.errors : {},
+      isSubmitSuccessful: keepStateOptions.keepIsSubmitSuccessful ? _formState.isSubmitSuccessful : false,
+      isSubmitting: false
+    });
+  };
+  const reset = (formValues, keepStateOptions) => _reset(isFunction(formValues) ? formValues(_formValues) : formValues, keepStateOptions);
+  const setFocus = (name, options = {}) => {
+    const field = get(_fields, name);
+    const fieldReference = field && field._f;
+    if (fieldReference) {
+      const fieldRef = fieldReference.refs ? fieldReference.refs[0] : fieldReference.ref;
+      if (fieldRef.focus) {
+        fieldRef.focus();
+        options.shouldSelect && fieldRef.select();
+      }
+    }
+  };
+  const _updateFormState = (updatedFormState) => {
+    _formState = __spreadValues(__spreadValues({}, _formState), updatedFormState);
+  };
+  const _resetDefaultValues = () => isFunction(_options.defaultValues) && _options.defaultValues().then((values2) => {
+    reset(values2, _options.resetOptions);
+    _subjects.state.next({
+      isLoading: false
+    });
+  });
+  return {
+    control: {
+      register,
+      unregister,
+      getFieldState,
+      handleSubmit,
+      setError,
+      _executeSchema,
+      _getWatch,
+      _getDirty,
+      _updateValid,
+      _removeUnmounted,
+      _updateFieldArray,
+      _updateDisabledField,
+      _getFieldArray,
+      _reset,
+      _resetDefaultValues,
+      _updateFormState,
+      _disableForm,
+      _subjects,
+      _proxyFormState,
+      _setErrors,
+      get _fields() {
+        return _fields;
+      },
+      get _formValues() {
+        return _formValues;
+      },
+      get _state() {
+        return _state;
+      },
+      set _state(value) {
+        _state = value;
+      },
+      get _defaultValues() {
+        return _defaultValues;
+      },
+      get _names() {
+        return _names;
+      },
+      set _names(value) {
+        _names = value;
+      },
+      get _formState() {
+        return _formState;
+      },
+      set _formState(value) {
+        _formState = value;
+      },
+      get _options() {
+        return _options;
+      },
+      set _options(value) {
+        _options = __spreadValues(__spreadValues({}, _options), value);
+      }
+    },
+    trigger,
+    register,
+    handleSubmit,
+    watch,
+    setValue,
+    getValues,
+    reset,
+    resetField,
+    clearErrors,
+    unregister,
+    setError,
+    setFocus,
+    getFieldState
+  };
+}
+function useForm(props = {}) {
+  const _formControl = React__default.useRef();
+  const _values = React__default.useRef();
+  const [formState, updateFormState] = React__default.useState({
+    isDirty: false,
+    isValidating: false,
+    isLoading: isFunction(props.defaultValues),
+    isSubmitted: false,
+    isSubmitting: false,
+    isSubmitSuccessful: false,
+    isValid: false,
+    submitCount: 0,
+    dirtyFields: {},
+    touchedFields: {},
+    errors: props.errors || {},
+    disabled: props.disabled || false,
+    defaultValues: isFunction(props.defaultValues) ? void 0 : props.defaultValues
+  });
+  if (!_formControl.current) {
+    _formControl.current = __spreadProps(__spreadValues({}, createFormControl(props, () => updateFormState((formState2) => __spreadValues({}, formState2)))), {
+      formState
+    });
+  }
+  const control = _formControl.current.control;
+  control._options = props;
+  useSubscribe({
+    subject: control._subjects.state,
+    next: (value) => {
+      if (shouldRenderFormState(value, control._proxyFormState, control._updateFormState, true)) {
+        updateFormState(__spreadValues({}, control._formState));
+      }
+    }
+  });
+  React__default.useEffect(() => control._disableForm(props.disabled), [control, props.disabled]);
+  React__default.useEffect(() => {
+    if (control._proxyFormState.isDirty) {
+      const isDirty = control._getDirty();
+      if (isDirty !== formState.isDirty) {
+        control._subjects.state.next({
+          isDirty
+        });
+      }
+    }
+  }, [control, formState.isDirty]);
+  React__default.useEffect(() => {
+    if (props.values && !deepEqual(props.values, _values.current)) {
+      control._reset(props.values, control._options.resetOptions);
+      _values.current = props.values;
+      updateFormState((state) => __spreadValues({}, state));
+    } else {
+      control._resetDefaultValues();
+    }
+  }, [props.values, control]);
+  React__default.useEffect(() => {
+    if (props.errors) {
+      control._setErrors(props.errors);
+    }
+  }, [props.errors, control]);
+  React__default.useEffect(() => {
+    if (!control._state.mount) {
+      control._updateValid();
+      control._state.mount = true;
+    }
+    if (control._state.watch) {
+      control._state.watch = false;
+      control._subjects.state.next(__spreadValues({}, control._formState));
+    }
+    control._removeUnmounted();
+  });
+  React__default.useEffect(() => {
+    props.shouldUnregister && control._subjects.values.next({
+      values: control._getWatch()
+    });
+  }, [props.shouldUnregister, control]);
+  _formControl.current.formState = getProxyFormState(formState, control);
+  return _formControl.current;
+}
+const CMPNAME$6 = "BasicEntityField";
+console.log(CMPNAME$6, "1");
+const { Open: Open$4 } = gubu_minExports.Gubu;
+const BasicEntityFieldSpecShape = gubu_minExports.Gubu(Open$4({}), { prefix: CMPNAME$6 });
+function BasicEntityField(props) {
   const { ctx, spec } = props;
   const { seneca, model } = ctx();
+  const basicEntityFieldSpec = BasicEntityFieldSpecShape(spec);
+  console.log(CMPNAME$6, basicEntityFieldSpec);
+  const field = spec.field;
+  const register = spec.register;
+  console.log(CMPNAME$6, field);
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("label", { children: field.title }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("input", __spreadValues({}, register(field.name)))
+  ] }, field.name);
+}
+const CMPNAME$5 = "BasicEntityEdit";
+console.log(CMPNAME$5, "1");
+const { Open: Open$3 } = gubu_minExports.Gubu;
+const BasicEntityEditSpecShape = gubu_minExports.Gubu(Open$3({}), { prefix: CMPNAME$5 });
+function BasicEntityEdit(props) {
+  const { ctx, spec } = props;
+  const { seneca, model } = ctx();
+  const basicEntityEditSpec = BasicEntityEditSpecShape(spec);
+  console.log(CMPNAME$5, basicEntityEditSpec);
   const name = spec.name;
   const slotName = spec.prefix + spec.name;
   const canon = spec.ent;
+  const fields = Object.entries(spec.field).reduce((a, n) => (n[1].name = n[0], a.push(n[1]), a), []);
   const slotSelectors = seneca.export("Redux/slotSelectors");
   let { selectItem, selectList, selectMeta } = slotSelectors(slotName);
   let item = useSelector((state) => selectItem(state));
   const params = useParams();
-  console.log(CMPNAME$5, "params", params, item);
+  console.log(CMPNAME$5, "params", params, item, fields);
   useEffect(() => {
     if (null == item) {
       seneca.act("aim:app,on:view,edit:item", {
@@ -69056,13 +70908,45 @@ function BasicEdit(props) {
         item_id: params.item
       });
     }
-  }, []);
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(Box$2, { className: "vxg-BasicEdit", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
-    "ITEM: ",
-    slotName,
-    " ",
-    JSON.stringify(item)
-  ] }) });
+    reset(item);
+  }, [item]);
+  const {
+    register,
+    handleSubmit,
+    reset
+  } = useForm({});
+  const onSubmit = (data) => {
+    console.log("handleSubmit", data);
+    seneca.make(canon).data$(__spreadProps(__spreadValues({}, data), {
+      id: item.id,
+      slot$: slotName
+    })).save$();
+  };
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(Box$2, { className: "vxg-BasicEntityEdit", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
+      "ITEM: ",
+      slotName,
+      " ",
+      JSON.stringify(item)
+    ] }),
+    item ? /* @__PURE__ */ jsxRuntimeExports.jsxs(
+      "form",
+      {
+        className: "vxg-BasicEntityEdit-form",
+        onSubmit: handleSubmit(onSubmit),
+        children: [
+          fields.map(
+            (field) => /* @__PURE__ */ jsxRuntimeExports.jsx(BasicEntityField, { ctx, spec: {
+              field,
+              register
+            } })
+          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("input", { type: "submit" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("br", {})
+        ]
+      }
+    ) : /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, {})
+  ] });
 }
 const CMPNAME$4 = "BasicLoading";
 console.log(CMPNAME$4, "1");
@@ -69075,8 +70959,9 @@ function VxgBasicLedPlugin(options) {
   const spec = options.spec;
   const navigate = options.navigate;
   const name = spec.name;
-  const canon = spec.spec.ent;
+  const canon = spec.def.ent;
   const slotName = "BasicLed_" + name;
+  const ledent = seneca.make(canon);
   seneca.fix({ view: name }).add(
     "aim:app,on:view,init:state,redux$:true",
     function(_msg, _reply, meta) {
@@ -69127,6 +71012,29 @@ function VxgBasicLedPlugin(options) {
       this.act("aim:app,on:view,init:state,direct$:true", { view: name });
     });
   });
+  const entcanon = ledent.canon$({ object: true });
+  const field = seneca.context.model.main.ent[entcanon.base][entcanon.name].field;
+  console.log("entcanon", entcanon, field);
+  const listSpec = {
+    name,
+    ent: canon,
+    prefix: "BasicLed_",
+    field
+  };
+  const editSpec = {
+    name,
+    ent: canon,
+    prefix: "BasicLed_",
+    field
+  };
+  return {
+    exports: {
+      spec: {
+        list: listSpec,
+        edit: editSpec
+      }
+    }
+  };
 }
 Object.defineProperty(VxgBasicLedPlugin, "name", { value: "VxgBasicLedPlugin" });
 const CMPNAME$3 = "BasicLed";
@@ -69141,7 +71049,7 @@ function BasicLed(props) {
   const basicLedSpec = BasicLedSpecShape(spec);
   console.log(CMPNAME$3, basicLedSpec);
   const name = basicLedSpec.name;
-  const canon = basicLedSpec.spec.ent;
+  const canon = basicLedSpec.def.ent;
   const navigate = useNavigate();
   const led = useSelector((state) => state.main.view[name]);
   const ready = true === led.ready;
@@ -69156,19 +71064,10 @@ function BasicLed(props) {
       }
     });
   }
-  const listSpec = {
-    name,
-    ent: canon,
-    prefix: "BasicLed_"
-  };
-  const editSpec = {
-    name,
-    ent: canon,
-    prefix: "BasicLed_"
-  };
+  const subspec = seneca.export("VxgBasicLedPlugin$" + name + "/spec");
   return ready ? /* @__PURE__ */ jsxRuntimeExports.jsx(Box$2, { className: "vxg-BasicLed", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(Routes, { children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/", element: /* @__PURE__ */ jsxRuntimeExports.jsx(BasicList, { ctx, spec: listSpec }) }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/edit/:item", element: /* @__PURE__ */ jsxRuntimeExports.jsx(BasicEdit, { ctx, spec: editSpec }) })
+    /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/", element: /* @__PURE__ */ jsxRuntimeExports.jsx(BasicEntityList, { ctx, spec: subspec.list }) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/edit/:item", element: /* @__PURE__ */ jsxRuntimeExports.jsx(BasicEntityEdit, { ctx, spec: subspec.edit }) })
   ] }) }) : /* @__PURE__ */ jsxRuntimeExports.jsx(BasicLoading, {});
 }
 const CMPNAME$2 = "BasicSide";
@@ -73460,12 +75359,13 @@ export {
   BasicButton,
   BasicDrawer,
   BasicDrawerHeader,
-  BasicEdit,
+  BasicEntityEdit,
+  BasicEntityField,
+  BasicEntityList,
   BasicFoot,
   BasicHead,
   BasicHeadTool,
   BasicLed,
-  BasicList,
   BasicLoading,
   BasicMain,
   BasicSide,

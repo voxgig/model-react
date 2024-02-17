@@ -8,8 +8,10 @@ function VxgBasicLedPlugin(this: any, options: any) {
   const navigate = options.navigate
 
   const name = spec.name
-  const canon = spec.spec.ent
+  const canon = spec.def.ent
   const slotName = 'BasicLed_' + name
+
+  const ledent = seneca.make(canon)
 
   seneca
     .fix({ view: name })
@@ -62,6 +64,35 @@ function VxgBasicLedPlugin(this: any, options: any) {
       this.act('aim:app,on:view,init:state,direct$:true', { view: name })
     })
 
+
+  const entcanon = ledent.canon$({ object: true })
+  const field = seneca.context.model.main.ent[entcanon.base][entcanon.name].field
+  console.log('entcanon', entcanon, field)
+
+
+  const listSpec = {
+    name,
+    ent: canon,
+    prefix: 'BasicLed_',
+    field,
+  }
+
+  const editSpec = {
+    name,
+    ent: canon,
+    prefix: 'BasicLed_',
+    field,
+  }
+
+
+  return {
+    exports: {
+      spec: {
+        list: listSpec,
+        edit: editSpec,
+      }
+    }
+  }
 }
 
 Object.defineProperty(VxgBasicLedPlugin, 'name', { value: 'VxgBasicLedPlugin' })

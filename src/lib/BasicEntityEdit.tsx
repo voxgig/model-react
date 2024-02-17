@@ -6,33 +6,42 @@ import { useParams } from 'react-router-dom'
 
 
 import {
-  Grid,
-  TextField,
-  Autocomplete,
-  createFilterOptions,
-  MenuItem,
   Box
 } from '@mui/material'
 
-import { useForm, Controller } from 'react-hook-form'
-
-// import BasicButton from './BasicButton'
-
-// const filter = createFilterOptions()
+import { useForm } from 'react-hook-form'
 
 
-const CMPNAME = 'BasicEdit'
+import type { Spec } from './basic-types'
+
+import { Gubu } from 'gubu'
+
+import { BasicEntityField } from './BasicEntityField'
+
+
+
+const CMPNAME = 'BasicEntityEdit'
 console.log(CMPNAME,'1')
 
 
-function BasicEdit (props: any) {
+const { Open } = Gubu
+const BasicEntityEditSpecShape = Gubu(Open({
+}), {prefix: CMPNAME})
+
+
+function BasicEntityEdit (props: any) {
   const { ctx, spec } = props
   const { seneca, model } = ctx()
+
+  const basicEntityEditSpec: Spec = BasicEntityEditSpecShape(spec)
+  console.log(CMPNAME,basicEntityEditSpec)
 
   const name = spec.name
   const slotName = spec.prefix+spec.name
   const canon = spec.ent
-  
+  const fields = Object.entries(spec.field)
+  .reduce((a:any,n:any)=>(n[1].name=n[0],a.push(n[1]),a),[])
+
   const slotSelectors = seneca.export('Redux/slotSelectors')
   let { selectItem, selectList, selectMeta } = slotSelectors(slotName)
 
@@ -40,7 +49,7 @@ function BasicEdit (props: any) {
 
   const params: any = useParams()
 
-  console.log(CMPNAME, 'params', params, item)
+  console.log(CMPNAME, 'params', params, item, fields)
 
   useEffect(()=>{
     if(null == item) {
@@ -49,11 +58,51 @@ function BasicEdit (props: any) {
         item_id: params.item
       })
     }
-  },[])
+    reset(item)
+  },[item])
+
+
+  const {
+    register,
+    handleSubmit,
+    reset
+  } = useForm({
+  })
+
+
+  
+  const onSubmit = (data:any) => {
+    console.log('handleSubmit', data)
+    seneca.make(canon)
+      .data$({
+        ...data,
+        id: item.id,
+      slot$: slotName,
+    })
+    .save$()
+  }
   
   return (
-    <Box className='vxg-BasicEdit'>
+    <Box className='vxg-BasicEntityEdit'>
       <p>ITEM: {slotName} { JSON.stringify(item) }</p>
+
+      { item ?
+      <form
+        className='vxg-BasicEntityEdit-form'
+        onSubmit={handleSubmit(onSubmit)}
+      >
+
+        { fields.map((field:any)=>
+          <BasicEntityField ctx={ctx} spec={{
+            field,
+            register,
+          }} />
+        )}
+        
+        <input type="submit" />
+        <br />
+      </form>
+        : <></> }
     </Box>
   )
 
@@ -80,7 +129,7 @@ function BasicEdit (props: any) {
   const { handleSubmit, setValue, control } = forms
 
   return (
-    <Box className='BasicEdit'>
+    <Box className='BasicEntityEdit'>
       <form
         className='vxg-form-field'
         onSubmit={handleSubmit(async (data: any) => {
@@ -222,5 +271,5 @@ function BasicEdit (props: any) {
 }
 
 export {
-  BasicEdit
+  BasicEntityEdit
 }
