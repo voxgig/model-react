@@ -52,7 +52,7 @@ function BasicEntityEdit (props: any) {
   console.log(CMPNAME, 'params', params, item, fields)
 
   useEffect(()=>{
-    if(null == item) {
+    if(null == item && null != params.item) {
       seneca.act('aim:app,on:view,edit:item', {
         view: name,
         item_id: params.item
@@ -84,8 +84,6 @@ function BasicEntityEdit (props: any) {
   
   return (
     <Box className='vxg-BasicEntityEdit'>
-      <p>ITEM: {slotName} { JSON.stringify(item) }</p>
-
       { item ?
       <form
         className='vxg-BasicEntityEdit-form'
