@@ -35,7 +35,7 @@ const setupComponent = (
   return componentTree
 }
 
-export function customRender (
+export function customRender(
   ui: JSX.Element,
   renderOptions?: IExtendedRenderOptions
 ) {
@@ -163,6 +163,7 @@ export const ctx = () => {
                       addbutton: {
                         kind: 'add',
                         label: 'Add',
+                        defaultvalue: 'Add',
                         options: {
                           kind: 'ent',
                           label: {
@@ -174,6 +175,7 @@ export const ctx = () => {
                       autocomplete: {
                         kind: 'autocomplete',
                         label: 'Autocomplete',
+                        defaultvalue: 'Autocomplete',
                         options: {
                           kind: 'ent',
                           label: {
