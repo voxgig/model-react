@@ -1025,15 +1025,22 @@ function requireReactJsxRuntime_development() {
   }
   return reactJsxRuntime_development;
 }
-var jsxRuntime = jsxRuntime$2.exports;
-"use strict";
-if (process.env.NODE_ENV === "production") {
-  jsxRuntime$2.exports = requireReactJsxRuntime_production_min();
-} else {
-  jsxRuntime$2.exports = requireReactJsxRuntime_development();
+var jsxRuntime$1 = jsxRuntime$2.exports;
+var hasRequiredJsxRuntime;
+function requireJsxRuntime() {
+  if (hasRequiredJsxRuntime)
+    return jsxRuntime$2.exports;
+  hasRequiredJsxRuntime = 1;
+  "use strict";
+  if (process.env.NODE_ENV === "production") {
+    jsxRuntime$2.exports = requireReactJsxRuntime_production_min();
+  } else {
+    jsxRuntime$2.exports = requireReactJsxRuntime_development();
+  }
+  return jsxRuntime$2.exports;
 }
-var jsxRuntimeExports = jsxRuntime$2.exports;
-const jsxRuntime$1 = /* @__PURE__ */ getDefaultExportFromCjs(jsxRuntimeExports);
+var jsxRuntimeExports = requireJsxRuntime();
+const jsxRuntime = /* @__PURE__ */ getDefaultExportFromCjs(jsxRuntimeExports);
 var gubu_min$2 = { exports: {} };
 var gubu_min = gubu_min$2.exports;
 (function(module, exports) {
@@ -1570,7 +1577,11 @@ function _extends$2() {
   return _extends$2.apply(this, arguments);
 }
 function isPlainObject$1(item) {
-  return item !== null && typeof item === "object" && item.constructor === Object;
+  if (typeof item !== "object" || item === null) {
+    return false;
+  }
+  const prototype = Object.getPrototypeOf(item);
+  return (prototype === null || prototype === Object.prototype || Object.getPrototypeOf(prototype) === null) && !(Symbol.toStringTag in item) && !(Symbol.iterator in item);
 }
 function deepClone(source) {
   if (!isPlainObject$1(source)) {
@@ -3093,7 +3104,6 @@ function setRef(ref, value) {
 "use client";
 const useEnhancedEffect = typeof window !== "undefined" ? React.useLayoutEffect : React.useEffect;
 "use client";
-"use client";
 let globalId = 0;
 function useGlobalId(idOverride) {
   const [defaultId, setDefaultId] = React.useState(idOverride);
@@ -3114,7 +3124,6 @@ function useId(idOverride) {
   }
   return useGlobalId(idOverride);
 }
-"use client";
 function unsupportedProp(props, propName, componentName, location2, propFullName) {
   if (process.env.NODE_ENV === "production") {
     return null;
@@ -3160,7 +3169,6 @@ function useControlled({
   return [value, setValueIfUncontrolled];
 }
 "use client";
-"use client";
 function useEventCallback(fn2) {
   const ref = React.useRef(fn2);
   useEnhancedEffect(() => {
@@ -3171,7 +3179,6 @@ function useEventCallback(fn2) {
     (0, ref.current)(...args)
   )).current;
 }
-"use client";
 "use client";
 function useForkRef(...refs) {
   return React.useMemo(() => {
@@ -3186,10 +3193,56 @@ function useForkRef(...refs) {
   }, refs);
 }
 "use client";
+const UNINITIALIZED = {};
+function useLazyRef(init, initArg) {
+  const ref = React.useRef(UNINITIALIZED);
+  if (ref.current === UNINITIALIZED) {
+    ref.current = init(initArg);
+  }
+  return ref;
+}
+"use client";
+const EMPTY$1 = [];
+function useOnMount(fn2) {
+  React.useEffect(fn2, EMPTY$1);
+}
+"use client";
+class Timeout {
+  constructor() {
+    this.currentId = 0;
+    this.clear = () => {
+      if (this.currentId !== 0) {
+        clearTimeout(this.currentId);
+        this.currentId = 0;
+      }
+    };
+    this.disposeEffect = () => {
+      return this.clear;
+    };
+  }
+  static create() {
+    return new Timeout();
+  }
+  /**
+   * Executes `fn` after `delay`, clearing any previously scheduled call.
+   */
+  start(delay, fn2) {
+    this.clear();
+    this.currentId = setTimeout(() => {
+      this.currentId = 0;
+      fn2();
+    }, delay);
+  }
+}
+function useTimeout() {
+  const timeout2 = useLazyRef(Timeout.create).current;
+  useOnMount(timeout2.disposeEffect);
+  return timeout2;
+}
 "use client";
 let hadKeyboardEvent = true;
 let hadFocusVisibleRecently = false;
-let hadFocusVisibleRecentlyTimeout;
+const hadFocusVisibleRecentlyTimeout = new Timeout();
 const inputTypesWhitelist = {
   text: true,
   search: true,
@@ -3271,10 +3324,9 @@ function useIsFocusVisible() {
   function handleBlurVisible() {
     if (isFocusVisibleRef.current) {
       hadFocusVisibleRecently = true;
-      window.clearTimeout(hadFocusVisibleRecentlyTimeout);
-      hadFocusVisibleRecentlyTimeout = window.setTimeout(() => {
+      hadFocusVisibleRecentlyTimeout.start(100, () => {
         hadFocusVisibleRecently = false;
-      }, 100);
+      });
       isFocusVisibleRef.current = false;
       return true;
     }
@@ -3476,7 +3528,7 @@ const createClassNameGenerator = () => {
   };
 };
 const ClassNameGenerator = createClassNameGenerator();
-const globalStateClassesMapping = {
+const globalStateClasses = {
   active: "active",
   checked: "checked",
   completed: "completed",
@@ -3491,8 +3543,11 @@ const globalStateClassesMapping = {
   selected: "selected"
 };
 function generateUtilityClass(componentName, slot, globalStatePrefix = "Mui") {
-  const globalStateClass = globalStateClassesMapping[slot];
+  const globalStateClass = globalStateClasses[slot];
   return globalStateClass ? `${globalStatePrefix}-${globalStateClass}` : `${ClassNameGenerator.generate(componentName)}-${slot}`;
+}
+function isGlobalState(slot) {
+  return globalStateClasses[slot] !== void 0;
 }
 function generateUtilityClasses(componentName, slots, globalStatePrefix = "Mui") {
   const result = {};
@@ -3501,7 +3556,16 @@ function generateUtilityClasses(componentName, slots, globalStatePrefix = "Mui")
   });
   return result;
 }
-"use client";
+function clamp$1(val, min2 = Number.MIN_SAFE_INTEGER, max2 = Number.MAX_SAFE_INTEGER) {
+  return Math.max(min2, Math.min(val, max2));
+}
+/**
+ * @mui/utils v5.15.9
+ *
+ * @license MIT
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
 function _objectWithoutPropertiesLoose(source, excluded) {
   if (source == null)
     return {};
@@ -3615,14 +3679,14 @@ function mergeSlotProps(parameters) {
     internalRef: internalSlotProps.ref
   };
 }
-const _excluded$1I = ["elementType", "externalSlotProps", "ownerState"];
+const _excluded$1H = ["elementType", "externalSlotProps", "ownerState"];
 function useSlotProps(parameters) {
   var _parameters$additiona;
   const {
     elementType,
     externalSlotProps,
     ownerState
-  } = parameters, rest = _objectWithoutPropertiesLoose(parameters, _excluded$1I);
+  } = parameters, rest = _objectWithoutPropertiesLoose(parameters, _excluded$1H);
   const resolvedComponentsProps = resolveComponentProps(externalSlotProps, ownerState);
   const {
     props: mergedProps,
@@ -4556,7 +4620,7 @@ function getBadgeUnstyledUtilityClass(slot) {
   return generateUtilityClass("MuiBadge", slot);
 }
 const badgeUnstyledClasses = generateUtilityClasses("MuiBadge", ["root", "badge", "invisible"]);
-const _excluded$1H = ["badgeContent", "component", "children", "invisible", "max", "slotProps", "slots", "showZero"];
+const _excluded$1G = ["badgeContent", "component", "children", "invisible", "max", "slotProps", "slots", "showZero"];
 const useUtilityClasses$1a = (ownerState) => {
   const {
     invisible
@@ -4575,7 +4639,7 @@ const BadgeUnstyled = /* @__PURE__ */ React.forwardRef(function BadgeUnstyled2(p
     slotProps = {},
     slots = {},
     showZero = false
-  } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1H);
+  } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1G);
   const {
     badgeContent,
     max: max2,
@@ -4823,7 +4887,7 @@ function useButton(parameters) {
     active
   };
 }
-const _excluded$1G = ["action", "children", "component", "disabled", "focusableWhenDisabled", "onBlur", "onClick", "onFocus", "onFocusVisible", "onKeyDown", "onKeyUp", "onMouseLeave", "slotProps", "slots"];
+const _excluded$1F = ["action", "children", "component", "disabled", "focusableWhenDisabled", "onBlur", "onClick", "onFocus", "onFocusVisible", "onKeyDown", "onKeyUp", "onMouseLeave", "slotProps", "slots"];
 const useUtilityClasses$19 = (ownerState) => {
   const {
     active,
@@ -4844,7 +4908,7 @@ const ButtonUnstyled = /* @__PURE__ */ React.forwardRef(function ButtonUnstyled2
     focusableWhenDisabled = false,
     slotProps = {},
     slots = {}
-  } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1G);
+  } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1F);
   const buttonRef = React.useRef();
   const {
     active,
@@ -5380,7 +5444,7 @@ function getFormControlUnstyledUtilityClass(slot) {
   return generateUtilityClass("MuiFormControl", slot);
 }
 const formControlUnstyledClasses = generateUtilityClasses("MuiFormControl", ["root", "disabled", "error", "filled", "focused", "required"]);
-const _excluded$1F = ["defaultValue", "children", "component", "disabled", "error", "onChange", "required", "slotProps", "slots", "value"];
+const _excluded$1E = ["defaultValue", "children", "component", "disabled", "error", "onChange", "required", "slotProps", "slots", "value"];
 function hasValue$1(value) {
   return value != null && !(Array.isArray(value) && value.length === 0) && value !== "";
 }
@@ -5410,7 +5474,7 @@ const FormControlUnstyled = /* @__PURE__ */ React.forwardRef(function FormContro
     slotProps = {},
     slots = {},
     value: incomingValue
-  } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1F);
+  } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1E);
   const [value, setValue] = useControlled({
     controlled: incomingValue,
     default: defaultValue,
@@ -5673,7 +5737,7 @@ function useInput(parameters) {
     value
   };
 }
-const _excluded$1E = ["aria-describedby", "aria-label", "aria-labelledby", "autoComplete", "autoFocus", "className", "component", "defaultValue", "disabled", "endAdornment", "error", "id", "multiline", "name", "onClick", "onChange", "onKeyDown", "onKeyUp", "onFocus", "onBlur", "placeholder", "readOnly", "required", "startAdornment", "value", "type", "rows", "slotProps", "slots", "minRows", "maxRows"];
+const _excluded$1D = ["aria-describedby", "aria-label", "aria-labelledby", "autoComplete", "autoFocus", "className", "component", "defaultValue", "disabled", "endAdornment", "error", "id", "multiline", "name", "onClick", "onChange", "onKeyDown", "onKeyUp", "onFocus", "onBlur", "placeholder", "readOnly", "required", "startAdornment", "value", "type", "rows", "slotProps", "slots", "minRows", "maxRows"];
 const InputUnstyled = /* @__PURE__ */ React.forwardRef(function InputUnstyled2(props, forwardedRef) {
   var _ref, _slots$textarea, _slots$input;
   const {
@@ -5708,7 +5772,7 @@ const InputUnstyled = /* @__PURE__ */ React.forwardRef(function InputUnstyled2(p
     slots = {},
     minRows,
     maxRows
-  } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1E);
+  } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1D);
   const {
     getRootProps,
     getInputProps,
@@ -6765,7 +6829,7 @@ function isShadowRoot(node2) {
   var OwnElement = getWindow(node2).ShadowRoot;
   return node2 instanceof OwnElement || node2 instanceof ShadowRoot;
 }
-function applyStyles(_ref) {
+function applyStyles$1(_ref) {
   var state = _ref.state;
   Object.keys(state.elements).forEach(function(name) {
     var style2 = state.styles[name] || {};
@@ -6823,11 +6887,11 @@ function effect$2(_ref2) {
     });
   };
 }
-const applyStyles$1 = {
+const applyStyles$2 = {
   name: "applyStyles",
   enabled: true,
   phase: "write",
-  fn: applyStyles,
+  fn: applyStyles$1,
   effect: effect$2,
   requires: ["computeStyles"]
 };
@@ -8056,11 +8120,11 @@ function popperGenerator(generatorOptions) {
   };
 }
 var createPopper$2 = /* @__PURE__ */ popperGenerator();
-var defaultModifiers$1 = [eventListeners, popperOffsets$1, computeStyles$1, applyStyles$1];
+var defaultModifiers$1 = [eventListeners, popperOffsets$1, computeStyles$1, applyStyles$2];
 var createPopper$1 = /* @__PURE__ */ popperGenerator({
   defaultModifiers: defaultModifiers$1
 });
-var defaultModifiers = [eventListeners, popperOffsets$1, computeStyles$1, applyStyles$1, offset$1, flip$1, preventOverflow$1, arrow$1, hide$1];
+var defaultModifiers = [eventListeners, popperOffsets$1, computeStyles$1, applyStyles$2, offset$1, flip$1, preventOverflow$1, arrow$1, hide$1];
 var createPopper = /* @__PURE__ */ popperGenerator({
   defaultModifiers
 });
@@ -8134,7 +8198,7 @@ function getPopperUnstyledUtilityClass(slot) {
   return generateUtilityClass("MuiPopperUnstyled", slot);
 }
 const popperUnstyledClasses = generateUtilityClasses("MuiPopperUnstyled", ["root"]);
-const _excluded$1D = ["anchorEl", "children", "component", "direction", "disablePortal", "modifiers", "open", "ownerState", "placement", "popperOptions", "popperRef", "slotProps", "slots", "TransitionProps"], _excluded2$6 = ["anchorEl", "children", "container", "direction", "disablePortal", "keepMounted", "modifiers", "open", "placement", "popperOptions", "popperRef", "style", "transition", "slotProps", "slots"];
+const _excluded$1C = ["anchorEl", "children", "component", "direction", "disablePortal", "modifiers", "open", "ownerState", "placement", "popperOptions", "popperRef", "slotProps", "slots", "TransitionProps"], _excluded2$7 = ["anchorEl", "children", "container", "direction", "disablePortal", "keepMounted", "modifiers", "open", "placement", "popperOptions", "popperRef", "style", "transition", "slotProps", "slots"];
 function flipPlacement(placement, direction) {
   if (direction === "ltr") {
     return placement;
@@ -8185,7 +8249,7 @@ const PopperTooltip = /* @__PURE__ */ React.forwardRef(function PopperTooltip2(p
     slotProps = {},
     slots = {},
     TransitionProps
-  } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1D);
+  } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1C);
   const tooltipRef = React.useRef(null);
   const ownRef = useForkRef(tooltipRef, ref);
   const popperRef = React.useRef(null);
@@ -8300,7 +8364,7 @@ const PopperUnstyled = /* @__PURE__ */ React.forwardRef(function PopperUnstyled2
     transition = false,
     slotProps = {},
     slots = {}
-  } = props, other = _objectWithoutPropertiesLoose(props, _excluded2$6);
+  } = props, other = _objectWithoutPropertiesLoose(props, _excluded2$7);
   const [exited, setExited] = React.useState(true);
   const handleEnter = () => {
     setExited(false);
@@ -8475,7 +8539,7 @@ process.env.NODE_ENV !== "production" ? PopperUnstyled.propTypes = {
    */
   transition: PropTypes.bool
 } : void 0;
-const _excluded$1C = ["actions", "anchorEl", "children", "component", "keepMounted", "listboxId", "onClose", "open", "slotProps", "slots"];
+const _excluded$1B = ["actions", "anchorEl", "children", "component", "keepMounted", "listboxId", "onClose", "open", "slotProps", "slots"];
 function getUtilityClasses$1(ownerState) {
   const {
     open
@@ -8499,7 +8563,7 @@ const MenuUnstyled = /* @__PURE__ */ React.forwardRef(function MenuUnstyled2(pro
     open = false,
     slotProps = {},
     slots = {}
-  } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1C);
+  } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1B);
   const {
     contextValue,
     getListboxProps,
@@ -8725,7 +8789,7 @@ function useMenuItem(props) {
     highlighted
   };
 }
-const _excluded$1B = ["children", "disabled", "component", "label", "slotProps", "slots"];
+const _excluded$1A = ["children", "disabled", "component", "label", "slotProps", "slots"];
 function getUtilityClasses(ownerState) {
   const {
     disabled,
@@ -8745,7 +8809,7 @@ const MenuItemUnstyled = /* @__PURE__ */ React.forwardRef(function MenuItemUnsty
     label,
     slotProps = {},
     slots = {}
-  } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1B);
+  } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1A);
   const {
     getRootProps,
     disabled,
@@ -9001,7 +9065,7 @@ function getModalUtilityClass(slot) {
   return generateUtilityClass("MuiModal", slot);
 }
 const modalUnstyledClasses = generateUtilityClasses("MuiModal", ["root", "hidden"]);
-const _excluded$1A = ["children", "classes", "closeAfterTransition", "component", "container", "disableAutoFocus", "disableEnforceFocus", "disableEscapeKeyDown", "disablePortal", "disableRestoreFocus", "disableScrollLock", "hideBackdrop", "keepMounted", "manager", "onBackdropClick", "onClose", "onKeyDown", "open", "onTransitionEnter", "onTransitionExited", "slotProps", "slots"];
+const _excluded$1z = ["children", "classes", "closeAfterTransition", "component", "container", "disableAutoFocus", "disableEnforceFocus", "disableEscapeKeyDown", "disablePortal", "disableRestoreFocus", "disableScrollLock", "hideBackdrop", "keepMounted", "manager", "onBackdropClick", "onClose", "onKeyDown", "open", "onTransitionEnter", "onTransitionExited", "slotProps", "slots"];
 const useUtilityClasses$16 = (ownerState) => {
   const {
     open,
@@ -9047,7 +9111,7 @@ const ModalUnstyled = /* @__PURE__ */ React.forwardRef(function ModalUnstyled2(p
     onTransitionExited,
     slotProps = {},
     slots = {}
-  } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1A);
+  } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1z);
   const [exited, setExited] = React.useState(!open);
   const modal = React.useRef({});
   const mountNodeRef = React.useRef(null);
@@ -9668,7 +9732,7 @@ function getSelectUnstyledUtilityClass(slot) {
   return generateUtilityClass("MuiSelect", slot);
 }
 const selectUnstyledClasses = generateUtilityClasses("MuiSelect", ["root", "button", "listbox", "popper", "active", "expanded", "disabled", "focusVisible"]);
-const _excluded$1z = ["autoFocus", "children", "component", "defaultListboxOpen", "defaultValue", "disabled", "getSerializedValue", "listboxId", "listboxOpen", "name", "onChange", "onListboxOpenChange", "optionStringifier", "renderValue", "slotProps", "slots", "value"];
+const _excluded$1y = ["autoFocus", "children", "component", "defaultListboxOpen", "defaultValue", "disabled", "getSerializedValue", "listboxId", "listboxOpen", "name", "onChange", "onListboxOpenChange", "optionStringifier", "renderValue", "slotProps", "slots", "value"];
 function defaultRenderMultipleValues(selectedOptions) {
   return /* @__PURE__ */ jsxRuntimeExports.jsx(React.Fragment, {
     children: selectedOptions.map((o) => o.label).join(", ")
@@ -9717,7 +9781,7 @@ const MultiSelectUnstyled = /* @__PURE__ */ React.forwardRef(function MultiSelec
     slotProps = {},
     slots = {},
     value: valueProp
-  } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1z);
+  } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1y);
   const renderValue = renderValueProp != null ? renderValueProp : defaultRenderMultipleValues;
   const [groupedOptions, setGroupedOptions] = React.useState([]);
   const options = React.useMemo(() => flattenOptionGroups(groupedOptions), [groupedOptions]);
@@ -9987,7 +10051,7 @@ function getOptionGroupUnstyledUtilityClass(slot) {
   return generateUtilityClass("MuiOptionGroup", slot);
 }
 const optionGroupUnstyledClasses = generateUtilityClasses("MuiOptionGroup", ["root", "label", "list"]);
-const _excluded$1y = ["component", "disabled", "slotProps", "slots"];
+const _excluded$1x = ["component", "disabled", "slotProps", "slots"];
 function useUtilityClasses$14(disabled) {
   const slots = {
     root: ["root", disabled && "disabled"],
@@ -10002,7 +10066,7 @@ const OptionGroupUnstyled = /* @__PURE__ */ React.forwardRef(function OptionGrou
     disabled = false,
     slotProps = {},
     slots = {}
-  } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1y);
+  } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1x);
   const Root = component || (slots == null ? void 0 : slots.root) || "li";
   const Label = (slots == null ? void 0 : slots.label) || "span";
   const List3 = (slots == null ? void 0 : slots.list) || "ul";
@@ -10161,7 +10225,7 @@ function useOption(params) {
     selected
   };
 }
-const _excluded$1x = ["children", "component", "disabled", "label", "slotProps", "slots", "value"];
+const _excluded$1w = ["children", "component", "disabled", "label", "slotProps", "slots", "value"];
 function useUtilityClasses$13(ownerState) {
   const {
     disabled,
@@ -10181,7 +10245,7 @@ const OptionUnstyled = /* @__PURE__ */ React.forwardRef(function OptionUnstyled2
     slotProps = {},
     slots = {},
     value
-  } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1x);
+  } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1w);
   const selectContext = React.useContext(SelectUnstyledContext);
   if (!selectContext) {
     throw new Error("OptionUnstyled must be used within a SelectUnstyled");
@@ -10261,7 +10325,7 @@ process.env.NODE_ENV !== "production" ? OptionUnstyled.propTypes = {
   value: PropTypes.any.isRequired
 } : void 0;
 const OptionUnstyled$1 = /* @__PURE__ */ React.memo(OptionUnstyled);
-const _excluded$1w = ["autoFocus", "children", "component", "defaultValue", "defaultListboxOpen", "disabled", "getSerializedValue", "listboxId", "listboxOpen", "name", "onChange", "onListboxOpenChange", "optionStringifier", "renderValue", "slotProps", "slots", "value"];
+const _excluded$1v = ["autoFocus", "children", "component", "defaultValue", "defaultListboxOpen", "disabled", "getSerializedValue", "listboxId", "listboxOpen", "name", "onChange", "onListboxOpenChange", "optionStringifier", "renderValue", "slotProps", "slots", "value"];
 function defaultRenderSingleValue(selectedOption) {
   var _selectedOption$label;
   return (_selectedOption$label = selectedOption == null ? void 0 : selectedOption.label) != null ? _selectedOption$label : "";
@@ -10309,7 +10373,7 @@ const SelectUnstyled = /* @__PURE__ */ React.forwardRef(function SelectUnstyled2
     slotProps = {},
     slots = {},
     value: valueProp
-  } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1w);
+  } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1v);
   const renderValue = renderValueProp != null ? renderValueProp : defaultRenderSingleValue;
   const [groupedOptions, setGroupedOptions] = React.useState([]);
   const options = React.useMemo(() => flattenOptionGroups(groupedOptions), [groupedOptions]);
@@ -10532,7 +10596,7 @@ const INTENTIONAL_DRAG_COUNT_THRESHOLD = 2;
 function asc(a, b) {
   return a - b;
 }
-function clamp$1(value, min2, max2) {
+function clamp(value, min2, max2) {
   if (value == null) {
     return min2;
   }
@@ -10698,7 +10762,7 @@ function useSlider(parameters) {
   });
   const range = Array.isArray(valueDerived);
   let values2 = range ? valueDerived.slice().sort(asc) : [valueDerived];
-  values2 = values2.map((value) => clamp$1(value, min2, max2));
+  values2 = values2.map((value) => clamp(value, min2, max2));
   const marks = marksProp === true && step !== null ? [...Array(Math.floor((max2 - min2) / step) + 1)].map((_2, index2) => ({
     value: min2 + step * index2
   })) : marksProp || [];
@@ -10754,14 +10818,14 @@ function useSlider(parameters) {
     if (marks && step == null) {
       newValue = newValue < value ? marksValues[marksIndex - 1] : marksValues[marksIndex + 1];
     }
-    newValue = clamp$1(newValue, min2, max2);
+    newValue = clamp(newValue, min2, max2);
     if (marks && step == null) {
       const currentMarkIndex = marksValues.indexOf(values2[index2]);
       newValue = newValue < values2[index2] ? marksValues[currentMarkIndex - 1] : marksValues[currentMarkIndex + 1];
     }
     if (range) {
       if (disableSwap) {
-        newValue = clamp$1(newValue, values2[index2 - 1] || -Infinity, values2[index2 + 1] || Infinity);
+        newValue = clamp(newValue, values2[index2 - 1] || -Infinity, values2[index2 + 1] || Infinity);
       }
       const previousValue = newValue;
       newValue = setValueIndex({
@@ -10822,7 +10886,7 @@ function useSlider(parameters) {
       const closestIndex = findClosest(marksValues, newValue);
       newValue = marksValues[closestIndex];
     }
-    newValue = clamp$1(newValue, min2, max2);
+    newValue = clamp(newValue, min2, max2);
     let activeIndex = 0;
     if (range) {
       if (!move) {
@@ -10831,7 +10895,7 @@ function useSlider(parameters) {
         activeIndex = previousIndex.current;
       }
       if (disableSwap) {
-        newValue = clamp$1(newValue, values2[activeIndex - 1] || -Infinity, values2[activeIndex + 1] || Infinity);
+        newValue = clamp(newValue, values2[activeIndex - 1] || -Infinity, values2[activeIndex + 1] || Infinity);
       }
       const previousValue = newValue;
       newValue = setValueIndex({
@@ -11072,7 +11136,7 @@ function useSlider(parameters) {
     values: values2
   };
 }
-const _excluded$1v = ["aria-label", "aria-valuetext", "aria-labelledby", "className", "component", "classes", "disableSwap", "disabled", "getAriaLabel", "getAriaValueText", "marks", "max", "min", "name", "onChange", "onChangeCommitted", "orientation", "scale", "step", "tabIndex", "track", "value", "valueLabelFormat", "isRtl", "defaultValue", "slotProps", "slots"];
+const _excluded$1u = ["aria-label", "aria-valuetext", "aria-labelledby", "className", "component", "classes", "disableSwap", "disabled", "getAriaLabel", "getAriaValueText", "marks", "max", "min", "name", "onChange", "onChangeCommitted", "orientation", "scale", "step", "tabIndex", "track", "value", "valueLabelFormat", "isRtl", "defaultValue", "slotProps", "slots"];
 function Identity$1(x) {
   return x;
 }
@@ -11126,7 +11190,7 @@ const SliderUnstyled = /* @__PURE__ */ React.forwardRef(function SliderUnstyled2
     defaultValue,
     slotProps = {},
     slots = {}
-  } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1v);
+  } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1u);
   const partialOwnerState = _extends$2({}, props, {
     marks: marksProp,
     classes: classesProp,
@@ -11601,7 +11665,7 @@ function useSnackbar(parameters) {
     onClickAway: handleClickAway
   };
 }
-const _excluded$1u = ["autoHideDuration", "children", "component", "disableWindowBlurListener", "exited", "onBlur", "onClose", "onFocus", "onMouseEnter", "onMouseLeave", "open", "resumeHideDuration", "slotProps", "slots"];
+const _excluded$1t = ["autoHideDuration", "children", "component", "disableWindowBlurListener", "exited", "onBlur", "onClose", "onFocus", "onMouseEnter", "onMouseLeave", "open", "resumeHideDuration", "slotProps", "slots"];
 const useUtilityClasses$10 = () => {
   const slots = {
     root: ["root"]
@@ -11620,7 +11684,7 @@ const SnackbarUnstyled = /* @__PURE__ */ React.forwardRef(function SnackbarUnsty
     resumeHideDuration,
     slotProps = {},
     slots = {}
-  } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1u);
+  } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1t);
   const classes = useUtilityClasses$10();
   const {
     getRootProps,
@@ -11846,7 +11910,7 @@ function getSwitchUnstyledUtilityClass(slot) {
   return generateUtilityClass("MuiSwitch", slot);
 }
 const switchUnstyledClasses = generateUtilityClasses("MuiSwitch", ["root", "input", "track", "thumb", "checked", "disabled", "focusVisible", "readOnly"]);
-const _excluded$1t = ["checked", "component", "defaultChecked", "disabled", "onBlur", "onChange", "onFocus", "onFocusVisible", "readOnly", "required", "slotProps", "slots"];
+const _excluded$1s = ["checked", "component", "defaultChecked", "disabled", "onBlur", "onChange", "onFocus", "onFocusVisible", "readOnly", "required", "slotProps", "slots"];
 const useUtilityClasses$$ = (ownerState) => {
   const {
     checked,
@@ -11876,7 +11940,7 @@ const SwitchUnstyled = /* @__PURE__ */ React.forwardRef(function SwitchUnstyled2
     readOnly: readOnlyProp,
     slotProps = {},
     slots = {}
-  } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1t);
+  } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1s);
   const useSwitchProps = {
     checked: checkedProp,
     defaultChecked,
@@ -12014,7 +12078,7 @@ process.env.NODE_ENV !== "production" ? SwitchUnstyled.propTypes = {
     track: PropTypes.oneOfType([PropTypes.elementType, PropTypes.oneOf([null])])
   })
 } : void 0;
-const _excluded$1s = ["component", "count", "getItemAriaLabel", "onPageChange", "page", "rowsPerPage", "showFirstButton", "showLastButton", "direction", "ownerState", "slotProps", "slots"];
+const _excluded$1r = ["component", "count", "getItemAriaLabel", "onPageChange", "page", "rowsPerPage", "showFirstButton", "showLastButton", "direction", "ownerState", "slotProps", "slots"];
 var _span$4, _span2, _span3, _span4;
 function LastPageIconDefault() {
   return _span$4 || (_span$4 = /* @__PURE__ */ jsxRuntimeExports.jsx("span", {
@@ -12053,7 +12117,7 @@ const TablePaginationActionsUnstyled = /* @__PURE__ */ React.forwardRef(function
     direction,
     slotProps = {},
     slots = {}
-  } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1s);
+  } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1r);
   const ownerState = props;
   const handleFirstPageButtonClick = (event) => {
     onPageChange(event, 0);
@@ -12145,7 +12209,7 @@ function getTablePaginationUnstyledUtilityClass(slot) {
   return generateUtilityClass("MuiTablePagination", slot);
 }
 const tablePaginationUnstyledClasses = generateUtilityClasses("MuiTablePagination", ["root", "toolbar", "spacer", "selectLabel", "selectRoot", "select", "selectIcon", "input", "menuItem", "displayedRows", "actions"]);
-const _excluded$1r = ["component", "colSpan", "count", "getItemAriaLabel", "labelDisplayedRows", "labelId", "labelRowsPerPage", "onPageChange", "onRowsPerPageChange", "page", "rowsPerPage", "rowsPerPageOptions", "selectId", "slotProps", "slots"];
+const _excluded$1q = ["component", "colSpan", "count", "getItemAriaLabel", "labelDisplayedRows", "labelId", "labelRowsPerPage", "onPageChange", "onRowsPerPageChange", "page", "rowsPerPage", "rowsPerPageOptions", "selectId", "slotProps", "slots"];
 function defaultLabelDisplayedRows$1({
   from: from2,
   to,
@@ -12189,7 +12253,7 @@ const TablePaginationUnstyled = /* @__PURE__ */ React.forwardRef(function TableP
     selectId: selectIdProp,
     slotProps = {},
     slots = {}
-  } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1r);
+  } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1q);
   const ownerState = props;
   const classes = useUtilityClasses$_();
   let colSpan;
@@ -12512,7 +12576,7 @@ function getTabId(context, value) {
   }
   return `${context.idPrefix}-T-${value}`;
 }
-const _excluded$1q = ["children", "value", "defaultValue", "orientation", "direction", "component", "onChange", "selectionFollowsFocus", "slotProps", "slots"];
+const _excluded$1p = ["children", "value", "defaultValue", "orientation", "direction", "component", "onChange", "selectionFollowsFocus", "slotProps", "slots"];
 const useUtilityClasses$Z = (ownerState) => {
   const {
     orientation
@@ -12531,7 +12595,7 @@ const TabsUnstyled = /* @__PURE__ */ React.forwardRef((props, ref) => {
     component,
     slotProps = {},
     slots = {}
-  } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1q);
+  } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1p);
   const {
     tabsContextValue
   } = useTabs(props);
@@ -12639,7 +12703,7 @@ function useTabPanel(parameters) {
     getRootProps
   };
 }
-const _excluded$1p = ["children", "component", "value", "slotProps", "slots"];
+const _excluded$1o = ["children", "component", "value", "slotProps", "slots"];
 const useUtilityClasses$Y = (ownerState) => {
   const {
     hidden
@@ -12656,7 +12720,7 @@ const TabPanelUnstyled = /* @__PURE__ */ React.forwardRef(function TabPanelUnsty
     component,
     slotProps = {},
     slots = {}
-  } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1p);
+  } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1o);
   const {
     hidden,
     getRootProps
@@ -12869,7 +12933,7 @@ function useTabsList(parameters) {
     getRootProps
   };
 }
-const _excluded$1o = ["children", "component", "slotProps", "slots"];
+const _excluded$1n = ["children", "component", "slotProps", "slots"];
 const useUtilityClasses$X = (ownerState) => {
   const {
     orientation
@@ -12885,7 +12949,7 @@ const TabsListUnstyled = /* @__PURE__ */ React.forwardRef((props, ref) => {
     component,
     slotProps = {},
     slots = {}
-  } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1o);
+  } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1n);
   const {
     isRtl,
     orientation,
@@ -12947,7 +13011,7 @@ function getTabUnstyledUtilityClass(slot) {
   return generateUtilityClass("MuiTab", slot);
 }
 const tabUnstyledClasses = generateUtilityClasses("MuiTab", ["root", "selected", "disabled"]);
-const _excluded$1n = ["getRootProps"];
+const _excluded$1m = ["getRootProps"];
 function useTab(parameters) {
   var _getPanelId, _getTabId;
   const {
@@ -12958,7 +13022,7 @@ function useTab(parameters) {
   } = parameters;
   const _useButton = useButton(parameters), {
     getRootProps: getRootPropsButton
-  } = _useButton, otherButtonProps = _objectWithoutPropertiesLoose(_useButton, _excluded$1n);
+  } = _useButton, otherButtonProps = _objectWithoutPropertiesLoose(_useButton, _excluded$1m);
   const context = useTabContext();
   if (context === null) {
     throw new Error("No TabContext provided");
@@ -13018,7 +13082,7 @@ function useTab(parameters) {
     selected
   });
 }
-const _excluded$1m = ["action", "children", "value", "disabled", "onChange", "onClick", "onFocus", "component", "slotProps", "slots"];
+const _excluded$1l = ["action", "children", "value", "disabled", "onChange", "onClick", "onFocus", "component", "slotProps", "slots"];
 const useUtilityClasses$W = (ownerState) => {
   const {
     selected,
@@ -13038,7 +13102,7 @@ const TabUnstyled = /* @__PURE__ */ React.forwardRef(function TabUnstyled2(props
     component,
     slotProps = {},
     slots = {}
-  } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1m);
+  } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1l);
   const tabRef = React.useRef();
   const handleRef = useForkRef(tabRef, ref);
   const {
@@ -13138,7 +13202,7 @@ process.env.NODE_ENV !== "production" ? TabUnstyled.propTypes = {
    */
   value: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
 } : void 0;
-const _excluded$1l = ["onChange", "maxRows", "minRows", "style", "value"];
+const _excluded$1k = ["onChange", "maxRows", "minRows", "style", "value"];
 function getStyleValue$1(computedStyle, property) {
   return parseInt(computedStyle[property], 10) || 0;
 }
@@ -13157,7 +13221,7 @@ const styles$3 = {
     transform: "translateZ(0)"
   }
 };
-function isEmpty$4(obj) {
+function isEmpty$3(obj) {
   return obj === void 0 || obj === null || Object.keys(obj).length === 0;
 }
 const TextareaAutosize = /* @__PURE__ */ React.forwardRef(function TextareaAutosize2(props, ref) {
@@ -13167,7 +13231,7 @@ const TextareaAutosize = /* @__PURE__ */ React.forwardRef(function TextareaAutos
     minRows = 1,
     style: style2,
     value
-  } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1l);
+  } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1k);
   const {
     current: isControlled
   } = React.useRef(value != null);
@@ -13231,7 +13295,7 @@ const TextareaAutosize = /* @__PURE__ */ React.forwardRef(function TextareaAutos
   };
   const syncHeight = React.useCallback(() => {
     const newState = getUpdatedState();
-    if (isEmpty$4(newState)) {
+    if (isEmpty$3(newState)) {
       return;
     }
     setState((prevState) => {
@@ -13240,7 +13304,7 @@ const TextareaAutosize = /* @__PURE__ */ React.forwardRef(function TextareaAutos
   }, [getUpdatedState]);
   const syncHeightWithFlushSycn = () => {
     const newState = getUpdatedState();
-    if (isEmpty$4(newState)) {
+    if (isEmpty$3(newState)) {
       return;
     }
     flushSync(() => {
@@ -14472,7 +14536,7 @@ process.env.NODE_ENV !== "production" ? StyledEngineProvider.propTypes = {
 } : void 0;
 "use client";
 "use client";
-function isEmpty$3(obj) {
+function isEmpty$2(obj) {
   return obj === void 0 || obj === null || Object.keys(obj).length === 0;
 }
 function GlobalStyles$2(props) {
@@ -14480,7 +14544,7 @@ function GlobalStyles$2(props) {
     styles: styles2,
     defaultTheme: defaultTheme2 = {}
   } = props;
-  const globalStyles = typeof styles2 === "function" ? (themeInput) => styles2(isEmpty$3(themeInput) ? defaultTheme2 : themeInput) : styles2;
+  const globalStyles = typeof styles2 === "function" ? (themeInput) => styles2(isEmpty$2(themeInput) ? defaultTheme2 : themeInput) : styles2;
   return /* @__PURE__ */ jsxRuntimeExports.jsx(Global, {
     styles: globalStyles
   });
@@ -14491,7 +14555,7 @@ process.env.NODE_ENV !== "production" ? GlobalStyles$2.propTypes = {
 } : void 0;
 "use client";
 /**
- * @mui/styled-engine v5.15.2
+ * @mui/styled-engine v5.15.9
  *
  * @license MIT
  * This source code is licensed under the MIT license found in the
@@ -14518,7 +14582,7 @@ const internal_processStyles = (tag, processor) => {
     tag.__emotion_styles = processor(tag.__emotion_styles);
   }
 };
-const _excluded$1k = ["values", "unit", "step"];
+const _excluded$1j = ["values", "unit", "step"];
 const breakpointKeys = ["xs", "sm", "md", "lg", "xl"];
 const sortBreakpointsValues = (values2) => {
   const breakpointsAsArray = Object.keys(values2).map((key) => ({
@@ -14550,7 +14614,7 @@ function createBreakpoints(breakpoints2) {
     },
     unit = "px",
     step = 5
-  } = breakpoints2, other = _objectWithoutPropertiesLoose(breakpoints2, _excluded$1k);
+  } = breakpoints2, other = _objectWithoutPropertiesLoose(breakpoints2, _excluded$1j);
   const sortedValues = sortBreakpointsValues(values2);
   const keys = Object.keys(sortedValues);
   function up(key) {
@@ -15579,14 +15643,27 @@ function unstable_createStyleFunctionSx() {
 }
 const styleFunctionSx = unstable_createStyleFunctionSx();
 styleFunctionSx.filterProps = ["sx"];
-const _excluded$1j = ["breakpoints", "palette", "spacing", "shape"];
+function applyStyles(key, styles2) {
+  const theme = this;
+  if (theme.vars && typeof theme.getColorSchemeSelector === "function") {
+    const selector = theme.getColorSchemeSelector(key).replace(/(\[[^\]]+\])/, "*:where($1)");
+    return {
+      [selector]: styles2
+    };
+  }
+  if (theme.palette.mode === key) {
+    return styles2;
+  }
+  return {};
+}
+const _excluded$1i = ["breakpoints", "palette", "spacing", "shape"];
 function createTheme$1(options = {}, ...args) {
   const {
     breakpoints: breakpointsInput = {},
     palette: paletteInput = {},
     spacing: spacingInput,
     shape: shapeInput = {}
-  } = options, other = _objectWithoutPropertiesLoose(options, _excluded$1j);
+  } = options, other = _objectWithoutPropertiesLoose(options, _excluded$1i);
   const breakpoints2 = createBreakpoints(breakpointsInput);
   const spacing2 = createSpacing(spacingInput);
   let muiTheme = deepmerge({
@@ -15600,6 +15677,7 @@ function createTheme$1(options = {}, ...args) {
     spacing: spacing2,
     shape: _extends$2({}, shape, shapeInput)
   }, other);
+  muiTheme.applyStyles = applyStyles;
   muiTheme = args.reduce((acc, argument) => deepmerge(acc, argument), muiTheme);
   muiTheme.unstable_sxConfig = _extends$2({}, defaultSxConfig, other == null ? void 0 : other.unstable_sxConfig);
   muiTheme.unstable_sx = function sx(props) {
@@ -15636,10 +15714,10 @@ function GlobalStyles$1({
   });
 }
 process.env.NODE_ENV !== "production" ? GlobalStyles$1.propTypes = {
-  // ----------------------------- Warning --------------------------------
-  // | These PropTypes are generated from the TypeScript type definitions |
-  // |     To update them edit TypeScript types and run "yarn proptypes"  |
-  // ----------------------------------------------------------------------
+  // ┌────────────────────────────── Warning ──────────────────────────────┐
+  // │ These PropTypes are generated from the TypeScript type definitions. │
+  // │ To update them, edit the TypeScript types and run `pnpm proptypes`. │
+  // └─────────────────────────────────────────────────────────────────────┘
   /**
    * @ignore
    */
@@ -15777,7 +15855,7 @@ const typographyVariant = style$3({
   themeKey: "typography"
 });
 const typography = compose(typographyVariant, fontFamily, fontSize, fontStyle, fontWeight, letterSpacing, lineHeight, textAlign, textTransform);
-const _excluded$1i = ["sx"];
+const _excluded$1h = ["sx"];
 const splitProps = (props) => {
   var _props$theme$unstable, _props$theme;
   const result = {
@@ -15797,7 +15875,7 @@ const splitProps = (props) => {
 function extendSxProp(props) {
   const {
     sx: inSx
-  } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1i);
+  } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1h);
   const {
     systemProps,
     otherProps
@@ -15880,7 +15958,7 @@ function clsx() {
   return n;
 }
 "use client";
-const _excluded$1h = ["className", "component"];
+const _excluded$1g = ["className", "component"];
 function createBox(options = {}) {
   const {
     themeId,
@@ -15896,7 +15974,7 @@ function createBox(options = {}) {
     const _extendSxProp = extendSxProp(inProps), {
       className,
       component = "div"
-    } = _extendSxProp, other = _objectWithoutPropertiesLoose(_extendSxProp, _excluded$1h);
+    } = _extendSxProp, other = _objectWithoutPropertiesLoose(_extendSxProp, _excluded$1g);
     return /* @__PURE__ */ jsxRuntimeExports.jsx(BoxRoot, _extends$2({
       as: component,
       ref,
@@ -15913,10 +15991,10 @@ const Box$1 = createBox({
   generateClassName: ClassNameGenerator.generate
 });
 process.env.NODE_ENV !== "production" ? Box$1.propTypes = {
-  // ----------------------------- Warning --------------------------------
-  // | These PropTypes are generated from the TypeScript type definitions |
-  // |     To update them edit the d.ts file and run "yarn proptypes"     |
-  // ----------------------------------------------------------------------
+  // ┌────────────────────────────── Warning ──────────────────────────────┐
+  // │ These PropTypes are generated from the TypeScript type definitions. │
+  // │    To update them, edit the d.ts file and run `pnpm proptypes`.     │
+  // └─────────────────────────────────────────────────────────────────────┘
   /**
    * @ignore
    */
@@ -15932,25 +16010,7 @@ process.env.NODE_ENV !== "production" ? Box$1.propTypes = {
   sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object])
 } : void 0;
 "use client";
-const _excluded$1g = ["variant"];
-function isEmpty$2(string) {
-  return string.length === 0;
-}
-function propsToClassKey(props) {
-  const {
-    variant
-  } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1g);
-  let classKey = variant || "";
-  Object.keys(other).sort().forEach((key) => {
-    if (key === "color") {
-      classKey += isEmpty$2(classKey) ? props[key] : capitalize(props[key]);
-    } else {
-      classKey += `${isEmpty$2(classKey) ? key : capitalize(key)}${capitalize(props[key].toString())}`;
-    }
-  });
-  return classKey;
-}
-const _excluded$1f = ["name", "slot", "skipVariantsResolver", "skipSx", "overridesResolver"];
+const _excluded$1f = ["ownerState"], _excluded2$6 = ["variants"], _excluded3 = ["name", "slot", "skipVariantsResolver", "skipSx", "overridesResolver"];
 function isEmpty$1(obj) {
   return Object.keys(obj).length === 0;
 }
@@ -15960,74 +16020,6 @@ function isStringTag(tag) {
   // it's a lowercase character
   tag.charCodeAt(0) > 96;
 }
-const getStyleOverrides = (name, theme) => {
-  if (theme.components && theme.components[name] && theme.components[name].styleOverrides) {
-    return theme.components[name].styleOverrides;
-  }
-  return null;
-};
-const transformVariants = (variants) => {
-  let numOfCallbacks = 0;
-  const variantsStyles = {};
-  if (variants) {
-    variants.forEach((definition) => {
-      let key = "";
-      if (typeof definition.props === "function") {
-        key = `callback${numOfCallbacks}`;
-        numOfCallbacks += 1;
-      } else {
-        key = propsToClassKey(definition.props);
-      }
-      variantsStyles[key] = definition.style;
-    });
-  }
-  return variantsStyles;
-};
-const getVariantStyles = (name, theme) => {
-  let variants = [];
-  if (theme && theme.components && theme.components[name] && theme.components[name].variants) {
-    variants = theme.components[name].variants;
-  }
-  return transformVariants(variants);
-};
-const variantsResolver = (props, styles2, variants) => {
-  const {
-    ownerState = {}
-  } = props;
-  const variantsStyles = [];
-  let numOfCallbacks = 0;
-  if (variants) {
-    variants.forEach((variant) => {
-      let isMatch = true;
-      if (typeof variant.props === "function") {
-        const propsToCheck = _extends$2({}, props, ownerState);
-        isMatch = variant.props(propsToCheck);
-      } else {
-        Object.keys(variant.props).forEach((key) => {
-          if (ownerState[key] !== variant.props[key] && props[key] !== variant.props[key]) {
-            isMatch = false;
-          }
-        });
-      }
-      if (isMatch) {
-        if (typeof variant.props === "function") {
-          variantsStyles.push(styles2[`callback${numOfCallbacks}`]);
-        } else {
-          variantsStyles.push(styles2[propsToClassKey(variant.props)]);
-        }
-      }
-      if (typeof variant.props === "function") {
-        numOfCallbacks += 1;
-      }
-    });
-  }
-  return variantsStyles;
-};
-const themeVariantsResolver = (props, styles2, theme, name) => {
-  var _theme$components;
-  const themeVariants = theme == null || (_theme$components = theme.components) == null || (_theme$components = _theme$components[name]) == null ? void 0 : _theme$components.variants;
-  return variantsResolver(props, styles2, themeVariants);
-};
 function shouldForwardProp(prop) {
   return prop !== "ownerState" && prop !== "theme" && prop !== "sx" && prop !== "as";
 }
@@ -16051,29 +16043,49 @@ function defaultOverridesResolver(slot) {
   }
   return (props, styles2) => styles2[slot];
 }
-const muiStyledFunctionResolver = ({
-  styledArg,
-  props,
-  defaultTheme: defaultTheme2,
-  themeId
-}) => {
-  const resolvedStyles = styledArg(_extends$2({}, props, {
-    theme: resolveTheme(_extends$2({}, props, {
-      defaultTheme: defaultTheme2,
-      themeId
-    }))
-  }));
-  let optionalVariants;
-  if (resolvedStyles && resolvedStyles.variants) {
-    optionalVariants = resolvedStyles.variants;
-    delete resolvedStyles.variants;
+function processStyleArg(callableStyle, _ref) {
+  let {
+    ownerState
+  } = _ref, props = _objectWithoutPropertiesLoose(_ref, _excluded$1f);
+  const resolvedStylesArg = typeof callableStyle === "function" ? callableStyle(_extends$2({
+    ownerState
+  }, props)) : callableStyle;
+  if (Array.isArray(resolvedStylesArg)) {
+    return resolvedStylesArg.flatMap((resolvedStyle) => processStyleArg(resolvedStyle, _extends$2({
+      ownerState
+    }, props)));
   }
-  if (optionalVariants) {
-    const variantsStyles = variantsResolver(props, transformVariants(optionalVariants), optionalVariants);
-    return [resolvedStyles, ...variantsStyles];
+  if (!!resolvedStylesArg && typeof resolvedStylesArg === "object" && Array.isArray(resolvedStylesArg.variants)) {
+    const {
+      variants = []
+    } = resolvedStylesArg, otherStyles = _objectWithoutPropertiesLoose(resolvedStylesArg, _excluded2$6);
+    let result = otherStyles;
+    variants.forEach((variant) => {
+      let isMatch = true;
+      if (typeof variant.props === "function") {
+        isMatch = variant.props(_extends$2({
+          ownerState
+        }, props));
+      } else {
+        Object.keys(variant.props).forEach((key) => {
+          if ((ownerState == null ? void 0 : ownerState[key]) !== variant.props[key] && props[key] !== variant.props[key]) {
+            isMatch = false;
+          }
+        });
+      }
+      if (isMatch) {
+        if (!Array.isArray(result)) {
+          result = [result];
+        }
+        result.push(typeof variant.style === "function" ? variant.style(_extends$2({
+          ownerState
+        }, props)) : variant.style);
+      }
+    });
+    return result;
   }
-  return resolvedStyles;
-};
+  return resolvedStylesArg;
+}
 function createStyled(input = {}) {
   const {
     themeId,
@@ -16100,7 +16112,7 @@ function createStyled(input = {}) {
       // TODO v6: remove `lowercaseFirstLetter()` in the next major release
       // For more details: https://github.com/mui/material-ui/pull/37908
       overridesResolver: overridesResolver2 = defaultOverridesResolver(lowercaseFirstLetter(componentSlot))
-    } = inputOptions, options = _objectWithoutPropertiesLoose(inputOptions, _excluded$1f);
+    } = inputOptions, options = _objectWithoutPropertiesLoose(inputOptions, _excluded3);
     const skipVariantsResolver = inputSkipVariantsResolver !== void 0 ? inputSkipVariantsResolver : (
       // TODO v6: remove `Root` in the next major release
       // For more details: https://github.com/mui/material-ui/pull/37908
@@ -16125,87 +16137,53 @@ function createStyled(input = {}) {
       shouldForwardProp: shouldForwardPropOption,
       label
     }, options));
-    const muiStyledResolver = (styleArg, ...expressions) => {
-      const expressionsWithDefaultTheme = expressions ? expressions.map((stylesArg) => {
-        if (typeof stylesArg === "function" && stylesArg.__emotion_real !== stylesArg) {
-          return (props) => muiStyledFunctionResolver({
-            styledArg: stylesArg,
-            props,
+    const transformStyleArg = (stylesArg) => {
+      if (typeof stylesArg === "function" && stylesArg.__emotion_real !== stylesArg || isPlainObject$1(stylesArg)) {
+        return (props) => processStyleArg(stylesArg, _extends$2({}, props, {
+          theme: resolveTheme({
+            theme: props.theme,
             defaultTheme: defaultTheme2,
             themeId
-          });
-        }
-        if (isPlainObject$1(stylesArg)) {
-          let transformedStylesArg = stylesArg;
-          let styledArgVariants;
-          if (stylesArg && stylesArg.variants) {
-            styledArgVariants = stylesArg.variants;
-            delete transformedStylesArg.variants;
-            transformedStylesArg = (props) => {
-              let result = stylesArg;
-              const variantStyles = variantsResolver(props, transformVariants(styledArgVariants), styledArgVariants);
-              variantStyles.forEach((variantStyle) => {
-                result = deepmerge(result, variantStyle);
-              });
-              return result;
-            };
-          }
-          return transformedStylesArg;
-        }
-        return stylesArg;
-      }) : [];
-      let transformedStyleArg = styleArg;
-      if (isPlainObject$1(styleArg)) {
-        let styledArgVariants;
-        if (styleArg && styleArg.variants) {
-          styledArgVariants = styleArg.variants;
-          delete transformedStyleArg.variants;
-          transformedStyleArg = (props) => {
-            let result = styleArg;
-            const variantStyles = variantsResolver(props, transformVariants(styledArgVariants), styledArgVariants);
-            variantStyles.forEach((variantStyle) => {
-              result = deepmerge(result, variantStyle);
-            });
-            return result;
-          };
-        }
-      } else if (typeof styleArg === "function" && // On the server Emotion doesn't use React.forwardRef for creating components, so the created
-      // component stays as a function. This condition makes sure that we do not interpolate functions
-      // which are basically components used as a selectors.
-      styleArg.__emotion_real !== styleArg) {
-        transformedStyleArg = (props) => muiStyledFunctionResolver({
-          styledArg: styleArg,
-          props,
-          defaultTheme: defaultTheme2,
-          themeId
-        });
+          })
+        }));
       }
+      return stylesArg;
+    };
+    const muiStyledResolver = (styleArg, ...expressions) => {
+      let transformedStyleArg = transformStyleArg(styleArg);
+      const expressionsWithDefaultTheme = expressions ? expressions.map(transformStyleArg) : [];
       if (componentName && overridesResolver2) {
         expressionsWithDefaultTheme.push((props) => {
           const theme = resolveTheme(_extends$2({}, props, {
             defaultTheme: defaultTheme2,
             themeId
           }));
-          const styleOverrides = getStyleOverrides(componentName, theme);
-          if (styleOverrides) {
-            const resolvedStyleOverrides = {};
-            Object.entries(styleOverrides).forEach(([slotKey, slotStyle]) => {
-              resolvedStyleOverrides[slotKey] = typeof slotStyle === "function" ? slotStyle(_extends$2({}, props, {
-                theme
-              })) : slotStyle;
-            });
-            return overridesResolver2(props, resolvedStyleOverrides);
+          if (!theme.components || !theme.components[componentName] || !theme.components[componentName].styleOverrides) {
+            return null;
           }
-          return null;
+          const styleOverrides = theme.components[componentName].styleOverrides;
+          const resolvedStyleOverrides = {};
+          Object.entries(styleOverrides).forEach(([slotKey, slotStyle]) => {
+            resolvedStyleOverrides[slotKey] = processStyleArg(slotStyle, _extends$2({}, props, {
+              theme
+            }));
+          });
+          return overridesResolver2(props, resolvedStyleOverrides);
         });
       }
       if (componentName && !skipVariantsResolver) {
         expressionsWithDefaultTheme.push((props) => {
+          var _theme$components;
           const theme = resolveTheme(_extends$2({}, props, {
             defaultTheme: defaultTheme2,
             themeId
           }));
-          return themeVariantsResolver(props, getVariantStyles(componentName, theme), theme, componentName);
+          const themeVariants = theme == null || (_theme$components = theme.components) == null || (_theme$components = _theme$components[componentName]) == null ? void 0 : _theme$components.variants;
+          return processStyleArg({
+            variants: themeVariants
+          }, _extends$2({}, props, {
+            theme
+          }));
         });
       }
       if (!skipSx) {
@@ -16270,13 +16248,13 @@ function useThemeProps$1({
   return mergedProps;
 }
 "use client";
-function clamp(value, min2 = 0, max2 = 1) {
+function clampWrapper(value, min2 = 0, max2 = 1) {
   if (process.env.NODE_ENV !== "production") {
     if (value < min2 || value > max2) {
       console.error(`MUI: The value provided ${value} is out of range [${min2}, ${max2}].`);
     }
   }
-  return Math.min(Math.max(min2, value), max2);
+  return clamp$1(value, min2, max2);
 }
 function hexToRgb(color2) {
   color2 = color2.slice(1);
@@ -16411,7 +16389,7 @@ function getContrastRatio(foreground, background) {
 }
 function alpha(color2, value) {
   color2 = decomposeColor(color2);
-  value = clamp(value);
+  value = clampWrapper(value);
   if (color2.type === "rgb" || color2.type === "hsl") {
     color2.type += "a";
   }
@@ -16434,7 +16412,7 @@ function private_safeAlpha(color2, value, warning) {
 }
 function darken(color2, coefficient) {
   color2 = decomposeColor(color2);
-  coefficient = clamp(coefficient);
+  coefficient = clampWrapper(coefficient);
   if (color2.type.indexOf("hsl") !== -1) {
     color2.values[2] *= 1 - coefficient;
   } else if (color2.type.indexOf("rgb") !== -1 || color2.type.indexOf("color") !== -1) {
@@ -16456,7 +16434,7 @@ function private_safeDarken(color2, coefficient, warning) {
 }
 function lighten(color2, coefficient) {
   color2 = decomposeColor(color2);
-  coefficient = clamp(coefficient);
+  coefficient = clampWrapper(coefficient);
   if (color2.type.indexOf("hsl") !== -1) {
     color2.values[2] += (100 - color2.values[2]) * coefficient;
   } else if (color2.type.indexOf("rgb") !== -1) {
@@ -16492,6 +16470,16 @@ function private_safeEmphasize(color2, coefficient, warning) {
     }
     return color2;
   }
+}
+function blend(background, overlay, opacity, gamma = 1) {
+  const blendChannel = (b, o) => Math.round(__pow(__pow(b, 1 / gamma) * (1 - opacity) + __pow(o, 1 / gamma) * opacity, gamma));
+  const backgroundColor2 = decomposeColor(background);
+  const overlayColor = decomposeColor(overlay);
+  const rgb = [blendChannel(backgroundColor2.values[0], overlayColor.values[0]), blendChannel(backgroundColor2.values[1], overlayColor.values[1]), blendChannel(backgroundColor2.values[2], overlayColor.values[2])];
+  return recomposeColor({
+    type: "rgb",
+    values: rgb
+  });
 }
 const ThemeContext = /* @__PURE__ */ React.createContext(null);
 if (process.env.NODE_ENV !== "production") {
@@ -16555,7 +16543,7 @@ if (process.env.NODE_ENV !== "production") {
   process.env.NODE_ENV !== "production" ? ThemeProvider$1.propTypes = exactProp(ThemeProvider$1.propTypes) : void 0;
 }
 /**
- * @mui/private-theming v5.15.2
+ * @mui/private-theming v5.15.9
  *
  * @license MIT
  * This source code is licensed under the MIT license found in the
@@ -16605,10 +16593,10 @@ function ThemeProvider(props) {
   });
 }
 process.env.NODE_ENV !== "production" ? ThemeProvider.propTypes = {
-  // ----------------------------- Warning --------------------------------
-  // | These PropTypes are generated from the TypeScript type definitions |
-  // |     To update them edit the d.ts file and run "yarn proptypes"     |
-  // ----------------------------------------------------------------------
+  // ┌────────────────────────────── Warning ──────────────────────────────┐
+  // │ These PropTypes are generated from the TypeScript type definitions. │
+  // │    To update them, edit the d.ts file and run `pnpm proptypes`.     │
+  // └─────────────────────────────────────────────────────────────────────┘
   /**
    * Your component tree.
    */
@@ -17453,10 +17441,10 @@ function createContainer(options = {}) {
 "use client";
 const Container$1 = createContainer();
 process.env.NODE_ENV !== "production" ? Container$1.propTypes = {
-  // ----------------------------- Warning --------------------------------
-  // | These PropTypes are generated from the TypeScript type definitions |
-  // |     To update them edit TypeScript types and run "yarn proptypes"  |
-  // ----------------------------------------------------------------------
+  // ┌────────────────────────────── Warning ──────────────────────────────┐
+  // │ These PropTypes are generated from the TypeScript type definitions. │
+  // │ To update them, edit the TypeScript types and run `pnpm proptypes`. │
+  // └─────────────────────────────────────────────────────────────────────┘
   /**
    * @ignore
    */
@@ -17906,10 +17894,10 @@ function createGrid(options = {}) {
 "use client";
 const Grid = createGrid();
 process.env.NODE_ENV !== "production" ? Grid.propTypes = {
-  // ----------------------------- Warning --------------------------------
-  // | These PropTypes are generated from the TypeScript type definitions |
-  // |     To update them edit TypeScript types and run "yarn proptypes"  |
-  // ----------------------------------------------------------------------
+  // ┌────────────────────────────── Warning ──────────────────────────────┐
+  // │ These PropTypes are generated from the TypeScript type definitions. │
+  // │ To update them, edit the TypeScript types and run `pnpm proptypes`. │
+  // └─────────────────────────────────────────────────────────────────────┘
   /**
    * The content of the component.
    */
@@ -18241,10 +18229,10 @@ function createStack(options = {}) {
 "use client";
 const Stack$1 = createStack();
 process.env.NODE_ENV !== "production" ? Stack$1.propTypes = {
-  // ----------------------------- Warning --------------------------------
-  // | These PropTypes are generated from the TypeScript type definitions |
-  // |     To update them edit TypeScript types and run "yarn proptypes"  |
-  // ----------------------------------------------------------------------
+  // ┌────────────────────────────── Warning ──────────────────────────────┐
+  // │ These PropTypes are generated from the TypeScript type definitions. │
+  // │ To update them, edit the TypeScript types and run `pnpm proptypes`. │
+  // └─────────────────────────────────────────────────────────────────────┘
   /**
    * The content of the component.
    */
@@ -18288,7 +18276,6 @@ function getStackUtilityClass(slot) {
   return generateUtilityClass("MuiStack", slot);
 }
 const stackClasses = generateUtilityClasses("MuiStack", ["root"]);
-"use client";
 "use client";
 function experimental_sx$1() {
   throw new Error(process.env.NODE_ENV !== "production" ? `MUI: The \`experimental_sx\` has been moved to \`theme.unstable_sx\`.For more details, see https://github.com/mui/material-ui/pull/35150.` : formatMuiErrorMessage(20));
@@ -19204,7 +19191,7 @@ Object.defineProperty(ChevronRight, "__esModule", {
 });
 var default_1$t = ChevronRight.default = void 0;
 var _createSvgIcon$t = _interopRequireDefault$t(requireCreateSvgIcon());
-var _jsxRuntime$t = jsxRuntimeExports;
+var _jsxRuntime$t = requireJsxRuntime();
 var _default$t = (0, _createSvgIcon$t.default)(/* @__PURE__ */ (0, _jsxRuntime$t.jsx)("path", {
   d: "M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
 }), "ChevronRight");
@@ -20056,6 +20043,7 @@ const BasicAutocompleteShape = gubu_minExports.Gubu({
   tooldef: {
     kind: gubu_minExports.Exact("addbutton", "autocomplete"),
     label: String,
+    defaultvalue: String,
     options: {
       kind: String,
       label: {
@@ -20087,31 +20075,22 @@ function BasicAutocomplete(props) {
         ent: selected
       };
     }
+    console.log("value", value);
   }
   const theme = ctx().theme;
   return /* @__PURE__ */ jsxRuntimeExports.jsx(ThemeProvider$2, { theme, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
     Autocomplete,
     {
+      multiple: true,
       freeSolo: true,
       forcePopupIcon: true,
-      value: value || tooldef.defaultvalue || "",
       options: resolveOptions(tooldef, options),
       size: "small",
       filterOptions: (options2, params) => {
         const filtered = filter$1(options2, params);
         return filtered;
       },
-      renderInput: (params) => /* @__PURE__ */ jsxRuntimeExports.jsx(TextField$1, __spreadProps(__spreadValues({}, params), { label: tooldef.label })),
-      onChange: (newval) => {
-        seneca.act("aim:app,set:state", {
-          section: "vxg.cmp.BasicHead.tool." + tooldef.name + ".selected",
-          content: "search" == tooldef.mode && typeof newval === "string" ? { [tooldef.options.label.field]: newval } : newval == null ? void 0 : newval.ent
-        });
-      },
-      isOptionEqualToValue: (opt, val) => {
-        var _a, _b;
-        return opt === val || null != opt && null != val && ((_a = opt.ent) == null ? void 0 : _a.id) === ((_b = val.ent) == null ? void 0 : _b.id);
-      }
+      renderInput: (params) => /* @__PURE__ */ jsxRuntimeExports.jsx(TextField$1, __spreadProps(__spreadValues({}, params), { label: tooldef.label }))
     },
     tooldef.name
   ) });
@@ -20331,12 +20310,13 @@ const BasicHeadSpecShape = gubu_minExports.Gubu({
       def: Child$4({
         kind: gubu_minExports.Exact("add", "autocomplete"),
         label: String,
+        defaultvalue: String,
         options: {
-          kind: String,
+          kind: gubu_minExports.Exact("ent"),
+          ent: String,
           label: {
             field: String
-          },
-          ent: String
+          }
         },
         name: ""
       })
@@ -20369,7 +20349,9 @@ function BasicHead(props) {
   const open = vxgState.cmp.BasicSide.show;
   let led_add = vxgState.trigger.led.add;
   const viewPath = location2.pathname.split("/")[2];
-  let add = ((_c = (_b = (_a = basicHeadSpec.view[viewPath]) == null ? void 0 : _a.content) == null ? void 0 : _b.def) == null ? void 0 : _c.add) || { active: false };
+  let add = ((_c = (_b = (_a = basicHeadSpec.view[viewPath]) == null ? void 0 : _a.content) == null ? void 0 : _b.def) == null ? void 0 : _c.add) || {
+    active: false
+  };
   const viewName = ((_d = basicHeadSpec.view[viewPath]) == null ? void 0 : _d.name) || "";
   const theme = useTheme$4();
   const handleAvatarClick = (event) => {
@@ -20394,6 +20376,33 @@ function BasicHead(props) {
         children: /* @__PURE__ */ jsxRuntimeExports.jsxs(Toolbar$1, { children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: basicHeadSpec.head.logo.img, style: { width: "5rem" } }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { flexGrow: 1 } }),
+          tooldefs.map((tooldef) => {
+            if ("autocomplete" === tooldef.kind) {
+              return /* @__PURE__ */ jsxRuntimeExports.jsx(
+                BasicAutocomplete,
+                {
+                  spec: { tooldef },
+                  ctx
+                },
+                tooldef.name
+              );
+            } else if ("add" === tooldef.kind) {
+              return /* @__PURE__ */ jsxRuntimeExports.jsx(
+                BasicButton,
+                {
+                  variant: "outlined",
+                  sx: {
+                    display: add.active ? null : "none",
+                    textTransform: "capitalize"
+                  },
+                  size: "large",
+                  onClick: () => addItem(seneca, led_add),
+                  children: tooldef.label + " " + viewName
+                },
+                tooldef.name
+              );
+            }
+          }),
           /* @__PURE__ */ jsxRuntimeExports.jsx(BasicButton, { onClick: handleAvatarClick, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
             Avatar,
             {
@@ -20601,7 +20610,7 @@ Object.defineProperty(ChevronLeft, "__esModule", {
 });
 var default_1$s = ChevronLeft.default = void 0;
 var _createSvgIcon$s = _interopRequireDefault$s(requireCreateSvgIcon());
-var _jsxRuntime$s = jsxRuntimeExports;
+var _jsxRuntime$s = requireJsxRuntime();
 var _default$s = (0, _createSvgIcon$s.default)(/* @__PURE__ */ (0, _jsxRuntime$s.jsx)("path", {
   d: "M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"
 }), "ChevronLeft");
@@ -27136,7 +27145,7 @@ Object.defineProperty(ArrowDownward, "__esModule", {
 });
 var default_1$r = ArrowDownward.default = void 0;
 var _createSvgIcon$r = _interopRequireDefault$r(requireCreateSvgIcon());
-var _jsxRuntime$r = jsxRuntimeExports;
+var _jsxRuntime$r = requireJsxRuntime();
 var _default$r = (0, _createSvgIcon$r.default)(/* @__PURE__ */ (0, _jsxRuntime$r.jsx)("path", {
   d: "m20 12-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z"
 }), "ArrowDownward");
@@ -27149,7 +27158,7 @@ Object.defineProperty(ArrowRight, "__esModule", {
 });
 var default_1$q = ArrowRight.default = void 0;
 var _createSvgIcon$q = _interopRequireDefault$q(requireCreateSvgIcon());
-var _jsxRuntime$q = jsxRuntimeExports;
+var _jsxRuntime$q = requireJsxRuntime();
 var _default$q = (0, _createSvgIcon$q.default)(/* @__PURE__ */ (0, _jsxRuntime$q.jsx)("path", {
   d: "m10 17 5-5-5-5v10z"
 }), "ArrowRight");
@@ -27162,7 +27171,7 @@ Object.defineProperty(Cancel, "__esModule", {
 });
 var default_1$p = Cancel.default = void 0;
 var _createSvgIcon$p = _interopRequireDefault$p(requireCreateSvgIcon());
-var _jsxRuntime$p = jsxRuntimeExports;
+var _jsxRuntime$p = requireJsxRuntime();
 var _default$p = (0, _createSvgIcon$p.default)(/* @__PURE__ */ (0, _jsxRuntime$p.jsx)("path", {
   d: "M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"
 }), "Cancel");
@@ -27175,7 +27184,7 @@ Object.defineProperty(ClearAll, "__esModule", {
 });
 var default_1$o = ClearAll.default = void 0;
 var _createSvgIcon$o = _interopRequireDefault$o(requireCreateSvgIcon());
-var _jsxRuntime$o = jsxRuntimeExports;
+var _jsxRuntime$o = requireJsxRuntime();
 var _default$o = (0, _createSvgIcon$o.default)(/* @__PURE__ */ (0, _jsxRuntime$o.jsx)("path", {
   d: "M5 13h14v-2H5v2zm-2 4h14v-2H3v2zM7 7v2h14V7H7z"
 }), "ClearAll");
@@ -27188,7 +27197,7 @@ Object.defineProperty(Close, "__esModule", {
 });
 var default_1$n = Close.default = void 0;
 var _createSvgIcon$n = _interopRequireDefault$n(requireCreateSvgIcon());
-var _jsxRuntime$n = jsxRuntimeExports;
+var _jsxRuntime$n = requireJsxRuntime();
 var _default$n = (0, _createSvgIcon$n.default)(/* @__PURE__ */ (0, _jsxRuntime$n.jsx)("path", {
   d: "M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
 }), "Close");
@@ -27201,7 +27210,7 @@ Object.defineProperty(DensityLarge, "__esModule", {
 });
 var default_1$m = DensityLarge.default = void 0;
 var _createSvgIcon$m = _interopRequireDefault$m(requireCreateSvgIcon());
-var _jsxRuntime$m = jsxRuntimeExports;
+var _jsxRuntime$m = requireJsxRuntime();
 var _default$m = (0, _createSvgIcon$m.default)(/* @__PURE__ */ (0, _jsxRuntime$m.jsx)("path", {
   d: "M3 3h18v2H3zm0 16h18v2H3z"
 }), "DensityLarge");
@@ -27214,7 +27223,7 @@ Object.defineProperty(DensityMedium, "__esModule", {
 });
 var default_1$l = DensityMedium.default = void 0;
 var _createSvgIcon$l = _interopRequireDefault$l(requireCreateSvgIcon());
-var _jsxRuntime$l = jsxRuntimeExports;
+var _jsxRuntime$l = requireJsxRuntime();
 var _default$l = (0, _createSvgIcon$l.default)(/* @__PURE__ */ (0, _jsxRuntime$l.jsx)("path", {
   d: "M3 3h18v2H3zm0 16h18v2H3zm0-8h18v2H3z"
 }), "DensityMedium");
@@ -27227,7 +27236,7 @@ Object.defineProperty(DensitySmall, "__esModule", {
 });
 var default_1$k = DensitySmall.default = void 0;
 var _createSvgIcon$k = _interopRequireDefault$k(requireCreateSvgIcon());
-var _jsxRuntime$k = jsxRuntimeExports;
+var _jsxRuntime$k = requireJsxRuntime();
 var _default$k = (0, _createSvgIcon$k.default)(/* @__PURE__ */ (0, _jsxRuntime$k.jsx)("path", {
   d: "M3 2h18v2H3zm0 18h18v2H3zm0-6h18v2H3zm0-6h18v2H3z"
 }), "DensitySmall");
@@ -27240,7 +27249,7 @@ Object.defineProperty(DragHandle, "__esModule", {
 });
 var default_1$j = DragHandle.default = void 0;
 var _createSvgIcon$j = _interopRequireDefault$j(requireCreateSvgIcon());
-var _jsxRuntime$j = jsxRuntimeExports;
+var _jsxRuntime$j = requireJsxRuntime();
 var _default$j = (0, _createSvgIcon$j.default)(/* @__PURE__ */ (0, _jsxRuntime$j.jsx)("path", {
   d: "M20 9H4v2h16V9zM4 15h16v-2H4v2z"
 }), "DragHandle");
@@ -27253,7 +27262,7 @@ Object.defineProperty(DynamicFeed, "__esModule", {
 });
 var default_1$i = DynamicFeed.default = void 0;
 var _createSvgIcon$i = _interopRequireDefault$i(requireCreateSvgIcon());
-var _jsxRuntime$i = jsxRuntimeExports;
+var _jsxRuntime$i = requireJsxRuntime();
 var _default$i = (0, _createSvgIcon$i.default)([/* @__PURE__ */ (0, _jsxRuntime$i.jsx)("path", {
   d: "M8 8H6v7c0 1.1.9 2 2 2h9v-2H8V8z"
 }, "0"), /* @__PURE__ */ (0, _jsxRuntime$i.jsx)("path", {
@@ -27268,7 +27277,7 @@ Object.defineProperty(Edit, "__esModule", {
 });
 var default_1$h = Edit.default = void 0;
 var _createSvgIcon$h = _interopRequireDefault$h(requireCreateSvgIcon());
-var _jsxRuntime$h = jsxRuntimeExports;
+var _jsxRuntime$h = requireJsxRuntime();
 var _default$h = (0, _createSvgIcon$h.default)(/* @__PURE__ */ (0, _jsxRuntime$h.jsx)("path", {
   d: "M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
 }), "Edit");
@@ -27281,7 +27290,7 @@ Object.defineProperty(ExpandMore, "__esModule", {
 });
 var default_1$g = ExpandMore.default = void 0;
 var _createSvgIcon$g = _interopRequireDefault$g(requireCreateSvgIcon());
-var _jsxRuntime$g = jsxRuntimeExports;
+var _jsxRuntime$g = requireJsxRuntime();
 var _default$g = (0, _createSvgIcon$g.default)(/* @__PURE__ */ (0, _jsxRuntime$g.jsx)("path", {
   d: "M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
 }), "ExpandMore");
@@ -27294,7 +27303,7 @@ Object.defineProperty(FilterAlt, "__esModule", {
 });
 var default_1$f = FilterAlt.default = void 0;
 var _createSvgIcon$f = _interopRequireDefault$f(requireCreateSvgIcon());
-var _jsxRuntime$f = jsxRuntimeExports;
+var _jsxRuntime$f = requireJsxRuntime();
 var _default$f = (0, _createSvgIcon$f.default)(/* @__PURE__ */ (0, _jsxRuntime$f.jsx)("path", {
   d: "M4.25 5.61C6.27 8.2 10 13 10 13v6c0 .55.45 1 1 1h2c.55 0 1-.45 1-1v-6s3.72-4.8 5.74-7.39c.51-.66.04-1.61-.79-1.61H5.04c-.83 0-1.3.95-.79 1.61z"
 }), "FilterAlt");
@@ -27307,7 +27316,7 @@ Object.defineProperty(FilterList, "__esModule", {
 });
 var default_1$e = FilterList.default = void 0;
 var _createSvgIcon$e = _interopRequireDefault$e(requireCreateSvgIcon());
-var _jsxRuntime$e = jsxRuntimeExports;
+var _jsxRuntime$e = requireJsxRuntime();
 var _default$e = (0, _createSvgIcon$e.default)(/* @__PURE__ */ (0, _jsxRuntime$e.jsx)("path", {
   d: "M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z"
 }), "FilterList");
@@ -27320,7 +27329,7 @@ Object.defineProperty(FilterListOff, "__esModule", {
 });
 var default_1$d = FilterListOff.default = void 0;
 var _createSvgIcon$d = _interopRequireDefault$d(requireCreateSvgIcon());
-var _jsxRuntime$d = jsxRuntimeExports;
+var _jsxRuntime$d = requireJsxRuntime();
 var _default$d = (0, _createSvgIcon$d.default)(/* @__PURE__ */ (0, _jsxRuntime$d.jsx)("path", {
   d: "M10.83 8H21V6H8.83l2 2zm5 5H18v-2h-4.17l2 2zM14 16.83V18h-4v-2h3.17l-3-3H6v-2h2.17l-3-3H3V6h.17L1.39 4.22 2.8 2.81l18.38 18.38-1.41 1.41L14 16.83z"
 }), "FilterListOff");
@@ -27333,7 +27342,7 @@ Object.defineProperty(FullscreenExit, "__esModule", {
 });
 var default_1$c = FullscreenExit.default = void 0;
 var _createSvgIcon$c = _interopRequireDefault$c(requireCreateSvgIcon());
-var _jsxRuntime$c = jsxRuntimeExports;
+var _jsxRuntime$c = requireJsxRuntime();
 var _default$c = (0, _createSvgIcon$c.default)(/* @__PURE__ */ (0, _jsxRuntime$c.jsx)("path", {
   d: "M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"
 }), "FullscreenExit");
@@ -27346,7 +27355,7 @@ Object.defineProperty(Fullscreen, "__esModule", {
 });
 var default_1$b = Fullscreen.default = void 0;
 var _createSvgIcon$b = _interopRequireDefault$b(requireCreateSvgIcon());
-var _jsxRuntime$b = jsxRuntimeExports;
+var _jsxRuntime$b = requireJsxRuntime();
 var _default$b = (0, _createSvgIcon$b.default)(/* @__PURE__ */ (0, _jsxRuntime$b.jsx)("path", {
   d: "M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"
 }), "Fullscreen");
@@ -27359,7 +27368,7 @@ Object.defineProperty(KeyboardDoubleArrowDown, "__esModule", {
 });
 var default_1$a = KeyboardDoubleArrowDown.default = void 0;
 var _createSvgIcon$a = _interopRequireDefault$a(requireCreateSvgIcon());
-var _jsxRuntime$a = jsxRuntimeExports;
+var _jsxRuntime$a = requireJsxRuntime();
 var _default$a = (0, _createSvgIcon$a.default)([/* @__PURE__ */ (0, _jsxRuntime$a.jsx)("path", {
   d: "M18 6.41 16.59 5 12 9.58 7.41 5 6 6.41l6 6z"
 }, "0"), /* @__PURE__ */ (0, _jsxRuntime$a.jsx)("path", {
@@ -27374,7 +27383,7 @@ Object.defineProperty(MoreHoriz, "__esModule", {
 });
 var default_1$9 = MoreHoriz.default = void 0;
 var _createSvgIcon$9 = _interopRequireDefault$9(requireCreateSvgIcon());
-var _jsxRuntime$9 = jsxRuntimeExports;
+var _jsxRuntime$9 = requireJsxRuntime();
 var _default$9 = (0, _createSvgIcon$9.default)(/* @__PURE__ */ (0, _jsxRuntime$9.jsx)("path", {
   d: "M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
 }), "MoreHoriz");
@@ -27387,7 +27396,7 @@ Object.defineProperty(MoreVert, "__esModule", {
 });
 var default_1$8 = MoreVert.default = void 0;
 var _createSvgIcon$8 = _interopRequireDefault$8(requireCreateSvgIcon());
-var _jsxRuntime$8 = jsxRuntimeExports;
+var _jsxRuntime$8 = requireJsxRuntime();
 var _default$8 = (0, _createSvgIcon$8.default)(/* @__PURE__ */ (0, _jsxRuntime$8.jsx)("path", {
   d: "M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
 }), "MoreVert");
@@ -27400,7 +27409,7 @@ Object.defineProperty(PushPin, "__esModule", {
 });
 var default_1$7 = PushPin.default = void 0;
 var _createSvgIcon$7 = _interopRequireDefault$7(requireCreateSvgIcon());
-var _jsxRuntime$7 = jsxRuntimeExports;
+var _jsxRuntime$7 = requireJsxRuntime();
 var _default$7 = (0, _createSvgIcon$7.default)(/* @__PURE__ */ (0, _jsxRuntime$7.jsx)("path", {
   fillRule: "evenodd",
   d: "M16 9V4h1c.55 0 1-.45 1-1s-.45-1-1-1H7c-.55 0-1 .45-1 1s.45 1 1 1h1v5c0 1.66-1.34 3-3 3v2h5.97v7l1 1 1-1v-7H19v-2c-1.66 0-3-1.34-3-3z"
@@ -27414,7 +27423,7 @@ Object.defineProperty(RestartAlt, "__esModule", {
 });
 var default_1$6 = RestartAlt.default = void 0;
 var _createSvgIcon$6 = _interopRequireDefault$6(requireCreateSvgIcon());
-var _jsxRuntime$6 = jsxRuntimeExports;
+var _jsxRuntime$6 = requireJsxRuntime();
 var _default$6 = (0, _createSvgIcon$6.default)(/* @__PURE__ */ (0, _jsxRuntime$6.jsx)("path", {
   d: "M12 5V2L8 6l4 4V7c3.31 0 6 2.69 6 6 0 2.97-2.17 5.43-5 5.91v2.02c3.95-.49 7-3.85 7-7.93 0-4.42-3.58-8-8-8zm-6 8c0-1.65.67-3.15 1.76-4.24L6.34 7.34C4.9 8.79 4 10.79 4 13c0 4.08 3.05 7.44 7 7.93v-2.02c-2.83-.48-5-2.94-5-5.91z"
 }), "RestartAlt");
@@ -27427,7 +27436,7 @@ Object.defineProperty(Save, "__esModule", {
 });
 var default_1$5 = Save.default = void 0;
 var _createSvgIcon$5 = _interopRequireDefault$5(requireCreateSvgIcon());
-var _jsxRuntime$5 = jsxRuntimeExports;
+var _jsxRuntime$5 = requireJsxRuntime();
 var _default$5 = (0, _createSvgIcon$5.default)(/* @__PURE__ */ (0, _jsxRuntime$5.jsx)("path", {
   d: "M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"
 }), "Save");
@@ -27440,7 +27449,7 @@ Object.defineProperty(Search, "__esModule", {
 });
 var default_1$4 = Search.default = void 0;
 var _createSvgIcon$4 = _interopRequireDefault$4(requireCreateSvgIcon());
-var _jsxRuntime$4 = jsxRuntimeExports;
+var _jsxRuntime$4 = requireJsxRuntime();
 var _default$4 = (0, _createSvgIcon$4.default)(/* @__PURE__ */ (0, _jsxRuntime$4.jsx)("path", {
   d: "M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
 }), "Search");
@@ -27453,7 +27462,7 @@ Object.defineProperty(SearchOff, "__esModule", {
 });
 var default_1$3 = SearchOff.default = void 0;
 var _createSvgIcon$3 = _interopRequireDefault$3(requireCreateSvgIcon());
-var _jsxRuntime$3 = jsxRuntimeExports;
+var _jsxRuntime$3 = requireJsxRuntime();
 var _default$3 = (0, _createSvgIcon$3.default)([/* @__PURE__ */ (0, _jsxRuntime$3.jsx)("path", {
   d: "M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3 6.08 3 3.28 5.64 3.03 9h2.02C5.3 6.75 7.18 5 9.5 5 11.99 5 14 7.01 14 9.5S11.99 14 9.5 14c-.17 0-.33-.03-.5-.05v2.02c.17.02.33.03.5.03 1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5z"
 }, "0"), /* @__PURE__ */ (0, _jsxRuntime$3.jsx)("path", {
@@ -27468,7 +27477,7 @@ Object.defineProperty(Sort, "__esModule", {
 });
 var default_1$2 = Sort.default = void 0;
 var _createSvgIcon$2 = _interopRequireDefault$2(requireCreateSvgIcon());
-var _jsxRuntime$2 = jsxRuntimeExports;
+var _jsxRuntime$2 = requireJsxRuntime();
 var _default$2 = (0, _createSvgIcon$2.default)(/* @__PURE__ */ (0, _jsxRuntime$2.jsx)("path", {
   d: "M3 18h6v-2H3v2zM3 6v2h18V6H3zm0 7h12v-2H3v2z"
 }), "Sort");
@@ -27481,7 +27490,7 @@ Object.defineProperty(ViewColumn, "__esModule", {
 });
 var default_1$1 = ViewColumn.default = void 0;
 var _createSvgIcon$1 = _interopRequireDefault$1(requireCreateSvgIcon());
-var _jsxRuntime$1 = jsxRuntimeExports;
+var _jsxRuntime$1 = requireJsxRuntime();
 var _default$1 = (0, _createSvgIcon$1.default)(/* @__PURE__ */ (0, _jsxRuntime$1.jsx)("path", {
   d: "M14.67 5v14H9.33V5h5.34zm1 14H21V5h-5.33v14zm-7.34 0V5H3v14h5.33z"
 }), "ViewColumn");
@@ -27494,7 +27503,7 @@ Object.defineProperty(VisibilityOff, "__esModule", {
 });
 var default_1 = VisibilityOff.default = void 0;
 var _createSvgIcon = _interopRequireDefault(requireCreateSvgIcon());
-var _jsxRuntime = jsxRuntimeExports;
+var _jsxRuntime = requireJsxRuntime();
 var _default = (0, _createSvgIcon.default)(/* @__PURE__ */ (0, _jsxRuntime.jsx)("path", {
   d: "M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78 3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z"
 }), "VisibilityOff");
@@ -46194,7 +46203,7 @@ function useController(props) {
     field: __spreadProps(__spreadValues({
       name,
       value
-    }, isBoolean(disabled) || isBoolean(formState.disabled) ? { disabled: formState.disabled || disabled } : {}), {
+    }, isBoolean(disabled) || formState.disabled ? { disabled: formState.disabled || disabled } : {}), {
       onChange: React__default.useCallback((event) => _registerProps.current.onChange({
         target: {
           value: getEventValue(event),
@@ -46747,7 +46756,7 @@ function useFieldArray(props) {
         });
       } else {
         const field = get(control._fields, name);
-        if (field && field._f) {
+        if (field && field._f && !(getValidationModes(control._options.reValidateMode).isOnSubmit && getValidationModes(control._options.mode).isOnSubmit)) {
           validateField(field, control._formValues, control._options.criteriaMode === VALIDATION_MODE.all, control._options.shouldUseNativeValidation, true).then((error) => !isEmptyObject(error) && control._subjects.state.next({
             errors: updateFieldArrayRootError(control._formState.errors, error, name)
           }));
@@ -46981,10 +46990,10 @@ function createFormControl(props = {}, flushRootRender) {
     touchedFields: {},
     dirtyFields: {},
     errors: _options.errors || {},
-    disabled: false
+    disabled: _options.disabled || false
   };
   let _fields = {};
-  let _defaultValues = isObject(_options.defaultValues) || isObject(_options.values) ? cloneObject(_options.defaultValues || _options.values) || {} : {};
+  let _defaultValues = isObject(_options.values) || isObject(_options.defaultValues) ? cloneObject(_options.values || _options.defaultValues) || {} : {};
   let _formValues = _options.shouldUnregister ? {} : cloneObject(_defaultValues);
   let _state = {
     action: false,
@@ -47012,7 +47021,6 @@ function createFormControl(props = {}, flushRootRender) {
     array: createSubject(),
     state: createSubject()
   };
-  const shouldCaptureDirtyFields = props.resetOptions && props.resetOptions.keepDirtyValues;
   const validationModeBeforeSubmit = getValidationModes(_options.mode);
   const validationModeAfterSubmit = getValidationModes(_options.reValidateMode);
   const shouldDisplayAllAssociatedErrors = _options.criteriaMode === VALIDATION_MODE.all;
@@ -47479,6 +47487,7 @@ function createFormControl(props = {}, flushRootRender) {
     }
   };
   const handleSubmit = (onValid, onInvalid) => (e) => __async(this, null, function* () {
+    let onValidError = void 0;
     if (e) {
       e.preventDefault && e.preventDefault();
       e.persist && e.persist();
@@ -47499,7 +47508,11 @@ function createFormControl(props = {}, flushRootRender) {
       _subjects.state.next({
         errors: {}
       });
-      yield onValid(fieldValues, e);
+      try {
+        yield onValid(fieldValues, e);
+      } catch (error) {
+        onValidError = error;
+      }
     } else {
       if (onInvalid) {
         yield onInvalid(__spreadValues({}, _formState.errors), e);
@@ -47510,25 +47523,28 @@ function createFormControl(props = {}, flushRootRender) {
     _subjects.state.next({
       isSubmitted: true,
       isSubmitting: false,
-      isSubmitSuccessful: isEmptyObject(_formState.errors),
+      isSubmitSuccessful: isEmptyObject(_formState.errors) && !onValidError,
       submitCount: _formState.submitCount + 1,
       errors: _formState.errors
     });
+    if (onValidError) {
+      throw onValidError;
+    }
   });
   const resetField = (name, options = {}) => {
     if (get(_fields, name)) {
       if (isUndefined$1(options.defaultValue)) {
-        setValue(name, get(_defaultValues, name));
+        setValue(name, cloneObject(get(_defaultValues, name)));
       } else {
         setValue(name, options.defaultValue);
-        set(_defaultValues, name, options.defaultValue);
+        set(_defaultValues, name, cloneObject(options.defaultValue));
       }
       if (!options.keepTouched) {
         unset(_formState.touchedFields, name);
       }
       if (!options.keepDirty) {
         unset(_formState.dirtyFields, name);
-        _formState.isDirty = options.defaultValue ? _getDirty(name, get(_defaultValues, name)) : _getDirty();
+        _formState.isDirty = options.defaultValue ? _getDirty(name, cloneObject(get(_defaultValues, name))) : _getDirty();
       }
       if (!options.keepError) {
         unset(_formState.errors, name);
@@ -47545,7 +47561,7 @@ function createFormControl(props = {}, flushRootRender) {
       _defaultValues = updatedValues;
     }
     if (!keepStateOptions.keepValues) {
-      if (keepStateOptions.keepDirtyValues || shouldCaptureDirtyFields) {
+      if (keepStateOptions.keepDirtyValues) {
         for (const fieldName of _names.mount) {
           get(_formState.dirtyFields, fieldName) ? set(values2, fieldName, get(_formValues, fieldName)) : setValue(fieldName, get(values2, fieldName));
         }
@@ -47584,13 +47600,13 @@ function createFormControl(props = {}, flushRootRender) {
       focus: ""
     };
     !_state.mount && flushRootRender();
-    _state.mount = !_proxyFormState.isValid || !!keepStateOptions.keepIsValid;
+    _state.mount = !_proxyFormState.isValid || !!keepStateOptions.keepIsValid || !!keepStateOptions.keepDirtyValues;
     _state.watch = !!props.shouldUnregister;
     _subjects.state.next({
       submitCount: keepStateOptions.keepSubmitCount ? _formState.submitCount : 0,
       isDirty: keepStateOptions.keepDirty ? _formState.isDirty : !!(keepStateOptions.keepDefaultValues && !deepEqual(formValues, _defaultValues)),
       isSubmitted: keepStateOptions.keepIsSubmitted ? _formState.isSubmitted : false,
-      dirtyFields: keepStateOptions.keepDirtyValues ? _formState.dirtyFields : keepStateOptions.keepDefaultValues && formValues ? getDirtyFields(_defaultValues, formValues) : {},
+      dirtyFields: keepStateOptions.keepDirtyValues ? keepStateOptions.keepDefaultValues && _formValues ? getDirtyFields(_defaultValues, _formValues) : _formState.dirtyFields : keepStateOptions.keepDefaultValues && formValues ? getDirtyFields(_defaultValues, formValues) : {},
       touchedFields: keepStateOptions.keepTouched ? _formState.touchedFields : {},
       errors: keepStateOptions.keepErrors ? _formState.errors : {},
       isSubmitSuccessful: keepStateOptions.keepIsSubmitSuccessful ? _formState.isSubmitSuccessful : false,
@@ -47704,7 +47720,7 @@ function useForm(props = {}) {
     dirtyFields: {},
     touchedFields: {},
     errors: props.errors || {},
-    disabled: false,
+    disabled: props.disabled || false,
     defaultValues: isFunction(props.defaultValues) ? void 0 : props.defaultValues
   });
   if (!_formControl.current) {
@@ -47758,6 +47774,11 @@ function useForm(props = {}) {
     }
     control._removeUnmounted();
   });
+  React__default.useEffect(() => {
+    props.shouldUnregister && control._subjects.values.next({
+      values: control._getWatch()
+    });
+  }, [props.shouldUnregister, control]);
   _formControl.current.formState = getProxyFormState(formState, control);
   return _formControl.current;
 }

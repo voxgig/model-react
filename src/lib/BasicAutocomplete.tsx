@@ -12,6 +12,7 @@ const BasicAutocompleteShape = Gubu({
   tooldef: {
     kind: Exact('addbutton', 'autocomplete'),
     label: String,
+    defaultvalue: String,
     options: {
       kind: String,
       label: {
@@ -29,7 +30,7 @@ interface BasicAutocompleteProps {
   vxg?: any
 }
 
-function BasicAutocomplete (props: BasicAutocompleteProps) {
+function BasicAutocomplete(props: BasicAutocompleteProps) {
   const { ctx } = props
   const { seneca } = ctx()
 
@@ -38,7 +39,7 @@ function BasicAutocomplete (props: BasicAutocompleteProps) {
 
   const { tooldef } = basicAutocompleteSpec
   let options = {}
-  let value = {}
+  let value: any = {}
 
   // populate options and value for autocomplete
   if ('ent' === tooldef.options.kind) {
@@ -57,6 +58,8 @@ function BasicAutocomplete (props: BasicAutocompleteProps) {
         ent: selected
       }
     }
+
+    console.log('value', value)
   }
 
   const theme = ctx().theme
@@ -64,9 +67,10 @@ function BasicAutocomplete (props: BasicAutocompleteProps) {
   return (
     <ThemeProvider theme={theme}>
       <Autocomplete
+        multiple={true}
         freeSolo
         forcePopupIcon
-        value={value || tooldef.defaultvalue || ''}
+        // value={value.label || tooldef.defaultvalue || ""}
         key={tooldef.name}
         options={resolveOptions(tooldef, options)}
         // disableClearable={ typeof vxg.cmp.BasicHead.tool[tooldef.name].selected != 'object' }
@@ -77,19 +81,19 @@ function BasicAutocomplete (props: BasicAutocompleteProps) {
           return filtered
         }}
         renderInput={params => <TextField {...params} label={tooldef.label} />}
-        onChange={(newval: any) => {
-          seneca.act('aim:app,set:state', {
-            section: 'vxg.cmp.BasicHead.tool.' + tooldef.name + '.selected',
-            content:
-              'search' == tooldef.mode && typeof newval === 'string'
-                ? { [tooldef.options.label.field]: newval }
-                : newval?.ent
-          })
-        }}
-        isOptionEqualToValue={(opt: any, val: any) =>
-          opt === val ||
-          (null != opt && null != val && opt.ent?.id === val.ent?.id)
-        }
+        // onChange={(newval: any) => {
+        //   seneca.act("aim:app,set:state", {
+        //     section: "vxg.cmp.BasicHead.tool." + tooldef.name + ".selected",
+        //     content:
+        //       "search" == tooldef.mode && typeof newval === "string"
+        //         ? { [tooldef.options.label.field]: newval }
+        //         : newval?.ent,
+        //   });
+        // }}
+        // isOptionEqualToValue={(opt: any, val: any) =>
+        //   opt === val ||
+        //   (null != opt && null != val && opt.ent?.id === val.ent?.id)
+        // }
       />
     </ThemeProvider>
   )
@@ -99,7 +103,7 @@ export default BasicAutocomplete
 
 const filter = createFilterOptions()
 
-function resolveOptions (tooldef: any, options: any) {
+function resolveOptions(tooldef: any, options: any) {
   let resolvedOptions = []
 
   if ('ent' === tooldef.options.kind && options) {

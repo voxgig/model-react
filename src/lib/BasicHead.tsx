@@ -30,12 +30,13 @@ const BasicHeadSpecShape = Gubu({
       def: Child({
         kind: Exact('add', 'autocomplete'),
         label: String,
+        defaultvalue: String,
         options: {
-          kind: String,
+          kind: Exact('ent'),
+          ent: String,
           label: {
             field: String
-          },
-          ent: String
+          }
         },
         name: ''
       })
@@ -51,7 +52,7 @@ interface BasicHeadProps {
   vxg?: any
 }
 
-function BasicHead (props: BasicHeadProps) {
+function BasicHead(props: BasicHeadProps) {
   const location = useLocation()
   const { ctx } = props
   const { seneca } = ctx()
@@ -85,7 +86,9 @@ function BasicHead (props: BasicHeadProps) {
 
   // get name and add state from spec
   const viewPath: any = location.pathname.split('/')[2]
-  let add = basicHeadSpec.view[viewPath]?.content?.def?.add || { active: false }
+  let add = basicHeadSpec.view[viewPath]?.content?.def?.add || {
+    active: false
+  }
   const viewName = basicHeadSpec.view[viewPath]?.name || ''
 
   const theme = useTheme()
@@ -116,6 +119,33 @@ function BasicHead (props: BasicHeadProps) {
         <Toolbar>
           <img src={basicHeadSpec.head.logo.img} style={{ width: '5rem' }} />
           <div style={{ flexGrow: 1 }}></div>
+          {tooldefs.map(tooldef => {
+            if ('autocomplete' === tooldef.kind) {
+              return (
+                <BasicAutocomplete
+                  spec={{ tooldef: tooldef }}
+                  ctx={ctx}
+                  key={tooldef.name}
+                />
+              )
+            } else if ('add' === tooldef.kind) {
+              return (
+                <BasicButton
+                  variant='outlined'
+                  key={tooldef.name}
+                  sx={{
+                    display: add.active ? null : 'none',
+                    textTransform: 'capitalize'
+                  }}
+                  size='large'
+                  onClick={() => addItem(seneca, led_add)}
+                >
+                  {tooldef.label + ' ' + viewName}
+                </BasicButton>
+              )
+            }
+          })}
+          {/* Avatar */}
           <BasicButton onClick={handleAvatarClick}>
             <Avatar
               sx={{ bgcolor: purple[300], color: 'white', fontWeight: 100 }}
@@ -134,6 +164,7 @@ function BasicHead (props: BasicHeadProps) {
           >
             <MenuItem onClick={handleLogout}>Logout</MenuItem>
           </Menu>
+          {/* Avatar */}
         </Toolbar>
       </BasicAppBar>
     )
@@ -199,7 +230,7 @@ function BasicHead (props: BasicHeadProps) {
 export default BasicHead
 
 // updates backend when user toggles BasicSide
-function onOpen (seneca: any) {
+function onOpen(seneca: any) {
   seneca.act('aim:app,set:state', {
     section: 'vxg.cmp.BasicSide.show',
     content: true
@@ -207,7 +238,7 @@ function onOpen (seneca: any) {
 }
 
 // notify BasicLed to switch to add mode
-function addItem (seneca: any, led_add: any) {
+function addItem(seneca: any, led_add: any) {
   seneca.act('aim:app,set:state', {
     section: 'vxg.trigger.led.add',
     content: ++led_add
