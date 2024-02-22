@@ -41,7 +41,10 @@ function BasicLedHead (props: any) {
   
   return (
     <Box className="bxg-BasicLedHead">
-      <Toolbar className="vxg-BasicHead-toolbar" {...spec.mui.Toolbar}>
+      <Toolbar
+        className="vxg-BasicLedHead-toolbar"
+        variant="dense"
+      >
         <Button
           color="inherit"
           onClick={()=>navigate(-1)}

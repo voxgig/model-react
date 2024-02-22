@@ -17,6 +17,12 @@ html {
     display: flex;
 }
 
+.vxg-BasicLedHead-toolbar {
+    display: flex;
+    background-color: #eee;
+    margin-bottom: 16px;
+}
+
 
 .vxg-BasicHeadTool-logo > img {
     width: 5rem;
