@@ -41,7 +41,8 @@ const BasicHeadSpecShape = Gubu({
         name: ''
       })
     },
-    app: {}
+    app: {},
+    cookie: {}
   },
   view: {}
 })
@@ -100,12 +101,22 @@ function BasicHead(props: BasicHeadProps) {
     setAnchorEl(null)
   }
 
+  function deleteCookie(cookieName: any) {
+    const date = new Date()
+    date.setTime(date.getTime() - 1) // Set to a past date
+    const expires = '; expires=' + date.toUTCString()
+    document.cookie = cookieName + '=;' + expires + '; path=/'
+  }
+
   const handleLogout = async () => {
     const signout = await seneca.post('aim:web,on:auth,signout:user')
 
-    console.log('signout', signout)
-
-    document.location.href = document.location.origin + '/'
+    const cookieName = basicHeadSpec.head?.cookie?.name
+    if (cookieName) {
+      deleteCookie(cookieName)
+      console.log('signout', signout)
+      document.location.href = document.location.origin + '/'
+    }
   }
 
   if (basicHeadSpec.head.variant === 'permanent') {
