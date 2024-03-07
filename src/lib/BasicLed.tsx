@@ -72,7 +72,7 @@ function BasicLed (props: any) {
   }, [])
 
   useEffect(() => {
-    console.log('useEffect entState, entlist', canon)
+    // console.log('useEffect entState, entlist', canon)
 
     if ('none' === entState) {
       setIsLoading(true)

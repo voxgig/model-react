@@ -56,7 +56,7 @@ var __async = (__this, __arguments, generator) => {
   });
 };
 import * as React from "react";
-import React__default, { createElement, useState, useEffect, isValidElement, Children, cloneElement, useMemo, useRef, useCallback, Fragment, memo as memo$2, useLayoutEffect } from "react";
+import React__default, { createElement, useState, useEffect, Fragment, isValidElement, Children, cloneElement, useMemo, useRef, useCallback, memo as memo$2, useLayoutEffect } from "react";
 import { useSelector } from "react-redux";
 import { useLocation, useNavigate, Link, Routes, Route } from "react-router-dom";
 import { Button as Button$1, ThemeProvider as ThemeProvider$2, Autocomplete, TextField as TextField$1, createFilterOptions as createFilterOptions$1, useTheme as useTheme$4, Toolbar as Toolbar$1, Avatar, Menu as Menu$1, MenuItem as MenuItem$1, IconButton as IconButton$1, Typography as Typography$1, List as List$1, ListItem, ListItemButton, ListItemIcon as ListItemIcon$1, ListItemText as ListItemText$1, Divider as Divider$1, Drawer as Drawer$1, Box as Box$2, Grid as Grid$1, LinearProgress as LinearProgress$1, Chip as Chip$1, Container as Container$2 } from "@mui/material";
@@ -20037,6 +20037,8 @@ const BasicAutocompleteShape = gubu_minExports.Gubu({
     kind: gubu_minExports.Exact("addbutton", "autocomplete"),
     label: String,
     defaultvalue: String,
+    multiple: false,
+    forcePopupIcon: false,
     options: {
       kind: String,
       label: {
@@ -20068,15 +20070,14 @@ function BasicAutocomplete(props) {
         ent: selected
       };
     }
-    console.log("value", value);
   }
   const theme = ctx().theme;
   return /* @__PURE__ */ jsxRuntimeExports.jsx(ThemeProvider$2, { theme, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
     Autocomplete,
     {
-      multiple: true,
+      multiple: tooldef.multiple || false,
       freeSolo: true,
-      forcePopupIcon: true,
+      forcePopupIcon: tooldef.forcePopupIcon || false,
       options: resolveOptions(tooldef, options),
       size: "small",
       filterOptions: (options2, params) => {
@@ -20304,6 +20305,8 @@ const BasicHeadSpecShape = gubu_minExports.Gubu({
         kind: gubu_minExports.Exact("add", "autocomplete"),
         label: String,
         defaultvalue: String,
+        multiple: false,
+        forcePopupIcon: false,
         options: {
           kind: gubu_minExports.Exact("ent"),
           ent: String,
@@ -20548,7 +20551,7 @@ function BasicSideMenuItem(props) {
     Object.entries(section.item).map(([itemKey, item]) => {
       return (
         // TODO: Load user role from redux store
-        isAuthorized(userRole, item.access) && /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+        isAuthorized(userRole, item.access) && /* @__PURE__ */ jsxRuntimeExports.jsxs(Fragment, { children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(
             ListItem,
             {
@@ -20562,11 +20565,11 @@ function BasicSideMenuItem(props) {
             itemKey
           ),
           /* @__PURE__ */ jsxRuntimeExports.jsx(Divider$1, { className: "BasicSideMenuItem-itemDivider" })
-        ] })
+        ] }, itemKey)
       );
     }),
     section.divider && /* @__PURE__ */ jsxRuntimeExports.jsx(Divider$1, {})
-  ] }, sectionKey);
+  ] }, section);
 }
 function makeIcon(name) {
   const Icon = iconmap[name];
@@ -49291,7 +49294,6 @@ function BasicLed(props) {
     setIsLoading(true);
   }, []);
   useEffect(() => {
-    console.log("useEffect entState, entlist", canon);
     if ("none" === entState) {
       setIsLoading(true);
       let q = custom.BasicLed.query(basicLedSpec, cmpState);

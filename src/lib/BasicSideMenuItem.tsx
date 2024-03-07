@@ -34,6 +34,7 @@ import {
 } from '@mui/icons-material'
 import { Gubu } from 'gubu'
 import { useSelector } from 'react-redux'
+import { Fragment } from 'react'
 
 const iconmap: any = {
   home: HomeOutlinedIcon,
@@ -77,7 +78,7 @@ const BasicSideMenuItemSpecShape = Gubu({
   }
 })
 
-function BasicSideMenuItem(props: any) {
+function BasicSideMenuItem (props: any) {
   const { sectionKey, onItemSelect } = props
 
   const viewPath: any = location.pathname.split('/')[2]
@@ -91,12 +92,12 @@ function BasicSideMenuItem(props: any) {
   const section = basicSideMenuItemSpec.section
 
   return (
-    <List key={sectionKey}>
+    <List key={section}>
       {Object.entries(section.item).map(([itemKey, item]: [any, any]) => {
         return (
           // TODO: Load user role from redux store
           isAuthorized(userRole, item.access) && (
-            <>
+            <Fragment key={itemKey}>
               <ListItem
                 key={itemKey}
                 disablePadding
@@ -108,7 +109,7 @@ function BasicSideMenuItem(props: any) {
                 </ListItemButton>
               </ListItem>
               <Divider className='BasicSideMenuItem-itemDivider' />
-            </>
+            </Fragment>
           )
         )
       })}
@@ -119,14 +120,14 @@ function BasicSideMenuItem(props: any) {
 
 export default BasicSideMenuItem
 
-function makeIcon(name: string) {
+function makeIcon (name: string) {
   const Icon = iconmap[name]
   return <Icon />
 }
 
 // TODO: Move isAuthorized to utils
 // TODO: Allow custom authorization function
-function isAuthorized(userRole: string, authorizedRoles: any): boolean {
+function isAuthorized (userRole: string, authorizedRoles: any): boolean {
   return (
     authorizedRoles.hasOwnProperty(userRole) &&
     authorizedRoles[userRole] === true

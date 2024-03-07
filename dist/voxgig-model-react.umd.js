@@ -20049,6 +20049,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       kind: gubu_minExports.Exact("addbutton", "autocomplete"),
       label: String,
       defaultvalue: String,
+      multiple: false,
+      forcePopupIcon: false,
       options: {
         kind: String,
         label: {
@@ -20080,15 +20082,14 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           ent: selected
         };
       }
-      console.log("value", value);
     }
     const theme = ctx().theme;
     return /* @__PURE__ */ jsxRuntimeExports.jsx(material.ThemeProvider, { theme, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
       material.Autocomplete,
       {
-        multiple: true,
+        multiple: tooldef.multiple || false,
         freeSolo: true,
-        forcePopupIcon: true,
+        forcePopupIcon: tooldef.forcePopupIcon || false,
         options: resolveOptions(tooldef, options),
         size: "small",
         filterOptions: (options2, params) => {
@@ -20316,6 +20317,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           kind: gubu_minExports.Exact("add", "autocomplete"),
           label: String,
           defaultvalue: String,
+          multiple: false,
+          forcePopupIcon: false,
           options: {
             kind: gubu_minExports.Exact("ent"),
             ent: String,
@@ -20560,7 +20563,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       Object.entries(section.item).map(([itemKey, item]) => {
         return (
           // TODO: Load user role from redux store
-          isAuthorized(userRole, item.access) && /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+          isAuthorized(userRole, item.access) && /* @__PURE__ */ jsxRuntimeExports.jsxs(React.Fragment, { children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx(
               material.ListItem,
               {
@@ -20574,11 +20577,11 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
               itemKey
             ),
             /* @__PURE__ */ jsxRuntimeExports.jsx(material.Divider, { className: "BasicSideMenuItem-itemDivider" })
-          ] })
+          ] }, itemKey)
         );
       }),
       section.divider && /* @__PURE__ */ jsxRuntimeExports.jsx(material.Divider, {})
-    ] }, sectionKey);
+    ] }, section);
   }
   function makeIcon(name) {
     const Icon = iconmap[name];
@@ -49303,7 +49306,6 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       setIsLoading(true);
     }, []);
     React.useEffect(() => {
-      console.log("useEffect entState, entlist", canon);
       if ("none" === entState) {
         setIsLoading(true);
         let q = custom.BasicLed.query(basicLedSpec, cmpState);

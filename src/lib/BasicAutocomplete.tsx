@@ -13,6 +13,8 @@ const BasicAutocompleteShape = Gubu({
     kind: Exact('addbutton', 'autocomplete'),
     label: String,
     defaultvalue: String,
+    multiple: false,
+    forcePopupIcon: false,
     options: {
       kind: String,
       label: {
@@ -30,7 +32,7 @@ interface BasicAutocompleteProps {
   vxg?: any
 }
 
-function BasicAutocomplete(props: BasicAutocompleteProps) {
+function BasicAutocomplete (props: BasicAutocompleteProps) {
   const { ctx } = props
   const { seneca } = ctx()
 
@@ -59,7 +61,7 @@ function BasicAutocomplete(props: BasicAutocompleteProps) {
       }
     }
 
-    console.log('value', value)
+    // console.log('value', value)
   }
 
   const theme = ctx().theme
@@ -67,9 +69,9 @@ function BasicAutocomplete(props: BasicAutocompleteProps) {
   return (
     <ThemeProvider theme={theme}>
       <Autocomplete
-        multiple={true}
+        multiple={tooldef.multiple || false}
         freeSolo
-        forcePopupIcon
+        forcePopupIcon={tooldef.forcePopupIcon || false}
         // value={value.label || tooldef.defaultvalue || ""}
         key={tooldef.name}
         options={resolveOptions(tooldef, options)}
@@ -103,7 +105,7 @@ export default BasicAutocomplete
 
 const filter = createFilterOptions()
 
-function resolveOptions(tooldef: any, options: any) {
+function resolveOptions (tooldef: any, options: any) {
   let resolvedOptions = []
 
   if ('ent' === tooldef.options.kind && options) {
