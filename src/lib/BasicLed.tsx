@@ -289,6 +289,9 @@ function BasicLed (props: any) {
             <Typography variant='body2'>{cellValue}%</Typography>
           </Box>
         )
+      case 't_c':
+        const date = new Date(cellValue).toISOString()
+        return <Box sx={{ textAlign: 'left' }}>{date}</Box>
       default:
         textAlign = field.textAlign || 'left'
         return (
