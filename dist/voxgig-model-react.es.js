@@ -49456,6 +49456,9 @@ function BasicLed(props) {
             ] })
           }
         );
+      case "t_c":
+        const date = new Date(cellValue).toISOString();
+        return /* @__PURE__ */ jsxRuntimeExports.jsx(Box$2, { sx: { textAlign: "left" }, children: date });
       default:
         textAlign2 = field.textAlign || "left";
         return /* @__PURE__ */ jsxRuntimeExports.jsx(Box$2, { sx: { textAlign: textAlign2 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Typography$1, { variant: "body2", children: cellValue }) });

@@ -49468,6 +49468,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
               ] })
             }
           );
+        case "t_c":
+          const date = new Date(cellValue).toISOString();
+          return /* @__PURE__ */ jsxRuntimeExports.jsx(material.Box, { sx: { textAlign: "left" }, children: date });
         default:
           textAlign2 = field.textAlign || "left";
           return /* @__PURE__ */ jsxRuntimeExports.jsx(material.Box, { sx: { textAlign: textAlign2 }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(material.Typography, { variant: "body2", children: cellValue }) });
