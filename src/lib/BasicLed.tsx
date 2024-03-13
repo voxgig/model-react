@@ -290,7 +290,13 @@ function BasicLed (props: any) {
           </Box>
         )
       case 't_c':
-        const date = new Date(cellValue) || new Date()
+        if (!cellValue) {
+          return <Box sx={{ textAlign: 'left' }}>-</Box>
+        }
+        const date = new Date(cellValue)
+        if (isNaN(date.getTime())) {
+          return <Box sx={{ textAlign: 'left' }}>Invalid date</Box>
+        }
         const dateStr = date.toISOString()
         return <Box sx={{ textAlign: 'left' }}>{dateStr}</Box>
       default:

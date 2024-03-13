@@ -49377,6 +49377,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const renderCell = ({ cell, field, row }) => {
       const cellValue = cell.getValue();
       let entityId, action2, textAlign2;
+      console.log("renderCell", field);
       switch (field.displayType) {
         case "link":
           const target = field.target;
@@ -49476,7 +49477,13 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
             }
           );
         case "t_c":
-          const date = new Date(cellValue) || /* @__PURE__ */ new Date();
+          if (!cellValue) {
+            return /* @__PURE__ */ jsxRuntimeExports.jsx(material.Box, { sx: { textAlign: "left" }, children: "-" });
+          }
+          const date = new Date(cellValue);
+          if (isNaN(date.getTime())) {
+            return /* @__PURE__ */ jsxRuntimeExports.jsx(material.Box, { sx: { textAlign: "left" }, children: "Invalid date" });
+          }
           const dateStr = date.toISOString();
           return /* @__PURE__ */ jsxRuntimeExports.jsx(material.Box, { sx: { textAlign: "left" }, children: dateStr });
         default:
