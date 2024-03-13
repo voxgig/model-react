@@ -290,8 +290,9 @@ function BasicLed (props: any) {
           </Box>
         )
       case 't_c':
-        const date = new Date(cellValue).toISOString()
-        return <Box sx={{ textAlign: 'left' }}>{date}</Box>
+        const date = new Date(cellValue) || new Date()
+        const dateStr = date.toISOString()
+        return <Box sx={{ textAlign: 'left' }}>{dateStr}</Box>
       default:
         textAlign = field.textAlign || 'left'
         return (
