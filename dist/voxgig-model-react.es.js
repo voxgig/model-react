@@ -59,7 +59,7 @@ import * as React from "react";
 import React__default, { createElement, useState, useEffect, Fragment, isValidElement, Children, cloneElement, useMemo, useRef, useCallback, memo as memo$2, useLayoutEffect } from "react";
 import { useSelector } from "react-redux";
 import { useLocation, useNavigate, Link, Routes, Route } from "react-router-dom";
-import { Button as Button$1, ThemeProvider as ThemeProvider$2, Autocomplete, TextField as TextField$1, createFilterOptions as createFilterOptions$1, useTheme as useTheme$4, Toolbar as Toolbar$1, Avatar, Menu as Menu$1, MenuItem as MenuItem$1, IconButton as IconButton$1, Typography as Typography$1, List as List$1, ListItem, ListItemButton, ListItemIcon as ListItemIcon$1, ListItemText as ListItemText$1, Divider as Divider$1, Drawer as Drawer$1, Box as Box$2, Grid as Grid$1, LinearProgress as LinearProgress$1, Chip as Chip$1, Container as Container$2 } from "@mui/material";
+import { Button as Button$1, ThemeProvider as ThemeProvider$2, Autocomplete, TextField as TextField$1, useTheme as useTheme$4, Toolbar as Toolbar$1, Avatar, Menu as Menu$1, MenuItem as MenuItem$1, IconButton as IconButton$1, Typography as Typography$1, List as List$1, ListItem, ListItemButton, ListItemIcon as ListItemIcon$1, ListItemText as ListItemText$1, Divider as Divider$1, Drawer as Drawer$1, Box as Box$2, createFilterOptions as createFilterOptions$1, Grid as Grid$1, LinearProgress as LinearProgress$1, Chip as Chip$1, Container as Container$2 } from "@mui/material";
 import * as ReactDOM from "react-dom";
 import ReactDOM__default, { flushSync } from "react-dom";
 import emStyled from "@emotion/styled";
@@ -20054,23 +20054,29 @@ function BasicAutocomplete(props) {
   const { seneca } = ctx();
   const basicAutocompleteSpec = BasicAutocompleteShape(props.spec);
   const { tooldef } = basicAutocompleteSpec;
-  let options = {};
-  let value = {};
+  let optionState;
+  let options = [];
+  let selected = [];
+  let canon = "fox/project";
+  const [value, setValue] = useState([]);
   if ("ent" === tooldef.options.kind) {
-    let canon = tooldef.options.ent;
-    options = {
-      ents: useSelector((state) => state.main.vxg.ent.list.main[canon])
-    };
-    let selected = useSelector(
+    canon = tooldef.options.ent;
+    optionState = useSelector(
+      (state) => state.main.vxg.ent.meta.main[canon].state
+    );
+    options = useSelector((state) => state.main.vxg.ent.list.main[canon]);
+    selected = useSelector(
       (state) => state.main.vxg.cmp.BasicHead.tool[tooldef.name].selected
     );
-    if (selected) {
-      value = {
-        label: selected[tooldef.options.label.field],
-        ent: selected
-      };
-    }
   }
+  useEffect(() => {
+    if (optionState === "none") {
+      seneca.entity(canon).list$();
+    }
+    if (optionState === "loaded" && selected !== void 0 && Array.isArray(selected)) {
+      setValue(options.filter((option) => selected.includes(option.id)));
+    }
+  }, [optionState, options]);
   const theme = ctx().theme;
   return /* @__PURE__ */ jsxRuntimeExports.jsx(ThemeProvider$2, { theme, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
     Autocomplete,
@@ -20078,28 +20084,27 @@ function BasicAutocomplete(props) {
       multiple: tooldef.multiple || false,
       freeSolo: true,
       forcePopupIcon: tooldef.forcePopupIcon || false,
-      options: resolveOptions(tooldef, options),
-      size: "small",
-      filterOptions: (options2, params) => {
-        const filtered = filter$1(options2, params);
-        return filtered;
+      onChange: (event, newValue) => __async(this, null, function* () {
+        console.log(newValue);
+        setValue(newValue);
+        yield seneca.post("aim:app,set:state", {
+          section: `vxg.cmp.BasicHead.tool.${tooldef.name}`,
+          content: {
+            selected: [...newValue.map((option) => option.id)]
+          }
+        });
+      }),
+      value: value || [],
+      options,
+      getOptionLabel: (option) => {
+        var _a, _b;
+        return option ? option[(_b = (_a = tooldef == null ? void 0 : tooldef.options) == null ? void 0 : _a.label) == null ? void 0 : _b.field] : null;
       },
+      size: "small",
       renderInput: (params) => /* @__PURE__ */ jsxRuntimeExports.jsx(TextField$1, __spreadProps(__spreadValues({}, params), { label: tooldef.label }))
     },
     tooldef.name
   ) });
-}
-const filter$1 = createFilterOptions$1();
-function resolveOptions(tooldef, options) {
-  let resolvedOptions = [];
-  if ("ent" === tooldef.options.kind && options) {
-    let ents = options.ents || [];
-    resolvedOptions = ents.map((ent) => ({
-      label: ent[tooldef.options.label.field],
-      ent
-    }));
-  }
-  return resolvedOptions;
 }
 const pink = {
   50: "#fce4ec",
@@ -49309,13 +49314,15 @@ function BasicLed(props) {
         const startDate = filters.prefacStart.selected;
         const endDate = filters.prefacEnd.selected;
         const unallocatedOnly = filters.unallocated.selected;
+        const projects = cmpState.BasicHead.tool.project.selected;
         const filteredData = entlist.filter((item2) => {
           const isSupplierMatch = supplierId === "" || item2.suppliers.includes(supplierId);
           const isCEIDMatch = ceid === "" || item2.ceids.includes(ceid);
           const isToolIdMatch = toolId === "" || item2.tools.includes(toolId);
           const isDateRangeMatch = (startDate === "" || item2.earlirestPrefac >= startDate) && (endDate === "" || item2.earlirestPrefac <= endDate);
           const unallocatedMatch = !unallocatedOnly || item2.qtyasn < 100;
-          return isSupplierMatch && isCEIDMatch && isToolIdMatch && isDateRangeMatch && unallocatedMatch;
+          const projectMatch = projects.includes(item2.project_id);
+          return isSupplierMatch && isCEIDMatch && isToolIdMatch && isDateRangeMatch && unallocatedMatch && projectMatch;
         });
         setData(filteredData);
       } else {

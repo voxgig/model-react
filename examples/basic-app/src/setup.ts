@@ -56,6 +56,9 @@ export function getMain () {
                 selected: {
                   title: 'Title'
                 }
+              },
+              project: {
+                selected: ['p01', 'p02']
               }
             }
           },

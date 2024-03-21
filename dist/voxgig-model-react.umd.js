@@ -20066,23 +20066,29 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const { seneca } = ctx();
     const basicAutocompleteSpec = BasicAutocompleteShape(props.spec);
     const { tooldef } = basicAutocompleteSpec;
-    let options = {};
-    let value = {};
+    let optionState;
+    let options = [];
+    let selected = [];
+    let canon = "fox/project";
+    const [value, setValue] = React.useState([]);
     if ("ent" === tooldef.options.kind) {
-      let canon = tooldef.options.ent;
-      options = {
-        ents: reactRedux.useSelector((state) => state.main.vxg.ent.list.main[canon])
-      };
-      let selected = reactRedux.useSelector(
+      canon = tooldef.options.ent;
+      optionState = reactRedux.useSelector(
+        (state) => state.main.vxg.ent.meta.main[canon].state
+      );
+      options = reactRedux.useSelector((state) => state.main.vxg.ent.list.main[canon]);
+      selected = reactRedux.useSelector(
         (state) => state.main.vxg.cmp.BasicHead.tool[tooldef.name].selected
       );
-      if (selected) {
-        value = {
-          label: selected[tooldef.options.label.field],
-          ent: selected
-        };
-      }
     }
+    React.useEffect(() => {
+      if (optionState === "none") {
+        seneca.entity(canon).list$();
+      }
+      if (optionState === "loaded" && selected !== void 0 && Array.isArray(selected)) {
+        setValue(options.filter((option) => selected.includes(option.id)));
+      }
+    }, [optionState, options]);
     const theme = ctx().theme;
     return /* @__PURE__ */ jsxRuntimeExports.jsx(material.ThemeProvider, { theme, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
       material.Autocomplete,
@@ -20090,28 +20096,27 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         multiple: tooldef.multiple || false,
         freeSolo: true,
         forcePopupIcon: tooldef.forcePopupIcon || false,
-        options: resolveOptions(tooldef, options),
-        size: "small",
-        filterOptions: (options2, params) => {
-          const filtered = filter$1(options2, params);
-          return filtered;
+        onChange: (event, newValue) => __async(this, null, function* () {
+          console.log(newValue);
+          setValue(newValue);
+          yield seneca.post("aim:app,set:state", {
+            section: `vxg.cmp.BasicHead.tool.${tooldef.name}`,
+            content: {
+              selected: [...newValue.map((option) => option.id)]
+            }
+          });
+        }),
+        value: value || [],
+        options,
+        getOptionLabel: (option) => {
+          var _a, _b;
+          return option ? option[(_b = (_a = tooldef == null ? void 0 : tooldef.options) == null ? void 0 : _a.label) == null ? void 0 : _b.field] : null;
         },
+        size: "small",
         renderInput: (params) => /* @__PURE__ */ jsxRuntimeExports.jsx(material.TextField, __spreadProps(__spreadValues({}, params), { label: tooldef.label }))
       },
       tooldef.name
     ) });
-  }
-  const filter$1 = material.createFilterOptions();
-  function resolveOptions(tooldef, options) {
-    let resolvedOptions = [];
-    if ("ent" === tooldef.options.kind && options) {
-      let ents = options.ents || [];
-      resolvedOptions = ents.map((ent) => ({
-        label: ent[tooldef.options.label.field],
-        ent
-      }));
-    }
-    return resolvedOptions;
   }
   const pink = {
     50: "#fce4ec",
@@ -49321,13 +49326,15 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           const startDate = filters.prefacStart.selected;
           const endDate = filters.prefacEnd.selected;
           const unallocatedOnly = filters.unallocated.selected;
+          const projects = cmpState.BasicHead.tool.project.selected;
           const filteredData = entlist.filter((item2) => {
             const isSupplierMatch = supplierId === "" || item2.suppliers.includes(supplierId);
             const isCEIDMatch = ceid === "" || item2.ceids.includes(ceid);
             const isToolIdMatch = toolId === "" || item2.tools.includes(toolId);
             const isDateRangeMatch = (startDate === "" || item2.earlirestPrefac >= startDate) && (endDate === "" || item2.earlirestPrefac <= endDate);
             const unallocatedMatch = !unallocatedOnly || item2.qtyasn < 100;
-            return isSupplierMatch && isCEIDMatch && isToolIdMatch && isDateRangeMatch && unallocatedMatch;
+            const projectMatch = projects.includes(item2.project_id);
+            return isSupplierMatch && isCEIDMatch && isToolIdMatch && isDateRangeMatch && unallocatedMatch && projectMatch;
           });
           setData(filteredData);
         } else {

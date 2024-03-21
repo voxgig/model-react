@@ -91,6 +91,8 @@ function BasicLed (props: any) {
         const startDate = filters.prefacStart.selected
         const endDate = filters.prefacEnd.selected
         const unallocatedOnly = filters.unallocated.selected
+        const projects = cmpState.BasicHead.tool.project.selected //array of project ids
+
         const filteredData = entlist.filter((item: any) => {
           const isSupplierMatch =
             supplierId === '' || item.suppliers.includes(supplierId)
@@ -100,12 +102,14 @@ function BasicLed (props: any) {
             (startDate === '' || item.earlirestPrefac >= startDate) &&
             (endDate === '' || item.earlirestPrefac <= endDate)
           const unallocatedMatch = !unallocatedOnly || item.qtyasn < 100
+          const projectMatch = projects.includes(item.project_id)
           return (
             isSupplierMatch &&
             isCEIDMatch &&
             isToolIdMatch &&
             isDateRangeMatch &&
-            unallocatedMatch
+            unallocatedMatch &&
+            projectMatch
           )
         })
 

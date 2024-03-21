@@ -5,6 +5,7 @@ import {
   ThemeProvider
 } from '@mui/material'
 import { Exact, Gubu } from 'gubu'
+import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 
 // Define spec shape with Gubu
@@ -40,29 +41,42 @@ function BasicAutocomplete (props: BasicAutocompleteProps) {
   const basicAutocompleteSpec = BasicAutocompleteShape(props.spec)
 
   const { tooldef } = basicAutocompleteSpec
-  let options = {}
-  let value: any = {}
+  let optionState: any
+  let options: any = []
+  let selected: any = []
+  let canon: any = 'fox/project'
+
+  const [value, setValue] = useState<any | null>([])
+
+  // const optionState = useSelector(
+  //   (state: any) => state.main.vxg.ent.meta.main['fox/project'].state
+  // )
 
   // populate options and value for autocomplete
   if ('ent' === tooldef.options.kind) {
-    let canon = tooldef.options.ent
-    options = {
-      ents: useSelector((state: any) => state.main.vxg.ent.list.main[canon])
-    }
-
-    let selected = useSelector(
-      (state: any) => state.main.vxg.cmp.BasicHead.tool[tooldef.name].selected
+    canon = tooldef.options.ent
+    optionState = useSelector(
+      (state: any) => state.main.vxg.ent.meta.main[canon].state
     )
 
-    if (selected) {
-      value = {
-        label: selected[tooldef.options.label.field],
-        ent: selected
-      }
-    }
-
-    // console.log('value', value)
+    options = useSelector((state: any) => state.main.vxg.ent.list.main[canon])
+    selected = useSelector(
+      (state: any) => state.main.vxg.cmp.BasicHead.tool[tooldef.name].selected
+    )
   }
+
+  useEffect(() => {
+    if (optionState === 'none') {
+      seneca.entity(canon).list$()
+    }
+    if (
+      optionState === 'loaded' &&
+      selected !== undefined &&
+      Array.isArray(selected)
+    ) {
+      setValue(options.filter((option: any) => selected.includes(option.id)))
+    }
+  }, [optionState, options])
 
   const theme = ctx().theme
 
@@ -72,30 +86,24 @@ function BasicAutocomplete (props: BasicAutocompleteProps) {
         multiple={tooldef.multiple || false}
         freeSolo
         forcePopupIcon={tooldef.forcePopupIcon || false}
-        // value={value.label || tooldef.defaultvalue || ""}
-        key={tooldef.name}
-        options={resolveOptions(tooldef, options)}
-        // disableClearable={ typeof vxg.cmp.BasicHead.tool[tooldef.name].selected != 'object' }
-        size='small'
-        filterOptions={(options: any, params: any) => {
-          const filtered = filter(options, params)
-          // const { inputValue } = params
-          return filtered
+        onChange={async (event: any, newValue: any) => {
+          console.log(newValue)
+          setValue(newValue)
+          await seneca.post('aim:app,set:state', {
+            section: `vxg.cmp.BasicHead.tool.${tooldef.name}`,
+            content: {
+              selected: [...newValue.map((option: any) => option.id)]
+            }
+          })
         }}
+        key={tooldef.name}
+        value={value || []}
+        options={options}
+        getOptionLabel={(option: any) =>
+          option ? option[tooldef?.options?.label?.field] : null
+        }
+        size='small'
         renderInput={params => <TextField {...params} label={tooldef.label} />}
-        // onChange={(newval: any) => {
-        //   seneca.act("aim:app,set:state", {
-        //     section: "vxg.cmp.BasicHead.tool." + tooldef.name + ".selected",
-        //     content:
-        //       "search" == tooldef.mode && typeof newval === "string"
-        //         ? { [tooldef.options.label.field]: newval }
-        //         : newval?.ent,
-        //   });
-        // }}
-        // isOptionEqualToValue={(opt: any, val: any) =>
-        //   opt === val ||
-        //   (null != opt && null != val && opt.ent?.id === val.ent?.id)
-        // }
       />
     </ThemeProvider>
   )
@@ -103,18 +111,21 @@ function BasicAutocomplete (props: BasicAutocompleteProps) {
 
 export default BasicAutocomplete
 
-const filter = createFilterOptions()
+// const filter = createFilterOptions()
 
-function resolveOptions (tooldef: any, options: any) {
-  let resolvedOptions = []
+// function resolveOptions (tooldef: any, options: any) {
+//   let resolvedOptions = []
 
-  if ('ent' === tooldef.options.kind && options) {
-    let ents = options.ents || []
-    resolvedOptions = ents.map((ent: any) => ({
-      label: ent[tooldef.options.label.field],
-      ent
-    }))
-  }
+//   if ('ent' === tooldef.options.kind && options) {
+//     console.log('resolveOptions-options', options)
+//     let ents = options.ents || []
+//     resolvedOptions = ents.map((ent: any) => ({
+//       label: ent[tooldef.options.label.field],
+//       ent
+//     }))
+//   }
 
-  return resolvedOptions
-}
+//   console.log('resolvedOptions', resolvedOptions)
+
+//   return resolvedOptions
+// }
