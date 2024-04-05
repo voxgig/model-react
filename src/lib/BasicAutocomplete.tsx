@@ -33,7 +33,7 @@ interface BasicAutocompleteProps {
   vxg?: any
 }
 
-function BasicAutocomplete (props: BasicAutocompleteProps) {
+function BasicAutocomplete(props: BasicAutocompleteProps) {
   const { ctx } = props
   const { seneca } = ctx()
 
@@ -67,8 +67,11 @@ function BasicAutocomplete (props: BasicAutocompleteProps) {
 
   useEffect(() => {
     if (optionState === 'none') {
-      seneca.entity(canon).list$()
+      //seneca.entity(canon).list$()
     }
+  }, [optionState])
+
+  useEffect(() => {
     if (
       optionState === 'loaded' &&
       selected !== undefined &&
@@ -76,7 +79,7 @@ function BasicAutocomplete (props: BasicAutocompleteProps) {
     ) {
       setValue(options.filter((option: any) => selected.includes(option.id)))
     }
-  }, [optionState, options])
+  }, [options])
 
   const theme = ctx().theme
 
