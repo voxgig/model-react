@@ -32,7 +32,7 @@ const BasicLedSpecShape = Gubu({
 })
 
 // BasicLed renders a list of entities (with BasicList) or a form to edit them (with BasicEdit)
-function BasicLed (props: any) {
+function BasicLed(props: any) {
   const { ctx, action } = props
   const { seneca, custom } = ctx()
   const [item, setItem] = useState({} as any)
@@ -230,11 +230,21 @@ function BasicLed (props: any) {
           )
         }
       case 'progressBar':
-        // FIXME: Accept dynamic width, border, height, etc.
+        // TODO: Accept dynamic width, border, height, etc.
+
+        const suppliersNumber = row.original.suppliers?.length || 0
+
+        // divide cellValue by suppliersNumber and cap it at 100
+        let progressValue = 0
+        if (suppliersNumber > 0) {
+          const rawValue = cellValue / suppliersNumber
+          progressValue = rawValue > 100 ? 100 : rawValue
+        }
+
         return (
           <LinearProgress
             variant='determinate'
-            value={cellValue}
+            value={progressValue}
             color='success'
             sx={{ height: '9px', border: '2px solid #ccc', width: '80%' }}
           />

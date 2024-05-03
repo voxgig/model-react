@@ -49364,6 +49364,7 @@ function BasicLed(props) {
     })
   );
   const renderCell = ({ cell, field, row }) => {
+    var _a2;
     const cellValue = cell.getValue();
     let entityId, action2, textAlign2;
     switch (field.displayType) {
@@ -49408,11 +49409,17 @@ function BasicLed(props) {
           return /* @__PURE__ */ jsxRuntimeExports.jsx(Chip$1, { sx: { color: "white" }, label: cellValue, color: "error" });
         }
       case "progressBar":
+        const suppliersNumber = ((_a2 = row.original.suppliers) == null ? void 0 : _a2.length) || 0;
+        let progressValue = 0;
+        if (suppliersNumber > 0) {
+          const rawValue = cellValue / suppliersNumber;
+          progressValue = rawValue > 100 ? 100 : rawValue;
+        }
         return /* @__PURE__ */ jsxRuntimeExports.jsx(
           LinearProgress$1,
           {
             variant: "determinate",
-            value: cellValue,
+            value: progressValue,
             color: "success",
             sx: { height: "9px", border: "2px solid #ccc", width: "80%" }
           }
