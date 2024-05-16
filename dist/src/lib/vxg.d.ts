@@ -1,3 +1,4 @@
+
 declare class Vxg {
     match: any;
     cmp: any;

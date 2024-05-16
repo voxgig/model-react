@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate, useParams, Routes, Route } from 'react-router-dom'
 import { Box } from '@mui/material'
-// import BasicButton from './BasicButton'
-// import Dinero from 'dinero.js'
 
 import { Gubu } from 'gubu'
 

@@ -1,6 +1,5 @@
 
 
-
 function VxgBasicLedPlugin(this: any, options: any) {
   const seneca = this
 

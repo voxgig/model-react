@@ -1,4 +1,8 @@
-import React, { useCallback, useState } from 'react'
+import React, {
+  // useCallback,
+  useState,
+  useEffect, 
+} from 'react'
 
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
@@ -7,55 +11,30 @@ import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import Alert from '@mui/material/Alert'
 
+import { VxgBasicAuthPlugin } from './VxgBasicAuthPlugin'
 
 
-console.log('BasicAuth 1')
+console.log('BasicAuth 2')
 
 
 function BasicAuth (props: any) {
   const { spec, ctx } = props
   const seneca = ctx().seneca
 
+  const [ready, setReady] = useState(false)
   const [signinStatus, setSigninStatus] = useState('none')
-  
-  const handleSignin = useCallback((event:any)=>{
-    event.preventDefault()
-    const data = new FormData(event.currentTarget)
 
-    const email = data.get('email')
-    const password = data.get('password')
-    
-    seneca.act(
-      'aim:req,on:auth,signin:user',
-      { email, password },
-      function (err: any, out: any) {
-        if (null == err && null != out && out.ok && !spec.signin.debug) {
-          document.location.href = document.location.origin +
-            '/view/'+spec.signin.view
-          return
-        }
 
-        else if(null == err && !out.ok) {
-          setSigninStatus('invalid')
-          return
-        }
-
-        else if(null == err && out.ok && spec.signin.debug) {
-          setSigninStatus('debug')
-          return
-        }
-
-        if(null != err ) {
-          console.warn('BasicAuth', 'signin', email, err)
-        }
-
-        setSigninStatus('unavailable')
-      }
-    )
-
+  useEffect(()=>{
+    if(!ready) {
+      seneca
+        .use(VxgBasicAuthPlugin,{setSigninStatus, setReady, spec:{}})
+    }
   },[])
-  
 
+  const handleSignin = seneca.export('VxgBasicAuthPlugin/handleSignin') || (()=>{})  
+
+  
   return (
     <Container component='main' maxWidth='xs'>
       <Box
