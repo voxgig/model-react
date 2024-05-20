@@ -1,10 +1,14 @@
 
+
+import { Open } from 'gubu'
+
+
 function VxgBasicAuthPlugin(this: any, options: any) {
   const seneca = this
 
   const { spec, setSigninStatus, setReady } = options
 
-  console.log('VxgBasicAuthPlugin define')
+  console.log('VxgBasicAuthPlugin define', spec)
 
 
   function handleSignin(event: any) {
@@ -15,7 +19,7 @@ function VxgBasicAuthPlugin(this: any, options: any) {
     const email = data.get('email')
     const password = data.get('password')
 
-    seneca.act(
+    seneca.delegate().act(
       'aim:req,on:auth,signin:user',
       { email, password },
       function(err: any, out: any) {
@@ -52,6 +56,17 @@ function VxgBasicAuthPlugin(this: any, options: any) {
     }
   }
 }
+
+VxgBasicAuthPlugin.default = {
+  setSigninStatus: Function,
+  setReady: Function,
+  spec: Open({
+    signin: Open({
+      debug: false
+    })
+  })
+}
+
 
 Object.defineProperty(VxgBasicAuthPlugin, 'name', { value: 'VxgBasicAuthPlugin' })
 

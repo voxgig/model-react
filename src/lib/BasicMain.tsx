@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
-import { useParams, useRoutes, Link } from 'react-router-dom'
+import { useParams, useSearchParams, useLocation } from 'react-router-dom'
 
 import {
   Box,
@@ -10,6 +10,8 @@ import {
 import { Gubu } from 'gubu'
 
 import { BasicLed } from './BasicLed'
+
+import { searchParamsToObject } from './vxg-util'
 
 
 const CMPNAME = 'BasicSide'
@@ -46,15 +48,22 @@ function BasicMain (props: any) {
   const basicMainSpec = BasicMainSpecShape(spec)
 
   const mode = useSelector((state:any)=>state.main.nav.mode)
-  const viewName = useSelector((state:any)=>state.main.current.view)
-  const params: any = useParams()
+  const view = useSelector((state:any)=>state.main.current.view)
 
-  if(viewName !== params.view) {
-    seneca.act('aim:app,set:view', {view: params.view})
+  const params: any = useParams()
+  const [searchParams] = useSearchParams()
+  const loc: any = useLocation()
+  
+  if(view.name !== params.view) {
+    seneca.act('aim:app,sync:view', {
+      name: params.view,
+      query: searchParamsToObject(searchParams),
+      hash: loc.hash,
+    })
   }
 
   // const viewMap = model.app.web.frame.private.view
-  const viewSpec = basicMainSpec.view[viewName]
+  const viewSpec = basicMainSpec.view[view.name]
   const kind = viewSpec?.kind
 
   // console.log(CMPNAME, 'view', params, viewSpec)

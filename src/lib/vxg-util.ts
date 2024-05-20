@@ -1,69 +1,5 @@
 
 
-
-
-function VxgSeneca(this: any) {
-  const seneca = this
-  const { Exact } = seneca.valid
-
-  seneca.root.context.cmap = cmap
-  seneca.root.context.vmap = vmap
-
-  seneca
-    .message(
-      'aim:app,prepare:app,redux$:true',
-      async function prepareApp(_msg: any, meta: any) {
-        let state = meta.custom.state()
-
-        let model = seneca.context.model
-        let frame = model.app.web.frame.private
-        let viewMap = frame.view
-        // let partMap = frame.part
-        let sectionMap = frame.nav.section
-
-        state.current = {
-          view: '',
-        }
-
-        state.view = cmap(viewMap, {
-          name: cmap.COPY,
-          active: cmap.FILTER,
-        })
-
-        state.nav = {
-          mode: 'shown',
-          section: cmap(sectionMap, {
-            name: cmap.COPY,
-            active: cmap.FILTER,
-            item: (x: any) => cmap(x, {
-              active: cmap.FILTER,
-              view: cmap.COPY,
-              name: cmap.COPY,
-            })
-          })
-        }
-      })
-
-    .message(
-      'aim:app,set:view,redux$:true',
-      { view: String },
-      async function setView(msg: any, meta: any) {
-        meta.custom.state().current.view = msg.view
-      })
-
-    .message(
-      'aim:app,area:nav,set:mode,redux$:true',
-      { mode: Exact('shown', 'hidden') },
-      async function setMode(msg: any, meta: any) {
-        meta.custom.state().nav.mode = msg.mode
-      })
-
-
-    .prepare(async function(this: any) {
-      await this.post('aim:app,prepare:app')
-    })
-}
-
 // TODO: cmap,vmap probably belong in @voxgig/model utils
 
 // Map child objects to new child objects
@@ -111,8 +47,18 @@ vmap.KEY = (_: any, p: any) => p.key
 
 
 
+function searchParamsToObject(searchParams: URLSearchParams) {
+  let params: any = Object.create(null)
+  for (let [key, value] of searchParams.entries()) {
+    params[key] = value
+  }
+  return params
+}
+
+
+
 export {
-  VxgSeneca,
   cmap,
   vmap,
+  searchParamsToObject,
 }

@@ -9,7 +9,7 @@ import { Gubu } from 'gubu'
 
 import type { BasicProps, Spec } from './basic-types'
 
-import { VxgSeneca } from './vxg-seneca'
+import { VxgBasicAdminPlugin } from './VxgBasicAdminPlugin'
 
 import { BasicHead } from './BasicHead'
 import { BasicMain } from './BasicMain'
@@ -122,7 +122,7 @@ async function init(ctx: any, done: any) {
     seneca.context.vxg.BasicAdmin.preparing = true
     
     seneca
-      .use(VxgSeneca)
+      .use(VxgBasicAdminPlugin)
     await seneca.ready(done)
   }
 }

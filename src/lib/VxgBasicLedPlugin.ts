@@ -12,16 +12,15 @@ function VxgBasicLedPlugin(this: any, options: any) {
 
   const ledent = seneca.make(canon)
 
+  console.log('LED SPEC', spec)
+
   seneca
     .fix({ view: name })
     .add('aim:app,on:view,init:state,redux$:true',
       function(this: any, _msg: any, _reply: any, meta: any) {
         const state = meta.custom.state()
         let view = state.view[name]
-        view.show = {
-          list: true,
-          edit: false
-        }
+        view.mode = 'list'
         view.status = 'init'
         view.ready = true
 
@@ -32,30 +31,18 @@ function VxgBasicLedPlugin(this: any, options: any) {
         let view = meta.custom.state().view[name]
 
         // TODO: these are mutually exclusive, maybe make a single value
-        view.show.list = true
-        view.show.edit = false
+        view.mode = 'list'
         view.status = 'list-item'
       })
 
-    /*
-      .add('aim:app,on:view,edit:start,redux$:true',
-        { item_id: String },
-        function(_msg: any, _reply: any, meta: any) {
-          let view = meta.custom.state().view[name]
-  
-          // TODO: these are mutually exclusive, maybe make a single value
-          view.show.list = false
-          view.show.edit = true
-          view.status = 'load-item'
-        })
-    */
-
-    .message('aim:app,on:view,edit:item',
+    .message('aim:app,on:view,edit:item,redux$:true',
       { item_id: String },
-      async function(this: any, msg: any) {
+      async function(this: any, msg: any, meta: any) {
+        const state = meta.custom.state()
+        let view = state.view[name]
         const { item_id } = msg
+        view.mode = 'edit'
         navigate('/view/' + name + '/edit/' + item_id)
-        // this.act('aim:app,on:view,view:track,edit:start,direct$:true', { item_id })
         return await this.entity(canon).load$({
           id: msg.item_id,
           slot$: slotName,
@@ -64,7 +51,7 @@ function VxgBasicLedPlugin(this: any, options: any) {
 
 
     .message('aim:app,on:view,add:item',
-      async function(this: any, msg: any) {
+      async function(this: any, _msg: any) {
         await seneca.entity(canon).save$({ add$: true, slot$: slotName })
         navigate('/view/' + name + '/add')
       })
@@ -85,15 +72,17 @@ function VxgBasicLedPlugin(this: any, options: any) {
     ent: canon,
     prefix: 'BasicLed_',
     field,
+    def: spec.def,
   }
 
 
   const listSpec = {
-    ...sharedSpec
+    ...sharedSpec,
+
   }
 
   const editSpec = {
-    ...sharedSpec
+    ...sharedSpec,
   }
 
   const headSpec = {

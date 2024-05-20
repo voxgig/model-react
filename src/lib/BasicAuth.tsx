@@ -28,7 +28,7 @@ function BasicAuth (props: any) {
   useEffect(()=>{
     if(!ready) {
       seneca
-        .use(VxgBasicAuthPlugin,{setSigninStatus, setReady, spec:{}})
+        .use(VxgBasicAuthPlugin,{setSigninStatus, setReady, spec})
     }
   },[])
 

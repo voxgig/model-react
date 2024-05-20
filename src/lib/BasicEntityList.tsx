@@ -52,9 +52,19 @@ function BasicEntityList (props: any) {
 
   let data = useSelector((state:any)=>selectList(state))
 
+  let query = useSelector((state:any)=>state.main.current.view.query)
+
+  let filter = Object.entries(query)
+  .reduce((a:any,n)=>((n[0].startsWith('f_')?a[n[0].substring(2)]=n[1]:null),a),{})
+
+  console.log('QF', query, filter)
+
+  
   useEffect(()=>{
-    seneca.entity(canon).list$({slot$:slotName})
-  },[])
+    const q = {...filter,slot$:slotName}
+    console.log('LIST', canon, q)
+    seneca.entity(canon).list$(q)
+  },Object.values(filter))
 
 
   const columns = [
@@ -65,6 +75,10 @@ function BasicEntityList (props: any) {
     {
       accessorKey: 'name',
       header: 'Name',
+    },
+    {
+      accessorKey: 'title',
+      header: 'Title',
     },
   ]
 
@@ -95,89 +109,6 @@ function BasicEntityList (props: any) {
       />
     </Box>
   )
-  
-  /*
-  const {
-    ctx,
-    onRowClick = () => {},
-    onEditingRowSave = () => {},
-    data,
-    columns,
-    sx = {},
-    spec,
-    isLoading,
-    action
-  } = props
-
-  const theme = ctx().theme
-  const editingMode = spec.content.def.subview[action]?.editingMode || 'none'
-  const enableColumnFilters =
-    spec.content.def.subview[action]?.enableColumnFilters || false
-  const cmpKey = spec.content.key
-
-  // callbacks for MaterialReactTable
-  const handleSaveRow =
-    async (args: any): Promise<void> => {
-      let { exitEditingMode, row, values } = args
-      onEditingRowSave(row, values)
-      exitEditingMode()
-    }
-
-  const handleRowClick = ({ row }: { row: { id: string } }) => ({
-    onClick: (event: any) => {
-      let selitem = { ...data[Number(row.id)] }
-      onRowClick(event, selitem)
-    },
-    sx: { cursor: 'pointer' }
-  })
-
-  const commonTableProps = {
-    enableColumnActions: false,
-    enableColumnFilters: enableColumnFilters,
-    enableSorting: false,
-    enableBottomToolbar: true,
-    enableTopToolbar: false,
-    columns: columns,
-    data: data,
-    initialState: {
-      columnVisibility: spec.content.def.columnVisibility
-    }
-  }
-
-  let specificProps = {}
-
-  if (editingMode === 'row') {
-    specificProps = {
-      editingMode: 'row',
-      enableEditing: true,
-      enablePagination: true,
-      onEditingRowSave: handleSaveRow
-    }
-  } else if (editingMode === 'form') {
-    specificProps = {
-      editingMode: 'custom',
-      enablePagination: true,
-      muiTableBodyRowProps: handleRowClick
-    }
-  } else {
-    specificProps = {
-      enablePagination: false
-    }
-  }
-
-  return (
-    <ThemeProvider theme={theme}>
-      <Box className='BasicList' style={{ ...sx }}>
-        <MaterialReactTable
-          {...commonTableProps}
-          {...specificProps}
-          state={{ isLoading: isLoading }}
-          key={cmpKey}
-        />
-      </Box>
-    </ThemeProvider>
-  )
-  */
 }
 
 export {

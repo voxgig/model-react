@@ -5,7 +5,7 @@ import Jsonic from '@jsonic/jsonic-next'
 
 import './vxg.css'
 
-import Pkg from '../../package.json'
+// import Pkg from '../../package.json'
 
 const config_defaults: any = {}
 

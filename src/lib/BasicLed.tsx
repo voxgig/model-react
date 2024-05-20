@@ -30,6 +30,7 @@ const BasicLedSpecShape = Gubu(Open({
     ent: String,
     head: {
       active: false,
+      tool: {},
     },
     foot: {
       active: false,
@@ -37,11 +38,14 @@ const BasicLedSpecShape = Gubu(Open({
   },
 }), {prefix: CMPNAME})
 
+
 // BasicLed renders a list of entities (with BasicList) or a form to edit them (with BasicEdit)
 function BasicLed (props: any) {
   const { ctx, spec } = props
   const { seneca, model } = ctx()
 
+  console.log('BasicLed SPEC', spec)
+  
   const basicLedSpec: Spec = BasicLedSpecShape(spec)
   console.log(CMPNAME,basicLedSpec)
   

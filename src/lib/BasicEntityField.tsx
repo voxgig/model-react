@@ -10,7 +10,7 @@ import type { Spec } from './basic-types'
 import { Gubu } from 'gubu'
 
 const CMPNAME = 'BasicEntityField'
-console.log(CMPNAME,'2')
+console.log(CMPNAME,'3')
 
 
 const { Open } = Gubu
@@ -31,12 +31,12 @@ function BasicEntityField (props: any) {
   // const { seneca, model } = ctx()
 
   const basicEntityFieldSpec: Spec = BasicEntityFieldSpecShape(spec)
-  console.log(CMPNAME,basicEntityFieldSpec)
+  // console.log(CMPNAME,basicEntityFieldSpec)
 
   const field: any = basicEntityFieldSpec.field
   // const register = spec.register
   
-  console.log(CMPNAME, field)
+  // console.log(CMPNAME, field)
 
   const Field: any = fieldMap[field.ux.kind]
   

@@ -17,7 +17,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 
 import { Gubu } from 'gubu'
 
-import { vmap, cmap } from './vxg-seneca'
+import { vmap, cmap } from './vxg-util'
 
 const CMPNAME = 'BasicSide'
 console.log(CMPNAME,'1')

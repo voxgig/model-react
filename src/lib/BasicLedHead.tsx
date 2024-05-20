@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react'
 
+import { useSelector } from 'react-redux'
+
 import { useNavigate, useLocation } from 'react-router-dom'
 
 
@@ -27,18 +29,36 @@ const BasicLedHeadSpecShape = Gubu(Open({
 
 function BasicLedHead (props: any) {
   const { ctx, spec } = props
-  const { seneca, model } = ctx()
+  const { seneca, custom } = ctx()
+
+  let navigate = useNavigate()
+  let loc = useLocation()
 
   const BasicEntityHeadSpec: Spec = BasicLedHeadSpecShape(spec)
   console.log(CMPNAME,BasicEntityHeadSpec)
   const viewName = BasicEntityHeadSpec.name
   
-  let navigate = useNavigate()
-  let loc = useLocation()
+  const name = spec.name
+  const slotName = spec.prefix+spec.name
 
-  const subview = '/view/'+viewName === loc.pathname ? 'list' : 'edit'
-  console.log('LOC', location, subview)
+  const slotSelectors = seneca.export('Redux/slotSelectors')
+  const { selectItem, selectMeta } = slotSelectors(slotName)
+
+  const item = useSelector((state:any)=>selectItem(state))
+  const viewState = useSelector((state:any)=>state.main.view[viewName])
+
+  const state = { item, view:viewState, navigate }
+  console.log(CMPNAME,'state',slotName,state)
   
+  const subview = '/view/'+viewName === loc.pathname ? 'list' : 'edit'
+  // console.log('LOC', location, subview, item)
+
+  const customButtons = Object.values(spec.def?.head?.tool || {})
+    .filter((t:any)=>'button'===t.kind)
+    .map((t:any)=>(custom.BasicLedHead||{})[t.custom])
+    .filter((t:any)=>null!=t)
+  console.log('CB', customButtons)
+    
   return (
     <Box className="bxg-BasicLedHead">
       <Toolbar
@@ -52,9 +72,20 @@ function BasicLedHead (props: any) {
         >Back</Button>
         <Button
           color="inherit"
-          onClick={()=>seneca.act('aim:app,on:view,add:item',{view:'track'})}
+          onClick={()=>seneca.act('aim:app,on:view,add:item',{view:viewName})}
           disabled={'edit'===subview}
         >Add</Button>
+
+        { customButtons.map(cb=>
+          <Button
+            key={cb.id}
+            color="inherit"
+            onClick={()=>seneca.act(cb.msg(state,spec,ctx))}
+            disabled={cb.disabled(state,spec,ctx)}
+            {...cb.attr(state,spec,ctx)}
+          >{cb.title(state,spec,ctx)}</Button>
+        ) }
+        
       </Toolbar>
     </Box>
   )

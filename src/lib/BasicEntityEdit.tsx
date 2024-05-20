@@ -37,7 +37,7 @@ function BasicEntityEdit (props: any) {
   const { seneca, model } = ctx()
 
   const basicEntityEditSpec: Spec = BasicEntityEditSpecShape(spec)
-  console.log(CMPNAME,basicEntityEditSpec)
+  // console.log(CMPNAME,basicEntityEditSpec)
 
   const name = spec.name
   const slotName = spec.prefix+spec.name
@@ -126,6 +126,7 @@ function fixField(fieldEntry:[string,any], spec:any) {
   field.id = 'vxg-field-'+spec.name+'-'+name
   field.name = name
 
+  field.ux = field.ux || {}
   field.ux.size = null == field.ux.size ? 4 : parseInt(field.ux.size,10)
 }
 
