@@ -1741,10 +1741,11 @@ var __async = (__this, __arguments, generator) => {
             hash: ""
           }
         };
-        state.view = cmap(viewMap, {
+        const viewState = cmap(viewMap, {
           name: cmap.COPY,
           active: cmap.FILTER
         });
+        state.view = viewState;
         state.nav = {
           mode: "shown",
           section: cmap(sectionMap, {
@@ -74264,7 +74265,6 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     });
     const entcanon = ledent.canon$({ object: true });
     const field = seneca.context.model.main.ent[entcanon.base][entcanon.name].field;
-    console.log("entcanon", entcanon, field);
     const sharedSpec = {
       name,
       ent: canon,
@@ -74298,6 +74298,11 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       head: {
         active: false,
         tool: {}
+      },
+      list: {
+        active: true,
+        order: [String],
+        field: {}
       },
       foot: {
         active: false

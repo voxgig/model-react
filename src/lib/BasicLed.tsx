@@ -32,6 +32,11 @@ const BasicLedSpecShape = Gubu(Open({
       active: false,
       tool: {},
     },
+    list: {
+      active: true,
+      order: [String],
+      field: {},
+    },
     foot: {
       active: false,
     },

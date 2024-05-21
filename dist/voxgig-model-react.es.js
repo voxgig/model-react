@@ -1729,10 +1729,11 @@ function VxgBasicAdminPlugin() {
           hash: ""
         }
       };
-      state.view = cmap(viewMap, {
+      const viewState = cmap(viewMap, {
         name: cmap.COPY,
         active: cmap.FILTER
       });
+      state.view = viewState;
       state.nav = {
         mode: "shown",
         section: cmap(sectionMap, {
@@ -74252,7 +74253,6 @@ function VxgBasicLedPlugin(options) {
   });
   const entcanon = ledent.canon$({ object: true });
   const field = seneca.context.model.main.ent[entcanon.base][entcanon.name].field;
-  console.log("entcanon", entcanon, field);
   const sharedSpec = {
     name,
     ent: canon,
@@ -74286,6 +74286,11 @@ const BasicLedSpecShape = gubu_minExports.Gubu(Open$2({
     head: {
       active: false,
       tool: {}
+    },
+    list: {
+      active: true,
+      order: [String],
+      field: {}
     },
     foot: {
       active: false

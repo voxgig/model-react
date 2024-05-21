@@ -77,10 +77,11 @@ function VxgBasicAdminPlugin(this: any) {
       }
     }
 
-    state.view = cmap(viewMap, {
+    const viewState = cmap(viewMap, {
       name: cmap.COPY,
       active: cmap.FILTER,
     })
+    state.view = viewState
 
     state.nav = {
       mode: 'shown',

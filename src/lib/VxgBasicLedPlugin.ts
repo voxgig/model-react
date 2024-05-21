@@ -64,7 +64,7 @@ function VxgBasicLedPlugin(this: any, options: any) {
 
   const entcanon = ledent.canon$({ object: true })
   const field = seneca.context.model.main.ent[entcanon.base][entcanon.name].field
-  console.log('entcanon', entcanon, field)
+  // console.log('entcanon', entcanon, field)
 
 
   const sharedSpec = {
