@@ -19,7 +19,7 @@ console.log('BasicAuth 2')
 
 function BasicAuth (props: any) {
   const { spec, ctx } = props
-  const seneca = ctx().seneca
+  const { seneca } = ctx()
 
   const [ready, setReady] = useState(false)
   const [signinStatus, setSigninStatus] = useState('none')

@@ -1,23 +1,48 @@
 
+import type { Spec } from './basic-types'
+
+import { Gubu } from 'gubu'
+
+const { Open } = Gubu
+
+const Shape = Gubu({
+  name: String,
+  title: String,
+  active: Boolean,
+  kind: String,
+  def: {
+    ent: String,
+    head: Open({
+      active: false,
+    }),
+    list: Open({
+      active: false,
+    }),
+    edit: Open({
+      active: false,
+    }),
+    foot: Open({
+      active: false,
+    }),
+  },
+}, { prefix: 'BasicLed' })
+
 
 function VxgBasicLedPlugin(this: any, options: any) {
   const seneca = this
 
-  const spec = options.spec
+  const spec = Shape(options.spec)
   const navigate = options.navigate
 
   const name = spec.name
-  const canon = spec.def.ent
+  const entCanon = spec.def.ent
   const slotName = 'BasicLed_' + name
-
-  const ledent = seneca.make(canon)
-
-  console.log('LED SPEC', spec)
 
   seneca
     .fix({ view: name })
+
     .add('aim:app,on:view,init:state,redux$:true',
-      function(this: any, _msg: any, _reply: any, meta: any) {
+      function(this: any, _msg: any, reply: any, meta: any) {
         const state = meta.custom.state()
         let view = state.view[name]
         view.mode = 'list'
@@ -25,17 +50,35 @@ function VxgBasicLedPlugin(this: any, options: any) {
         view.ready = true
 
         this.export('Redux/entityPrepare')(state, slotName)
+        reply()
       })
-    .add('aim:app,on:view,list:item,redux$:true',
-      function(_msg: any, _reply: any, meta: any) {
-        let view = meta.custom.state().view[name]
 
-        // TODO: these are mutually exclusive, maybe make a single value
+    .add('aim:app,on:BasicLed,ready:list,redux$:true',
+      function(msg: any, reply: any, meta: any) {
+        const setReady = msg.setReady
+        const view = meta.custom.state().view[name]
+
         view.mode = 'list'
         view.status = 'list-item'
+
+        setReady(true)
+        reply()
       })
 
-    .message('aim:app,on:view,edit:item,redux$:true',
+    .add('aim:app,on:BasicLed,ready:edit,redux$:true',
+      function(msg: any, reply: any, meta: any) {
+        const setReady = msg.setReady
+        const view = meta.custom.state().view[name]
+
+        view.mode = 'edit'
+        view.status = 'edit-item'
+
+        setReady(true)
+        reply()
+      })
+
+
+    .message('aim:app,on:BasicLed,edit:item,redux$:true',
       { item_id: String },
       async function(this: any, msg: any, meta: any) {
         const state = meta.custom.state()
@@ -43,16 +86,15 @@ function VxgBasicLedPlugin(this: any, options: any) {
         const { item_id } = msg
         view.mode = 'edit'
         navigate('/view/' + name + '/edit/' + item_id)
-        return await this.entity(canon).load$({
+        return await this.entity(entCanon).load$({
           id: msg.item_id,
           slot$: slotName,
         })
       })
 
-
     .message('aim:app,on:view,add:item',
       async function(this: any, _msg: any) {
-        await seneca.entity(canon).save$({ add$: true, slot$: slotName })
+        await seneca.entity(entCanon).save$({ add$: true, slot$: slotName })
         navigate('/view/' + name + '/add')
       })
 
@@ -62,35 +104,32 @@ function VxgBasicLedPlugin(this: any, options: any) {
     })
 
 
-  const entcanon = ledent.canon$({ object: true })
-  const field = seneca.context.model.main.ent[entcanon.base][entcanon.name].field
-  // console.log('entcanon', entcanon, field)
-
-
   const sharedSpec = {
     name,
-    ent: canon,
+    ent: entCanon,
     prefix: 'BasicLed_',
-    field,
-    def: spec.def,
   }
 
 
   const listSpec = {
+    ...spec.def.list,
     ...sharedSpec,
-
   }
 
   const editSpec = {
+    ...spec.def.edit,
     ...sharedSpec,
+
   }
 
   const headSpec = {
-    ...sharedSpec
+    ...spec.def.head,
+    ...sharedSpec,
   }
 
   const footSpec = {
-    ...sharedSpec
+    ...spec.def.foot,
+    ...sharedSpec,
   }
 
 
@@ -105,6 +144,13 @@ function VxgBasicLedPlugin(this: any, options: any) {
     }
   }
 }
+
+
+VxgBasicLedPlugin.defaults = {
+  spec: {},
+  navigate: Function,
+}
+
 
 Object.defineProperty(VxgBasicLedPlugin, 'name', { value: 'VxgBasicLedPlugin' })
 

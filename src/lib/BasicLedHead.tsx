@@ -19,8 +19,13 @@ const CMPNAME = 'BasicLedHead'
 console.log(CMPNAME,'1')
 
 
-const { Open } = Gubu
+const { Open, Child } = Gubu
 const BasicLedHeadSpecShape = Gubu(Open({
+  tool: Child({
+    id: String,
+    kind: String,
+    custom: '',
+  },{}),
   mui: Open({
     Toolbar: Open({})
   })
@@ -53,7 +58,7 @@ function BasicLedHead (props: any) {
   const subview = '/view/'+viewName === loc.pathname ? 'list' : 'edit'
   // console.log('LOC', location, subview, item)
 
-  const customButtons = Object.values(spec.def?.head?.tool || {})
+  const customButtons = Object.values(spec.tool || {})
     .filter((t:any)=>'button'===t.kind)
     .map((t:any)=>(custom.BasicLedHead||{})[t.custom])
     .filter((t:any)=>null!=t)

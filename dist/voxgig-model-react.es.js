@@ -1040,22 +1040,15 @@ function requireReactJsxRuntime_development() {
   }
   return reactJsxRuntime_development;
 }
-var jsxRuntime$1 = jsxRuntime$2.exports;
-var hasRequiredJsxRuntime;
-function requireJsxRuntime() {
-  if (hasRequiredJsxRuntime)
-    return jsxRuntime$2.exports;
-  hasRequiredJsxRuntime = 1;
-  "use strict";
-  if (process.env.NODE_ENV === "production") {
-    jsxRuntime$2.exports = requireReactJsxRuntime_production_min();
-  } else {
-    jsxRuntime$2.exports = requireReactJsxRuntime_development();
-  }
-  return jsxRuntime$2.exports;
+var jsxRuntime = jsxRuntime$2.exports;
+"use strict";
+if (process.env.NODE_ENV === "production") {
+  jsxRuntime$2.exports = requireReactJsxRuntime_production_min();
+} else {
+  jsxRuntime$2.exports = requireReactJsxRuntime_development();
 }
-var jsxRuntimeExports = requireJsxRuntime();
-const jsxRuntime = /* @__PURE__ */ getDefaultExportFromCjs(jsxRuntimeExports);
+var jsxRuntimeExports = jsxRuntime$2.exports;
+const jsxRuntime$1 = /* @__PURE__ */ getDefaultExportFromCjs(jsxRuntimeExports);
 var gubu_min$2 = { exports: {} };
 var gubu_min = gubu_min$2.exports;
 (function(module, exports) {
@@ -10695,12 +10688,12 @@ function BasicHeadTool(props) {
 }
 const CMPNAME$a = "BasicHead";
 console.log(CMPNAME$a, "1");
-const { Child: Child$3, Exact, Open: Open$8, Required: Required$1 } = gubu_minExports.Gubu;
+const { Child: Child$6, Exact, Open: Open$a, Required: Required$1 } = gubu_minExports.Gubu;
 const BasicHeadSpecShape = gubu_minExports.Gubu({
   head: {
     name: String,
     active: Boolean,
-    tool: Child$3(Open$8({
+    tool: Child$6(Open$a({
       align: Exact("left", "right")
     }))
   },
@@ -25469,7 +25462,7 @@ Object.defineProperty(ArrowDownward, "__esModule", {
 });
 var default_1$x = ArrowDownward.default = void 0;
 var _createSvgIcon$x = _interopRequireDefault$x(requireCreateSvgIcon());
-var _jsxRuntime$x = requireJsxRuntime();
+var _jsxRuntime$x = jsxRuntimeExports;
 var _default$x = default_1$x = ArrowDownward.default = (0, _createSvgIcon$x.default)(/* @__PURE__ */ (0, _jsxRuntime$x.jsx)("path", {
   d: "m20 12-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8z"
 }), "ArrowDownward");
@@ -25482,7 +25475,7 @@ Object.defineProperty(ArrowRight, "__esModule", {
 });
 var default_1$w = ArrowRight.default = void 0;
 var _createSvgIcon$w = _interopRequireDefault$w(requireCreateSvgIcon());
-var _jsxRuntime$w = requireJsxRuntime();
+var _jsxRuntime$w = jsxRuntimeExports;
 var _default$w = default_1$w = ArrowRight.default = (0, _createSvgIcon$w.default)(/* @__PURE__ */ (0, _jsxRuntime$w.jsx)("path", {
   d: "m10 17 5-5-5-5z"
 }), "ArrowRight");
@@ -25495,7 +25488,7 @@ Object.defineProperty(Cancel, "__esModule", {
 });
 var default_1$v = Cancel.default = void 0;
 var _createSvgIcon$v = _interopRequireDefault$v(requireCreateSvgIcon());
-var _jsxRuntime$v = requireJsxRuntime();
+var _jsxRuntime$v = jsxRuntimeExports;
 var _default$v = default_1$v = Cancel.default = (0, _createSvgIcon$v.default)(/* @__PURE__ */ (0, _jsxRuntime$v.jsx)("path", {
   d: "M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2m5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12z"
 }), "Cancel");
@@ -25508,7 +25501,7 @@ Object.defineProperty(ChevronLeft, "__esModule", {
 });
 var default_1$u = ChevronLeft.default = void 0;
 var _createSvgIcon$u = _interopRequireDefault$u(requireCreateSvgIcon());
-var _jsxRuntime$u = requireJsxRuntime();
+var _jsxRuntime$u = jsxRuntimeExports;
 var _default$u = default_1$u = ChevronLeft.default = (0, _createSvgIcon$u.default)(/* @__PURE__ */ (0, _jsxRuntime$u.jsx)("path", {
   d: "M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"
 }), "ChevronLeft");
@@ -25521,7 +25514,7 @@ Object.defineProperty(ChevronRight, "__esModule", {
 });
 var default_1$t = ChevronRight.default = void 0;
 var _createSvgIcon$t = _interopRequireDefault$t(requireCreateSvgIcon());
-var _jsxRuntime$t = requireJsxRuntime();
+var _jsxRuntime$t = jsxRuntimeExports;
 var _default$t = default_1$t = ChevronRight.default = (0, _createSvgIcon$t.default)(/* @__PURE__ */ (0, _jsxRuntime$t.jsx)("path", {
   d: "M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
 }), "ChevronRight");
@@ -25534,7 +25527,7 @@ Object.defineProperty(ClearAll, "__esModule", {
 });
 var default_1$s = ClearAll.default = void 0;
 var _createSvgIcon$s = _interopRequireDefault$s(requireCreateSvgIcon());
-var _jsxRuntime$s = requireJsxRuntime();
+var _jsxRuntime$s = jsxRuntimeExports;
 var _default$s = default_1$s = ClearAll.default = (0, _createSvgIcon$s.default)(/* @__PURE__ */ (0, _jsxRuntime$s.jsx)("path", {
   d: "M5 13h14v-2H5zm-2 4h14v-2H3zM7 7v2h14V7z"
 }), "ClearAll");
@@ -25547,7 +25540,7 @@ Object.defineProperty(Close, "__esModule", {
 });
 var default_1$r = Close.default = void 0;
 var _createSvgIcon$r = _interopRequireDefault$r(requireCreateSvgIcon());
-var _jsxRuntime$r = requireJsxRuntime();
+var _jsxRuntime$r = jsxRuntimeExports;
 var _default$r = default_1$r = Close.default = (0, _createSvgIcon$r.default)(/* @__PURE__ */ (0, _jsxRuntime$r.jsx)("path", {
   d: "M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
 }), "Close");
@@ -25560,7 +25553,7 @@ Object.defineProperty(ContentCopy, "__esModule", {
 });
 var default_1$q = ContentCopy.default = void 0;
 var _createSvgIcon$q = _interopRequireDefault$q(requireCreateSvgIcon());
-var _jsxRuntime$q = requireJsxRuntime();
+var _jsxRuntime$q = jsxRuntimeExports;
 var _default$q = default_1$q = ContentCopy.default = (0, _createSvgIcon$q.default)(/* @__PURE__ */ (0, _jsxRuntime$q.jsx)("path", {
   d: "M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2m0 16H8V7h11z"
 }), "ContentCopy");
@@ -25573,7 +25566,7 @@ Object.defineProperty(DensityLarge, "__esModule", {
 });
 var default_1$p = DensityLarge.default = void 0;
 var _createSvgIcon$p = _interopRequireDefault$p(requireCreateSvgIcon());
-var _jsxRuntime$p = requireJsxRuntime();
+var _jsxRuntime$p = jsxRuntimeExports;
 var _default$p = default_1$p = DensityLarge.default = (0, _createSvgIcon$p.default)(/* @__PURE__ */ (0, _jsxRuntime$p.jsx)("path", {
   d: "M3 3h18v2H3zm0 16h18v2H3z"
 }), "DensityLarge");
@@ -25586,7 +25579,7 @@ Object.defineProperty(DensityMedium, "__esModule", {
 });
 var default_1$o = DensityMedium.default = void 0;
 var _createSvgIcon$o = _interopRequireDefault$o(requireCreateSvgIcon());
-var _jsxRuntime$o = requireJsxRuntime();
+var _jsxRuntime$o = jsxRuntimeExports;
 var _default$o = default_1$o = DensityMedium.default = (0, _createSvgIcon$o.default)(/* @__PURE__ */ (0, _jsxRuntime$o.jsx)("path", {
   d: "M3 3h18v2H3zm0 16h18v2H3zm0-8h18v2H3z"
 }), "DensityMedium");
@@ -25599,7 +25592,7 @@ Object.defineProperty(DensitySmall, "__esModule", {
 });
 var default_1$n = DensitySmall.default = void 0;
 var _createSvgIcon$n = _interopRequireDefault$n(requireCreateSvgIcon());
-var _jsxRuntime$n = requireJsxRuntime();
+var _jsxRuntime$n = jsxRuntimeExports;
 var _default$n = default_1$n = DensitySmall.default = (0, _createSvgIcon$n.default)(/* @__PURE__ */ (0, _jsxRuntime$n.jsx)("path", {
   d: "M3 2h18v2H3zm0 18h18v2H3zm0-6h18v2H3zm0-6h18v2H3z"
 }), "DensitySmall");
@@ -25612,7 +25605,7 @@ Object.defineProperty(DragHandle, "__esModule", {
 });
 var default_1$m = DragHandle.default = void 0;
 var _createSvgIcon$m = _interopRequireDefault$m(requireCreateSvgIcon());
-var _jsxRuntime$m = requireJsxRuntime();
+var _jsxRuntime$m = jsxRuntimeExports;
 var _default$m = default_1$m = DragHandle.default = (0, _createSvgIcon$m.default)(/* @__PURE__ */ (0, _jsxRuntime$m.jsx)("path", {
   d: "M20 9H4v2h16zM4 15h16v-2H4z"
 }), "DragHandle");
@@ -25625,7 +25618,7 @@ Object.defineProperty(DynamicFeed, "__esModule", {
 });
 var default_1$l = DynamicFeed.default = void 0;
 var _createSvgIcon$l = _interopRequireDefault$l(requireCreateSvgIcon());
-var _jsxRuntime$l = requireJsxRuntime();
+var _jsxRuntime$l = jsxRuntimeExports;
 var _default$l = default_1$l = DynamicFeed.default = (0, _createSvgIcon$l.default)([/* @__PURE__ */ (0, _jsxRuntime$l.jsx)("path", {
   d: "M8 8H6v7c0 1.1.9 2 2 2h9v-2H8z"
 }, "0"), /* @__PURE__ */ (0, _jsxRuntime$l.jsx)("path", {
@@ -25640,7 +25633,7 @@ Object.defineProperty(Edit, "__esModule", {
 });
 var default_1$k = Edit.default = void 0;
 var _createSvgIcon$k = _interopRequireDefault$k(requireCreateSvgIcon());
-var _jsxRuntime$k = requireJsxRuntime();
+var _jsxRuntime$k = jsxRuntimeExports;
 var _default$k = default_1$k = Edit.default = (0, _createSvgIcon$k.default)(/* @__PURE__ */ (0, _jsxRuntime$k.jsx)("path", {
   d: "M3 17.25V21h3.75L17.81 9.94l-3.75-3.75zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75z"
 }), "Edit");
@@ -25653,7 +25646,7 @@ Object.defineProperty(ExpandMore, "__esModule", {
 });
 var default_1$j = ExpandMore.default = void 0;
 var _createSvgIcon$j = _interopRequireDefault$j(requireCreateSvgIcon());
-var _jsxRuntime$j = requireJsxRuntime();
+var _jsxRuntime$j = jsxRuntimeExports;
 var _default$j = default_1$j = ExpandMore.default = (0, _createSvgIcon$j.default)(/* @__PURE__ */ (0, _jsxRuntime$j.jsx)("path", {
   d: "M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
 }), "ExpandMore");
@@ -25666,7 +25659,7 @@ Object.defineProperty(FilterAlt, "__esModule", {
 });
 var default_1$i = FilterAlt.default = void 0;
 var _createSvgIcon$i = _interopRequireDefault$i(requireCreateSvgIcon());
-var _jsxRuntime$i = requireJsxRuntime();
+var _jsxRuntime$i = jsxRuntimeExports;
 var _default$i = default_1$i = FilterAlt.default = (0, _createSvgIcon$i.default)(/* @__PURE__ */ (0, _jsxRuntime$i.jsx)("path", {
   d: "M4.25 5.61C6.27 8.2 10 13 10 13v6c0 .55.45 1 1 1h2c.55 0 1-.45 1-1v-6s3.72-4.8 5.74-7.39c.51-.66.04-1.61-.79-1.61H5.04c-.83 0-1.3.95-.79 1.61"
 }), "FilterAlt");
@@ -25679,7 +25672,7 @@ Object.defineProperty(FilterList, "__esModule", {
 });
 var default_1$h = FilterList.default = void 0;
 var _createSvgIcon$h = _interopRequireDefault$h(requireCreateSvgIcon());
-var _jsxRuntime$h = requireJsxRuntime();
+var _jsxRuntime$h = jsxRuntimeExports;
 var _default$h = default_1$h = FilterList.default = (0, _createSvgIcon$h.default)(/* @__PURE__ */ (0, _jsxRuntime$h.jsx)("path", {
   d: "M10 18h4v-2h-4zM3 6v2h18V6zm3 7h12v-2H6z"
 }), "FilterList");
@@ -25692,7 +25685,7 @@ Object.defineProperty(FilterListOff, "__esModule", {
 });
 var default_1$g = FilterListOff.default = void 0;
 var _createSvgIcon$g = _interopRequireDefault$g(requireCreateSvgIcon());
-var _jsxRuntime$g = requireJsxRuntime();
+var _jsxRuntime$g = jsxRuntimeExports;
 var _default$g = default_1$g = FilterListOff.default = (0, _createSvgIcon$g.default)(/* @__PURE__ */ (0, _jsxRuntime$g.jsx)("path", {
   d: "M10.83 8H21V6H8.83zm5 5H18v-2h-4.17zM14 16.83V18h-4v-2h3.17l-3-3H6v-2h2.17l-3-3H3V6h.17L1.39 4.22 2.8 2.81l18.38 18.38-1.41 1.41z"
 }), "FilterListOff");
@@ -25705,7 +25698,7 @@ Object.defineProperty(FirstPage, "__esModule", {
 });
 var default_1$f = FirstPage.default = void 0;
 var _createSvgIcon$f = _interopRequireDefault$f(requireCreateSvgIcon());
-var _jsxRuntime$f = requireJsxRuntime();
+var _jsxRuntime$f = jsxRuntimeExports;
 var _default$f = default_1$f = FirstPage.default = (0, _createSvgIcon$f.default)(/* @__PURE__ */ (0, _jsxRuntime$f.jsx)("path", {
   d: "M18.41 16.59 13.82 12l4.59-4.59L17 6l-6 6 6 6zM6 6h2v12H6z"
 }), "FirstPage");
@@ -25718,7 +25711,7 @@ Object.defineProperty(Fullscreen, "__esModule", {
 });
 var default_1$e = Fullscreen.default = void 0;
 var _createSvgIcon$e = _interopRequireDefault$e(requireCreateSvgIcon());
-var _jsxRuntime$e = requireJsxRuntime();
+var _jsxRuntime$e = jsxRuntimeExports;
 var _default$e = default_1$e = Fullscreen.default = (0, _createSvgIcon$e.default)(/* @__PURE__ */ (0, _jsxRuntime$e.jsx)("path", {
   d: "M7 14H5v5h5v-2H7zm-2-4h2V7h3V5H5zm12 7h-3v2h5v-5h-2zM14 5v2h3v3h2V5z"
 }), "Fullscreen");
@@ -25731,7 +25724,7 @@ Object.defineProperty(FullscreenExit, "__esModule", {
 });
 var default_1$d = FullscreenExit.default = void 0;
 var _createSvgIcon$d = _interopRequireDefault$d(requireCreateSvgIcon());
-var _jsxRuntime$d = requireJsxRuntime();
+var _jsxRuntime$d = jsxRuntimeExports;
 var _default$d = default_1$d = FullscreenExit.default = (0, _createSvgIcon$d.default)(/* @__PURE__ */ (0, _jsxRuntime$d.jsx)("path", {
   d: "M5 16h3v3h2v-5H5zm3-8H5v2h5V5H8zm6 11h2v-3h3v-2h-5zm2-11V5h-2v5h5V8z"
 }), "FullscreenExit");
@@ -25744,7 +25737,7 @@ Object.defineProperty(KeyboardDoubleArrowDown, "__esModule", {
 });
 var default_1$c = KeyboardDoubleArrowDown.default = void 0;
 var _createSvgIcon$c = _interopRequireDefault$c(requireCreateSvgIcon());
-var _jsxRuntime$c = requireJsxRuntime();
+var _jsxRuntime$c = jsxRuntimeExports;
 var _default$c = default_1$c = KeyboardDoubleArrowDown.default = (0, _createSvgIcon$c.default)([/* @__PURE__ */ (0, _jsxRuntime$c.jsx)("path", {
   d: "M18 6.41 16.59 5 12 9.58 7.41 5 6 6.41l6 6z"
 }, "0"), /* @__PURE__ */ (0, _jsxRuntime$c.jsx)("path", {
@@ -25759,7 +25752,7 @@ Object.defineProperty(LastPage, "__esModule", {
 });
 var default_1$b = LastPage.default = void 0;
 var _createSvgIcon$b = _interopRequireDefault$b(requireCreateSvgIcon());
-var _jsxRuntime$b = requireJsxRuntime();
+var _jsxRuntime$b = jsxRuntimeExports;
 var _default$b = default_1$b = LastPage.default = (0, _createSvgIcon$b.default)(/* @__PURE__ */ (0, _jsxRuntime$b.jsx)("path", {
   d: "M5.59 7.41 10.18 12l-4.59 4.59L7 18l6-6-6-6zM16 6h2v12h-2z"
 }), "LastPage");
@@ -25772,7 +25765,7 @@ Object.defineProperty(MoreHoriz, "__esModule", {
 });
 var default_1$a = MoreHoriz.default = void 0;
 var _createSvgIcon$a = _interopRequireDefault$a(requireCreateSvgIcon());
-var _jsxRuntime$a = requireJsxRuntime();
+var _jsxRuntime$a = jsxRuntimeExports;
 var _default$a = default_1$a = MoreHoriz.default = (0, _createSvgIcon$a.default)(/* @__PURE__ */ (0, _jsxRuntime$a.jsx)("path", {
   d: "M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
 }), "MoreHoriz");
@@ -25785,7 +25778,7 @@ Object.defineProperty(MoreVert, "__esModule", {
 });
 var default_1$9 = MoreVert.default = void 0;
 var _createSvgIcon$9 = _interopRequireDefault$9(requireCreateSvgIcon());
-var _jsxRuntime$9 = requireJsxRuntime();
+var _jsxRuntime$9 = jsxRuntimeExports;
 var _default$9 = default_1$9 = MoreVert.default = (0, _createSvgIcon$9.default)(/* @__PURE__ */ (0, _jsxRuntime$9.jsx)("path", {
   d: "M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2m0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
 }), "MoreVert");
@@ -25798,7 +25791,7 @@ Object.defineProperty(PushPin, "__esModule", {
 });
 var default_1$8 = PushPin.default = void 0;
 var _createSvgIcon$8 = _interopRequireDefault$8(requireCreateSvgIcon());
-var _jsxRuntime$8 = requireJsxRuntime();
+var _jsxRuntime$8 = jsxRuntimeExports;
 var _default$8 = default_1$8 = PushPin.default = (0, _createSvgIcon$8.default)(/* @__PURE__ */ (0, _jsxRuntime$8.jsx)("path", {
   fillRule: "evenodd",
   d: "M16 9V4h1c.55 0 1-.45 1-1s-.45-1-1-1H7c-.55 0-1 .45-1 1s.45 1 1 1h1v5c0 1.66-1.34 3-3 3v2h5.97v7l1 1 1-1v-7H19v-2c-1.66 0-3-1.34-3-3"
@@ -25812,7 +25805,7 @@ Object.defineProperty(RestartAlt, "__esModule", {
 });
 var default_1$7 = RestartAlt.default = void 0;
 var _createSvgIcon$7 = _interopRequireDefault$7(requireCreateSvgIcon());
-var _jsxRuntime$7 = requireJsxRuntime();
+var _jsxRuntime$7 = jsxRuntimeExports;
 var _default$7 = default_1$7 = RestartAlt.default = (0, _createSvgIcon$7.default)(/* @__PURE__ */ (0, _jsxRuntime$7.jsx)("path", {
   d: "M12 5V2L8 6l4 4V7c3.31 0 6 2.69 6 6 0 2.97-2.17 5.43-5 5.91v2.02c3.95-.49 7-3.85 7-7.93 0-4.42-3.58-8-8-8m-6 8c0-1.65.67-3.15 1.76-4.24L6.34 7.34C4.9 8.79 4 10.79 4 13c0 4.08 3.05 7.44 7 7.93v-2.02c-2.83-.48-5-2.94-5-5.91"
 }), "RestartAlt");
@@ -25825,7 +25818,7 @@ Object.defineProperty(Save, "__esModule", {
 });
 var default_1$6 = Save.default = void 0;
 var _createSvgIcon$6 = _interopRequireDefault$6(requireCreateSvgIcon());
-var _jsxRuntime$6 = requireJsxRuntime();
+var _jsxRuntime$6 = jsxRuntimeExports;
 var _default$6 = default_1$6 = Save.default = (0, _createSvgIcon$6.default)(/* @__PURE__ */ (0, _jsxRuntime$6.jsx)("path", {
   d: "M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3m3-10H5V5h10z"
 }), "Save");
@@ -25838,7 +25831,7 @@ Object.defineProperty(Search, "__esModule", {
 });
 var default_1$5 = Search.default = void 0;
 var _createSvgIcon$5 = _interopRequireDefault$5(requireCreateSvgIcon());
-var _jsxRuntime$5 = requireJsxRuntime();
+var _jsxRuntime$5 = jsxRuntimeExports;
 var _default$5 = default_1$5 = Search.default = (0, _createSvgIcon$5.default)(/* @__PURE__ */ (0, _jsxRuntime$5.jsx)("path", {
   d: "M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"
 }), "Search");
@@ -25851,7 +25844,7 @@ Object.defineProperty(SearchOff, "__esModule", {
 });
 var default_1$4 = SearchOff.default = void 0;
 var _createSvgIcon$4 = _interopRequireDefault$4(requireCreateSvgIcon());
-var _jsxRuntime$4 = requireJsxRuntime();
+var _jsxRuntime$4 = jsxRuntimeExports;
 var _default$4 = default_1$4 = SearchOff.default = (0, _createSvgIcon$4.default)([/* @__PURE__ */ (0, _jsxRuntime$4.jsx)("path", {
   d: "M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3 6.08 3 3.28 5.64 3.03 9h2.02C5.3 6.75 7.18 5 9.5 5 11.99 5 14 7.01 14 9.5S11.99 14 9.5 14c-.17 0-.33-.03-.5-.05v2.02c.17.02.33.03.5.03 1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19z"
 }, "0"), /* @__PURE__ */ (0, _jsxRuntime$4.jsx)("path", {
@@ -25866,7 +25859,7 @@ Object.defineProperty(Sort, "__esModule", {
 });
 var default_1$3 = Sort.default = void 0;
 var _createSvgIcon$3 = _interopRequireDefault$3(requireCreateSvgIcon());
-var _jsxRuntime$3 = requireJsxRuntime();
+var _jsxRuntime$3 = jsxRuntimeExports;
 var _default$3 = default_1$3 = Sort.default = (0, _createSvgIcon$3.default)(/* @__PURE__ */ (0, _jsxRuntime$3.jsx)("path", {
   d: "M3 18h6v-2H3zM3 6v2h18V6zm0 7h12v-2H3z"
 }), "Sort");
@@ -25879,7 +25872,7 @@ Object.defineProperty(SyncAlt, "__esModule", {
 });
 var default_1$2 = SyncAlt.default = void 0;
 var _createSvgIcon$2 = _interopRequireDefault$2(requireCreateSvgIcon());
-var _jsxRuntime$2 = requireJsxRuntime();
+var _jsxRuntime$2 = jsxRuntimeExports;
 var _default$2 = default_1$2 = SyncAlt.default = (0, _createSvgIcon$2.default)(/* @__PURE__ */ (0, _jsxRuntime$2.jsx)("path", {
   d: "m18 12 4-4-4-4v3H3v2h15zM6 12l-4 4 4 4v-3h15v-2H6z"
 }), "SyncAlt");
@@ -25892,7 +25885,7 @@ Object.defineProperty(ViewColumn, "__esModule", {
 });
 var default_1$1 = ViewColumn.default = void 0;
 var _createSvgIcon$1 = _interopRequireDefault$1(requireCreateSvgIcon());
-var _jsxRuntime$1 = requireJsxRuntime();
+var _jsxRuntime$1 = jsxRuntimeExports;
 var _default$1 = default_1$1 = ViewColumn.default = (0, _createSvgIcon$1.default)(/* @__PURE__ */ (0, _jsxRuntime$1.jsx)("path", {
   d: "M14.67 5v14H9.33V5zm1 14H21V5h-5.33zm-7.34 0V5H3v14z"
 }), "ViewColumn");
@@ -25905,7 +25898,7 @@ Object.defineProperty(VisibilityOff, "__esModule", {
 });
 var default_1 = VisibilityOff.default = void 0;
 var _createSvgIcon = _interopRequireDefault(requireCreateSvgIcon());
-var _jsxRuntime = requireJsxRuntime();
+var _jsxRuntime = jsxRuntimeExports;
 var _default = default_1 = VisibilityOff.default = (0, _createSvgIcon.default)(/* @__PURE__ */ (0, _jsxRuntime.jsx)("path", {
   d: "M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7M2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2m4.31-.78 3.15 3.15.02-.16c0-1.66-1.34-3-3-3z"
 }), "VisibilityOff");
@@ -72081,51 +72074,105 @@ const MaterialReactTable = (props) => {
   }
   return jsxRuntimeExports.jsx(MRT_TablePaper, { table });
 };
+const { Open: Open$9, Child: Child$5 } = gubu_minExports.Gubu;
+const Shape$2 = gubu_minExports.Gubu(Open$9({
+  name: String,
+  prefix: String,
+  ent: String,
+  order: [String],
+  field: Child$5({}, {})
+}), { prefix: "BasicEntityList" });
+function VxgBasicEntityListPlugin(options) {
+  const seneca = this;
+  const spec = Shape$2(options.spec);
+  console.log("BasicEntityList spec", spec);
+  const slot = spec.prefix + spec.name;
+  const columns = spec.order.reduce((a, fn2) => {
+    const field = spec.field[fn2];
+    console.log("CF", fn2, field);
+    a.push({
+      accessorKey: fn2,
+      header: field.label,
+      Cell: options.cell[fn2]
+    });
+    return a;
+  }, []);
+  console.log("BasicEntityList columns", columns);
+  options.setPlugin(true);
+  return {
+    exports: {
+      handle: {
+        spec,
+        slot,
+        columns,
+        buildFilter
+      }
+    }
+  };
+}
+function buildFilter(query) {
+  const filter = Object.entries(query).reduce((a, n) => (n[0].startsWith("f_") ? a[n[0].substring(2)] = n[1] : null, a), {});
+  const filterDesc = Object.entries(filter).reduce((a, n) => a + "~" + n[0] + "=" + n[1], "");
+  return { filter, filterDesc };
+}
+Object.assign(VxgBasicEntityListPlugin, {
+  defaults: {
+    spec: {},
+    cell: {},
+    setPlugin: Function
+  }
+});
+Object.defineProperty(VxgBasicEntityListPlugin, "name", { value: "VxgBasicEntityListPlugin" });
 const CMPNAME$9 = "BasicEntityList";
 console.log(CMPNAME$9, "1");
-const { Open: Open$7 } = gubu_minExports.Gubu;
-const BasicEntityListSpecShape = gubu_minExports.Gubu(Open$7({}), { prefix: CMPNAME$9 });
 function BasicEntityList(props) {
-  const { ctx, spec } = props;
-  const { seneca, model } = ctx();
-  const basicEntityListSpec = BasicEntityListSpecShape(spec);
-  console.log(CMPNAME$9, basicEntityListSpec);
-  const name = spec.name;
-  const slotName = spec.prefix + spec.name;
-  const canon = spec.ent;
+  const { ctx } = props;
+  const { seneca } = ctx();
+  const query = useSelector((state) => state.main.current.view.query);
   const slotSelectors = seneca.export("Redux/slotSelectors");
-  let { selectItem, selectList, selectMeta } = slotSelectors(slotName);
-  let data = useSelector((state) => selectList(state));
-  let query = useSelector((state) => state.main.current.view.query);
-  let filter = Object.entries(query).reduce((a, n) => (n[0].startsWith("f_") ? a[n[0].substring(2)] = n[1] : null, a), {});
-  console.log("QF", query, filter);
+  const [plugin, setPlugin] = useState(false);
+  const [ready, setReady] = useState(false);
   useEffect(() => {
-    const q = __spreadProps(__spreadValues({}, filter), { slot$: slotName });
-    console.log("LIST", canon, q);
-    seneca.entity(canon).list$(q);
-  }, Object.values(filter));
-  const columns = [
-    {
-      accessorKey: "id",
-      header: "ID"
-    },
-    {
-      accessorKey: "name",
-      header: "Name"
-    },
-    {
-      accessorKey: "title",
-      header: "Title"
+    if (!plugin) {
+      seneca.use({
+        tag: props.spec.name,
+        define: VxgBasicEntityListPlugin,
+        options: {
+          spec: props.spec,
+          cell: {
+            t_m: cellDateTime
+          },
+          setPlugin
+        }
+      });
     }
-  ];
+  }, []);
+  const { spec, slot, columns, buildFilter: buildFilter2 } = seneca.export("VxgBasicEntityListPlugin/handle") || { spec: {}, columns: [] };
+  const { ent, name } = spec;
+  if (plugin && !ready) {
+    seneca.act("aim:app,on:BasicLed,ready:list", { view: name, setReady });
+  }
+  const { selectList } = slotSelectors(slot);
+  const data = useSelector((state) => selectList(state)) || [];
+  const { filter, filterDesc } = ready ? buildFilter2(query) : {};
+  useEffect(() => {
+    if (ready) {
+      seneca.entity(ent).list$(__spreadProps(__spreadValues({}, filter || {}), { slot$: slot }));
+    }
+  }, [filterDesc]);
   const table = useMaterialReactTable({
     columns,
     data,
+    enableTopToolbar: false,
+    enableColumnActions: false,
+    enableColumnFilters: false,
+    enablePagination: false,
+    enableSorting: false,
+    initialState: { density: "compact" },
     muiTableBodyRowProps: ({ row }) => ({
       onClick: () => {
         let entdata = row.original;
-        console.info("ROW", entdata);
-        seneca.act("aim:app,on:view,edit:item", {
+        seneca.act("aim:app,on:BasicLed,edit:item", {
           view: name,
           item_id: entdata.id
         });
@@ -72141,6 +72188,10 @@ function BasicEntityList(props) {
       table
     }
   ) });
+}
+function cellDateTime(spec) {
+  const formattedDate = new Date(spec.cell.getValue()).toLocaleString();
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: formattedDate });
 }
 var isCheckBoxInput = (element) => element.type === "checkbox";
 var isDateObject = (value) => value instanceof Date;
@@ -73987,8 +74038,8 @@ function useForm(props = {}) {
 }
 const CMPNAME$8 = "BasicEntityField";
 console.log(CMPNAME$8, "3");
-const { Open: Open$6 } = gubu_minExports.Gubu;
-const BasicEntityFieldSpecShape = gubu_minExports.Gubu(Open$6({}), { prefix: CMPNAME$8 });
+const { Open: Open$8 } = gubu_minExports.Gubu;
+const BasicEntityFieldSpecShape = gubu_minExports.Gubu(Open$8({}), { prefix: CMPNAME$8 });
 const fieldMap = {
   Text: BasicEntityTextField,
   TextBox: BasicEntityTextBoxField
@@ -74032,42 +74083,98 @@ function BasicEntityTextBoxField(props) {
     }, register(field.name))
   ) }, field.name);
 }
+const { Open: Open$7, Child: Child$4 } = gubu_minExports.Gubu;
+const Shape$1 = gubu_minExports.Gubu(Open$7({
+  name: String,
+  prefix: String,
+  ent: String,
+  order: [String],
+  field: Child$4({}, {})
+}), { prefix: "BasicEntityEdit" });
+function VxgBasicEntityEditPlugin(options) {
+  const seneca = this;
+  const spec = Shape$1(options.spec);
+  console.log("QQQ", spec);
+  const slot = spec.prefix + spec.name;
+  const fields = Object.entries(spec.field).reduce((a, n) => (fixField(n, spec), a.push(n[1]), a), []);
+  options.setPlugin(true);
+  return {
+    exports: {
+      handle: {
+        spec,
+        slot,
+        fields
+      }
+    }
+  };
+}
+function fixField(fieldEntry, spec) {
+  const name = fieldEntry[0];
+  const field = fieldEntry[1];
+  field.id = "vxg-field-" + spec.name + "-" + name;
+  field.name = name;
+  field.ux = field.ux || {};
+  field.ux.size = null == field.ux.size ? 4 : parseInt(field.ux.size, 10);
+}
+Object.assign(VxgBasicEntityEditPlugin, {
+  defaults: {
+    spec: {},
+    setPlugin: Function
+  }
+});
+Object.defineProperty(VxgBasicEntityEditPlugin, "name", { value: "VxgBasicEntityEditPlugin" });
 const CMPNAME$7 = "BasicEntityEdit";
 console.log(CMPNAME$7, "1");
-const { Open: Open$5 } = gubu_minExports.Gubu;
-const BasicEntityEditSpecShape = gubu_minExports.Gubu(Open$5({}), { prefix: CMPNAME$7 });
+const { Open: Open$6 } = gubu_minExports.Gubu;
+const BasicEntityEditSpecShape = gubu_minExports.Gubu(Open$6({}), { prefix: CMPNAME$7 });
 function BasicEntityEdit(props) {
-  const { ctx, spec } = props;
-  const { seneca, model } = ctx();
-  const basicEntityEditSpec = BasicEntityEditSpecShape(spec);
-  const name = spec.name;
-  const slotName = spec.prefix + spec.name;
-  const canon = spec.ent;
-  const fields = Object.entries(spec.field).reduce((a, n) => (fixField(n, spec), a.push(n[1]), a), []);
-  const slotSelectors = seneca.export("Redux/slotSelectors");
-  let { selectItem, selectList, selectMeta } = slotSelectors(slotName);
-  let item = useSelector((state) => selectItem(state));
-  const params = useParams();
-  console.log(CMPNAME$7, "params", params, item, fields);
+  const { ctx } = props;
+  const { seneca } = ctx();
+  const query = useSelector((state) => state.main.current.view.query);
+  const [plugin, setPlugin] = useState(false);
+  const [ready, setReady] = useState(false);
   useEffect(() => {
-    if (null == item && null != params.item) {
-      seneca.act("aim:app,on:view,edit:item", {
-        view: name,
-        item_id: params.item
+    if (!plugin) {
+      seneca.use({
+        tag: props.spec.name,
+        define: VxgBasicEntityEditPlugin,
+        options: {
+          spec: props.spec,
+          setPlugin
+        }
       });
     }
-    reset(item);
-  }, [item]);
+  }, []);
+  const { spec, slot, fields } = seneca.export("VxgBasicEntityEditPlugin/handle") || { spec: {}, item: null, fields: [] };
+  const { ent, name } = spec;
+  if (plugin && !ready) {
+    console.log("ZZZ", plugin, ready, name, fields);
+    seneca.act("aim:app,on:BasicLed,ready:edit", { view: name, setReady });
+  }
+  const slotSelectors = seneca.export("Redux/slotSelectors");
+  let { selectItem, selectList, selectMeta } = slotSelectors(slot);
+  let item = useSelector((state) => selectItem(state));
+  const params = useParams();
+  useEffect(() => {
+    if (ready) {
+      if (null == item && null != params.item) {
+        seneca.act("aim:app,on:BasicLed,edit:item", {
+          view: name,
+          item_id: params.item
+        });
+      }
+      reset(item);
+    }
+  }, [null == item, ready]);
   const {
     register,
     handleSubmit,
     reset
   } = useForm({});
   const onSubmit = (data) => {
-    console.log("handleSubmit", data);
-    seneca.make(canon).data$(__spreadProps(__spreadValues({}, data), {
+    seneca.make(ent).data$(__spreadProps(__spreadValues({}, data), {
       id: item.id,
-      slot$: slotName
+      slot$: slot
     })).save$();
   };
   return /* @__PURE__ */ jsxRuntimeExports.jsx(Box$2, { className: "vxg-BasicEntityEdit", children: item ? /* @__PURE__ */ jsxRuntimeExports.jsxs(
@@ -74101,24 +74208,20 @@ function BasicEntityEdit(props) {
     }
   ) : /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, {}) });
 }
-function fixField(fieldEntry, spec) {
-  const name = fieldEntry[0];
-  const field = fieldEntry[1];
-  field.id = "vxg-field-" + spec.name + "-" + name;
-  field.name = name;
-  field.ux = field.ux || {};
-  field.ux.size = null == field.ux.size ? 4 : parseInt(field.ux.size, 10);
-}
 const CMPNAME$6 = "BasicLedHead";
 console.log(CMPNAME$6, "1");
-const { Open: Open$4 } = gubu_minExports.Gubu;
-const BasicLedHeadSpecShape = gubu_minExports.Gubu(Open$4({
-  mui: Open$4({
-    Toolbar: Open$4({})
+const { Open: Open$5, Child: Child$3 } = gubu_minExports.Gubu;
+const BasicLedHeadSpecShape = gubu_minExports.Gubu(Open$5({
+  tool: Child$3({
+    id: String,
+    kind: String,
+    custom: ""
+  }, {}),
+  mui: Open$5({
+    Toolbar: Open$5({})
   })
 }), { prefix: CMPNAME$6 });
 function BasicLedHead(props) {
-  var _a, _b;
   const { ctx, spec } = props;
   const { seneca, custom } = ctx();
   let navigate = useNavigate();
@@ -74135,7 +74238,7 @@ function BasicLedHead(props) {
   const state = { item, view: viewState, navigate };
   console.log(CMPNAME$6, "state", slotName, state);
   const subview = "/view/" + viewName === loc.pathname ? "list" : "edit";
-  const customButtons = Object.values(((_b = (_a = spec.def) == null ? void 0 : _a.head) == null ? void 0 : _b.tool) || {}).filter((t) => "button" === t.kind).map((t) => (custom.BasicLedHead || {})[t.custom]).filter((t) => null != t);
+  const customButtons = Object.values(spec.tool || {}).filter((t) => "button" === t.kind).map((t) => (custom.BasicLedHead || {})[t.custom]).filter((t) => null != t);
   console.log("CB", customButtons);
   return /* @__PURE__ */ jsxRuntimeExports.jsx(Box$2, { className: "bxg-BasicLedHead", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
     Toolbar$1,
@@ -74180,8 +74283,8 @@ function BasicLedHead(props) {
 }
 const CMPNAME$5 = "BasicLedFoot";
 console.log(CMPNAME$5, "1");
-const { Open: Open$3 } = gubu_minExports.Gubu;
-const BasicLedFootSpecShape = gubu_minExports.Gubu(Open$3({}), { prefix: CMPNAME$5 });
+const { Open: Open$4 } = gubu_minExports.Gubu;
+const BasicLedFootSpecShape = gubu_minExports.Gubu(Open$4({}), { prefix: CMPNAME$5 });
 function BasicLedFoot(props) {
   const { ctx, spec } = props;
   const { seneca, model } = ctx();
@@ -74195,34 +74298,68 @@ const BasicLoadingSpecShape = gubu_minExports.Gubu({}, { prefix: CMPNAME$4 });
 function BasicLoading(props) {
   return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { children: "Loading..." }) });
 }
+const { Open: Open$3 } = gubu_minExports.Gubu;
+const Shape = gubu_minExports.Gubu({
+  name: String,
+  title: String,
+  active: Boolean,
+  kind: String,
+  def: {
+    ent: String,
+    head: Open$3({
+      active: false
+    }),
+    list: Open$3({
+      active: false
+    }),
+    edit: Open$3({
+      active: false
+    }),
+    foot: Open$3({
+      active: false
+    })
+  }
+}, { prefix: "BasicLed" });
 function VxgBasicLedPlugin(options) {
   const seneca = this;
-  const spec = options.spec;
+  const spec = Shape(options.spec);
   const navigate = options.navigate;
   const name = spec.name;
-  const canon = spec.def.ent;
+  const entCanon = spec.def.ent;
   const slotName = "BasicLed_" + name;
-  const ledent = seneca.make(canon);
-  console.log("LED SPEC", spec);
   seneca.fix({ view: name }).add(
     "aim:app,on:view,init:state,redux$:true",
-    function(_msg, _reply, meta) {
+    function(_msg, reply, meta) {
       const state = meta.custom.state();
       let view = state.view[name];
       view.mode = "list";
       view.status = "init";
       view.ready = true;
       this.export("Redux/entityPrepare")(state, slotName);
+      reply();
     }
   ).add(
-    "aim:app,on:view,list:item,redux$:true",
-    function(_msg, _reply, meta) {
-      let view = meta.custom.state().view[name];
+    "aim:app,on:BasicLed,ready:list,redux$:true",
+    function(msg, reply, meta) {
+      const setReady = msg.setReady;
+      const view = meta.custom.state().view[name];
       view.mode = "list";
       view.status = "list-item";
+      setReady(true);
+      reply();
+    }
+  ).add(
+    "aim:app,on:BasicLed,ready:edit,redux$:true",
+    function(msg, reply, meta) {
+      const setReady = msg.setReady;
+      const view = meta.custom.state().view[name];
+      view.mode = "edit";
+      view.status = "edit-item";
+      setReady(true);
+      reply();
     }
   ).message(
-    "aim:app,on:view,edit:item,redux$:true",
+    "aim:app,on:BasicLed,edit:item,redux$:true",
     { item_id: String },
     function(msg, meta) {
       return __async(this, null, function* () {
@@ -74231,7 +74368,7 @@ function VxgBasicLedPlugin(options) {
         const { item_id } = msg;
         view.mode = "edit";
         navigate("/view/" + name + "/edit/" + item_id);
-        return yield this.entity(canon).load$({
+        return yield this.entity(entCanon).load$({
           id: msg.item_id,
           slot$: slotName
         });
@@ -74241,7 +74378,7 @@ function VxgBasicLedPlugin(options) {
     "aim:app,on:view,add:item",
     function(_msg) {
       return __async(this, null, function* () {
-        yield seneca.entity(canon).save$({ add$: true, slot$: slotName });
+        yield seneca.entity(entCanon).save$({ add$: true, slot$: slotName });
         navigate("/view/" + name + "/add");
       });
     }
@@ -74251,19 +74388,15 @@ function VxgBasicLedPlugin(options) {
       this.act("aim:app,on:view,init:state,direct$:true", { view: name });
     });
   });
-  const entcanon = ledent.canon$({ object: true });
-  const field = seneca.context.model.main.ent[entcanon.base][entcanon.name].field;
   const sharedSpec = {
     name,
-    ent: canon,
-    prefix: "BasicLed_",
-    field,
-    def: spec.def
+    ent: entCanon,
+    prefix: "BasicLed_"
   };
-  const listSpec = __spreadValues({}, sharedSpec);
-  const editSpec = __spreadValues({}, sharedSpec);
-  const headSpec = __spreadValues({}, sharedSpec);
-  const footSpec = __spreadValues({}, sharedSpec);
+  const listSpec = __spreadValues(__spreadValues({}, spec.def.list), sharedSpec);
+  const editSpec = __spreadValues(__spreadValues({}, spec.def.edit), sharedSpec);
+  const headSpec = __spreadValues(__spreadValues({}, spec.def.head), sharedSpec);
+  const footSpec = __spreadValues(__spreadValues({}, spec.def.foot), sharedSpec);
   return {
     exports: {
       spec: {
@@ -74275,60 +74408,41 @@ function VxgBasicLedPlugin(options) {
     }
   };
 }
+VxgBasicLedPlugin.defaults = {
+  spec: {},
+  navigate: Function
+};
 Object.defineProperty(VxgBasicLedPlugin, "name", { value: "VxgBasicLedPlugin" });
 const CMPNAME$3 = "BasicLed";
 console.log(CMPNAME$3, "2");
 const { Open: Open$2 } = gubu_minExports.Gubu;
-const BasicLedSpecShape = gubu_minExports.Gubu(Open$2({
-  name: String,
-  def: {
-    ent: String,
-    head: {
-      active: false,
-      tool: {}
-    },
-    list: {
-      active: true,
-      order: [String],
-      field: {}
-    },
-    foot: {
-      active: false
-    }
-  }
-}), { prefix: CMPNAME$3 });
 function BasicLed(props) {
-  const { ctx, spec } = props;
-  const { seneca, model } = ctx();
-  console.log("BasicLed SPEC", spec);
-  const basicLedSpec = BasicLedSpecShape(spec);
-  console.log(CMPNAME$3, basicLedSpec);
-  const name = basicLedSpec.name;
-  const headDef = basicLedSpec.def.head;
-  const footDef = basicLedSpec.def.foot;
+  const { ctx } = props;
+  const { seneca } = ctx();
+  const name = props.spec.name;
   const navigate = useNavigate();
   const led = useSelector((state) => state.main.view[name]);
   const ready = true === led.ready;
+  console.log(CMPNAME$3, "ready", ready);
   if (!ready) {
-    console.log(CMPNAME$3, "ready", ready);
     seneca.use({
       tag: name,
       define: VxgBasicLedPlugin,
       options: {
-        spec: basicLedSpec,
+        spec: props.spec,
         navigate
       }
     });
   }
-  const subspec = seneca.export("VxgBasicLedPlugin$" + name + "/spec");
+  const { head, list, edit, foot } = seneca.export("VxgBasicLedPlugin$" + name + "/spec") || {};
   return ready ? /* @__PURE__ */ jsxRuntimeExports.jsxs(Box$2, { className: "vxg-BasicLed", children: [
-    headDef.active && /* @__PURE__ */ jsxRuntimeExports.jsx(BasicLedHead, { ctx, spec: subspec.head }),
+    head.active && /* @__PURE__ */ jsxRuntimeExports.jsx(BasicLedHead, { ctx, spec: head }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs(Routes, { children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/", element: /* @__PURE__ */ jsxRuntimeExports.jsx(BasicEntityList, { ctx, spec: subspec.list }) }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/edit/:item", element: /* @__PURE__ */ jsxRuntimeExports.jsx(BasicEntityEdit, { ctx, spec: subspec.edit }) }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/add", element: /* @__PURE__ */ jsxRuntimeExports.jsx(BasicEntityEdit, { ctx, spec: subspec.edit }) })
+      /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/", element: /* @__PURE__ */ jsxRuntimeExports.jsx(BasicEntityList, { ctx, spec: list }) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/edit/:item", element: /* @__PURE__ */ jsxRuntimeExports.jsx(BasicEntityEdit, { ctx, spec: edit }) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/add", element: /* @__PURE__ */ jsxRuntimeExports.jsx(BasicEntityEdit, { ctx, spec: edit }) })
     ] }),
-    footDef.active && /* @__PURE__ */ jsxRuntimeExports.jsx(BasicLedFoot, { ctx, spec: subspec.foot })
+    foot.active && /* @__PURE__ */ jsxRuntimeExports.jsx(BasicLedFoot, { ctx, spec: foot })
   ] }) : /* @__PURE__ */ jsxRuntimeExports.jsx(BasicLoading, {});
 }
 const CMPNAME$2 = "BasicSide";
@@ -78558,7 +78672,7 @@ Object.defineProperty(VxgBasicAuthPlugin, "name", { value: "VxgBasicAuthPlugin" 
 console.log("BasicAuth 2");
 function BasicAuth(props) {
   const { spec, ctx } = props;
-  const seneca = ctx().seneca;
+  const { seneca } = ctx();
   const [ready, setReady] = useState(false);
   const [signinStatus, setSigninStatus] = useState("none");
   useEffect(() => {

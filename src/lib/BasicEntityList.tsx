@@ -1,97 +1,103 @@
 
 
 import React, {
+  useState,
   useEffect,
 } from 'react'
 
 import { useSelector } from 'react-redux'
 
 
-import {
+// import {
   // useTheme,
   // createTheme,
-  ThemeProvider
-} from '@mui/material/styles'
+  // ThemeProvider
+// } from '@mui/material/styles'
 
 
 import {
   MaterialReactTable,
   useMaterialReactTable,
-  type MRT_ColumnDef,
+  //  type MRT_ColumnDef,
 } from 'material-react-table'
 
 import { Box } from '@mui/material'
 
-import type { Spec } from './basic-types'
 
-import { Gubu } from 'gubu'
+import { VxgBasicEntityListPlugin } from './VxgBasicEntityListPlugin'
 
 
 const CMPNAME = 'BasicEntityList'
 console.log(CMPNAME,'1')
 
 
-const { Open } = Gubu
-const BasicEntityListSpecShape = Gubu(Open({
-}), {prefix: CMPNAME})
 
 
 function BasicEntityList (props: any) {
-  const { ctx, spec } = props
-  const { seneca, model } = ctx()
+  const { ctx } = props
+  const { seneca } = ctx()
 
-  const basicEntityListSpec: Spec = BasicEntityListSpecShape(spec)
-  console.log(CMPNAME,basicEntityListSpec)
-
-  const name = spec.name
-  const slotName = spec.prefix+spec.name
-  const canon = spec.ent
+  const query = useSelector((state:any)=>state.main.current.view.query)
   
   const slotSelectors = seneca.export('Redux/slotSelectors')
-  let { selectItem, selectList, selectMeta } = slotSelectors(slotName)
 
-  let data = useSelector((state:any)=>selectList(state))
+  const [plugin, setPlugin] = useState(false)
+  const [ready, setReady] = useState(false)
 
-  let query = useSelector((state:any)=>state.main.current.view.query)
-
-  let filter = Object.entries(query)
-  .reduce((a:any,n)=>((n[0].startsWith('f_')?a[n[0].substring(2)]=n[1]:null),a),{})
-
-  console.log('QF', query, filter)
-
-  
   useEffect(()=>{
-    const q = {...filter,slot$:slotName}
-    console.log('LIST', canon, q)
-    seneca.entity(canon).list$(q)
-  },Object.values(filter))
+    if(!plugin) {
+      seneca.use({
+        tag: props.spec.name,
+        define: VxgBasicEntityListPlugin,
+        options: {
+          spec: props.spec,
+          cell: {
+            t_m: cellDateTime,
+          },
+          setPlugin,
+        }
+      })
+    }
+  },[])
+
+  const { spec, slot, columns, buildFilter } =
+    seneca.export('VxgBasicEntityListPlugin/handle') ||
+    { spec: {}, columns: [] }
+
+  const { ent, name } = spec
+
+  if(plugin && !ready) {
+    seneca.act('aim:app,on:BasicLed,ready:list',{view:name,setReady})
+  }
+
+  const { selectList } = slotSelectors(slot)
+  const data = useSelector((state:any)=>selectList(state)) || []
+
+  const { filter, filterDesc } = ready ? buildFilter(query) : {} as any
+
+  useEffect(()=>{
+    if( ready ) {
+      seneca.entity(ent).list$({...(filter||{}),slot$:slot})
+    }
+  }, [filterDesc])
 
 
-  const columns = [
-    {
-      accessorKey: 'id',
-      header: 'ID',
-    },
-    {
-      accessorKey: 'name',
-      header: 'Name',
-    },
-    {
-      accessorKey: 'title',
-      header: 'Title',
-    },
-  ]
-
-  
   const table = useMaterialReactTable({
     columns,
     data,
 
+    enableTopToolbar: false,
+    enableColumnActions: false,
+    enableColumnFilters: false,
+    enablePagination: false,
+    enableSorting: false,
+
+    initialState: { density: 'compact' },
+    
     muiTableBodyRowProps: ({ row }) => ({
       onClick: () => {
         let entdata = row.original
-        console.info('ROW', entdata)
-        seneca.act('aim:app,on:view,edit:item', {
+        seneca.act('aim:app,on:BasicLed,edit:item', {
           view: name,
           item_id: entdata.id
         })
@@ -110,6 +116,13 @@ function BasicEntityList (props: any) {
     </Box>
   )
 }
+
+
+function cellDateTime(spec: any) {
+  const formattedDate = new Date(spec.cell.getValue()).toLocaleString()
+  return <div>{formattedDate}</div>
+}
+
 
 export {
   BasicEntityList

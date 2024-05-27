@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { useSelector } from 'react-redux'
 
@@ -22,6 +22,9 @@ import { Gubu } from 'gubu'
 import { BasicEntityField } from './BasicEntityField'
 
 
+import { VxgBasicEntityEditPlugin } from './VxgBasicEntityEditPlugin'
+
+
 
 const CMPNAME = 'BasicEntityEdit'
 console.log(CMPNAME,'1')
@@ -33,38 +36,60 @@ const BasicEntityEditSpecShape = Gubu(Open({
 
 
 function BasicEntityEdit (props: any) {
-  const { ctx, spec } = props
-  const { seneca, model } = ctx()
+  const { ctx } = props
+  const { seneca } = ctx()
 
-  const basicEntityEditSpec: Spec = BasicEntityEditSpecShape(spec)
-  // console.log(CMPNAME,basicEntityEditSpec)
 
-  const name = spec.name
-  const slotName = spec.prefix+spec.name
-  const canon = spec.ent
-  const fields = Object.entries(spec.field)
-    .reduce((a:any,n:any)=>(fixField(n,spec),a.push(n[1]),a),[])
+  const query = useSelector((state:any)=>state.main.current.view.query)
+  
+  const [plugin,setPlugin] = useState(false)
+  const [ready, setReady] = useState(false)
+  
+  useEffect(()=>{
+    if(!plugin) {
+      seneca.use({
+        tag: props.spec.name,
+        define: VxgBasicEntityEditPlugin,
+        options: {
+          spec: props.spec,
+          setPlugin,
+        }
+      })
+    }
+  },[])
+
+
+  const { spec, slot, fields } =
+    seneca.export('VxgBasicEntityEditPlugin/handle') ||
+    { spec: {}, item: null, fields: [] }
+
+  const { ent, name } = spec
+
+  if(plugin && !ready) {
+    console.log('ZZZ', plugin, ready, name, fields)
+    seneca.act('aim:app,on:BasicLed,ready:edit',{view:name,setReady})
+  }
 
   const slotSelectors = seneca.export('Redux/slotSelectors')
-  let { selectItem, selectList, selectMeta } = slotSelectors(slotName)
+  let { selectItem, selectList, selectMeta } = slotSelectors(slot)
 
   let item = useSelector((state:any)=>selectItem(state))
 
   const params: any = useParams()
 
-  console.log(CMPNAME, 'params', params, item, fields)
-
   useEffect(()=>{
-    if(null == item && null != params.item) {
-      seneca.act('aim:app,on:view,edit:item', {
-        view: name,
-        item_id: params.item
-      })
+    if(ready) {
+      if(null == item && null != params.item) {
+        seneca.act('aim:app,on:BasicLed,edit:item', {
+          view: name,
+          item_id: params.item
+        })
+      }
+      reset(item)
     }
-    reset(item)
-  },[item])
+  },[null==item,ready])
 
-
+  
   const {
     register,
     handleSubmit,
@@ -75,14 +100,13 @@ function BasicEntityEdit (props: any) {
 
   
   const onSubmit = (data:any) => {
-    console.log('handleSubmit', data)
-    seneca.make(canon)
+    seneca.make(ent)
       .data$({
         ...data,
         id: item.id,
-      slot$: slotName,
+      slot$: slot,
     })
-    .save$()
+      .save$()
   }
   
   return (
@@ -119,16 +143,6 @@ function BasicEntityEdit (props: any) {
   )
 }
 
-
-function fixField(fieldEntry:[string,any], spec:any) {
-  const name = fieldEntry[0]
-  const field = fieldEntry[1]
-  field.id = 'vxg-field-'+spec.name+'-'+name
-  field.name = name
-
-  field.ux = field.ux || {}
-  field.ux.size = null == field.ux.size ? 4 : parseInt(field.ux.size,10)
-}
 
 
 export {
