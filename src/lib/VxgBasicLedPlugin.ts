@@ -77,6 +77,41 @@ function VxgBasicLedPlugin(this: any, options: any) {
         reply()
       })
 
+    .add('aim:app,on:BasicLed,modify:edit',
+      function(msg: any) {
+        let item = msg.item
+        let fields = msg.fields
+
+        if (null == item) return item;
+
+        item = { ...item }
+
+        for (const field of fields) {
+          if ('Date' === field.ux.kind) {
+            item[field.name + '_orig$'] = item[field.name]
+            item[field.name] = new Date(item[field.name]).toISOString().split('T')[0]
+            item[field.name + '_time$'] =
+              item[field.name + '_orig$'] - new Date(item[field.name]).getTime()
+          }
+          else if ('Time' === field.ux.kind) {
+            const tstr = new Date(item[field.name]).toISOString().split('T')[1]
+            item[field.name + '_orig$'] = item[field.name]
+            item[field.name] = tstr.split('.')[0]
+            item[field.name + '_millis$'] = tstr.split('.')[1]
+          }
+          else if ('DateTime' === field.ux.kind) {
+            const iso = new Date(item[field.name]).toISOString()
+            const dstr = iso.split('T')[0]
+            const tstr = iso.split('T')[1].split('.')[0]
+            item[field.name] = dstr + 'T' + tstr
+            item[field.name + '_date$'] = dstr
+            item[field.name + '_time$'] = tstr
+            item[field.name + '_millis$'] = tstr.split('.')[1]
+          }
+        }
+
+        return item
+      })
 
     .message('aim:app,on:BasicLed,edit:item,redux$:true',
       { item_id: String },
@@ -86,10 +121,13 @@ function VxgBasicLedPlugin(this: any, options: any) {
         const { item_id } = msg
         view.mode = 'edit'
         navigate('/view/' + name + '/edit/' + item_id)
-        return await this.entity(entCanon).load$({
+
+        const item = await this.entity(entCanon).load$({
           id: msg.item_id,
           slot$: slotName,
         })
+
+        return item
       })
 
     .message('aim:app,on:view,add:item',

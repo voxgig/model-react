@@ -23,9 +23,8 @@ function VxgBasicEntityEditPlugin(this: any, options: any) {
 
   const slot = spec.prefix + spec.name
 
-  const fields = Object.entries(spec.field)
-    .reduce((a: any, n: any) => (fixField(n, spec), a.push(n[1]), a), [])
-
+  const fields = spec.order.reduce((a: any, fn: any) =>
+    (fixField(fn, spec.field[fn], spec), a.push(spec.field[fn]), a), [])
 
   options.setPlugin(true)
 
@@ -42,12 +41,9 @@ function VxgBasicEntityEditPlugin(this: any, options: any) {
 
 
 
-function fixField(fieldEntry: [string, any], spec: any) {
-  const name = fieldEntry[0]
-  const field = fieldEntry[1]
+function fixField(name: string, field: any, spec: any) {
   field.id = 'vxg-field-' + spec.name + '-' + name
   field.name = name
-
   field.ux = field.ux || {}
   field.ux.size = null == field.ux.size ? 4 : parseInt(field.ux.size, 10)
 }

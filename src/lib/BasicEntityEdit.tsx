@@ -61,12 +61,11 @@ function BasicEntityEdit (props: any) {
 
   const { spec, slot, fields } =
     seneca.export('VxgBasicEntityEditPlugin/handle') ||
-    { spec: {}, item: null, fields: [] }
+    { spec: {}, slot: null, fields: [] }
 
   const { ent, name } = spec
 
   if(plugin && !ready) {
-    console.log('ZZZ', plugin, ready, name, fields)
     seneca.act('aim:app,on:BasicLed,ready:edit',{view:name,setReady})
   }
 
@@ -75,6 +74,15 @@ function BasicEntityEdit (props: any) {
 
   let item = useSelector((state:any)=>selectItem(state))
 
+  if(item && name) {
+    item =
+    seneca.direct('aim:app,on:BasicLed,modify:edit', {
+      view:name, item, fields
+    })
+  }
+
+  console.log('EDIT ITEM', item)
+  
   const params: any = useParams()
 
   useEffect(()=>{
@@ -82,6 +90,7 @@ function BasicEntityEdit (props: any) {
       if(null == item && null != params.item) {
         seneca.act('aim:app,on:BasicLed,edit:item', {
           view: name,
+          fields,
           item_id: params.item
         })
       }
@@ -93,6 +102,7 @@ function BasicEntityEdit (props: any) {
   const {
     register,
     handleSubmit,
+    getValues,
     reset
   } = useForm({
   })
@@ -100,6 +110,7 @@ function BasicEntityEdit (props: any) {
 
   
   const onSubmit = (data:any) => {
+    // TODO: should be a message
     seneca.make(ent)
       .data$({
         ...data,
@@ -129,6 +140,7 @@ function BasicEntityEdit (props: any) {
                 spec={{
                   field,
                   register,
+                  getValues,
                 }} />
             </Grid>
           )}
