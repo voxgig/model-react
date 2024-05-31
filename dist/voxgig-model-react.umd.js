@@ -74452,22 +74452,20 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         item = __spreadValues({}, item);
         for (const field of fields) {
           if ("Date" === field.ux.kind) {
+            const dt = util$1.dateTimeFromUTC(item[field.name]);
             item[field.name + "_orig$"] = item[field.name];
-            item[field.name] = new Date(item[field.name]).toISOString().split("T")[0];
-            item[field.name + "_time$"] = item[field.name + "_orig$"] - new Date(item[field.name]).getTime();
+            item[field.name + "_udm$"] = dt.udm;
+            item[field.name] = dt.locald;
           } else if ("Time" === field.ux.kind) {
-            const tstr = new Date(item[field.name]).toISOString().split("T")[1];
+            const dt = util$1.dateTimeFromUTC(item[field.name]);
             item[field.name + "_orig$"] = item[field.name];
-            item[field.name] = tstr.split(".")[0];
-            item[field.name + "_millis$"] = tstr.split(".")[1];
+            item[field.name + "_udm$"] = dt.udm;
+            item[field.name] = dt.localt;
           } else if ("DateTime" === field.ux.kind) {
-            const iso = new Date(item[field.name]).toISOString();
-            const dstr = iso.split("T")[0];
-            const tstr = iso.split("T")[1].split(".")[0];
-            item[field.name] = dstr + "T" + tstr;
-            item[field.name + "_date$"] = dstr;
-            item[field.name + "_time$"] = tstr;
-            item[field.name + "_millis$"] = tstr.split(".")[1];
+            const dt = util$1.dateTimeFromUTC(item[field.name]);
+            item[field.name + "_orig$"] = item[field.name];
+            item[field.name + "_udm$"] = dt.udm;
+            item[field.name] = dt.locald + "T" + dt.localt;
           }
         }
         return item;
@@ -74519,10 +74517,46 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           edit: editSpec,
           head: headSpec,
           foot: footSpec
-        }
+        },
+        util: util$1
       }
     };
   }
+  const util$1 = {
+    dateTimeFromUTC: (utc, tz) => {
+      const date = new Date(utc);
+      const iso = date.toISOString();
+      const isod = iso.split("T")[0];
+      const isot = iso.split("T")[1].split(".")[0];
+      const udm = date.getUTCHours() * 60 * 60 * 1e3 + date.getUTCMinutes() * 60 * 1e3 + date.getUTCSeconds() * 1e3 + date.getUTCMilliseconds();
+      let out = {
+        utc,
+        date,
+        isod,
+        isot,
+        udm
+      };
+      tz = tz || Intl.DateTimeFormat().resolvedOptions().timeZone;
+      const dateFormatter = new Intl.DateTimeFormat("en-GB", {
+        timeZone: tz,
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit"
+      });
+      const timeFormatter = new Intl.DateTimeFormat("en-GB", {
+        timeZone: tz,
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: false
+      });
+      const [{ value: day }, , { value: month }, , { value: year }] = dateFormatter.formatToParts(date);
+      const [{ value: hour }, , { value: minute }, , { value: second }] = timeFormatter.formatToParts(date);
+      out.locald = `${year}-${month}-${day}`;
+      out.localt = `${hour}:${minute}:${second}`;
+      return out;
+    }
+  };
   VxgBasicLedPlugin.defaults = {
     spec: {},
     navigate: Function
