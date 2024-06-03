@@ -10,7 +10,7 @@ import { Box } from '@mui/material'
 
 // import { DataGrid } from '@mui/x-data-grid'
 
-function BasicList (props: any) {
+function BasicList(props: any) {
   const {
     ctx,
     onRowClick = () => {},
@@ -74,7 +74,7 @@ function BasicList (props: any) {
     }
   } else {
     specificProps = {
-      enablePagination: false
+      enablePagination: true
     }
   }
 

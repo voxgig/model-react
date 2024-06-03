@@ -45978,7 +45978,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       };
     } else {
       specificProps = {
-        enablePagination: false
+        enablePagination: true
       };
     }
     return /* @__PURE__ */ jsxRuntimeExports.jsx(ThemeProvider, { theme, children: /* @__PURE__ */ jsxRuntimeExports.jsx(material.Box, { className: "BasicList", style: __spreadValues({}, sx), children: /* @__PURE__ */ React.createElement(

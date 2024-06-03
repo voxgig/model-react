@@ -45966,7 +45966,7 @@ function BasicList(props) {
     };
   } else {
     specificProps = {
-      enablePagination: false
+      enablePagination: true
     };
   }
   return /* @__PURE__ */ jsxRuntimeExports.jsx(ThemeProvider, { theme, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Box$2, { className: "BasicList", style: __spreadValues({}, sx), children: /* @__PURE__ */ createElement(
