@@ -45986,7 +45986,6 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       MaterialReactTable,
       __spreadProps(__spreadValues(__spreadValues({}, commonTableProps), specificProps), {
         state: { isLoading },
-        initialState,
         key: cmpKey
       })
     ) }) });

@@ -45974,7 +45974,6 @@ function BasicList(props) {
     MaterialReactTable,
     __spreadProps(__spreadValues(__spreadValues({}, commonTableProps), specificProps), {
       state: { isLoading },
-      initialState,
       key: cmpKey
     })
   ) }) });

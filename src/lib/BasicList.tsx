@@ -86,7 +86,6 @@ function BasicList(props: any) {
           {...commonTableProps}
           {...specificProps}
           state={{ isLoading: isLoading }}
-          initialState={initialState}
           key={cmpKey}
         />
       </Box>
