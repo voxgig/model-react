@@ -178,7 +178,9 @@ function BasicLed(props: any) {
 
         return (
           <Link to={`/view/${entityName}/${entityId}/show`}>
-            <Typography variant='body2'>{cellValue}</Typography>
+            <Typography variant='body2' textTransform='capitalize'>
+              {cellValue}
+            </Typography>
           </Link>
         )
       case 'image':

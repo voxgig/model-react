@@ -45918,6 +45918,7 @@ function BasicList(props) {
     },
     data,
     columns,
+    initialState = {},
     sx = {},
     spec,
     isLoading,
@@ -45941,7 +45942,7 @@ function BasicList(props) {
   const commonTableProps = {
     enableColumnActions: false,
     enableColumnFilters,
-    enableSorting: false,
+    enableSorting: true,
     enableBottomToolbar: true,
     enableTopToolbar: false,
     columns,
@@ -45973,6 +45974,7 @@ function BasicList(props) {
     MaterialReactTable,
     __spreadProps(__spreadValues(__spreadValues({}, commonTableProps), specificProps), {
       state: { isLoading },
+      initialState,
       key: cmpKey
     })
   ) }) });
@@ -49372,7 +49374,7 @@ function BasicLed(props) {
         const target = field.target;
         entityId = row.original[(target == null ? void 0 : target.idName) || "id"];
         const entityName = (target == null ? void 0 : target.entity) || viewName;
-        return /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: `/view/${entityName}/${entityId}/show`, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Typography$1, { variant: "body2", children: cellValue }) });
+        return /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: `/view/${entityName}/${entityId}/show`, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Typography$1, { variant: "body2", textTransform: "capitalize", children: cellValue }) });
       case "image":
         return /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: cellValue, alt: "Cell Content" });
       case "navbutton":

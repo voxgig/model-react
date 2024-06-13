@@ -17,6 +17,7 @@ function BasicList(props: any) {
     onEditingRowSave = () => {},
     data,
     columns,
+    initialState = {},
     sx = {},
     spec,
     isLoading,
@@ -47,7 +48,7 @@ function BasicList(props: any) {
   const commonTableProps = {
     enableColumnActions: false,
     enableColumnFilters: enableColumnFilters,
-    enableSorting: false,
+    enableSorting: true,
     enableBottomToolbar: true,
     enableTopToolbar: false,
     columns: columns,
@@ -85,6 +86,7 @@ function BasicList(props: any) {
           {...commonTableProps}
           {...specificProps}
           state={{ isLoading: isLoading }}
+          initialState={initialState}
           key={cmpKey}
         />
       </Box>

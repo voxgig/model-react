@@ -45930,6 +45930,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       },
       data,
       columns,
+      initialState = {},
       sx = {},
       spec,
       isLoading,
@@ -45953,7 +45954,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const commonTableProps = {
       enableColumnActions: false,
       enableColumnFilters,
-      enableSorting: false,
+      enableSorting: true,
       enableBottomToolbar: true,
       enableTopToolbar: false,
       columns,
@@ -45985,6 +45986,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       MaterialReactTable,
       __spreadProps(__spreadValues(__spreadValues({}, commonTableProps), specificProps), {
         state: { isLoading },
+        initialState,
         key: cmpKey
       })
     ) }) });
@@ -49384,7 +49386,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           const target = field.target;
           entityId = row.original[(target == null ? void 0 : target.idName) || "id"];
           const entityName = (target == null ? void 0 : target.entity) || viewName;
-          return /* @__PURE__ */ jsxRuntimeExports.jsx(reactRouterDom.Link, { to: `/view/${entityName}/${entityId}/show`, children: /* @__PURE__ */ jsxRuntimeExports.jsx(material.Typography, { variant: "body2", children: cellValue }) });
+          return /* @__PURE__ */ jsxRuntimeExports.jsx(reactRouterDom.Link, { to: `/view/${entityName}/${entityId}/show`, children: /* @__PURE__ */ jsxRuntimeExports.jsx(material.Typography, { variant: "body2", textTransform: "capitalize", children: cellValue }) });
         case "image":
           return /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: cellValue, alt: "Cell Content" });
         case "navbutton":
