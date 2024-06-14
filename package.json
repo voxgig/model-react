@@ -1,6 +1,6 @@
 {
   "name": "@voxgig/model-react",
-  "version": "1.14.6",
+  "version": "1.14.7",
   "license": "MIT",
   "files": [
     "dist"
