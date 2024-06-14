@@ -114,6 +114,14 @@ function BasicLed(props: any) {
         })
 
         setData(filteredData)
+      } else if ('fox/supplierorder' === canon) {
+        const currentProject = cmpState.BasicHead.tool.project.selected
+        const filteredData = entlist.filter((item: any) => {
+          const isProjectMatch = currentProject.id === item.project_id
+          return isProjectMatch
+        })
+
+        setData(filteredData)
       } else {
         setData(entlist)
       }
@@ -134,6 +142,8 @@ function BasicLed(props: any) {
 
     setTriggerLed(++triggerLed)
   }, [led_add])
+
+  console.log('BasicLed', 'fields', Object.entries(fields))
 
   // TODO: move to BasicList
   // Define BasicList columns from fields

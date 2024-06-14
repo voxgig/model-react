@@ -49339,6 +49339,13 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
             return isSupplierMatch && isCEIDMatch && isToolIdMatch && isDateRangeMatch && isUnallocatedMatch && isProjectMatch;
           });
           setData(filteredData);
+        } else if ("fox/supplierorder" === canon) {
+          const currentProject = cmpState.BasicHead.tool.project.selected;
+          const filteredData = entlist.filter((item2) => {
+            const isProjectMatch = currentProject.id === item2.project_id;
+            return isProjectMatch;
+          });
+          setData(filteredData);
         } else {
           setData(entlist);
         }
@@ -49353,6 +49360,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       }
       setTriggerLed(++triggerLed);
     }, [led_add]);
+    console.log("BasicLed", "fields", Object.entries(fields));
     const basicListColumns = Object.entries(fields).map(
       ([key, field]) => ({
         accessorFn: (row) => row[key],
