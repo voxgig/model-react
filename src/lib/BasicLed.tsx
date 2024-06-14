@@ -102,7 +102,7 @@ function BasicLed(props: any) {
             (startDate === '' || item.earlirestPrefac >= startDate) &&
             (endDate === '' || item.earlirestPrefac <= endDate)
           const isUnallocatedMatch = !unallocatedOnly || item.qtyasn < 100
-          const isProjectMatch = currentProject === item.project_id
+          const isProjectMatch = currentProject.id === item.project_id
           return (
             isSupplierMatch &&
             isCEIDMatch &&
