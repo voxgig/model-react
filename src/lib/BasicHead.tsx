@@ -33,6 +33,7 @@ const BasicHeadSpecShape = Gubu({
         defaultvalue: String,
         multiple: false,
         forcePopupIcon: false,
+        canon: String,
         options: {
           kind: Exact('ent'),
           ent: String,
@@ -55,7 +56,7 @@ interface BasicHeadProps {
   vxg?: any
 }
 
-function BasicHead (props: BasicHeadProps) {
+function BasicHead(props: BasicHeadProps) {
   const location = useLocation()
   const { ctx } = props
   const { seneca } = ctx()
@@ -103,7 +104,7 @@ function BasicHead (props: BasicHeadProps) {
     setAnchorEl(null)
   }
 
-  function deleteCookie (cookieName: any) {
+  function deleteCookie(cookieName: any) {
     const date = new Date()
     date.setTime(date.getTime() - 1) // Set to a past date
     const expires = '; expires=' + date.toUTCString()
@@ -243,7 +244,7 @@ function BasicHead (props: BasicHeadProps) {
 export default BasicHead
 
 // updates backend when user toggles BasicSide
-function onOpen (seneca: any) {
+function onOpen(seneca: any) {
   seneca.act('aim:app,set:state', {
     section: 'vxg.cmp.BasicSide.show',
     content: true
@@ -251,7 +252,7 @@ function onOpen (seneca: any) {
 }
 
 // notify BasicLed to switch to add mode
-function addItem (seneca: any, led_add: any) {
+function addItem(seneca: any, led_add: any) {
   seneca.act('aim:app,set:state', {
     section: 'vxg.trigger.led.add',
     content: ++led_add

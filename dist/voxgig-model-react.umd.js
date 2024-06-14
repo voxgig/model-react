@@ -20051,6 +20051,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       defaultvalue: String,
       multiple: false,
       forcePopupIcon: false,
+      canon: String,
       options: {
         kind: String,
         label: {
@@ -20066,28 +20067,22 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const { seneca } = ctx();
     const basicAutocompleteSpec = BasicAutocompleteShape(props.spec);
     const { tooldef } = basicAutocompleteSpec;
-    let optionState;
     let options = [];
     let selected = [];
-    let canon = "fox/project";
     const [value, setValue] = React.useState([]);
+    const canon = tooldef.canon;
+    const optionState = reactRedux.useSelector(
+      (state) => state.main.vxg.ent.meta.main[canon].state
+    );
     if ("ent" === tooldef.options.kind) {
-      canon = tooldef.options.ent;
-      optionState = reactRedux.useSelector(
-        (state) => state.main.vxg.ent.meta.main[canon].state
-      );
       options = reactRedux.useSelector((state) => state.main.vxg.ent.list.main[canon]);
       selected = reactRedux.useSelector(
         (state) => state.main.vxg.cmp.BasicHead.tool[tooldef.name].selected
       );
     }
     React.useEffect(() => {
-      if (optionState === "none") {
-      }
-    }, [optionState]);
-    React.useEffect(() => {
-      if (optionState === "loaded" && selected !== void 0 && Array.isArray(selected)) {
-        setValue(options.filter((option) => selected.includes(option.id)));
+      if (optionState === "loaded") {
+        setValue(options[0]);
       }
     }, [options]);
     const theme = ctx().theme;
@@ -20098,25 +20093,28 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         freeSolo: true,
         forcePopupIcon: tooldef.forcePopupIcon || false,
         onChange: (event, newValue) => __async(this, null, function* () {
-          console.log(newValue);
+          console.log("Project switched", newValue);
           setValue(newValue);
           yield seneca.post("aim:app,set:state", {
             section: `vxg.cmp.BasicHead.tool.${tooldef.name}`,
             content: {
-              selected: [...newValue.map((option) => option.id)]
+              selected: newValue
             }
           });
         }),
         value: value || [],
         options,
         getOptionLabel: (option) => {
-          var _a, _b;
-          return option ? option[(_b = (_a = tooldef == null ? void 0 : tooldef.options) == null ? void 0 : _a.label) == null ? void 0 : _b.field] : null;
+          if (option && !Array.isArray(option)) {
+            return option[tooldef.options.label.field];
+          } else {
+            return "undefined";
+          }
         },
         size: "small",
-        renderInput: (params) => /* @__PURE__ */ jsxRuntimeExports.jsx(material.TextField, __spreadProps(__spreadValues({}, params), { label: tooldef.label }))
+        renderInput: (params) => /* @__PURE__ */ jsxRuntimeExports.jsx(material.TextField, __spreadProps(__spreadValues({}, params), { label: tooldef.label || "Autocomplete" }))
       },
-      tooldef.name
+      tooldef.label
     ) });
   }
   const pink = {
@@ -20325,6 +20323,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           defaultvalue: String,
           multiple: false,
           forcePopupIcon: false,
+          canon: String,
           options: {
             kind: gubu_minExports.Exact("ent"),
             ent: String,
@@ -49316,8 +49315,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       if ("none" === entState) {
         setIsLoading(true);
         let q = custom.BasicLed.query(basicLedSpec, cmpState);
-        seneca.entity(canon).list$(q);
       }
+    }, [entState]);
+    React.useEffect(() => {
       if ("loaded" === entState) {
         setIsLoading(false);
         if ("fox/bom" === canon) {

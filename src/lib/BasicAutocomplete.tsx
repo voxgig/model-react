@@ -1,9 +1,4 @@
-import {
-  TextField,
-  Autocomplete,
-  createFilterOptions,
-  ThemeProvider
-} from '@mui/material'
+import { TextField, Autocomplete, ThemeProvider } from '@mui/material'
 import { Exact, Gubu } from 'gubu'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
@@ -16,6 +11,7 @@ const BasicAutocompleteShape = Gubu({
     defaultvalue: String,
     multiple: false,
     forcePopupIcon: false,
+    canon: String,
     options: {
       kind: String,
       label: {
@@ -41,43 +37,28 @@ function BasicAutocomplete(props: BasicAutocompleteProps) {
   const basicAutocompleteSpec = BasicAutocompleteShape(props.spec)
 
   const { tooldef } = basicAutocompleteSpec
-  let optionState: any
   let options: any = []
   let selected: any = []
-  let canon: any = 'fox/project'
-
   const [value, setValue] = useState<any | null>([])
 
-  // const optionState = useSelector(
-  //   (state: any) => state.main.vxg.ent.meta.main['fox/project'].state
-  // )
+  const canon: any = tooldef.canon
 
-  // populate options and value for autocomplete
+  const optionState = useSelector(
+    (state: any) => state.main.vxg.ent.meta.main[canon].state
+  )
+
+  // Populate options and value for autocomplete
   if ('ent' === tooldef.options.kind) {
-    canon = tooldef.options.ent
-    optionState = useSelector(
-      (state: any) => state.main.vxg.ent.meta.main[canon].state
-    )
-
     options = useSelector((state: any) => state.main.vxg.ent.list.main[canon])
+    // console.log('options', options)
     selected = useSelector(
       (state: any) => state.main.vxg.cmp.BasicHead.tool[tooldef.name].selected
     )
   }
 
   useEffect(() => {
-    if (optionState === 'none') {
-      //seneca.entity(canon).list$()
-    }
-  }, [optionState])
-
-  useEffect(() => {
-    if (
-      optionState === 'loaded' &&
-      selected !== undefined &&
-      Array.isArray(selected)
-    ) {
-      setValue(options.filter((option: any) => selected.includes(option.id)))
+    if (optionState === 'loaded') {
+      setValue(options[0])
     }
   }, [options])
 
@@ -90,23 +71,30 @@ function BasicAutocomplete(props: BasicAutocompleteProps) {
         freeSolo
         forcePopupIcon={tooldef.forcePopupIcon || false}
         onChange={async (event: any, newValue: any) => {
-          console.log(newValue)
+          console.log('Project switched', newValue)
           setValue(newValue)
           await seneca.post('aim:app,set:state', {
             section: `vxg.cmp.BasicHead.tool.${tooldef.name}`,
             content: {
-              selected: [...newValue.map((option: any) => option.id)]
+              selected: newValue
             }
           })
         }}
-        key={tooldef.name}
+        key={tooldef.label}
         value={value || []}
         options={options}
-        getOptionLabel={(option: any) =>
-          option ? option[tooldef?.options?.label?.field] : null
-        }
+        getOptionLabel={(option: any) => {
+          // console.log('getOptionLabel', option, typeof option)
+          if (option && !Array.isArray(option)) {
+            return option[tooldef.options.label.field]
+          } else {
+            return 'undefined'
+          }
+        }}
         size='small'
-        renderInput={params => <TextField {...params} label={tooldef.label} />}
+        renderInput={params => (
+          <TextField {...params} label={tooldef.label || 'Autocomplete'} />
+        )}
       />
     </ThemeProvider>
   )

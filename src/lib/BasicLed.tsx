@@ -72,15 +72,15 @@ function BasicLed(props: any) {
   }, [])
 
   useEffect(() => {
-    // console.log('useEffect entState, entlist', canon)
-
     if ('none' === entState) {
       setIsLoading(true)
       // console.log('[...]setIsLoading(true)')
       let q = custom.BasicLed.query(basicLedSpec, cmpState)
-      seneca.entity(canon).list$(q)
+      //seneca.entity(canon).list$(q)
     }
+  }, [entState])
 
+  useEffect(() => {
     if ('loaded' === entState) {
       setIsLoading(false)
       if ('fox/bom' === canon) {
