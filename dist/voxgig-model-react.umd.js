@@ -20542,7 +20542,11 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     chatBubble: iconsMaterial.ChatBubble,
     event: iconsMaterial.Event,
     logout: iconsMaterial.Logout,
-    settings: iconsMaterial.Settings
+    settings: iconsMaterial.Settings,
+    moreHoriz: iconsMaterial.MoreHorizOutlined,
+    autoGraph: iconsMaterial.AutoGraphOutlined,
+    cloudDownload: iconsMaterial.CloudDownloadOutlined,
+    receiptLong: iconsMaterial.ReceiptLongOutlined
   };
   const { Child: Child$3 } = gubu_minExports.Gubu;
   const BasicSideMenuItemSpecShape = gubu_minExports.Gubu({

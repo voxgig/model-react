@@ -64,7 +64,7 @@ import * as ReactDOM from "react-dom";
 import ReactDOM__default, { flushSync } from "react-dom";
 import emStyled from "@emotion/styled";
 import { CacheProvider, Global, ThemeContext as ThemeContext$1, keyframes, css } from "@emotion/react";
-import { HomeOutlined, WarehouseOutlined, TuneOutlined, WidgetsOutlined, FactCheckOutlined, UploadFileOutlined, AltRoute, FactoryOutlined, KeyOutlined, AssignmentTurnedInOutlined, TextSnippetOutlined, HighlightAlt, Map as Map$1, SupervisorAccount, Tablet, Update, Security, ContentPaste, FitScreen, ChatBubble, Event, Logout, Settings } from "@mui/icons-material";
+import { HomeOutlined, WarehouseOutlined, TuneOutlined, WidgetsOutlined, FactCheckOutlined, UploadFileOutlined, AltRoute, FactoryOutlined, KeyOutlined, AssignmentTurnedInOutlined, TextSnippetOutlined, HighlightAlt, Map as Map$1, SupervisorAccount, Tablet, Update, Security, ContentPaste, FitScreen, ChatBubble, Event, Logout, Settings, MoreHorizOutlined, AutoGraphOutlined, CloudDownloadOutlined, ReceiptLongOutlined } from "@mui/icons-material";
 var commonjsGlobal = typeof globalThis !== "undefined" ? globalThis : typeof window !== "undefined" ? window : typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : {};
 function getDefaultExportFromCjs(x) {
   return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, "default") ? x["default"] : x;
@@ -20530,7 +20530,11 @@ const iconmap = {
   chatBubble: ChatBubble,
   event: Event,
   logout: Logout,
-  settings: Settings
+  settings: Settings,
+  moreHoriz: MoreHorizOutlined,
+  autoGraph: AutoGraphOutlined,
+  cloudDownload: CloudDownloadOutlined,
+  receiptLong: ReceiptLongOutlined
 };
 const { Child: Child$3 } = gubu_minExports.Gubu;
 const BasicSideMenuItemSpecShape = gubu_minExports.Gubu({

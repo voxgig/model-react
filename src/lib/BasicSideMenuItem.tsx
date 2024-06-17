@@ -30,7 +30,11 @@ import {
   FactCheckOutlined as FactCheckOutlinedIcon,
   WidgetsOutlined as WidgetsOutlinedIcon,
   AltRoute as AltRouteIcon,
-  Settings as SettingsIcon
+  Settings as SettingsIcon,
+  MoreHorizOutlined as MoreHorizOutlinedIcon,
+  AutoGraphOutlined as AutoGraphOutlinedIcon,
+  CloudDownloadOutlined as CloudDownloadOutlinedIcon,
+  ReceiptLongOutlined as ReceiptLongOutlinedIcon
 } from '@mui/icons-material'
 import { Gubu } from 'gubu'
 import { useSelector } from 'react-redux'
@@ -59,7 +63,11 @@ const iconmap: any = {
   chatBubble: ChatBubbleIcon,
   event: EventIcon,
   logout: LogoutIcon,
-  settings: SettingsIcon
+  settings: SettingsIcon,
+  moreHoriz: MoreHorizOutlinedIcon,
+  autoGraph: AutoGraphOutlinedIcon,
+  cloudDownload: CloudDownloadOutlinedIcon,
+  receiptLong: ReceiptLongOutlinedIcon
 }
 
 const { Child } = Gubu
@@ -78,7 +86,7 @@ const BasicSideMenuItemSpecShape = Gubu({
   }
 })
 
-function BasicSideMenuItem (props: any) {
+function BasicSideMenuItem(props: any) {
   const { sectionKey, onItemSelect } = props
 
   const viewPath: any = location.pathname.split('/')[2]
@@ -120,14 +128,14 @@ function BasicSideMenuItem (props: any) {
 
 export default BasicSideMenuItem
 
-function makeIcon (name: string) {
+function makeIcon(name: string) {
   const Icon = iconmap[name]
   return <Icon />
 }
 
 // TODO: Move isAuthorized to utils
 // TODO: Allow custom authorization function
-function isAuthorized (userRole: string, authorizedRoles: any): boolean {
+function isAuthorized(userRole: string, authorizedRoles: any): boolean {
   return (
     authorizedRoles.hasOwnProperty(userRole) &&
     authorizedRoles[userRole] === true
