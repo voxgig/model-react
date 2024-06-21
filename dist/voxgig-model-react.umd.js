@@ -49314,9 +49314,6 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const projectState = reactRedux.useSelector(
       (state) => state.main.vxg.ent.meta.main["fox/project"].state
     );
-    const projects = reactRedux.useSelector(
-      (state) => state.main.vxg.ent.list.main["fox/project"]
-    );
     const led_add = reactRedux.useSelector((state) => state.main.vxg.trigger.led.add);
     React.useEffect(() => {
       setIsLoading(true);
@@ -49324,11 +49321,15 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     React.useEffect(() => {
       if ("none" === entState) {
         setIsLoading(true);
+        console.log("BasicLed", "useEffect", "entlist", "none");
         let q = custom.BasicLed.query(basicLedSpec, cmpState);
+        seneca.entity(canon).list$(q);
       }
     }, [entState]);
     React.useEffect(() => {
+      console.log("BasicLed", "useEffect", "entState", entState);
       if ("loaded" === entState) {
+        console.log("BasicLed", "useEffect", "entlist", "loaded");
         setIsLoading(false);
         if ("fox/bom" === canon) {
           const filters = cmpState.AssignSuppliersHead.filters;
@@ -49350,6 +49351,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           });
           setData(filteredData);
         } else if ("fox/supplierorder" === canon) {
+          setIsLoading(false);
           const currentProject = cmpState.BasicHead.tool.project.selected;
           const filteredData = entlist.filter((item2) => {
             const isProjectMatch = currentProject.id === item2.project_id;
@@ -49357,10 +49359,11 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           });
           setData(filteredData);
         } else {
+          setIsLoading(false);
           setData(entlist);
         }
       }
-    }, [entState, entlist, cmpState, projectState, projects]);
+    }, [entState, entlist, cmpState, projectState]);
     React.useEffect(() => {
       setItem({});
     }, [location2.pathname]);

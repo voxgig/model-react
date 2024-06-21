@@ -49302,9 +49302,6 @@ function BasicLed(props) {
   const projectState = useSelector(
     (state) => state.main.vxg.ent.meta.main["fox/project"].state
   );
-  const projects = useSelector(
-    (state) => state.main.vxg.ent.list.main["fox/project"]
-  );
   const led_add = useSelector((state) => state.main.vxg.trigger.led.add);
   useEffect(() => {
     setIsLoading(true);
@@ -49312,11 +49309,15 @@ function BasicLed(props) {
   useEffect(() => {
     if ("none" === entState) {
       setIsLoading(true);
+      console.log("BasicLed", "useEffect", "entlist", "none");
       let q = custom.BasicLed.query(basicLedSpec, cmpState);
+      seneca.entity(canon).list$(q);
     }
   }, [entState]);
   useEffect(() => {
+    console.log("BasicLed", "useEffect", "entState", entState);
     if ("loaded" === entState) {
+      console.log("BasicLed", "useEffect", "entlist", "loaded");
       setIsLoading(false);
       if ("fox/bom" === canon) {
         const filters = cmpState.AssignSuppliersHead.filters;
@@ -49338,6 +49339,7 @@ function BasicLed(props) {
         });
         setData(filteredData);
       } else if ("fox/supplierorder" === canon) {
+        setIsLoading(false);
         const currentProject = cmpState.BasicHead.tool.project.selected;
         const filteredData = entlist.filter((item2) => {
           const isProjectMatch = currentProject.id === item2.project_id;
@@ -49345,10 +49347,11 @@ function BasicLed(props) {
         });
         setData(filteredData);
       } else {
+        setIsLoading(false);
         setData(entlist);
       }
     }
-  }, [entState, entlist, cmpState, projectState, projects]);
+  }, [entState, entlist, cmpState, projectState]);
   useEffect(() => {
     setItem({});
   }, [location2.pathname]);

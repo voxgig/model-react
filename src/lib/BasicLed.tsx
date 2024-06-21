@@ -65,10 +65,6 @@ function BasicLed(props: any) {
     (state: any) => state.main.vxg.ent.meta.main['fox/project'].state
   )
 
-  const projects = useSelector(
-    (state: any) => state.main.vxg.ent.list.main['fox/project']
-  )
-
   // Handle when the add button (in BasicHead) is clicked
   const led_add = useSelector((state: any) => state.main.vxg.trigger.led.add)
   // const vxgState = useSelector((state: any) => state.main.vxg)
@@ -82,14 +78,16 @@ function BasicLed(props: any) {
   useEffect(() => {
     if ('none' === entState) {
       setIsLoading(true)
-      // console.log('[...]setIsLoading(true)')
+      console.log('BasicLed', 'useEffect', 'entlist', 'none')
       let q = custom.BasicLed.query(basicLedSpec, cmpState)
-      //seneca.entity(canon).list$(q)
+      seneca.entity(canon).list$(q)
     }
   }, [entState])
 
   useEffect(() => {
+    console.log('BasicLed', 'useEffect', 'entState', entState)
     if ('loaded' === entState) {
+      console.log('BasicLed', 'useEffect', 'entlist', 'loaded')
       setIsLoading(false)
       if ('fox/bom' === canon) {
         const filters = cmpState.AssignSuppliersHead.filters
@@ -123,18 +121,19 @@ function BasicLed(props: any) {
 
         setData(filteredData)
       } else if ('fox/supplierorder' === canon) {
+        setIsLoading(false)
         const currentProject = cmpState.BasicHead.tool.project.selected
         const filteredData = entlist.filter((item: any) => {
           const isProjectMatch = currentProject.id === item.project_id
           return isProjectMatch
         })
-
         setData(filteredData)
       } else {
+        setIsLoading(false)
         setData(entlist)
       }
     }
-  }, [entState, entlist, cmpState, projectState, projects])
+  }, [entState, entlist, cmpState, projectState])
 
   // Reset item when location changes
   useEffect(() => {
