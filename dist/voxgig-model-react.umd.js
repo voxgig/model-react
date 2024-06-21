@@ -49318,12 +49318,6 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       (state) => state.main.vxg.ent.list.main["fox/project"]
     );
     const led_add = reactRedux.useSelector((state) => state.main.vxg.trigger.led.add);
-    if ("none" === entState) {
-      setIsLoading(true);
-      console.log("BasicLed", "useEffect", "entlist", "none");
-      let q = custom.BasicLed.query(basicLedSpec, cmpState);
-      seneca.entity(canon).list$(q);
-    }
     React.useEffect(() => {
       if ("none" === entState) {
         setIsLoading(true);

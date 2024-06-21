@@ -49306,12 +49306,6 @@ function BasicLed(props) {
     (state) => state.main.vxg.ent.list.main["fox/project"]
   );
   const led_add = useSelector((state) => state.main.vxg.trigger.led.add);
-  if ("none" === entState) {
-    setIsLoading(true);
-    console.log("BasicLed", "useEffect", "entlist", "none");
-    let q = custom.BasicLed.query(basicLedSpec, cmpState);
-    seneca.entity(canon).list$(q);
-  }
   useEffect(() => {
     if ("none" === entState) {
       setIsLoading(true);

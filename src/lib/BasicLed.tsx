@@ -74,13 +74,6 @@ function BasicLed(props: any) {
   // const vxgState = useSelector((state: any) => state.main.vxg)
   // const led_add = vxgState.trigger.led.add
 
-  if ('none' === entState) {
-    setIsLoading(true)
-    console.log('BasicLed', 'useEffect', 'entlist', 'none')
-    let q = custom.BasicLed.query(basicLedSpec, cmpState)
-    seneca.entity(canon).list$(q)
-  }
-
   useEffect(() => {
     if ('none' === entState) {
       setIsLoading(true)
