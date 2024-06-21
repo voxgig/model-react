@@ -49311,6 +49311,12 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const entlist = reactRedux.useSelector(
       (state) => state.main.vxg.ent.list.main[canon]
     );
+    const projectState = reactRedux.useSelector(
+      (state) => state.main.vxg.ent.meta.main["fox/project"].state
+    );
+    const projects = reactRedux.useSelector(
+      (state) => state.main.vxg.ent.list.main["fox/project"]
+    );
     const led_add = reactRedux.useSelector((state) => state.main.vxg.trigger.led.add);
     React.useEffect(() => {
       setIsLoading(true);
@@ -49354,7 +49360,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           setData(entlist);
         }
       }
-    }, [entState, entlist, cmpState]);
+    }, [entState, entlist, cmpState, projectState, projects]);
     React.useEffect(() => {
       setItem({});
     }, [location2.pathname]);

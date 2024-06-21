@@ -61,6 +61,14 @@ function BasicLed(props: any) {
     (state: any) => state.main.vxg.ent.list.main[canon]
   )
 
+  const projectState = useSelector(
+    (state: any) => state.main.vxg.ent.meta.main['fox/project'].state
+  )
+
+  const projects = useSelector(
+    (state: any) => state.main.vxg.ent.list.main['fox/project']
+  )
+
   // Handle when the add button (in BasicHead) is clicked
   const led_add = useSelector((state: any) => state.main.vxg.trigger.led.add)
   // const vxgState = useSelector((state: any) => state.main.vxg)
@@ -126,7 +134,7 @@ function BasicLed(props: any) {
         setData(entlist)
       }
     }
-  }, [entState, entlist, cmpState])
+  }, [entState, entlist, cmpState, projectState, projects])
 
   // Reset item when location changes
   useEffect(() => {
