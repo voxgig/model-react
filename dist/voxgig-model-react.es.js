@@ -49361,7 +49361,6 @@ function BasicLed(props) {
     }
     setTriggerLed(++triggerLed);
   }, [led_add]);
-  console.log("BasicLed", "fields", Object.entries(fields));
   const basicListColumns = Object.entries(fields).map(
     ([key, field]) => ({
       accessorFn: (row) => row[key],

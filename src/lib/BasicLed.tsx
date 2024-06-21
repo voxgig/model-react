@@ -149,7 +149,7 @@ function BasicLed(props: any) {
     setTriggerLed(++triggerLed)
   }, [led_add])
 
-  console.log('BasicLed', 'fields', Object.entries(fields))
+  // console.log('BasicLed', 'fields', Object.entries(fields))
 
   // TODO: move to BasicList
   // Define BasicList columns from fields

@@ -49373,7 +49373,6 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       }
       setTriggerLed(++triggerLed);
     }, [led_add]);
-    console.log("BasicLed", "fields", Object.entries(fields));
     const basicListColumns = Object.entries(fields).map(
       ([key, field]) => ({
         accessorFn: (row) => row[key],
