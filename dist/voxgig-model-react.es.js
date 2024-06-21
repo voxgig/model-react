@@ -49302,10 +49302,16 @@ function BasicLed(props) {
   const projectState = useSelector(
     (state) => state.main.vxg.ent.meta.main["fox/project"].state
   );
+  const projects = useSelector(
+    (state) => state.main.vxg.ent.list.main["fox/project"]
+  );
   const led_add = useSelector((state) => state.main.vxg.trigger.led.add);
-  useEffect(() => {
+  if ("none" === entState) {
     setIsLoading(true);
-  }, []);
+    console.log("BasicLed", "useEffect", "entlist", "none");
+    let q = custom.BasicLed.query(basicLedSpec, cmpState);
+    seneca.entity(canon).list$(q);
+  }
   useEffect(() => {
     if ("none" === entState) {
       setIsLoading(true);
@@ -49351,7 +49357,7 @@ function BasicLed(props) {
         setData(entlist);
       }
     }
-  }, [entState, entlist, cmpState, projectState]);
+  }, [entState, entlist, cmpState, projectState, projects]);
   useEffect(() => {
     setItem({});
   }, [location2.pathname]);

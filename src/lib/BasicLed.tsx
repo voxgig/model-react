@@ -65,15 +65,21 @@ function BasicLed(props: any) {
     (state: any) => state.main.vxg.ent.meta.main['fox/project'].state
   )
 
+  const projects = useSelector(
+    (state: any) => state.main.vxg.ent.list.main['fox/project']
+  )
+
   // Handle when the add button (in BasicHead) is clicked
   const led_add = useSelector((state: any) => state.main.vxg.trigger.led.add)
   // const vxgState = useSelector((state: any) => state.main.vxg)
   // const led_add = vxgState.trigger.led.add
 
-  useEffect(() => {
+  if ('none' === entState) {
     setIsLoading(true)
-    // console.log('[]setIsLoading(true)')
-  }, [])
+    console.log('BasicLed', 'useEffect', 'entlist', 'none')
+    let q = custom.BasicLed.query(basicLedSpec, cmpState)
+    seneca.entity(canon).list$(q)
+  }
 
   useEffect(() => {
     if ('none' === entState) {
@@ -133,7 +139,7 @@ function BasicLed(props: any) {
         setData(entlist)
       }
     }
-  }, [entState, entlist, cmpState, projectState])
+  }, [entState, entlist, cmpState, projectState, projects])
 
   // Reset item when location changes
   useEffect(() => {
