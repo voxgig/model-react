@@ -18,11 +18,8 @@ import { VxgBasicLedPlugin } from './VxgBasicLedPlugin'
 
 
 const CMPNAME = 'BasicLed'
-console.log(CMPNAME,'2')
+console.log(CMPNAME,'3')
 
-
-// Define the shape of props.spec
-const { Open } = Gubu
 
 
 // BasicLed renders a list of entities (with BasicList) or a form to edit them (with BasicEdit)
@@ -34,7 +31,7 @@ function BasicLed (props: any) {
   const navigate = useNavigate()
   
   const led = useSelector((state:any)=>state.main.view[name])
-  const ready = true === led.ready
+  const ready = true === led?.ready
   console.log(CMPNAME,'ready', ready)
   
   if(!ready) {

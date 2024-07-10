@@ -31,6 +31,8 @@ const Shape = Gubu({
 function VxgBasicLedPlugin(this: any, options: any) {
   const seneca = this
 
+  console.log('VxgBasicLedPlugin options', options)
+
   const spec = Shape(options.spec)
   const navigate = options.navigate
 
@@ -45,6 +47,9 @@ function VxgBasicLedPlugin(this: any, options: any) {
       function(this: any, _msg: any, reply: any, meta: any) {
         const state = meta.custom.state()
         let view = state.view[name]
+
+        console.log('VxgBasicLedPlugin init:state', name, view)
+
         view.mode = 'list'
         view.status = 'init'
         view.ready = true
@@ -127,11 +132,19 @@ function VxgBasicLedPlugin(this: any, options: any) {
         return item
       })
 
-    .message('aim:app,on:view,add:item',
+    .message('aim:app,on:BasicLed,add:item',
       async function(this: any, _msg: any) {
         await seneca.entity(entCanon).save$({ add$: true, slot$: slotName })
         navigate('/view/' + name + '/add')
       })
+
+    .message('aim:app,on:BasicLed,save:item',
+      async function(this: any, msg: any) {
+        const data = msg.data
+        const item = await seneca.entity(entCanon).save$(data)
+        navigate('/view/' + name + '/edit/' + item.id)
+      })
+
 
   seneca
     .prepare(async function(this: any) {

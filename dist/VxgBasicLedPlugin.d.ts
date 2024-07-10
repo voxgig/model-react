@@ -7,7 +7,7 @@ declare function VxgBasicLedPlugin(this: any, options: any): {
             foot: any;
         };
         util: {
-            dateTimeFromUTC: (utc: number, tz?: string | undefined) => any;
+            dateTimeFromUTC: (utc: number, tz?: string) => any;
         };
     };
 };

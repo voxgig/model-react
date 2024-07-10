@@ -34,10 +34,7 @@ var __objRest = (source, exclude) => {
     }
   return target;
 };
-var __publicField = (obj, key, value) => {
-  __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
-  return value;
-};
+var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
 var __async = (__this, __arguments, generator) => {
   return new Promise((resolve, reject) => {
     var fulfilled = (value) => {
@@ -88,8 +85,7 @@ var __async = (__this, __arguments, generator) => {
     return n && Object.prototype.hasOwnProperty.call(n, "default") && Object.keys(n).length === 1 ? n["default"] : n;
   }
   function getAugmentedNamespace(n) {
-    if (n.__esModule)
-      return n;
+    if (n.__esModule) return n;
     var f = n.default;
     if (typeof f == "function") {
       var a = function a2() {
@@ -99,8 +95,7 @@ var __async = (__this, __arguments, generator) => {
         return f.apply(this, arguments);
       };
       a.prototype = f.prototype;
-    } else
-      a = {};
+    } else a = {};
     Object.defineProperty(a, "__esModule", { value: true });
     Object.keys(n).forEach(function(k) {
       var d = Object.getOwnPropertyDescriptor(n, k);
@@ -126,8 +121,7 @@ var __async = (__this, __arguments, generator) => {
    */
   var hasRequiredReactJsxRuntime_production_min;
   function requireReactJsxRuntime_production_min() {
-    if (hasRequiredReactJsxRuntime_production_min)
-      return reactJsxRuntime_production_min;
+    if (hasRequiredReactJsxRuntime_production_min) return reactJsxRuntime_production_min;
     hasRequiredReactJsxRuntime_production_min = 1;
     "use strict";
     var f = React$1, k = Symbol.for("react.element"), l = Symbol.for("react.fragment"), m = Object.prototype.hasOwnProperty, n = f.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner, p = { key: true, ref: true, __self: true, __source: true };
@@ -136,11 +130,8 @@ var __async = (__this, __arguments, generator) => {
       void 0 !== g && (e = "" + g);
       void 0 !== a.key && (e = "" + a.key);
       void 0 !== a.ref && (h = a.ref);
-      for (b in a)
-        m.call(a, b) && !p.hasOwnProperty(b) && (d[b] = a[b]);
-      if (c && c.defaultProps)
-        for (b in a = c.defaultProps, a)
-          void 0 === d[b] && (d[b] = a[b]);
+      for (b in a) m.call(a, b) && !p.hasOwnProperty(b) && (d[b] = a[b]);
+      if (c && c.defaultProps) for (b in a = c.defaultProps, a) void 0 === d[b] && (d[b] = a[b]);
       return { $$typeof: k, type: c, key: e, ref: h, props: d, _owner: n.current };
     }
     reactJsxRuntime_production_min.Fragment = l;
@@ -160,8 +151,7 @@ var __async = (__this, __arguments, generator) => {
    */
   var hasRequiredReactJsxRuntime_development;
   function requireReactJsxRuntime_development() {
-    if (hasRequiredReactJsxRuntime_development)
-      return reactJsxRuntime_development;
+    if (hasRequiredReactJsxRuntime_development) return reactJsxRuntime_development;
     hasRequiredReactJsxRuntime_development = 1;
     "use strict";
     if (process.env.NODE_ENV !== "production") {
@@ -1065,33 +1055,30 @@ var __async = (__this, __arguments, generator) => {
   var gubu_min = gubu_min$2.exports;
   (function(module2, exports3) {
     !function(e) {
-      if (true)
-        module2.exports = e();
-      else if (false)
-        (void 0)([], e);
+      if (true) module2.exports = e();
+      else if (false) (void 0)([], e);
       else {
         ("undefined" != typeof window ? window : "undefined" != typeof commonjsGlobal ? commonjsGlobal : "undefined" != typeof self ? self : this).Gubu = e();
       }
     }(function() {
       var e = {}, t = {};
       Object.defineProperty(t, "__esModule", { value: true }), t.Gubu = void 0;
-      const n = Symbol.for("gubu$"), r2 = { gubu$: n, v$: "7.1.1" }, l = Symbol.for("gubu$nil"), i = /^[A-Z]/, { toString: o } = Object.prototype, s = "gubu", u = "name", a = "nan", c = "never", f = "number", p = "required", h = "array", v = "function", d = "object", g = "string", y = "boolean", b = "undefined", m = "any", $ = "list", x = "instance", I = "null", k = "type", j = "closed", O = "shape", w = "check", N = "regexp", S = "Object", V = "Array", R = "Function", A = "Value", D = "Above", E = "All", C = "Below", G = "Max", T = "Min", B = "Len", M = "One", L = "Some", F = " for property ", P = '"$PATH"', z = '"$VALUE"', q = (e2) => Object.keys(e2), W = (e2, t2, n2) => Object.defineProperty(e2, t2, n2), _2 = (e2) => Array.isArray(e2), J = (e2) => JSON.parse(e2), H = (e2, t2) => JSON.stringify(e2, t2);
-      class U {
+      const n = Symbol.for("gubu$"), r2 = { gubu$: n, v$: "8.0.2" }, l = (Symbol.for("gubu$undef"), /^[A-Z]/), { toString: i } = Object.prototype, o = "gubu", s = "name", u = "nan", a = "never", c = "number", f = "required", p = "array", h = "function", v = "object", d = "string", g = "boolean", y = "undefined", m = "any", b = "list", $ = "instance", k = "null", x = "type", I = "closed", w = "shape", S = "check", j = "regexp", N = "String", O = "Number", V = "Boolean", A = "Object", R = "Array", D = "Function", E = "Value", C = "Above", T = "All", G = "Below", B = "Check", J = "Exact", M = "Max", W = "Min", F = "One", P = "Some", z = " for property ", L = '"$PATH"', _2 = '"$VALUE"', q = { [N]: String, [O]: Number, [V]: Boolean, [A]: Object, [R]: Array, ["Symbol"]: Symbol, [D]: Function }, H = (e2) => Object.keys(e2), U = (e2, t2, n2) => Object.defineProperty(e2, t2, n2), K = (e2) => Array.isArray(e2), Z = (e2) => JSON.parse(e2), Q = (e2, t2) => JSON.stringify(e2, t2);
+      class X {
         constructor(e2, t2, n2, r3) {
-          this.match = false, this.dI = 0, this.nI = 2, this.cI = -1, this.pI = 0, this.sI = -1, this.valType = c, this.isRoot = false, this.key = "", this.type = c, this.stop = true, this.nextSibling = true, this.fromDflt = false, this.ignoreVal = void 0, this.curerr = [], this.err = [], this.parents = [], this.keys = [], this.path = [], this.root = e2, this.vals = [e2, -1], this.node = t2, this.nodes = [t2, -1], this.ctx = n2 || {}, this.match = !!r3;
+          this.match = false, this.dI = 0, this.nI = 2, this.cI = -1, this.pI = 0, this.sI = -1, this.valType = a, this.isRoot = false, this.key = "", this.type = a, this.stop = true, this.nextSibling = true, this.fromDflt = false, this.ignoreVal = void 0, this.curerr = [], this.err = [], this.parents = [], this.keys = [], this.ancestors = [], this.path = [], this.root = e2, this.vals = [e2, -1], this.node = t2, this.nodes = [t2, -1], this.ctx = n2 || {}, this.match = !!r3;
         }
         next() {
           this.stop = false, this.fromDflt = false, this.ignoreVal = void 0, this.isRoot = 0 === this.pI, this.check = void 0;
           let e2 = this.nodes[this.pI];
-          for (; +e2; )
-            this.dI--, this.ctx.log && -1 < this.dI && this.ctx.log("e" + (_2(this.parents[this.pI]) ? "a" : "o"), this), this.pI = +e2, e2 = this.nodes[this.pI];
-          e2 ? (this.node = e2, this.updateVal(this.vals[this.pI]), this.key = this.keys[this.pI], this.cI = this.pI, this.sI = this.pI + 1, Object.isFrozen(this.parents[this.pI]) && (this.parents[this.pI] = Object.assign({}, this.parents[this.pI])), this.parent = this.parents[this.pI], this.nextSibling = true, this.type = this.node.t, this.path[this.dI] = this.key, this.oval = this.val, this.curerr.length = 0) : this.stop = true;
+          for (this.ancestors[this.dI] = this.node; +e2; ) this.dI--, this.ctx.log && -1 < this.dI && this.ctx.log("e" + (K(this.parents[this.pI]) ? "a" : "o"), this), this.pI = +e2, e2 = this.nodes[this.pI];
+          e2 ? (this.node = e2, this.updateVal(this.vals[this.pI]), this.key = this.keys[this.pI], this.cI = this.pI, this.sI = this.pI + 1, Object.isFrozen(this.parents[this.pI]) && (this.parents[this.pI] = __spreadValues({}, this.parents[this.pI])), this.parent = this.parents[this.pI], this.nextSibling = true, this.type = this.node.t, this.path[this.dI] = this.key, this.oval = this.val, this.curerr.length = 0) : this.stop = true;
         }
         updateVal(e2) {
-          this.val = e2, this.valType = typeof this.val, f === this.valType && isNaN(this.val) && (this.valType = a), this.isRoot && !this.match && (this.root = this.val);
+          this.val = e2, this.valType = typeof this.val, c === this.valType && isNaN(this.val) && (this.valType = u), this.isRoot && !this.match && (this.root = this.val);
         }
       }
-      class K extends TypeError {
+      class Y extends TypeError {
         constructor(e2, t2, n2, r3) {
           var l2;
           super((t2 = null == t2 ? "" : t2 + ": ") + n2.map((e3) => e3.t).join("\n")), this.gubu = true, this.name = "GubuError", this.code = e2, this.prefix = t2, this.desc = () => ({ name: "GubuError", code: e2, err: n2, ctx: r3 }), this.stack = null === (l2 = this.stack) || void 0 === l2 ? void 0 : l2.replace(/.*\/gubu\/gubu\.[tj]s.*\n/g, ""), this.props = n2.map((e3) => {
@@ -1100,202 +1087,233 @@ var __async = (__this, __arguments, generator) => {
           });
         }
         toJSON() {
-          return Object.assign(Object.assign({}, this), { err: this.desc().err, name: this.name, message: this.message });
+          return __spreadProps(__spreadValues({}, this), { err: this.desc().err, name: this.name, message: this.message });
         }
       }
-      const Z = { Array: true, BigInt: true, Boolean: true, Function: true, Number: true, Object: true, String: true, Symbol: true }, Q = { string: "", number: 0, boolean: false, object: {}, array: [], symbol: Symbol(""), bigint: BigInt(0), null: null, regexp: /.*/ };
-      function X(e2, t2, s2) {
-        var u2, c2, p2, y2;
-        if (Y === e2)
-          e2 = void 0;
-        else if (null != e2 && (null === (u2 = e2.$) || void 0 === u2 ? void 0 : u2.gubu$)) {
-          if (n === e2.$.gubu$)
-            return e2.d = null == t2 ? e2.d : t2, e2;
+      const ee = { Array: true, BigInt: true, Boolean: true, Function: true, Number: true, Object: true, String: true, Symbol: true }, te = { string: "", number: 0, boolean: false, object: {}, array: [], symbol: Symbol(""), bigint: BigInt(0), null: null, regexp: /.*/ };
+      function ne(e2, t2, o2) {
+        var s2, a2, f2, g2;
+        if (le === e2) e2 = void 0;
+        else if (null != e2 && (null === (s2 = e2.$) || void 0 === s2 ? void 0 : s2.gubu$)) {
+          if (n === e2.$.gubu$) return e2.d = null == t2 ? e2.d : t2, e2;
           if (true === e2.$.gubu$) {
-            let r3 = Object.assign({}, e2);
-            return r3.$ = Object.assign(Object.assign({ v$: "7.1.1" }, r3.$), { gubu$: n }), r3.v = null != r3.v && d === typeof r3.v ? Object.assign({}, r3.v) : r3.v, r3.t = r3.t || typeof r3.v, v === r3.t && Z[r3.v.name] && (r3.t = r3.v.name.toLowerCase(), r3.v = Fe(Q[r3.t]), r3.f = r3.v), r3.r = !!r3.r, r3.p = !!r3.p, r3.d = null == t2 ? null == r3.d ? -1 : r3.d : t2, r3.b = r3.b || [], r3.a = r3.a || [], r3.u = r3.u || {}, r3.m = r3.m || s2 || {}, r3;
+            let r3 = __spreadValues({}, e2);
+            return r3.$ = __spreadProps(__spreadValues({ v$: "8.0.2" }, r3.$), { gubu$: n }), r3.v = null != r3.v && v === typeof r3.v ? __spreadValues({}, r3.v) : r3.v, r3.t = r3.t || typeof r3.v, h === r3.t && ee[r3.v.name] && (r3.t = r3.v.name.toLowerCase(), r3.v = He(te[r3.t]), r3.f = r3.v), r3.r = !!r3.r, r3.p = !!r3.p, r3.d = null == t2 ? null == r3.d ? -1 : r3.d : t2, r3.b = r3.b || [], r3.a = r3.a || [], r3.u = r3.u || {}, r3.m = r3.m || o2 || {}, r3;
           }
         }
-        let $2 = null === e2 ? I : typeof e2;
-        $2 = b === $2 ? m : $2;
-        let k2 = e2, j2 = k2, O2 = l, w2 = false, V2 = {}, A2 = [], D2 = [];
-        if (d === $2)
-          j2 = void 0, _2(k2) ? ($2 = h, 1 === k2.length && (O2 = k2[0], k2 = [])) : null != k2 && Function !== k2.constructor && Object !== k2.constructor && null != k2.constructor ? ("[object RegExp]" === o.call(k2) ? ($2 = N, w2 = true) : ($2 = x, V2.n = k2.constructor.name, V2.i = k2.constructor), j2 = k2) : 0 === q(k2).length && (O2 = ue());
-        else if (v === $2)
-          if (Z[e2.name])
-            $2 = e2.name.toLowerCase(), w2 = true, k2 = Fe(Q[$2]), j2 = k2, S === e2.name && (O2 = ue());
-          else if (k2.gubu === r2 || true === (null === (c2 = k2.$) || void 0 === c2 ? void 0 : c2.gubu)) {
-            let e3 = k2.node ? k2.node() : k2;
-            $2 = e3.t, k2 = e3.v, j2 = k2, w2 = e3.r, V2 = Object.assign({}, e3.u), A2 = [...e3.a], D2 = [...e3.b];
-          } else
-            R === k2.constructor.name && i.test(k2.name) && ($2 = x, w2 = true, V2.n = null === (y2 = null === (p2 = k2.prototype) || void 0 === p2 ? void 0 : p2.constructor) || void 0 === y2 ? void 0 : y2.name, V2.i = k2);
-        else
-          f === $2 && isNaN(k2) ? $2 = a : g === $2 && "" === k2 && (V2.empty = true);
-        let E2 = null == k2 || d !== $2 && h !== $2 ? k2 : Object.assign({}, k2);
-        return { $: r2, t: $2, v: E2, f: j2, n: null != E2 && d === typeof E2 ? q(E2).length : 0, c: O2, r: w2, p: false, d: null == t2 ? -1 : t2, k: [], e: true, u: V2, a: A2, b: D2, m: s2 || {} };
+        let b2 = null === e2 ? k : typeof e2;
+        b2 = y === b2 ? m : b2;
+        let x2, I2 = e2, w2 = I2, S2 = false, N2 = {}, O2 = [], V2 = [];
+        if (v === b2) w2 = void 0, K(I2) ? (b2 = p, 1 === I2.length && (x2 = I2[0], I2 = [])) : null != I2 && Function !== I2.constructor && Object !== I2.constructor && null != I2.constructor ? ("[object RegExp]" === i.call(I2) ? (b2 = j, S2 = true) : (b2 = $, N2.n = I2.constructor.name, N2.i = I2.constructor), w2 = I2) : 0 === H(I2).length && (x2 = he());
+        else if (h === b2) if (ee[e2.name]) b2 = e2.name.toLowerCase(), S2 = true, I2 = He(te[b2]), w2 = I2, A === e2.name && (x2 = he());
+        else if (I2.gubu === r2 || true === (null === (a2 = I2.$) || void 0 === a2 ? void 0 : a2.gubu)) {
+          let e3 = I2.node ? I2.node() : I2;
+          b2 = e3.t, I2 = e3.v, w2 = I2, S2 = e3.r, N2 = __spreadValues({}, e3.u), O2 = [...e3.a], V2 = [...e3.b];
+        } else D === I2.constructor.name && l.test(I2.name) && (b2 = $, S2 = true, N2.n = null === (g2 = null === (f2 = I2.prototype) || void 0 === f2 ? void 0 : f2.constructor) || void 0 === g2 ? void 0 : g2.name, N2.i = I2);
+        else c === b2 && isNaN(I2) ? b2 = u : d === b2 && "" === I2 && (N2.empty = true);
+        let R2 = null == I2 || v !== b2 && p !== b2 ? I2 : __spreadValues({}, I2);
+        return { $: r2, t: b2, v: R2, f: w2, n: null != R2 && v === typeof R2 ? H(R2).length : 0, c: x2, r: S2, p: false, d: null == t2 ? -1 : t2, k: [], e: true, u: N2, a: O2, b: V2, m: o2 || {}, [Symbol.for("nodejs.util.inspect.custom")]() {
+          const e3 = __spreadValues({}, this);
+          return delete e3.$, JSON.stringify(e3, (e4, t3) => "function" != typeof t3 || Ke[t3.name] ? t3 : t3.name).replace(/"/g, "").replace(/,/g, " ");
+        } };
       }
-      function Y(t2, i2) {
-        const o2 = null == i2 ? {} : i2;
-        o2.name = null == o2.name ? "G" + ("" + Math.random()).substring(2, 8) : "" + o2.name, o2.prefix = null == o2.prefix ? void 0 : o2.prefix;
-        let s2 = o2.meta = o2.meta || {};
-        s2.active = true === s2.active || false, s2.suffix = g == typeof s2.suffix ? s2.suffix : "$$";
-        let u2 = o2.keyexpr = o2.keyexpr || {};
-        u2.active = false !== u2.active;
-        let a2 = X(t2, 0);
-        function f2(e2, t3, n2) {
-          let r3 = new U(e2, a2, t3, n2);
-          for (; r3.next(), !r3.stop; ) {
-            let t4 = r3.node, n3 = false, i3 = false;
-            if (0 < t4.b.length)
-              for (let e3 = 0; e3 < t4.b.length; e3++) {
-                let l2 = te(t4.b[e3], r3);
-                t4 = r3.node, void 0 !== l2.done && (n3 = l2.done), i3 = i3 || !!l2.fatal;
-              }
-            if (!n3) {
-              let n4 = true, i4 = void 0 === r3.val;
-              if (c === r3.type)
-                r3.curerr.push(Be(c, r3, 1070));
-              else if (d === r3.type) {
-                let e3;
-                if (t4.r && i4 ? (r3.ignoreVal = true, r3.curerr.push(Be(p, r3, 1010))) : i4 || null !== r3.val && d === r3.valType && !_2(r3.val) ? !t4.p && i4 && void 0 !== t4.f ? (r3.updateVal(t4.f), r3.fromDflt = true, e3 = r3.val, n4 = false) : t4.p && i4 || (r3.updateVal(r3.val || (r3.fromDflt = true, {})), e3 = r3.val) : (r3.curerr.push(Be(k, r3, 1020)), e3 = _2(r3.val) ? r3.val : {}), n4 && (e3 = null == e3 && false === r3.ctx.err ? {} : e3, null != e3)) {
-                  r3.ctx.log && r3.ctx.log("so", r3);
-                  let n5 = false, i5 = q(t4.v), o4 = r3.nI;
-                  if (0 < i5.length) {
-                    n5 = true, r3.pI = o4;
-                    for (let n6 = 0; n6 < i5.length; n6++) {
-                      let l2, o5 = i5[n6];
-                      if (s2.active && o5.endsWith(s2.suffix)) {
-                        if (l2 = { short: "" }, g === typeof t4.v[o5] ? l2.short = t4.v[o5] : l2 = Object.assign(Object.assign({}, l2), t4.v[o5]), delete t4.v[o5], n6++, i5.length <= n6)
-                          break;
-                        if (i5[n6] !== o5.substring(0, o5.length - s2.suffix.length))
-                          throw new Error("Invalid meta key: " + o5);
-                        o5 = i5[n6];
-                      }
-                      let a4 = o5, c2 = t4.v[o5];
-                      if (u2.active) {
-                        let e4 = /^\s*("(\\.|[^"\\])*"|[^\s]+):\s*(.*?)\s*$/.exec(o5);
-                        e4 && (a4 = e4[1], c2 = ee({ src: e4[3], val: c2 }), delete t4.v[o5]);
-                      }
-                      let f3 = X(c2, 1 + r3.dI, l2);
-                      t4.v[a4] = f3, t4.k.includes(a4) || t4.k.push(a4), r3.nodes[r3.nI] = f3, r3.vals[r3.nI] = e3[a4], r3.parents[r3.nI] = e3, r3.keys[r3.nI] = a4, r3.nI++;
-                    }
-                  }
-                  let a3 = q(e3).filter((e4) => void 0 === t4.v[e4]);
-                  if (0 < a3.length)
-                    if (l === t4.c)
-                      r3.ignoreVal = true, r3.curerr.push(Be(j, r3, 1100, void 0, { k: a3 }));
-                    else {
-                      n5 = true, r3.pI = o4;
-                      for (let n6 of a3) {
-                        let l2 = t4.c = X(t4.c, 1 + r3.dI);
-                        r3.nodes[r3.nI] = l2, r3.vals[r3.nI] = e3[n6], r3.parents[r3.nI] = e3, r3.keys[r3.nI] = n6, r3.nI++;
-                      }
-                    }
-                  n5 ? (r3.dI++, r3.nodes[r3.nI] = r3.sI, r3.parents[r3.nI] = e3, r3.nextSibling = false, r3.nI++) : r3.ctx.log && r3.ctx.log("eo", r3);
-                }
-              } else if (h === r3.type)
-                if (t4.r && i4)
-                  r3.ignoreVal = true, r3.curerr.push(Be(p, r3, 1030));
-                else if (i4 || _2(r3.val)) {
-                  if (!t4.p && i4 && void 0 !== t4.f)
-                    r3.updateVal(t4.f), r3.fromDflt = true;
-                  else if (!t4.p || null != r3.val) {
-                    r3.updateVal(r3.val || (r3.fromDflt = true, []));
-                    let n5 = l !== t4.c, i5 = 0 < r3.val.length, o4 = q(t4.v).filter((e3) => !isNaN(+e3)), s3 = 0 < o4.length;
-                    if (r3.ctx.log && r3.ctx.log("sa", r3), i5 || s3) {
-                      r3.pI = r3.nI;
-                      let e3 = 0;
-                      if (s3)
-                        if (o4.length < r3.val.length && !n5)
-                          r3.ignoreVal = true, r3.curerr.push(Be(j, r3, 1090, void 0, { k: o4.length }));
-                        else
-                          for (; e3 < o4.length; e3++) {
-                            let n6 = t4.v[e3] = X(t4.v[e3], 1 + r3.dI);
-                            r3.nodes[r3.nI] = n6, r3.vals[r3.nI] = r3.val[e3], r3.parents[r3.nI] = r3.val, r3.keys[r3.nI] = "" + e3, r3.nI++;
-                          }
-                      if (n5 && i5) {
-                        let n6 = t4.c = X(t4.c, 1 + r3.dI);
-                        for (; e3 < r3.val.length; e3++)
-                          r3.nodes[r3.nI] = n6, r3.vals[r3.nI] = r3.val[e3], r3.parents[r3.nI] = r3.val, r3.keys[r3.nI] = "" + e3, r3.nI++;
-                      }
-                      r3.ignoreVal || (r3.dI++, r3.nodes[r3.nI] = r3.sI, r3.parents[r3.nI] = r3.val, r3.nextSibling = false, r3.nI++);
-                    } else
-                      r3.ctx.log && n5 && null == e2 && r3.ctx.log("kv", Object.assign(Object.assign({}, r3), { key: 0, val: t4.c })), r3.ctx.log && r3.ctx.log("ea", r3);
-                  }
-                } else
-                  r3.curerr.push(Be(k, r3, 1040));
-              else if (N === r3.type)
-                i4 && !t4.r ? r3.ignoreVal = true : g !== r3.valType ? (r3.ignoreVal = true, r3.curerr.push(Be(k, r3, 1045))) : r3.val.match(t4.v) || (r3.ignoreVal = true, r3.curerr.push(Be(N, r3, 1045)));
-              else if (m === r3.type || $ === r3.type || void 0 === r3.val || r3.type === r3.valType || x === r3.type && t4.u.i && r3.val instanceof t4.u.i || I === r3.type && null === r3.val)
-                if (void 0 === r3.val) {
-                  let e3 = r3.path[r3.dI];
-                  !t4.r || b === r3.type && r3.parent.hasOwnProperty(e3) ? void 0 !== t4.f && !t4.p || b === r3.type ? (r3.updateVal(t4.f), r3.fromDflt = true) : m === r3.type && (r3.ignoreVal = void 0 === r3.ignoreVal || r3.ignoreVal) : (r3.ignoreVal = true, r3.curerr.push(Be(p, r3, 1060))), r3.ctx.log && r3.ctx.log("kv", r3);
-                } else
-                  g !== r3.type || "" !== r3.val || t4.u.empty || r3.curerr.push(Be(p, r3, 1080)), r3.ctx.log && r3.ctx.log("kv", r3);
-              else
-                r3.curerr.push(Be(k, r3, 1050));
+      function re(e2, t2) {
+        var n2;
+        const r3 = [[{}, "root", e2, t2]];
+        for (let l2 = 0; l2 < r3.length; l2++) {
+          const e3 = r3[l2], t3 = e3[0][e3[1]] = ne(e3[2], e3[3]);
+          void 0 !== t3.c && ((null === (n2 = t3.c.$) || void 0 === n2 ? void 0 : n2.gubu$) || r3.push([t3, "c", t3.c, t3.d]));
+          let i2 = typeof t3.v;
+          v === i2 && null != t3.v && Object.entries(t3.v).map((e4) => {
+            var n3;
+            (null === (n3 = e4[1].$) || void 0 === n3 ? void 0 : n3.gubu$) || r3.push([t3.v, e4[0], e4[1], t3.d + 1]);
+          });
+        }
+        return r3[0][0].root;
+      }
+      function le(t2, l2) {
+        const i2 = null == l2 ? {} : l2;
+        i2.name = null == i2.name ? "G" + ("" + Math.random()).substring(2, 8) : "" + i2.name, i2.prefix = null == i2.prefix ? void 0 : i2.prefix;
+        let o2 = i2.meta = i2.meta || {};
+        o2.active = true === o2.active || false, o2.suffix = d == typeof o2.suffix ? o2.suffix : "$$";
+        let s2 = i2.keyexpr = i2.keyexpr || {};
+        s2.active = false !== s2.active;
+        let u2 = i2.keyspec = i2.keyspec || {};
+        u2.active = true === u2.active, u2.keymark = d == typeof u2.keymark ? u2.keymark : o2.suffix;
+        let c2, h2 = ne(t2, 0), g2 = "";
+        function N2(e2, t3, n2) {
+          var r3, l3, c3;
+          const g3 = null === (r3 = null == t3 ? void 0 : t3.skip) || void 0 === r3 ? void 0 : r3.depth, N3 = Array.isArray(null === (l3 = null == t3 ? void 0 : t3.skip) || void 0 === l3 ? void 0 : l3.depth) ? t3.skip.depth : null, O3 = Array.isArray(null === (c3 = null == t3 ? void 0 : t3.skip) || void 0 === c3 ? void 0 : c3.keys) ? t3.skip.keys : null, V2 = new X(e2, h2, t3, n2);
+          for (; V2.next(), !V2.stop; ) {
+            let t4 = V2.node, n3 = false, r4 = false, l4 = !!(t4.d === g3 || N3 && N3.includes(t4.d) || O3 && 1 === t4.d && O3.includes(V2.key)) || t4.p;
+            if (0 < t4.b.length) for (let e3 = 0; e3 < t4.b.length; e3++) {
+              let l5 = se(t4.b[e3], V2);
+              t4 = V2.node, void 0 !== l5.done && (n3 = l5.done), r4 = r4 || !!l5.fatal;
             }
-            if (0 < t4.a.length)
-              for (let e3 = 0; e3 < t4.a.length; e3++) {
-                let l2 = te(t4.a[e3], r3);
-                t4 = r3.node, void 0 !== l2.done && (n3 = l2.done), i3 = i3 || !!l2.fatal;
-              }
-            let o3 = r3.node.p ? false !== r3.ignoreVal : !!r3.ignoreVal;
-            !r3.match && null != r3.parent && !n3 && !o3 && (r3.parent[r3.key] = r3.val), r3.nextSibling && (r3.pI = r3.sI), (r3.node.e || i3) && r3.err.push(...r3.curerr);
+            if (!n3) {
+              let n4 = true, r5 = void 0 === V2.val;
+              if (a === V2.type) V2.curerr.push(Le(a, V2, 1070));
+              else if (v === V2.type) {
+                let e3;
+                if (void 0 !== t4.c && (t4.c = re(t4.c, 1 + V2.dI)), t4.r && r5 ? (V2.ignoreVal = true, V2.curerr.push(Le(f, V2, 1010))) : r5 || null !== V2.val && v === V2.valType && !K(V2.val) ? !l4 && r5 && void 0 !== t4.f ? (V2.updateVal(t4.f), V2.fromDflt = true, e3 = V2.val, n4 = false) : l4 && r5 || (V2.updateVal(V2.val || (V2.fromDflt = true, {})), e3 = V2.val) : (V2.curerr.push(Le(x, V2, 1020)), e3 = K(V2.val) ? V2.val : {}), n4 && (e3 = null == e3 && false === V2.ctx.err ? {} : e3, null != e3)) {
+                  V2.ctx.log && V2.ctx.log("so", V2);
+                  let n5 = false, r6 = H(t4.v), l5 = V2.nI;
+                  if (0 < r6.length) {
+                    n5 = true, V2.pI = l5;
+                    for (let n6 = 0; n6 < r6.length; n6++) {
+                      let l6, i5 = r6[n6];
+                      if (o2.active && i5.endsWith(o2.suffix)) {
+                        if (l6 = { short: "" }, d === typeof t4.v[i5] ? l6.short = t4.v[i5] : l6 = __spreadValues(__spreadValues({}, l6), t4.v[i5]), delete t4.v[i5], n6++, r6.length <= n6) break;
+                        if (r6[n6] !== i5.substring(0, i5.length - o2.suffix.length)) throw new Error("Invalid meta key: " + i5);
+                        i5 = r6[n6];
+                      }
+                      let a2 = i5, c4 = t4.v[i5];
+                      if (s2.active) {
+                        let e4 = /^\s*("(\\.|[^"\\])*"|[^\s]+):\s*(.*?)\s*$/.exec(i5);
+                        e4 && (a2 = e4[1], c4 = ie({ src: e4[3], d: 1 + V2.dI, meta: l6 }, c4), delete t4.v[i5]);
+                      }
+                      if (u2.active && i5.startsWith(u2.keymark)) {
+                        if (i5 === u2.keymark) {
+                          let e4 = ie({ src: c4, d: 1 + V2.dI, meta: l6, ancestors: V2.ancestors, node: t4 }, t4);
+                          Object.assign(t4, e4);
+                        } else t4.m.$$ = t4.m.$$ || {}, t4.m.$$[i5.substring(u2.keymark.length)] = t4.v[i5];
+                        delete t4.v[i5];
+                        continue;
+                      }
+                      let f2 = ne(c4, 1 + V2.dI, l6);
+                      t4.v[a2] = f2, t4.k.includes(a2) || t4.k.push(a2), V2.nodes[V2.nI] = f2, V2.vals[V2.nI] = e3[a2], V2.parents[V2.nI] = e3, V2.keys[V2.nI] = a2, V2.nI++;
+                    }
+                  }
+                  let i4 = H(e3).filter((e4) => void 0 === t4.v[e4]);
+                  if (0 < i4.length) if (void 0 === t4.c) V2.ignoreVal = true, V2.curerr.push(Le(I, V2, 1100, void 0, { k: i4 }));
+                  else {
+                    n5 = true, V2.pI = l5;
+                    for (let n6 of i4) {
+                      let r7 = t4.c = ne(t4.c, 1 + V2.dI);
+                      V2.nodes[V2.nI] = r7, V2.vals[V2.nI] = e3[n6], V2.parents[V2.nI] = e3, V2.keys[V2.nI] = n6, V2.nI++;
+                    }
+                  }
+                  n5 ? (V2.dI++, V2.nodes[V2.nI] = V2.sI, V2.parents[V2.nI] = e3, V2.nextSibling = false, V2.nI++) : V2.ctx.log && V2.ctx.log("eo", V2);
+                }
+              } else if (p === V2.type) if (t4.r && r5) V2.ignoreVal = true, V2.curerr.push(Le(f, V2, 1030));
+              else if (r5 || K(V2.val)) {
+                if (!l4 && r5 && void 0 !== t4.f) V2.updateVal(t4.f), V2.fromDflt = true;
+                else if (!l4 || null != V2.val) {
+                  V2.updateVal(V2.val || (V2.fromDflt = true, []));
+                  let n5 = void 0 !== t4.c, r6 = 0 < V2.val.length, l5 = H(t4.v).filter((e3) => !isNaN(+e3)), i4 = 0 < l5.length;
+                  if (n5 && (t4.c = re(t4.c, 1 + V2.dI)), V2.ctx.log && V2.ctx.log("sa", V2), r6 || i4) {
+                    V2.pI = V2.nI;
+                    let e3 = 0;
+                    if (i4) if (l5.length < V2.val.length && !n5) V2.ignoreVal = true, V2.curerr.push(Le(I, V2, 1090, void 0, { k: l5.length }));
+                    else for (; e3 < l5.length; e3++) {
+                      let n6 = t4.v[e3] = ne(t4.v[e3], 1 + V2.dI);
+                      V2.nodes[V2.nI] = n6, V2.vals[V2.nI] = V2.val[e3], V2.parents[V2.nI] = V2.val, V2.keys[V2.nI] = "" + e3, V2.nI++;
+                    }
+                    if (n5 && r6) {
+                      let n6 = t4.c;
+                      for (; e3 < V2.val.length; e3++) V2.nodes[V2.nI] = n6, V2.vals[V2.nI] = V2.val[e3], V2.parents[V2.nI] = V2.val, V2.keys[V2.nI] = "" + e3, V2.nI++;
+                    }
+                    V2.ignoreVal || (V2.dI++, V2.nodes[V2.nI] = V2.sI, V2.parents[V2.nI] = V2.val, V2.nextSibling = false, V2.nI++);
+                  } else V2.ctx.log && n5 && null == e2 && V2.ctx.log("kv", __spreadProps(__spreadValues({}, V2), { key: 0, val: t4.c })), V2.ctx.log && V2.ctx.log("ea", V2);
+                }
+              } else V2.curerr.push(Le(x, V2, 1040));
+              else if (j === V2.type) r5 && !t4.r ? V2.ignoreVal = true : d !== V2.valType ? (V2.ignoreVal = true, V2.curerr.push(Le(x, V2, 1045))) : V2.val.match(t4.v) || (V2.ignoreVal = true, V2.curerr.push(Le(j, V2, 1045)));
+              else if (m === V2.type || b === V2.type || S === V2.type || void 0 === V2.val || V2.type === V2.valType || $ === V2.type && t4.u.i && V2.val instanceof t4.u.i || k === V2.type && null === V2.val) if (void 0 === V2.val) {
+                let e3 = V2.path[V2.dI];
+                l4 || !t4.r || y === V2.type && V2.parent.hasOwnProperty(e3) ? void 0 !== t4.f && !l4 || y === V2.type ? (V2.updateVal(t4.f), V2.fromDflt = true) : m === V2.type && (V2.ignoreVal = void 0 === V2.ignoreVal || V2.ignoreVal) : (V2.ignoreVal = true, V2.curerr.push(Le(f, V2, 1060))), V2.ctx.log && V2.ctx.log("kv", V2);
+              } else d !== V2.type || "" !== V2.val || t4.u.empty || V2.curerr.push(Le(f, V2, 1080)), V2.ctx.log && V2.ctx.log("kv", V2);
+              else V2.curerr.push(Le(x, V2, 1050));
+            }
+            if (0 < t4.a.length) for (let e3 = 0; e3 < t4.a.length; e3++) {
+              let l5 = se(t4.a[e3], V2);
+              t4 = V2.node, void 0 !== l5.done && (n3 = l5.done), r4 = r4 || !!l5.fatal;
+            }
+            let i3 = l4 ? false !== V2.ignoreVal : !!V2.ignoreVal;
+            !V2.match && null != V2.parent && !n3 && !i3 && (V2.parent[V2.key] = V2.val), V2.nextSibling && (V2.pI = V2.sI), (V2.node.e || r4) && V2.err.push(...V2.curerr);
           }
-          if (0 < r3.err.length) {
-            if (_2(r3.ctx.err))
-              r3.ctx.err.push(...r3.err);
-            else if (!r3.match && false !== r3.ctx.err)
-              throw new K(O, o2.prefix, r3.err, r3.ctx);
+          if (0 < V2.err.length) {
+            if (K(V2.ctx.err)) V2.ctx.err.push(...V2.err);
+            else if (!V2.match && false !== V2.ctx.err) throw new Y(w, i2.prefix, V2.err, V2.ctx);
           }
-          return r3.match ? 0 === r3.err.length : r3.root;
+          return V2.match ? 0 === V2.err.length : V2.root;
         }
-        function v2(e2, t3) {
-          return f2(e2, t3, false);
+        function O2(e2, t3) {
+          return N2(e2, t3, false);
         }
-        v2.valid = function(e2, t3) {
+        return O2.valid = function(e2, t3) {
           let n2 = t3 || {};
-          return n2.err = n2.err || [], f2(e2, n2, false), 0 === n2.err.length;
-        }, v2.match = (e2, t3) => f2(e2, t3 = t3 || {}, true), v2.error = (e2, t3) => {
+          return n2.err = n2.err || [], N2(e2, n2, false), 0 === n2.err.length;
+        }, O2.match = (e2, t3) => N2(e2, t3 = t3 || {}, true), O2.error = (e2, t3) => {
           let n2 = t3 || {};
-          return n2.err = n2.err || [], f2(e2, n2, false), n2.err;
-        }, v2.spec = () => (v2(void 0, { err: false }), J(Le(a2, (e2, t3) => n === t3 || t3, false, true))), v2.node = () => (v2.spec(), a2), v2.stringify = (e2) => {
-          let t3 = null == e2 ? a2 : e2.node && e2.node();
-          return t3 = null == t3 || !t3.$ || n !== t3.$.gubu$ && true !== t3.$.gubu$ ? t3 : t3.v, qe.stringify(t3);
-        };
-        let y2 = "";
-        return v2.toString = () => (y2 = le("" === y2 ? Le(null == a2 || !a2.$ || n !== a2.$.gubu$ && true !== a2.$.gubu$ ? a2 : a2.v) : y2), `[Gubu ${o2.name} ${y2}]`), e.inspect && e.inspect.custom && (v2[e.inspect.custom] = v2.toString), v2.gubu = r2, v2.spec(), v2;
+          return n2.err = n2.err || [], N2(e2, n2, false), n2.err;
+        }, O2.spec = () => {
+          O2(void 0, { err: false });
+          const e2 = qe(h2, (e3, t3) => n === t3 || t3, false, true);
+          return Z(e2);
+        }, O2.node = () => (O2.spec(), h2), O2.stringify = (...e2) => {
+          const t3 = O2.jsonify();
+          return "" === g2 ? g2 = "string" == typeof t3 ? t3.replace(/^"(.*)"$/, "$1") : JSON.stringify(t3, ...e2) : g2;
+        }, O2.jsonify = () => null == c2 ? c2 = _e(O2.node()) : c2, O2.toString = () => (g2 = ae("" === g2 ? qe(null == h2 || !h2.$ || n !== h2.$.gubu$ && true !== h2.$.gubu$ ? h2 : h2.v, null, true) : g2), `[Gubu ${i2.name} ${g2}]`), e.inspect && e.inspect.custom && (O2[e.inspect.custom] = O2.toString), O2.gubu = r2, O2.spec(), O2;
       }
-      function ee(e2) {
-        let t2 = false;
-        if (null == e2.tokens) {
-          t2 = true, e2.tokens = [];
-          let n3 = /\s*,?\s*([)(\.]|"(\\.|[^"\\])*"|\/(\\.|[^\/\\])*\/[a-z]?|[^)(,\s]+)\s*/g, r4 = null;
-          for (; r4 = n3.exec(e2.src); )
-            e2.tokens.push(r4[1]);
+      function ie(e2, t2) {
+        var n2, r3;
+        let l2, i2 = false;
+        "string" == typeof e2 && (e2 = { src: e2 });
+        const o2 = null === (n2 = null == t2 ? void 0 : t2.$) || void 0 === n2 ? void 0 : n2.gubu$;
+        if (e2.i = e2.i || 0, null == e2.tokens) {
+          l2 = null != e2.val ? ne(e2.val, (e2.d || 0) + 1, e2.meta) : void 0, i2 = true, e2.tokens = [];
+          let n3 = /\s*,?\s*([)(\.]|"(\\.|[^"\\])*"|\/(\\.|[^\/\\])*\/[a-z]?|[^)(,.\s]+)\s*/g, r4 = null;
+          for (; r4 = n3.exec(e2.src); ) e2.tokens.push(r4[1]);
+          if (!o2) {
+            let n4 = 0, r5 = false;
+            for (; n4 < e2.tokens.length; n4++) if (")" == e2.tokens[n4]) {
+              r5 = true;
+              break;
+            }
+            if ((r5 || n4 === e2.tokens.length) && void 0 !== t2) {
+              let l3 = "token_" + e2.d + "_" + e2.i;
+              e2.refs = e2.refs || {}, e2.refs[l3] = t2, r5 ? e2.tokens.splice(n4, 0, "$$" + l3) : e2.tokens.push("(", "$$" + l3, ")");
+            }
+          }
         }
-        e2.i = e2.i || 0;
-        let n2 = e2.tokens[e2.i], r3 = ze[n2];
-        if (")" === e2.tokens[e2.i])
-          return e2.i++, e2.val;
+        let s2 = e2.tokens[e2.i], u2 = Ke[s2];
+        if (")" === e2.tokens[e2.i]) return e2.i++, t2;
         e2.i++;
-        let l2 = { Number, String, Boolean };
-        if (null == r3)
-          try {
-            return l2[n2] || (b === n2 ? void 0 : "NaN" === n2 ? NaN : n2.match(/^\/.+\/$/) ? new RegExp(n2.substring(1, n2.length - 1)) : J(n2));
-          } catch (s2) {
-            throw new SyntaxError(`Gubu: unexpected token ${n2} in builder expression ${e2.src}`);
+        let a2 = [];
+        if (null == u2) try {
+          let t3;
+          if (q[s2]) u2 = Te, a2.unshift(s2);
+          else {
+            if (y === s2) return;
+            if ("NaN" === s2) return NaN;
+            if (s2.match(/^\/.+\/$/)) return new RegExp(s2.substring(1, s2.length - 1));
+            if (t3 = s2.match(/^\$\$([^$]+)$/)) return e2.node ? ((null === (r3 = e2.node.m) || void 0 === r3 ? void 0 : r3.$$) || {})[t3[1]] || e2.node.v["$$" + t3[1]] : e2.refs ? e2.refs[t3[1]] : void 0;
+            {
+              let e3 = Z(s2);
+              if (!i2) return e3;
+              u2 = me, a2.unshift(e3);
+            }
           }
-        "(" === e2.tokens[e2.i] && e2.i++;
-        let i2 = [], o2 = null;
-        for (; null != (o2 = e2.tokens[e2.i]) && ")" !== o2; ) {
-          let t3 = ee(e2);
-          i2.push(t3);
+        } catch (c2) {
+          throw new SyntaxError(`Gubu: unexpected token ${s2} in builder expression ${e2.src}`);
         }
-        return e2.i++, e2.val = r3.call(e2.val, ...i2), "." === e2.tokens[e2.i] ? (e2.i++, ee(e2)) : t2 && e2.i < e2.tokens.length ? ee(e2) : e2.val;
+        if ("(" === e2.tokens[e2.i]) {
+          e2.i++;
+          let t3 = null;
+          for (; null != (t3 = e2.tokens[e2.i]) && ")" !== t3; ) {
+            let t4 = ie(e2);
+            a2.push(t4);
+          }
+          e2.i++;
+        }
+        return l2 = o2 ? u2.call(t2, ...a2) : u2.call(void 0, ...a2), "." === e2.tokens[e2.i] ? (e2.i++, l2 = ie(e2, l2)) : i2 && e2.i < e2.tokens.length && (l2 = ie(e2, l2)), l2;
       }
-      function te(e2, t2) {
+      function oe(e2, t2 = true) {
+        let n2;
+        const r3 = Array.isArray(e2) ? "array" : null === e2 ? "null" : typeof e2;
+        return "string" === r3 ? n2 = ie(e2) : v === r3 ? n2 = Object.entries(e2).reduce((e3, t3) => (e3[t3[0]] = "$$" === t3[0] ? t3[1] : oe(t3[1], false), e3), {}) : p === r3 && (n2 = e2.map((e3) => oe(e3, false))), t2 ? Ze(n2, { keyspec: { active: true } }) : n2;
+      }
+      function se(e2, t2) {
         var n2;
         let r3, l2 = {}, i2 = false;
         try {
@@ -1303,176 +1321,180 @@ var __async = (__this, __arguments, generator) => {
         } catch (s2) {
           r3 = s2;
         }
-        let o2 = _2(l2.err) ? 0 < l2.err.length : null != l2.err;
+        let o2 = K(l2.err) ? 0 < l2.err.length : null != l2.err;
         if (!i2 || o2) {
-          if (void 0 === t2.val && (t2.node.p || !t2.node.r) && true !== l2.done)
-            return delete l2.err, l2;
-          let n3 = l2.why || w, i3 = ne(t2);
-          if (g === typeof l2.err)
-            t2.curerr.push(Te(t2, l2.err));
-          else if (d === typeof l2.err)
-            t2.curerr.push(...[l2.err].flat().filter((e3) => null != e3).map((e3) => (e3.p = null == e3.p ? i3 : e3.p, e3.m = null == e3.m ? 2010 : e3.m, e3)));
+          if (void 0 === t2.val && (t2.node.p || !t2.node.r) && true !== l2.done) return delete l2.err, l2;
+          let n3 = l2.why || S, i3 = ue(t2);
+          if (d === typeof l2.err) t2.curerr.push(ze(t2, l2.err));
+          else if (v === typeof l2.err) t2.curerr.push(...[l2.err].flat().filter((e3) => null != e3).map((e3) => (e3.p = null == e3.p ? i3 : e3.p, e3.m = null == e3.m ? 2010 : e3.m, e3)));
           else {
             let l3 = e2.name;
-            null != l3 && "" != l3 || (l3 = le(e2.toString().replace(/[ \t\r\n]+/g, " "))), t2.curerr.push(Be(n3, t2, 1045, void 0, { thrown: r3 }, l3));
+            null != l3 && "" != l3 || (l3 = ae(e2.toString().replace(/[ \t\r\n]+/g, " "))), t2.curerr.push(Le(n3, t2, 1045, void 0, { thrown: r3 }, l3));
           }
           l2.done = null == l2.done || l2.done;
         }
         return l2.hasOwnProperty("uval") ? (t2.updateVal(l2.uval), t2.ignoreVal = false) : void 0 === l2.val || Number.isNaN(l2.val) || (t2.updateVal(l2.val), t2.ignoreVal = false), void 0 !== l2.node && (t2.node = l2.node), void 0 !== l2.type && (t2.type = l2.type), l2;
       }
-      function ne(e2) {
+      function ue(e2) {
         return e2.path.slice(1, e2.dI + 1).filter((e3) => null != e3).join(".");
       }
-      function re(e2) {
-        return f === typeof e2 ? e2 : f === typeof (null == e2 ? void 0 : e2.length) ? e2.length : null != e2 && d === typeof e2 ? q(e2).length : NaN;
-      }
-      function le(e2, t2) {
+      function ae(e2, t2) {
         let n2 = String(e2), r3 = null == t2 || isNaN(t2) ? 30 : t2 < 0 ? 0 : ~~t2, l2 = null == e2 ? 0 : n2.length, i2 = null == e2 ? "" : n2.substring(0, l2);
         return i2 = r3 < l2 ? i2.substring(0, r3 - 3) + "..." : i2, i2.substring(0, r3);
       }
-      const ie = function(e2) {
-        let t2 = Ge(this, e2);
-        return t2.r = true, t2.p = false, void 0 === e2 && 1 === arguments.length && (t2.t = b, t2.v = void 0), t2;
-      }, oe = function(e2) {
-        let t2 = Ge(this, e2);
-        return t2.c = ue(), t2;
-      }, se = function(e2) {
-        let t2 = Ge(this, e2);
-        return t2.r = false, void 0 === e2 && 1 === arguments.length && (t2.t = b, t2.v = void 0), t2;
-      }, ue = function(e2) {
-        let t2 = Ge(this, e2);
-        return t2.t = m, void 0 !== e2 && (t2.v = e2, t2.f = e2), t2;
-      }, ae = function(e2, t2) {
-        let n2 = Ge(this, t2);
-        return n2.z = e2, n2;
-      }, ce = function(e2) {
-        let t2 = Ge(this, e2);
-        return t2.r = false, t2.p = true, t2;
+      const ce = function(e2) {
+        var t2;
+        let n2 = Pe(this, e2);
+        return n2.r = true, n2.p = false, void 0 === e2 ? (n2.f = void 0, 1 === arguments.length && (n2.t = y, n2.v = void 0)) : (null === (t2 = null == this ? void 0 : this.$) || void 0 === t2 ? void 0 : t2.gubu$) && (n2.f = void 0), n2;
       }, fe = function(e2) {
-        let t2 = Ge(this, e2);
+        let t2 = Pe(this, e2);
+        return t2.c = he(), t2;
+      }, pe = function(e2) {
+        let t2 = Pe(this, e2);
+        return t2.r = false, void 0 === e2 && 1 === arguments.length && (t2.t = y, t2.v = void 0), t2;
+      }, he = function(e2) {
+        let t2 = Pe(this, e2);
+        return t2.t = m, void 0 !== e2 && (t2.v = e2, t2.f = e2), t2;
+      }, ve = function(e2, t2) {
+        let n2 = Pe(this, t2);
+        return n2.z = e2, n2;
+      }, de = function(e2) {
+        let t2 = Pe(this, e2);
+        return t2.r = false, t2.p = true, t2;
+      }, ge = function(e2) {
+        let t2 = Pe(this, e2);
         return t2.r = false, t2.p = true, t2.e = false, t2.a.push(function(e3, t3, n2) {
           return 0 < n2.curerr.length && (t3.uval = void 0, t3.done = false), true;
         }), t2;
-      }, pe = function(e2) {
-        let t2 = Ge(this);
-        return t2.t = v, t2.v = e2, t2.f = e2, t2;
-      }, he = function(e2, t2) {
-        let n2 = Ge(this, void 0 === t2 ? e2 : t2);
-        return n2.r = false, n2.f = e2, v === typeof e2 && Z[e2.name] && (n2.t = e2.name.toLowerCase(), n2.f = Fe(Q[n2.t])), n2.p = false, n2;
-      }, ve = function(e2) {
-        let t2 = Ge(this, e2);
+      }, ye = function(e2) {
+        let t2 = Pe(this);
+        return t2.t = h, t2.v = e2, t2.f = e2, t2;
+      }, me = function(e2, t2) {
+        let n2 = Pe(this, e2);
+        if (void 0 !== t2 && (n2 = Pe(n2, t2)), n2.r = false, n2.f = e2, void 0 === t2) {
+          h === typeof e2 && ee[e2.name] && (n2.t = e2.name.toLowerCase(), n2.f = He(te[n2.t]));
+        } else {
+          const e3 = ne(t2);
+          n2.t = e3.t;
+        }
+        return n2.p = false, n2;
+      }, be = function(e2) {
+        let t2 = Pe(this, e2);
         return t2.u.empty = true, t2;
-      }, de = function(e2) {
-        let t2 = Ge(this, e2);
-        return t2.t = c, t2;
-      }, ge = function(e2, t2) {
-        let n2 = Ge(this), r3 = f === typeof e2;
-        n2.t = g, r3 && null == t2 && (n2 = X([]));
+      }, $e = function(e2) {
+        let t2 = Pe(this, e2);
+        return t2.t = a, t2;
+      }, ke = function(e2, t2) {
+        let n2 = Pe(this), r3 = c === typeof e2;
+        n2.t = d, r3 && null == t2 && (n2 = ne([]));
         let l2 = null;
-        return v === typeof e2 && (l2 = e2, n2 = ue()), n2.b.push(function(n3, i2, o2) {
-          if (l2)
-            i2.val = l2(o2.path, o2);
+        return h === typeof e2 && (l2 = e2, n2 = he()), n2.b.push(function(n3, i2, o2) {
+          if (l2) i2.val = l2(o2.path, o2);
           else if (r3) {
             let n4 = e2;
-            i2.val = o2.path.slice(o2.path.length - 1 - (0 <= n4 ? n4 : 0), o2.path.length - 1 + (0 <= n4 ? 0 : 1)), g === typeof t2 && (i2.val = i2.val.join(t2));
-          } else
-            null == e2 && (i2.val = o2.path[o2.path.length - 2]);
+            i2.val = o2.path.slice(o2.path.length - 1 - (0 <= n4 ? n4 : 0), o2.path.length - 1 + (0 <= n4 ? 0 : 1)), d === typeof t2 && (i2.val = i2.val.join(t2));
+          } else null == e2 && (i2.val = o2.path[o2.path.length - 2]);
           return true;
         }), n2;
-      }, ye = function(...e2) {
-        let t2 = Ge();
-        t2.t = $, t2.r = true;
-        let n2 = e2.map((e3) => qe(e3));
-        return t2.u.list = e2, t2.b.push(function(t3, r3, l2) {
+      }, xe = function(...e2) {
+        const t2 = Pe(this);
+        t2.t = b, t2.r = true;
+        const n2 = e2.map((e3) => Ze(e3));
+        t2.u.list = n2.map((e3) => e3.node());
+        const r3 = function(t3, r4, l2) {
           let i2 = true;
           for (let e3 of n2) {
-            let n3 = Object.assign(Object.assign({}, l2.ctx), { err: [] });
+            let n3 = __spreadProps(__spreadValues({}, l2.ctx), { err: [] });
             e3(t3, n3), 0 < n3.err.length && (i2 = false);
           }
-          return i2 || (r3.why = E, r3.err = [Te(l2, A + " " + z + F + P + " does not satisfy all of: " + e2.map((e3) => Le(e3, null, true)).join(", "))]), i2;
-        }), t2;
-      }, be = function(...e2) {
-        let t2 = Ge();
-        t2.t = $, t2.r = true;
-        let n2 = e2.map((e3) => qe(e3));
-        return t2.u.list = e2, t2.b.push(function(t3, r3, l2) {
+          return i2 || (r4.why = T, r4.err = [ze(l2, E + " " + _2 + z + L + " does not satisfy all of: " + e2.map((e3) => qe(e3, null, true)).join(", "))]), i2;
+        };
+        return r3.n = T, r3.a = e2, t2.b.push(r3), t2;
+      }, Ie = function(...e2) {
+        let t2 = Pe(this);
+        t2.t = b, t2.r = true;
+        let n2 = e2.map((e3) => Ze(e3));
+        t2.u.list = n2.map((e3) => e3.node());
+        const r3 = function(t3, r4, l2) {
           let i2 = false;
           for (let e3 of n2) {
-            let n3 = Object.assign(Object.assign({}, l2.ctx), { err: [] }), o2 = e3.match(t3, n3);
-            o2 && (r3.val = e3(t3, n3)), i2 || (i2 = o2);
+            let n3 = __spreadProps(__spreadValues({}, l2.ctx), { err: [] }), o2 = e3.match(t3, n3);
+            o2 && (r4.val = e3(t3, n3)), i2 || (i2 = o2);
           }
-          return i2 || (r3.why = L, r3.err = [Te(l2, A + " " + z + F + P + " does not satisfy any of: " + e2.map((e3) => Le(e3, null, true)).join(", "))]), i2;
-        }), t2;
-      }, me = function(...e2) {
-        let t2 = Ge();
-        t2.t = $, t2.r = true;
-        let n2 = e2.map((e3) => qe(e3));
-        return t2.u.list = e2, t2.b.push(function(t3, r3, l2) {
+          return i2 || (r4.why = P, r4.err = [ze(l2, E + " " + _2 + z + L + " does not satisfy any of: " + e2.map((e3) => qe(e3, null, true)).join(", "))]), i2;
+        };
+        return r3.n = P, r3.a = e2, t2.b.push(r3), t2;
+      }, we = function(...e2) {
+        let t2 = Pe(this);
+        t2.t = b, t2.r = true;
+        let n2 = e2.map((e3) => Ze(e3));
+        t2.u.list = n2.map((e3) => e3.node());
+        const r3 = function(t3, r4, l2) {
           let i2 = 0;
           for (let e3 of n2) {
-            let n3 = Object.assign(Object.assign({}, l2.ctx), { err: [] });
+            let n3 = __spreadProps(__spreadValues({}, l2.ctx), { err: [] });
             if (e3.match(t3, n3)) {
-              i2++, r3.val = e3(t3, n3);
+              i2++, r4.val = e3(t3, n3);
               break;
             }
           }
-          return 1 !== i2 && (r3.why = M, r3.err = [Te(l2, A + " " + z + F + P + " does not satisfy one of: " + e2.map((e3) => Le(e3, null, true)).join(", "))]), true;
-        }), t2;
-      }, $e = function(...e2) {
-        let t2 = Ge();
-        return t2.b.push(function(t3, n2, r3) {
-          for (let l2 = 0; l2 < e2.length; l2++)
-            if (t3 === e2[l2])
-              return true;
+          return 1 !== i2 && (r4.why = F, r4.err = [ze(l2, E + " " + _2 + z + L + " does not satisfy one of: " + e2.map((e3) => qe(e3, null, true)).join(", "))]), true;
+        };
+        return r3.n = F, r3.a = e2, t2.b.push(r3), t2;
+      }, Se = function(...e2) {
+        const t2 = Pe(this), n2 = function(t3, n3, r3) {
+          for (let l2 = 0; l2 < e2.length; l2++) if (t3 === e2[l2]) return true;
           if (r3.node.hasOwnProperty("f") && void 0 === t3) {
             const t4 = r3.node.f;
-            for (let n3 = 0; n3 < e2.length; n3++)
-              if (t4 === e2[n3])
-                return true;
+            for (let n4 = 0; n4 < e2.length; n4++) if (t4 === e2[n4]) return true;
           }
-          return n2.err = Te(r3, A + " " + z + F + P + " must be exactly one of: " + r3.node.s + "."), n2.done = true, false;
-        }), t2.s = e2.map((e3) => Le(e3, null, true)).join(", "), t2;
-      }, xe = function(e2, t2) {
-        let n2 = Ge(this, t2);
+          return n3.err = ze(r3, E + " " + _2 + z + L + " must be exactly one of: " + e2.map((e3) => qe(e3, null, true)).join(", ")), n3.done = true, false;
+        };
+        return n2.n = J, n2.a = e2, n2.s = () => J + "(" + e2.map((e3) => qe(e3, null, true)).join(",") + ")", t2.b.push(n2), t2;
+      }, je = function(e2, t2) {
+        let n2 = Pe(this, t2);
         return n2.b.push(e2), n2;
-      }, Ie = function(e2, t2) {
-        let n2 = Ge(this, t2);
+      }, Ne = function(e2, t2) {
+        let n2 = Pe(this, t2);
         return n2.a.push(e2), n2;
-      }, ke = function(e2, t2) {
-        let n2 = Ge(this, t2);
-        if (v === typeof e2) {
+      }, Oe = function(e2, t2) {
+        let n2 = Pe(this, t2);
+        if (n2.r = true, h === typeof e2) {
           let t3 = e2;
-          t3.gubu$ = t3.gubu$ || {}, t3.gubu$.Check = true, n2.b.push(e2), n2.s = (null == n2.s ? "" : n2.s + ";") + Le(e2, null, true), n2.r = true;
-        } else if (d === typeof e2) {
+          t3.gubu$ = t3.gubu$ || {}, t3.gubu$.Check = true, t3.s = () => B + "(" + qe(e2, null, true) + ")", n2.b.push(e2), n2.t = S;
+        } else if (v === typeof e2) {
           if (Object.prototype.toString.call(e2).includes("RegExp")) {
             let t3 = (t4) => null != t4 && !Number.isNaN(t4) && !!String(t4).match(e2);
-            W(t3, u, { value: String(e2) }), W(t3, "gubu$", { value: { Check: true } }), n2.b.push(t3), n2.s = Le(e2), n2.r = true;
+            U(t3, s, { value: String(e2) }), U(t3, "gubu$", { value: { Check: true } }), t3.s = () => B + "(" + qe(e2, null, true) + ")", n2.b.push(t3), n2.t = S;
           }
-        } else
-          g === typeof e2 && (n2.t = e2, n2.r = true);
+        } else d === typeof e2 && (n2.t = e2);
+        if (void 0 !== t2) {
+          const e3 = ne(t2);
+          n2.t = e3.t;
+        }
         return n2;
-      }, je = function(e2) {
-        let t2 = Ge(this, e2);
-        return h === t2.t && l !== t2.c && 0 === t2.n ? (t2.v = [t2.c], t2.c = l) : t2.c = l, t2;
-      }, Oe = function(e2, t2) {
-        let n2 = Ge(this, t2), r3 = g === typeof e2 ? e2 : (d === typeof e2 && e2 || {}).name;
+      }, Ve = function(e2) {
+        let t2 = Pe(this, e2);
+        return p === t2.t && void 0 !== t2.c && 0 === t2.n && (t2.v = [t2.c]), t2.c = void 0, t2;
+      }, Ae = function(e2, t2) {
+        let n2 = Pe(this, t2), r3 = d === typeof e2 ? e2 : (v === typeof e2 && e2 || {}).name;
         return null != r3 && "" != r3 && n2.b.push(function(e3, t3, n3) {
           return (n3.ctx.ref = n3.ctx.ref || {})[r3] = n3.node, true;
         }), n2;
-      }, we = function(e2, t2) {
-        let n2 = Ge(this, t2), r3 = d === typeof e2 && e2 || {}, l2 = g === typeof e2 ? e2 : r3.name, i2 = !!r3.fill;
+      }, Re = function(e2, t2) {
+        let n2 = Pe(this, t2), r3 = v === typeof e2 && e2 || {}, l2 = d === typeof e2 ? e2 : r3.name, i2 = !!r3.fill;
         return null != l2 && "" != l2 && n2.b.push(function(e3, t3, n3) {
           if (void 0 !== e3 || i2) {
             let e4 = n3.ctx.ref = n3.ctx.ref || {};
             if (void 0 !== e4[l2]) {
-              let n4 = Object.assign({}, e4[l2]);
-              n4.t = n4.t || c, t3.node = n4, t3.type = n4.t;
+              let n4 = __spreadValues({}, e4[l2]);
+              n4.t = n4.t || a, t3.node = n4, t3.type = n4.t;
             }
           }
           return true;
         }), n2;
-      }, Ne = function(e2, t2) {
-        let n2 = Ge(this, t2), r3 = d === typeof e2 && e2 || {}, l2 = g === typeof e2 ? e2 : r3.name, i2 = y === typeof r3.keep ? r3.keep : void 0, o2 = _2(r3.claim) ? r3.claim : [];
+      }, De = function(e2, t2) {
+        let n2 = Pe(this, t2), r3 = v === typeof e2 && e2 || {}, l2 = d === typeof e2 ? e2 : r3.name, i2 = g === typeof r3.keep ? r3.keep : void 0, o2 = K(r3.claim) ? r3.claim : [];
         if (null != l2 && "" != l2) {
           let e3 = (e4, t4, n3) => {
             if (void 0 === e4 && 0 < o2.length) {
@@ -1481,13 +1503,11 @@ var __async = (__this, __arguments, generator) => {
                 let r4 = n3.ctx.Rename.fromDflt[e5] || {};
                 if (void 0 !== n3.parent[e5] && !r4.yes) {
                   t4.val = n3.parent[e5], n3.match || (n3.parent[l2] = t4.val), t4.node = r4.node;
-                  for (let e6 = 0; e6 < n3.err.length; e6++)
-                    n3.err[e6].k === r4.key && (n3.err.splice(e6, 1), e6--);
+                  for (let e6 = 0; e6 < n3.err.length; e6++) n3.err[e6].k === r4.key && (n3.err.splice(e6, 1), e6--);
                   if (i2) {
                     let t5 = n3.cI + 1;
-                    n3.nodes.splice(t5, 0, X(r4.dval)), n3.vals.splice(t5, 0, void 0), n3.parents.splice(t5, 0, n3.parent), n3.keys.splice(t5, 0, e5), n3.nI++, n3.pI++;
-                  } else
-                    delete n3.parent[e5];
+                    n3.nodes.splice(t5, 0, ne(r4.dval)), n3.vals.splice(t5, 0, void 0), n3.parents.splice(t5, 0, n3.parent), n3.keys.splice(t5, 0, e5), n3.nI++, n3.pI++;
+                  } else delete n3.parent[e5];
                   break;
                 }
               }
@@ -1495,135 +1515,161 @@ var __async = (__this, __arguments, generator) => {
             }
             return true;
           };
-          W(e3, u, { value: "Rename:" + l2 }), n2.b.push(e3);
-          let t3 = (e4, t4, n3) => (n3.parent[l2] = e4, n3.match || i2 || n3.key === l2 || _2(n3.parent) && false !== i2 || (delete n3.parent[n3.key], t4.done = true), n3.ctx.Rename = n3.ctx.Rename || {}, n3.ctx.Rename.fromDflt = n3.ctx.Rename.fromDflt || {}, n3.ctx.Rename.fromDflt[l2] = { yes: n3.fromDflt, key: n3.key, dval: n3.node.v, node: n3.node }, true);
-          W(t3, u, { value: "Rename:" + l2 }), n2.a.push(t3);
+          U(e3, s, { value: "Rename:" + l2 }), n2.b.push(e3);
+          let t3 = (e4, t4, n3) => (n3.parent[l2] = e4, n3.match || i2 || n3.key === l2 || K(n3.parent) && false !== i2 || (delete n3.parent[n3.key], t4.done = true), n3.ctx.Rename = n3.ctx.Rename || {}, n3.ctx.Rename.fromDflt = n3.ctx.Rename.fromDflt || {}, n3.ctx.Rename.fromDflt[l2] = { yes: n3.fromDflt, key: n3.key, dval: n3.node.v, node: n3.node }, true);
+          U(t3, s, { value: "Rename:" + l2 }), n2.a.push(t3);
         }
         return n2;
-      }, Se = function(e2, t2) {
-        let n2 = Ge(this, t2);
-        return n2.b.push(function(t3, n3, r3) {
-          let l2 = re(t3);
-          if (e2 <= l2)
-            return true;
-          r3.checkargs = { min: 1 };
-          let i2 = f === typeof t3 ? "" : "length ";
-          return n3.err = Te(r3, A + " " + z + F + P + ` must be a minimum ${i2}of ${e2} (was ${l2}).`), false;
-        }), n2.s = T + "(" + e2 + (null == t2 ? "" : "," + Le(t2)) + ")", n2;
-      }, Ve = function(e2, t2) {
-        let n2 = Ge(this, t2);
-        return n2.b.push(function(t3, n3, r3) {
-          let l2 = re(t3);
-          if (l2 <= e2)
-            return true;
-          let i2 = f === typeof t3 ? "" : "length ";
-          return n3.err = Te(r3, A + " " + z + F + P + ` must be a maximum ${i2}of ${e2} (was ${l2}).`), false;
-        }), n2.s = G + "(" + e2 + (null == t2 ? "" : "," + Le(t2)) + ")", n2;
-      }, Re = function(e2, t2) {
-        let n2 = Ge(this, t2);
-        return n2.b.push(function(t3, n3, r3) {
-          let l2 = re(t3);
-          if (e2 < l2)
-            return true;
-          let i2 = f === typeof t3 ? "be" : "have length";
-          return n3.err = Te(r3, A + " " + z + F + P + ` must ${i2} above ${e2} (was ${l2}).`), false;
-        }), n2.s = D + "(" + e2 + (null == t2 ? "" : "," + Le(t2)) + ")", n2;
-      }, Ae = function(e2, t2) {
-        let n2 = Ge(this, t2);
-        return n2.b.push(function(t3, n3, r3) {
-          let l2 = re(t3);
-          if (l2 < e2)
-            return true;
-          let i2 = f === typeof t3 ? "be" : "have length";
-          return n3.err = Te(r3, A + " " + z + F + P + ` must ${i2} below ${e2} (was ${l2}).`), false;
-        }), n2.s = C + "(" + e2 + (null == t2 ? "" : "," + Le(t2)) + ")", n2;
-      }, De = function(e2, t2) {
-        let n2 = Ge(this, t2 || ue());
-        return n2.b.push(function(t3, n3, r3) {
-          let l2 = re(t3);
-          if (e2 === l2)
-            return true;
-          let i2 = f === typeof t3 ? "" : " in length";
-          return n3.err = Te(r3, A + " " + z + F + P + ` must be exactly ${e2}${i2} (was ${l2}).`), false;
-        }), n2.s = B + "(" + e2 + (null == t2 ? "" : "," + Le(t2)) + ")", n2;
       }, Ee = function(e2, t2) {
-        let n2 = Ge(this, t2 || {});
-        return n2.c = X(e2), n2;
+        let n2 = Pe(this, t2);
+        return n2.c = ne(e2), void 0 === n2.v && (n2.t = "object", n2.v = {}, n2.f = {}), n2;
       }, Ce = function(e2, t2) {
-        let n2 = Ge(this, t2 || []);
-        return n2.t = "array", n2.c = X(e2), n2.m = n2.m || {}, n2.m.rest = true, n2;
+        let n2 = Pe(this, t2 || []);
+        return n2.t = "array", n2.c = ne(e2), n2.m = n2.m || {}, n2.m.rest = true, n2;
+      }, Te = function(e2, t2) {
+        let n2 = ne(q[e2]), r3 = Pe(this, t2);
+        return r3 !== n2 && (r3.t = n2.t, r3.r = n2.r, r3.p = n2.p, r3.v = n2.v), r3;
       };
-      function Ge(e2, t2) {
-        let n2 = X(null == e2 || e2.window === e2 || e2.global === e2 ? t2 : e2);
-        return Object.assign(n2, { Above: Re, After: Ie, Any: ue, Before: xe, Below: Ae, Check: ke, Child: Ee, Closed: je, Default: he, Define: Oe, Empty: ve, Exact: $e, Fault: ae, Ignore: fe, Len: De, Max: Ve, Min: Se, Never: de, Open: oe, Refer: we, Rename: Ne, Required: ie, Rest: Ce, Skip: ce });
+      function Ge(e2, t2, n2, r3, l2) {
+        let i2 = Pe(e2, n2);
+        t2 = +t2;
+        let o2 = function(e3, n3, r4) {
+          return l2(function(e4) {
+            return c === typeof e4 ? e4 : c === typeof (null == e4 ? void 0 : e4.length) ? e4.length : null != e4 && v === typeof e4 ? H(e4).length : NaN;
+          }(e3), t2, e3, n3, r4);
+        };
+        return Object.defineProperty(o2, s, { value: r3 }), o2.n = r3, o2.a = [t2], o2.s = () => r3 + "(" + t2 + ")", o2[Symbol.for("nodejs.util.inspect.custom")] = o2.s(), o2.toJSON = () => o2.s(), i2.b.push(o2), i2;
       }
-      function Te(e2, t2, n2, r3) {
-        return Be(n2 || w, e2, 4e3, t2, r3);
+      const Be = function(e2, t2) {
+        return Ge(this, e2, t2, W, (e3, t3, n2, r3, l2) => {
+          if (t3 <= e3) return true;
+          l2.checkargs = { min: 1 };
+          let i2 = c === typeof n2 ? "" : "length ";
+          return r3.err = ze(l2, E + " " + _2 + z + L + ` must be a minimum ${i2}of ${t3} (was ${e3}).`), false;
+        });
+      }, Je = function(e2, t2) {
+        return Ge(this, e2, t2, M, (e3, t3, n2, r3, l2) => {
+          if (e3 <= t3) return true;
+          let i2 = c === typeof n2 ? "" : "length ";
+          return r3.err = ze(l2, E + " " + _2 + z + L + ` must be a maximum ${i2}of ${t3} (was ${e3}).`), false;
+        });
+      }, Me = function(e2, t2) {
+        return Ge(this, e2, t2, C, (e3, t3, n2, r3, l2) => {
+          if (t3 < e3) return true;
+          let i2 = c === typeof n2 ? "be" : "have length";
+          return r3.err = ze(l2, E + " " + _2 + z + L + ` must ${i2} above ${t3} (was ${e3}).`), false;
+        });
+      }, We = function(e2, t2) {
+        return Ge(this, e2, t2, G, (e3, t3, n2, r3, l2) => {
+          if (e3 < t3) return true;
+          let i2 = c === typeof n2 ? "be" : "have length";
+          return r3.err = ze(l2, E + " " + _2 + z + L + ` must ${i2} below ${t3} (was ${e3}).`), false;
+        });
+      }, Fe = function(e2, t2) {
+        return Ge(this, e2, t2, G, (e3, t3, n2, r3, l2) => {
+          if (t3 === e3) return true;
+          let i2 = c === typeof n2 ? "" : " in length";
+          return r3.err = ze(l2, E + " " + _2 + z + L + ` must be exactly ${t3}${i2} (was ${e3}).`), false;
+        });
+      };
+      function Pe(e2, t2) {
+        let n2, r3 = null != e2 && (e2.window === e2 || e2.global === e2);
+        if (void 0 !== e2 && !r3 || void 0 === t2) if (void 0 === e2 || r3) n2 = ne(void 0);
+        else if (void 0 !== t2) {
+          n2 = ne(t2);
+          let r4 = ne(e2);
+          void 0 === n2.v && "list" !== n2.t && (n2.v = r4.v, n2.t = r4.t), ["f", "r", "p", "c", "e", "z"].map((e3) => n2[e3] = void 0 !== r4[e3] ? r4[e3] : n2[e3]), n2.u = Object.assign(__spreadValues({}, r4.u), n2.u), n2.m = Object.assign(__spreadValues({}, r4.m), n2.m), n2.a = r4.a.concat(n2.a), n2.b = r4.b.concat(n2.b);
+        } else n2 = ne(e2);
+        else n2 = ne(t2);
+        return n2.Above ? n2 : Object.assign(n2, { Above: Me, After: Ne, Any: he, Before: je, Below: We, Check: Oe, Child: Ee, Closed: Ve, Default: me, Define: Ae, Empty: be, Exact: Se, Fault: ve, Ignore: ge, Len: Fe, Max: Je, Min: Be, Never: $e, Open: fe, Refer: Re, Rename: De, Required: ce, Rest: Ce, Skip: de, Type: Te });
       }
-      function Be(e2, t2, n2, r3, l2, i2) {
+      function ze(e2, t2, n2, r3) {
+        return Le(n2 || S, e2, 4e3, t2, r3);
+      }
+      function Le(e2, t2, n2, r3, l2, i2) {
         var o2;
-        let s2 = { k: t2.key, n: t2.node, v: t2.val, p: ne(t2), w: e2, c: (null === (o2 = t2.check) || void 0 === o2 ? void 0 : o2.name) || "none", a: t2.checkargs || {}, m: n2, t: "", u: l2 || {} }, u2 = le((void 0 === t2.val ? b : Le(t2.val)).replace(/"/g, ""));
+        let s2 = { k: t2.key, n: t2.node, v: t2.val, p: ue(t2), w: e2, c: (null === (o2 = t2.check) || void 0 === o2 ? void 0 : o2.name) || "none", a: t2.checkargs || {}, m: n2, t: "", u: l2 || {} }, u2 = ae((void 0 === t2.val ? y : qe(t2.val)).replace(/"/g, ""));
         if (null == (r3 = r3 || t2.node.z) || "" === r3) {
-          let n3 = u2.startsWith("[") ? h : u2.startsWith("{") ? d : null == t2.val || f === typeof t2.val && isNaN(t2.val) ? "value" : typeof t2.val, r4 = u2.startsWith("[") || _2(t2.parents[t2.pI]) ? "index" : "property", o3 = "is", a2 = null == l2 ? void 0 : l2.k;
-          a2 = _2(a2) ? (r4 = 1 < a2.length ? (o3 = "are", "properties") : r4, a2.join(", ")) : a2, s2.t = "Validation failed for " + (0 < s2.p.length ? `${r4} "${s2.p}" with ` : "") + `${n3} "${u2}" because ` + (k === e2 ? x === t2.node.t ? `the ${n3} is not an instance of ${t2.node.u.n}` : `the ${n3} is not of type ${N === t2.node.t ? g : t2.node.t}` : p === e2 ? "" === t2.val ? "an empty string is not allowed" : `the ${n3} is required` : "closed" === e2 ? `the ${r4} "${a2}" ${o3} not allowed` : N === e2 ? "the string did not match " + t2.node.v : c === e2 ? "no value is allowed" : `check "${null == i2 ? e2 : i2}" failed`) + (s2.u.thrown ? " (threw: " + s2.u.thrown.message + ")" : ".");
-        } else
-          s2.t = r3.replace(/\$VALUE/g, u2).replace(/\$PATH/g, s2.p);
+          let n3 = u2.startsWith("[") ? p : u2.startsWith("{") ? v : null == t2.val || c === typeof t2.val && isNaN(t2.val) ? "value" : typeof t2.val, r4 = u2.startsWith("[") || K(t2.parents[t2.pI]) ? "index" : "property", o3 = "is", h2 = null == l2 ? void 0 : l2.k;
+          h2 = K(h2) ? (r4 = 1 < h2.length ? (o3 = "are", "properties") : r4, h2.join(", ")) : h2, s2.t = "Validation failed for " + (0 < s2.p.length ? `${r4} "${s2.p}" with ` : "") + `${n3} "${u2}" because ` + (x === e2 ? $ === t2.node.t ? `the ${n3} is not an instance of ${t2.node.u.n}` : `the ${n3} is not of type ${j === t2.node.t ? d : t2.node.t}` : f === e2 ? "" === t2.val ? "an empty string is not allowed" : `the ${n3} is required` : "closed" === e2 ? `the ${r4} "${h2}" ${o3} not allowed` : j === e2 ? "the string did not match " + t2.node.v : a === e2 ? "no value is allowed" : `check "${null == i2 ? e2 : i2}" failed`) + (s2.u.thrown ? " (threw: " + s2.u.thrown.message + ")" : ".");
+        } else s2.t = r3.replace(/\$VALUE/g, u2).replace(/\$PATH/g, s2.p);
         return s2;
       }
-      function Me(e2) {
-        return null != e2.s && "" !== e2.s ? e2.s : e2.r || void 0 === e2.v ? e2.t : "function" == typeof e2.v.constructor ? e2.v : e2.v.toString();
-      }
-      function Le(e2, t2, r3, l2) {
-        let i2;
-        l2 || !e2 || !e2.$ || n !== e2.$.gubu$ && true !== e2.$.gubu$ || (e2 = Me(e2));
-        try {
-          i2 = H(e2, (e3, r4) => {
-            var i3, s2;
-            if (t2 && (r4 = t2(e3, r4)), null != r4 && d === typeof r4 && r4.constructor && S !== r4.constructor.name && V !== r4.constructor.name)
-              r4 = "[object RegExp]" === o.call(r4) || v === typeof r4.toString ? r4.toString() : r4.constructor.name;
-            else if (v === typeof r4)
-              r4 = v === typeof Y[r4.name] && isNaN(+e3) ? void 0 : null != r4.name && "" !== r4.name ? r4.name : le(r4.toString().replace(/[ \t\r\n]+/g, " "));
-            else if ("bigint" == typeof r4)
-              r4 = String(r4.toString());
-            else {
-              if (Number.isNaN(r4))
-                return "NaN";
-              true === l2 || true !== (null === (i3 = null == r4 ? void 0 : r4.$) || void 0 === i3 ? void 0 : i3.gubu$) && n !== (null === (s2 = null == r4 ? void 0 : r4.$) || void 0 === s2 ? void 0 : s2.gubu$) || (r4 = Me(r4));
-            }
-            return r4;
-          }), i2 = String(i2);
-        } catch (s2) {
-          i2 = H(String(e2));
+      function _e(e2) {
+        var t2;
+        let n2 = e2.t;
+        const r3 = { number: O, string: N, boolean: V };
+        if (r3[n2]) {
+          let t3 = "";
+          return e2.r && (t3 += r3[n2]), "" === t3 && (t3 = JSON.stringify(e2.v)), t3 += e2.b.map((t4) => t4.s ? "." + t4.s(e2) : "").join(""), t3;
         }
-        return true === r3 && (i2 = i2.replace(/^"/, "").replace(/"$/, "")), i2;
+        if (m === n2) {
+          let n3 = "";
+          return e2.r && (n3 += "Required()"), "any" == (null === (t2 = e2.c) || void 0 === t2 ? void 0 : t2.t) && (n3 += ("" === n3 ? "" : ".") + "Open()"), n3 += e2.b.map((t3) => t3.s ? "." + t3.s(e2) : "").join(""), n3.startsWith(".") && (n3 = n3.slice(1)), "" === n3 && (n3 = "Any()"), n3;
+        }
+        if (S === n2) {
+          let t3 = "";
+          return t3 += e2.b.map((t4) => t4.s ? "." + t4.s(e2) : "").join(""), t3.startsWith(".") && (t3 = t3.slice(1)), t3;
+        }
+        if (v === n2) {
+          let t3 = {};
+          for (let n3 in e2.v) t3[n3] = _e(e2.v[n3]);
+          return void 0 !== e2.c && (r3[e2.c.t] ? t3.$$ = "Child(" + r3[e2.c.t] + ")" : "any" === e2.c.t ? t3.$$ = "Open()" : (t3.$$ = "Child($$child)", t3.$$child = _e(e2.c))), 0 < e2.b.length && (void 0 === t3.$$ && (t3.$$ = ""), t3.$$ += e2.b.map((t4) => t4.s ? "." + t4.s(e2) : "").join(""), t3.$$.startsWith(".") && (t3.$$ = t3.$$.slice(1))), t3.$$ && 1 === Object.keys(t3).length && t3.$$.startsWith("Child") ? t3.$$ : t3;
+        }
+        if ("list" === n2) {
+          let t3 = {}, n3 = 0, r4 = e2.u.list.map((e3) => _e(e3)).map((e3, r5) => v === typeof e3 ? (t3[r5 = "$$ref" + n3++] = e3, r5) : e3), l2 = (e2.b[0].n || e2.b[0].name) + "(" + r4.join(",") + ")";
+          return 0 === n3 ? l2 : __spreadValues({ $$: l2 }, t3);
+        }
+        if ("array" === n2) {
+          let t3 = [];
+          return void 0 !== e2.c ? t3[0] = _e(e2.c) : t3 = Object.keys(e2.v).reduce((t4, n3) => (t4[+n3] = e2.v[n3], t4), []).map((e3) => _e(e3)), t3;
+        }
       }
-      function Fe(e2) {
-        return null == e2 || d !== typeof e2 ? e2 : J(H(e2));
+      function qe(e2, t2, r3, l2) {
+        let o2;
+        if (!l2 && e2 && e2.$ && (n === e2.$.gubu$ || true === e2.$.gubu$)) return e2 = JSON.stringify(_e(e2)), r3 && (e2 = "string" == typeof e2 ? e2.replace(/\\/g, "").replace(/"/g, "") : ""), e2;
+        try {
+          o2 = Q(e2, (e3, o3) => {
+            var s2, u2, a2;
+            if (t2 && (o3 = t2(e3, o3)), null != o3 && v === typeof o3 && o3.constructor && A !== o3.constructor.name && R !== o3.constructor.name) o3 = "[object RegExp]" === i.call(o3) || h === typeof o3.toString ? o3.toString() : o3.constructor.name;
+            else if (l2 || n !== (null === (s2 = null == o3 ? void 0 : o3.$) || void 0 === s2 ? void 0 : s2.gubu$)) if (h === typeof o3) o3 = h === typeof le[o3.name] && isNaN(+e3) ? void 0 : null != o3.name && "" !== o3.name ? o3.name : ae(o3.toString().replace(/[ \t\r\n]+/g, " "));
+            else if ("bigint" == typeof o3) o3 = String(o3.toString());
+            else {
+              if (Number.isNaN(o3)) return "NaN";
+              true === l2 || true !== (null === (u2 = null == o3 ? void 0 : o3.$) || void 0 === u2 ? void 0 : u2.gubu$) && n !== (null === (a2 = null == o3 ? void 0 : o3.$) || void 0 === a2 ? void 0 : a2.gubu$) || (o3 = JSON.stringify(_e(o3)));
+            }
+            else "number" === o3.t || "string" === o3.t || "boolean" === o3.t ? o3 = o3.v : (o3 = _e(o3), o3 = JSON.stringify(o3), r3 && (o3 = "string" == typeof o3 ? o3.replace(/\\/g, "").replace(/"/g, "") : ""));
+            return o3;
+          }), o2 = String(o2);
+        } catch (s2) {
+          o2 = Q(String(e2));
+        }
+        return true === r3 && (o2 = o2.replace(/^"/, "").replace(/"$/, "")), o2;
       }
-      const Pe = (e2) => X(Object.assign(Object.assign({}, e2), { $: { gubu$: true } })), ze = { Above: Re, After: Ie, All: ye, Any: ue, Before: xe, Below: Ae, Check: ke, Child: Ee, Closed: je, Default: he, Define: Oe, Empty: ve, Exact: $e, Fault: ae, Func: pe, Ignore: fe, Key: ge, Len: De, Max: Ve, Min: Se, Never: de, One: me, Open: oe, Optional: se, Refer: we, Rename: Ne, Required: ie, Skip: ce, Some: be, Rest: Ce };
-      if (b !== typeof window)
-        for (let Je in ze)
-          W(ze[Je], u, { value: Je });
-      Object.assign(Y, Object.assign(Object.assign(Object.assign({ Gubu: Y }, ze), Object.entries(ze).reduce((e2, t2) => (e2["G" + t2[0]] = t2[1], e2), {})), { isShape: (e2) => e2 && r2 === e2.gubu, G$: Pe, buildize: Ge, makeErr: Te, stringify: Le, truncate: le, nodize: X, expr: ee, MakeArgu: We })), W(Y, u, { value: s });
-      const qe = Y;
-      t.Gubu = qe;
-      function We(e2) {
+      function He(e2) {
+        return null == e2 || v !== typeof e2 ? e2 : Z(Q(e2));
+      }
+      const Ue = (e2) => ne(__spreadProps(__spreadValues({}, e2), { $: { gubu$: true } })), Ke = { Above: Me, After: Ne, All: xe, Any: he, Before: je, Below: We, Check: Oe, Child: Ee, Closed: Ve, Default: me, Define: Ae, Empty: be, Exact: Se, Fault: ve, Func: ye, Ignore: ge, Key: ke, Len: Fe, Max: Je, Min: Be, Never: $e, One: we, Open: fe, Optional: pe, Refer: Re, Rename: De, Required: ce, Skip: de, Some: Ie, Rest: Ce, Type: Te };
+      if (y !== typeof window) for (let Ye in Ke) U(Ke[Ye], s, { value: Ye });
+      Object.assign(le, __spreadProps(__spreadValues(__spreadValues({ Gubu: le }, Ke), Object.entries(Ke).reduce((e2, t2) => (e2["G" + t2[0]] = t2[1], e2), {})), { isShape: (e2) => e2 && r2 === e2.gubu, G$: Ue, buildize: Pe, makeErr: ze, stringify: qe, truncate: ae, nodize: ne, expr: ie, build: oe, MakeArgu: Qe })), U(le, s, { value: o });
+      const Ze = le;
+      t.Gubu = Ze;
+      function Qe(e2) {
         return function(t2, n2, r3) {
           let l2 = false;
-          g === typeof t2 && (l2 = true, r3 = n2, n2 = t2);
-          const i2 = qe(r3 = r3 || n2, { prefix: e2 + (n2 = g === typeof n2 ? " (" + n2 + ")" : "") }), o2 = i2.node(), s2 = o2.k;
+          d === typeof t2 && (l2 = true, r3 = n2, n2 = t2);
+          const i2 = Ze(r3 = r3 || n2, { prefix: e2 + (n2 = d === typeof n2 ? " (" + n2 + ")" : "") }), o2 = i2.node(), s2 = o2.k;
           let u2 = t2, a2 = {}, c2 = 0, f2 = 0;
           for (; c2 < s2.length; c2++) {
             let e3 = o2.v[s2[c2]];
-            e3.p && (e3 = o2.v[s2[c2]] = ((t3) => Ie(function(e4, n3, r4) {
+            e3.p && (e3 = o2.v[s2[c2]] = ((t3) => Ne(function(e4, n3, r4) {
               if (0 < r4.curerr.length) {
                 f2++;
-                for (let e5 = s2.length - 1; e5 > t3; e5--)
-                  o2.v[s2[e5]].m.rest ? a2[s2[e5]].splice(o2.v[s2[e5]].m.rest_pos + t3 - e5, 0, a2[s2[e5 - 1]]) : (r4.vals[r4.pI + e5 - t3] = r4.vals[r4.pI + e5 - t3 - 1], a2[s2[e5]] = a2[s2[e5 - 1]]);
+                for (let e5 = s2.length - 1; e5 > t3; e5--) o2.v[s2[e5]].m.rest ? a2[s2[e5]].splice(o2.v[s2[e5]].m.rest_pos + t3 - e5, 0, a2[s2[e5 - 1]]) : (r4.vals[r4.pI + e5 - t3] = r4.vals[r4.pI + e5 - t3 - 1], a2[s2[e5]] = a2[s2[e5 - 1]]);
                 n3.uval = void 0, n3.done = false;
               }
               return true;
-            }, e3))(c2), e3.e = false), c2 !== s2.length - 1 || o2.v[s2[c2]].m.rest || (o2.v[s2[c2]] = Ie(function(e4, t3, n3) {
+            }, e3))(c2), e3.e = false), c2 !== s2.length - 1 || o2.v[s2[c2]].m.rest || (o2.v[s2[c2]] = Ne(function(e4, t3, n3) {
               return !(s2.length - f2 < u2.length && (0 === n3.curerr.length && (t3.err = `Too many arguments for type signature (was ${u2.length}, expected ${s2.length - f2})`), t3.fatal = true, 1));
             }, o2.v[s2[c2]]));
           }
@@ -1639,8 +1685,8 @@ var __async = (__this, __arguments, generator) => {
           } : i2(p2(t2));
         };
       }
-      const { Gubu: _e } = t;
-      return _e;
+      const { Gubu: Xe } = t;
+      return Xe;
     });
   })(gubu_min$2, gubu_min$2.exports);
   var gubu_minExports = gubu_min$2.exports;
@@ -1697,6 +1743,7 @@ var __async = (__this, __arguments, generator) => {
     ).prepare(function() {
       return __async(this, null, function* () {
         yield this.post("aim:app,prepare:app");
+        console.log("VxgBasicAdminPlugin prep done");
       });
     });
     function setPath(msg, meta) {
@@ -1755,23 +1802,19 @@ var __async = (__this, __arguments, generator) => {
     }
   }
   function _objectWithoutPropertiesLoose(r2, e) {
-    if (null == r2)
-      return {};
+    if (null == r2) return {};
     var t = {};
-    for (var n in r2)
-      if ({}.hasOwnProperty.call(r2, n)) {
-        if (e.indexOf(n) >= 0)
-          continue;
-        t[n] = r2[n];
-      }
+    for (var n in r2) if ({}.hasOwnProperty.call(r2, n)) {
+      if (e.indexOf(n) >= 0) continue;
+      t[n] = r2[n];
+    }
     return t;
   }
   function _extends$1() {
     return _extends$1 = Object.assign ? Object.assign.bind() : function(n) {
       for (var e = 1; e < arguments.length; e++) {
         var t = arguments[e];
-        for (var r2 in t)
-          ({}).hasOwnProperty.call(t, r2) && (n[r2] = t[r2]);
+        for (var r2 in t) ({}).hasOwnProperty.call(t, r2) && (n[r2] = t[r2]);
       }
       return n;
     }, _extends$1.apply(null, arguments);
@@ -1789,8 +1832,7 @@ var __async = (__this, __arguments, generator) => {
    */
   var hasRequiredReactIs_production_min$1;
   function requireReactIs_production_min$1() {
-    if (hasRequiredReactIs_production_min$1)
-      return reactIs_production_min$1;
+    if (hasRequiredReactIs_production_min$1) return reactIs_production_min$1;
     hasRequiredReactIs_production_min$1 = 1;
     "use strict";
     var b = "function" === typeof Symbol && Symbol.for, c = b ? Symbol.for("react.element") : 60103, d = b ? Symbol.for("react.portal") : 60106, e = b ? Symbol.for("react.fragment") : 60107, f = b ? Symbol.for("react.strict_mode") : 60108, g = b ? Symbol.for("react.profiler") : 60114, h = b ? Symbol.for("react.provider") : 60109, k = b ? Symbol.for("react.context") : 60110, l = b ? Symbol.for("react.async_mode") : 60111, m = b ? Symbol.for("react.concurrent_mode") : 60111, n = b ? Symbol.for("react.forward_ref") : 60112, p = b ? Symbol.for("react.suspense") : 60113, q = b ? Symbol.for("react.suspense_list") : 60120, r2 = b ? Symbol.for("react.memo") : 60115, t = b ? Symbol.for("react.lazy") : 60116, v = b ? Symbol.for("react.block") : 60121, w = b ? Symbol.for("react.fundamental") : 60117, x = b ? Symbol.for("react.responder") : 60118, y = b ? Symbol.for("react.scope") : 60119;
@@ -1894,8 +1936,7 @@ var __async = (__this, __arguments, generator) => {
    */
   var hasRequiredReactIs_development$1;
   function requireReactIs_development$1() {
-    if (hasRequiredReactIs_development$1)
-      return reactIs_development$1;
+    if (hasRequiredReactIs_development$1) return reactIs_development$1;
     hasRequiredReactIs_development$1 = 1;
     "use strict";
     if (process.env.NODE_ENV !== "production") {
@@ -2051,8 +2092,7 @@ var __async = (__this, __arguments, generator) => {
   var reactIs$2 = reactIs$3.exports;
   var hasRequiredReactIs;
   function requireReactIs() {
-    if (hasRequiredReactIs)
-      return reactIs$3.exports;
+    if (hasRequiredReactIs) return reactIs$3.exports;
     hasRequiredReactIs = 1;
     "use strict";
     if (process.env.NODE_ENV === "production") {
@@ -2070,8 +2110,7 @@ var __async = (__this, __arguments, generator) => {
   var objectAssign;
   var hasRequiredObjectAssign;
   function requireObjectAssign() {
-    if (hasRequiredObjectAssign)
-      return objectAssign;
+    if (hasRequiredObjectAssign) return objectAssign;
     hasRequiredObjectAssign = 1;
     "use strict";
     var getOwnPropertySymbols = Object.getOwnPropertySymbols;
@@ -2142,8 +2181,7 @@ var __async = (__this, __arguments, generator) => {
   var ReactPropTypesSecret_1;
   var hasRequiredReactPropTypesSecret;
   function requireReactPropTypesSecret() {
-    if (hasRequiredReactPropTypesSecret)
-      return ReactPropTypesSecret_1;
+    if (hasRequiredReactPropTypesSecret) return ReactPropTypesSecret_1;
     hasRequiredReactPropTypesSecret = 1;
     "use strict";
     var ReactPropTypesSecret = "SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED";
@@ -2153,8 +2191,7 @@ var __async = (__this, __arguments, generator) => {
   var has;
   var hasRequiredHas;
   function requireHas() {
-    if (hasRequiredHas)
-      return has;
+    if (hasRequiredHas) return has;
     hasRequiredHas = 1;
     has = Function.call.bind(Object.prototype.hasOwnProperty);
     return has;
@@ -2162,8 +2199,7 @@ var __async = (__this, __arguments, generator) => {
   var checkPropTypes_1;
   var hasRequiredCheckPropTypes;
   function requireCheckPropTypes() {
-    if (hasRequiredCheckPropTypes)
-      return checkPropTypes_1;
+    if (hasRequiredCheckPropTypes) return checkPropTypes_1;
     hasRequiredCheckPropTypes = 1;
     "use strict";
     var printWarning = function() {
@@ -2227,8 +2263,7 @@ var __async = (__this, __arguments, generator) => {
   var factoryWithTypeCheckers;
   var hasRequiredFactoryWithTypeCheckers;
   function requireFactoryWithTypeCheckers() {
-    if (hasRequiredFactoryWithTypeCheckers)
-      return factoryWithTypeCheckers;
+    if (hasRequiredFactoryWithTypeCheckers) return factoryWithTypeCheckers;
     hasRequiredFactoryWithTypeCheckers = 1;
     "use strict";
     var ReactIs2 = requireReactIs();
@@ -2672,8 +2707,7 @@ var __async = (__this, __arguments, generator) => {
   var factoryWithThrowingShims;
   var hasRequiredFactoryWithThrowingShims;
   function requireFactoryWithThrowingShims() {
-    if (hasRequiredFactoryWithThrowingShims)
-      return factoryWithThrowingShims;
+    if (hasRequiredFactoryWithThrowingShims) return factoryWithThrowingShims;
     hasRequiredFactoryWithThrowingShims = 1;
     "use strict";
     var ReactPropTypesSecret = requireReactPropTypesSecret();
@@ -2739,21 +2773,15 @@ var __async = (__this, __arguments, generator) => {
   const PropTypes = /* @__PURE__ */ getDefaultExportFromCjs(propTypesExports);
   function r(e) {
     var t, f, n = "";
-    if ("string" == typeof e || "number" == typeof e)
-      n += e;
-    else if ("object" == typeof e)
-      if (Array.isArray(e)) {
-        var o = e.length;
-        for (t = 0; t < o; t++)
-          e[t] && (f = r(e[t])) && (n && (n += " "), n += f);
-      } else
-        for (f in e)
-          e[f] && (n && (n += " "), n += f);
+    if ("string" == typeof e || "number" == typeof e) n += e;
+    else if ("object" == typeof e) if (Array.isArray(e)) {
+      var o = e.length;
+      for (t = 0; t < o; t++) e[t] && (f = r(e[t])) && (n && (n += " "), n += f);
+    } else for (f in e) e[f] && (n && (n += " "), n += f);
     return n;
   }
   function clsx() {
-    for (var e, t, f = 0, n = "", o = arguments.length; f < o; f++)
-      (e = arguments[f]) && (t = r(e)) && (n && (n += " "), n += t);
+    for (var e, t, f = 0, n = "", o = arguments.length; f < o; f++) (e = arguments[f]) && (t = r(e)) && (n && (n += " "), n += t);
     return n;
   }
   function composeClasses(slots, getUtilityClass, classes = void 0) {
@@ -2795,16 +2823,14 @@ var __async = (__this, __arguments, generator) => {
   var _extends_1 = _extends.exports;
   var hasRequired_extends;
   function require_extends() {
-    if (hasRequired_extends)
-      return _extends.exports;
+    if (hasRequired_extends) return _extends.exports;
     hasRequired_extends = 1;
     (function(module2) {
       function _extends3() {
         return module2.exports = _extends3 = Object.assign ? Object.assign.bind() : function(n) {
           for (var e = 1; e < arguments.length; e++) {
             var t = arguments[e];
-            for (var r2 in t)
-              ({}).hasOwnProperty.call(t, r2) && (n[r2] = t[r2]);
+            for (var r2 in t) ({}).hasOwnProperty.call(t, r2) && (n[r2] = t[r2]);
           }
           return n;
         }, module2.exports.__esModule = true, module2.exports["default"] = module2.exports, _extends3.apply(null, arguments);
@@ -2817,20 +2843,16 @@ var __async = (__this, __arguments, generator) => {
   var objectWithoutPropertiesLoose = objectWithoutPropertiesLoose$1.exports;
   var hasRequiredObjectWithoutPropertiesLoose;
   function requireObjectWithoutPropertiesLoose() {
-    if (hasRequiredObjectWithoutPropertiesLoose)
-      return objectWithoutPropertiesLoose$1.exports;
+    if (hasRequiredObjectWithoutPropertiesLoose) return objectWithoutPropertiesLoose$1.exports;
     hasRequiredObjectWithoutPropertiesLoose = 1;
     (function(module2) {
       function _objectWithoutPropertiesLoose3(r2, e) {
-        if (null == r2)
-          return {};
+        if (null == r2) return {};
         var t = {};
-        for (var n in r2)
-          if ({}.hasOwnProperty.call(r2, n)) {
-            if (e.indexOf(n) >= 0)
-              continue;
-            t[n] = r2[n];
-          }
+        for (var n in r2) if ({}.hasOwnProperty.call(r2, n)) {
+          if (e.indexOf(n) >= 0) continue;
+          t[n] = r2[n];
+        }
         return t;
       }
       module2.exports = _objectWithoutPropertiesLoose3, module2.exports.__esModule = true, module2.exports["default"] = module2.exports;
@@ -3185,8 +3207,7 @@ var __async = (__this, __arguments, generator) => {
             case 125:
               scanning = 0;
             case 59 + offset2:
-              if (ampersand == -1)
-                characters2 = replace(characters2, /\f/g, "");
+              if (ampersand == -1) characters2 = replace(characters2, /\f/g, "");
               if (property > 0 && strlen(characters2) - length2)
                 append(property > 32 ? declaration(characters2 + ";", rule, parent, length2 - 1) : declaration(replace(characters2, " ", "") + ";", rule, parent, length2 - 2), declarations);
               break;
@@ -3330,8 +3351,7 @@ var __async = (__this, __arguments, generator) => {
       case 4968:
         return replace(replace(value, /(.+:)(flex-)?(.*)/, WEBKIT + "box-pack:$3" + MS + "flex-pack:$3"), /s.+-b[^;]+/, "justify") + WEBKIT + value + value;
       case 4200:
-        if (!match(value, /flex-|baseline/))
-          return MS + "grid-column-align" + substr(value, length2) + value;
+        if (!match(value, /flex-|baseline/)) return MS + "grid-column-align" + substr(value, length2) + value;
         break;
       case 2592:
       case 3360:
@@ -3413,8 +3433,7 @@ var __async = (__this, __arguments, generator) => {
   function stringify(element, index2, children, callback) {
     switch (element.type) {
       case LAYER:
-        if (element.children.length)
-          break;
+        if (element.children.length) break;
       case IMPORT:
       case DECLARATION:
         return element.return = element.return || element.value;
@@ -3521,8 +3540,7 @@ var __async = (__this, __arguments, generator) => {
   function memoize$1(fn) {
     var cache2 = /* @__PURE__ */ Object.create(null);
     return function(arg) {
-      if (cache2[arg] === void 0)
-        cache2[arg] = fn(arg);
+      if (cache2[arg] === void 0) cache2[arg] = fn(arg);
       return cache2[arg];
     };
   }
@@ -3582,8 +3600,7 @@ var __async = (__this, __arguments, generator) => {
     var isImplicitRule = element.column === parent.column && element.line === parent.line;
     while (parent.type !== "rule") {
       parent = parent.parent;
-      if (!parent)
-        return;
+      if (!parent) return;
     }
     if (element.props.length === 1 && value.charCodeAt(0) !== 58 && !fixedElements.get(parent)) {
       return;
@@ -3620,8 +3637,7 @@ var __async = (__this, __arguments, generator) => {
   };
   var createUnsafeSelectorsAlarm = function createUnsafeSelectorsAlarm2(cache2) {
     return function(element, index2, children) {
-      if (element.type !== "rule" || cache2.compat)
-        return;
+      if (element.type !== "rule" || cache2.compat) return;
       var unsafePseudoClasses = element.value.match(/(:first|:nth|:nth-last)-child/g);
       if (unsafePseudoClasses) {
         var isNested = !!element.parent;
@@ -3756,20 +3772,17 @@ var __async = (__this, __arguments, generator) => {
       case 5789:
       case 5021:
       case 4765:
-        if (strlen(value) - 1 - length2 > 6)
-          switch (charat(value, length2 + 1)) {
-            case 109:
-              if (charat(value, length2 + 4) !== 45)
-                break;
-            case 102:
-              return replace(value, /(.+:)(.+)-([^]+)/, "$1" + WEBKIT + "$2-$3$1" + MOZ + (charat(value, length2 + 3) == 108 ? "$3" : "$2-$3")) + value;
-            case 115:
-              return ~indexof(value, "stretch") ? prefix(replace(value, "stretch", "fill-available"), length2) + value : value;
-          }
+        if (strlen(value) - 1 - length2 > 6) switch (charat(value, length2 + 1)) {
+          case 109:
+            if (charat(value, length2 + 4) !== 45) break;
+          case 102:
+            return replace(value, /(.+:)(.+)-([^]+)/, "$1" + WEBKIT + "$2-$3$1" + MOZ + (charat(value, length2 + 3) == 108 ? "$3" : "$2-$3")) + value;
+          case 115:
+            return ~indexof(value, "stretch") ? prefix(replace(value, "stretch", "fill-available"), length2) + value : value;
+        }
         break;
       case 4949:
-        if (charat(value, length2 + 1) !== 115)
-          break;
+        if (charat(value, length2 + 1) !== 115) break;
       case 6444:
         switch (charat(value, strlen(value) - 3 - (~indexof(value, "!important") && 10))) {
           case 107:
@@ -3793,36 +3806,34 @@ var __async = (__this, __arguments, generator) => {
   }
   var prefixer = function prefixer2(element, index2, children, callback) {
     if (element.length > -1) {
-      if (!element["return"])
-        switch (element.type) {
-          case DECLARATION:
-            element["return"] = prefix(element.value, element.length);
-            break;
-          case KEYFRAMES:
-            return serialize([copy(element, {
-              value: replace(element.value, "@", "@" + WEBKIT)
-            })], callback);
-          case RULESET:
-            if (element.length)
-              return combine(element.props, function(value) {
-                switch (match(value, /(::plac\w+|:read-\w+)/)) {
-                  case ":read-only":
-                  case ":read-write":
-                    return serialize([copy(element, {
-                      props: [replace(value, /:(read-\w+)/, ":" + MOZ + "$1")]
-                    })], callback);
-                  case "::placeholder":
-                    return serialize([copy(element, {
-                      props: [replace(value, /:(plac\w+)/, ":" + WEBKIT + "input-$1")]
-                    }), copy(element, {
-                      props: [replace(value, /:(plac\w+)/, ":" + MOZ + "$1")]
-                    }), copy(element, {
-                      props: [replace(value, /:(plac\w+)/, MS + "input-$1")]
-                    })], callback);
-                }
-                return "";
-              });
-        }
+      if (!element["return"]) switch (element.type) {
+        case DECLARATION:
+          element["return"] = prefix(element.value, element.length);
+          break;
+        case KEYFRAMES:
+          return serialize([copy(element, {
+            value: replace(element.value, "@", "@" + WEBKIT)
+          })], callback);
+        case RULESET:
+          if (element.length) return combine(element.props, function(value) {
+            switch (match(value, /(::plac\w+|:read-\w+)/)) {
+              case ":read-only":
+              case ":read-write":
+                return serialize([copy(element, {
+                  props: [replace(value, /:(read-\w+)/, ":" + MOZ + "$1")]
+                })], callback);
+              case "::placeholder":
+                return serialize([copy(element, {
+                  props: [replace(value, /:(plac\w+)/, ":" + WEBKIT + "input-$1")]
+                }), copy(element, {
+                  props: [replace(value, /:(plac\w+)/, ":" + MOZ + "$1")]
+                }), copy(element, {
+                  props: [replace(value, /:(plac\w+)/, MS + "input-$1")]
+                })], callback);
+            }
+            return "";
+          });
+      }
     }
   };
   var defaultStylisPlugins = [prefixer];
@@ -4037,10 +4048,8 @@ var __async = (__this, __arguments, generator) => {
     const output = options.clone ? _extends$1({}, target) : target;
     if (isPlainObject$1(target) && isPlainObject$1(source)) {
       Object.keys(source).forEach((key) => {
-        if (key === "__proto__") {
-          return;
-        }
-        if (isPlainObject$1(source[key]) && key in target && isPlainObject$1(target[key])) {
+        if (isPlainObject$1(source[key]) && // Avoid prototype pollution
+        Object.prototype.hasOwnProperty.call(target, key) && isPlainObject$1(target[key])) {
           output[key] = deepmerge$1(target[key], source[key], options);
         } else if (options.clone) {
           output[key] = isPlainObject$1(source[key]) ? deepClone(source[key]) : source[key];
@@ -4092,8 +4101,7 @@ var __async = (__this, __arguments, generator) => {
    */
   var hasRequiredReactIs_production_min;
   function requireReactIs_production_min() {
-    if (hasRequiredReactIs_production_min)
-      return reactIs_production_min;
+    if (hasRequiredReactIs_production_min) return reactIs_production_min;
     hasRequiredReactIs_production_min = 1;
     "use strict";
     var b = Symbol.for("react.element"), c = Symbol.for("react.portal"), d = Symbol.for("react.fragment"), e = Symbol.for("react.strict_mode"), f = Symbol.for("react.profiler"), g = Symbol.for("react.provider"), h = Symbol.for("react.context"), k = Symbol.for("react.server_context"), l = Symbol.for("react.forward_ref"), m = Symbol.for("react.suspense"), n = Symbol.for("react.suspense_list"), p = Symbol.for("react.memo"), q = Symbol.for("react.lazy"), t = Symbol.for("react.offscreen"), u;
@@ -4200,8 +4208,7 @@ var __async = (__this, __arguments, generator) => {
    */
   var hasRequiredReactIs_development;
   function requireReactIs_development() {
-    if (hasRequiredReactIs_development)
-      return reactIs_development;
+    if (hasRequiredReactIs_development) return reactIs_development;
     hasRequiredReactIs_development = 1;
     "use strict";
     if (process.env.NODE_ENV !== "production") {
@@ -4431,7 +4438,7 @@ var __async = (__this, __arguments, generator) => {
     getFunctionName
   }, Symbol.toStringTag, { value: "Module" }));
   const require$$6 = /* @__PURE__ */ getAugmentedNamespace(getDisplayName);
-  const _excluded$2J = ["values", "unit", "step"];
+  const _excluded$2I = ["values", "unit", "step"];
   const breakpointKeys = ["xs", "sm", "md", "lg", "xl"];
   const sortBreakpointsValues = (values2) => {
     const breakpointsAsArray = Object.keys(values2).map((key) => ({
@@ -4463,7 +4470,7 @@ var __async = (__this, __arguments, generator) => {
       },
       unit = "px",
       step = 5
-    } = breakpoints2, other = _objectWithoutPropertiesLoose(breakpoints2, _excluded$2J);
+    } = breakpoints2, other = _objectWithoutPropertiesLoose(breakpoints2, _excluded$2I);
     const sortedValues = sortBreakpointsValues(values2);
     const keys = Object.keys(sortedValues);
     function up(key) {
@@ -5505,14 +5512,14 @@ var __async = (__this, __arguments, generator) => {
     }
     return {};
   }
-  const _excluded$2I = ["breakpoints", "palette", "spacing", "shape"];
+  const _excluded$2H = ["breakpoints", "palette", "spacing", "shape"];
   function createTheme$2(options = {}, ...args) {
     const {
       breakpoints: breakpointsInput = {},
       palette: paletteInput = {},
       spacing: spacingInput,
       shape: shapeInput = {}
-    } = options, other = _objectWithoutPropertiesLoose(options, _excluded$2I);
+    } = options, other = _objectWithoutPropertiesLoose(options, _excluded$2H);
     const breakpoints2 = createBreakpoints(breakpointsInput);
     const spacing2 = createSpacing(spacingInput);
     let muiTheme = deepmerge$1({
@@ -5544,7 +5551,7 @@ var __async = (__this, __arguments, generator) => {
     unstable_applyStyles: applyStyles$2
   }, Symbol.toStringTag, { value: "Module" }));
   const require$$7 = /* @__PURE__ */ getAugmentedNamespace(createTheme$1);
-  const _excluded$2H = ["sx"];
+  const _excluded$2G = ["sx"];
   const splitProps = (props) => {
     var _props$theme$unstable, _props$theme;
     const result = {
@@ -5564,7 +5571,7 @@ var __async = (__this, __arguments, generator) => {
   function extendSxProp(props) {
     const {
       sx: inSx
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$2H);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$2G);
     const {
       systemProps,
       otherProps
@@ -5611,29 +5618,24 @@ var __async = (__this, __arguments, generator) => {
   var _getDisplayName = _interopRequireDefault$z(require$$6);
   var _createTheme = _interopRequireDefault$z(require$$7);
   var _styleFunctionSx = _interopRequireDefault$z(require$$8);
-  const _excluded$2G = ["ownerState"], _excluded2$i = ["variants"], _excluded3$7 = ["name", "slot", "skipVariantsResolver", "skipSx", "overridesResolver"];
+  const _excluded$2F = ["ownerState"], _excluded2$i = ["variants"], _excluded3$7 = ["name", "slot", "skipVariantsResolver", "skipSx", "overridesResolver"];
   function _getRequireWildcardCache$1(e) {
-    if ("function" != typeof WeakMap)
-      return null;
+    if ("function" != typeof WeakMap) return null;
     var r2 = /* @__PURE__ */ new WeakMap(), t = /* @__PURE__ */ new WeakMap();
     return (_getRequireWildcardCache$1 = function(e2) {
       return e2 ? t : r2;
     })(e);
   }
   function _interopRequireWildcard$1(e, r2) {
-    if (!r2 && e && e.__esModule)
-      return e;
-    if (null === e || "object" != typeof e && "function" != typeof e)
-      return { default: e };
+    if (!r2 && e && e.__esModule) return e;
+    if (null === e || "object" != typeof e && "function" != typeof e) return { default: e };
     var t = _getRequireWildcardCache$1(r2);
-    if (t && t.has(e))
-      return t.get(e);
+    if (t && t.has(e)) return t.get(e);
     var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor;
-    for (var u in e)
-      if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) {
-        var i = a ? Object.getOwnPropertyDescriptor(e, u) : null;
-        i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u];
-      }
+    for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) {
+      var i = a ? Object.getOwnPropertyDescriptor(e, u) : null;
+      i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u];
+    }
     return n.default = e, t && t.set(e, n), n;
   }
   function isEmpty$3(obj) {
@@ -5671,7 +5673,7 @@ var __async = (__this, __arguments, generator) => {
   function processStyleArg$1(callableStyle, _ref) {
     let {
       ownerState
-    } = _ref, props = (0, _objectWithoutPropertiesLoose2.default)(_ref, _excluded$2G);
+    } = _ref, props = (0, _objectWithoutPropertiesLoose2.default)(_ref, _excluded$2F);
     const resolvedStylesArg = typeof callableStyle === "function" ? callableStyle((0, _extends2.default)({
       ownerState
     }, props)) : callableStyle;
@@ -6280,7 +6282,7 @@ The following color spaces are supported: srgb, display-p3, a98-rgb, prophoto-rg
     A400: "#00e676",
     A700: "#00c853"
   };
-  const _excluded$2F = ["mode", "contrastThreshold", "tonalOffset"];
+  const _excluded$2E = ["mode", "contrastThreshold", "tonalOffset"];
   const light = {
     // The colors used to style the text.
     text: {
@@ -6448,7 +6450,7 @@ The following color spaces are supported: srgb, display-p3, a98-rgb, prophoto-rg
       mode = "light",
       contrastThreshold = 3,
       tonalOffset = 0.2
-    } = palette2, other = _objectWithoutPropertiesLoose(palette2, _excluded$2F);
+    } = palette2, other = _objectWithoutPropertiesLoose(palette2, _excluded$2E);
     const primary = palette2.primary || getDefaultPrimary(mode);
     const secondary = palette2.secondary || getDefaultSecondary(mode);
     const error = palette2.error || getDefaultError(mode);
@@ -6567,7 +6569,7 @@ const theme2 = createTheme({ palette: {
     }, modes2[mode]), other);
     return paletteOutput;
   }
-  const _excluded$2E = ["fontFamily", "fontSize", "fontWeightLight", "fontWeightRegular", "fontWeightMedium", "fontWeightBold", "htmlFontSize", "allVariants", "pxToRem"];
+  const _excluded$2D = ["fontFamily", "fontSize", "fontWeightLight", "fontWeightRegular", "fontWeightMedium", "fontWeightBold", "htmlFontSize", "allVariants", "pxToRem"];
   function round$4(value) {
     return Math.round(value * 1e5) / 1e5;
   }
@@ -6591,7 +6593,7 @@ const theme2 = createTheme({ palette: {
       // Apply the CSS properties to all the variants.
       allVariants,
       pxToRem: pxToRem2
-    } = _ref, other = _objectWithoutPropertiesLoose(_ref, _excluded$2E);
+    } = _ref, other = _objectWithoutPropertiesLoose(_ref, _excluded$2D);
     if (process.env.NODE_ENV !== "production") {
       if (typeof fontSize2 !== "number") {
         console.error("MUI: `fontSize` is required to be a number.");
@@ -6655,7 +6657,7 @@ const theme2 = createTheme({ palette: {
     return [`${px[0]}px ${px[1]}px ${px[2]}px ${px[3]}px rgba(0,0,0,${shadowKeyUmbraOpacity})`, `${px[4]}px ${px[5]}px ${px[6]}px ${px[7]}px rgba(0,0,0,${shadowKeyPenumbraOpacity})`, `${px[8]}px ${px[9]}px ${px[10]}px ${px[11]}px rgba(0,0,0,${shadowAmbientShadowOpacity})`].join(",");
   }
   const shadows = ["none", createShadow(0, 2, 1, -1, 0, 1, 1, 0, 0, 1, 3, 0), createShadow(0, 3, 1, -2, 0, 2, 2, 0, 0, 1, 5, 0), createShadow(0, 3, 3, -2, 0, 3, 4, 0, 0, 1, 8, 0), createShadow(0, 2, 4, -1, 0, 4, 5, 0, 0, 1, 10, 0), createShadow(0, 3, 5, -1, 0, 5, 8, 0, 0, 1, 14, 0), createShadow(0, 3, 5, -1, 0, 6, 10, 0, 0, 1, 18, 0), createShadow(0, 4, 5, -2, 0, 7, 10, 1, 0, 2, 16, 1), createShadow(0, 5, 5, -3, 0, 8, 10, 1, 0, 3, 14, 2), createShadow(0, 5, 6, -3, 0, 9, 12, 1, 0, 3, 16, 2), createShadow(0, 6, 6, -3, 0, 10, 14, 1, 0, 4, 18, 3), createShadow(0, 6, 7, -4, 0, 11, 15, 1, 0, 4, 20, 3), createShadow(0, 7, 8, -4, 0, 12, 17, 2, 0, 5, 22, 4), createShadow(0, 7, 8, -4, 0, 13, 19, 2, 0, 5, 24, 4), createShadow(0, 7, 9, -4, 0, 14, 21, 2, 0, 5, 26, 4), createShadow(0, 8, 9, -5, 0, 15, 22, 2, 0, 6, 28, 5), createShadow(0, 8, 10, -5, 0, 16, 24, 2, 0, 6, 30, 5), createShadow(0, 8, 11, -5, 0, 17, 26, 2, 0, 6, 32, 5), createShadow(0, 9, 11, -5, 0, 18, 28, 2, 0, 7, 34, 6), createShadow(0, 9, 12, -6, 0, 19, 29, 2, 0, 7, 36, 6), createShadow(0, 10, 13, -6, 0, 20, 31, 3, 0, 8, 38, 7), createShadow(0, 10, 13, -6, 0, 21, 33, 3, 0, 8, 40, 7), createShadow(0, 10, 14, -6, 0, 22, 35, 3, 0, 8, 42, 7), createShadow(0, 11, 14, -7, 0, 23, 36, 3, 0, 9, 44, 8), createShadow(0, 11, 15, -7, 0, 24, 38, 3, 0, 9, 46, 8)];
-  const _excluded$2D = ["duration", "easing", "delay"];
+  const _excluded$2C = ["duration", "easing", "delay"];
   const easing = {
     // This is the most common easing curve.
     easeInOut: "cubic-bezier(0.4, 0, 0.2, 1)",
@@ -6698,7 +6700,7 @@ const theme2 = createTheme({ palette: {
         duration: durationOption = mergedDuration.standard,
         easing: easingOption = mergedEasing.easeInOut,
         delay = 0
-      } = options, other = _objectWithoutPropertiesLoose(options, _excluded$2D);
+      } = options, other = _objectWithoutPropertiesLoose(options, _excluded$2C);
       if (process.env.NODE_ENV !== "production") {
         const isString2 = (value) => typeof value === "string";
         const isNumber2 = (value) => !isNaN(parseFloat(value));
@@ -6741,14 +6743,14 @@ const theme2 = createTheme({ palette: {
     snackbar: 1400,
     tooltip: 1500
   };
-  const _excluded$2C = ["breakpoints", "mixins", "spacing", "palette", "transitions", "typography", "shape"];
+  const _excluded$2B = ["breakpoints", "mixins", "spacing", "palette", "transitions", "typography", "shape"];
   function createTheme(options = {}, ...args) {
     const {
       mixins: mixinsInput = {},
       palette: paletteInput = {},
       transitions: transitionsInput = {},
       typography: typographyInput = {}
-    } = options, other = _objectWithoutPropertiesLoose(options, _excluded$2C);
+    } = options, other = _objectWithoutPropertiesLoose(options, _excluded$2B);
     if (options.vars) {
       throw new Error(process.env.NODE_ENV !== "production" ? `MUI: \`vars\` is a private field used for CSS variables support.
 Please use another name.` : formatMuiErrorMessage$1(18));
@@ -6849,60 +6851,82 @@ Please use another name.` : formatMuiErrorMessage$1(18));
     });
     return output;
   }
-  function getThemeProps(params) {
+  "use client";
+  const PropsContext = /* @__PURE__ */ React__namespace.createContext(void 0);
+  function DefaultPropsProvider$1({
+    value,
+    children
+  }) {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(PropsContext.Provider, {
+      value,
+      children
+    });
+  }
+  process.env.NODE_ENV !== "production" ? DefaultPropsProvider$1.propTypes = {
+    // ┌────────────────────────────── Warning ──────────────────────────────┐
+    // │ These PropTypes are generated from the TypeScript type definitions. │
+    // │ To update them, edit the TypeScript types and run `pnpm proptypes`. │
+    // └─────────────────────────────────────────────────────────────────────┘
+    /**
+     * @ignore
+     */
+    children: PropTypes.node,
+    /**
+     * @ignore
+     */
+    value: PropTypes.object
+  } : void 0;
+  function getThemeProps$1(params) {
     const {
       theme,
       name,
       props
     } = params;
-    if (!theme || !theme.components || !theme.components[name] || !theme.components[name].defaultProps) {
+    if (!theme || !theme.components || !theme.components[name]) {
       return props;
     }
-    return resolveProps(theme.components[name].defaultProps, props);
-  }
-  "use client";
-  function isObjectEmpty$1(obj) {
-    return Object.keys(obj).length === 0;
-  }
-  function useTheme$4(defaultTheme2 = null) {
-    const contextTheme = React__namespace.useContext(react.ThemeContext);
-    return !contextTheme || isObjectEmpty$1(contextTheme) ? defaultTheme2 : contextTheme;
-  }
-  "use client";
-  const systemDefaultTheme$1 = createTheme$2();
-  function useTheme$3(defaultTheme2 = systemDefaultTheme$1) {
-    return useTheme$4(defaultTheme2);
-  }
-  "use client";
-  function useThemeProps$7({
-    props,
-    name,
-    defaultTheme: defaultTheme2,
-    themeId
-  }) {
-    let theme = useTheme$3(defaultTheme2);
-    if (themeId) {
-      theme = theme[themeId] || theme;
+    const config2 = theme.components[name];
+    if (config2.defaultProps) {
+      return resolveProps(config2.defaultProps, props);
     }
-    const mergedProps = getThemeProps({
-      theme,
-      name,
-      props
-    });
-    return mergedProps;
+    if (!config2.styleOverrides && !config2.variants) {
+      return resolveProps(config2, props);
+    }
+    return props;
   }
-  "use client";
-  "use client";
-  function useThemeProps$6({
+  function useDefaultProps$1({
     props,
     name
   }) {
-    return useThemeProps$7({
+    const ctx = React__namespace.useContext(PropsContext);
+    return getThemeProps$1({
       props,
       name,
-      defaultTheme: defaultTheme$5,
-      themeId: THEME_ID
+      theme: {
+        components: ctx
+      }
     });
+  }
+  "use client";
+  function DefaultPropsProvider(props) {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(DefaultPropsProvider$1, _extends$1({}, props));
+  }
+  process.env.NODE_ENV !== "production" ? DefaultPropsProvider.propTypes = {
+    // ┌────────────────────────────── Warning ──────────────────────────────┐
+    // │ These PropTypes are generated from the TypeScript type definitions. │
+    // │ To update them, edit the TypeScript types and run `pnpm proptypes`. │
+    // └─────────────────────────────────────────────────────────────────────┘
+    /**
+     * @ignore
+     */
+    children: PropTypes.node,
+    /**
+     * @ignore
+     */
+    value: PropTypes.object.isRequired
+  } : void 0;
+  function useDefaultProps(params) {
+    return useDefaultProps$1(params);
   }
   function getTypeByValue(value) {
     const valueType = typeof value;
@@ -6969,6 +6993,19 @@ Please use another name.` : formatMuiErrorMessage$1(18));
     }
     return (alphaValue / 100).toFixed(2);
   };
+  "use client";
+  function isObjectEmpty$1(obj) {
+    return Object.keys(obj).length === 0;
+  }
+  function useTheme$4(defaultTheme2 = null) {
+    const contextTheme = React__namespace.useContext(react.ThemeContext);
+    return !contextTheme || isObjectEmpty$1(contextTheme) ? defaultTheme2 : contextTheme;
+  }
+  "use client";
+  const systemDefaultTheme$1 = createTheme$2();
+  function useTheme$3(defaultTheme2 = systemDefaultTheme$1) {
+    return useTheme$4(defaultTheme2);
+  }
   "use client";
   function GlobalStyles$1({
     styles: styles2,
@@ -7164,7 +7201,7 @@ Please use another name.` : formatMuiErrorMessage$1(18));
     };
   }
   "use client";
-  const _excluded$2B = ["className", "component"];
+  const _excluded$2A = ["className", "component"];
   function createBox(options = {}) {
     const {
       themeId,
@@ -7180,7 +7217,7 @@ Please use another name.` : formatMuiErrorMessage$1(18));
       const _extendSxProp = extendSxProp(inProps), {
         className,
         component = "div"
-      } = _extendSxProp, other = _objectWithoutPropertiesLoose(_extendSxProp, _excluded$2B);
+      } = _extendSxProp, other = _objectWithoutPropertiesLoose(_extendSxProp, _excluded$2A);
       return /* @__PURE__ */ jsxRuntimeExports.jsx(BoxRoot, _extends$1({
         as: component,
         ref,
@@ -7223,7 +7260,7 @@ Please use another name.` : formatMuiErrorMessage$1(18));
     sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object])
   } : void 0;
   "use client";
-  const _excluded$2A = ["ownerState"], _excluded2$h = ["variants"], _excluded3$6 = ["name", "slot", "skipVariantsResolver", "skipSx", "overridesResolver"];
+  const _excluded$2z = ["ownerState"], _excluded2$h = ["variants"], _excluded3$6 = ["name", "slot", "skipVariantsResolver", "skipSx", "overridesResolver"];
   function isEmpty$2(obj) {
     return Object.keys(obj).length === 0;
   }
@@ -7259,7 +7296,7 @@ Please use another name.` : formatMuiErrorMessage$1(18));
   function processStyleArg(callableStyle, _ref) {
     let {
       ownerState
-    } = _ref, props = _objectWithoutPropertiesLoose(_ref, _excluded$2A);
+    } = _ref, props = _objectWithoutPropertiesLoose(_ref, _excluded$2z);
     const resolvedStylesArg = typeof callableStyle === "function" ? callableStyle(_extends$1({
       ownerState
     }, props)) : callableStyle;
@@ -7431,6 +7468,36 @@ Please use another name.` : formatMuiErrorMessage$1(18));
     };
   }
   const styled = createStyled();
+  function getThemeProps(params) {
+    const {
+      theme,
+      name,
+      props
+    } = params;
+    if (!theme || !theme.components || !theme.components[name] || !theme.components[name].defaultProps) {
+      return props;
+    }
+    return resolveProps(theme.components[name].defaultProps, props);
+  }
+  "use client";
+  function useThemeProps$1({
+    props,
+    name,
+    defaultTheme: defaultTheme2,
+    themeId
+  }) {
+    let theme = useTheme$3(defaultTheme2);
+    if (themeId) {
+      theme = theme[themeId] || theme;
+    }
+    const mergedProps = getThemeProps({
+      theme,
+      name,
+      props
+    });
+    return mergedProps;
+  }
+  "use client";
   "use client";
   const useEnhancedEffect = typeof window !== "undefined" ? React__namespace.useLayoutEffect : React__namespace.useEffect;
   "use client";
@@ -7979,7 +8046,7 @@ The following color spaces are supported: srgb, display-p3, a98-rgb, prophoto-rg
         current: defaultValue
       } = React__namespace.useRef(defaultProp);
       React__namespace.useEffect(() => {
-        if (!isControlled && defaultValue !== defaultProp) {
+        if (!isControlled && !Object.is(defaultValue, defaultProp)) {
           console.error([`MUI: A component is changing the default ${state} state of an uncontrolled ${name} after being initialized. To suppress this warning opt to use a controlled ${name}.`].join("\n"));
         }
       }, [JSON.stringify(defaultProp)]);
@@ -8241,7 +8308,7 @@ The following color spaces are supported: srgb, display-p3, a98-rgb, prophoto-rg
     width: "1px"
   };
   /**
-   * @mui/utils v5.15.14
+   * @mui/utils v5.16.0
    *
    * @license MIT
    * This source code is licensed under the MIT license found in the
@@ -8309,18 +8376,18 @@ The following color spaces are supported: srgb, display-p3, a98-rgb, prophoto-rg
     process.env.NODE_ENV !== "production" ? ThemeProvider$2.propTypes = exactProp(ThemeProvider$2.propTypes) : void 0;
   }
   /**
-   * @mui/private-theming v5.15.14
+   * @mui/private-theming v5.16.0
    *
    * @license MIT
    * This source code is licensed under the MIT license found in the
    * LICENSE file in the root directory of this source tree.
    */
-  const _excluded$2z = ["value"];
+  const _excluded$2y = ["value"];
   const RtlContext = /* @__PURE__ */ React__namespace.createContext();
   function RtlProvider(_ref) {
     let {
       value
-    } = _ref, props = _objectWithoutPropertiesLoose(_ref, _excluded$2z);
+    } = _ref, props = _objectWithoutPropertiesLoose(_ref, _excluded$2y);
     return /* @__PURE__ */ jsxRuntimeExports.jsx(RtlContext.Provider, _extends$1({
       value: value != null ? value : true
     }, props));
@@ -8375,7 +8442,10 @@ The following color spaces are supported: srgb, display-p3, a98-rgb, prophoto-rg
         value: engineTheme,
         children: /* @__PURE__ */ jsxRuntimeExports.jsx(RtlProvider, {
           value: rtlValue,
-          children
+          children: /* @__PURE__ */ jsxRuntimeExports.jsx(DefaultPropsProvider$1, {
+            value: engineTheme == null ? void 0 : engineTheme.components,
+            children
+          })
         })
       })
     });
@@ -8405,7 +8475,7 @@ The following color spaces are supported: srgb, display-p3, a98-rgb, prophoto-rg
   const DEFAULT_MODE_STORAGE_KEY = "mode";
   const DEFAULT_COLOR_SCHEME_STORAGE_KEY = "color-scheme";
   const DEFAULT_ATTRIBUTE = "data-color-scheme";
-  function getInitColorSchemeScript$1(options) {
+  function InitColorSchemeScript$1(options) {
     const {
       defaultMode = "light",
       defaultLightColorScheme = "light",
@@ -8413,10 +8483,12 @@ The following color spaces are supported: srgb, display-p3, a98-rgb, prophoto-rg
       modeStorageKey = DEFAULT_MODE_STORAGE_KEY,
       colorSchemeStorageKey = DEFAULT_COLOR_SCHEME_STORAGE_KEY,
       attribute = DEFAULT_ATTRIBUTE,
-      colorSchemeNode = "document.documentElement"
+      colorSchemeNode = "document.documentElement",
+      nonce
     } = options || {};
     return /* @__PURE__ */ jsxRuntimeExports.jsx("script", {
-      // eslint-disable-next-line react/no-danger
+      suppressHydrationWarning: true,
+      nonce: typeof window === "undefined" ? nonce : "",
       dangerouslySetInnerHTML: {
         __html: `(function() {
 try {
@@ -8650,7 +8722,7 @@ try {
       setColorScheme
     });
   }
-  const _excluded$2y = ["colorSchemes", "components", "generateCssVars", "cssVarPrefix"];
+  const _excluded$2x = ["colorSchemes", "components", "generateCssVars", "cssVarPrefix"];
   const DISABLE_CSS_TRANSITION = "*{-webkit-transition:none!important;-moz-transition:none!important;-o-transition:none!important;-ms-transition:none!important;transition:none!important}";
   function createCssVarsProvider(options) {
     const {
@@ -8715,7 +8787,7 @@ try {
           css: {}
         }),
         cssVarPrefix
-      } = _ref, restThemeProp = _objectWithoutPropertiesLoose(_ref, _excluded$2y);
+      } = _ref, restThemeProp = _objectWithoutPropertiesLoose(_ref, _excluded$2x);
       const allColorSchemes = Object.keys(colorSchemes);
       const defaultLightColorScheme2 = typeof defaultColorScheme === "string" ? defaultColorScheme : defaultColorScheme.light;
       const defaultDarkColorScheme2 = typeof defaultColorScheme === "string" ? defaultColorScheme : defaultColorScheme.dark;
@@ -8943,7 +9015,7 @@ try {
     } : void 0;
     const defaultLightColorScheme = typeof designSystemColorScheme === "string" ? designSystemColorScheme : designSystemColorScheme.light;
     const defaultDarkColorScheme = typeof designSystemColorScheme === "string" ? designSystemColorScheme : designSystemColorScheme.dark;
-    const getInitColorSchemeScript2 = (params) => getInitColorSchemeScript$1(_extends$1({
+    const getInitColorSchemeScript2 = (params) => InitColorSchemeScript$1(_extends$1({
       attribute: defaultAttribute,
       colorSchemeStorageKey: defaultColorSchemeStorageKey,
       defaultMode: designSystemMode,
@@ -9059,13 +9131,11 @@ try {
     }, _typeof(o);
   }
   function toPrimitive(t, r2) {
-    if ("object" != _typeof(t) || !t)
-      return t;
+    if ("object" != _typeof(t) || !t) return t;
     var e = t[Symbol.toPrimitive];
     if (void 0 !== e) {
       var i = e.call(t, r2 || "default");
-      if ("object" != _typeof(i))
-        return i;
+      if ("object" != _typeof(i)) return i;
       throw new TypeError("@@toPrimitive must return a primitive value.");
     }
     return ("string" === r2 ? String : Number)(t);
@@ -9074,12 +9144,12 @@ try {
     var i = toPrimitive(t, "string");
     return "symbol" == _typeof(i) ? i : i + "";
   }
-  const _excluded$2x = ["colorSchemes", "components", "defaultColorScheme"];
+  const _excluded$2w = ["colorSchemes", "components", "defaultColorScheme"];
   function prepareCssVars(theme, parserConfig) {
     const {
       colorSchemes = {},
       defaultColorScheme = "light"
-    } = theme, otherTheme = _objectWithoutPropertiesLoose(theme, _excluded$2x);
+    } = theme, otherTheme = _objectWithoutPropertiesLoose(theme, _excluded$2w);
     const {
       vars: rootVars,
       css: rootCss,
@@ -9137,18 +9207,18 @@ try {
       generateCssVars
     };
   }
-  const _excluded$2w = ["cssVarPrefix", "shouldSkipGeneratingVar"];
+  const _excluded$2v = ["cssVarPrefix", "shouldSkipGeneratingVar"];
   function createCssVarsTheme(theme) {
     const {
       cssVarPrefix,
       shouldSkipGeneratingVar: shouldSkipGeneratingVar2
-    } = theme, otherTheme = _objectWithoutPropertiesLoose(theme, _excluded$2w);
+    } = theme, otherTheme = _objectWithoutPropertiesLoose(theme, _excluded$2v);
     return _extends$1({}, theme, prepareCssVars(otherTheme, {
       prefix: cssVarPrefix,
       shouldSkipGeneratingVar: shouldSkipGeneratingVar2
     }));
   }
-  const _excluded$2v = ["className", "component", "disableGutters", "fixed", "maxWidth", "classes"];
+  const _excluded$2u = ["className", "component", "disableGutters", "fixed", "maxWidth", "classes"];
   const defaultTheme$4 = createTheme$2();
   const defaultCreateStyledComponent$2 = styled("div", {
     name: "MuiContainer",
@@ -9160,7 +9230,7 @@ try {
       return [styles2.root, styles2[`maxWidth${capitalize$1(String(ownerState.maxWidth))}`], ownerState.fixed && styles2.fixed, ownerState.disableGutters && styles2.disableGutters];
     }
   });
-  const useThemePropsDefault$2 = (inProps) => useThemeProps$7({
+  const useThemePropsDefault$2 = (inProps) => useThemeProps$1({
     props: inProps,
     name: "MuiContainer",
     defaultTheme: defaultTheme$4
@@ -9241,7 +9311,7 @@ try {
         disableGutters = false,
         fixed = false,
         maxWidth: maxWidth2 = "lg"
-      } = props, other = _objectWithoutPropertiesLoose(props, _excluded$2v);
+      } = props, other = _objectWithoutPropertiesLoose(props, _excluded$2u);
       const ownerState = _extends$1({}, props, {
         component,
         disableGutters,
@@ -9580,7 +9650,7 @@ try {
     }
     return [`direction-xs-${String(direction)}`];
   };
-  const _excluded$2u = ["className", "children", "columns", "container", "component", "direction", "wrap", "spacing", "rowSpacing", "columnSpacing", "disableEqualOverflow", "unstable_level"];
+  const _excluded$2t = ["className", "children", "columns", "container", "component", "direction", "wrap", "spacing", "rowSpacing", "columnSpacing", "disableEqualOverflow", "unstable_level"];
   const defaultTheme$3 = createTheme$2();
   const defaultCreateStyledComponent$1 = styled("div", {
     name: "MuiGrid",
@@ -9588,7 +9658,7 @@ try {
     overridesResolver: (props, styles2) => styles2.root
   });
   function useThemePropsDefault$1(props) {
-    return useThemeProps$7({
+    return useThemeProps$1({
       props,
       name: "MuiGrid",
       defaultTheme: defaultTheme$3
@@ -9638,7 +9708,7 @@ try {
         columnSpacing: columnSpacingProp = spacingProp,
         disableEqualOverflow: themeDisableEqualOverflow,
         unstable_level: level = 0
-      } = props, rest = _objectWithoutPropertiesLoose(props, _excluded$2u);
+      } = props, rest = _objectWithoutPropertiesLoose(props, _excluded$2t);
       let disableEqualOverflow = themeDisableEqualOverflow;
       if (level && themeDisableEqualOverflow !== void 0) {
         disableEqualOverflow = inProps.disableEqualOverflow;
@@ -9914,7 +9984,7 @@ try {
     ...GRID_SIZES.map((size2) => `grid-xl-${size2}`)
   ]);
   "use client";
-  const _excluded$2t = ["component", "direction", "spacing", "divider", "children", "className", "useFlexGap"];
+  const _excluded$2s = ["component", "direction", "spacing", "divider", "children", "className", "useFlexGap"];
   const defaultTheme$2 = createTheme$2();
   const defaultCreateStyledComponent = styled("div", {
     name: "MuiStack",
@@ -9922,7 +9992,7 @@ try {
     overridesResolver: (props, styles2) => styles2.root
   });
   function useThemePropsDefault(props) {
-    return useThemeProps$7({
+    return useThemeProps$1({
       props,
       name: "MuiStack",
       defaultTheme: defaultTheme$2
@@ -10037,7 +10107,7 @@ try {
         children,
         className,
         useFlexGap = false
-      } = props, other = _objectWithoutPropertiesLoose(props, _excluded$2t);
+      } = props, other = _objectWithoutPropertiesLoose(props, _excluded$2s);
       const ownerState = {
         direction,
         spacing: spacing2,
@@ -10129,7 +10199,7 @@ try {
   }
   const paperClasses = generateUtilityClasses$1("MuiPaper", ["root", "rounded", "outlined", "elevation", "elevation0", "elevation1", "elevation2", "elevation3", "elevation4", "elevation5", "elevation6", "elevation7", "elevation8", "elevation9", "elevation10", "elevation11", "elevation12", "elevation13", "elevation14", "elevation15", "elevation16", "elevation17", "elevation18", "elevation19", "elevation20", "elevation21", "elevation22", "elevation23", "elevation24"]);
   "use client";
-  const _excluded$2s = ["className", "component", "elevation", "square", "variant"];
+  const _excluded$2r = ["className", "component", "elevation", "square", "variant"];
   const useUtilityClasses$1X = (ownerState) => {
     const {
       square,
@@ -10173,7 +10243,7 @@ try {
     }));
   });
   const Paper = /* @__PURE__ */ React__namespace.forwardRef(function Paper2(inProps, ref) {
-    const props = useThemeProps$6({
+    const props = useDefaultProps({
       props: inProps,
       name: "MuiPaper"
     });
@@ -10183,7 +10253,7 @@ try {
       elevation = 1,
       square = false,
       variant = "elevation"
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$2s);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$2r);
     const ownerState = _extends$1({}, props, {
       component,
       elevation,
@@ -10262,7 +10332,7 @@ try {
   }
   const appBarClasses = generateUtilityClasses$1("MuiAppBar", ["root", "positionFixed", "positionAbsolute", "positionSticky", "positionStatic", "positionRelative", "colorDefault", "colorPrimary", "colorSecondary", "colorInherit", "colorTransparent", "colorError", "colorInfo", "colorSuccess", "colorWarning"]);
   "use client";
-  const _excluded$2r = ["className", "color", "enableColorOnDark", "position"];
+  const _excluded$2q = ["className", "color", "enableColorOnDark", "position"];
   const useUtilityClasses$1W = (ownerState) => {
     const {
       color: color2,
@@ -10355,7 +10425,7 @@ try {
     }));
   });
   const AppBar = /* @__PURE__ */ React__namespace.forwardRef(function AppBar2(inProps, ref) {
-    const props = useThemeProps$6({
+    const props = useDefaultProps({
       props: inProps,
       name: "MuiAppBar"
     });
@@ -10364,7 +10434,7 @@ try {
       color: color2 = "primary",
       enableColorOnDark = false,
       position: position2 = "fixed"
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$2r);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$2q);
     const ownerState = _extends$1({}, props, {
       color: color2,
       position: position2,
@@ -10427,7 +10497,7 @@ try {
   }
   const toolbarClasses = generateUtilityClasses$1("MuiToolbar", ["root", "gutters", "regular", "dense"]);
   "use client";
-  const _excluded$2q = ["className", "component", "disableGutters", "variant"];
+  const _excluded$2p = ["className", "component", "disableGutters", "variant"];
   const useUtilityClasses$1V = (ownerState) => {
     const {
       classes,
@@ -10469,7 +10539,7 @@ try {
     ownerState
   }) => ownerState.variant === "regular" && theme.mixins.toolbar);
   const Toolbar = /* @__PURE__ */ React__namespace.forwardRef(function Toolbar2(inProps, ref) {
-    const props = useThemeProps$6({
+    const props = useDefaultProps({
       props: inProps,
       name: "MuiToolbar"
     });
@@ -10478,7 +10548,7 @@ try {
       component = "div",
       disableGutters = false,
       variant = "regular"
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$2q);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$2p);
     const ownerState = _extends$1({}, props, {
       component,
       disableGutters,
@@ -10690,12 +10760,12 @@ try {
   }
   const CMPNAME$a = "BasicHead";
   console.log(CMPNAME$a, "1");
-  const { Child: Child$6, Exact, Open: Open$a, Required: Required$1 } = gubu_minExports.Gubu;
+  const { Child: Child$6, Exact, Open: Open$8, Required: Required$1 } = gubu_minExports.Gubu;
   const BasicHeadSpecShape = gubu_minExports.Gubu({
     head: {
       name: String,
       active: Boolean,
-      tool: Child$6(Open$a({
+      tool: Child$6(Open$8({
         align: Exact("left", "right")
       }))
     },
@@ -10809,8 +10879,7 @@ try {
     let result;
     return (depArgs) => {
       let depTime;
-      if (opts.key && opts.debug)
-        depTime = Date.now();
+      if (opts.key && opts.debug) depTime = Date.now();
       const newDeps = getDeps(depArgs);
       const depsChanged = newDeps.length !== deps.length || newDeps.some((dep, index2) => deps[index2] !== dep);
       if (!depsChanged) {
@@ -10818,8 +10887,7 @@ try {
       }
       deps = newDeps;
       let resultTime;
-      if (opts.key && opts.debug)
-        resultTime = Date.now();
+      if (opts.key && opts.debug) resultTime = Date.now();
       result = fn(...newDeps);
       opts == null || opts.onChange == null || opts.onChange(result);
       if (opts.key && opts.debug) {
@@ -11195,8 +11263,7 @@ try {
         let currentRow = row;
         while (true) {
           const parentRow = currentRow.getParentRow();
-          if (!parentRow)
-            break;
+          if (!parentRow) break;
           parentRows.push(parentRow);
           currentRow = parentRow;
         }
@@ -11483,13 +11550,10 @@ try {
       const value = row.getValue(columnId);
       if (value != null) {
         if (min2 === void 0) {
-          if (value >= value)
-            min2 = max2 = value;
+          if (value >= value) min2 = max2 = value;
         } else {
-          if (min2 > value)
-            min2 = value;
-          if (max2 < value)
-            max2 = value;
+          if (min2 > value) min2 = value;
+          if (max2 < value) max2 = value;
         }
       }
     });
@@ -11504,8 +11568,7 @@ try {
         ++count2, sum2 += value;
       }
     });
-    if (count2)
-      return sum2 / count2;
+    if (count2) return sum2 / count2;
     return;
   };
   const median = (columnId, leafRows) => {
@@ -11588,8 +11651,7 @@ try {
       column2.getToggleGroupingHandler = () => {
         const canGroup = column2.getCanGroup();
         return () => {
-          if (!canGroup)
-            return;
+          if (!canGroup) return;
           column2.toggleGrouping();
         };
       };
@@ -12040,8 +12102,7 @@ try {
   };
   let passiveSupported = null;
   function passiveEventSupported() {
-    if (typeof passiveSupported === "boolean")
-      return passiveSupported;
+    if (typeof passiveSupported === "boolean") return passiveSupported;
     let supported = false;
     try {
       const options = {
@@ -12230,8 +12291,7 @@ try {
           return;
         }
         if ((_ref = (_table$options$autoRe = table.options.autoResetAll) != null ? _table$options$autoRe : table.options.autoResetExpanded) != null ? _ref : !table.options.manualExpanding) {
-          if (queued)
-            return;
+          if (queued) return;
           queued = true;
           table._queue(() => {
             table.resetExpanded();
@@ -12349,8 +12409,7 @@ try {
       row.getToggleExpandedHandler = () => {
         const canExpand = row.getCanExpand();
         return () => {
-          if (!canExpand)
-            return;
+          if (!canExpand) return;
           row.toggleExpanded();
         };
       };
@@ -12385,8 +12444,7 @@ try {
           return;
         }
         if ((_ref = (_table$options$autoRe = table.options.autoResetAll) != null ? _table$options$autoRe : table.options.autoResetPageIndex) != null ? _ref : !table.options.manualPagination) {
-          if (queued)
-            return;
+          if (queued) return;
           queued = true;
           table._queue(() => {
             table.resetPageIndex();
@@ -12575,8 +12633,7 @@ try {
       row.getPinnedIndex = () => {
         var _table$_getPinnedRows, _visiblePinnedRowIds$;
         const position2 = row.getIsPinned();
-        if (!position2)
-          return -1;
+        if (!position2) return -1;
         const visiblePinnedRowIds = (_table$_getPinnedRows = table._getPinnedRows(position2)) == null ? void 0 : _table$_getPinnedRows.map((_ref4) => {
           let {
             id
@@ -12809,8 +12866,7 @@ try {
         const canSelect = row.getCanSelect();
         return (e) => {
           var _target;
-          if (!canSelect)
-            return;
+          if (!canSelect) return;
           row.toggleSelected((_target = e.target) == null ? void 0 : _target.checked);
         };
       };
@@ -12867,8 +12923,7 @@ try {
   }
   function isSubRowSelected(row, selection, table) {
     var _row$subRows3;
-    if (!((_row$subRows3 = row.subRows) != null && _row$subRows3.length))
-      return false;
+    if (!((_row$subRows3 = row.subRows) != null && _row$subRows3.length)) return false;
     let allChildrenSelected = true;
     let someSelected = false;
     row.subRows.forEach((subRow) => {
@@ -13125,8 +13180,7 @@ try {
       column2.getToggleSortingHandler = () => {
         const canSort = column2.getCanSort();
         return (e) => {
-          if (!canSort)
-            return;
+          if (!canSort) return;
           e.persist == null || e.persist();
           column2.toggleSorting == null || column2.toggleSorting(void 0, column2.getCanMultiSort() ? table.options.isMultiSortEvent == null ? void 0 : table.options.isMultiSortEvent(e) : false);
         };
@@ -13388,8 +13442,7 @@ try {
       return [(_table$getColumn = table.getColumn(columnId)) == null ? void 0 : _table$getColumn.getFacetedRowModel()];
     }, (facetedRowModel) => {
       var _facetedRowModel$flat;
-      if (!facetedRowModel)
-        return void 0;
+      if (!facetedRowModel) return void 0;
       const firstValue = (_facetedRowModel$flat = facetedRowModel.flatRows[0]) == null ? void 0 : _facetedRowModel$flat.getUniqueValues(columnId);
       if (typeof firstValue === "undefined") {
         return void 0;
@@ -13517,8 +13570,7 @@ try {
       var _table$getColumn;
       return [(_table$getColumn = table.getColumn(columnId)) == null ? void 0 : _table$getColumn.getFacetedRowModel()];
     }, (facetedRowModel) => {
-      if (!facetedRowModel)
-        return /* @__PURE__ */ new Map();
+      if (!facetedRowModel) return /* @__PURE__ */ new Map();
       let facetedUniqueValues = /* @__PURE__ */ new Map();
       for (let i = 0; i < facetedRowModel.flatRows.length; i++) {
         const values2 = facetedRowModel.flatRows[i].getUniqueValues(columnId);
@@ -13773,8 +13825,7 @@ try {
       const columnInfoById = {};
       availableSorting.forEach((sortEntry) => {
         const column2 = table.getColumn(sortEntry.id);
-        if (!column2)
-          return;
+        if (!column2) return;
         columnInfoById[sortEntry.id] = {
           sortUndefined: column2.columnDef.sortUndefined,
           invertSorting: column2.columnDef.invertSorting,
@@ -13797,10 +13848,8 @@ try {
               const aUndefined = aValue === void 0;
               const bUndefined = bValue === void 0;
               if (aUndefined || bUndefined) {
-                if (sortUndefined === "first")
-                  return aUndefined ? -1 : 1;
-                if (sortUndefined === "last")
-                  return aUndefined ? 1 : -1;
+                if (sortUndefined === "first") return aUndefined ? -1 : 1;
+                if (sortUndefined === "last") return aUndefined ? 1 : -1;
                 sortInt = aUndefined && bUndefined ? 0 : aUndefined ? sortUndefined : -sortUndefined;
               }
             }
@@ -14505,18 +14554,13 @@ try {
     t.prototype = Object.create(o.prototype), t.prototype.constructor = t, _setPrototypeOf(t, o);
   }
   function hasClass(element, className) {
-    if (element.classList)
-      return !!className && element.classList.contains(className);
+    if (element.classList) return !!className && element.classList.contains(className);
     return (" " + (element.className.baseVal || element.className) + " ").indexOf(" " + className + " ") !== -1;
   }
   function addClass(element, className) {
-    if (element.classList)
-      element.classList.add(className);
-    else if (!hasClass(element, className))
-      if (typeof element.className === "string")
-        element.className = element.className + " " + className;
-      else
-        element.setAttribute("class", (element.className && element.className.baseVal || "") + " " + className);
+    if (element.classList) element.classList.add(className);
+    else if (!hasClass(element, className)) if (typeof element.className === "string") element.className = element.className + " " + className;
+    else element.setAttribute("class", (element.className && element.className.baseVal || "") + " " + className);
   }
   function replaceClassName(origClass, classToRemove) {
     return origClass.replace(new RegExp("(^|\\s)" + classToRemove + "(?:\\s|$)", "g"), "$1").replace(/\s+/g, " ").replace(/^\s*|\s*$/g, "");
@@ -14644,8 +14688,7 @@ try {
         if (nextStatus === ENTERING) {
           if (this.props.unmountOnExit || this.props.mountOnEnter) {
             var node2 = this.props.nodeRef ? this.props.nodeRef.current : ReactDOM.findDOMNode(this);
-            if (node2)
-              forceReflow(node2);
+            if (node2) forceReflow(node2);
           }
           this.performEnter(mounting);
         } else {
@@ -14867,8 +14910,7 @@ try {
      */
     timeout: function timeout(props) {
       var pt = timeoutsShape;
-      if (!props.addEndListener)
-        pt = pt.isRequired;
+      if (!props.addEndListener) pt = pt.isRequired;
       for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
         args[_key - 1] = arguments[_key];
       }
@@ -15060,8 +15102,7 @@ try {
         className += " " + doneClassName;
       }
       if (phase === "active") {
-        if (node2)
-          forceReflow(node2);
+        if (node2) forceReflow(node2);
       }
       if (className) {
         this.appliedClasses[type][phase] = className;
@@ -15222,8 +15263,7 @@ try {
     onExited: PropTypes.func
   }) : {};
   function _assertThisInitialized(e) {
-    if (void 0 === e)
-      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    if (void 0 === e) throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
     return e;
   }
   function getChildMapping(children, mapFn) {
@@ -15231,12 +15271,11 @@ try {
       return mapFn && React$1.isValidElement(child) ? mapFn(child) : child;
     };
     var result = /* @__PURE__ */ Object.create(null);
-    if (children)
-      React$1.Children.map(children, function(c) {
-        return c;
-      }).forEach(function(child) {
-        result[child.key] = mapper(child);
-      });
+    if (children) React$1.Children.map(children, function(c) {
+      return c;
+    }).forEach(function(child) {
+      result[child.key] = mapper(child);
+    });
     return result;
   }
   function mergeChildMappings(prev2, next2) {
@@ -15292,8 +15331,7 @@ try {
     var children = mergeChildMappings(prevChildMapping, nextChildMapping);
     Object.keys(children).forEach(function(key) {
       var child = children[key];
-      if (!React$1.isValidElement(child))
-        return;
+      if (!React$1.isValidElement(child)) return;
       var hasPrev = key in prevChildMapping;
       var hasNext = key in nextChildMapping;
       var prevChild = prevChildMapping[key];
@@ -15367,8 +15405,7 @@ try {
     };
     _proto.handleExited = function handleExited(child, node2) {
       var currentChildMapping = getChildMapping(this.props.children);
-      if (child.key in currentChildMapping)
-        return;
+      if (child.key in currentChildMapping) return;
       if (child.props.onExited) {
         child.props.onExited(node2);
       }
@@ -15505,8 +15542,7 @@ try {
       var _child$props;
       var children = this.props.children;
       var child = React$1.Children.toArray(children)[idx];
-      if (child.props[handler])
-        (_child$props = child.props)[handler].apply(_child$props, originalArgs);
+      if (child.props[handler]) (_child$props = child.props)[handler].apply(_child$props, originalArgs);
       if (this.props[handler]) {
         var maybeNode = child.props.nodeRef ? void 0 : ReactDOM.findDOMNode(this);
         this.props[handler](maybeNode);
@@ -15538,15 +15574,13 @@ try {
   ReplaceTransition.propTypes = process.env.NODE_ENV !== "production" ? {
     in: PropTypes.bool.isRequired,
     children: function children(props, propName) {
-      if (React$1.Children.count(props[propName]) !== 2)
-        return new Error('"' + propName + '" must be exactly two transition components.');
+      if (React$1.Children.count(props[propName]) !== 2) return new Error('"' + propName + '" must be exactly two transition components.');
       return null;
     }
   } : {};
   var _leaveRenders, _enterRenders;
   function areChildrenDifferent(oldChildren, newChildren) {
-    if (oldChildren === newChildren)
-      return false;
+    if (oldChildren === newChildren) return false;
     if (React$1.isValidElement(oldChildren) && React$1.isValidElement(newChildren) && oldChildren.key != null && oldChildren.key === newChildren.key) {
       return false;
     }
@@ -15779,7 +15813,7 @@ try {
   }
   const touchRippleClasses = generateUtilityClasses$1("MuiTouchRipple", ["root", "ripple", "rippleVisible", "ripplePulsate", "child", "childLeaving", "childPulsate"]);
   "use client";
-  const _excluded$2p = ["center", "classes", "className"];
+  const _excluded$2o = ["center", "classes", "className"];
   let _$3 = (t) => t, _t$3, _t2$3, _t3$3, _t4$3;
   const DURATION = 550;
   const DELAY_RIPPLE = 80;
@@ -15886,7 +15920,7 @@ try {
     theme
   }) => theme.transitions.easing.easeInOut);
   const TouchRipple = /* @__PURE__ */ React__namespace.forwardRef(function TouchRipple2(inProps, ref) {
-    const props = useThemeProps$6({
+    const props = useDefaultProps({
       props: inProps,
       name: "MuiTouchRipple"
     });
@@ -15894,7 +15928,7 @@ try {
       center: centerProp = false,
       classes = {},
       className
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$2p);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$2o);
     const [ripples, setRipples] = React__namespace.useState([]);
     const nextKey = React__namespace.useRef(0);
     const rippleCallback = React__namespace.useRef(null);
@@ -16068,7 +16102,7 @@ try {
   }
   const buttonBaseClasses = generateUtilityClasses$1("MuiButtonBase", ["root", "disabled", "focusVisible"]);
   "use client";
-  const _excluded$2o = ["action", "centerRipple", "children", "className", "component", "disabled", "disableRipple", "disableTouchRipple", "focusRipple", "focusVisibleClassName", "LinkComponent", "onBlur", "onClick", "onContextMenu", "onDragLeave", "onFocus", "onFocusVisible", "onKeyDown", "onKeyUp", "onMouseDown", "onMouseLeave", "onMouseUp", "onTouchEnd", "onTouchMove", "onTouchStart", "tabIndex", "TouchRippleProps", "touchRippleRef", "type"];
+  const _excluded$2n = ["action", "centerRipple", "children", "className", "component", "disabled", "disableRipple", "disableTouchRipple", "focusRipple", "focusVisibleClassName", "LinkComponent", "onBlur", "onClick", "onContextMenu", "onDragLeave", "onFocus", "onFocusVisible", "onKeyDown", "onKeyUp", "onMouseDown", "onMouseLeave", "onMouseUp", "onTouchEnd", "onTouchMove", "onTouchStart", "tabIndex", "TouchRippleProps", "touchRippleRef", "type"];
   const useUtilityClasses$1U = (ownerState) => {
     const {
       disabled,
@@ -16130,7 +16164,7 @@ try {
     }
   });
   const ButtonBase = /* @__PURE__ */ React__namespace.forwardRef(function ButtonBase2(inProps, ref) {
-    const props = useThemeProps$6({
+    const props = useDefaultProps({
       props: inProps,
       name: "MuiButtonBase"
     });
@@ -16163,7 +16197,7 @@ try {
       TouchRippleProps,
       touchRippleRef,
       type
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$2o);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$2n);
     const buttonRef = React__namespace.useRef(null);
     const rippleRef = React__namespace.useRef(null);
     const handleRippleRef = useForkRef(rippleRef, touchRippleRef);
@@ -16512,7 +16546,7 @@ try {
   }
   const iconButtonClasses = generateUtilityClasses$1("MuiIconButton", ["root", "disabled", "colorInherit", "colorPrimary", "colorSecondary", "colorError", "colorInfo", "colorSuccess", "colorWarning", "edgeStart", "edgeEnd", "sizeSmall", "sizeMedium", "sizeLarge"]);
   "use client";
-  const _excluded$2n = ["edge", "children", "className", "color", "disabled", "disableFocusRipple", "size"];
+  const _excluded$2m = ["edge", "children", "className", "color", "disabled", "disableFocusRipple", "size"];
   const useUtilityClasses$1T = (ownerState) => {
     const {
       classes,
@@ -16595,7 +16629,7 @@ try {
     });
   });
   const IconButton = /* @__PURE__ */ React__namespace.forwardRef(function IconButton2(inProps, ref) {
-    const props = useThemeProps$6({
+    const props = useDefaultProps({
       props: inProps,
       name: "MuiIconButton"
     });
@@ -16607,7 +16641,7 @@ try {
       disabled = false,
       disableFocusRipple = false,
       size: size2 = "medium"
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$2n);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$2m);
     const ownerState = _extends$1({}, props, {
       edge,
       color: color2,
@@ -16829,7 +16863,7 @@ try {
     };
   }
   "use client";
-  const _excluded$2m = ["elementType", "externalSlotProps", "ownerState", "skipResolvingSlotProps"];
+  const _excluded$2l = ["elementType", "externalSlotProps", "ownerState", "skipResolvingSlotProps"];
   function useSlotProps(parameters) {
     var _parameters$additiona;
     const {
@@ -16837,7 +16871,7 @@ try {
       externalSlotProps,
       ownerState,
       skipResolvingSlotProps = false
-    } = parameters, rest = _objectWithoutPropertiesLoose(parameters, _excluded$2m);
+    } = parameters, rest = _objectWithoutPropertiesLoose(parameters, _excluded$2l);
     const resolvedComponentsProps = skipResolvingSlotProps ? {} : resolveComponentProps(externalSlotProps, ownerState);
     const {
       props: mergedProps,
@@ -16851,10 +16885,10 @@ try {
     }), ownerState);
     return props;
   }
-  const _excluded$2l = ["ownerState"];
+  const _excluded$2k = ["ownerState"];
   function prepareForSlot(Component) {
     return /* @__PURE__ */ React__namespace.forwardRef(function Slot(props, ref) {
-      const other = _objectWithoutPropertiesLoose(props, _excluded$2l);
+      const other = _objectWithoutPropertiesLoose(props, _excluded$2k);
       return /* @__PURE__ */ React__namespace.createElement(Component, _extends$1({}, other, {
         ref
       }));
@@ -16876,7 +16910,7 @@ try {
     };
   }
   "use client";
-  const _excluded$2k = ["addEndListener", "appear", "children", "easing", "in", "onEnter", "onEntered", "onEntering", "onExit", "onExited", "onExiting", "style", "timeout", "TransitionComponent"];
+  const _excluded$2j = ["addEndListener", "appear", "children", "easing", "in", "onEnter", "onEntered", "onEntering", "onExit", "onExited", "onExiting", "style", "timeout", "TransitionComponent"];
   function getScale$1(value) {
     return `scale(${value}, ${__pow(value, 2)})`;
   }
@@ -16908,7 +16942,7 @@ try {
       timeout = "auto",
       // eslint-disable-next-line react/prop-types
       TransitionComponent = Transition
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$2k);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$2j);
     const timer = useTimeout();
     const autoTimeout = React__namespace.useRef();
     const theme = useTheme$1();
@@ -17974,8 +18008,7 @@ try {
       };
       for (var _i = numberOfChecks; _i > 0; _i--) {
         var _ret = _loop(_i);
-        if (_ret === "break")
-          break;
+        if (_ret === "break") break;
       }
     }
     if (state.placement !== firstFittingPlacement) {
@@ -18555,7 +18588,7 @@ try {
   }
   const popperClasses = generateUtilityClasses(COMPONENT_NAME$l, ["root"]);
   "use client";
-  const _excluded$2j = ["anchorEl", "children", "direction", "disablePortal", "modifiers", "open", "placement", "popperOptions", "popperRef", "slotProps", "slots", "TransitionProps", "ownerState"], _excluded2$g = ["anchorEl", "children", "container", "direction", "disablePortal", "keepMounted", "modifiers", "open", "placement", "popperOptions", "popperRef", "style", "transition", "slotProps", "slots"];
+  const _excluded$2i = ["anchorEl", "children", "direction", "disablePortal", "modifiers", "open", "placement", "popperOptions", "popperRef", "slotProps", "slots", "TransitionProps", "ownerState"], _excluded2$g = ["anchorEl", "children", "container", "direction", "disablePortal", "keepMounted", "modifiers", "open", "placement", "popperOptions", "popperRef", "style", "transition", "slotProps", "slots"];
   function flipPlacement(placement, direction) {
     if (direction === "ltr") {
       return placement;
@@ -18606,7 +18639,7 @@ try {
       TransitionProps
       // @ts-ignore internal logic
       // prevent from spreading to DOM, it can come from the parent component e.g. Select.
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$2j);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$2i);
     const tooltipRef = React__namespace.useRef(null);
     const ownRef = useForkRef(tooltipRef, forwardedRef);
     const popperRef = React__namespace.useRef(null);
@@ -18906,27 +18939,22 @@ try {
   var React = _interopRequireWildcard(React$1);
   var _styledEngine = require$$1$1;
   function _getRequireWildcardCache(e) {
-    if ("function" != typeof WeakMap)
-      return null;
+    if ("function" != typeof WeakMap) return null;
     var r2 = /* @__PURE__ */ new WeakMap(), t = /* @__PURE__ */ new WeakMap();
     return (_getRequireWildcardCache = function(e2) {
       return e2 ? t : r2;
     })(e);
   }
   function _interopRequireWildcard(e, r2) {
-    if (!r2 && e && e.__esModule)
-      return e;
-    if (null === e || "object" != typeof e && "function" != typeof e)
-      return { default: e };
+    if (!r2 && e && e.__esModule) return e;
+    if (null === e || "object" != typeof e && "function" != typeof e) return { default: e };
     var t = _getRequireWildcardCache(r2);
-    if (t && t.has(e))
-      return t.get(e);
+    if (t && t.has(e)) return t.get(e);
     var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor;
-    for (var u in e)
-      if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) {
-        var i = a ? Object.getOwnPropertyDescriptor(e, u) : null;
-        i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u];
-      }
+    for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) {
+      var i = a ? Object.getOwnPropertyDescriptor(e, u) : null;
+      i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u];
+    }
     return n.default = e, t && t.set(e, n), n;
   }
   function isObjectEmpty(obj) {
@@ -18937,7 +18965,7 @@ try {
     return !contextTheme || isObjectEmpty(contextTheme) ? defaultTheme2 : contextTheme;
   }
   var _default$y = default_1$y = useThemeWithoutDefault.default = useTheme;
-  const _excluded$2i = ["defaultProps", "mixins", "overrides", "palette", "props", "styleOverrides"], _excluded2$f = ["type", "mode"];
+  const _excluded$2h = ["defaultProps", "mixins", "overrides", "palette", "props", "styleOverrides"], _excluded2$f = ["type", "mode"];
   function adaptV4Theme(inputTheme) {
     if (process.env.NODE_ENV !== "production") {
       console.warn(["MUI: adaptV4Theme() is deprecated.", "Follow the upgrade guide on https://mui.com/r/migration-v4#theme."].join("\n"));
@@ -18949,7 +18977,7 @@ try {
       palette: palette2 = {},
       props = {},
       styleOverrides = {}
-    } = inputTheme, other = _objectWithoutPropertiesLoose(inputTheme, _excluded$2i);
+    } = inputTheme, other = _objectWithoutPropertiesLoose(inputTheme, _excluded$2h);
     const theme = _extends$1({}, other, {
       components: {}
     });
@@ -19147,11 +19175,23 @@ Use unitless line heights instead.` : formatMuiErrorMessage$1(6));
     return theme;
   }
   "use client";
-  const _excluded$2h = ["theme"];
+  function useThemeProps({
+    props,
+    name
+  }) {
+    return useThemeProps$1({
+      props,
+      name,
+      defaultTheme: defaultTheme$5,
+      themeId: THEME_ID
+    });
+  }
+  "use client";
+  const _excluded$2g = ["theme"];
   function ThemeProvider(_ref) {
     let {
       theme: themeInput
-    } = _ref, props = _objectWithoutPropertiesLoose(_ref, _excluded$2h);
+    } = _ref, props = _objectWithoutPropertiesLoose(_ref, _excluded$2g);
     const scopedTheme = themeInput[THEME_ID];
     return /* @__PURE__ */ jsxRuntimeExports.jsx(ThemeProvider$1, _extends$1({}, props, {
       themeId: scopedTheme ? THEME_ID : void 0,
@@ -19188,7 +19228,7 @@ See https://mui.com/r/migration-v4/#mui-material-styles for more details.` : for
     return !!keys[0].match(/(cssVarPrefix|typography|mixins|breakpoints|direction|transitions)/) || !!keys[0].match(/sxConfig$/) || // ends with sxConfig
     keys[0] === "palette" && !!((_keys$ = keys[1]) != null && _keys$.match(/(mode|contrastThreshold|tonalOffset)/));
   }
-  const _excluded$2g = ["colorSchemes", "cssVarPrefix", "shouldSkipGeneratingVar"], _excluded2$e = ["palette"];
+  const _excluded$2f = ["colorSchemes", "cssVarPrefix", "shouldSkipGeneratingVar"], _excluded2$e = ["palette"];
   const defaultDarkOverlays = [...Array(25)].map((_2, index2) => {
     if (index2 === 0) {
       return void 0;
@@ -19234,7 +19274,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       colorSchemes: colorSchemesInput = {},
       cssVarPrefix = "mui",
       shouldSkipGeneratingVar: shouldSkipGeneratingVar$1 = shouldSkipGeneratingVar
-    } = options, input = _objectWithoutPropertiesLoose(options, _excluded$2g);
+    } = options, input = _objectWithoutPropertiesLoose(options, _excluded$2f);
     const getCssVar = createGetCssVar(cssVarPrefix);
     const _createThemeWithoutVa = createTheme(_extends$1({}, input, colorSchemesInput.light && {
       palette: (_colorSchemesInput$li = colorSchemesInput.light) == null ? void 0 : _colorSchemesInput$li.palette
@@ -19470,21 +19510,31 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     return theme;
   }
   const excludeVariablesFromRoot = (cssVarPrefix) => [...[...Array(24)].map((_2, index2) => `--${cssVarPrefix ? `${cssVarPrefix}-` : ""}overlays-${index2 + 1}`), `--${cssVarPrefix ? `${cssVarPrefix}-` : ""}palette-AppBar-darkBg`, `--${cssVarPrefix ? `${cssVarPrefix}-` : ""}palette-AppBar-darkColor`];
+  const defaultConfig = {
+    attribute: "data-mui-color-scheme",
+    colorSchemeStorageKey: "mui-color-scheme",
+    defaultLightColorScheme: "light",
+    defaultDarkColorScheme: "dark",
+    modeStorageKey: "mui-mode"
+  };
+  const InitColorSchemeScript = function InitColorSchemeScript2(props) {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(InitColorSchemeScript$1, _extends$1({}, defaultConfig, props));
+  };
   "use client";
   const defaultTheme$1 = extendTheme();
   const {
     CssVarsProvider,
     useColorScheme,
-    getInitColorSchemeScript
+    getInitColorSchemeScript: getInitColorSchemeScriptSystem
   } = createCssVarsProvider({
     themeId: THEME_ID,
     theme: defaultTheme$1,
-    attribute: "data-mui-color-scheme",
-    modeStorageKey: "mui-mode",
-    colorSchemeStorageKey: "mui-color-scheme",
+    attribute: defaultConfig.attribute,
+    colorSchemeStorageKey: defaultConfig.colorSchemeStorageKey,
+    modeStorageKey: defaultConfig.modeStorageKey,
     defaultColorScheme: {
-      light: "light",
-      dark: "dark"
+      light: defaultConfig.defaultLightColorScheme,
+      dark: defaultConfig.defaultDarkColorScheme
     },
     resolveTheme: (theme) => {
       const newTheme = _extends$1({}, theme, {
@@ -19500,12 +19550,13 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     },
     excludeVariablesFromRoot
   });
+  const getInitColorSchemeScript = getInitColorSchemeScriptSystem;
   "use client";
   function experimental_sx() {
     throw new Error(process.env.NODE_ENV !== "production" ? `MUI: The \`experimental_sx\` has been moved to \`theme.unstable_sx\`.For more details, see https://github.com/mui/material-ui/pull/35150.` : formatMuiErrorMessage$1(20));
   }
   "use client";
-  const _excluded$2f = ["anchorEl", "component", "components", "componentsProps", "container", "disablePortal", "keepMounted", "modifiers", "open", "placement", "popperOptions", "popperRef", "transition", "slots", "slotProps"];
+  const _excluded$2e = ["anchorEl", "component", "components", "componentsProps", "container", "disablePortal", "keepMounted", "modifiers", "open", "placement", "popperOptions", "popperRef", "transition", "slots", "slotProps"];
   const PopperRoot = styled$1(Popper$1, {
     name: "MuiPopper",
     slot: "Root",
@@ -19514,7 +19565,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   const Popper = /* @__PURE__ */ React__namespace.forwardRef(function Popper2(inProps, ref) {
     var _slots$root;
     const theme = default_1$y();
-    const props = useThemeProps$6({
+    const props = useDefaultProps({
       props: inProps,
       name: "MuiPopper"
     });
@@ -19534,7 +19585,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       transition,
       slots,
       slotProps
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$2f);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$2e);
     const RootComponent = (_slots$root = slots == null ? void 0 : slots.root) != null ? _slots$root : components == null ? void 0 : components.Root;
     const otherProps = _extends$1({
       anchorEl,
@@ -19694,7 +19745,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const tooltipClasses = generateUtilityClasses$1("MuiTooltip", ["popper", "popperInteractive", "popperArrow", "popperClose", "tooltip", "tooltipArrow", "touch", "tooltipPlacementLeft", "tooltipPlacementRight", "tooltipPlacementTop", "tooltipPlacementBottom", "arrow"]);
   "use client";
-  const _excluded$2e = ["arrow", "children", "classes", "components", "componentsProps", "describeChild", "disableFocusListener", "disableHoverListener", "disableInteractive", "disableTouchListener", "enterDelay", "enterNextDelay", "enterTouchDelay", "followCursor", "id", "leaveDelay", "leaveTouchDelay", "onClose", "onOpen", "open", "placement", "PopperComponent", "PopperProps", "slotProps", "slots", "title", "TransitionComponent", "TransitionProps"];
+  const _excluded$2d = ["arrow", "children", "classes", "components", "componentsProps", "describeChild", "disableFocusListener", "disableHoverListener", "disableInteractive", "disableTouchListener", "enterDelay", "enterNextDelay", "enterTouchDelay", "followCursor", "id", "leaveDelay", "leaveTouchDelay", "onClose", "onOpen", "open", "placement", "PopperComponent", "PopperProps", "slotProps", "slots", "title", "TransitionComponent", "TransitionProps"];
   function round$2(value) {
     return Math.round(value * 1e5) / 1e5;
   }
@@ -19885,7 +19936,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const Tooltip = /* @__PURE__ */ React__namespace.forwardRef(function Tooltip2(inProps, ref) {
     var _ref, _slots$popper, _ref2, _ref3, _slots$transition, _ref4, _slots$tooltip, _ref5, _slots$arrow, _slotProps$popper, _ref6, _slotProps$popper2, _slotProps$transition, _slotProps$tooltip, _ref7, _slotProps$tooltip2, _slotProps$arrow, _ref8, _slotProps$arrow2;
-    const props = useThemeProps$6({
+    const props = useDefaultProps({
       props: inProps,
       name: "MuiTooltip"
     });
@@ -19917,7 +19968,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       title,
       TransitionComponent: TransitionComponentProp = Grow,
       TransitionProps
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$2e);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$2d);
     const children = /* @__PURE__ */ React__namespace.isValidElement(childrenProp) ? childrenProp : /* @__PURE__ */ jsxRuntimeExports.jsx("span", {
       children: childrenProp
     });
@@ -20450,7 +20501,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     ButtonGroupButtonContext.displayName = "ButtonGroupButtonContext";
   }
   "use client";
-  const _excluded$2d = ["children", "color", "component", "className", "disabled", "disableElevation", "disableFocusRipple", "endIcon", "focusVisibleClassName", "fullWidth", "size", "startIcon", "type", "variant"];
+  const _excluded$2c = ["children", "color", "component", "className", "disabled", "disableElevation", "disableFocusRipple", "endIcon", "focusVisibleClassName", "fullWidth", "size", "startIcon", "type", "variant"];
   const useUtilityClasses$1Q = (ownerState) => {
     const {
       color: color2,
@@ -20657,7 +20708,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const contextProps = React__namespace.useContext(ButtonGroupContext);
     const buttonGroupButtonContextPositionClassName = React__namespace.useContext(ButtonGroupButtonContext);
     const resolvedProps = resolveProps(contextProps, inProps);
-    const props = useThemeProps$6({
+    const props = useDefaultProps({
       props: resolvedProps,
       name: "MuiButton"
     });
@@ -20676,7 +20727,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       startIcon: startIconProp,
       type,
       variant = "text"
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$2d);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$2c);
     const ownerState = _extends$1({}, props, {
       color: color2,
       component,
@@ -20814,7 +20865,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const circularProgressClasses = generateUtilityClasses$1("MuiCircularProgress", ["root", "determinate", "indeterminate", "colorPrimary", "colorSecondary", "svg", "circle", "circleDeterminate", "circleIndeterminate", "circleDisableShrink"]);
   "use client";
-  const _excluded$2c = ["className", "color", "disableShrink", "size", "style", "thickness", "value", "variant"];
+  const _excluded$2b = ["className", "color", "disableShrink", "size", "style", "thickness", "value", "variant"];
   let _$2 = (t) => t, _t$2, _t2$2, _t3$2, _t4$2;
   const SIZE = 44;
   const circularRotateKeyframe = react.keyframes(_t$2 || (_t$2 = _$2`
@@ -20914,7 +20965,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       animation: ${0} 1.4s ease-in-out infinite;
     `), circularDashKeyframe));
   const CircularProgress = /* @__PURE__ */ React__namespace.forwardRef(function CircularProgress2(inProps, ref) {
-    const props = useThemeProps$6({
+    const props = useDefaultProps({
       props: inProps,
       name: "MuiCircularProgress"
     });
@@ -20927,7 +20978,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       thickness = 3.6,
       value = 0,
       variant = "indeterminate"
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$2c);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$2b);
     const ownerState = _extends$1({}, props, {
       color: color2,
       disableShrink,
@@ -21049,7 +21100,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const listClasses = generateUtilityClasses$1("MuiList", ["root", "padding", "dense", "subheader"]);
   "use client";
-  const _excluded$2b = ["children", "className", "component", "dense", "disablePadding", "subheader"];
+  const _excluded$2a = ["children", "className", "component", "dense", "disablePadding", "subheader"];
   const useUtilityClasses$1O = (ownerState) => {
     const {
       classes,
@@ -21085,7 +21136,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     paddingTop: 0
   }));
   const List = /* @__PURE__ */ React__namespace.forwardRef(function List2(inProps, ref) {
-    const props = useThemeProps$6({
+    const props = useDefaultProps({
       props: inProps,
       name: "MuiList"
     });
@@ -21096,7 +21147,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       dense = false,
       disablePadding = false,
       subheader
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$2b);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$2a);
     const context = React__namespace.useMemo(() => ({
       dense
     }), [dense]);
@@ -21164,7 +21215,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   "use client";
   "use client";
   "use client";
-  const _excluded$2a = ["actions", "autoFocus", "autoFocusItem", "children", "className", "disabledItemsFocusable", "disableListWrap", "onKeyDown", "variant"];
+  const _excluded$29 = ["actions", "autoFocus", "autoFocusItem", "children", "className", "disabledItemsFocusable", "disableListWrap", "onKeyDown", "variant"];
   function nextItem$1(list, item, disableListWrap) {
     if (list === item) {
       return list.firstChild;
@@ -21233,7 +21284,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       disableListWrap = false,
       onKeyDown,
       variant = "selectedMenu"
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$2a);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$29);
     const listRef = React__namespace.useRef(null);
     const textCriteriaRef = React__namespace.useRef({
       keys: [],
@@ -22013,7 +22064,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     FocusTrap["propTypes"] = exactProp(FocusTrap.propTypes);
   }
   "use client";
-  const _excluded$29 = ["addEndListener", "appear", "children", "easing", "in", "onEnter", "onEntered", "onEntering", "onExit", "onExited", "onExiting", "style", "timeout", "TransitionComponent"];
+  const _excluded$28 = ["addEndListener", "appear", "children", "easing", "in", "onEnter", "onEntered", "onEntering", "onExit", "onExited", "onExiting", "style", "timeout", "TransitionComponent"];
   const styles$2 = {
     entering: {
       opacity: 1
@@ -22044,7 +22095,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       timeout = defaultTimeout,
       // eslint-disable-next-line react/prop-types
       TransitionComponent = Transition
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$29);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$28);
     const enableStrictModeCompat = true;
     const nodeRef = React__namespace.useRef(null);
     const handleRef = useForkRef(nodeRef, children.ref, ref);
@@ -22201,7 +22252,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const backdropClasses = generateUtilityClasses$1("MuiBackdrop", ["root", "invisible"]);
   "use client";
-  const _excluded$28 = ["children", "className", "component", "components", "componentsProps", "invisible", "open", "slotProps", "slots", "TransitionComponent", "transitionDuration"];
+  const _excluded$27 = ["children", "className", "component", "components", "componentsProps", "invisible", "open", "slotProps", "slots", "TransitionComponent", "transitionDuration"];
   const useUtilityClasses$1N = (ownerState) => {
     const {
       classes,
@@ -22239,7 +22290,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }));
   const Backdrop = /* @__PURE__ */ React__namespace.forwardRef(function Backdrop2(inProps, ref) {
     var _slotProps$root, _ref, _slots$root;
-    const props = useThemeProps$6({
+    const props = useDefaultProps({
       props: inProps,
       name: "MuiBackdrop"
     });
@@ -22255,7 +22306,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       slots = {},
       TransitionComponent = Fade,
       transitionDuration
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$28);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$27);
     const ownerState = _extends$1({}, props, {
       component,
       invisible
@@ -22380,7 +22431,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const modalClasses$1 = generateUtilityClasses$1("MuiModal", ["root", "hidden", "backdrop"]);
   "use client";
-  const _excluded$27 = ["BackdropComponent", "BackdropProps", "classes", "className", "closeAfterTransition", "children", "container", "component", "components", "componentsProps", "disableAutoFocus", "disableEnforceFocus", "disableEscapeKeyDown", "disablePortal", "disableRestoreFocus", "disableScrollLock", "hideBackdrop", "keepMounted", "onBackdropClick", "onClose", "onTransitionEnter", "onTransitionExited", "open", "slotProps", "slots", "theme"];
+  const _excluded$26 = ["BackdropComponent", "BackdropProps", "classes", "className", "closeAfterTransition", "children", "container", "component", "components", "componentsProps", "disableAutoFocus", "disableEnforceFocus", "disableEscapeKeyDown", "disablePortal", "disableRestoreFocus", "disableScrollLock", "hideBackdrop", "keepMounted", "onBackdropClick", "onClose", "onTransitionEnter", "onTransitionExited", "open", "slotProps", "slots", "theme"];
   const useUtilityClasses$1M = (ownerState) => {
     const {
       open,
@@ -22426,7 +22477,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   });
   const Modal$1 = /* @__PURE__ */ React__namespace.forwardRef(function Modal2(inProps, ref) {
     var _ref, _slots$root, _ref2, _slots$backdrop, _slotProps$root, _slotProps$backdrop;
-    const props = useThemeProps$6({
+    const props = useDefaultProps({
       name: "MuiModal",
       props: inProps
     });
@@ -22453,7 +22504,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       slotProps,
       slots
       // eslint-disable-next-line react/prop-types
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$27);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$26);
     const propsWithDefaults = _extends$1({}, props, {
       closeAfterTransition,
       disableAutoFocus,
@@ -22733,7 +22784,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const popoverClasses = generateUtilityClasses$1("MuiPopover", ["root", "paper"]);
   "use client";
-  const _excluded$26 = ["onEntering"], _excluded2$d = ["action", "anchorEl", "anchorOrigin", "anchorPosition", "anchorReference", "children", "className", "container", "elevation", "marginThreshold", "open", "PaperProps", "slots", "slotProps", "transformOrigin", "TransitionComponent", "transitionDuration", "TransitionProps", "disableScrollLock"], _excluded3$5 = ["slotProps"];
+  const _excluded$25 = ["onEntering"], _excluded2$d = ["action", "anchorEl", "anchorOrigin", "anchorPosition", "anchorReference", "children", "className", "container", "elevation", "marginThreshold", "open", "PaperProps", "slots", "slotProps", "transformOrigin", "TransitionComponent", "transitionDuration", "TransitionProps", "disableScrollLock"], _excluded3$5 = ["slotProps"];
   function getOffsetTop(rect, vertical) {
     let offset2 = 0;
     if (typeof vertical === "number") {
@@ -22796,7 +22847,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   });
   const Popover = /* @__PURE__ */ React__namespace.forwardRef(function Popover2(inProps, ref) {
     var _slotProps$paper, _slots$root, _slots$paper;
-    const props = useThemeProps$6({
+    const props = useDefaultProps({
       props: inProps,
       name: "MuiPopover"
     });
@@ -22828,7 +22879,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         onEntering
       } = {},
       disableScrollLock = false
-    } = props, TransitionProps = _objectWithoutPropertiesLoose(props.TransitionProps, _excluded$26), other = _objectWithoutPropertiesLoose(props, _excluded2$d);
+    } = props, TransitionProps = _objectWithoutPropertiesLoose(props.TransitionProps, _excluded$25), other = _objectWithoutPropertiesLoose(props, _excluded2$d);
     const externalPaperSlotProps = (_slotProps$paper = slotProps == null ? void 0 : slotProps.paper) != null ? _slotProps$paper : PaperPropsProp;
     const paperRef = React__namespace.useRef();
     const handlePaperRef = useForkRef(paperRef, externalPaperSlotProps.ref);
@@ -23218,7 +23269,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const menuClasses$1 = generateUtilityClasses$1("MuiMenu", ["root", "paper", "list"]);
   "use client";
-  const _excluded$25 = ["onEntering"], _excluded2$c = ["autoFocus", "children", "className", "disableAutoFocusItem", "MenuListProps", "onClose", "open", "PaperProps", "PopoverClasses", "transitionDuration", "TransitionProps", "variant", "slots", "slotProps"];
+  const _excluded$24 = ["onEntering"], _excluded2$c = ["autoFocus", "children", "className", "disableAutoFocusItem", "MenuListProps", "onClose", "open", "PaperProps", "PopoverClasses", "transitionDuration", "TransitionProps", "variant", "slots", "slotProps"];
   const RTL_ORIGIN = {
     vertical: "top",
     horizontal: "right"
@@ -23266,7 +23317,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   });
   const Menu$1 = /* @__PURE__ */ React__namespace.forwardRef(function Menu2(inProps, ref) {
     var _slots$paper, _slotProps$paper;
-    const props = useThemeProps$6({
+    const props = useDefaultProps({
       props: inProps,
       name: "MuiMenu"
     });
@@ -23287,7 +23338,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       variant = "selectedMenu",
       slots = {},
       slotProps = {}
-    } = props, TransitionProps = _objectWithoutPropertiesLoose(props.TransitionProps, _excluded$25), other = _objectWithoutPropertiesLoose(props, _excluded2$c);
+    } = props, TransitionProps = _objectWithoutPropertiesLoose(props.TransitionProps, _excluded$24), other = _objectWithoutPropertiesLoose(props, _excluded2$c);
     const isRtl = useRtl();
     const ownerState = _extends$1({}, props, {
       autoFocus,
@@ -23500,7 +23551,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const listItemIconClasses = generateUtilityClasses$1("MuiListItemIcon", ["root", "alignItemsFlexStart"]);
   "use client";
-  const _excluded$24 = ["className"];
+  const _excluded$23 = ["className"];
   const useUtilityClasses$1J = (ownerState) => {
     const {
       alignItems: alignItems2,
@@ -23532,13 +23583,13 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     marginTop: 8
   }));
   const ListItemIcon = /* @__PURE__ */ React__namespace.forwardRef(function ListItemIcon2(inProps, ref) {
-    const props = useThemeProps$6({
+    const props = useDefaultProps({
       props: inProps,
       name: "MuiListItemIcon"
     });
     const {
       className
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$24);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$23);
     const context = React__namespace.useContext(ListContext$1);
     const ownerState = _extends$1({}, props, {
       alignItems: context.alignItems
@@ -23579,7 +23630,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const dividerClasses = generateUtilityClasses$1("MuiDivider", ["root", "absolute", "fullWidth", "inset", "middle", "flexItem", "light", "vertical", "withChildren", "withChildrenVertical", "textAlignRight", "textAlignLeft", "wrapper", "wrapperVertical"]);
   "use client";
-  const _excluded$23 = ["absolute", "children", "className", "component", "flexItem", "light", "orientation", "role", "textAlign", "variant"];
+  const _excluded$22 = ["absolute", "children", "className", "component", "flexItem", "light", "orientation", "role", "textAlign", "variant"];
   const useUtilityClasses$1I = (ownerState) => {
     const {
       absolute,
@@ -23705,7 +23756,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     paddingBottom: `calc(${theme.spacing(1)} * 1.2)`
   }));
   const Divider = /* @__PURE__ */ React__namespace.forwardRef(function Divider2(inProps, ref) {
-    const props = useThemeProps$6({
+    const props = useDefaultProps({
       props: inProps,
       name: "MuiDivider"
     });
@@ -23720,7 +23771,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       role = component !== "hr" ? "separator" : void 0,
       textAlign: textAlign2 = "center",
       variant = "fullWidth"
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$23);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$22);
     const ownerState = _extends$1({}, props, {
       absolute,
       component,
@@ -23816,7 +23867,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const typographyClasses = generateUtilityClasses$1("MuiTypography", ["root", "h1", "h2", "h3", "h4", "h5", "h6", "subtitle1", "subtitle2", "body1", "body2", "inherit", "button", "caption", "overline", "alignLeft", "alignRight", "alignCenter", "alignJustify", "noWrap", "gutterBottom", "paragraph"]);
   "use client";
-  const _excluded$22 = ["align", "className", "component", "gutterBottom", "noWrap", "paragraph", "variant", "variantMapping"];
+  const _excluded$21 = ["align", "className", "component", "gutterBottom", "noWrap", "paragraph", "variant", "variantMapping"];
   const useUtilityClasses$1H = (ownerState) => {
     const {
       align,
@@ -23883,7 +23934,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     return colorTransformations[color2] || color2;
   };
   const Typography = /* @__PURE__ */ React__namespace.forwardRef(function Typography2(inProps, ref) {
-    const themeProps = useThemeProps$6({
+    const themeProps = useDefaultProps({
       props: inProps,
       name: "MuiTypography"
     });
@@ -23900,7 +23951,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       paragraph = false,
       variant = "body1",
       variantMapping = defaultVariantMapping
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$22);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$21);
     const ownerState = _extends$1({}, props, {
       align,
       color: color2,
@@ -24002,7 +24053,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const listItemTextClasses = generateUtilityClasses$1("MuiListItemText", ["root", "multiline", "dense", "inset", "primary", "secondary"]);
   "use client";
-  const _excluded$21 = ["children", "className", "disableTypography", "inset", "primary", "primaryTypographyProps", "secondary", "secondaryTypographyProps"];
+  const _excluded$20 = ["children", "className", "disableTypography", "inset", "primary", "primaryTypographyProps", "secondary", "secondaryTypographyProps"];
   const useUtilityClasses$1G = (ownerState) => {
     const {
       classes,
@@ -24045,7 +24096,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     paddingLeft: 56
   }));
   const ListItemText = /* @__PURE__ */ React__namespace.forwardRef(function ListItemText2(inProps, ref) {
-    const props = useThemeProps$6({
+    const props = useDefaultProps({
       props: inProps,
       name: "MuiListItemText"
     });
@@ -24058,7 +24109,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       primaryTypographyProps,
       secondary: secondaryProp,
       secondaryTypographyProps
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$21);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$20);
     const {
       dense
     } = React__namespace.useContext(ListContext$1);
@@ -24160,7 +24211,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const menuItemClasses$1 = generateUtilityClasses$1("MuiMenuItem", ["root", "focusVisible", "dense", "disabled", "divider", "gutters", "selected"]);
   "use client";
-  const _excluded$20 = ["autoFocus", "component", "dense", "divider", "disableGutters", "focusVisibleClassName", "role", "tabIndex", "className"];
+  const _excluded$1$ = ["autoFocus", "component", "dense", "divider", "disableGutters", "focusVisibleClassName", "role", "tabIndex", "className"];
   const overridesResolver$6 = (props, styles2) => {
     const {
       ownerState
@@ -24267,7 +24318,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }
   })));
   const MenuItem$1 = /* @__PURE__ */ React__namespace.forwardRef(function MenuItem2(inProps, ref) {
-    const props = useThemeProps$6({
+    const props = useDefaultProps({
       props: inProps,
       name: "MuiMenuItem"
     });
@@ -24281,7 +24332,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       role = "menuitem",
       tabIndex: tabIndexProp,
       className
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$20);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1$);
     const context = React__namespace.useContext(ListContext$1);
     const childContext = React__namespace.useMemo(() => ({
       dense: dense || context.dense || false,
@@ -24406,7 +24457,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       slot: "Root",
       overridesResolver: (props, styles2) => styles2.root
     }),
-    useThemeProps: (inProps) => useThemeProps$6({
+    useThemeProps: (inProps) => useDefaultProps({
       props: inProps,
       name: "MuiStack"
     })
@@ -24473,7 +24524,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const switchBaseClasses = generateUtilityClasses$1("PrivateSwitchBase", ["root", "checked", "disabled", "input", "edgeStart", "edgeEnd"]);
   "use client";
-  const _excluded$1$ = ["autoFocus", "checked", "checkedIcon", "className", "defaultChecked", "disabled", "disableFocusRipple", "edge", "icon", "id", "inputProps", "inputRef", "name", "onBlur", "onChange", "onFocus", "readOnly", "required", "tabIndex", "type", "value"];
+  const _excluded$1_ = ["autoFocus", "checked", "checkedIcon", "className", "defaultChecked", "disabled", "disableFocusRipple", "edge", "icon", "id", "inputProps", "inputRef", "name", "onBlur", "onChange", "onFocus", "readOnly", "required", "tabIndex", "type", "value"];
   const useUtilityClasses$1E = (ownerState) => {
     const {
       classes,
@@ -24534,7 +24585,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       tabIndex,
       type,
       value
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1$);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1_);
     const [checked, setCheckedState] = useControlled({
       controlled: checkedProp,
       default: Boolean(defaultChecked),
@@ -24723,7 +24774,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const svgIconClasses = generateUtilityClasses$1("MuiSvgIcon", ["root", "colorPrimary", "colorSecondary", "colorAction", "colorError", "colorDisabled", "fontSizeInherit", "fontSizeSmall", "fontSizeMedium", "fontSizeLarge"]);
   "use client";
-  const _excluded$1_ = ["children", "className", "color", "component", "fontSize", "htmlColor", "inheritViewBox", "titleAccess", "viewBox"];
+  const _excluded$1Z = ["children", "className", "color", "component", "fontSize", "htmlColor", "inheritViewBox", "titleAccess", "viewBox"];
   const useUtilityClasses$1D = (ownerState) => {
     const {
       color: color2,
@@ -24776,7 +24827,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     };
   });
   const SvgIcon = /* @__PURE__ */ React__namespace.forwardRef(function SvgIcon2(inProps, ref) {
-    const props = useThemeProps$6({
+    const props = useDefaultProps({
       props: inProps,
       name: "MuiSvgIcon"
     });
@@ -24790,7 +24841,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       inheritViewBox = false,
       titleAccess,
       viewBox = "0 0 24 24"
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1_);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1Z);
     const hasSvgAsChild = /* @__PURE__ */ React__namespace.isValidElement(children) && children.type === "svg";
     const ownerState = _extends$1({}, props, {
       color: color2,
@@ -24928,7 +24979,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const checkboxClasses = generateUtilityClasses$1("MuiCheckbox", ["root", "checked", "disabled", "indeterminate", "colorPrimary", "colorSecondary", "sizeSmall", "sizeMedium"]);
   "use client";
-  const _excluded$1Z = ["checkedIcon", "color", "icon", "indeterminate", "indeterminateIcon", "inputProps", "size", "className"];
+  const _excluded$1Y = ["checkedIcon", "color", "icon", "indeterminate", "indeterminateIcon", "inputProps", "size", "className"];
   const useUtilityClasses$1C = (ownerState) => {
     const {
       classes,
@@ -24978,7 +25029,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   const defaultIndeterminateIcon = /* @__PURE__ */ jsxRuntimeExports.jsx(IndeterminateCheckBoxIcon, {});
   const Checkbox = /* @__PURE__ */ React__namespace.forwardRef(function Checkbox2(inProps, ref) {
     var _icon$props$fontSize, _indeterminateIcon$pr;
-    const props = useThemeProps$6({
+    const props = useDefaultProps({
       props: inProps,
       name: "MuiCheckbox"
     });
@@ -24991,7 +25042,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       inputProps,
       size: size2 = "medium",
       className
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1Z);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1Y);
     const icon = indeterminate ? indeterminateIconProp : iconProp;
     const indeterminateIcon = indeterminate ? indeterminateIconProp : checkedIcon;
     const ownerState = _extends$1({}, props, {
@@ -25208,7 +25259,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const radioClasses = generateUtilityClasses$1("MuiRadio", ["root", "checked", "disabled", "colorPrimary", "colorSecondary", "sizeSmall"]);
   "use client";
-  const _excluded$1Y = ["checked", "checkedIcon", "color", "icon", "name", "onChange", "size", "className"];
+  const _excluded$1X = ["checked", "checkedIcon", "color", "icon", "name", "onChange", "size", "className"];
   const useUtilityClasses$1B = (ownerState) => {
     const {
       classes,
@@ -25264,7 +25315,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   const defaultIcon = /* @__PURE__ */ jsxRuntimeExports.jsx(RadioButtonIcon, {});
   const Radio = /* @__PURE__ */ React__namespace.forwardRef(function Radio2(inProps, ref) {
     var _defaultIcon$props$fo, _defaultCheckedIcon$p;
-    const props = useThemeProps$6({
+    const props = useDefaultProps({
       props: inProps,
       name: "MuiRadio"
     });
@@ -25277,7 +25328,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       onChange: onChangeProp,
       size: size2 = "medium",
       className
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1Y);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1X);
     const ownerState = _extends$1({}, props, {
       color: color2,
       size: size2
@@ -25435,8 +25486,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   const require$$0 = /* @__PURE__ */ getAugmentedNamespace(utils);
   var hasRequiredCreateSvgIcon;
   function requireCreateSvgIcon() {
-    if (hasRequiredCreateSvgIcon)
-      return createSvgIcon;
+    if (hasRequiredCreateSvgIcon) return createSvgIcon;
     hasRequiredCreateSvgIcon = 1;
     (function(exports3) {
       "use strict";
@@ -26636,7 +26686,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const tableContainerClasses = generateUtilityClasses$1("MuiTableContainer", ["root"]);
   "use client";
-  const _excluded$1X = ["className", "component"];
+  const _excluded$1W = ["className", "component"];
   const useUtilityClasses$1A = (ownerState) => {
     const {
       classes
@@ -26655,14 +26705,14 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     overflowX: "auto"
   });
   const TableContainer = /* @__PURE__ */ React__namespace.forwardRef(function TableContainer2(inProps, ref) {
-    const props = useThemeProps$6({
+    const props = useDefaultProps({
       props: inProps,
       name: "MuiTableContainer"
     });
     const {
       className,
       component = "div"
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1X);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1W);
     const ownerState = _extends$1({}, props, {
       component
     });
@@ -26712,7 +26762,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const tableClasses = generateUtilityClasses$1("MuiTable", ["root", "stickyHeader"]);
   "use client";
-  const _excluded$1W = ["className", "component", "padding", "size", "stickyHeader"];
+  const _excluded$1V = ["className", "component", "padding", "size", "stickyHeader"];
   const useUtilityClasses$1z = (ownerState) => {
     const {
       classes,
@@ -26751,7 +26801,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }));
   const defaultComponent$4 = "table";
   const Table = /* @__PURE__ */ React__namespace.forwardRef(function Table2(inProps, ref) {
-    const props = useThemeProps$6({
+    const props = useDefaultProps({
       props: inProps,
       name: "MuiTable"
     });
@@ -26761,7 +26811,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       padding: padding2 = "normal",
       size: size2 = "medium",
       stickyHeader = false
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1W);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1V);
     const ownerState = _extends$1({}, props, {
       component,
       padding: padding2,
@@ -26839,7 +26889,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const tableBodyClasses = generateUtilityClasses$1("MuiTableBody", ["root"]);
   "use client";
-  const _excluded$1V = ["className", "component"];
+  const _excluded$1U = ["className", "component"];
   const useUtilityClasses$1y = (ownerState) => {
     const {
       classes
@@ -26861,14 +26911,14 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   };
   const defaultComponent$3 = "tbody";
   const TableBody = /* @__PURE__ */ React__namespace.forwardRef(function TableBody2(inProps, ref) {
-    const props = useThemeProps$6({
+    const props = useDefaultProps({
       props: inProps,
       name: "MuiTableBody"
     });
     const {
       className,
       component = defaultComponent$3
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1V);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1U);
     const ownerState = _extends$1({}, props, {
       component
     });
@@ -26917,7 +26967,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const tableRowClasses = generateUtilityClasses$1("MuiTableRow", ["root", "selected", "hover", "head", "footer"]);
   "use client";
-  const _excluded$1U = ["className", "component", "hover", "selected"];
+  const _excluded$1T = ["className", "component", "hover", "selected"];
   const useUtilityClasses$1x = (ownerState) => {
     const {
       classes,
@@ -26960,7 +27010,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }));
   const defaultComponent$2 = "tr";
   const TableRow = /* @__PURE__ */ React__namespace.forwardRef(function TableRow2(inProps, ref) {
-    const props = useThemeProps$6({
+    const props = useDefaultProps({
       props: inProps,
       name: "MuiTableRow"
     });
@@ -26969,7 +27019,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       component = defaultComponent$2,
       hover = false,
       selected = false
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1U);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1T);
     const tablelvl22 = React__namespace.useContext(Tablelvl2Context);
     const ownerState = _extends$1({}, props, {
       component,
@@ -27030,7 +27080,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const skeletonClasses = generateUtilityClasses$1("MuiSkeleton", ["root", "text", "rectangular", "rounded", "circular", "pulse", "wave", "withChildren", "fitContent", "heightAuto"]);
   "use client";
-  const _excluded$1T = ["animation", "className", "component", "height", "style", "variant", "width"];
+  const _excluded$1S = ["animation", "className", "component", "height", "style", "variant", "width"];
   let _$1 = (t) => t, _t$1, _t2$1, _t3$1, _t4$1;
   const useUtilityClasses$1w = (ownerState) => {
     const {
@@ -27148,7 +27198,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       }
     `), waveKeyframe, (theme.vars || theme).palette.action.hover));
   const Skeleton = /* @__PURE__ */ React__namespace.forwardRef(function Skeleton2(inProps, ref) {
-    const props = useThemeProps$6({
+    const props = useDefaultProps({
       props: inProps,
       name: "MuiSkeleton"
     });
@@ -27160,7 +27210,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       style: style2,
       variant = "text",
       width: width2
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1T);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1S);
     const ownerState = _extends$1({}, props, {
       animation,
       component,
@@ -27238,7 +27288,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const tableCellClasses = generateUtilityClasses$1("MuiTableCell", ["root", "head", "body", "footer", "sizeSmall", "sizeMedium", "paddingCheckbox", "paddingNone", "alignLeft", "alignCenter", "alignRight", "alignJustify", "stickyHeader"]);
   "use client";
-  const _excluded$1S = ["align", "className", "component", "padding", "scope", "size", "sortDirection", "variant"];
+  const _excluded$1R = ["align", "className", "component", "padding", "scope", "size", "sortDirection", "variant"];
   const useUtilityClasses$1v = (ownerState) => {
     const {
       classes,
@@ -27316,7 +27366,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     backgroundColor: (theme.vars || theme).palette.background.default
   }));
   const TableCell = /* @__PURE__ */ React__namespace.forwardRef(function TableCell2(inProps, ref) {
-    const props = useThemeProps$6({
+    const props = useDefaultProps({
       props: inProps,
       name: "MuiTableCell"
     });
@@ -27329,7 +27379,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       size: sizeProp,
       sortDirection,
       variant: variantProp
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1S);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1R);
     const table = React__namespace.useContext(TableContext);
     const tablelvl22 = React__namespace.useContext(Tablelvl2Context);
     const isHeadCell = tablelvl22 && tablelvl22.variant === "head";
@@ -27587,7 +27637,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const badgeClasses$1 = generateUtilityClasses(COMPONENT_NAME$k, ["root", "badge", "invisible"]);
   "use client";
-  const _excluded$1R = ["badgeContent", "children", "invisible", "max", "slotProps", "slots", "showZero"];
+  const _excluded$1Q = ["badgeContent", "children", "invisible", "max", "slotProps", "slots", "showZero"];
   const useUtilityClasses$1u = (ownerState) => {
     const {
       invisible
@@ -27606,7 +27656,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       slotProps = {},
       slots = {},
       showZero = false
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1R);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1Q);
     const {
       badgeContent,
       max: max2,
@@ -27865,7 +27915,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   "use client";
   "use client";
-  const _excluded$1Q = ["action", "children", "disabled", "focusableWhenDisabled", "onFocusVisible", "slotProps", "slots", "rootElementName"];
+  const _excluded$1P = ["action", "children", "disabled", "focusableWhenDisabled", "onFocusVisible", "slotProps", "slots", "rootElementName"];
   const useUtilityClasses$1t = (ownerState) => {
     const {
       active,
@@ -27886,7 +27936,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       slotProps = {},
       slots = {},
       rootElementName: rootElementNameProp = "button"
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1Q);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1P);
     const buttonRef = React__namespace.useRef();
     let rootElementName = rootElementNameProp;
     if (typeof slots.root === "string") {
@@ -28376,7 +28426,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const formControlClasses$1 = generateUtilityClasses(COMPONENT_NAME$i, ["root", "disabled", "error", "filled", "focused", "required"]);
   "use client";
-  const _excluded$1P = ["defaultValue", "children", "disabled", "error", "onChange", "required", "slotProps", "slots", "value"];
+  const _excluded$1O = ["defaultValue", "children", "disabled", "error", "onChange", "required", "slotProps", "slots", "value"];
   function hasValue$1(value) {
     return value != null && !(Array.isArray(value) && value.length === 0) && value !== "";
   }
@@ -28405,7 +28455,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       slotProps = {},
       slots = {},
       value: incomingValue
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1P);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1O);
     const [value, setValue] = useControlled({
       controlled: incomingValue,
       default: defaultValue,
@@ -28674,7 +28724,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   "use client";
   "use client";
-  const _excluded$1O = ["aria-describedby", "aria-label", "aria-labelledby", "autoComplete", "autoFocus", "className", "defaultValue", "disabled", "endAdornment", "error", "id", "multiline", "name", "onClick", "onChange", "onKeyDown", "onKeyUp", "onFocus", "onBlur", "placeholder", "readOnly", "required", "startAdornment", "value", "type", "rows", "slotProps", "slots", "minRows", "maxRows"];
+  const _excluded$1N = ["aria-describedby", "aria-label", "aria-labelledby", "autoComplete", "autoFocus", "className", "defaultValue", "disabled", "endAdornment", "error", "id", "multiline", "name", "onClick", "onChange", "onKeyDown", "onKeyUp", "onFocus", "onBlur", "placeholder", "readOnly", "required", "startAdornment", "value", "type", "rows", "slotProps", "slots", "minRows", "maxRows"];
   const useUtilityClasses$1r = (ownerState) => {
     const {
       disabled,
@@ -28724,7 +28774,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       slots = {},
       minRows,
       maxRows
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1O);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1N);
     const {
       getRootProps,
       getInputProps,
@@ -29963,8 +30013,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     switch (side) {
       case "top":
       case "bottom":
-        if (rtl)
-          return isStart ? rl : lr;
+        if (rtl) return isStart ? rl : lr;
         return isStart ? lr : rl;
       case "left":
       case "right":
@@ -30415,10 +30464,12 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
             return {};
           }
           const side = getSide(placement);
+          const initialSideAxis = getSideAxis(initialPlacement);
           const isBasePlacement = getSide(initialPlacement) === initialPlacement;
           const rtl = yield platform2.isRTL == null ? void 0 : platform2.isRTL(elements.floating);
           const fallbackPlacements = specifiedFallbackPlacements || (isBasePlacement || !flipAlignment ? [getOppositePlacement(initialPlacement)] : getExpandedPlacements(initialPlacement));
-          if (!specifiedFallbackPlacements && fallbackAxisSideDirection !== "none") {
+          const hasFallbackAxisSideDirection = fallbackAxisSideDirection !== "none";
+          if (!specifiedFallbackPlacements && hasFallbackAxisSideDirection) {
             fallbackPlacements.push(...getOppositeAxisPlacements(initialPlacement, flipAlignment, fallbackAxisSideDirection, rtl));
           }
           const placements2 = [initialPlacement, ...fallbackPlacements];
@@ -30455,8 +30506,16 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
             if (!resetPlacement) {
               switch (fallbackStrategy) {
                 case "bestFit": {
-                  var _overflowsData$map$so;
-                  const placement2 = (_overflowsData$map$so = overflowsData.map((d) => [d.placement, d.overflows.filter((overflow3) => overflow3 > 0).reduce((acc, overflow3) => acc + overflow3, 0)]).sort((a, b) => a[1] - b[1])[0]) == null ? void 0 : _overflowsData$map$so[0];
+                  var _overflowsData$filter2;
+                  const placement2 = (_overflowsData$filter2 = overflowsData.filter((d) => {
+                    if (hasFallbackAxisSideDirection) {
+                      const currentSideAxis = getSideAxis(d.placement);
+                      return currentSideAxis === initialSideAxis || // Create a bias to the `y` side axis due to horizontal
+                      // reading directions favoring greater width.
+                      currentSideAxis === "y";
+                    }
+                    return true;
+                  }).map((d) => [d.placement, d.overflows.filter((overflow3) => overflow3 > 0).reduce((acc, overflow3) => acc + overflow3, 0)]).sort((a, b) => a[1] - b[1])[0]) == null ? void 0 : _overflowsData$filter2[0];
                   if (placement2) {
                     resetPlacement = placement2;
                   }
@@ -30985,6 +31044,15 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   function isTableElement(element) {
     return ["table", "td", "th"].includes(getNodeName(element));
   }
+  function isTopLayer(element) {
+    return [":popover-open", ":modal"].some((selector) => {
+      try {
+        return element.matches(selector);
+      } catch (e) {
+        return false;
+      }
+    });
+  }
   function isContainingBlock(element) {
     const webkit = isWebKit();
     const css = getComputedStyle(element);
@@ -30993,6 +31061,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   function getContainingBlock(element) {
     let currentNode = getParentNode(element);
     while (isHTMLElement$1(currentNode) && !isLastTraversableNode(currentNode)) {
+      if (isTopLayer(currentNode)) {
+        return null;
+      }
       if (isContainingBlock(currentNode)) {
         return currentNode;
       }
@@ -31001,8 +31072,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     return null;
   }
   function isWebKit() {
-    if (typeof CSS === "undefined" || !CSS.supports)
-      return false;
+    if (typeof CSS === "undefined" || !CSS.supports) return false;
     return CSS.supports("-webkit-backdrop-filter", "none");
   }
   function isLastTraversableNode(node2) {
@@ -31019,8 +31089,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       };
     }
     return {
-      scrollLeft: element.pageXOffset,
-      scrollTop: element.pageYOffset
+      scrollLeft: element.scrollX,
+      scrollTop: element.scrollY
     };
   }
   function getParentNode(node2) {
@@ -31177,16 +31247,6 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       height: height2,
       x,
       y
-    });
-  }
-  const topLayerSelectors = [":popover-open", ":modal"];
-  function isTopLayer(element) {
-    return topLayerSelectors.some((selector) => {
-      try {
-        return element.matches(selector);
-      } catch (e) {
-        return false;
-      }
     });
   }
   function convertOffsetParentRelativeRectToViewportRelativeRect(_ref) {
@@ -31650,8 +31710,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     if (a && b && typeof a === "object") {
       if (Array.isArray(a)) {
         length2 = a.length;
-        if (length2 !== b.length)
-          return false;
+        if (length2 !== b.length) return false;
         for (i = length2; i-- !== 0; ) {
           if (!deepEqual$1(a[i], b[i])) {
             return false;
@@ -31791,10 +31850,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       };
     }, []);
     index(() => {
-      if (referenceEl)
-        referenceRef.current = referenceEl;
-      if (floatingEl)
-        floatingRef.current = floatingEl;
+      if (referenceEl) referenceRef.current = referenceEl;
+      if (floatingEl) floatingRef.current = floatingEl;
       if (referenceEl && floatingEl) {
         if (whileElementsMountedRef.current) {
           return whileElementsMountedRef.current(referenceEl, floatingEl, update);
@@ -31983,7 +32040,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     PopupContext.displayName = "PopupContext";
   }
   "use client";
-  const _excluded$1N = ["anchor", "children", "container", "disablePortal", "keepMounted", "middleware", "offset", "open", "placement", "slotProps", "slots", "strategy"];
+  const _excluded$1M = ["anchor", "children", "container", "disablePortal", "keepMounted", "middleware", "offset", "open", "placement", "slotProps", "slots", "strategy"];
   function useUtilityClasses$1q(ownerState) {
     const {
       open
@@ -32011,7 +32068,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       slotProps = {},
       slots = {},
       strategy = "absolute"
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1N);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1M);
     const {
       refs,
       elements,
@@ -32185,7 +32242,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   } : void 0;
   "use client";
   "use client";
-  const _excluded$1M = ["actions", "anchor", "children", "onItemsChange", "slotProps", "slots"];
+  const _excluded$1L = ["actions", "anchor", "children", "onItemsChange", "slotProps", "slots"];
   function useUtilityClasses$1p(ownerState) {
     const {
       open
@@ -32205,7 +32262,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       onItemsChange,
       slotProps = {},
       slots = {}
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1M);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1L);
     const {
       contextValue,
       getListboxProps,
@@ -32400,7 +32457,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const menuButtonClasses = generateUtilityClasses(COMPONENT_NAME$e, ["root", "active", "disabled", "expanded"]);
   "use client";
-  const _excluded$1L = ["children", "disabled", "label", "slots", "slotProps", "focusableWhenDisabled"];
+  const _excluded$1K = ["children", "disabled", "label", "slots", "slotProps", "focusableWhenDisabled"];
   const useUtilityClasses$1o = (ownerState) => {
     const {
       active,
@@ -32419,7 +32476,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       slots = {},
       slotProps = {},
       focusableWhenDisabled = false
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1L);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1K);
     const {
       getRootProps,
       open,
@@ -32657,7 +32714,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   "use client";
   "use client";
-  const _excluded$1K = ["children", "disabled", "label", "id", "slotProps", "slots"];
+  const _excluded$1J = ["children", "disabled", "label", "id", "slotProps", "slots"];
   function useUtilityClasses$1n(ownerState) {
     const {
       disabled,
@@ -32677,7 +32734,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       id,
       slotProps = {},
       slots = {}
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1K);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1J);
     const {
       getRootProps,
       disabled,
@@ -32780,7 +32837,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const modalClasses = generateUtilityClasses(COMPONENT_NAME$c, ["root", "hidden", "backdrop"]);
   "use client";
-  const _excluded$1J = ["children", "closeAfterTransition", "container", "disableAutoFocus", "disableEnforceFocus", "disableEscapeKeyDown", "disablePortal", "disableRestoreFocus", "disableScrollLock", "hideBackdrop", "keepMounted", "onBackdropClick", "onClose", "onKeyDown", "open", "onTransitionEnter", "onTransitionExited", "slotProps", "slots"];
+  const _excluded$1I = ["children", "closeAfterTransition", "container", "disableAutoFocus", "disableEnforceFocus", "disableEscapeKeyDown", "disablePortal", "disableRestoreFocus", "disableScrollLock", "hideBackdrop", "keepMounted", "onBackdropClick", "onClose", "onKeyDown", "open", "onTransitionEnter", "onTransitionExited", "slotProps", "slots"];
   const useUtilityClasses$1m = (ownerState) => {
     const {
       open,
@@ -32810,7 +32867,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       open,
       slotProps = {},
       slots = {}
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1J);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1I);
     const propsWithDefaults = _extends$1({}, props, {
       closeAfterTransition,
       disableAutoFocus,
@@ -33511,7 +33568,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   "use client";
   "use client";
-  const _excluded$1I = ["className", "defaultValue", "disabled", "endAdornment", "error", "id", "max", "min", "onBlur", "onInputChange", "onFocus", "onChange", "placeholder", "required", "readOnly", "shiftMultiplier", "startAdornment", "step", "value", "slotProps", "slots"];
+  const _excluded$1H = ["className", "defaultValue", "disabled", "endAdornment", "error", "id", "max", "min", "onBlur", "onInputChange", "onFocus", "onChange", "placeholder", "required", "readOnly", "shiftMultiplier", "startAdornment", "step", "value", "slotProps", "slots"];
   const useUtilityClasses$1l = (ownerState) => {
     const {
       disabled,
@@ -33556,7 +33613,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       value,
       slotProps = {},
       slots = {}
-    } = props, rest = _objectWithoutPropertiesLoose(props, _excluded$1I);
+    } = props, rest = _objectWithoutPropertiesLoose(props, _excluded$1H);
     const {
       getRootProps,
       getInputProps,
@@ -33768,7 +33825,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const optionGroupClasses = generateUtilityClasses(COMPONENT_NAME$a, ["root", "disabled", "label", "list"]);
   "use client";
-  const _excluded$1H = ["disabled", "slotProps", "slots"];
+  const _excluded$1G = ["disabled", "slotProps", "slots"];
   function useUtilityClasses$1k(disabled) {
     const slots = {
       root: ["root", disabled && "disabled"],
@@ -33782,7 +33839,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       disabled = false,
       slotProps = {},
       slots = {}
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1H);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1G);
     const Root = (slots == null ? void 0 : slots.root) || "li";
     const Label = (slots == null ? void 0 : slots.label) || "span";
     const List2 = (slots == null ? void 0 : slots.list) || "ul";
@@ -33966,7 +34023,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   "use client";
   "use client";
-  const _excluded$1G = ["children", "disabled", "label", "slotProps", "slots", "value"];
+  const _excluded$1F = ["children", "disabled", "label", "slotProps", "slots", "value"];
   function useUtilityClasses$1j(ownerState) {
     const {
       disabled,
@@ -33987,7 +34044,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       slotProps = {},
       slots = {},
       value
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1G);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1F);
     const Root = (_slots$root = slots.root) != null ? _slots$root : "li";
     const optionRef = React__namespace.useRef(null);
     const combinedRef = useForkRef(optionRef, forwardedRef);
@@ -34535,7 +34592,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   const selectClasses$1 = generateUtilityClasses(COMPONENT_NAME$8, ["root", "button", "listbox", "popup", "active", "expanded", "disabled", "focusVisible"]);
   "use client";
   var _span$5;
-  const _excluded$1F = ["areOptionsEqual", "autoComplete", "autoFocus", "children", "defaultValue", "defaultListboxOpen", "disabled", "getSerializedValue", "listboxId", "listboxOpen", "multiple", "name", "required", "onChange", "onListboxOpenChange", "getOptionAsString", "renderValue", "placeholder", "slotProps", "slots", "value"];
+  const _excluded$1E = ["areOptionsEqual", "autoComplete", "autoFocus", "children", "defaultValue", "defaultListboxOpen", "disabled", "getSerializedValue", "listboxId", "listboxOpen", "multiple", "name", "required", "onChange", "onListboxOpenChange", "getOptionAsString", "renderValue", "placeholder", "slotProps", "slots", "value"];
   function defaultRenderValue(selectedOptions) {
     var _selectedOptions$labe;
     if (Array.isArray(selectedOptions)) {
@@ -34583,7 +34640,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       slotProps = {},
       slots = {},
       value: valueProp
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1F);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1E);
     const renderValue = renderValueProp != null ? renderValueProp : defaultRenderValue;
     const [buttonDefined, setButtonDefined] = React__namespace.useState(false);
     const buttonRef = React__namespace.useRef(null);
@@ -35428,7 +35485,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   "use client";
   "use client";
-  const _excluded$1E = ["aria-label", "aria-valuetext", "aria-labelledby", "className", "disableSwap", "disabled", "getAriaLabel", "getAriaValueText", "marks", "max", "min", "name", "onChange", "onChangeCommitted", "orientation", "shiftStep", "scale", "step", "tabIndex", "track", "value", "valueLabelFormat", "isRtl", "defaultValue", "slotProps", "slots"];
+  const _excluded$1D = ["aria-label", "aria-valuetext", "aria-labelledby", "className", "disableSwap", "disabled", "getAriaLabel", "getAriaValueText", "marks", "max", "min", "name", "onChange", "onChangeCommitted", "orientation", "shiftStep", "scale", "step", "tabIndex", "track", "value", "valueLabelFormat", "isRtl", "defaultValue", "slotProps", "slots"];
   function Identity$1(x) {
     return x;
   }
@@ -35480,7 +35537,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       defaultValue,
       slotProps = {},
       slots = {}
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1E);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1D);
     const partialOwnerState = _extends$1({}, props, {
       marks: marksProp,
       disabled,
@@ -35946,7 +36003,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   "use client";
   "use client";
-  const _excluded$1D = ["autoHideDuration", "children", "disableWindowBlurListener", "exited", "onBlur", "onClose", "onFocus", "onMouseEnter", "onMouseLeave", "open", "resumeHideDuration", "slotProps", "slots"];
+  const _excluded$1C = ["autoHideDuration", "children", "disableWindowBlurListener", "exited", "onBlur", "onClose", "onFocus", "onMouseEnter", "onMouseLeave", "open", "resumeHideDuration", "slotProps", "slots"];
   const useUtilityClasses$1g = () => {
     const slots = {
       root: ["root"]
@@ -35964,7 +36021,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       resumeHideDuration,
       slotProps = {},
       slots = {}
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1D);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1C);
     const classes = useUtilityClasses$1g();
     const {
       getRootProps,
@@ -36176,7 +36233,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const switchClasses$1 = generateUtilityClasses(COMPONENT_NAME$5, ["root", "input", "track", "thumb", "checked", "disabled", "focusVisible", "readOnly"]);
   "use client";
-  const _excluded$1C = ["checked", "defaultChecked", "disabled", "onBlur", "onChange", "onFocus", "onFocusVisible", "readOnly", "required", "slotProps", "slots"];
+  const _excluded$1B = ["checked", "defaultChecked", "disabled", "onBlur", "onChange", "onFocus", "onFocusVisible", "readOnly", "required", "slotProps", "slots"];
   const useUtilityClasses$1f = (ownerState) => {
     const {
       checked,
@@ -36197,7 +36254,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const {
       slotProps = {},
       slots = {}
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1C);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1B);
     const {
       getInputProps,
       checked,
@@ -36322,7 +36379,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   } : void 0;
   "use client";
   "use client";
-  const _excluded$1B = ["count", "getItemAriaLabel", "onPageChange", "page", "rowsPerPage", "showFirstButton", "showLastButton", "direction", "ownerState", "slotProps", "slots"];
+  const _excluded$1A = ["count", "getItemAriaLabel", "onPageChange", "page", "rowsPerPage", "showFirstButton", "showLastButton", "direction", "ownerState", "slotProps", "slots"];
   var _span$4, _span2, _span3, _span4;
   function LastPageIconDefault() {
     return _span$4 || (_span$4 = /* @__PURE__ */ jsxRuntimeExports.jsx("span", {
@@ -36360,7 +36417,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       direction,
       slotProps = {},
       slots = {}
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1B);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1A);
     const ownerState = props;
     const handleFirstPageButtonClick = (event) => {
       onPageChange(event, 0);
@@ -36454,7 +36511,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const tablePaginationClasses = generateUtilityClasses(COMPONENT_NAME$4, ["root", "toolbar", "spacer", "selectLabel", "selectRoot", "select", "selectIcon", "input", "menuItem", "displayedRows", "actions"]);
   "use client";
-  const _excluded$1A = ["colSpan", "count", "getItemAriaLabel", "labelDisplayedRows", "labelId", "labelRowsPerPage", "onPageChange", "onRowsPerPageChange", "page", "rowsPerPage", "rowsPerPageOptions", "selectId", "slotProps", "slots"];
+  const _excluded$1z = ["colSpan", "count", "getItemAriaLabel", "labelDisplayedRows", "labelId", "labelRowsPerPage", "onPageChange", "onRowsPerPageChange", "page", "rowsPerPage", "rowsPerPageOptions", "selectId", "slotProps", "slots"];
   function defaultLabelDisplayedRows({
     from: from2,
     to,
@@ -36497,7 +36554,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       selectId: selectIdProp,
       slotProps = {},
       slots = {}
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1A);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1z);
     const ownerState = props;
     const classes = useUtilityClasses$1e();
     let colSpan;
@@ -36856,7 +36913,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   "use client";
   "use client";
-  const _excluded$1z = ["children", "value", "defaultValue", "orientation", "direction", "onChange", "selectionFollowsFocus", "slotProps", "slots"];
+  const _excluded$1y = ["children", "value", "defaultValue", "orientation", "direction", "onChange", "selectionFollowsFocus", "slotProps", "slots"];
   const useUtilityClasses$1d = (ownerState) => {
     const {
       orientation
@@ -36874,7 +36931,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       direction = "ltr",
       slotProps = {},
       slots = {}
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1z);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1y);
     const ownerState = _extends$1({}, props, {
       orientation,
       direction
@@ -37005,7 +37062,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     };
   }
   "use client";
-  const _excluded$1y = ["children", "value", "slotProps", "slots"];
+  const _excluded$1x = ["children", "value", "slotProps", "slots"];
   const useUtilityClasses$1c = (ownerState) => {
     const {
       hidden
@@ -37021,7 +37078,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       children,
       slotProps = {},
       slots = {}
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1y);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1x);
     const {
       hidden,
       getRootProps
@@ -37261,7 +37318,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   "use client";
   "use client";
-  const _excluded$1x = ["children", "slotProps", "slots"];
+  const _excluded$1w = ["children", "slotProps", "slots"];
   const useUtilityClasses$1b = (ownerState) => {
     const {
       orientation
@@ -37277,7 +37334,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       children,
       slotProps = {},
       slots = {}
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1x);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1w);
     const {
       isRtl,
       orientation,
@@ -37417,7 +37474,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   "use client";
   "use client";
-  const _excluded$1w = ["action", "children", "disabled", "onChange", "onClick", "onFocus", "slotProps", "slots", "value"];
+  const _excluded$1v = ["action", "children", "disabled", "onChange", "onClick", "onFocus", "slotProps", "slots", "value"];
   const useUtilityClasses$1a = (ownerState) => {
     const {
       selected,
@@ -37436,7 +37493,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       slotProps = {},
       slots = {},
       value
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1w);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1v);
     const tabRef = React__namespace.useRef();
     const handleRef = useForkRef(tabRef, forwardedRef);
     const {
@@ -37519,7 +37576,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   } : void 0;
   "use client";
   "use client";
-  const _excluded$1v = ["onChange", "maxRows", "minRows", "style", "value"];
+  const _excluded$1u = ["onChange", "maxRows", "minRows", "style", "value"];
   function getStyleValue(value) {
     return parseInt(value, 10) || 0;
   }
@@ -37548,7 +37605,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       minRows = 1,
       style: style2,
       value
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1v);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1u);
     const {
       current: isControlled
     } = React__namespace.useRef(value != null);
@@ -37698,7 +37755,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   } : void 0;
   "use client";
   "use client";
-  const _excluded$1u = ["children", "className", "enterAnimationName", "enterClassName", "exitAnimationName", "exitClassName"];
+  const _excluded$1t = ["children", "className", "enterAnimationName", "enterClassName", "exitAnimationName", "exitClassName"];
   function CssAnimation(props) {
     const {
       children,
@@ -37707,7 +37764,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       enterClassName,
       exitAnimationName,
       exitClassName
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1u);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1t);
     const {
       requestedEnter,
       onExited
@@ -37742,7 +37799,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     exitClassName: PropTypes.string
   } : void 0;
   "use client";
-  const _excluded$1t = ["children", "className", "lastTransitionedPropertyOnExit", "enterClassName", "exitClassName"];
+  const _excluded$1s = ["children", "className", "lastTransitionedPropertyOnExit", "enterClassName", "exitClassName"];
   const CssTransition = /* @__PURE__ */ React__namespace.forwardRef(function CssTransition2(props, forwardedRef) {
     const {
       children,
@@ -37750,7 +37807,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       lastTransitionedPropertyOnExit,
       enterClassName,
       exitClassName
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1t);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1s);
     const {
       requestedEnter,
       onExited
@@ -38755,7 +38812,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const inputBaseClasses = generateUtilityClasses$1("MuiInputBase", ["root", "formControl", "focused", "disabled", "adornedStart", "adornedEnd", "error", "sizeSmall", "multiline", "colorSecondary", "fullWidth", "hiddenLabel", "readOnly", "input", "inputSizeSmall", "inputMultiline", "inputTypeSearch", "inputAdornedStart", "inputAdornedEnd", "inputHiddenLabel"]);
   "use client";
-  const _excluded$1s = ["aria-describedby", "autoComplete", "autoFocus", "className", "color", "components", "componentsProps", "defaultValue", "disabled", "disableInjectingGlobalStyles", "endAdornment", "error", "fullWidth", "id", "inputComponent", "inputProps", "inputRef", "margin", "maxRows", "minRows", "multiline", "name", "onBlur", "onChange", "onClick", "onFocus", "onKeyDown", "onKeyUp", "placeholder", "readOnly", "renderSuffix", "rows", "size", "slotProps", "slots", "startAdornment", "type", "value"];
+  const _excluded$1r = ["aria-describedby", "autoComplete", "autoFocus", "className", "color", "components", "componentsProps", "defaultValue", "disabled", "disableInjectingGlobalStyles", "endAdornment", "error", "fullWidth", "id", "inputComponent", "inputProps", "inputRef", "margin", "maxRows", "minRows", "multiline", "name", "onBlur", "onChange", "onClick", "onFocus", "onKeyDown", "onKeyUp", "placeholder", "readOnly", "renderSuffix", "rows", "size", "slotProps", "slots", "startAdornment", "type", "value"];
   const rootOverridesResolver = (props, styles2) => {
     const {
       ownerState
@@ -38940,7 +38997,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   });
   const InputBase = /* @__PURE__ */ React__namespace.forwardRef(function InputBase2(inProps, ref) {
     var _slotProps$input;
-    const props = useThemeProps$6({
+    const props = useDefaultProps({
       props: inProps,
       name: "MuiInputBase"
     });
@@ -38979,7 +39036,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       startAdornment,
       type = "text",
       value: valueProp
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1s);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1r);
     const value = inputPropsProp.value != null ? inputPropsProp.value : valueProp;
     const {
       current: isControlled
@@ -39426,7 +39483,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const inputClasses = _extends$1({}, inputBaseClasses, generateUtilityClasses$1("MuiInput", ["root", "underline", "input"]));
   "use client";
-  const _excluded$1r = ["disableUnderline", "components", "componentsProps", "fullWidth", "inputComponent", "multiline", "slotProps", "slots", "type"];
+  const _excluded$1q = ["disableUnderline", "components", "componentsProps", "fullWidth", "inputComponent", "multiline", "slotProps", "slots", "type"];
   const useUtilityClasses$18 = (ownerState) => {
     const {
       classes,
@@ -39524,7 +39581,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   })({});
   const Input = /* @__PURE__ */ React__namespace.forwardRef(function Input2(inProps, ref) {
     var _ref, _slots$root, _ref2, _slots$input;
-    const props = useThemeProps$6({
+    const props = useDefaultProps({
       props: inProps,
       name: "MuiInput"
     });
@@ -39538,7 +39595,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       slotProps,
       slots = {},
       type = "text"
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1r);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1q);
     const classes = useUtilityClasses$18(props);
     const ownerState = {
       disableUnderline
@@ -39759,7 +39816,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const filledInputClasses = _extends$1({}, inputBaseClasses, generateUtilityClasses$1("MuiFilledInput", ["root", "underline", "input"]));
   "use client";
-  const _excluded$1q = ["disableUnderline", "components", "componentsProps", "fullWidth", "hiddenLabel", "inputComponent", "multiline", "slotProps", "slots", "type"];
+  const _excluded$1p = ["disableUnderline", "components", "componentsProps", "fullWidth", "hiddenLabel", "inputComponent", "multiline", "slotProps", "slots", "type"];
   const useUtilityClasses$17 = (ownerState) => {
     const {
       classes,
@@ -39931,7 +39988,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }));
   const FilledInput = /* @__PURE__ */ React__namespace.forwardRef(function FilledInput2(inProps, ref) {
     var _ref, _slots$root, _ref2, _slots$input;
-    const props = useThemeProps$6({
+    const props = useDefaultProps({
       props: inProps,
       name: "MuiFilledInput"
     });
@@ -39945,7 +40002,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       slotProps,
       slots = {},
       type = "text"
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1q);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1p);
     const ownerState = _extends$1({}, props, {
       fullWidth,
       inputComponent,
@@ -40176,7 +40233,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   "use client";
   "use client";
   var _span$3;
-  const _excluded$1p = ["children", "classes", "className", "label", "notched"];
+  const _excluded$1o = ["children", "classes", "className", "label", "notched"];
   const NotchedOutlineRoot$1 = styled$1("fieldset", {
     shouldForwardProp: rootShouldForwardProp
   })({
@@ -40248,7 +40305,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       className,
       label,
       notched
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1p);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1o);
     const withLabel = label != null && label !== "";
     const ownerState = _extends$1({}, props, {
       notched,
@@ -40304,7 +40361,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const outlinedInputClasses = _extends$1({}, inputBaseClasses, generateUtilityClasses$1("MuiOutlinedInput", ["root", "notchedOutline", "input"]));
   "use client";
-  const _excluded$1o = ["components", "fullWidth", "inputComponent", "label", "multiline", "notched", "slots", "type"];
+  const _excluded$1n = ["components", "fullWidth", "inputComponent", "label", "multiline", "notched", "slots", "type"];
   const useUtilityClasses$16 = (ownerState) => {
     const {
       classes
@@ -40409,7 +40466,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }));
   const OutlinedInput = /* @__PURE__ */ React__namespace.forwardRef(function OutlinedInput2(inProps, ref) {
     var _ref, _slots$root, _ref2, _slots$input, _React$Fragment;
-    const props = useThemeProps$6({
+    const props = useDefaultProps({
       props: inProps,
       name: "MuiOutlinedInput"
     });
@@ -40422,7 +40479,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       notched,
       slots = {},
       type = "text"
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1o);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1n);
     const classes = useUtilityClasses$16(props);
     const muiFormControl = useFormControl();
     const fcs = formControlState({
@@ -40641,7 +40698,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const formLabelClasses = generateUtilityClasses$1("MuiFormLabel", ["root", "colorSecondary", "focused", "disabled", "error", "filled", "required", "asterisk"]);
   "use client";
-  const _excluded$1n = ["children", "className", "color", "component", "disabled", "error", "filled", "focused", "required"];
+  const _excluded$1m = ["children", "className", "color", "component", "disabled", "error", "filled", "focused", "required"];
   const useUtilityClasses$15 = (ownerState) => {
     const {
       classes,
@@ -40697,7 +40754,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }
   }));
   const FormLabel = /* @__PURE__ */ React__namespace.forwardRef(function FormLabel2(inProps, ref) {
-    const props = useThemeProps$6({
+    const props = useDefaultProps({
       props: inProps,
       name: "MuiFormLabel"
     });
@@ -40705,7 +40762,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       children,
       className,
       component = "label"
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1n);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1m);
     const muiFormControl = useFormControl();
     const fcs = formControlState({
       props,
@@ -40795,7 +40852,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const inputLabelClasses = generateUtilityClasses$1("MuiInputLabel", ["root", "focused", "disabled", "error", "required", "asterisk", "formControl", "sizeSmall", "shrink", "animated", "standard", "filled", "outlined"]);
   "use client";
-  const _excluded$1m = ["disableAnimation", "margin", "shrink", "variant", "className"];
+  const _excluded$1l = ["disableAnimation", "margin", "shrink", "variant", "className"];
   const useUtilityClasses$14 = (ownerState) => {
     const {
       classes,
@@ -40888,7 +40945,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     transform: "translate(14px, -9px) scale(0.75)"
   })));
   const InputLabel = /* @__PURE__ */ React__namespace.forwardRef(function InputLabel2(inProps, ref) {
-    const props = useThemeProps$6({
+    const props = useDefaultProps({
       name: "MuiInputLabel",
       props: inProps
     });
@@ -40896,7 +40953,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       disableAnimation = false,
       shrink: shrinkProp,
       className
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1m);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1l);
     const muiFormControl = useFormControl();
     let shrink = shrinkProp;
     if (typeof shrink === "undefined" && muiFormControl) {
@@ -40999,7 +41056,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const formControlClasses = generateUtilityClasses$1("MuiFormControl", ["root", "marginNone", "marginNormal", "marginDense", "fullWidth", "disabled"]);
   "use client";
-  const _excluded$1l = ["children", "className", "color", "component", "disabled", "error", "focused", "fullWidth", "hiddenLabel", "margin", "required", "size", "variant"];
+  const _excluded$1k = ["children", "className", "color", "component", "disabled", "error", "focused", "fullWidth", "hiddenLabel", "margin", "required", "size", "variant"];
   const useUtilityClasses$13 = (ownerState) => {
     const {
       classes,
@@ -41041,7 +41098,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     width: "100%"
   }));
   const FormControl = /* @__PURE__ */ React__namespace.forwardRef(function FormControl2(inProps, ref) {
-    const props = useThemeProps$6({
+    const props = useDefaultProps({
       props: inProps,
       name: "MuiFormControl"
     });
@@ -41059,7 +41116,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       required = false,
       size: size2 = "medium",
       variant = "outlined"
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1l);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1k);
     const ownerState = _extends$1({}, props, {
       color: color2,
       component,
@@ -41248,7 +41305,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   const formHelperTextClasses = generateUtilityClasses$1("MuiFormHelperText", ["root", "error", "disabled", "sizeSmall", "sizeMedium", "contained", "focused", "filled", "required"]);
   "use client";
   var _span$2;
-  const _excluded$1k = ["children", "className", "component", "disabled", "error", "filled", "focused", "margin", "required", "variant"];
+  const _excluded$1j = ["children", "className", "component", "disabled", "error", "filled", "focused", "margin", "required", "variant"];
   const useUtilityClasses$12 = (ownerState) => {
     const {
       classes,
@@ -41298,7 +41355,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     marginRight: 14
   }));
   const FormHelperText = /* @__PURE__ */ React__namespace.forwardRef(function FormHelperText2(inProps, ref) {
-    const props = useThemeProps$6({
+    const props = useDefaultProps({
       props: inProps,
       name: "MuiFormHelperText"
     });
@@ -41306,7 +41363,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       children,
       className,
       component = "p"
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1k);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1j);
     const muiFormControl = useFormControl();
     const fcs = formControlState({
       props,
@@ -41404,7 +41461,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const nativeSelectClasses = generateUtilityClasses$1("MuiNativeSelect", ["root", "select", "multiple", "filled", "outlined", "standard", "disabled", "icon", "iconOpen", "iconFilled", "iconOutlined", "iconStandard", "nativeInput", "error"]);
   "use client";
-  const _excluded$1j = ["className", "disabled", "error", "IconComponent", "inputRef", "variant"];
+  const _excluded$1i = ["className", "disabled", "error", "IconComponent", "inputRef", "variant"];
   const useUtilityClasses$11 = (ownerState) => {
     const {
       classes,
@@ -41529,7 +41586,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       IconComponent,
       inputRef,
       variant = "standard"
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1j);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1i);
     const ownerState = _extends$1({}, props, {
       disabled,
       variant,
@@ -41610,7 +41667,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   const selectClasses = generateUtilityClasses$1("MuiSelect", ["root", "select", "multiple", "filled", "outlined", "standard", "disabled", "focused", "icon", "iconOpen", "iconFilled", "iconOutlined", "iconStandard", "nativeInput", "error"]);
   "use client";
   var _span$1;
-  const _excluded$1i = ["aria-describedby", "aria-label", "autoFocus", "autoWidth", "children", "className", "defaultOpen", "defaultValue", "disabled", "displayEmpty", "error", "IconComponent", "inputRef", "labelId", "MenuProps", "multiple", "name", "onBlur", "onChange", "onClose", "onFocus", "onOpen", "open", "readOnly", "renderValue", "SelectDisplayProps", "tabIndex", "type", "value", "variant"];
+  const _excluded$1h = ["aria-describedby", "aria-label", "autoFocus", "autoWidth", "children", "className", "defaultOpen", "defaultValue", "disabled", "displayEmpty", "error", "IconComponent", "inputRef", "labelId", "MenuProps", "multiple", "name", "onBlur", "onChange", "onClose", "onFocus", "onOpen", "open", "readOnly", "renderValue", "SelectDisplayProps", "tabIndex", "type", "value", "variant"];
   const SelectSelect = styled$1("div", {
     name: "MuiSelect",
     slot: "Select",
@@ -41727,7 +41784,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       tabIndex: tabIndexProp,
       value: valueProp,
       variant = "standard"
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1i);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1h);
     const [value, setValueState] = useControlled({
       controlled: valueProp,
       default: defaultValue,
@@ -42221,7 +42278,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     d: "M7 10l5 5 5-5z"
   }), "ArrowDropDown");
   "use client";
-  const _excluded$1h = ["autoWidth", "children", "classes", "className", "defaultOpen", "displayEmpty", "IconComponent", "id", "input", "inputProps", "label", "labelId", "MenuProps", "multiple", "native", "onClose", "onOpen", "open", "renderValue", "SelectDisplayProps", "variant"], _excluded2$b = ["root"];
+  const _excluded$1g = ["autoWidth", "children", "classes", "className", "defaultOpen", "displayEmpty", "IconComponent", "id", "input", "inputProps", "label", "labelId", "MenuProps", "multiple", "native", "onClose", "onOpen", "open", "renderValue", "SelectDisplayProps", "variant"], _excluded2$b = ["root"];
   const useUtilityClasses$$ = (ownerState) => {
     const {
       classes
@@ -42238,7 +42295,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   const StyledOutlinedInput = styled$1(OutlinedInput, styledRootConfig)("");
   const StyledFilledInput = styled$1(FilledInput, styledRootConfig)("");
   const Select = /* @__PURE__ */ React__namespace.forwardRef(function Select2(inProps, ref) {
-    const props = useThemeProps$6({
+    const props = useDefaultProps({
       name: "MuiSelect",
       props: inProps
     });
@@ -42264,7 +42321,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       renderValue,
       SelectDisplayProps,
       variant: variantProp = "outlined"
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1h);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1g);
     const inputComponent = native ? NativeSelectInput : SelectInput;
     const muiFormControl = useFormControl();
     const fcs = formControlState({
@@ -42487,7 +42544,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const textFieldClasses = generateUtilityClasses$1("MuiTextField", ["root"]);
   "use client";
-  const _excluded$1g = ["autoComplete", "autoFocus", "children", "className", "color", "defaultValue", "disabled", "error", "FormHelperTextProps", "fullWidth", "helperText", "id", "InputLabelProps", "inputProps", "InputProps", "inputRef", "label", "maxRows", "minRows", "multiline", "name", "onBlur", "onChange", "onFocus", "placeholder", "required", "rows", "select", "SelectProps", "type", "value", "variant"];
+  const _excluded$1f = ["autoComplete", "autoFocus", "children", "className", "color", "defaultValue", "disabled", "error", "FormHelperTextProps", "fullWidth", "helperText", "id", "InputLabelProps", "inputProps", "InputProps", "inputRef", "label", "maxRows", "minRows", "multiline", "name", "onBlur", "onChange", "onFocus", "placeholder", "required", "rows", "select", "SelectProps", "type", "value", "variant"];
   const variantComponent = {
     standard: Input,
     filled: FilledInput,
@@ -42508,7 +42565,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     overridesResolver: (props, styles2) => styles2.root
   })({});
   const TextField = /* @__PURE__ */ React__namespace.forwardRef(function TextField2(inProps, ref) {
-    const props = useThemeProps$6({
+    const props = useDefaultProps({
       props: inProps,
       name: "MuiTextField"
     });
@@ -42545,7 +42602,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       type,
       value,
       variant = "outlined"
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1g);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1f);
     const ownerState = _extends$1({}, props, {
       autoFocus,
       color: color2,
@@ -42811,7 +42868,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const collapseClasses = generateUtilityClasses$1("MuiCollapse", ["root", "horizontal", "vertical", "entered", "hidden", "wrapper", "wrapperInner"]);
   "use client";
-  const _excluded$1f = ["addEndListener", "children", "className", "collapsedSize", "component", "easing", "in", "onEnter", "onEntered", "onEntering", "onExit", "onExited", "onExiting", "orientation", "style", "timeout", "TransitionComponent"];
+  const _excluded$1e = ["addEndListener", "children", "className", "collapsedSize", "component", "easing", "in", "onEnter", "onEntered", "onEntering", "onExit", "onExited", "onExiting", "orientation", "style", "timeout", "TransitionComponent"];
   const useUtilityClasses$Z = (ownerState) => {
     const {
       orientation,
@@ -42881,7 +42938,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     height: "100%"
   }));
   const Collapse = /* @__PURE__ */ React__namespace.forwardRef(function Collapse2(inProps, ref) {
-    const props = useThemeProps$6({
+    const props = useDefaultProps({
       props: inProps,
       name: "MuiCollapse"
     });
@@ -42904,7 +42961,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       timeout = duration.standard,
       // eslint-disable-next-line react/prop-types
       TransitionComponent = Transition
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1f);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1e);
     const ownerState = _extends$1({}, props, {
       orientation,
       collapsedSize: collapsedSizeProp
@@ -43160,7 +43217,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const tableFooterClasses = generateUtilityClasses$1("MuiTableFooter", ["root"]);
   "use client";
-  const _excluded$1e = ["className", "component"];
+  const _excluded$1d = ["className", "component"];
   const useUtilityClasses$Y = (ownerState) => {
     const {
       classes
@@ -43182,14 +43239,14 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   };
   const defaultComponent$1 = "tfoot";
   const TableFooter = /* @__PURE__ */ React__namespace.forwardRef(function TableFooter2(inProps, ref) {
-    const props = useThemeProps$6({
+    const props = useDefaultProps({
       props: inProps,
       name: "MuiTableFooter"
     });
     const {
       className,
       component = defaultComponent$1
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1e);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1d);
     const ownerState = _extends$1({}, props, {
       component
     });
@@ -43238,7 +43295,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const tableHeadClasses = generateUtilityClasses$1("MuiTableHead", ["root"]);
   "use client";
-  const _excluded$1d = ["className", "component"];
+  const _excluded$1c = ["className", "component"];
   const useUtilityClasses$X = (ownerState) => {
     const {
       classes
@@ -43260,14 +43317,14 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   };
   const defaultComponent = "thead";
   const TableHead = /* @__PURE__ */ React__namespace.forwardRef(function TableHead2(inProps, ref) {
-    const props = useThemeProps$6({
+    const props = useDefaultProps({
       props: inProps,
       name: "MuiTableHead"
     });
     const {
       className,
       component = defaultComponent
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1d);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1c);
     const ownerState = _extends$1({}, props, {
       component
     });
@@ -43316,7 +43373,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const formControlLabelClasses = generateUtilityClasses$1("MuiFormControlLabel", ["root", "labelPlacementStart", "labelPlacementTop", "labelPlacementBottom", "disabled", "label", "error", "required", "asterisk"]);
   "use client";
-  const _excluded$1c = ["checked", "className", "componentsProps", "control", "disabled", "disableTypography", "inputRef", "label", "labelPlacement", "name", "onChange", "required", "slotProps", "value"];
+  const _excluded$1b = ["checked", "className", "componentsProps", "control", "disabled", "disableTypography", "inputRef", "label", "labelPlacement", "name", "onChange", "required", "slotProps", "value"];
   const useUtilityClasses$W = (ownerState) => {
     const {
       classes,
@@ -43390,7 +43447,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }));
   const FormControlLabel = /* @__PURE__ */ React__namespace.forwardRef(function FormControlLabel2(inProps, ref) {
     var _ref, _slotProps$typography;
-    const props = useThemeProps$6({
+    const props = useDefaultProps({
       props: inProps,
       name: "MuiFormControlLabel"
     });
@@ -43404,7 +43461,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       labelPlacement = "end",
       required: requiredProp,
       slotProps = {}
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1c);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1b);
     const muiFormControl = useFormControl();
     const disabled = (_ref = disabledProp != null ? disabledProp : control.props.disabled) != null ? _ref : muiFormControl == null ? void 0 : muiFormControl.disabled;
     const required = requiredProp != null ? requiredProp : control.props.required;
@@ -43541,7 +43598,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const listSubheaderClasses = generateUtilityClasses$1("MuiListSubheader", ["root", "colorPrimary", "colorInherit", "gutters", "inset", "sticky"]);
   "use client";
-  const _excluded$1b = ["className", "color", "component", "disableGutters", "disableSticky", "inset"];
+  const _excluded$1a = ["className", "color", "component", "disableGutters", "disableSticky", "inset"];
   const useUtilityClasses$V = (ownerState) => {
     const {
       classes,
@@ -43591,7 +43648,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     backgroundColor: (theme.vars || theme).palette.background.paper
   }));
   const ListSubheader = /* @__PURE__ */ React__namespace.forwardRef(function ListSubheader2(inProps, ref) {
-    const props = useThemeProps$6({
+    const props = useDefaultProps({
       props: inProps,
       name: "MuiListSubheader"
     });
@@ -43602,7 +43659,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       disableGutters = false,
       disableSticky = false,
       inset = false
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1b);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1a);
     const ownerState = _extends$1({}, props, {
       color: color2,
       component,
@@ -43676,7 +43733,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const chipClasses = generateUtilityClasses$1("MuiChip", ["root", "sizeSmall", "sizeMedium", "colorError", "colorInfo", "colorPrimary", "colorSecondary", "colorSuccess", "colorWarning", "disabled", "clickable", "clickableColorPrimary", "clickableColorSecondary", "deletable", "deletableColorPrimary", "deletableColorSecondary", "outlined", "filled", "outlinedPrimary", "outlinedSecondary", "filledPrimary", "filledSecondary", "avatar", "avatarSmall", "avatarMedium", "avatarColorPrimary", "avatarColorSecondary", "icon", "iconSmall", "iconMedium", "iconColorPrimary", "iconColorSecondary", "label", "labelSmall", "labelMedium", "deleteIcon", "deleteIconSmall", "deleteIconMedium", "deleteIconColorPrimary", "deleteIconColorSecondary", "deleteIconOutlinedColorPrimary", "deleteIconOutlinedColorSecondary", "deleteIconFilledColorPrimary", "deleteIconFilledColorSecondary", "focusVisible"]);
   "use client";
-  const _excluded$1a = ["avatar", "className", "clickable", "color", "component", "deleteIcon", "disabled", "icon", "label", "onClick", "onDelete", "onKeyDown", "onKeyUp", "size", "variant", "tabIndex", "skipFocusWhenDisabled"];
+  const _excluded$19 = ["avatar", "className", "clickable", "color", "component", "deleteIcon", "disabled", "icon", "label", "onClick", "onDelete", "onKeyDown", "onKeyUp", "size", "variant", "tabIndex", "skipFocusWhenDisabled"];
   const useUtilityClasses$U = (ownerState) => {
     const {
       classes,
@@ -43935,7 +43992,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     return keyboardEvent.key === "Backspace" || keyboardEvent.key === "Delete";
   }
   const Chip = /* @__PURE__ */ React__namespace.forwardRef(function Chip2(inProps, ref) {
-    const props = useThemeProps$6({
+    const props = useDefaultProps({
       props: inProps,
       name: "MuiChip"
     });
@@ -43958,7 +44015,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       tabIndex,
       skipFocusWhenDisabled = false
       // TODO v6: Rename to `focusableWhenDisabled`.
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$1a);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$19);
     const chipRef = React__namespace.useRef(null);
     const handleRef = useForkRef(chipRef, ref);
     const handleDeleteIconClick = (event) => {
@@ -44159,7 +44216,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     d: "M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
   }), "Close");
   function createUseThemeProps(name) {
-    return useThemeProps$6;
+    return useThemeProps;
   }
   function getAutocompleteUtilityClass(slot) {
     return generateUtilityClass$1("MuiAutocomplete", slot);
@@ -44167,8 +44224,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   const autocompleteClasses = generateUtilityClasses$1("MuiAutocomplete", ["root", "expanded", "fullWidth", "focused", "focusVisible", "tag", "tagSizeSmall", "tagSizeMedium", "hasPopupIcon", "hasClearIcon", "inputRoot", "input", "inputFocused", "endAdornment", "clearIndicator", "popupIndicator", "popupIndicatorOpen", "popper", "popperDisablePortal", "paper", "listbox", "loading", "noOptions", "option", "groupLabel", "groupUl"]);
   "use client";
   var _ClearIcon, _ArrowDropDownIcon;
-  const _excluded$19 = ["autoComplete", "autoHighlight", "autoSelect", "blurOnSelect", "ChipProps", "className", "clearIcon", "clearOnBlur", "clearOnEscape", "clearText", "closeText", "componentsProps", "defaultValue", "disableClearable", "disableCloseOnSelect", "disabled", "disabledItemsFocusable", "disableListWrap", "disablePortal", "filterOptions", "filterSelectedOptions", "forcePopupIcon", "freeSolo", "fullWidth", "getLimitTagsText", "getOptionDisabled", "getOptionKey", "getOptionLabel", "isOptionEqualToValue", "groupBy", "handleHomeEndKeys", "id", "includeInputInList", "inputValue", "limitTags", "ListboxComponent", "ListboxProps", "loading", "loadingText", "multiple", "noOptionsText", "onChange", "onClose", "onHighlightChange", "onInputChange", "onOpen", "open", "openOnFocus", "openText", "options", "PaperComponent", "PopperComponent", "popupIcon", "readOnly", "renderGroup", "renderInput", "renderOption", "renderTags", "selectOnFocus", "size", "slotProps", "value"], _excluded2$a = ["ref"], _excluded3$4 = ["key"], _excluded4 = ["key"];
-  const useThemeProps$5 = createUseThemeProps("MuiAutocomplete");
+  const _excluded$18 = ["autoComplete", "autoHighlight", "autoSelect", "blurOnSelect", "ChipProps", "className", "clearIcon", "clearOnBlur", "clearOnEscape", "clearText", "closeText", "componentsProps", "defaultValue", "disableClearable", "disableCloseOnSelect", "disabled", "disabledItemsFocusable", "disableListWrap", "disablePortal", "filterOptions", "filterSelectedOptions", "forcePopupIcon", "freeSolo", "fullWidth", "getLimitTagsText", "getOptionDisabled", "getOptionKey", "getOptionLabel", "isOptionEqualToValue", "groupBy", "handleHomeEndKeys", "id", "includeInputInList", "inputValue", "limitTags", "ListboxComponent", "ListboxProps", "loading", "loadingText", "multiple", "noOptionsText", "onChange", "onClose", "onHighlightChange", "onInputChange", "onOpen", "open", "openOnFocus", "openText", "options", "PaperComponent", "PopperComponent", "popupIcon", "readOnly", "renderGroup", "renderInput", "renderOption", "renderTags", "selectOnFocus", "size", "slotProps", "value"], _excluded2$a = ["ref"], _excluded3$4 = ["key"], _excluded4 = ["key"];
   const useUtilityClasses$T = (ownerState) => {
     const {
       classes,
@@ -44228,6 +44284,15 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       }, styles2.root, fullWidth && styles2.fullWidth, hasPopupIcon && styles2.hasPopupIcon, hasClearIcon && styles2.hasClearIcon];
     }
   })({
+    [`&.${autocompleteClasses.focused} .${autocompleteClasses.clearIndicator}`]: {
+      visibility: "visible"
+    },
+    /* Avoid double tap issue on iOS */
+    "@media (pointer: fine)": {
+      [`&:hover .${autocompleteClasses.clearIndicator}`]: {
+        visibility: "visible"
+      }
+    },
     [`& .${autocompleteClasses.tag}`]: {
       margin: 3,
       maxWidth: "calc(100% - 6px)"
@@ -44242,23 +44307,6 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       [`& .${autocompleteClasses.input}`]: {
         width: 0,
         minWidth: 30
-      }
-    },
-    [`&.${autocompleteClasses.focused}`]: {
-      [`& .${autocompleteClasses.clearIndicator}`]: {
-        visibility: "visible"
-      },
-      [`& .${autocompleteClasses.input}`]: {
-        minWidth: 0
-      }
-    },
-    /* Avoid double tap issue on iOS */
-    "@media (pointer: fine)": {
-      [`&:hover .${autocompleteClasses.clearIndicator}`]: {
-        visibility: "visible"
-      },
-      [`&:hover .${autocompleteClasses.input}`]: {
-        minWidth: 0
       }
     },
     [`& .${inputClasses.root}`]: {
@@ -44550,7 +44598,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   });
   const Autocomplete = /* @__PURE__ */ React__namespace.forwardRef(function Autocomplete2(inProps, ref) {
     var _slotProps$clearIndic, _slotProps$paper, _slotProps$popper, _slotProps$popupIndic;
-    const props = useThemeProps$5({
+    const props = useDefaultProps({
       props: inProps,
       name: "MuiAutocomplete"
     });
@@ -44605,7 +44653,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       selectOnFocus = !props.freeSolo,
       size: size2 = "medium",
       slotProps = {}
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$19);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$18);
     const {
       getRootProps,
       getInputProps,
@@ -45272,7 +45320,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   const inputAdornmentClasses = generateUtilityClasses$1("MuiInputAdornment", ["root", "filled", "standard", "outlined", "positionStart", "positionEnd", "disablePointerEvents", "hiddenLabel", "sizeSmall"]);
   "use client";
   var _span;
-  const _excluded$18 = ["children", "className", "component", "disablePointerEvents", "disableTypography", "position", "variant"];
+  const _excluded$17 = ["children", "className", "component", "disablePointerEvents", "disableTypography", "position", "variant"];
   const overridesResolver$5 = (props, styles2) => {
     const {
       ownerState
@@ -45324,7 +45372,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     pointerEvents: "none"
   }));
   const InputAdornment = /* @__PURE__ */ React__namespace.forwardRef(function InputAdornment2(inProps, ref) {
-    const props = useThemeProps$6({
+    const props = useDefaultProps({
       props: inProps,
       name: "MuiInputAdornment"
     });
@@ -45336,7 +45384,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       disableTypography = false,
       position: position2,
       variant: variantProp
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$18);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$17);
     const muiFormControl = useFormControl() || {};
     let variant = variantProp;
     if (variantProp && muiFormControl.variant) {
@@ -45789,7 +45837,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   };
   const isStringNumber = (valueStr, localizedDigits) => {
     const nonLocalizedValueStr = removeLocalizedDigits(valueStr, localizedDigits);
-    return !Number.isNaN(Number(nonLocalizedValueStr));
+    return nonLocalizedValueStr !== " " && !Number.isNaN(Number(nonLocalizedValueStr));
   };
   const cleanLeadingZeros = (valueStr, size2) => {
     let cleanValueStr = valueStr;
@@ -46263,7 +46311,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         return section.contentType !== "letter" ? Number(section.value) : void 0;
     }
   };
-  const _excluded$17 = ["value", "referenceDate"];
+  const _excluded$16 = ["value", "referenceDate"];
   const singleItemValueManager = {
     emptyValue: null,
     getTodayValue: getTodayDate,
@@ -46271,7 +46319,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       let {
         value,
         referenceDate
-      } = _ref, params = _objectWithoutPropertiesLoose(_ref, _excluded$17);
+      } = _ref, params = _objectWithoutPropertiesLoose(_ref, _excluded$16);
       if (value != null && params.utils.isValid(value)) {
         return value;
       }
@@ -46310,7 +46358,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }),
     parseValueStr: (valueStr, referenceValue, parseDate) => parseDate(valueStr.trim(), referenceValue)
   };
-  const _excluded$16 = ["localeText"];
+  const _excluded$15 = ["localeText"];
   const MuiPickersAdapterContext = /* @__PURE__ */ React__namespace.createContext(null);
   if (process.env.NODE_ENV !== "production") {
     MuiPickersAdapterContext.displayName = "MuiPickersAdapterContext";
@@ -46319,7 +46367,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     var _a;
     const {
       localeText: inLocaleText
-    } = inProps, otherInProps = _objectWithoutPropertiesLoose(inProps, _excluded$16);
+    } = inProps, otherInProps = _objectWithoutPropertiesLoose(inProps, _excluded$15);
     const {
       utils: parentUtils,
       localeText: parentLocaleText
@@ -46327,7 +46375,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       utils: void 0,
       localeText: void 0
     };
-    const props = useThemeProps$6({
+    const props = useThemeProps({
       // We don't want to pass the `localeText` prop to the theme, that way it will always return the theme value,
       // We will then merge this theme value with our value manually
       props: otherInProps,
@@ -46529,7 +46577,6 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   };
   const useUtils = () => useLocalizationContext().utils;
   const useDefaultDates = () => useLocalizationContext().defaultDates;
-  const useLocaleText = () => useLocalizationContext().localeText;
   const useNow = (timezone) => {
     const utils2 = useUtils();
     const now = React__namespace.useRef();
@@ -46542,7 +46589,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     return generateUtilityClass$1("MuiPickersToolbar", slot);
   }
   const pickersToolbarClasses = generateUtilityClasses$1("MuiPickersToolbar", ["root", "content"]);
-  const _excluded$15 = ["children", "className", "toolbarTitle", "hidden", "titleId", "isLandscape", "classes", "landscapeDirection"];
+  const _excluded$14 = ["children", "className", "toolbarTitle", "hidden", "titleId", "isLandscape", "classes", "landscapeDirection"];
   const useUtilityClasses$R = (ownerState) => {
     const {
       classes,
@@ -46612,7 +46659,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }]
   });
   const PickersToolbar = /* @__PURE__ */ React__namespace.forwardRef(function PickersToolbar2(inProps, ref) {
-    const props = useThemeProps$6({
+    const props = useThemeProps({
       props: inProps,
       name: "MuiPickersToolbar"
     });
@@ -46622,7 +46669,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       toolbarTitle,
       hidden,
       titleId
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$15);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$14);
     const ownerState = props;
     const classes = useUtilityClasses$R(ownerState);
     if (hidden) {
@@ -46645,11 +46692,12 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       })]
     }));
   });
+  const usePickersTranslations = () => useLocalizationContext().localeText;
   function getDatePickerToolbarUtilityClass(slot) {
     return generateUtilityClass$1("MuiDatePickerToolbar", slot);
   }
   const datePickerToolbarClasses = generateUtilityClasses$1("MuiDatePickerToolbar", ["root", "title"]);
-  const _excluded$14 = ["value", "isLandscape", "onChange", "toolbarFormat", "toolbarPlaceholder", "views", "className", "onViewChange", "view"];
+  const _excluded$13 = ["value", "isLandscape", "onChange", "toolbarFormat", "toolbarPlaceholder", "views", "className", "onViewChange", "view"];
   const useUtilityClasses$Q = (ownerState) => {
     const {
       classes
@@ -46680,7 +46728,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }]
   });
   const DatePickerToolbar = /* @__PURE__ */ React__namespace.forwardRef(function DatePickerToolbar2(inProps, ref) {
-    const props = useThemeProps$6({
+    const props = useThemeProps({
       props: inProps,
       name: "MuiDatePickerToolbar"
     });
@@ -46691,9 +46739,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       toolbarPlaceholder = "––",
       views,
       className
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$14);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$13);
     const utils2 = useUtils();
-    const localeText = useLocaleText();
+    const translations = usePickersTranslations();
     const classes = useUtilityClasses$Q(props);
     const dateText = React__namespace.useMemo(() => {
       if (!value) {
@@ -46708,7 +46756,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const ownerState = props;
     return /* @__PURE__ */ jsxRuntimeExports.jsx(DatePickerToolbarRoot, _extends$1({
       ref,
-      toolbarTitle: localeText.datePickerToolbarTitle,
+      toolbarTitle: translations.datePickerToolbarTitle,
       isLandscape,
       className: clsx(classes.root, className)
     }, other, {
@@ -46774,7 +46822,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     var _a, _b;
     const utils2 = useUtils();
     const defaultDates = useDefaultDates();
-    const themeProps = useThemeProps$6({
+    const themeProps = useThemeProps({
       props,
       name
     });
@@ -46889,7 +46937,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     });
     return prefersReduced || slowAnimationDevices;
   };
-  const _excluded$13 = ["PaperComponent", "popperPlacement", "ownerState", "children", "paperSlotProps", "paperClasses", "onPaperClick", "onPaperTouchStart"];
+  const _excluded$12 = ["PaperComponent", "popperPlacement", "ownerState", "children", "paperSlotProps", "paperClasses", "onPaperClick", "onPaperTouchStart"];
   const useUtilityClasses$P = (ownerState) => {
     const {
       classes
@@ -47016,7 +47064,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       onPaperTouchStart
       // picks up the style props provided by `Transition`
       // https://mui.com/material-ui/transitions/#child-requirement
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$13);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$12);
     const ownerState = _extends$1({}, inOwnerState, {
       placement: popperPlacement
     });
@@ -47048,7 +47096,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   });
   function PickersPopper(inProps) {
     var _a, _b, _c, _d;
-    const props = useThemeProps$6({
+    const props = useThemeProps({
       props: inProps,
       name: "MuiPickersPopper"
     });
@@ -47341,7 +47389,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const {
       onAccept,
       onChange,
-      value: inValue,
+      value: inValueWithoutRenderTimezone,
       defaultValue: inDefaultValue,
       closeOnSelect = wrapperVariant === "desktop",
       timezone: timezoneProp
@@ -47351,13 +47399,13 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     } = React__namespace.useRef(inDefaultValue);
     const {
       current: isControlled
-    } = React__namespace.useRef(inValue !== void 0);
+    } = React__namespace.useRef(inValueWithoutRenderTimezone !== void 0);
     if (process.env.NODE_ENV !== "production") {
       React__namespace.useEffect(() => {
-        if (isControlled !== (inValue !== void 0)) {
+        if (isControlled !== (inValueWithoutRenderTimezone !== void 0)) {
           console.error([`MUI X: A component is changing the ${isControlled ? "" : "un"}controlled value of a picker to be ${isControlled ? "un" : ""}controlled.`, "Elements should not switch from uncontrolled to controlled (or vice versa).", `Decide between using a controlled or uncontrolled valuefor the lifetime of the component.`, "The nature of the state is determined during the first render. It's considered controlled if the value is not `undefined`.", "More info: https://fb.me/react-controlled-components"].join("\n"));
         }
-      }, [inValue]);
+      }, [inValueWithoutRenderTimezone]);
       React__namespace.useEffect(() => {
         if (!isControlled && defaultValue !== inDefaultValue) {
           console.error([`MUI X: A component is changing the defaultValue of an uncontrolled picker after being initialized. To suppress this warning opt to use a controlled value.`].join("\n"));
@@ -47370,10 +47418,21 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       isOpen,
       setIsOpen
     } = useOpenState(props);
+    const {
+      timezone,
+      value: inValueWithTimezoneToRender,
+      handleValueChange
+    } = useValueWithTimezone({
+      timezone: timezoneProp,
+      value: inValueWithoutRenderTimezone,
+      defaultValue,
+      onChange,
+      valueManager
+    });
     const [dateState, setDateState] = React__namespace.useState(() => {
       let initialValue;
-      if (inValue !== void 0) {
-        initialValue = inValue;
+      if (inValueWithTimezoneToRender !== void 0) {
+        initialValue = inValueWithTimezoneToRender;
       } else if (defaultValue !== void 0) {
         initialValue = defaultValue;
       } else {
@@ -47383,19 +47442,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         draft: initialValue,
         lastPublishedValue: initialValue,
         lastCommittedValue: initialValue,
-        lastControlledValue: inValue,
+        lastControlledValue: inValueWithTimezoneToRender,
         hasBeenModifiedSinceMount: false
       };
-    });
-    const {
-      timezone,
-      handleValueChange
-    } = useValueWithTimezone({
-      timezone: timezoneProp,
-      value: inValue,
-      defaultValue,
-      onChange,
-      valueManager
     });
     useValidation(_extends$1({}, props, {
       value: dateState.draft,
@@ -47418,38 +47467,44 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         lastCommittedValue: shouldCommit ? action.value : prev2.lastCommittedValue,
         hasBeenModifiedSinceMount: true
       }));
-      if (shouldPublish) {
-        const validationError = action.name === "setValueFromField" ? action.context.validationError : validator2({
-          adapter,
-          value: action.value,
-          props: _extends$1({}, props, {
+      let cachedContext = null;
+      const getContext = () => {
+        if (!cachedContext) {
+          const validationError = action.name === "setValueFromField" ? action.context.validationError : validator2({
+            adapter,
             value: action.value,
-            timezone
-          })
-        });
-        const context = {
-          validationError
-        };
-        if (action.name === "setValueFromShortcut") {
-          context.shortcut = action.shortcut;
+            props: _extends$1({}, props, {
+              value: action.value,
+              timezone
+            })
+          });
+          cachedContext = {
+            validationError
+          };
+          if (action.name === "setValueFromShortcut") {
+            cachedContext.shortcut = action.shortcut;
+          }
         }
-        handleValueChange(action.value, context);
+        return cachedContext;
+      };
+      if (shouldPublish) {
+        handleValueChange(action.value, getContext());
       }
       if (shouldCommit && onAccept) {
-        onAccept(action.value);
+        onAccept(action.value, getContext());
       }
       if (shouldClose) {
         setIsOpen(false);
       }
     });
-    if (inValue !== void 0 && (dateState.lastControlledValue === void 0 || !valueManager.areValuesEqual(utils2, dateState.lastControlledValue, inValue))) {
-      const isUpdateComingFromPicker = valueManager.areValuesEqual(utils2, dateState.draft, inValue);
+    if (inValueWithTimezoneToRender !== void 0 && (dateState.lastControlledValue === void 0 || !valueManager.areValuesEqual(utils2, dateState.lastControlledValue, inValueWithTimezoneToRender))) {
+      const isUpdateComingFromPicker = valueManager.areValuesEqual(utils2, dateState.draft, inValueWithTimezoneToRender);
       setDateState((prev2) => _extends$1({}, prev2, {
-        lastControlledValue: inValue
+        lastControlledValue: inValueWithTimezoneToRender
       }, isUpdateComingFromPicker ? {} : {
-        lastCommittedValue: inValue,
-        lastPublishedValue: inValue,
-        draft: inValue,
+        lastCommittedValue: inValueWithTimezoneToRender,
+        lastPublishedValue: inValueWithTimezoneToRender,
+        draft: inValueWithTimezoneToRender,
         hasBeenModifiedSinceMount: true
       }));
     }
@@ -47664,7 +47719,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       setValueAndGoToNextView
     };
   }
-  const _excluded$12 = ["className", "sx"];
+  const _excluded$11 = ["className", "sx"];
   const usePickerViews = ({
     props,
     propsFromPickerValue,
@@ -47679,13 +47734,14 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       onClose
     } = propsFromPickerValue;
     const {
+      view: inView,
       views,
       openTo,
       onViewChange,
       viewRenderers,
       timezone
     } = props;
-    const propsToForwardToView = _objectWithoutPropertiesLoose(props, _excluded$12);
+    const propsToForwardToView = _objectWithoutPropertiesLoose(props, _excluded$11);
     const {
       view,
       setView,
@@ -47694,7 +47750,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       setFocusedView,
       setValueAndGoToNextView
     } = useViews({
-      view: void 0,
+      view: inView,
       views,
       openTo,
       onChange,
@@ -47933,7 +47989,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const dialogActionsClasses = generateUtilityClasses$1("MuiDialogActions", ["root", "spacing"]);
   "use client";
-  const _excluded$11 = ["className", "disableSpacing"];
+  const _excluded$10 = ["className", "disableSpacing"];
   const useUtilityClasses$O = (ownerState) => {
     const {
       classes,
@@ -47967,14 +48023,14 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }
   }));
   const DialogActions = /* @__PURE__ */ React__namespace.forwardRef(function DialogActions2(inProps, ref) {
-    const props = useThemeProps$6({
+    const props = useDefaultProps({
       props: inProps,
       name: "MuiDialogActions"
     });
     const {
       className,
       disableSpacing = false
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$11);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$10);
     const ownerState = _extends$1({}, props, {
       disableSpacing
     });
@@ -48013,7 +48069,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object])
   } : void 0;
   "use client";
-  const _excluded$10 = ["onAccept", "onClear", "onCancel", "onSetToday", "actions"];
+  const _excluded$$ = ["onAccept", "onClear", "onCancel", "onSetToday", "actions"];
   function PickersActionBar(props) {
     const {
       onAccept,
@@ -48021,8 +48077,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       onCancel,
       onSetToday,
       actions
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$10);
-    const localeText = useLocaleText();
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$$);
+    const translations = usePickersTranslations();
     if (actions == null || actions.length === 0) {
       return null;
     }
@@ -48031,22 +48087,22 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         case "clear":
           return /* @__PURE__ */ jsxRuntimeExports.jsx(Button$1, {
             onClick: onClear,
-            children: localeText.clearButtonLabel
+            children: translations.clearButtonLabel
           }, actionType);
         case "cancel":
           return /* @__PURE__ */ jsxRuntimeExports.jsx(Button$1, {
             onClick: onCancel,
-            children: localeText.cancelButtonLabel
+            children: translations.cancelButtonLabel
           }, actionType);
         case "accept":
           return /* @__PURE__ */ jsxRuntimeExports.jsx(Button$1, {
             onClick: onAccept,
-            children: localeText.okButtonLabel
+            children: translations.okButtonLabel
           }, actionType);
         case "today":
           return /* @__PURE__ */ jsxRuntimeExports.jsx(Button$1, {
             onClick: onSetToday,
-            children: localeText.todayButtonLabel
+            children: translations.todayButtonLabel
           }, actionType);
         default:
           return null;
@@ -48090,7 +48146,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const listItemButtonClasses = generateUtilityClasses$1("MuiListItemButton", ["root", "focusVisible", "dense", "alignItemsFlexStart", "disabled", "divider", "gutters", "selected"]);
   "use client";
-  const _excluded$$ = ["alignItems", "autoFocus", "component", "children", "dense", "disableGutters", "divider", "focusVisibleClassName", "selected", "className"];
+  const _excluded$_ = ["alignItems", "autoFocus", "component", "children", "dense", "disableGutters", "divider", "focusVisibleClassName", "selected", "className"];
   const overridesResolver$4 = (props, styles2) => {
     const {
       ownerState
@@ -48176,7 +48232,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     paddingBottom: 4
   }));
   const ListItemButton = /* @__PURE__ */ React__namespace.forwardRef(function ListItemButton2(inProps, ref) {
-    const props = useThemeProps$6({
+    const props = useDefaultProps({
       props: inProps,
       name: "MuiListItemButton"
     });
@@ -48191,7 +48247,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       focusVisibleClassName,
       selected = false,
       className
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$$);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$_);
     const context = React__namespace.useContext(ListContext$1);
     const childContext = React__namespace.useMemo(() => ({
       dense: dense || context.dense || false,
@@ -48316,7 +48372,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const listItemSecondaryActionClasses = generateUtilityClasses$1("MuiListItemSecondaryAction", ["root", "disableGutters"]);
   "use client";
-  const _excluded$_ = ["className"];
+  const _excluded$Z = ["className"];
   const useUtilityClasses$M = (ownerState) => {
     const {
       disableGutters,
@@ -48347,13 +48403,13 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     right: 0
   }));
   const ListItemSecondaryAction = /* @__PURE__ */ React__namespace.forwardRef(function ListItemSecondaryAction2(inProps, ref) {
-    const props = useThemeProps$6({
+    const props = useDefaultProps({
       props: inProps,
       name: "MuiListItemSecondaryAction"
     });
     const {
       className
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$_);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$Z);
     const context = React__namespace.useContext(ListContext$1);
     const ownerState = _extends$1({}, props, {
       disableGutters: context.disableGutters
@@ -48390,7 +48446,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   ListItemSecondaryAction.muiName = "ListItemSecondaryAction";
   "use client";
   "use client";
-  const _excluded$Z = ["className"], _excluded2$9 = ["alignItems", "autoFocus", "button", "children", "className", "component", "components", "componentsProps", "ContainerComponent", "ContainerProps", "dense", "disabled", "disableGutters", "disablePadding", "divider", "focusVisibleClassName", "secondaryAction", "selected", "slotProps", "slots"];
+  const _excluded$Y = ["className"], _excluded2$9 = ["alignItems", "autoFocus", "button", "children", "className", "component", "components", "componentsProps", "ContainerComponent", "ContainerProps", "dense", "disabled", "disableGutters", "disablePadding", "divider", "focusVisibleClassName", "secondaryAction", "selected", "slotProps", "slots"];
   const overridesResolver$3 = (props, styles2) => {
     const {
       ownerState
@@ -48499,7 +48555,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     position: "relative"
   });
   const ListItem = /* @__PURE__ */ React__namespace.forwardRef(function ListItem2(inProps, ref) {
-    const props = useThemeProps$6({
+    const props = useDefaultProps({
       props: inProps,
       name: "MuiListItem"
     });
@@ -48526,7 +48582,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       selected = false,
       slotProps = {},
       slots = {}
-    } = props, ContainerProps = _objectWithoutPropertiesLoose(props.ContainerProps, _excluded$Z), other = _objectWithoutPropertiesLoose(props, _excluded2$9);
+    } = props, ContainerProps = _objectWithoutPropertiesLoose(props.ContainerProps, _excluded$Y), other = _objectWithoutPropertiesLoose(props, _excluded2$9);
     const context = React__namespace.useContext(ListContext$1);
     const childContext = React__namespace.useMemo(() => ({
       dense: dense || context.dense || false,
@@ -48777,14 +48833,14 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   const VIEW_HEIGHT = 336;
   const DIGITAL_CLOCK_VIEW_HEIGHT = 232;
   const MULTI_SECTION_CLOCK_SECTION_WIDTH = 48;
-  const _excluded$Y = ["items", "changeImportance", "isLandscape", "onChange", "isValid"], _excluded2$8 = ["getValue"];
+  const _excluded$X = ["items", "changeImportance", "isLandscape", "onChange", "isValid"], _excluded2$8 = ["getValue"];
   function PickersShortcuts(props) {
     const {
       items,
       changeImportance = "accept",
       onChange,
       isValid
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$Y);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$X);
     if (items == null || items.length === 0) {
       return null;
     }
@@ -49068,7 +49124,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     flexDirection: "column"
   });
   const PickersLayout = function PickersLayout2(inProps) {
-    const props = useThemeProps$6({
+    const props = useThemeProps({
       props: inProps,
       name: "MuiPickersLayout"
     });
@@ -49154,13 +49210,13 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     views: PropTypes.arrayOf(PropTypes.oneOf(["day", "hours", "meridiem", "minutes", "month", "seconds", "year"]).isRequired).isRequired,
     wrapperVariant: PropTypes.oneOf(["desktop", "mobile"])
   } : void 0;
-  const _excluded$X = ["props", "getOpenDialogAriaText"], _excluded2$7 = ["ownerState"], _excluded3$3 = ["ownerState"];
+  const _excluded$W = ["props", "getOpenDialogAriaText"], _excluded2$7 = ["ownerState"], _excluded3$3 = ["ownerState"];
   const useDesktopPicker = (_ref) => {
     var _a, _b, _c, _d, _e;
     let {
       props,
       getOpenDialogAriaText
-    } = _ref, pickerParams = _objectWithoutPropertiesLoose(_ref, _excluded$X);
+    } = _ref, pickerParams = _objectWithoutPropertiesLoose(_ref, _excluded$W);
     const {
       slots,
       slotProps: innerSlotProps,
@@ -49575,7 +49631,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   };
   const useFieldState = (params) => {
     const utils2 = useUtils();
-    const localeText = useLocaleText();
+    const translations = usePickersTranslations();
     const adapter = useLocalizationContext();
     const isRtl = useRtl();
     const {
@@ -49614,7 +49670,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const getSectionsFromValue = React__namespace.useCallback((value, fallbackSections = null) => fieldValueManager.getSectionsFromValue(utils2, value, fallbackSections, (date) => buildSectionsFromFormat({
       utils: utils2,
       timezone,
-      localeText,
+      localeText: translations,
       localizedDigits,
       format,
       date,
@@ -49622,7 +49678,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       shouldRespectLeadingZeros,
       enableAccessibleFieldDOMStructure,
       isRtl
-    })), [fieldValueManager, format, localeText, localizedDigits, isRtl, shouldRespectLeadingZeros, utils2, formatDensity, timezone, enableAccessibleFieldDOMStructure]);
+    })), [fieldValueManager, format, translations, localizedDigits, isRtl, shouldRespectLeadingZeros, utils2, formatDensity, timezone, enableAccessibleFieldDOMStructure]);
     const [state, setState] = React__namespace.useState(() => {
       const sections = getSectionsFromValue(valueFromTheOutside);
       validateSections(sections, valueType);
@@ -49722,7 +49778,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         const sections = buildSectionsFromFormat({
           utils: utils2,
           timezone,
-          localeText,
+          localeText: translations,
           localizedDigits,
           format,
           date,
@@ -50049,7 +50105,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     } = params;
     const sectionListRef = React__namespace.useRef(null);
     const handleSectionListRef = useForkRef(inSectionListRef, sectionListRef);
-    const localeText = useLocaleText();
+    const translations = usePickersTranslations();
     const utils2 = useUtils();
     const id = useId();
     const [focused, setFocused] = React__namespace.useState(false);
@@ -50336,8 +50392,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
             "aria-valuenow": getSectionValueNow(section, utils2),
             "aria-valuemin": sectionBoundaries[section.type].minimum,
             "aria-valuemax": sectionBoundaries[section.type].maximum,
-            "aria-valuetext": section.value ? getSectionValueText(section, utils2) : localeText.empty,
-            "aria-label": localeText[section.type],
+            "aria-valuetext": section.value ? getSectionValueText(section, utils2) : translations.empty,
+            "aria-label": translations[section.type],
             "aria-disabled": disabled,
             spellCheck: isEditable ? false : void 0,
             autoCapitalize: isEditable ? "off" : void 0,
@@ -50359,7 +50415,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           }
         };
       });
-    }, [state.sections, getInputContentFocusHandler, handleInputContentPaste, handleInputContentDragOver, handleInputContentInput, getInputContainerClickHandler, handleInputContentMouseUp, disabled, readOnly, isContainerEditable, localeText, utils2, sectionBoundaries, id]);
+    }, [state.sections, getInputContentFocusHandler, handleInputContentPaste, handleInputContentDragOver, handleInputContentInput, getInputContainerClickHandler, handleInputContentMouseUp, disabled, readOnly, isContainerEditable, translations, utils2, sectionBoundaries, id]);
     const handleValueStrChange = useEventCallback((event) => {
       updateValueFromValueStr(event.target.value);
     });
@@ -50483,6 +50539,11 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
               inputRef.current.setSelectionRange(selectionStart, selectionEnd);
             }
           }
+          setTimeout(() => {
+            if (inputRef.current && inputRef.current === getActiveElement(document) && (inputRef.current.selectionStart !== selectionStart || inputRef.current.selectionEnd !== selectionEnd)) {
+              interactions.syncSelectionToDOM();
+            }
+          });
         }
         inputRef.current.scrollTop = currentScrollTop;
       },
@@ -50628,10 +50689,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       if (keyPressed.length === 0) {
         if (isAndroid()) {
           setTempAndroidValueStr(valueStr2);
-        } else {
-          resetCharacterQuery();
-          clearActiveSection();
         }
+        resetCharacterQuery();
+        clearActiveSection();
         return;
       }
       applyCharacterEditing({
@@ -50956,10 +51016,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       valueType: "date"
     });
   };
-  const _excluded$W = ["clearable", "onClear", "InputProps", "sx", "slots", "slotProps"], _excluded2$6 = ["ownerState"];
+  const _excluded$V = ["clearable", "onClear", "InputProps", "sx", "slots", "slotProps"], _excluded2$6 = ["ownerState"];
   const useClearableField = (props) => {
     var _a, _b;
-    const localeText = useLocaleText();
+    const translations = usePickersTranslations();
     const {
       clearable,
       onClear,
@@ -50967,7 +51027,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       sx,
       slots,
       slotProps
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$W);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$V);
     const IconButton$1 = (_a = slots == null ? void 0 : slots.clearButton) != null ? _a : IconButton;
     const _useSlotProps = useSlotProps({
       elementType: IconButton$1,
@@ -50975,7 +51035,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       ownerState: {},
       className: "clearButton",
       additionalProps: {
-        title: localeText.fieldClearLabel
+        title: translations.fieldClearLabel
       }
     }), iconButtonProps = _objectWithoutPropertiesLoose(_useSlotProps, _excluded2$6);
     const EndClearIcon = (_b = slots == null ? void 0 : slots.clearIcon) != null ? _b : ClearIcon;
@@ -51030,7 +51090,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     return generateUtilityClass$1("MuiPickersSectionList", slot);
   }
   const pickersSectionListClasses = generateUtilityClasses$1("MuiPickersSectionList", ["root", "section", "sectionContent"]);
-  const _excluded$V = ["slots", "slotProps", "elements", "sectionListRef"];
+  const _excluded$U = ["slots", "slotProps", "elements", "sectionListRef"];
   const PickersSectionListRoot = styled$1("div", {
     name: "MuiPickersSectionList",
     slot: "Root",
@@ -51119,7 +51179,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const PickersSectionList = /* @__PURE__ */ React__namespace.forwardRef(function PickersSectionList2(inProps, ref) {
     var _a;
-    const props = useThemeProps$6({
+    const props = useThemeProps({
       props: inProps,
       name: "MuiPickersSectionList"
     });
@@ -51128,7 +51188,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       slotProps,
       elements,
       sectionListRef
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$V);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$U);
     const classes = useUtilityClasses$I(props);
     const rootRef = React__namespace.useRef(null);
     const handleRootRef = useForkRef(ref, rootRef);
@@ -51235,7 +51295,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      */
     slots: PropTypes.object
   } : void 0;
-  const _excluded$U = ["elements", "areAllSectionsEmpty", "defaultValue", "label", "value", "onChange", "id", "autoFocus", "endAdornment", "startAdornment", "renderSuffix", "slots", "slotProps", "contentEditable", "tabIndex", "onInput", "onPaste", "onKeyDown", "fullWidth", "name", "readOnly", "inputProps", "inputRef", "sectionListRef"];
+  const _excluded$T = ["elements", "areAllSectionsEmpty", "defaultValue", "label", "value", "onChange", "id", "autoFocus", "endAdornment", "startAdornment", "renderSuffix", "slots", "slotProps", "contentEditable", "tabIndex", "onInput", "onPaste", "onKeyDown", "fullWidth", "name", "readOnly", "inputProps", "inputRef", "sectionListRef"];
   const round = (value) => Math.round(value * 1e5) / 1e5;
   const PickersInputBaseRoot = styled$1("div", {
     name: "MuiPickersInputBase",
@@ -51388,7 +51448,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     return composeClasses(slots, getPickersInputBaseUtilityClass, classes);
   };
   const PickersInputBase = /* @__PURE__ */ React__namespace.forwardRef(function PickersInputBase2(inProps, ref) {
-    const props = useThemeProps$6({
+    const props = useThemeProps({
       props: inProps,
       name: "MuiPickersInputBase"
     });
@@ -51413,7 +51473,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       inputProps,
       inputRef,
       sectionListRef
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$U);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$T);
     const rootRef = React__namespace.useRef(null);
     const handleRootRef = useForkRef(ref, rootRef);
     const handleInputRef = useForkRef(inputProps == null ? void 0 : inputProps.ref, inputRef);
@@ -51588,7 +51648,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     return generateUtilityClass$1("MuiPickersOutlinedInput", slot);
   }
   const pickersOutlinedInputClasses = _extends$1({}, pickersInputBaseClasses, generateUtilityClasses$1("MuiPickersOutlinedInput", ["root", "notchedOutline", "input"]));
-  const _excluded$T = ["children", "className", "label", "notched", "shrink"];
+  const _excluded$S = ["children", "className", "label", "notched", "shrink"];
   const OutlineRoot = styled$1("fieldset", {
     name: "MuiPickersOutlinedInput",
     slot: "NotchedOutline",
@@ -51688,7 +51748,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const {
       className,
       label
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$T);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$S);
     const withLabel = label != null && label !== "";
     const ownerState = _extends$1({}, props, {
       withLabel
@@ -51712,7 +51772,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       })
     }));
   }
-  const _excluded$S = ["label", "autoFocus", "ownerState", "notched"];
+  const _excluded$R = ["label", "autoFocus", "ownerState", "notched"];
   const PickersOutlinedInputRoot = styled$1(PickersInputBaseRoot, {
     name: "MuiPickersOutlinedInput",
     slot: "Root",
@@ -51793,7 +51853,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     return _extends$1({}, classes, composedClasses);
   };
   const PickersOutlinedInput = /* @__PURE__ */ React__namespace.forwardRef(function PickersOutlinedInput2(inProps, ref) {
-    const props = useThemeProps$6({
+    const props = useThemeProps({
       props: inProps,
       name: "MuiPickersOutlinedInput"
     });
@@ -51801,7 +51861,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       label,
       ownerState: ownerStateProp,
       notched
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$S);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$R);
     const muiFormControl = useFormControl();
     const ownerState = _extends$1({}, props, ownerStateProp, muiFormControl, {
       color: (muiFormControl == null ? void 0 : muiFormControl.color) || "primary"
@@ -51908,7 +51968,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     return generateUtilityClass$1("MuiPickersFilledInput", slot);
   }
   const pickersFilledInputClasses = _extends$1({}, pickersInputBaseClasses, generateUtilityClasses$1("MuiPickersFilledInput", ["root", "underline", "input"]));
-  const _excluded$R = ["label", "autoFocus", "disableUnderline", "ownerState"];
+  const _excluded$Q = ["label", "autoFocus", "disableUnderline", "ownerState"];
   const PickersFilledInputRoot = styled$1(PickersInputBaseRoot, {
     name: "MuiPickersFilledInput",
     slot: "Root",
@@ -52092,7 +52152,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     return _extends$1({}, classes, composedClasses);
   };
   const PickersFilledInput = /* @__PURE__ */ React__namespace.forwardRef(function PickersFilledInput2(inProps, ref) {
-    const props = useThemeProps$6({
+    const props = useThemeProps({
       props: inProps,
       name: "MuiPickersFilledInput"
     });
@@ -52100,7 +52160,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       label,
       disableUnderline = false,
       ownerState: ownerStateProp
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$R);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$Q);
     const muiFormControl = useFormControl();
     const ownerState = _extends$1({}, props, ownerStateProp, muiFormControl, {
       color: (muiFormControl == null ? void 0 : muiFormControl.color) || "primary"
@@ -52204,7 +52264,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     return generateUtilityClass$1("MuiPickersFilledInput", slot);
   }
   const pickersInputClasses = _extends$1({}, pickersInputBaseClasses, generateUtilityClasses$1("MuiPickersInput", ["root", "input"]));
-  const _excluded$Q = ["label", "autoFocus", "disableUnderline", "ownerState"];
+  const _excluded$P = ["label", "autoFocus", "disableUnderline", "ownerState"];
   const PickersInputRoot = styled$1(PickersInputBaseRoot, {
     name: "MuiPickersInput",
     slot: "Root",
@@ -52307,7 +52367,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     return _extends$1({}, classes, composedClasses);
   };
   const PickersInput = /* @__PURE__ */ React__namespace.forwardRef(function PickersInput2(inProps, ref) {
-    const props = useThemeProps$6({
+    const props = useThemeProps({
       props: inProps,
       name: "MuiPickersInput"
     });
@@ -52315,7 +52375,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       label,
       disableUnderline = false,
       ownerState: ownerStateProp
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$Q);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$P);
     const muiFormControl = useFormControl();
     const ownerState = _extends$1({}, props, ownerStateProp, muiFormControl, {
       disableUnderline,
@@ -52409,7 +52469,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     value: PropTypes.string.isRequired
   } : void 0;
   PickersInput.muiName = "Input";
-  const _excluded$P = ["onFocus", "onBlur", "className", "color", "disabled", "error", "variant", "required", "InputProps", "inputProps", "inputRef", "sectionListRef", "elements", "areAllSectionsEmpty", "onClick", "onKeyDown", "onKeyUp", "onPaste", "onInput", "endAdornment", "startAdornment", "tabIndex", "contentEditable", "focused", "value", "onChange", "fullWidth", "id", "name", "helperText", "FormHelperTextProps", "label", "InputLabelProps"];
+  const _excluded$O = ["onFocus", "onBlur", "className", "color", "disabled", "error", "variant", "required", "InputProps", "inputProps", "inputRef", "sectionListRef", "elements", "areAllSectionsEmpty", "onClick", "onKeyDown", "onKeyUp", "onPaste", "onInput", "endAdornment", "startAdornment", "tabIndex", "contentEditable", "focused", "value", "onChange", "fullWidth", "id", "name", "helperText", "FormHelperTextProps", "label", "InputLabelProps"];
   const VARIANT_COMPONENT = {
     standard: PickersInput,
     filled: PickersFilledInput,
@@ -52433,7 +52493,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     return composeClasses(slots, getPickersTextFieldUtilityClass, classes);
   };
   const PickersTextField = /* @__PURE__ */ React__namespace.forwardRef(function PickersTextField2(inProps, ref) {
-    const props = useThemeProps$6({
+    const props = useThemeProps({
       props: inProps,
       name: "MuiPickersTextField"
     });
@@ -52474,7 +52534,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       // Props used by InputLabel
       label,
       InputLabelProps
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$P);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$O);
     const rootRef = React__namespace.useRef(null);
     const handleRootRef = useForkRef(ref, rootRef);
     const id = useId(idProp);
@@ -52650,11 +52710,11 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      */
     variant: PropTypes.oneOf(["filled", "outlined", "standard"])
   } : void 0;
-  const _excluded$O = ["enableAccessibleFieldDOMStructure"], _excluded2$5 = ["InputProps", "readOnly"], _excluded3$2 = ["onPaste", "onKeyDown", "inputMode", "readOnly", "InputProps", "inputProps", "inputRef"];
+  const _excluded$N = ["enableAccessibleFieldDOMStructure"], _excluded2$5 = ["InputProps", "readOnly"], _excluded3$2 = ["onPaste", "onKeyDown", "inputMode", "readOnly", "InputProps", "inputProps", "inputRef"];
   const convertFieldResponseIntoMuiTextFieldProps = (_ref) => {
     let {
       enableAccessibleFieldDOMStructure
-    } = _ref, fieldResponse = _objectWithoutPropertiesLoose(_ref, _excluded$O);
+    } = _ref, fieldResponse = _objectWithoutPropertiesLoose(_ref, _excluded$N);
     if (enableAccessibleFieldDOMStructure) {
       const {
         InputProps: InputProps2,
@@ -52687,10 +52747,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       })
     });
   };
-  const _excluded$N = ["slots", "slotProps", "InputProps", "inputProps"];
+  const _excluded$M = ["slots", "slotProps", "InputProps", "inputProps"];
   const DateField = /* @__PURE__ */ React__namespace.forwardRef(function DateField2(inProps, inRef) {
     var _a;
-    const themeProps = useThemeProps$6({
+    const themeProps = useThemeProps({
       props: inProps,
       name: "MuiDateField"
     });
@@ -52699,7 +52759,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       slotProps,
       InputProps,
       inputProps
-    } = themeProps, other = _objectWithoutPropertiesLoose(themeProps, _excluded$N);
+    } = themeProps, other = _objectWithoutPropertiesLoose(themeProps, _excluded$M);
     const ownerState = themeProps;
     const TextField$1 = (_a = slots == null ? void 0 : slots.textField) != null ? _a : inProps.enableAccessibleFieldDOMStructure ? PickersTextField : TextField;
     const textFieldProps = useSlotProps({
@@ -53143,7 +53203,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     position: "relative"
   });
   function PickersFadeTransitionGroup(inProps) {
-    const props = useThemeProps$6({
+    const props = useThemeProps({
       props: inProps,
       name: "MuiPickersFadeTransitionGroup"
     });
@@ -53177,7 +53237,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     return generateUtilityClass$1("MuiPickersDay", slot);
   }
   const pickersDayClasses = generateUtilityClasses$1("MuiPickersDay", ["root", "dayWithMargin", "dayOutsideMonth", "hiddenDaySpacingFiller", "today", "selected", "disabled"]);
-  const _excluded$M = ["autoFocus", "className", "day", "disabled", "disableHighlightToday", "disableMargin", "hidden", "isAnimating", "onClick", "onDaySelect", "onFocus", "onBlur", "onKeyDown", "onMouseDown", "onMouseEnter", "outsideCurrentMonth", "selected", "showDaysOutsideCurrentMonth", "children", "today", "isFirstVisibleCell", "isLastVisibleCell"];
+  const _excluded$L = ["autoFocus", "className", "day", "disabled", "disableHighlightToday", "disableMargin", "hidden", "isAnimating", "onClick", "onDaySelect", "onFocus", "onBlur", "onKeyDown", "onMouseDown", "onMouseEnter", "outsideCurrentMonth", "selected", "showDaysOutsideCurrentMonth", "children", "today", "isFirstVisibleCell", "isLastVisibleCell"];
   const useUtilityClasses$B = (ownerState) => {
     const {
       selected,
@@ -53290,7 +53350,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   const noop = () => {
   };
   const PickersDayRaw = /* @__PURE__ */ React__namespace.forwardRef(function PickersDay2(inProps, forwardedRef) {
-    const props = useThemeProps$6({
+    const props = useThemeProps({
       props: inProps,
       name: "MuiPickersDay"
     });
@@ -53314,7 +53374,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       showDaysOutsideCurrentMonth = false,
       children,
       today: isToday = false
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$M);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$L);
     const ownerState = _extends$1({}, props, {
       autoFocus,
       disabled,
@@ -53519,7 +53579,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   const PickersDay = /* @__PURE__ */ React__namespace.memo(PickersDayRaw);
   const getPickersSlideTransitionUtilityClass = (slot) => generateUtilityClass$1("MuiPickersSlideTransition", slot);
   const pickersSlideTransitionClasses = generateUtilityClasses$1("MuiPickersSlideTransition", ["root", "slideEnter-left", "slideEnter-right", "slideEnterActive", "slideExit", "slideExitActiveLeft-left", "slideExitActiveLeft-right"]);
-  const _excluded$L = ["children", "className", "reduceAnimations", "slideDirection", "transKey", "classes"];
+  const _excluded$K = ["children", "className", "reduceAnimations", "slideDirection", "transKey", "classes"];
   const useUtilityClasses$A = (ownerState) => {
     const {
       classes,
@@ -53599,7 +53659,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     };
   });
   function PickersSlideTransition(inProps) {
-    const props = useThemeProps$6({
+    const props = useThemeProps({
       props: inProps,
       name: "MuiPickersSlideTransition"
     });
@@ -53609,7 +53669,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       reduceAnimations,
       transKey
       // extracting `classes` from `other`
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$L);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$K);
     const classes = useUtilityClasses$A(props);
     const theme = useTheme$1();
     if (reduceAnimations) {
@@ -53642,7 +53702,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const getDayCalendarUtilityClass = (slot) => generateUtilityClass$1("MuiDayCalendar", slot);
   const dayCalendarClasses = generateUtilityClasses$1("MuiDayCalendar", ["root", "header", "weekDayLabel", "loadingContainer", "slideTransition", "monthContainer", "weekContainer", "weekNumberLabel", "weekNumber"]);
-  const _excluded$K = ["parentProps", "day", "focusableDay", "selectedDays", "isDateDisabled", "currentMonthNumber", "isViewFocused"], _excluded2$4 = ["ownerState"];
+  const _excluded$J = ["parentProps", "day", "focusableDay", "selectedDays", "isDateDisabled", "currentMonthNumber", "isViewFocused"], _excluded2$4 = ["ownerState"];
   const useUtilityClasses$z = (ownerState) => {
     const {
       classes
@@ -53767,7 +53827,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       isDateDisabled,
       currentMonthNumber,
       isViewFocused
-    } = _ref, other = _objectWithoutPropertiesLoose(_ref, _excluded$K);
+    } = _ref, other = _objectWithoutPropertiesLoose(_ref, _excluded$J);
     const {
       disabled,
       disableHighlightToday,
@@ -53830,7 +53890,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }));
   }
   function DayCalendar(inProps) {
-    const props = useThemeProps$6({
+    const props = useThemeProps({
       props: inProps,
       name: "MuiDayCalendar"
     });
@@ -53880,7 +53940,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       disableFuture,
       timezone
     });
-    const localeText = useLocaleText();
+    const translations = usePickersTranslations();
     const [internalHasFocus, setInternalHasFocus] = useControlled({
       name: "DayCalendar",
       state: "hasFocus",
@@ -54017,9 +54077,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         children: [displayWeekNumber && /* @__PURE__ */ jsxRuntimeExports.jsx(PickersCalendarWeekNumberLabel, {
           variant: "caption",
           role: "columnheader",
-          "aria-label": localeText.calendarWeekNumberHeaderLabel,
+          "aria-label": translations.calendarWeekNumberHeaderLabel,
           className: classes.weekNumberLabel,
-          children: localeText.calendarWeekNumberHeaderText
+          children: translations.calendarWeekNumberHeaderText
         }), getWeekdays(utils2, now).map((weekday, i) => /* @__PURE__ */ jsxRuntimeExports.jsx(PickersCalendarWeekDayLabel, {
           variant: "caption",
           role: "columnheader",
@@ -54049,8 +54109,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
             children: [displayWeekNumber && /* @__PURE__ */ jsxRuntimeExports.jsx(PickersCalendarWeekNumber, {
               className: classes.weekNumber,
               role: "rowheader",
-              "aria-label": localeText.calendarWeekNumberAriaLabelText(utils2.getWeekNumber(week[0])),
-              children: localeText.calendarWeekNumberText(utils2.getWeekNumber(week[0]))
+              "aria-label": translations.calendarWeekNumberAriaLabelText(utils2.getWeekNumber(week[0])),
+              children: translations.calendarWeekNumberText(utils2.getWeekNumber(week[0]))
             }), week.map((day, dayIndex) => /* @__PURE__ */ jsxRuntimeExports.jsx(WrappedDay, {
               parentProps: props,
               day,
@@ -54074,7 +54134,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     return generateUtilityClass$1("MuiPickersMonth", slot);
   }
   const pickersMonthClasses = generateUtilityClasses$1("MuiPickersMonth", ["root", "monthButton", "disabled", "selected"]);
-  const _excluded$J = ["autoFocus", "children", "disabled", "selected", "value", "tabIndex", "onClick", "onKeyDown", "onFocus", "onBlur", "aria-current", "aria-label", "monthsPerRow"];
+  const _excluded$I = ["autoFocus", "className", "children", "disabled", "selected", "value", "tabIndex", "onClick", "onKeyDown", "onFocus", "onBlur", "aria-current", "aria-label", "monthsPerRow", "slots", "slotProps"];
   const useUtilityClasses$y = (ownerState) => {
     const {
       disabled,
@@ -54105,7 +54165,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       }
     }]
   });
-  const PickersMonthButton = styled$1("button", {
+  const MonthCalendarButton = styled$1("button", {
     name: "MuiPickersMonth",
     slot: "MonthButton",
     overridesResolver: (_2, styles2) => [styles2.monthButton, {
@@ -54148,12 +54208,14 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }
   }));
   const PickersMonth = /* @__PURE__ */ React__namespace.memo(function PickersMonth2(inProps) {
-    const props = useThemeProps$6({
+    var _a;
+    const props = useThemeProps({
       props: inProps,
       name: "MuiPickersMonth"
     });
     const {
       autoFocus,
+      className,
       children,
       disabled,
       selected,
@@ -54164,45 +54226,52 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       onFocus,
       onBlur,
       "aria-current": ariaCurrent,
-      "aria-label": ariaLabel
-      // We don't want to forward this prop to the root element
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$J);
+      "aria-label": ariaLabel,
+      slots,
+      slotProps
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$I);
     const ref = React__namespace.useRef(null);
     const classes = useUtilityClasses$y(props);
     useEnhancedEffect(() => {
-      var _a;
+      var _a2;
       if (autoFocus) {
-        (_a = ref.current) == null ? void 0 : _a.focus();
+        (_a2 = ref.current) == null ? void 0 : _a2.focus();
       }
     }, [autoFocus]);
-    return /* @__PURE__ */ jsxRuntimeExports.jsx(PickersMonthRoot, _extends$1({
-      className: classes.root,
-      ownerState: props
-    }, other, {
-      children: /* @__PURE__ */ jsxRuntimeExports.jsx(PickersMonthButton, {
-        ref,
+    const MonthButton = (_a = slots == null ? void 0 : slots.monthButton) != null ? _a : MonthCalendarButton;
+    const monthButtonProps = useSlotProps({
+      elementType: MonthButton,
+      externalSlotProps: slotProps == null ? void 0 : slotProps.monthButton,
+      additionalProps: {
+        children,
         disabled,
+        tabIndex,
+        ref,
         type: "button",
         role: "radio",
-        tabIndex: disabled ? -1 : tabIndex,
         "aria-current": ariaCurrent,
         "aria-checked": selected,
         "aria-label": ariaLabel,
         onClick: (event) => onClick(event, value),
         onKeyDown: (event) => onKeyDown(event, value),
         onFocus: (event) => onFocus(event, value),
-        onBlur: (event) => onBlur(event, value),
-        className: classes.monthButton,
-        ownerState: props,
-        children
-      })
+        onBlur: (event) => onBlur(event, value)
+      },
+      ownerState: props,
+      className: classes.monthButton
+    });
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(PickersMonthRoot, _extends$1({
+      className: clsx(classes.root, className),
+      ownerState: props
+    }, other, {
+      children: /* @__PURE__ */ jsxRuntimeExports.jsx(MonthButton, _extends$1({}, monthButtonProps))
     }));
   });
   function getMonthCalendarUtilityClass(slot) {
     return generateUtilityClass$1("MuiMonthCalendar", slot);
   }
   const monthCalendarClasses = generateUtilityClasses$1("MuiMonthCalendar", ["root"]);
-  const _excluded$I = ["className", "value", "defaultValue", "referenceDate", "disabled", "disableFuture", "disablePast", "maxDate", "minDate", "onChange", "shouldDisableMonth", "readOnly", "disableHighlightToday", "autoFocus", "onMonthFocus", "hasFocus", "onFocusedViewChange", "monthsPerRow", "timezone", "gridLabelId"];
+  const _excluded$H = ["className", "value", "defaultValue", "referenceDate", "disabled", "disableFuture", "disablePast", "maxDate", "minDate", "onChange", "shouldDisableMonth", "readOnly", "disableHighlightToday", "autoFocus", "onMonthFocus", "hasFocus", "onFocusedViewChange", "monthsPerRow", "timezone", "gridLabelId", "slots", "slotProps"];
   const useUtilityClasses$x = (ownerState) => {
     const {
       classes
@@ -54215,7 +54284,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   function useMonthCalendarDefaultizedProps(props, name) {
     const utils2 = useUtils();
     const defaultDates = useDefaultDates();
-    const themeProps = useThemeProps$6({
+    const themeProps = useThemeProps({
       props,
       name
     });
@@ -54261,8 +54330,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       onFocusedViewChange,
       monthsPerRow = 3,
       timezone: timezoneProp,
-      gridLabelId
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$I);
+      gridLabelId,
+      slots,
+      slotProps
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$H);
     const {
       value,
       handleValueChange,
@@ -54398,12 +54469,14 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           onKeyDown: handleKeyDown2,
           autoFocus: internalHasFocus && monthNumber === focusedMonth,
           disabled: isDisabled,
-          tabIndex: monthNumber === focusedMonth ? 0 : -1,
+          tabIndex: monthNumber === focusedMonth && !isDisabled ? 0 : -1,
           onFocus: handleMonthFocus,
           onBlur: handleMonthBlur,
           "aria-current": todayMonth === monthNumber ? "date" : void 0,
           "aria-label": monthLabel,
           monthsPerRow,
+          slots,
+          slotProps,
           children: monthText
         }, monthText);
       })
@@ -54484,6 +54557,16 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      */
     shouldDisableMonth: PropTypes.func,
     /**
+     * The props used for each component slot.
+     * @default {}
+     */
+    slotProps: PropTypes.object,
+    /**
+     * Overridable component slots.
+     * @default {}
+     */
+    slots: PropTypes.object,
+    /**
      * The system prop that allows defining system overrides as well as additional CSS styles.
      */
     sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object]),
@@ -54505,7 +54588,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     return generateUtilityClass$1("MuiPickersYear", slot);
   }
   const pickersYearClasses = generateUtilityClasses$1("MuiPickersYear", ["root", "yearButton", "selected", "disabled"]);
-  const _excluded$H = ["autoFocus", "className", "children", "disabled", "selected", "value", "tabIndex", "onClick", "onKeyDown", "onFocus", "onBlur", "aria-current", "yearsPerRow"];
+  const _excluded$G = ["autoFocus", "className", "children", "disabled", "selected", "value", "tabIndex", "onClick", "onKeyDown", "onFocus", "onBlur", "aria-current", "yearsPerRow", "slots", "slotProps"];
   const useUtilityClasses$w = (ownerState) => {
     const {
       disabled,
@@ -54536,7 +54619,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       }
     }]
   });
-  const PickersYearButton = styled$1("button", {
+  const YearCalendarButton = styled$1("button", {
     name: "MuiPickersYear",
     slot: "YearButton",
     overridesResolver: (_2, styles2) => [styles2.yearButton, {
@@ -54579,7 +54662,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }
   }));
   const PickersYear = /* @__PURE__ */ React__namespace.memo(function PickersYear2(inProps) {
-    const props = useThemeProps$6({
+    var _a;
+    const props = useThemeProps({
       props: inProps,
       name: "MuiPickersYear"
     });
@@ -54595,43 +54679,51 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       onKeyDown,
       onFocus,
       onBlur,
-      "aria-current": ariaCurrent
-      // We don't want to forward this prop to the root element
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$H);
+      "aria-current": ariaCurrent,
+      slots,
+      slotProps
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$G);
     const ref = React__namespace.useRef(null);
     const classes = useUtilityClasses$w(props);
-    React__namespace.useEffect(() => {
+    useEnhancedEffect(() => {
+      var _a2;
       if (autoFocus) {
-        ref.current.focus();
+        (_a2 = ref.current) == null ? void 0 : _a2.focus();
       }
     }, [autoFocus]);
-    return /* @__PURE__ */ jsxRuntimeExports.jsx(PickersYearRoot, _extends$1({
-      className: clsx(classes.root, className),
-      ownerState: props
-    }, other, {
-      children: /* @__PURE__ */ jsxRuntimeExports.jsx(PickersYearButton, {
-        ref,
+    const YearButton = (_a = slots == null ? void 0 : slots.yearButton) != null ? _a : YearCalendarButton;
+    const yearButtonProps = useSlotProps({
+      elementType: YearButton,
+      externalSlotProps: slotProps == null ? void 0 : slotProps.yearButton,
+      additionalProps: {
+        children,
         disabled,
+        tabIndex,
+        ref,
         type: "button",
         role: "radio",
-        tabIndex: disabled ? -1 : tabIndex,
         "aria-current": ariaCurrent,
         "aria-checked": selected,
         onClick: (event) => onClick(event, value),
         onKeyDown: (event) => onKeyDown(event, value),
         onFocus: (event) => onFocus(event, value),
-        onBlur: (event) => onBlur(event, value),
-        className: classes.yearButton,
-        ownerState: props,
-        children
-      })
+        onBlur: (event) => onBlur(event, value)
+      },
+      ownerState: props,
+      className: classes.yearButton
+    });
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(PickersYearRoot, _extends$1({
+      className: clsx(classes.root, className),
+      ownerState: props
+    }, other, {
+      children: /* @__PURE__ */ jsxRuntimeExports.jsx(YearButton, _extends$1({}, yearButtonProps))
     }));
   });
   function getYearCalendarUtilityClass(slot) {
     return generateUtilityClass$1("MuiYearCalendar", slot);
   }
   const yearCalendarClasses = generateUtilityClasses$1("MuiYearCalendar", ["root"]);
-  const _excluded$G = ["autoFocus", "className", "value", "defaultValue", "referenceDate", "disabled", "disableFuture", "disablePast", "maxDate", "minDate", "onChange", "readOnly", "shouldDisableYear", "disableHighlightToday", "onYearFocus", "hasFocus", "onFocusedViewChange", "yearsPerRow", "timezone", "gridLabelId"];
+  const _excluded$F = ["autoFocus", "className", "value", "defaultValue", "referenceDate", "disabled", "disableFuture", "disablePast", "maxDate", "minDate", "onChange", "readOnly", "shouldDisableYear", "disableHighlightToday", "onYearFocus", "hasFocus", "onFocusedViewChange", "yearsPerRow", "timezone", "gridLabelId", "slots", "slotProps"];
   const useUtilityClasses$v = (ownerState) => {
     const {
       classes
@@ -54645,7 +54737,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     var _a;
     const utils2 = useUtils();
     const defaultDates = useDefaultDates();
-    const themeProps = useThemeProps$6({
+    const themeProps = useThemeProps({
       props,
       name
     });
@@ -54696,8 +54788,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       onFocusedViewChange,
       yearsPerRow,
       timezone: timezoneProp,
-      gridLabelId
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$G);
+      gridLabelId,
+      slots,
+      slotProps
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$F);
     const {
       value,
       handleValueChange,
@@ -54851,11 +54945,13 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           onKeyDown: handleKeyDown2,
           autoFocus: internalHasFocus && yearNumber === focusedYear,
           disabled: isDisabled,
-          tabIndex: yearNumber === focusedYear ? 0 : -1,
+          tabIndex: yearNumber === focusedYear && !isDisabled ? 0 : -1,
           onFocus: handleYearFocus,
           onBlur: handleYearBlur,
           "aria-current": todayYear === yearNumber ? "date" : void 0,
           yearsPerRow,
+          slots,
+          slotProps,
           children: utils2.format(year, "year")
         }, utils2.format(year, "year"));
       })
@@ -54931,6 +55027,16 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      */
     shouldDisableYear: PropTypes.func,
     /**
+     * The props used for each component slot.
+     * @default {}
+     */
+    slotProps: PropTypes.object,
+    /**
+     * Overridable component slots.
+     * @default {}
+     */
+    slots: PropTypes.object,
+    /**
      * The system prop that allows defining system overrides as well as additional CSS styles.
      */
     sx: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])), PropTypes.func, PropTypes.object]),
@@ -54959,7 +55065,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     return generateUtilityClass$1("MuiPickersArrowSwitcher", slot);
   }
   const pickersArrowSwitcherClasses = generateUtilityClasses$1("MuiPickersArrowSwitcher", ["root", "spacer", "button"]);
-  const _excluded$F = ["children", "className", "slots", "slotProps", "isNextDisabled", "isNextHidden", "onGoToNext", "nextLabel", "isPreviousDisabled", "isPreviousHidden", "onGoToPrevious", "previousLabel"], _excluded2$3 = ["ownerState"], _excluded3$1 = ["ownerState"];
+  const _excluded$E = ["children", "className", "slots", "slotProps", "isNextDisabled", "isNextHidden", "onGoToNext", "nextLabel", "isPreviousDisabled", "isPreviousHidden", "onGoToPrevious", "previousLabel", "labelId"], _excluded2$3 = ["ownerState"], _excluded3$1 = ["ownerState"];
   const PickersArrowSwitcherRoot = styled$1("div", {
     name: "MuiPickersArrowSwitcher",
     slot: "Root",
@@ -55004,7 +55110,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   const PickersArrowSwitcher = /* @__PURE__ */ React__namespace.forwardRef(function PickersArrowSwitcher2(inProps, ref) {
     var _a, _b, _c, _d;
     const isRtl = useRtl();
-    const props = useThemeProps$6({
+    const props = useThemeProps({
       props: inProps,
       name: "MuiPickersArrowSwitcher"
     });
@@ -55020,8 +55126,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       isPreviousDisabled,
       isPreviousHidden,
       onGoToPrevious,
-      previousLabel
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$F);
+      previousLabel,
+      labelId
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$E);
     const ownerState = props;
     const classes = useUtilityClasses$u(ownerState);
     const nextProps = {
@@ -55098,6 +55205,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       })), children ? /* @__PURE__ */ jsxRuntimeExports.jsx(Typography, {
         variant: "subtitle1",
         component: "span",
+        id: labelId,
         children
       }) : /* @__PURE__ */ jsxRuntimeExports.jsx(PickersArrowSwitcherSpacer, {
         className: classes.spacer,
@@ -55143,7 +55251,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       handleMeridiemChange
     };
   }
-  const _excluded$E = ["slots", "slotProps", "currentMonth", "disabled", "disableFuture", "disablePast", "maxDate", "minDate", "onMonthChange", "onViewChange", "view", "reduceAnimations", "views", "labelId", "className", "timezone", "format"], _excluded2$2 = ["ownerState"];
+  const _excluded$D = ["slots", "slotProps", "currentMonth", "disabled", "disableFuture", "disablePast", "maxDate", "minDate", "onMonthChange", "onViewChange", "view", "reduceAnimations", "views", "labelId", "className", "timezone", "format"], _excluded2$2 = ["ownerState"];
   const useUtilityClasses$t = (ownerState) => {
     const {
       classes
@@ -55224,9 +55332,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }));
   const PickersCalendarHeader = /* @__PURE__ */ React__namespace.forwardRef(function PickersCalendarHeader2(inProps, ref) {
     var _a, _b;
-    const localeText = useLocaleText();
+    const translations = usePickersTranslations();
     const utils2 = useUtils();
-    const props = useThemeProps$6({
+    const props = useThemeProps({
       props: inProps,
       name: "MuiPickersCalendarHeader"
     });
@@ -55248,7 +55356,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       className,
       timezone,
       format = `${utils2.formats.month} ${utils2.formats.year}`
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$E);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$D);
     const ownerState = props;
     const classes = useUtilityClasses$t(props);
     const SwitchViewButton = (_a = slots == null ? void 0 : slots.switchViewButton) != null ? _a : PickersCalendarHeaderSwitchViewButton;
@@ -55257,7 +55365,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       externalSlotProps: slotProps == null ? void 0 : slotProps.switchViewButton,
       additionalProps: {
         size: "small",
-        "aria-label": localeText.calendarViewSwitchingButtonAriaLabel(view)
+        "aria-label": translations.calendarViewSwitchingButtonAriaLabel(view)
       },
       ownerState,
       className: classes.switchViewButton
@@ -55325,10 +55433,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           slotProps,
           onGoToPrevious: selectPreviousMonth,
           isPreviousDisabled: isPreviousMonthDisabled,
-          previousLabel: localeText.previousMonth,
+          previousLabel: translations.previousMonth,
           onGoToNext: selectNextMonth,
           isNextDisabled: isNextMonthDisabled,
-          nextLabel: localeText.nextMonth
+          nextLabel: translations.nextMonth
         })
       })]
     }));
@@ -55352,6 +55460,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      * @default `${adapter.formats.month} ${adapter.formats.year}`
      */
     format: PropTypes.string,
+    /**
+     * Id of the calendar text element.
+     * It is used to establish an `aria-labelledby` relationship with the calendar `grid` element.
+     */
     labelId: PropTypes.string,
     maxDate: PropTypes.object.isRequired,
     minDate: PropTypes.object.isRequired,
@@ -55386,7 +55498,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   });
   const getDateCalendarUtilityClass = (slot) => generateUtilityClass$1("MuiDateCalendar", slot);
   const dateCalendarClasses = generateUtilityClasses$1("MuiDateCalendar", ["root", "viewTransitionContainer"]);
-  const _excluded$D = ["autoFocus", "onViewChange", "value", "defaultValue", "referenceDate", "disableFuture", "disablePast", "onChange", "onYearChange", "onMonthChange", "reduceAnimations", "shouldDisableDate", "shouldDisableMonth", "shouldDisableYear", "view", "views", "openTo", "className", "disabled", "readOnly", "minDate", "maxDate", "disableHighlightToday", "focusedView", "onFocusedViewChange", "showDaysOutsideCurrentMonth", "fixedWeekNumber", "dayOfWeekFormatter", "slots", "slotProps", "loading", "renderLoading", "displayWeekNumber", "yearsPerRow", "monthsPerRow", "timezone"];
+  const _excluded$C = ["autoFocus", "onViewChange", "value", "defaultValue", "referenceDate", "disableFuture", "disablePast", "onChange", "onYearChange", "onMonthChange", "reduceAnimations", "shouldDisableDate", "shouldDisableMonth", "shouldDisableYear", "view", "views", "openTo", "className", "disabled", "readOnly", "minDate", "maxDate", "disableHighlightToday", "focusedView", "onFocusedViewChange", "showDaysOutsideCurrentMonth", "fixedWeekNumber", "dayOfWeekFormatter", "slots", "slotProps", "loading", "renderLoading", "displayWeekNumber", "yearsPerRow", "monthsPerRow", "timezone"];
   const useUtilityClasses$s = (ownerState) => {
     const {
       classes
@@ -55402,7 +55514,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const utils2 = useUtils();
     const defaultDates = useDefaultDates();
     const defaultReduceAnimations = useDefaultReduceAnimations();
-    const themeProps = useThemeProps$6({
+    const themeProps = useThemeProps({
       props,
       name
     });
@@ -55476,7 +55588,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       yearsPerRow,
       monthsPerRow,
       timezone: timezoneProp
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$D);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$C);
     const {
       value,
       handleValueChange,
@@ -55622,7 +55734,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       readOnly,
       disabled,
       timezone,
-      gridLabelId
+      gridLabelId,
+      slots,
+      slotProps
     };
     const prevOpenViewRef = React__namespace.useRef(view);
     React__namespace.useEffect(() => {
@@ -55681,8 +55795,6 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
             fixedWeekNumber,
             dayOfWeekFormatter,
             displayWeekNumber,
-            slots,
-            slotProps,
             loading,
             renderLoading
           }))]
@@ -55989,7 +56101,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   });
   const DesktopDatePicker = /* @__PURE__ */ React__namespace.forwardRef(function DesktopDatePicker2(inProps, ref) {
     var _a, _b, _c, _d;
-    const localeText = useLocaleText();
+    const translations = usePickersTranslations();
     const utils2 = useUtils();
     const defaultizedProps = useDatePickerDefaultizedProps(inProps, "MuiDesktopDatePicker");
     const viewRenderers = _extends$1({
@@ -56023,7 +56135,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       props,
       valueManager: singleItemValueManager,
       valueType: "date",
-      getOpenDialogAriaText: (_d = (_c = props.localeText) == null ? void 0 : _c.openDatePickerDialogue) != null ? _d : localeText.openDatePickerDialogue,
+      getOpenDialogAriaText: (_d = (_c = props.localeText) == null ? void 0 : _c.openDatePickerDialogue) != null ? _d : translations.openDatePickerDialogue,
       validator: validateDate
     });
     return renderPicker();
@@ -56146,7 +56258,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     /**
      * Callback fired when the value is accepted.
      * @template TValue The value type. Will be either the same type as `value` or `null`. Can be in `[start, end]` format in case of range value.
+     * @template TError The validation error type. Will be either `string` or a `null`. Can be in `[start, end]` format in case of range value.
      * @param {TValue} value The value that was just accepted.
+     * @param {FieldChangeHandlerContext<TError>} context The context containing the validation result of the current value.
      */
     onAccept: PropTypes.func,
     /**
@@ -56339,7 +56453,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const dialogTitleClasses = generateUtilityClasses$1("MuiDialogTitle", ["root"]);
   "use client";
-  const _excluded$C = ["className", "dividers"];
+  const _excluded$B = ["className", "dividers"];
   const useUtilityClasses$r = (ownerState) => {
     const {
       classes,
@@ -56378,14 +56492,14 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }
   }));
   const DialogContent = /* @__PURE__ */ React__namespace.forwardRef(function DialogContent2(inProps, ref) {
-    const props = useThemeProps$6({
+    const props = useDefaultProps({
       props: inProps,
       name: "MuiDialogContent"
     });
     const {
       className,
       dividers = false
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$C);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$B);
     const ownerState = _extends$1({}, props, {
       dividers
     });
@@ -56433,7 +56547,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     DialogContext.displayName = "DialogContext";
   }
   "use client";
-  const _excluded$B = ["aria-describedby", "aria-labelledby", "BackdropComponent", "BackdropProps", "children", "className", "disableEscapeKeyDown", "fullScreen", "fullWidth", "maxWidth", "onBackdropClick", "onClick", "onClose", "open", "PaperComponent", "PaperProps", "scroll", "TransitionComponent", "transitionDuration", "TransitionProps"];
+  const _excluded$A = ["aria-describedby", "aria-labelledby", "BackdropComponent", "BackdropProps", "children", "className", "disableEscapeKeyDown", "fullScreen", "fullWidth", "maxWidth", "onBackdropClick", "onClick", "onClose", "open", "PaperComponent", "PaperProps", "scroll", "TransitionComponent", "transitionDuration", "TransitionProps"];
   const DialogBackdrop = styled$1(Backdrop, {
     name: "MuiDialog",
     slot: "Backdrop",
@@ -56562,7 +56676,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }
   }));
   const Dialog = /* @__PURE__ */ React__namespace.forwardRef(function Dialog2(inProps, ref) {
-    const props = useThemeProps$6({
+    const props = useDefaultProps({
       props: inProps,
       name: "MuiDialog"
     });
@@ -56592,7 +56706,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       TransitionComponent = Fade,
       transitionDuration = defaultTransitionDuration,
       TransitionProps
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$B);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$A);
     const ownerState = _extends$1({}, props, {
       disableEscapeKeyDown,
       fullScreen,
@@ -56844,13 +56958,13 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       })
     }));
   }
-  const _excluded$A = ["props", "getOpenDialogAriaText"];
+  const _excluded$z = ["props", "getOpenDialogAriaText"];
   const useMobilePicker = (_ref) => {
     var _a, _b, _c;
     let {
       props,
       getOpenDialogAriaText
-    } = _ref, pickerParams = _objectWithoutPropertiesLoose(_ref, _excluded$A);
+    } = _ref, pickerParams = _objectWithoutPropertiesLoose(_ref, _excluded$z);
     const {
       slots,
       slotProps: innerSlotProps,
@@ -56960,7 +57074,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   };
   const MobileDatePicker = /* @__PURE__ */ React__namespace.forwardRef(function MobileDatePicker2(inProps, ref) {
     var _a, _b, _c;
-    const localeText = useLocaleText();
+    const translations = usePickersTranslations();
     const utils2 = useUtils();
     const defaultizedProps = useDatePickerDefaultizedProps(inProps, "MuiMobileDatePicker");
     const viewRenderers = _extends$1({
@@ -56992,7 +57106,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       props,
       valueManager: singleItemValueManager,
       valueType: "date",
-      getOpenDialogAriaText: (_c = (_b = props.localeText) == null ? void 0 : _b.openDatePickerDialogue) != null ? _c : localeText.openDatePickerDialogue,
+      getOpenDialogAriaText: (_c = (_b = props.localeText) == null ? void 0 : _b.openDatePickerDialogue) != null ? _c : translations.openDatePickerDialogue,
       validator: validateDate
     });
     return renderPicker();
@@ -57115,7 +57229,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     /**
      * Callback fired when the value is accepted.
      * @template TValue The value type. Will be either the same type as `value` or `null`. Can be in `[start, end]` format in case of range value.
+     * @template TError The validation error type. Will be either `string` or a `null`. Can be in `[start, end]` format in case of range value.
      * @param {TValue} value The value that was just accepted.
+     * @param {FieldChangeHandlerContext<TError>} context The context containing the validation result of the current value.
      */
     onAccept: PropTypes.func,
     /**
@@ -57299,15 +57415,15 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
      */
     yearsPerRow: PropTypes.oneOf([3, 4])
   };
-  const _excluded$z = ["desktopModeMediaQuery"];
+  const _excluded$y = ["desktopModeMediaQuery"];
   const DatePicker = /* @__PURE__ */ React__namespace.forwardRef(function DatePicker2(inProps, ref) {
-    const props = useThemeProps$6({
+    const props = useThemeProps({
       props: inProps,
       name: "MuiDatePicker"
     });
     const {
       desktopModeMediaQuery = DEFAULT_DESKTOP_MODE_MEDIA_QUERY
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$z);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$y);
     const isDesktop = useMediaQuery(desktopModeMediaQuery, {
       defaultMatches: true
     });
@@ -57444,7 +57560,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     /**
      * Callback fired when the value is accepted.
      * @template TValue The value type. Will be either the same type as `value` or `null`. Can be in `[start, end]` format in case of range value.
+     * @template TError The validation error type. Will be either `string` or a `null`. Can be in `[start, end]` format in case of range value.
      * @param {TValue} value The value that was just accepted.
+     * @param {FieldChangeHandlerContext<TError>} context The context containing the validation result of the current value.
      */
     onAccept: PropTypes.func,
     /**
@@ -57705,10 +57823,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       valueType: "date-time"
     });
   };
-  const _excluded$y = ["slots", "slotProps", "InputProps", "inputProps"];
+  const _excluded$x = ["slots", "slotProps", "InputProps", "inputProps"];
   const DateTimeField = /* @__PURE__ */ React__namespace.forwardRef(function DateTimeField2(inProps, inRef) {
     var _a;
-    const themeProps = useThemeProps$6({
+    const themeProps = useThemeProps({
       props: inProps,
       name: "MuiDateTimeField"
     });
@@ -57717,7 +57835,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       slotProps,
       InputProps,
       inputProps
-    } = themeProps, other = _objectWithoutPropertiesLoose(themeProps, _excluded$y);
+    } = themeProps, other = _objectWithoutPropertiesLoose(themeProps, _excluded$x);
     const ownerState = themeProps;
     const TextField$1 = (_a = slots == null ? void 0 : slots.textField) != null ? _a : inProps.enableAccessibleFieldDOMStructure ? PickersTextField : TextField;
     const textFieldProps = useSlotProps({
@@ -58047,7 +58165,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const tabClasses = generateUtilityClasses$1("MuiTab", ["root", "labelIcon", "textColorInherit", "textColorPrimary", "textColorSecondary", "selected", "disabled", "fullWidth", "wrapped", "iconWrapper"]);
   "use client";
-  const _excluded$x = ["className", "disabled", "disableFocusRipple", "fullWidth", "icon", "iconPosition", "indicator", "label", "onChange", "onClick", "onFocus", "selected", "selectionFollowsFocus", "textColor", "value", "wrapped"];
+  const _excluded$w = ["className", "disabled", "disableFocusRipple", "fullWidth", "icon", "iconPosition", "indicator", "label", "onChange", "onClick", "onFocus", "selected", "selectionFollowsFocus", "textColor", "value", "wrapped"];
   const useUtilityClasses$p = (ownerState) => {
     const {
       classes,
@@ -58072,7 +58190,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       const {
         ownerState
       } = props;
-      return [styles2.root, ownerState.label && ownerState.icon && styles2.labelIcon, styles2[`textColor${capitalize$1(ownerState.textColor)}`], ownerState.fullWidth && styles2.fullWidth, ownerState.wrapped && styles2.wrapped];
+      return [styles2.root, ownerState.label && ownerState.icon && styles2.labelIcon, styles2[`textColor${capitalize$1(ownerState.textColor)}`], ownerState.fullWidth && styles2.fullWidth, ownerState.wrapped && styles2.wrapped, {
+        [`& .${tabClasses.iconWrapper}`]: styles2.iconWrapper
+      }];
     }
   })(({
     theme,
@@ -58139,7 +58259,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     fontSize: theme.typography.pxToRem(12)
   }));
   const Tab = /* @__PURE__ */ React__namespace.forwardRef(function Tab2(inProps, ref) {
-    const props = useThemeProps$6({
+    const props = useDefaultProps({
       props: inProps,
       name: "MuiTab"
     });
@@ -58165,7 +58285,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       textColor = "inherit",
       value,
       wrapped = false
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$x);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$w);
     const ownerState = _extends$1({}, props, {
       disabled,
       disableFocusRipple,
@@ -58335,7 +58455,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     return cancel;
   }
   "use client";
-  const _excluded$w = ["onChange"];
+  const _excluded$v = ["onChange"];
   const styles = {
     width: 99,
     height: 99,
@@ -58346,7 +58466,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   function ScrollbarSize(props) {
     const {
       onChange
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$w);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$v);
     const scrollbarHeight = React__namespace.useRef();
     const nodeRef = React__namespace.useRef(null);
     const setMeasurements = () => {
@@ -58392,7 +58512,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const tabScrollButtonClasses = generateUtilityClasses$1("MuiTabScrollButton", ["root", "vertical", "horizontal", "disabled"]);
   "use client";
-  const _excluded$v = ["className", "slots", "slotProps", "direction", "orientation", "disabled"];
+  const _excluded$u = ["className", "slots", "slotProps", "direction", "orientation", "disabled"];
   const useUtilityClasses$o = (ownerState) => {
     const {
       classes,
@@ -58431,7 +58551,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }));
   const TabScrollButton = /* @__PURE__ */ React__namespace.forwardRef(function TabScrollButton2(inProps, ref) {
     var _slots$StartScrollBut, _slots$EndScrollButto;
-    const props = useThemeProps$6({
+    const props = useDefaultProps({
       props: inProps,
       name: "MuiTabScrollButton"
     });
@@ -58440,7 +58560,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       slots = {},
       slotProps = {},
       direction
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$v);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$u);
     const isRtl = useRtl();
     const ownerState = _extends$1({
       isRtl
@@ -58533,7 +58653,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const tabsClasses = generateUtilityClasses$1("MuiTabs", ["root", "vertical", "flexContainer", "flexContainerVertical", "centered", "scroller", "fixed", "scrollableX", "scrollableY", "hideScrollbar", "scrollButtons", "scrollButtonsHideMobile", "indicator"]);
   "use client";
-  const _excluded$u = ["aria-label", "aria-labelledby", "action", "centered", "children", "className", "component", "allowScrollButtonsMobile", "indicatorColor", "onChange", "orientation", "ScrollButtonComponent", "scrollButtons", "selectionFollowsFocus", "slots", "slotProps", "TabIndicatorProps", "TabScrollButtonProps", "textColor", "value", "variant", "visibleScrollbar"];
+  const _excluded$t = ["aria-label", "aria-labelledby", "action", "centered", "children", "className", "component", "allowScrollButtonsMobile", "indicatorColor", "onChange", "orientation", "ScrollButtonComponent", "scrollButtons", "selectionFollowsFocus", "slots", "slotProps", "TabIndicatorProps", "TabScrollButtonProps", "textColor", "value", "variant", "visibleScrollbar"];
   const nextItem = (list, item) => {
     if (list === item) {
       return list.firstChild;
@@ -58712,7 +58832,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   const defaultIndicatorStyle = {};
   let warnedOnceTabPresent = false;
   const Tabs = /* @__PURE__ */ React__namespace.forwardRef(function Tabs2(inProps, ref) {
-    const props = useThemeProps$6({
+    const props = useDefaultProps({
       props: inProps,
       name: "MuiTabs"
     });
@@ -58741,7 +58861,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       value,
       variant = "standard",
       visibleScrollbar = false
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$u);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$t);
     const scrollable = variant === "scrollable";
     const vertical = orientation === "vertical";
     const scrollStart = vertical ? "scrollTop" : "scrollLeft";
@@ -59353,7 +59473,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }
   }));
   const DateTimePickerTabs = function DateTimePickerTabs2(inProps) {
-    const props = useThemeProps$6({
+    const props = useThemeProps({
       props: inProps,
       name: "MuiDateTimePickerTabs"
     });
@@ -59366,7 +59486,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       className,
       sx
     } = props;
-    const localeText = useLocaleText();
+    const translations = usePickersTranslations();
     const classes = useUtilityClasses$m(props);
     const handleChange = (event, value) => {
       onViewChange(tabToView(value));
@@ -59383,13 +59503,13 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       sx,
       children: [/* @__PURE__ */ jsxRuntimeExports.jsx(Tab, {
         value: "date",
-        "aria-label": localeText.dateTableLabel,
+        "aria-label": translations.dateTableLabel,
         icon: /* @__PURE__ */ jsxRuntimeExports.jsx(React__namespace.Fragment, {
           children: dateIcon
         })
       }), /* @__PURE__ */ jsxRuntimeExports.jsx(Tab, {
         value: "time",
-        "aria-label": localeText.timeTableLabel,
+        "aria-label": translations.timeTableLabel,
         icon: /* @__PURE__ */ jsxRuntimeExports.jsx(React__namespace.Fragment, {
           children: timeIcon
         })
@@ -59440,7 +59560,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     return generateUtilityClass$1("MuiPickersToolbarText", slot);
   }
   const pickersToolbarTextClasses = generateUtilityClasses$1("MuiPickersToolbarText", ["root", "selected"]);
-  const _excluded$t = ["className", "selected", "value"];
+  const _excluded$s = ["className", "selected", "value"];
   const useUtilityClasses$l = (ownerState) => {
     const {
       classes,
@@ -59467,14 +59587,14 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }
   }));
   const PickersToolbarText = /* @__PURE__ */ React__namespace.forwardRef(function PickersToolbarText2(inProps, ref) {
-    const props = useThemeProps$6({
+    const props = useThemeProps({
       props: inProps,
       name: "MuiPickersToolbarText"
     });
     const {
       className,
       value
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$t);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$s);
     const classes = useUtilityClasses$l(props);
     return /* @__PURE__ */ jsxRuntimeExports.jsx(PickersToolbarTextRoot, _extends$1({
       ref,
@@ -59484,7 +59604,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       children: value
     }));
   });
-  const _excluded$s = ["align", "className", "selected", "typographyClassName", "value", "variant", "width"];
+  const _excluded$r = ["align", "className", "selected", "typographyClassName", "value", "variant", "width"];
   const useUtilityClasses$k = (ownerState) => {
     const {
       classes
@@ -59504,7 +59624,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     textTransform: "none"
   });
   const PickersToolbarButton = /* @__PURE__ */ React__namespace.forwardRef(function PickersToolbarButton2(inProps, ref) {
-    const props = useThemeProps$6({
+    const props = useThemeProps({
       props: inProps,
       name: "MuiPickersToolbarButton"
     });
@@ -59516,7 +59636,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       value,
       variant,
       width: width2
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$s);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$r);
     const classes = useUtilityClasses$k(props);
     return /* @__PURE__ */ jsxRuntimeExports.jsx(PickersToolbarButtonRoot, _extends$1({
       variant: "text",
@@ -59540,129 +59660,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     return generateUtilityClass$1("MuiDateTimePickerToolbar", slot);
   }
   const dateTimePickerToolbarClasses = generateUtilityClasses$1("MuiDateTimePickerToolbar", ["root", "dateContainer", "timeContainer", "timeDigitsContainer", "separator", "timeLabelReverse", "ampmSelection", "ampmLandscape", "ampmLabel"]);
-  function getPickersToolbarButtonUtilityClass(slot) {
-    return generateUtilityClass$1("MuiPickersToolbarButton", slot);
-  }
-  const pickersToolbarButtonClasses = generateUtilityClasses$1("MuiPickersToolbarButton", ["root"]);
-  const _excluded$r = ["props", "ref"];
-  const PickerStaticLayout = styled$1(PickersLayout)(({
-    theme
-  }) => ({
-    overflow: "hidden",
-    minWidth: DIALOG_WIDTH,
-    backgroundColor: (theme.vars || theme).palette.background.paper
-  }));
-  const useStaticPicker = (_ref) => {
-    var _a;
-    let {
-      props,
-      ref
-    } = _ref, pickerParams = _objectWithoutPropertiesLoose(_ref, _excluded$r);
-    const {
-      localeText,
-      slots,
-      slotProps,
-      className,
-      sx,
-      displayStaticWrapperAs,
-      autoFocus
-    } = props;
-    const {
-      layoutProps,
-      renderCurrentView
-    } = usePicker(_extends$1({}, pickerParams, {
-      props,
-      autoFocusView: autoFocus != null ? autoFocus : false,
-      fieldRef: void 0,
-      additionalViewProps: {},
-      wrapperVariant: displayStaticWrapperAs
-    }));
-    const Layout = (_a = slots == null ? void 0 : slots.layout) != null ? _a : PickerStaticLayout;
-    const renderPicker = () => {
-      var _a2, _b, _c;
-      return /* @__PURE__ */ jsxRuntimeExports.jsx(LocalizationProvider, {
-        localeText,
-        children: /* @__PURE__ */ jsxRuntimeExports.jsx(Layout, _extends$1({}, layoutProps, slotProps == null ? void 0 : slotProps.layout, {
-          slots,
-          slotProps,
-          sx: [...Array.isArray(sx) ? sx : [sx], ...Array.isArray((_a2 = slotProps == null ? void 0 : slotProps.layout) == null ? void 0 : _a2.sx) ? slotProps.layout.sx : [(_b = slotProps == null ? void 0 : slotProps.layout) == null ? void 0 : _b.sx]],
-          className: clsx(className, (_c = slotProps == null ? void 0 : slotProps.layout) == null ? void 0 : _c.className),
-          ref,
-          children: renderCurrentView()
-        }))
-      });
-    };
-    return {
-      renderPicker
-    };
-  };
-  const _excluded$q = ["views", "format"];
-  const resolveDateTimeFormat = (utils2, _ref) => {
-    let {
-      views,
-      format
-    } = _ref, other = _objectWithoutPropertiesLoose(_ref, _excluded$q);
-    if (format) {
-      return format;
-    }
-    const dateViews2 = [];
-    const timeViews2 = [];
-    views.forEach((view) => {
-      if (isTimeView(view)) {
-        timeViews2.push(view);
-      } else {
-        dateViews2.push(view);
-      }
-    });
-    if (timeViews2.length === 0) {
-      return resolveDateFormat(utils2, _extends$1({
-        views: dateViews2
-      }, other), false);
-    }
-    if (dateViews2.length === 0) {
-      return resolveTimeFormat(utils2, _extends$1({
-        views: timeViews2
-      }, other));
-    }
-    const timeFormat = resolveTimeFormat(utils2, _extends$1({
-      views: timeViews2
-    }, other));
-    const dateFormat = resolveDateFormat(utils2, _extends$1({
-      views: dateViews2
-    }, other), false);
-    return `${dateFormat} ${timeFormat}`;
-  };
-  const resolveViews = (ampm, views, shouldUseSingleColumn) => {
-    if (shouldUseSingleColumn) {
-      return views.filter((view) => !isInternalTimeView(view) || view === "hours");
-    }
-    return ampm ? [...views, "meridiem"] : views;
-  };
-  const resolveShouldRenderTimeInASingleColumn = (timeSteps, threshold) => {
-    var _a, _b;
-    return 24 * 60 / (((_a = timeSteps.hours) != null ? _a : 1) * ((_b = timeSteps.minutes) != null ? _b : 5)) <= threshold;
-  };
-  function resolveTimeViewsResponse({
-    thresholdToRenderTimeInASingleColumn: inThreshold,
-    ampm,
-    timeSteps: inTimeSteps,
-    views
-  }) {
-    const thresholdToRenderTimeInASingleColumn = inThreshold != null ? inThreshold : 24;
-    const timeSteps = _extends$1({
-      hours: 1,
-      minutes: 5,
-      seconds: 5
-    }, inTimeSteps);
-    const shouldRenderTimeInASingleColumn = resolveShouldRenderTimeInASingleColumn(timeSteps, thresholdToRenderTimeInASingleColumn);
-    return {
-      thresholdToRenderTimeInASingleColumn,
-      timeSteps,
-      shouldRenderTimeInASingleColumn,
-      views: resolveViews(ampm, views, shouldRenderTimeInASingleColumn)
-    };
-  }
-  const _excluded$p = ["ampm", "ampmInClock", "value", "onChange", "view", "isLandscape", "onViewChange", "toolbarFormat", "toolbarPlaceholder", "views", "disabled", "readOnly", "toolbarVariant", "toolbarTitle", "className"];
+  const _excluded$q = ["ampm", "ampmInClock", "value", "onChange", "view", "isLandscape", "onViewChange", "toolbarFormat", "toolbarPlaceholder", "views", "disabled", "readOnly", "toolbarVariant", "toolbarTitle", "className"];
   const useUtilityClasses$j = (ownerState) => {
     const {
       classes,
@@ -59840,7 +59838,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }]
   });
   function DateTimePickerToolbar(inProps) {
-    const props = useThemeProps$6({
+    const props = useThemeProps({
       props: inProps,
       name: "MuiDateTimePickerToolbar"
     });
@@ -59860,7 +59858,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       toolbarVariant = "mobile",
       toolbarTitle: inToolbarTitle,
       className
-    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$p);
+    } = props, other = _objectWithoutPropertiesLoose(props, _excluded$q);
     const isRtl = useRtl();
     const ownerState = _extends$1({}, props, {
       isRtl
@@ -59872,9 +59870,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     } = useMeridiemMode(value, ampm, onChange);
     const showAmPmControl = Boolean(ampm && !ampmInClock);
     const isDesktop = toolbarVariant === "desktop";
-    const localeText = useLocaleText();
+    const translations = usePickersTranslations();
     const classes = useUtilityClasses$j(ownerState);
-    const toolbarTitle = inToolbarTitle != null ? inToolbarTitle : localeText.dateTimePickerToolbarTitle;
+    const toolbarTitle = inToolbarTitle != null ? inToolbarTitle : translations.dateTimePickerToolbarTitle;
     const formatHours = (time) => ampm ? utils2.format(time, "hours12h") : utils2.format(time, "hours24h");
     const dateText = React__namespace.useMemo(() => {
       if (!value) {
@@ -60035,7 +60033,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     var _a, _b, _c, _d, _e, _f, _g, _h, _i, _j;
     const utils2 = useUtils();
     const defaultDates = useDefaultDates();
-    const themeProps = useThemeProps$6({
+    const themeProps = useThemeProps({
       props,
       name
     });
@@ -60077,6 +60075,72 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         }, (_j = themeProps.slotProps) == null ? void 0 : _j.toolbar)
       })
     });
+  }
+  const _excluded$p = ["views", "format"];
+  const resolveDateTimeFormat = (utils2, _ref) => {
+    let {
+      views,
+      format
+    } = _ref, other = _objectWithoutPropertiesLoose(_ref, _excluded$p);
+    if (format) {
+      return format;
+    }
+    const dateViews2 = [];
+    const timeViews2 = [];
+    views.forEach((view) => {
+      if (isTimeView(view)) {
+        timeViews2.push(view);
+      } else {
+        dateViews2.push(view);
+      }
+    });
+    if (timeViews2.length === 0) {
+      return resolveDateFormat(utils2, _extends$1({
+        views: dateViews2
+      }, other), false);
+    }
+    if (dateViews2.length === 0) {
+      return resolveTimeFormat(utils2, _extends$1({
+        views: timeViews2
+      }, other));
+    }
+    const timeFormat = resolveTimeFormat(utils2, _extends$1({
+      views: timeViews2
+    }, other));
+    const dateFormat = resolveDateFormat(utils2, _extends$1({
+      views: dateViews2
+    }, other), false);
+    return `${dateFormat} ${timeFormat}`;
+  };
+  const resolveViews = (ampm, views, shouldUseSingleColumn) => {
+    if (shouldUseSingleColumn) {
+      return views.filter((view) => !isInternalTimeView(view) || view === "hours");
+    }
+    return ampm ? [...views, "meridiem"] : views;
+  };
+  const resolveShouldRenderTimeInASingleColumn = (timeSteps, threshold) => {
+    var _a, _b;
+    return 24 * 60 / (((_a = timeSteps.hours) != null ? _a : 1) * ((_b = timeSteps.minutes) != null ? _b : 5)) <= threshold;
+  };
+  function resolveTimeViewsResponse({
+    thresholdToRenderTimeInASingleColumn: inThreshold,
+    ampm,
+    timeSteps: inTimeSteps,
+    views
+  }) {
+    const thresholdToRenderTimeInASingleColumn = inThreshold != null ? inThreshold : 24;
+    const timeSteps = _extends$1({
+      hours: 1,
+      minutes: 5,
+      seconds: 5
+    }, inTimeSteps);
+    const shouldRenderTimeInASingleColumn = resolveShouldRenderTimeInASingleColumn(timeSteps, thresholdToRenderTimeInASingleColumn);
+    return {
+      thresholdToRenderTimeInASingleColumn,
+      timeSteps,
+      shouldRenderTimeInASingleColumn,
+      views: resolveViews(ampm, views, shouldRenderTimeInASingleColumn)
+    };
   }
   function getTimeClockUtilityClass(slot) {
     return generateUtilityClass$1("MuiTimeClock", slot);
@@ -60197,7 +60261,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }]
   }));
   function ClockPointer(inProps) {
-    const props = useThemeProps$6({
+    const props = useThemeProps({
       props: inProps,
       name: "MuiClockPointer"
     });
@@ -60399,7 +60463,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     textOverflow: "ellipsis"
   });
   function Clock(inProps) {
-    const props = useThemeProps$6({
+    const props = useThemeProps({
       props: inProps,
       name: "MuiClock"
     });
@@ -60423,7 +60487,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     } = props;
     const ownerState = props;
     const utils2 = useUtils();
-    const localeText = useLocaleText();
+    const translations = usePickersTranslations();
     const isMoving = React__namespace.useRef(false);
     const classes = useUtilityClasses$h(ownerState);
     const isSelectedTimeDisabled = isTimeDisabled(viewValue, type);
@@ -60532,7 +60596,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           })]
         }), /* @__PURE__ */ jsxRuntimeExports.jsx(ClockWrapper, {
           "aria-activedescendant": selectedId,
-          "aria-label": localeText.clockLabelText(type, value, utils2),
+          "aria-label": translations.clockLabelText(type, value, utils2),
           ref: listboxRef,
           role: "listbox",
           onKeyDown: handleKeyDown2,
@@ -60624,7 +60688,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }]
   }));
   function ClockNumber(inProps) {
-    const props = useThemeProps$6({
+    const props = useThemeProps({
       props: inProps,
       name: "MuiClockNumber"
     });
@@ -60775,7 +60839,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   const TIME_CLOCK_DEFAULT_VIEWS = ["hours", "minutes"];
   const TimeClock = /* @__PURE__ */ React__namespace.forwardRef(function TimeClock2(inProps, ref) {
     const utils2 = useUtils();
-    const props = useThemeProps$6({
+    const props = useThemeProps({
       props: inProps,
       name: "MuiTimeClock"
     });
@@ -60827,7 +60891,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       props,
       timezone
     });
-    const localeText = useLocaleText();
+    const translations = usePickersTranslations();
     const now = useNow(timezone);
     const {
       view,
@@ -60936,7 +61000,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
               utils: utils2,
               ampm,
               onChange: handleHoursChange,
-              getClockNumberText: localeText.hoursClockNumberText,
+              getClockNumberText: translations.hoursClockNumberText,
               isDisabled: (hourValue) => disabled || isTimeDisabled(hourValue, "hours"),
               selectedId
             })
@@ -60954,7 +61018,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
               utils: utils2,
               value: minutesValue,
               onChange: handleMinutesChange,
-              getClockNumberText: localeText.minutesClockNumberText,
+              getClockNumberText: translations.minutesClockNumberText,
               isDisabled: (minuteValue) => disabled || isTimeDisabled(minuteValue, "minutes"),
               selectedId
             })
@@ -60972,7 +61036,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
               utils: utils2,
               value: secondsValue,
               onChange: handleSecondsChange,
-              getClockNumberText: localeText.secondsClockNumberText,
+              getClockNumberText: translations.secondsClockNumberText,
               isDisabled: (secondValue) => disabled || isTimeDisabled(secondValue, "seconds"),
               selectedId
             })
@@ -60981,7 +61045,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         default:
           throw new Error("You must provide the type for ClockView");
       }
-    }, [view, utils2, value, ampm, localeText.hoursClockNumberText, localeText.minutesClockNumberText, localeText.secondsClockNumberText, meridiemMode, setValueAndGoToNextView, valueOrReferenceDate, isTimeDisabled, selectedId, disabled]);
+    }, [view, utils2, value, ampm, translations.hoursClockNumberText, translations.minutesClockNumberText, translations.secondsClockNumberText, meridiemMode, setValueAndGoToNextView, valueOrReferenceDate, isTimeDisabled, selectedId, disabled]);
     const ownerState = props;
     const classes = useUtilityClasses$f(ownerState);
     return /* @__PURE__ */ jsxRuntimeExports.jsxs(TimeClockRoot, _extends$1({
@@ -61008,10 +61072,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         slotProps,
         onGoToPrevious: () => setView(previousView),
         isPreviousDisabled: !previousView,
-        previousLabel: localeText.openPreviousView,
+        previousLabel: translations.openPreviousView,
         onGoToNext: () => setView(nextView),
         isNextDisabled: !nextView,
-        nextLabel: localeText.openNextView,
+        nextLabel: translations.openNextView,
         ownerState
       })]
     }));
@@ -61249,7 +61313,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const utils2 = useUtils();
     const containerRef = React__namespace.useRef(null);
     const handleRef = useForkRef(ref, containerRef);
-    const props = useThemeProps$6({
+    const props = useThemeProps({
       props: inProps,
       name: "MuiDigitalClock"
     });
@@ -61294,7 +61358,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       onChange,
       valueManager: singleItemValueManager
     });
-    const localeText = useLocaleText();
+    const translations = usePickersTranslations();
     const now = useNow(timezone);
     const ownerState = React__namespace.useMemo(() => _extends$1({}, props, {
       alreadyRendered: !!containerRef.current
@@ -61385,7 +61449,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }, other, {
       children: /* @__PURE__ */ jsxRuntimeExports.jsx(DigitalClockList, {
         role: "listbox",
-        "aria-label": localeText.timePickerToolbarTitle,
+        "aria-label": translations.timePickerToolbarTitle,
         className: classes.list,
         children: timeOptions.map((option, index2) => {
           if (skipDisabled && isTimeDisabled(option)) {
@@ -61666,7 +61730,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const containerRef = React__namespace.useRef(null);
     const handleRef = useForkRef(ref, containerRef);
     const previousActive = React__namespace.useRef(null);
-    const props = useThemeProps$6({
+    const props = useThemeProps({
       props: inProps,
       name: "MuiMultiSectionDigitalClockSection"
     });
@@ -61836,7 +61900,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }));
   const MultiSectionDigitalClock = /* @__PURE__ */ React__namespace.forwardRef(function MultiSectionDigitalClock2(inProps, ref) {
     const utils2 = useUtils();
-    const props = useThemeProps$6({
+    const isRtl = useRtl();
+    const props = useThemeProps({
       props: inProps,
       name: "MuiMultiSectionDigitalClock"
     });
@@ -61881,7 +61946,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       onChange,
       valueManager: singleItemValueManager
     });
-    const localeText = useLocaleText();
+    const translations = usePickersTranslations();
     const now = useNow(timezone);
     const timeSteps = React__namespace.useMemo(() => _extends$1({
       hours: 1,
@@ -62009,7 +62074,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
               utils: utils2,
               isDisabled: (hours) => isTimeDisabled(hours, "hours"),
               timeStep: timeSteps.hours,
-              resolveAriaLabel: localeText.hoursClockNumberText,
+              resolveAriaLabel: translations.hoursClockNumberText,
               valueOrReferenceDate
             })
           };
@@ -62026,7 +62091,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
               resolveLabel: (minutes) => utils2.format(utils2.setMinutes(now, minutes), "minutes"),
               timeStep: timeSteps.minutes,
               hasValue: !!value,
-              resolveAriaLabel: localeText.minutesClockNumberText
+              resolveAriaLabel: translations.minutesClockNumberText
             })
           };
         }
@@ -62042,7 +62107,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
               resolveLabel: (seconds) => utils2.format(utils2.setSeconds(now, seconds), "seconds"),
               timeStep: timeSteps.seconds,
               hasValue: !!value,
-              resolveAriaLabel: localeText.secondsClockNumberText
+              resolveAriaLabel: translations.secondsClockNumberText
             })
           };
         }
@@ -62069,7 +62134,18 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         default:
           throw new Error(`Unknown view: ${viewToBuild} found.`);
       }
-    }, [now, value, ampm, utils2, timeSteps.hours, timeSteps.minutes, timeSteps.seconds, localeText.hoursClockNumberText, localeText.minutesClockNumberText, localeText.secondsClockNumberText, meridiemMode, setValueAndGoToNextView, valueOrReferenceDate, isTimeDisabled, handleMeridiemChange]);
+    }, [now, value, ampm, utils2, timeSteps.hours, timeSteps.minutes, timeSteps.seconds, translations.hoursClockNumberText, translations.minutesClockNumberText, translations.secondsClockNumberText, meridiemMode, setValueAndGoToNextView, valueOrReferenceDate, isTimeDisabled, handleMeridiemChange]);
+    const viewsToRender = React__namespace.useMemo(() => {
+      if (!isRtl) {
+        return views;
+      }
+      const digitViews = views.filter((v) => v !== "meridiem");
+      const result = digitViews.toReversed();
+      if (views.includes("meridiem")) {
+        result.push("meridiem");
+      }
+      return result;
+    }, [isRtl, views]);
     const viewTimeOptions = React__namespace.useMemo(() => {
       return views.reduce((result, currentView) => {
         return _extends$1({}, result, {
@@ -62085,9 +62161,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       ownerState,
       role: "group"
     }, other, {
-      children: Object.entries(viewTimeOptions).map(([timeView, viewOptions]) => /* @__PURE__ */ jsxRuntimeExports.jsx(MultiSectionDigitalClockSection, {
-        items: viewOptions.items,
-        onChange: viewOptions.onChange,
+      children: viewsToRender.map((timeView) => /* @__PURE__ */ jsxRuntimeExports.jsx(MultiSectionDigitalClockSection, {
+        items: viewTimeOptions[timeView].items,
+        onChange: viewTimeOptions[timeView].onChange,
         active: view === timeView,
         autoFocus: autoFocus != null ? autoFocus : focusedView === timeView,
         disabled,
@@ -62095,7 +62171,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         slots,
         slotProps,
         skipDisabled,
-        "aria-label": localeText.selectViewText(timeView)
+        "aria-label": translations.selectViewText(timeView)
       }, timeView))
     }));
   });
@@ -62590,7 +62666,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   };
   const DesktopDateTimePicker = /* @__PURE__ */ React__namespace.forwardRef(function DesktopDateTimePicker2(inProps, ref) {
     var _a, _b, _c, _d, _e, _f, _g;
-    const localeText = useLocaleText();
+    const translations = usePickersTranslations();
     const utils2 = useUtils();
     const defaultizedProps = useDateTimePickerDefaultizedProps(inProps, "MuiDesktopDateTimePicker");
     const {
@@ -62656,7 +62732,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       props,
       valueManager: singleItemValueManager,
       valueType: "date-time",
-      getOpenDialogAriaText: (_g = (_f = props.localeText) == null ? void 0 : _f.openDatePickerDialogue) != null ? _g : localeText.openDatePickerDialogue,
+      getOpenDialogAriaText: (_g = (_f = props.localeText) == null ? void 0 : _f.openDatePickerDialogue) != null ? _g : translations.openDatePickerDialogue,
       validator: validateDateTime,
       rendererInterceptor
     });
@@ -62818,7 +62894,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     /**
      * Callback fired when the value is accepted.
      * @template TValue The value type. Will be either the same type as `value` or `null`. Can be in `[start, end]` format in case of range value.
+     * @template TError The validation error type. Will be either `string` or a `null`. Can be in `[start, end]` format in case of range value.
      * @param {TValue} value The value that was just accepted.
+     * @param {FieldChangeHandlerContext<TError>} context The context containing the validation result of the current value.
      */
     onAccept: PropTypes.func,
     /**
@@ -63037,7 +63115,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   };
   const MobileDateTimePicker = /* @__PURE__ */ React__namespace.forwardRef(function MobileDateTimePicker2(inProps, ref) {
     var _a, _b, _c, _d, _e;
-    const localeText = useLocaleText();
+    const translations = usePickersTranslations();
     const utils2 = useUtils();
     const defaultizedProps = useDateTimePickerDefaultizedProps(inProps, "MuiMobileDateTimePicker");
     const viewRenderers = _extends$1({
@@ -63078,7 +63156,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       props,
       valueManager: singleItemValueManager,
       valueType: "date-time",
-      getOpenDialogAriaText: (_e = (_d = props.localeText) == null ? void 0 : _d.openDatePickerDialogue) != null ? _e : localeText.openDatePickerDialogue,
+      getOpenDialogAriaText: (_e = (_d = props.localeText) == null ? void 0 : _d.openDatePickerDialogue) != null ? _e : translations.openDatePickerDialogue,
       validator: validateDateTime
     });
     return renderPicker();
@@ -63239,7 +63317,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     /**
      * Callback fired when the value is accepted.
      * @template TValue The value type. Will be either the same type as `value` or `null`. Can be in `[start, end]` format in case of range value.
+     * @template TError The validation error type. Will be either `string` or a `null`. Can be in `[start, end]` format in case of range value.
      * @param {TValue} value The value that was just accepted.
+     * @param {FieldChangeHandlerContext<TError>} context The context containing the validation result of the current value.
      */
     onAccept: PropTypes.func,
     /**
@@ -63436,7 +63516,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   };
   const _excluded$h = ["desktopModeMediaQuery"];
   const DateTimePicker = /* @__PURE__ */ React__namespace.forwardRef(function DateTimePicker2(inProps, ref) {
-    const props = useThemeProps$6({
+    const props = useThemeProps({
       props: inProps,
       name: "MuiDateTimePicker"
     });
@@ -63617,7 +63697,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     /**
      * Callback fired when the value is accepted.
      * @template TValue The value type. Will be either the same type as `value` or `null`. Can be in `[start, end]` format in case of range value.
+     * @template TError The validation error type. Will be either `string` or a `null`. Can be in `[start, end]` format in case of range value.
      * @param {TValue} value The value that was just accepted.
+     * @param {FieldChangeHandlerContext<TError>} context The context containing the validation result of the current value.
      */
     onAccept: PropTypes.func,
     /**
@@ -63852,7 +63934,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   const _excluded$g = ["slots", "slotProps", "InputProps", "inputProps"];
   const TimeField = /* @__PURE__ */ React__namespace.forwardRef(function TimeField2(inProps, inRef) {
     var _a;
-    const themeProps = useThemeProps$6({
+    const themeProps = useThemeProps({
       props: inProps,
       name: "MuiTimeField"
     });
@@ -64236,7 +64318,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }]
   });
   function TimePickerToolbar(inProps) {
-    const props = useThemeProps$6({
+    const props = useThemeProps({
       props: inProps,
       name: "MuiTimePickerToolbar"
     });
@@ -64254,7 +64336,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       className
     } = props, other = _objectWithoutPropertiesLoose(props, _excluded$f);
     const utils2 = useUtils();
-    const localeText = useLocaleText();
+    const translations = usePickersTranslations();
     const isRtl = useRtl();
     const showAmPmControl = Boolean(ampm && !ampmInClock && views.includes("hours"));
     const {
@@ -64275,7 +64357,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     });
     return /* @__PURE__ */ jsxRuntimeExports.jsxs(TimePickerToolbarRoot, _extends$1({
       landscapeDirection: "row",
-      toolbarTitle: localeText.timePickerToolbarTitle,
+      toolbarTitle: translations.timePickerToolbarTitle,
       isLandscape,
       ownerState,
       className: clsx(classes.root, className)
@@ -64378,7 +64460,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   function useTimePickerDefaultizedProps(props, name) {
     var _a, _b, _c, _d;
     const utils2 = useUtils();
-    const themeProps = useThemeProps$6({
+    const themeProps = useThemeProps({
       props,
       name
     });
@@ -64416,7 +64498,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const DesktopTimePicker = /* @__PURE__ */ React__namespace.forwardRef(function DesktopTimePicker2(inProps, ref) {
     var _a, _b, _c, _d, _e, _f;
-    const localeText = useLocaleText();
+    const translations = usePickersTranslations();
     const utils2 = useUtils();
     const defaultizedProps = useTimePickerDefaultizedProps(inProps, "MuiDesktopTimePicker");
     const {
@@ -64469,7 +64551,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       props,
       valueManager: singleItemValueManager,
       valueType: "time",
-      getOpenDialogAriaText: (_f = (_e = props.localeText) == null ? void 0 : _e.openTimePickerDialogue) != null ? _f : localeText.openTimePickerDialogue,
+      getOpenDialogAriaText: (_f = (_e = props.localeText) == null ? void 0 : _e.openTimePickerDialogue) != null ? _f : translations.openTimePickerDialogue,
       validator: validateTime
     });
     return renderPicker();
@@ -64582,7 +64664,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     /**
      * Callback fired when the value is accepted.
      * @template TValue The value type. Will be either the same type as `value` or `null`. Can be in `[start, end]` format in case of range value.
+     * @template TError The validation error type. Will be either `string` or a `null`. Can be in `[start, end]` format in case of range value.
      * @param {TValue} value The value that was just accepted.
+     * @param {FieldChangeHandlerContext<TError>} context The context containing the validation result of the current value.
      */
     onAccept: PropTypes.func,
     /**
@@ -64740,7 +64824,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   };
   const MobileTimePicker = /* @__PURE__ */ React__namespace.forwardRef(function MobileTimePicker2(inProps, ref) {
     var _a, _b, _c, _d;
-    const localeText = useLocaleText();
+    const translations = usePickersTranslations();
     const utils2 = useUtils();
     const defaultizedProps = useTimePickerDefaultizedProps(inProps, "MuiMobileTimePicker");
     const viewRenderers = _extends$1({
@@ -64775,7 +64859,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       props,
       valueManager: singleItemValueManager,
       valueType: "time",
-      getOpenDialogAriaText: (_d = (_c = props.localeText) == null ? void 0 : _c.openTimePickerDialogue) != null ? _d : localeText.openTimePickerDialogue,
+      getOpenDialogAriaText: (_d = (_c = props.localeText) == null ? void 0 : _c.openTimePickerDialogue) != null ? _d : translations.openTimePickerDialogue,
       validator: validateTime
     });
     return renderPicker();
@@ -64888,7 +64972,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     /**
      * Callback fired when the value is accepted.
      * @template TValue The value type. Will be either the same type as `value` or `null`. Can be in `[start, end]` format in case of range value.
+     * @template TError The validation error type. Will be either `string` or a `null`. Can be in `[start, end]` format in case of range value.
      * @param {TValue} value The value that was just accepted.
+     * @param {FieldChangeHandlerContext<TError>} context The context containing the validation result of the current value.
      */
     onAccept: PropTypes.func,
     /**
@@ -65024,7 +65110,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   };
   const _excluded$e = ["desktopModeMediaQuery"];
   const TimePicker = /* @__PURE__ */ React__namespace.forwardRef(function TimePicker2(inProps, ref) {
-    const props = useThemeProps$6({
+    const props = useThemeProps({
       props: inProps,
       name: "MuiTimePicker"
     });
@@ -65157,7 +65243,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     /**
      * Callback fired when the value is accepted.
      * @template TValue The value type. Will be either the same type as `value` or `null`. Can be in `[start, end]` format in case of range value.
+     * @template TError The validation error type. Will be either `string` or a `null`. Can be in `[start, end]` format in case of range value.
      * @param {TValue} value The value that was just accepted.
+     * @param {FieldChangeHandlerContext<TError>} context The context containing the validation result of the current value.
      */
     onAccept: PropTypes.func,
     /**
@@ -65365,7 +65453,6 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   } : void 0;
   "use client";
   const _excluded$d = ["aria-label", "aria-valuetext", "aria-labelledby", "component", "components", "componentsProps", "color", "classes", "className", "disableSwap", "disabled", "getAriaLabel", "getAriaValueText", "marks", "max", "min", "name", "onChange", "onChangeCommitted", "orientation", "shiftStep", "size", "step", "scale", "slotProps", "slots", "tabIndex", "track", "value", "valueLabelDisplay", "valueLabelFormat"];
-  const useThemeProps$4 = createUseThemeProps("MuiSlider");
   function Identity(x) {
     return x;
   }
@@ -65893,7 +65980,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }) => children;
   const Slider = /* @__PURE__ */ React__namespace.forwardRef(function Slider2(inputProps, ref) {
     var _ref, _slots$root, _ref2, _slots$rail, _ref3, _slots$track, _ref4, _slots$thumb, _ref5, _slots$valueLabel, _ref6, _slots$mark, _ref7, _slots$markLabel, _ref8, _slots$input, _slotProps$root, _slotProps$rail, _slotProps$track, _slotProps$thumb, _slotProps$valueLabel, _slotProps$mark, _slotProps$markLabel, _slotProps$input;
-    const props = useThemeProps$4({
+    const props = useDefaultProps({
       props: inputProps,
       name: "MuiSlider"
     });
@@ -66416,7 +66503,6 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   const _excluded$c = ["anchorOrigin", "className", "classes", "component", "components", "componentsProps", "children", "overlap", "color", "invisible", "max", "badgeContent", "slots", "slotProps", "showZero", "variant"];
   const RADIUS_STANDARD = 10;
   const RADIUS_DOT = 4;
-  const useThemeProps$3 = createUseThemeProps("MuiBadge");
   const useUtilityClasses$9 = (ownerState) => {
     const {
       color: color2,
@@ -66619,7 +66705,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   });
   const Badge = /* @__PURE__ */ React__namespace.forwardRef(function Badge2(inProps, ref) {
     var _ref, _slots$root, _ref2, _slots$badge, _slotProps$root, _slotProps$badge;
-    const props = useThemeProps$3({
+    const props = useDefaultProps({
       props: inProps,
       name: "MuiBadge"
     });
@@ -66908,7 +66994,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     transform: "rotate(180deg)"
   }));
   const TableSortLabel = /* @__PURE__ */ React__namespace.forwardRef(function TableSortLabel2(inProps, ref) {
-    const props = useThemeProps$6({
+    const props = useDefaultProps({
       props: inProps,
       name: "MuiTableSortLabel"
     });
@@ -67053,7 +67139,6 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }), "InfoOutlined");
   "use client";
   const _excluded$9 = ["action", "children", "className", "closeText", "color", "components", "componentsProps", "icon", "iconMapping", "onClose", "role", "severity", "slotProps", "slots", "variant"];
-  const useThemeProps$2 = createUseThemeProps("MuiAlert");
   const useUtilityClasses$7 = (ownerState) => {
     const {
       variant,
@@ -67178,7 +67263,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     })
   };
   const Alert = /* @__PURE__ */ React__namespace.forwardRef(function Alert2(inProps, ref) {
-    const props = useThemeProps$2({
+    const props = useDefaultProps({
       props: inProps,
       name: "MuiAlert"
     });
@@ -67383,7 +67468,6 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   const alertTitleClasses = generateUtilityClasses$1("MuiAlertTitle", ["root"]);
   "use client";
   const _excluded$8 = ["className"];
-  const useThemeProps$1 = createUseThemeProps("MuiAlertTitle");
   const useUtilityClasses$6 = (ownerState) => {
     const {
       classes
@@ -67406,7 +67490,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     };
   });
   const AlertTitle = /* @__PURE__ */ React__namespace.forwardRef(function AlertTitle2(inProps, ref) {
-    const props = useThemeProps$1({
+    const props = useDefaultProps({
       props: inProps,
       name: "MuiAlertTitle"
     });
@@ -67466,7 +67550,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     flex: "0 0 auto"
   });
   const DialogTitle = /* @__PURE__ */ React__namespace.forwardRef(function DialogTitle2(inProps, ref) {
-    const props = useThemeProps$6({
+    const props = useDefaultProps({
       props: inProps,
       name: "MuiDialogTitle"
     });
@@ -67729,7 +67813,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       animation: ${0} 2.1s cubic-bezier(0.165, 0.84, 0.44, 1) 1.15s infinite;
     `), indeterminate2Keyframe));
   const LinearProgress = /* @__PURE__ */ React__namespace.forwardRef(function LinearProgress2(inProps, ref) {
-    const props = useThemeProps$6({
+    const props = useDefaultProps({
       props: inProps,
       name: "MuiLinearProgress"
     });
@@ -68165,7 +68249,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     fontSize: theme.typography.pxToRem(22)
   }));
   const PaginationItem = /* @__PURE__ */ React__namespace.forwardRef(function PaginationItem2(inProps, ref) {
-    const props = useThemeProps$6({
+    const props = useDefaultProps({
       props: inProps,
       name: "MuiPaginationItem"
     });
@@ -68363,7 +68447,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     return `Go to ${type} page`;
   }
   const Pagination = /* @__PURE__ */ React__namespace.forwardRef(function Pagination2(inProps, ref) {
-    const props = useThemeProps$6({
+    const props = useDefaultProps({
       props: inProps,
       name: "MuiPagination"
     });
@@ -68550,7 +68634,6 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   const switchClasses = generateUtilityClasses$1("MuiSwitch", ["root", "edgeStart", "edgeEnd", "switchBase", "colorPrimary", "colorSecondary", "sizeSmall", "sizeMedium", "checked", "disabled", "input", "thumb", "track"]);
   "use client";
   const _excluded$2 = ["className", "color", "edge", "size", "sx"];
-  const useThemeProps = createUseThemeProps("MuiSwitch");
   const useUtilityClasses$1 = (ownerState) => {
     const {
       classes,
@@ -68733,7 +68816,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     borderRadius: "50%"
   }));
   const Switch = /* @__PURE__ */ React__namespace.forwardRef(function Switch2(inProps, ref) {
-    const props = useThemeProps({
+    const props = useDefaultProps({
       props: inProps,
       name: "MuiSwitch"
     });
@@ -69233,9 +69316,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   });
   function __rest(s, e) {
     var t = {};
-    for (var p in s)
-      if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
-        t[p] = s[p];
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+      t[p] = s[p];
     if (s != null && typeof Object.getOwnPropertySymbols === "function")
       for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
         if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
@@ -72115,8 +72197,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }
     return jsxRuntimeExports.jsx(MRT_TablePaper, { table });
   };
-  const { Open: Open$9, Child: Child$5 } = gubu_minExports.Gubu;
-  const Shape$2 = gubu_minExports.Gubu(Open$9({
+  const { Open: Open$7, Child: Child$5 } = gubu_minExports.Gubu;
+  const Shape$2 = gubu_minExports.Gubu(Open$7({
     name: String,
     prefix: String,
     ent: String,
@@ -72447,7 +72529,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       const _shouldUnregisterField = control._options.shouldUnregister || shouldUnregister;
       const updateMounted = (name2, value2) => {
         const field = get(control._fields, name2);
-        if (field) {
+        if (field && field._f) {
           field._f.mount = value2;
         }
       };
@@ -72638,7 +72720,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }
   };
   var updateFieldArrayRootError = (errors, error, name) => {
-    const fieldArrayErrors = compact(get(errors, name));
+    const fieldArrayErrors = convertToArrayPayload(get(errors, name));
     set(fieldArrayErrors, "root", error[name]);
     set(errors, name, fieldArrayErrors);
     return errors;
@@ -73388,7 +73470,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       const output = {
         name
       };
-      const disabledField = !!(get(_fields, name) && get(_fields, name)._f.disabled);
+      const disabledField = !!(get(_fields, name) && get(_fields, name)._f && get(_fields, name)._f.disabled);
       if (!isBlurEvent || shouldDirty) {
         if (_proxyFormState.isDirty) {
           isPreviousDirty = _formState.isDirty;
@@ -73653,9 +73735,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const getFieldState = (name, formState) => ({
       invalid: !!get((formState || _formState).errors, name),
       isDirty: !!get((formState || _formState).dirtyFields, name),
-      isTouched: !!get((formState || _formState).touchedFields, name),
-      isValidating: !!get((formState || _formState).validatingFields, name),
-      error: get((formState || _formState).errors, name)
+      error: get((formState || _formState).errors, name),
+      isValidating: !!get(_formState.validatingFields, name),
+      isTouched: !!get((formState || _formState).touchedFields, name)
     });
     const clearErrors = (name) => {
       name && convertToArrayPayload(name).forEach((inputName) => unset(_formState.errors, inputName));
@@ -73906,7 +73988,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         submitCount: keepStateOptions.keepSubmitCount ? _formState.submitCount : 0,
         isDirty: isEmptyResetValues ? false : keepStateOptions.keepDirty ? _formState.isDirty : !!(keepStateOptions.keepDefaultValues && !deepEqual(formValues, _defaultValues)),
         isSubmitted: keepStateOptions.keepIsSubmitted ? _formState.isSubmitted : false,
-        dirtyFields: isEmptyResetValues ? [] : keepStateOptions.keepDirtyValues ? keepStateOptions.keepDefaultValues && _formValues ? getDirtyFields(_defaultValues, _formValues) : _formState.dirtyFields : keepStateOptions.keepDefaultValues && formValues ? getDirtyFields(_defaultValues, formValues) : {},
+        dirtyFields: isEmptyResetValues ? {} : keepStateOptions.keepDirtyValues ? keepStateOptions.keepDefaultValues && _formValues ? getDirtyFields(_defaultValues, _formValues) : _formState.dirtyFields : keepStateOptions.keepDefaultValues && formValues ? getDirtyFields(_defaultValues, formValues) : keepStateOptions.keepDirty ? _formState.dirtyFields : {},
         touchedFields: keepStateOptions.keepTouched ? _formState.touchedFields : {},
         errors: keepStateOptions.keepErrors ? _formState.errors : {},
         isSubmitSuccessful: keepStateOptions.keepIsSubmitSuccessful ? _formState.isSubmitSuccessful : false,
@@ -74085,8 +74167,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const CMPNAME$8 = "BasicEntityField";
   console.log(CMPNAME$8, "3");
-  const { Open: Open$8 } = gubu_minExports.Gubu;
-  const BasicEntityFieldSpecShape = gubu_minExports.Gubu(Open$8({}), { prefix: CMPNAME$8 });
+  const { Open: Open$6 } = gubu_minExports.Gubu;
+  const BasicEntityFieldSpecShape = gubu_minExports.Gubu(Open$6({}), { prefix: CMPNAME$8 });
   const fieldMap = {
     Text: BasicEntityTextField,
     TextBox: BasicEntityTextBoxField,
@@ -74189,8 +74271,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       }, register(field.name))
     ) }, field.id);
   }
-  const { Open: Open$7, Child: Child$4 } = gubu_minExports.Gubu;
-  const Shape$1 = gubu_minExports.Gubu(Open$7({
+  const { Open: Open$5, Child: Child$4 } = gubu_minExports.Gubu;
+  const Shape$1 = gubu_minExports.Gubu(Open$5({
     name: String,
     prefix: String,
     ent: String,
@@ -74229,12 +74311,26 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   Object.defineProperty(VxgBasicEntityEditPlugin, "name", { value: "VxgBasicEntityEditPlugin" });
   const CMPNAME$7 = "BasicEntityEdit";
   console.log(CMPNAME$7, "1");
-  const { Open: Open$6 } = gubu_minExports.Gubu;
-  const BasicEntityEditSpecShape = gubu_minExports.Gubu(Open$6({}), { prefix: CMPNAME$7 });
+  const makeResolver = (shape2) => React$1.useCallback((data) => __async(this, null, function* () {
+    console.log("RESOLVER", data);
+    const formdata = {
+      title: data.title,
+      host: data.host
+    };
+    const err = [];
+    const values2 = shape2(formdata, { err });
+    console.log("ERR", err);
+    const errors = err.reduce((a, e) => (a[e.k] = e.t, a), {});
+    const out = {
+      values: values2,
+      errors
+    };
+    console.log("OUT", out);
+    return out;
+  }), [shape2]);
   function BasicEntityEdit(props) {
     const { ctx } = props;
     const { seneca } = ctx();
-    const query = reactRedux.useSelector((state) => state.main.current.view.query);
     const [plugin, setPlugin] = React$1.useState(false);
     const [ready, setReady] = React$1.useState(false);
     React$1.useEffect(() => {
@@ -74278,17 +74374,24 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         reset(item);
       }
     }, [null == item, ready]);
+    const resolver = makeResolver(gubu_minExports.Gubu({
+      title: String,
+      host: String
+    }));
+    console.log("resolver", resolver);
     const {
       register,
       handleSubmit,
       getValues,
-      reset
-    } = useForm({});
+      reset,
+      formState: { errors }
+    } = useForm({
+      mode: "onChange",
+      resolver
+    });
+    console.log("errors", errors);
     const onSubmit = (data) => {
-      seneca.make(ent).data$(__spreadProps(__spreadValues({}, data), {
-        id: item.id,
-        slot$: slot
-      })).save$();
+      seneca.act("aim:app,on:BasicLed,save:item", { view: name, data });
     };
     return /* @__PURE__ */ jsxRuntimeExports.jsx(material.Box, { className: "vxg-BasicEntityEdit", children: item ? /* @__PURE__ */ jsxRuntimeExports.jsxs(
       "form",
@@ -74317,6 +74420,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
               field.id
             )
           ) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
+            "errors: ",
+            JSON.stringify(errors)
+          ] }),
           /* @__PURE__ */ jsxRuntimeExports.jsx(material.Toolbar, { className: "vxg-BasicEntityEdit-toolbar-foot", children: /* @__PURE__ */ jsxRuntimeExports.jsx(material.Button, { type: "submit", variant: "contained", children: "Save" }) })
         ]
       }
@@ -74324,15 +74431,15 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const CMPNAME$6 = "BasicLedHead";
   console.log(CMPNAME$6, "1");
-  const { Open: Open$5, Child: Child$3 } = gubu_minExports.Gubu;
-  const BasicLedHeadSpecShape = gubu_minExports.Gubu(Open$5({
+  const { Open: Open$4, Child: Child$3 } = gubu_minExports.Gubu;
+  const BasicLedHeadSpecShape = gubu_minExports.Gubu(Open$4({
     tool: Child$3({
       id: String,
       kind: String,
       custom: ""
     }, {}),
-    mui: Open$5({
-      Toolbar: Open$5({})
+    mui: Open$4({
+      Toolbar: Open$4({})
     })
   }), { prefix: CMPNAME$6 });
   function BasicLedHead(props) {
@@ -74397,8 +74504,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   const CMPNAME$5 = "BasicLedFoot";
   console.log(CMPNAME$5, "1");
-  const { Open: Open$4 } = gubu_minExports.Gubu;
-  const BasicLedFootSpecShape = gubu_minExports.Gubu(Open$4({}), { prefix: CMPNAME$5 });
+  const { Open: Open$3 } = gubu_minExports.Gubu;
+  const BasicLedFootSpecShape = gubu_minExports.Gubu(Open$3({}), { prefix: CMPNAME$5 });
   function BasicLedFoot(props) {
     const { ctx, spec } = props;
     const { seneca, model } = ctx();
@@ -74412,7 +74519,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   function BasicLoading(props) {
     return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { children: "Loading..." }) });
   }
-  const { Open: Open$3 } = gubu_minExports.Gubu;
+  const { Open: Open$2 } = gubu_minExports.Gubu;
   const Shape = gubu_minExports.Gubu({
     name: String,
     title: String,
@@ -74420,22 +74527,23 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     kind: String,
     def: {
       ent: String,
-      head: Open$3({
+      head: Open$2({
         active: false
       }),
-      list: Open$3({
+      list: Open$2({
         active: false
       }),
-      edit: Open$3({
+      edit: Open$2({
         active: false
       }),
-      foot: Open$3({
+      foot: Open$2({
         active: false
       })
     }
   }, { prefix: "BasicLed" });
   function VxgBasicLedPlugin(options) {
     const seneca = this;
+    console.log("VxgBasicLedPlugin options", options);
     const spec = Shape(options.spec);
     const navigate = options.navigate;
     const name = spec.name;
@@ -74446,6 +74554,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       function(_msg, reply, meta) {
         const state = meta.custom.state();
         let view = state.view[name];
+        console.log("VxgBasicLedPlugin init:state", name, view);
         view.mode = "list";
         view.status = "init";
         view.ready = true;
@@ -74477,8 +74586,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       function(msg) {
         let item = msg.item;
         let fields = msg.fields;
-        if (null == item)
-          return item;
+        if (null == item) return item;
         item = __spreadValues({}, item);
         for (const field of fields) {
           if ("Date" === field.ux.kind) {
@@ -74518,11 +74626,20 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         });
       }
     ).message(
-      "aim:app,on:view,add:item",
+      "aim:app,on:BasicLed,add:item",
       function(_msg) {
         return __async(this, null, function* () {
           yield seneca.entity(entCanon).save$({ add$: true, slot$: slotName });
           navigate("/view/" + name + "/add");
+        });
+      }
+    ).message(
+      "aim:app,on:BasicLed,save:item",
+      function(msg) {
+        return __async(this, null, function* () {
+          const data = msg.data;
+          const item = yield seneca.entity(entCanon).save$(data);
+          navigate("/view/" + name + "/edit/" + item.id);
         });
       }
     );
@@ -74593,15 +74710,14 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   };
   Object.defineProperty(VxgBasicLedPlugin, "name", { value: "VxgBasicLedPlugin" });
   const CMPNAME$3 = "BasicLed";
-  console.log(CMPNAME$3, "2");
-  const { Open: Open$2 } = gubu_minExports.Gubu;
+  console.log(CMPNAME$3, "3");
   function BasicLed(props) {
     const { ctx } = props;
     const { seneca } = ctx();
     const name = props.spec.name;
     const navigate = reactRouterDom.useNavigate();
     const led = reactRedux.useSelector((state) => state.main.view[name]);
-    const ready = true === led.ready;
+    const ready = true === (led == null ? void 0 : led.ready);
     console.log(CMPNAME$3, "ready", ready);
     if (!ready) {
       seneca.use({
@@ -74793,6 +74909,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const { model } = ctxval;
     const [ready, setReady] = React$1.useState("init");
     React$1.useEffect(() => {
+      console.log("BasicAdmin useEffect", ready);
       if ("init" !== ready) {
         return;
       }
@@ -74840,7 +74957,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       if (!seneca.context.vxg.BasicAdmin.preparing) {
         seneca.context.vxg.BasicAdmin.preparing = true;
         seneca.use(VxgBasicAdminPlugin);
-        yield seneca.ready(done);
+        yield seneca.ready();
+        console.log("BasicAdmin READY DONE");
+        return done();
       }
     });
   }
@@ -74873,10 +74992,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   var patrun_min = patrun_min$1.exports;
   (function(module2, exports3) {
     !function(e) {
-      if (true)
-        module2.exports = e();
-      else if (false)
-        (void 0)([], e);
+      if (true) module2.exports = e();
+      else if (false) (void 0)([], e);
       else {
         ("undefined" != typeof window ? window : "undefined" != typeof commonjsGlobal ? commonjsGlobal : "undefined" != typeof self ? self : this).Patrun = e();
       }
@@ -74905,26 +75022,21 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
               match(e3) {
                 e3 = "" + e3;
                 let t4 = false, n3 = Object.keys(this.gexmap);
-                for (let r3 = 0; r3 < n3.length && !t4; r3++)
-                  t4 = !!this.gexmap[n3[r3]].exec(e3);
+                for (let r3 = 0; r3 < n3.length && !t4; r3++) t4 = !!this.gexmap[n3[r3]].exec(e3);
                 return t4;
               }
               on(e3) {
-                if (null == e3)
-                  return null;
+                if (null == e3) return null;
                 let t4 = typeof e3;
-                if ("string" === t4 || "number" === t4 || "boolean" === t4 || e3 instanceof Date || e3 instanceof RegExp)
-                  return this.match(e3) ? e3 : null;
+                if ("string" === t4 || "number" === t4 || "boolean" === t4 || e3 instanceof Date || e3 instanceof RegExp) return this.match(e3) ? e3 : null;
                 if (Array.isArray(e3)) {
                   let t5 = [];
-                  for (let n3 = 0; n3 < e3.length; n3++)
-                    !this.dodgy(e3[n3]) && this.match(e3[n3]) && t5.push(e3[n3]);
+                  for (let n3 = 0; n3 < e3.length; n3++) !this.dodgy(e3[n3]) && this.match(e3[n3]) && t5.push(e3[n3]);
                   return t5;
                 }
                 {
                   let t5 = {};
-                  for (let n3 in e3)
-                    Object.prototype.hasOwnProperty.call(e3, n3) && this.match(n3) && (t5[n3] = e3[n3]);
+                  for (let n3 in e3) Object.prototype.hasOwnProperty.call(e3, n3) && this.match(n3) && (t5[n3] = e3[n3]);
                   return t5;
                 }
               }
@@ -74936,8 +75048,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
                 return e3 ? ("" + e3).replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&") : "";
               }
               re(e3) {
-                if ("" === e3 || e3)
-                  return e3 = "^" + (e3 = (e3 = (e3 = (e3 = (e3 = this.escregexp(e3)).replace(/\\\*/g, "[\\s\\S]*")).replace(/\\\?/g, "[\\s\\S]")).replace(/\[\\s\\S\]\*\[\\s\\S\]\*/g, "\\*")).replace(/\[\\s\\S\]\*\[\\s\\S\]/g, "\\?")) + "$", new RegExp(e3);
+                if ("" === e3 || e3) return e3 = "^" + (e3 = (e3 = (e3 = (e3 = (e3 = this.escregexp(e3)).replace(/\\\*/g, "[\\s\\S]*")).replace(/\\\?/g, "[\\s\\S]")).replace(/\[\\s\\S\]\*\[\\s\\S\]\*/g, "\\*")).replace(/\[\\s\\S\]\*\[\\s\\S\]/g, "\\?")) + "$", new RegExp(e3);
                 {
                   let e4 = Object.keys(this.gexmap);
                   return 1 == e4.length ? this.gexmap[e4[0]] : __spreadValues({}, this.gexmap);
@@ -74959,10 +75070,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         }).call(this);
       }).call(this, "undefined" != typeof commonjsGlobal ? commonjsGlobal : "undefined" != typeof self ? self : "undefined" != typeof window ? window : {}), e = e.exports;
       var t, n, r2, s, i, o, l, u, a, f = {}, p = this && this.__classPrivateFieldGet || function(e2, t2, n2, r3) {
-        if ("a" === n2 && !r3)
-          throw new TypeError("Private accessor was defined without a getter");
-        if ("function" == typeof t2 ? e2 !== t2 || !r3 : !t2.has(e2))
-          throw new TypeError("Cannot read private member from an object whose class did not declare it");
+        if ("a" === n2 && !r3) throw new TypeError("Private accessor was defined without a getter");
+        if ("function" == typeof t2 ? e2 !== t2 || !r3 : !t2.has(e2)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
         return "m" === n2 ? r3 : "a" === n2 ? r3.call(e2) : r3 ? r3.value : t2.get(e2);
       };
       Object.defineProperty(f, "__esModule", { value: true }), f.IntervalMatcher = f.GexMatcher = void 0, f.GexMatcher = class {
@@ -75043,23 +75152,16 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         }
         half_intervals(e2) {
           let t2 = [];
-          for (let r3 of e2)
-            t2.push([{ n: r3.meta.n0, o: r3.meta.o0 }, { n: r3.meta.n1, o: r3.meta.o1 }]);
+          for (let r3 of e2) t2.push([{ n: r3.meta.n0, o: r3.meta.o0 }, { n: r3.meta.n1, o: r3.meta.o1 }]);
           var n2 = ["lt", "lte", "eq", "gte", "gt"];
           return t2.map((e3) => [isNaN(e3[0].n) || null == e3[0].n ? null : e3[0], isNaN(e3[1].n) || null == e3[1].n ? null : e3[1]].filter((e4) => null != e4)).sort((e3, t3) => {
-            if (e3[0].n < t3[0].n)
-              return -1;
-            if (t3[0].n < e3[0].n)
-              return 1;
+            if (e3[0].n < t3[0].n) return -1;
+            if (t3[0].n < e3[0].n) return 1;
             var r3 = n2.indexOf(e3[0].o), s2 = n2.indexOf(t3[0].o);
-            if (r3 < s2)
-              return -1;
-            if (s2 < r3)
-              return 1;
-            if (e3[1].n < t3[1].n)
-              return -1;
-            if (t3[1].n < e3[1].n)
-              return 1;
+            if (r3 < s2) return -1;
+            if (s2 < r3) return 1;
+            if (e3[1].n < t3[1].n) return -1;
+            if (t3[1].n < e3[1].n) return 1;
             var i2 = n2.indexOf(e3[1].o), o2 = n2.indexOf(t3[1].o);
             return i2 < o2 ? -1 : o2 < i2 ? 1 : 0;
           }).reduce((e3, t3) => e3.concat(...t3), []);
@@ -75081,46 +75183,38 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           for (var u2, a2 = r3, f2 = 0; f2 < l2.length; f2++) {
             var p2 = l2[f2], h2 = e2[p2];
             let t3 = s2.reduce((e3, t4) => e3 || t4.make(p2, h2), void 0);
-            if ((u2 = a2.v) && p2 == a2.k)
-              if (t3) {
-                var c2 = (g2 = a2.g = a2.g || {})[p2] = g2[p2] || [];
-                a2 = (t3 = c2.find((e3) => e3.same(t3)) || (c2.push(t3), t3)).keymap || (t3.keymap = {});
-              } else
-                a2 = u2[h2] || (u2[h2] = {});
-            else if (a2.k)
-              if (p2 < a2.k) {
-                var d2 = a2.s;
-                g2 = a2.g, a2.s = { k: a2.k, v: a2.v }, d2 && (a2.s.s = d2), g2 && (a2.s.g = g2), a2.g && (a2.g = {}), a2.k = p2, a2.v = {}, t3 ? (c2 = (g2 = a2.g = a2.g || {})[p2] = g2[p2] || [], a2 = (t3 = c2.find((e3) => e3.same(t3)) || (c2.push(t3), t3)).keymap || (t3.keymap = {})) : a2 = a2.v[h2] = {};
-              } else
-                a2 = a2.s || (a2.s = {}), f2--;
+            if ((u2 = a2.v) && p2 == a2.k) if (t3) {
+              var c2 = (g2 = a2.g = a2.g || {})[p2] = g2[p2] || [];
+              a2 = (t3 = c2.find((e3) => e3.same(t3)) || (c2.push(t3), t3)).keymap || (t3.keymap = {});
+            } else a2 = u2[h2] || (u2[h2] = {});
+            else if (a2.k) if (p2 < a2.k) {
+              var d2 = a2.s;
+              g2 = a2.g, a2.s = { k: a2.k, v: a2.v }, d2 && (a2.s.s = d2), g2 && (a2.s.g = g2), a2.g && (a2.g = {}), a2.k = p2, a2.v = {}, t3 ? (c2 = (g2 = a2.g = a2.g || {})[p2] = g2[p2] || [], a2 = (t3 = c2.find((e3) => e3.same(t3)) || (c2.push(t3), t3)).keymap || (t3.keymap = {})) : a2 = a2.v[h2] = {};
+            } else a2 = a2.s || (a2.s = {}), f2--;
             else if (a2.k = p2, a2.v = {}, t3) {
               var g2;
               c2 = (g2 = a2.g = a2.g || {})[p2] = g2[p2] || [];
               a2 = (t3 = c2.find((e3) => e3.same(t3)) || (c2.push(t3), t3)).keymap || (t3.keymap = {});
-            } else
-              a2 = a2.v[h2] = {};
+            } else a2 = a2.v[h2] = {};
           }
           return void 0 !== i2 && a2 && (a2.d = i2, o2 && (a2.f = "function" == typeof o2 ? o2 : o2.find, a2.r = "function" == typeof o2.remove ? o2.remove : void 0)), n2;
         }, n2.findexact = function(e2) {
           return n2.find(e2, true);
         }, n2.find = function(e2, t3, s3) {
-          if (null == e2)
-            return null;
+          if (null == e2) return null;
           var i2 = r3, o2 = void 0 === r3.d ? null : r3.d, l2 = r3.f, u2 = null, a2 = [], f2 = {}, p2 = Object.keys(e2).length, h2 = [];
           void 0 !== r3.d && h2.push(r3.d);
           do {
             if (u2 = i2.k, i2.v) {
               var c2 = e2[u2], d2 = i2.v[c2];
               if (!d2 && i2.g && i2.g[u2]) {
-                for (var g2 = i2.g[u2], m2 = 0; m2 < g2.length; m2++)
-                  if (g2[m2].match(c2)) {
-                    d2 = g2[m2].keymap;
-                    break;
-                  }
+                for (var g2 = i2.g[u2], m2 = 0; m2 < g2.length; m2++) if (g2[m2].match(c2)) {
+                  d2 = g2[m2].keymap;
+                  break;
+                }
               }
               d2 ? (f2[u2] = true, i2.s && a2.push(i2.s), o2 = void 0 === d2.d ? t3 ? null : o2 : d2.d, s3 && void 0 !== d2.d && h2.push(d2.d), l2 = d2.f, i2 = d2) : i2 = i2.s;
-            } else
-              i2 = null;
+            } else i2 = null;
             null == i2 && 0 < a2.length && (null == o2 || s3 && !t3) && (i2 = a2.pop());
           } while (i2);
           return t3 ? Object.keys(f2).length !== p2 && (o2 = null) : null == o2 && void 0 !== r3.d && (o2 = r3.d), l2 && (o2 = l2.call(n2, e2, o2)), s3 ? h2 : o2;
@@ -75134,15 +75228,13 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
               }
               if (null == o2 && n3.g) {
                 let r4 = n3.g[t3] || [];
-                for (let s4 = 0; s4 < r4.length; s4++)
-                  if (r4[s4].fix === e2[t3]) {
-                    i2.push({ km: n3, v: e2[t3], mv: r4[s4] }), o2 = r4[s4].keymap;
-                    break;
-                  }
+                for (let s4 = 0; s4 < r4.length; s4++) if (r4[s4].fix === e2[t3]) {
+                  i2.push({ km: n3, v: e2[t3], mv: r4[s4] }), o2 = r4[s4].keymap;
+                  break;
+                }
               }
               o2 ? (s3 = o2.d, n3 = o2) : n3 = n3.s;
-            } else
-              n3 = null;
+            } else n3 = null;
           } while (n3);
           if (void 0 !== s3) {
             var l2 = i2[i2.length - 1];
@@ -75157,13 +75249,12 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           return r3.d && s3.push({ match: {}, data: r3.d, find: r3.f }), function r4(s4, i2, o2, l2) {
             if (s4.v) {
               var u2, a2 = s4.k, f2 = (0, e.Gex)(t3 ? null == t3[a2] ? n3 ? null : "*" : t3[a2] : "*"), p2 = __spreadValues({}, i2), h2 = __spreadValues({}, o2);
-              for (var c2 in s4.v)
-                if (c2 === t3[a2] || !n3 && null == t3[a2] || f2.on(c2)) {
-                  var d2 = __spreadValues({}, p2);
-                  d2[a2] = c2;
-                  var g2 = __spreadValues({}, h2);
-                  delete g2[a2], u2 = s4.v[c2], 0 === Object.keys(g2).length && u2 && u2.d && l2.push({ match: d2, data: u2.d, find: u2.f }), u2 && null != u2.v && r4(u2, __spreadValues({}, d2), __spreadValues({}, g2), l2);
-                }
+              for (var c2 in s4.v) if (c2 === t3[a2] || !n3 && null == t3[a2] || f2.on(c2)) {
+                var d2 = __spreadValues({}, p2);
+                d2[a2] = c2;
+                var g2 = __spreadValues({}, h2);
+                delete g2[a2], u2 = s4.v[c2], 0 === Object.keys(g2).length && u2 && u2.d && l2.push({ match: d2, data: u2.d, find: u2.f }), u2 && null != u2.v && r4(u2, __spreadValues({}, d2), __spreadValues({}, g2), l2);
+              }
               (u2 = s4.s) && r4(u2, __spreadValues({}, p2), __spreadValues({}, h2), l2);
             }
           }(r3, {}, __spreadValues({}, t3), s3), s3;
@@ -75172,23 +75263,19 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
             return "function" == typeof e3 ? "<" + e3.name + ">" : "<" + e3 + ">";
           };
           function i2(e3, t4) {
-            for (var n4 = 0; n4 < t4; n4++)
-              e3.push(" ");
+            for (var n4 = 0; n4 < t4; n4++) e3.push(" ");
           }
           var o2 = [], l2 = [];
           return function e3(t4, n4, r4, l3) {
             var u2;
-            if (void 0 !== t4.d && (n4.push(" " + s3(t4.d)), o2.push(l3.join(", ") + " -> " + s3(t4.d))), t4.k && (n4.push("\n"), i2(n4, r4), n4.push(t4.k + ":")), (t4.v || t4.s || t4.g) && r4++, t4.v)
-              for (var a2 = Object.keys(t4.v).sort(), f2 = 0; f2 < a2.length; f2++) {
-                var p2 = a2[f2];
-                n4.push("\n"), i2(n4, r4), n4.push(p2 + " ->"), (u2 = l3.slice()).push(t4.k + "=" + p2), e3(t4.v[p2], n4, r4 + 1, u2);
-              }
-            if (t4.g)
-              for (a2 = Object.keys(t4.g).sort(), f2 = 0; f2 < a2.length; f2++)
-                for (var h2 = t4.g[a2[f2]], c2 = 0; c2 < h2.length; c2++) {
-                  var d2 = h2[c2];
-                  n4.push("\n"), i2(n4, r4), n4.push(d2.fix + " ~>"), (u2 = l3.slice()).push(t4.k + "~" + d2.fix), e3(d2.keymap, n4, r4 + 1, u2);
-                }
+            if (void 0 !== t4.d && (n4.push(" " + s3(t4.d)), o2.push(l3.join(", ") + " -> " + s3(t4.d))), t4.k && (n4.push("\n"), i2(n4, r4), n4.push(t4.k + ":")), (t4.v || t4.s || t4.g) && r4++, t4.v) for (var a2 = Object.keys(t4.v).sort(), f2 = 0; f2 < a2.length; f2++) {
+              var p2 = a2[f2];
+              n4.push("\n"), i2(n4, r4), n4.push(p2 + " ->"), (u2 = l3.slice()).push(t4.k + "=" + p2), e3(t4.v[p2], n4, r4 + 1, u2);
+            }
+            if (t4.g) for (a2 = Object.keys(t4.g).sort(), f2 = 0; f2 < a2.length; f2++) for (var h2 = t4.g[a2[f2]], c2 = 0; c2 < h2.length; c2++) {
+              var d2 = h2[c2];
+              n4.push("\n"), i2(n4, r4), n4.push(d2.fix + " ~>"), (u2 = l3.slice()).push(t4.k + "~" + d2.fix), e3(d2.keymap, n4, r4 + 1, u2);
+            }
             t4.s && (n4.push("\n"), i2(n4, r4), n4.push("|"), u2 = l3.slice(), e3(t4.s, n4, r4 + 1, u2));
           }(r3, l2, 0, []), n3 ? l2.join("") : o2.join("\n");
         }, n2.inspect = n2.toString, n2.toJSON = function(e2) {
@@ -75223,8 +75310,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   var lexer = {};
   var hasRequiredLexer;
   function requireLexer() {
-    if (hasRequiredLexer)
-      return lexer;
+    if (hasRequiredLexer) return lexer;
     hasRequiredLexer = 1;
     "use strict";
     Object.defineProperty(lexer, "__esModule", { value: true });
@@ -75947,8 +76033,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   }
   var hasRequiredUtility;
   function requireUtility() {
-    if (hasRequiredUtility)
-      return utility;
+    if (hasRequiredUtility) return utility;
     hasRequiredUtility = 1;
     "use strict";
     Object.defineProperty(utility, "__esModule", { value: true });
@@ -78500,7 +78585,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     return direction === "rtl" && isHorizontal(anchor) ? oppositeDirection[anchor] : anchor;
   }
   const Drawer = /* @__PURE__ */ React__namespace.forwardRef(function Drawer2(inProps, ref) {
-    const props = useThemeProps$6({
+    const props = useDefaultProps({
       props: inProps,
       name: "MuiDrawer"
     });
@@ -78747,7 +78832,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         return [styles2.root, styles2[`maxWidth${capitalize$1(String(ownerState.maxWidth))}`], ownerState.fixed && styles2.fixed, ownerState.disableGutters && styles2.disableGutters];
       }
     }),
-    useThemeProps: (inProps) => useThemeProps$6({
+    useThemeProps: (inProps) => useDefaultProps({
       props: inProps,
       name: "MuiContainer"
     })

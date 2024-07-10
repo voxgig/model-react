@@ -34,6 +34,7 @@ function VxgBasicAdminPlugin(this: any) {
 
     .prepare(async function(this: any) {
       await this.post('aim:app,prepare:app')
+      console.log('VxgBasicAdminPlugin prep done')
     })
 
 

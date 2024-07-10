@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 
 import { useSelector } from 'react-redux'
 
@@ -15,7 +15,7 @@ import {
 import { useForm } from 'react-hook-form'
 
 
-import type { Spec } from './basic-types'
+// import type { Spec } from './basic-types'
 
 import { Gubu } from 'gubu'
 
@@ -30,9 +30,31 @@ const CMPNAME = 'BasicEntityEdit'
 console.log(CMPNAME,'1')
 
 
-const { Open } = Gubu
-const BasicEntityEditSpecShape = Gubu(Open({
-}), {prefix: CMPNAME})
+// const { Open } = Gubu
+// const BasicEntityEditSpecShape = Gubu(Open({
+// }), {prefix: CMPNAME})
+
+
+
+const makeResolver = (shape:any) => useCallback(async (data:any) => {
+  console.log('RESOLVER', data)
+  const formdata = {
+    title: data.title,
+    host: data.host,
+  }
+  const err: any[] = []
+  const values = shape(formdata,{err})
+  console.log('ERR', err)
+  const errors = err.reduce((a:any,e:any)=>(a[e.k]=e.t,a),{})
+      
+  const out = {
+    values,
+    errors,
+  }
+
+  console.log('OUT', out)
+  return out
+}, [shape])
 
 
 function BasicEntityEdit (props: any) {
@@ -40,7 +62,7 @@ function BasicEntityEdit (props: any) {
   const { seneca } = ctx()
 
 
-  const query = useSelector((state:any)=>state.main.current.view.query)
+  // const query = useSelector((state:any)=>state.main.current.view.query)
   
   const [plugin,setPlugin] = useState(false)
   const [ready, setReady] = useState(false)
@@ -98,26 +120,29 @@ function BasicEntityEdit (props: any) {
     }
   },[null==item,ready])
 
+
+  const resolver = makeResolver(Gubu({
+    title: String,
+    host: String,
+  }))
+
+  console.log('resolver', resolver)
   
   const {
     register,
     handleSubmit,
     getValues,
-    reset
+    reset,
+    formState: { errors },
   } = useForm({
+    mode: 'onChange',
+    resolver,
   })
 
-
+  console.log('errors', errors)
   
   const onSubmit = (data:any) => {
-    // TODO: should be a message
-    seneca.make(ent)
-      .data$({
-        ...data,
-        id: item.id,
-      slot$: slot,
-    })
-      .save$()
+    seneca.act('aim:app,on:BasicLed,save:item',{view:name,data})
   }
   
   return (
@@ -146,6 +171,8 @@ function BasicEntityEdit (props: any) {
           )}
         </Grid>
 
+        <p>errors: {JSON.stringify(errors)}</p>
+        
         <Toolbar className="vxg-BasicEntityEdit-toolbar-foot">
           <Button type="submit" variant="contained">Save</Button>
         </Toolbar>

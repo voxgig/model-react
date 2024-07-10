@@ -53,6 +53,7 @@ function BasicAdmin (props: BasicProps) {
   const [ready, setReady] = useState('init')
   
   useEffect(()=>{
+    console.log('BasicAdmin useEffect', ready)
     if('init' !== ready) {
       return
     }
@@ -123,7 +124,10 @@ async function init(ctx: any, done: any) {
     
     seneca
       .use(VxgBasicAdminPlugin)
-    await seneca.ready(done)
+    // await seneca.ready(done)
+    await seneca.ready()
+    console.log('BasicAdmin READY DONE')
+    return done()
   }
 }
 
