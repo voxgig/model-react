@@ -13,6 +13,7 @@ import { Box } from '@mui/material'
 function BasicList(props: any) {
   const {
     ctx,
+    key,
     onRowClick = () => {},
     onEditingRowSave = () => {},
     data,
@@ -28,7 +29,6 @@ function BasicList(props: any) {
   const editingMode = spec.content.def.subview[action]?.editingMode || 'none'
   const enableColumnFilters =
     spec.content.def.subview[action]?.enableColumnFilters || false
-  const cmpKey = spec.content.key
 
   // callbacks for MaterialReactTable
   const handleSaveRow: MaterialReactTableProps<any>['onEditingRowSave'] =
@@ -86,7 +86,7 @@ function BasicList(props: any) {
           {...commonTableProps}
           {...specificProps}
           state={{ isLoading: isLoading }}
-          key={cmpKey}
+          key={key}
         />
       </Box>
     </ThemeProvider>

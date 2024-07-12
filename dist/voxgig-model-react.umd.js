@@ -45927,6 +45927,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     var _a, _b;
     const {
       ctx,
+      key,
       onRowClick = () => {
       },
       onEditingRowSave = () => {
@@ -45942,7 +45943,6 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const theme = ctx().theme;
     const editingMode = ((_a = spec.content.def.subview[action]) == null ? void 0 : _a.editingMode) || "none";
     const enableColumnFilters = ((_b = spec.content.def.subview[action]) == null ? void 0 : _b.enableColumnFilters) || false;
-    const cmpKey = spec.content.key;
     const handleSaveRow = (_0) => __async(this, [_0], function* ({ exitEditingMode, row, values: values2 }) {
       onEditingRowSave(row, values2);
       exitEditingMode();
@@ -45989,7 +45989,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       MaterialReactTable,
       __spreadProps(__spreadValues(__spreadValues({}, commonTableProps), specificProps), {
         state: { isLoading },
-        key: cmpKey
+        key
       })
     ) }) });
   }
@@ -49294,15 +49294,14 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const { ctx, action } = props;
     const { seneca, custom } = ctx();
     const [item, setItem] = React.useState({});
-    const location2 = reactRouterDom.useLocation();
-    const navigate = reactRouterDom.useNavigate();
     const [data, setData] = React.useState([]);
     const [isLoading, setIsLoading] = React.useState(false);
     let [triggerLed, setTriggerLed] = React.useState(0);
+    const location2 = reactRouterDom.useLocation();
+    const navigate = reactRouterDom.useNavigate();
     const basicLedSpec = BasicLedSpecShape(props.spec);
     const viewName = basicLedSpec.name;
-    const def = basicLedSpec.content.def;
-    const canon = def.canon;
+    const canon = basicLedSpec.content.def.canon;
     const fields = basicLedSpec.content.def.field;
     const cmpState = reactRedux.useSelector((state) => state.main.vxg.cmp);
     const entState = reactRedux.useSelector(
@@ -49369,7 +49368,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }, [location2.pathname]);
     React.useEffect(() => {
       if (triggerLed >= 2) {
-        setItem({ entity$: "-/" + def.canon });
+        setItem({ entity$: "-/" + canon });
       }
       setTriggerLed(++triggerLed);
     }, [led_add]);
@@ -49547,7 +49546,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
             setItem({});
           })
         },
-        canon
+        basicLedSpec.name
       ),
       FootCmp ? /* @__PURE__ */ jsxRuntimeExports.jsx(FootCmp, { ctx }) : null
     ] }) : /* @__PURE__ */ jsxRuntimeExports.jsx(

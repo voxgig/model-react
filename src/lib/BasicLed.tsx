@@ -35,20 +35,22 @@ const BasicLedSpecShape = Gubu({
 function BasicLed(props: any) {
   const { ctx, action } = props
   const { seneca, custom } = ctx()
+
   const [item, setItem] = useState({} as any)
-  const location = useLocation()
-  const navigate = useNavigate()
   const [data, setData] = useState([] as any)
   const [isLoading, setIsLoading] = useState(false)
   let [triggerLed, setTriggerLed] = useState(0)
 
-  // define variables from spec
+  const location = useLocation()
+  const navigate = useNavigate()
+
+  // Define variables from spec
   const basicLedSpec = BasicLedSpecShape(props.spec)
   const viewName = basicLedSpec.name
-  const def = basicLedSpec.content.def
-  const canon = def.canon
+  const canon = basicLedSpec.content.def.canon
   const fields: any = basicLedSpec.content.def.field
 
+  // ----- Define variables from state -----
   const cmpState = useSelector((state: any) => state.main.vxg.cmp)
 
   // Move the useSelector hook to the top level of your component
@@ -56,7 +58,7 @@ function BasicLed(props: any) {
     (state: any) => state.main.vxg.ent.meta.main[canon].state
   )
 
-  // Define data we'll use to render the list
+  // ----- Define variables from state -----
   const entlist = useSelector(
     (state: any) => state.main.vxg.ent.list.main[canon]
   )
@@ -71,9 +73,8 @@ function BasicLed(props: any) {
 
   // Handle when the add button (in BasicHead) is clicked
   const led_add = useSelector((state: any) => state.main.vxg.trigger.led.add)
-  // const vxgState = useSelector((state: any) => state.main.vxg)
-  // const led_add = vxgState.trigger.led.add
 
+  // ----- Define useEffect hooks -----
   useEffect(() => {
     if ('none' === entState) {
       setIsLoading(true)
@@ -143,13 +144,11 @@ function BasicLed(props: any) {
   useEffect(() => {
     // a workaround to prevent 'useEffect' to trigger when re-rendered
     if (triggerLed >= 2) {
-      setItem({ entity$: '-/' + def.canon })
+      setItem({ entity$: '-/' + canon })
     }
 
     setTriggerLed(++triggerLed)
   }, [led_add])
-
-  // console.log('BasicLed', 'fields', Object.entries(fields))
 
   // TODO: move to BasicList
   // Define BasicList columns from fields
@@ -357,7 +356,7 @@ function BasicLed(props: any) {
         <>
           {HeadCmp ? <HeadCmp ctx={ctx} /> : null}
           <BasicList
-            key={canon}
+            key={basicLedSpec.name}
             ctx={ctx}
             spec={basicLedSpec}
             data={data || []}

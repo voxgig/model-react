@@ -45915,6 +45915,7 @@ function BasicList(props) {
   var _a, _b;
   const {
     ctx,
+    key,
     onRowClick = () => {
     },
     onEditingRowSave = () => {
@@ -45930,7 +45931,6 @@ function BasicList(props) {
   const theme = ctx().theme;
   const editingMode = ((_a = spec.content.def.subview[action]) == null ? void 0 : _a.editingMode) || "none";
   const enableColumnFilters = ((_b = spec.content.def.subview[action]) == null ? void 0 : _b.enableColumnFilters) || false;
-  const cmpKey = spec.content.key;
   const handleSaveRow = (_0) => __async(this, [_0], function* ({ exitEditingMode, row, values: values2 }) {
     onEditingRowSave(row, values2);
     exitEditingMode();
@@ -45977,7 +45977,7 @@ function BasicList(props) {
     MaterialReactTable,
     __spreadProps(__spreadValues(__spreadValues({}, commonTableProps), specificProps), {
       state: { isLoading },
-      key: cmpKey
+      key
     })
   ) }) });
 }
@@ -49282,15 +49282,14 @@ function BasicLed(props) {
   const { ctx, action } = props;
   const { seneca, custom } = ctx();
   const [item, setItem] = useState({});
-  const location2 = useLocation();
-  const navigate = useNavigate();
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   let [triggerLed, setTriggerLed] = useState(0);
+  const location2 = useLocation();
+  const navigate = useNavigate();
   const basicLedSpec = BasicLedSpecShape(props.spec);
   const viewName = basicLedSpec.name;
-  const def = basicLedSpec.content.def;
-  const canon = def.canon;
+  const canon = basicLedSpec.content.def.canon;
   const fields = basicLedSpec.content.def.field;
   const cmpState = useSelector((state) => state.main.vxg.cmp);
   const entState = useSelector(
@@ -49357,7 +49356,7 @@ function BasicLed(props) {
   }, [location2.pathname]);
   useEffect(() => {
     if (triggerLed >= 2) {
-      setItem({ entity$: "-/" + def.canon });
+      setItem({ entity$: "-/" + canon });
     }
     setTriggerLed(++triggerLed);
   }, [led_add]);
@@ -49535,7 +49534,7 @@ function BasicLed(props) {
           setItem({});
         })
       },
-      canon
+      basicLedSpec.name
     ),
     FootCmp ? /* @__PURE__ */ jsxRuntimeExports.jsx(FootCmp, { ctx }) : null
   ] }) : /* @__PURE__ */ jsxRuntimeExports.jsx(
