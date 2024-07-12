@@ -49320,15 +49320,14 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     React.useEffect(() => {
       if ("none" === entState) {
         setIsLoading(true);
-        console.log("BasicLed", "useEffect", "entlist", "none");
+        console.log("BasicLed", canon, "state", "none");
         let q = custom.BasicLed.query(basicLedSpec, cmpState);
         seneca.entity(canon).list$(q);
       }
     }, [entState]);
     React.useEffect(() => {
-      console.log("BasicLed", "useEffect", "entState", entState);
+      console.log("BasicLed", canon, "state", entState);
       if ("loaded" === entState) {
-        console.log("BasicLed", "useEffect", "entlist", "loaded");
         setIsLoading(false);
         if ("fox/bom" === canon) {
           const filters = cmpState.AssignSuppliersHead.filters;
@@ -49356,6 +49355,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
             const isProjectMatch = currentProject.id === item2.project_id;
             return isProjectMatch;
           });
+          console.log("BasicLed", "entlist-count", filteredData.length);
           setData(filteredData);
         } else {
           setIsLoading(false);
@@ -49398,13 +49398,14 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const renderCell = ({ cell, field, row }) => {
       var _a2;
       const cellValue = cell.getValue();
-      let entityId, action2, textAlign2;
+      let entityId, action2, textAlign2, style2;
       switch (field.displayType) {
         case "link":
           const target = field.target;
+          const style22 = field.style || {};
           entityId = row.original[(target == null ? void 0 : target.idName) || "id"];
           const entityName = (target == null ? void 0 : target.entity) || viewName;
-          return /* @__PURE__ */ jsxRuntimeExports.jsx(reactRouterDom.Link, { to: `/view/${entityName}/${entityId}/show`, children: /* @__PURE__ */ jsxRuntimeExports.jsx(material.Typography, { variant: "body2", textTransform: "capitalize", children: cellValue }) });
+          return /* @__PURE__ */ jsxRuntimeExports.jsx(reactRouterDom.Link, { to: `/view/${entityName}/${entityId}/show`, children: /* @__PURE__ */ jsxRuntimeExports.jsx(material.Typography, { variant: "body2", textTransform: style22 == null ? void 0 : style22.textTransform, children: cellValue }) });
         case "image":
           return /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: cellValue, alt: "Cell Content" });
         case "navbutton":

@@ -78,16 +78,15 @@ function BasicLed(props: any) {
   useEffect(() => {
     if ('none' === entState) {
       setIsLoading(true)
-      console.log('BasicLed', 'useEffect', 'entlist', 'none')
+      console.log('BasicLed', canon, 'state', 'none')
       let q = custom.BasicLed.query(basicLedSpec, cmpState)
       seneca.entity(canon).list$(q)
     }
   }, [entState])
 
   useEffect(() => {
-    console.log('BasicLed', 'useEffect', 'entState', entState)
+    console.log('BasicLed', canon, 'state', entState)
     if ('loaded' === entState) {
-      console.log('BasicLed', 'useEffect', 'entlist', 'loaded')
       setIsLoading(false)
       if ('fox/bom' === canon) {
         const filters = cmpState.AssignSuppliersHead.filters
@@ -122,11 +121,13 @@ function BasicLed(props: any) {
         setData(filteredData)
       } else if ('fox/supplierorder' === canon) {
         setIsLoading(false)
+
         const currentProject = cmpState.BasicHead.tool.project.selected
         const filteredData = entlist.filter((item: any) => {
           const isProjectMatch = currentProject.id === item.project_id
           return isProjectMatch
         })
+        console.log('BasicLed', 'entlist-count', filteredData.length)
         setData(filteredData)
       } else {
         setIsLoading(false)
@@ -183,17 +184,18 @@ function BasicLed(props: any) {
   // Define how cells are rendered
   const renderCell = ({ cell, field, row }: any) => {
     const cellValue = cell.getValue()
-    let entityId: any, action, textAlign
+    let entityId: any, action, textAlign, style
 
     switch (field.displayType) {
       case 'link':
         const target = field.target
+        const style = field.style || {}
         entityId = row.original[target?.idName || 'id']
         const entityName = target?.entity || viewName
 
         return (
           <Link to={`/view/${entityName}/${entityId}/show`}>
-            <Typography variant='body2' textTransform='capitalize'>
+            <Typography variant='body2' textTransform={style?.textTransform}>
               {cellValue}
             </Typography>
           </Link>
