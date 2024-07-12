@@ -38,7 +38,7 @@ const BasicSideSpecShape = Gubu({
   mui: {
     Drawer: {},
   }
-}, {prefix: CMPNAME})
+}, {name: CMPNAME})
 
 
 

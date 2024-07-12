@@ -1051,7 +1051,7 @@ var gubu_min = gubu_min$2.exports;
   }(function() {
     var e = {}, t = {};
     Object.defineProperty(t, "__esModule", { value: true }), t.Gubu = void 0;
-    const n = Symbol.for("gubu$"), r2 = { gubu$: n, v$: "8.0.2" }, l = (Symbol.for("gubu$undef"), /^[A-Z]/), { toString: i } = Object.prototype, o = "gubu", s = "name", u = "nan", a = "never", c = "number", f = "required", p = "array", h = "function", v = "object", d = "string", g = "boolean", y = "undefined", m = "any", b = "list", $ = "instance", k = "null", x = "type", I = "closed", w = "shape", S = "check", j = "regexp", N = "String", O = "Number", V = "Boolean", A = "Object", R = "Array", D = "Function", E = "Value", C = "Above", T = "All", G = "Below", B = "Check", J = "Exact", M = "Max", W = "Min", F = "One", P = "Some", z = " for property ", L = '"$PATH"', _2 = '"$VALUE"', q = { [N]: String, [O]: Number, [V]: Boolean, [A]: Object, [R]: Array, ["Symbol"]: Symbol, [D]: Function }, H = (e2) => Object.keys(e2), U = (e2, t2, n2) => Object.defineProperty(e2, t2, n2), K = (e2) => Array.isArray(e2), Z = (e2) => JSON.parse(e2), Q = (e2, t2) => JSON.stringify(e2, t2);
+    const n = Symbol.for("gubu$"), r2 = { gubu$: n, v$: "8.2.1" }, l = /^[A-Z]/, { toString: i } = Object.prototype, o = "gubu", s = "name", u = "nan", a = "never", c = "number", f = "required", p = "array", h = "function", v = "object", d = "string", g = "boolean", y = "undefined", m = "any", b = "list", $ = "instance", k = "null", x = "type", I = "closed", w = "shape", j = "check", S = "regexp", N = "String", O = "Number", V = "Boolean", A = "Object", R = "Array", D = "Function", E = "Value", C = "Above", G = "All", T = "Below", B = "Check", J = "Exact", W = "Max", M = "Min", F = "One", P = "Some", z = " for property ", L = '"$PATH"', _2 = '"$VALUE"', q = { [N]: String, [O]: Number, [V]: Boolean, [A]: Object, [R]: Array, ["Symbol"]: Symbol, [D]: Function }, H = (e2) => Object.keys(e2), U = (e2, t2, n2) => Object.defineProperty(e2, t2, n2), K = (e2) => Array.isArray(e2), Z = (e2) => JSON.parse(e2), Q = (e2, t2) => JSON.stringify(e2, t2);
     class X {
       constructor(e2, t2, n2, r3) {
         this.match = false, this.dI = 0, this.nI = 2, this.cI = -1, this.pI = 0, this.sI = -1, this.valType = a, this.isRoot = false, this.key = "", this.type = a, this.stop = true, this.nextSibling = true, this.fromDflt = false, this.ignoreVal = void 0, this.curerr = [], this.err = [], this.parents = [], this.keys = [], this.ancestors = [], this.path = [], this.root = e2, this.vals = [e2, -1], this.node = t2, this.nodes = [t2, -1], this.ctx = n2 || {}, this.match = !!r3;
@@ -1069,9 +1069,9 @@ var gubu_min = gubu_min$2.exports;
     class Y extends TypeError {
       constructor(e2, t2, n2, r3) {
         var l2;
-        super((t2 = null == t2 ? "" : t2 + ": ") + n2.map((e3) => e3.t).join("\n")), this.gubu = true, this.name = "GubuError", this.code = e2, this.prefix = t2, this.desc = () => ({ name: "GubuError", code: e2, err: n2, ctx: r3 }), this.stack = null === (l2 = this.stack) || void 0 === l2 ? void 0 : l2.replace(/.*\/gubu\/gubu\.[tj]s.*\n/g, ""), this.props = n2.map((e3) => {
+        super((t2 = null == t2 || t2.startsWith("G$") ? "" : t2 + ": ") + n2.map((e3) => e3.text).join("\n")), this.gubu = true, this.name = "GubuError", this.code = e2, this.gname = t2, this.desc = () => ({ name: "GubuError", code: e2, err: n2, ctx: r3 }), this.stack = null === (l2 = this.stack) || void 0 === l2 ? void 0 : l2.replace(/.*\/gubu\/gubu\.[tj]s.*\n/g, ""), this.props = n2.map((e3) => {
           var t3;
-          return { path: e3.p, what: e3.w, type: null === (t3 = e3.n) || void 0 === t3 ? void 0 : t3.t, value: e3.v };
+          return { path: e3.path, what: e3.why, type: null === (t3 = e3.node) || void 0 === t3 ? void 0 : t3.t, value: e3.value };
         });
       }
       toJSON() {
@@ -1086,21 +1086,21 @@ var gubu_min = gubu_min$2.exports;
         if (n === e2.$.gubu$) return e2.d = null == t2 ? e2.d : t2, e2;
         if (true === e2.$.gubu$) {
           let r3 = __spreadValues({}, e2);
-          return r3.$ = __spreadProps(__spreadValues({ v$: "8.0.2" }, r3.$), { gubu$: n }), r3.v = null != r3.v && v === typeof r3.v ? __spreadValues({}, r3.v) : r3.v, r3.t = r3.t || typeof r3.v, h === r3.t && ee[r3.v.name] && (r3.t = r3.v.name.toLowerCase(), r3.v = He(te[r3.t]), r3.f = r3.v), r3.r = !!r3.r, r3.p = !!r3.p, r3.d = null == t2 ? null == r3.d ? -1 : r3.d : t2, r3.b = r3.b || [], r3.a = r3.a || [], r3.u = r3.u || {}, r3.m = r3.m || o2 || {}, r3;
+          return r3.$ = __spreadProps(__spreadValues({ v$: "8.2.1" }, r3.$), { gubu$: n }), r3.v = null != r3.v && v === typeof r3.v ? __spreadValues({}, r3.v) : r3.v, r3.t = r3.t || typeof r3.v, h === r3.t && ee[r3.v.name] && (r3.t = r3.v.name.toLowerCase(), r3.v = He(te[r3.t]), r3.f = r3.v), r3.r = !!r3.r, r3.p = !!r3.p, r3.d = null == t2 ? null == r3.d ? -1 : r3.d : t2, r3.b = r3.b || [], r3.a = r3.a || [], r3.u = r3.u || {}, r3.m = r3.m || o2 || {}, r3;
         }
       }
       let b2 = null === e2 ? k : typeof e2;
       b2 = y === b2 ? m : b2;
-      let x2, I2 = e2, w2 = I2, S2 = false, N2 = {}, O2 = [], V2 = [];
-      if (v === b2) w2 = void 0, K(I2) ? (b2 = p, 1 === I2.length && (x2 = I2[0], I2 = [])) : null != I2 && Function !== I2.constructor && Object !== I2.constructor && null != I2.constructor ? ("[object RegExp]" === i.call(I2) ? (b2 = j, S2 = true) : (b2 = $, N2.n = I2.constructor.name, N2.i = I2.constructor), w2 = I2) : 0 === H(I2).length && (x2 = he());
-      else if (h === b2) if (ee[e2.name]) b2 = e2.name.toLowerCase(), S2 = true, I2 = He(te[b2]), w2 = I2, A === e2.name && (x2 = he());
+      let x2, I2 = e2, w2 = I2, j2 = false, N2 = {}, O2 = [], V2 = [];
+      if (v === b2) w2 = void 0, K(I2) ? (b2 = p, 1 === I2.length && (x2 = I2[0], I2 = [])) : null != I2 && Function !== I2.constructor && Object !== I2.constructor && null != I2.constructor ? ("[object RegExp]" === i.call(I2) ? (b2 = S, j2 = true) : (b2 = $, N2.n = I2.constructor.name, N2.i = I2.constructor), w2 = I2) : 0 === H(I2).length && (x2 = he());
+      else if (h === b2) if (ee[e2.name]) b2 = e2.name.toLowerCase(), j2 = true, I2 = He(te[b2]), w2 = I2, A === e2.name && (x2 = he());
       else if (I2.gubu === r2 || true === (null === (a2 = I2.$) || void 0 === a2 ? void 0 : a2.gubu)) {
         let e3 = I2.node ? I2.node() : I2;
-        b2 = e3.t, I2 = e3.v, w2 = I2, S2 = e3.r, N2 = __spreadValues({}, e3.u), O2 = [...e3.a], V2 = [...e3.b];
-      } else D === I2.constructor.name && l.test(I2.name) && (b2 = $, S2 = true, N2.n = null === (g2 = null === (f2 = I2.prototype) || void 0 === f2 ? void 0 : f2.constructor) || void 0 === g2 ? void 0 : g2.name, N2.i = I2);
+        b2 = e3.t, I2 = e3.v, w2 = I2, j2 = e3.r, N2 = __spreadValues({}, e3.u), O2 = [...e3.a], V2 = [...e3.b];
+      } else D === I2.constructor.name && l.test(I2.name) && (b2 = $, j2 = true, N2.n = null === (g2 = null === (f2 = I2.prototype) || void 0 === f2 ? void 0 : f2.constructor) || void 0 === g2 ? void 0 : g2.name, N2.i = I2);
       else c === b2 && isNaN(I2) ? b2 = u : d === b2 && "" === I2 && (N2.empty = true);
       let R2 = null == I2 || v !== b2 && p !== b2 ? I2 : __spreadValues({}, I2);
-      return { $: r2, t: b2, v: R2, f: w2, n: null != R2 && v === typeof R2 ? H(R2).length : 0, c: x2, r: S2, p: false, d: null == t2 ? -1 : t2, k: [], e: true, u: N2, a: O2, b: V2, m: o2 || {}, [Symbol.for("nodejs.util.inspect.custom")]() {
+      return { $: r2, t: b2, v: R2, f: w2, n: null != R2 && v === typeof R2 ? H(R2).length : 0, c: x2, r: j2, p: false, d: null == t2 ? -1 : t2, k: [], e: true, u: N2, a: O2, b: V2, m: o2 || {}, [Symbol.for("nodejs.util.inspect.custom")]() {
         const e3 = __spreadValues({}, this);
         return delete e3.$, JSON.stringify(e3, (e4, t3) => "function" != typeof t3 || Ke[t3.name] ? t3 : t3.name).replace(/"/g, "").replace(/,/g, " ");
       } };
@@ -1121,12 +1121,12 @@ var gubu_min = gubu_min$2.exports;
     }
     function le(t2, l2) {
       const i2 = null == l2 ? {} : l2;
-      i2.name = null == i2.name ? "G" + ("" + Math.random()).substring(2, 8) : "" + i2.name, i2.prefix = null == i2.prefix ? void 0 : i2.prefix;
+      i2.name = null == i2.name ? "G$" + ("" + Math.random()).substring(2, 8) : "" + i2.name;
       let o2 = i2.meta = i2.meta || {};
       o2.active = true === o2.active || false, o2.suffix = d == typeof o2.suffix ? o2.suffix : "$$";
       let s2 = i2.keyexpr = i2.keyexpr || {};
       s2.active = false !== s2.active;
-      let u2 = i2.keyspec = i2.keyspec || {};
+      let u2 = i2.valexpr = i2.valexpr || {};
       u2.active = true === u2.active, u2.keymark = d == typeof u2.keymark ? u2.keymark : o2.suffix;
       let c2, h2 = ne(t2, 0), g2 = "";
       function N2(e2, t3, n2) {
@@ -1205,8 +1205,8 @@ var gubu_min = gubu_min$2.exports;
                 } else V2.ctx.log && n5 && null == e2 && V2.ctx.log("kv", __spreadProps(__spreadValues({}, V2), { key: 0, val: t4.c })), V2.ctx.log && V2.ctx.log("ea", V2);
               }
             } else V2.curerr.push(Le(x, V2, 1040));
-            else if (j === V2.type) r5 && !t4.r ? V2.ignoreVal = true : d !== V2.valType ? (V2.ignoreVal = true, V2.curerr.push(Le(x, V2, 1045))) : V2.val.match(t4.v) || (V2.ignoreVal = true, V2.curerr.push(Le(j, V2, 1045)));
-            else if (m === V2.type || b === V2.type || S === V2.type || void 0 === V2.val || V2.type === V2.valType || $ === V2.type && t4.u.i && V2.val instanceof t4.u.i || k === V2.type && null === V2.val) if (void 0 === V2.val) {
+            else if (S === V2.type) r5 && !t4.r ? V2.ignoreVal = true : d !== V2.valType ? (V2.ignoreVal = true, V2.curerr.push(Le(x, V2, 1045))) : V2.val.match(t4.v) || (V2.ignoreVal = true, V2.curerr.push(Le(S, V2, 1045)));
+            else if (m === V2.type || b === V2.type || j === V2.type || void 0 === V2.val || V2.type === V2.valType || $ === V2.type && t4.u.i && V2.val instanceof t4.u.i || k === V2.type && null === V2.val) if (void 0 === V2.val) {
               let e3 = V2.path[V2.dI];
               l4 || !t4.r || y === V2.type && V2.parent.hasOwnProperty(e3) ? void 0 !== t4.f && !l4 || y === V2.type ? (V2.updateVal(t4.f), V2.fromDflt = true) : m === V2.type && (V2.ignoreVal = void 0 === V2.ignoreVal || V2.ignoreVal) : (V2.ignoreVal = true, V2.curerr.push(Le(f, V2, 1060))), V2.ctx.log && V2.ctx.log("kv", V2);
             } else d !== V2.type || "" !== V2.val || t4.u.empty || V2.curerr.push(Le(f, V2, 1080)), V2.ctx.log && V2.ctx.log("kv", V2);
@@ -1221,7 +1221,7 @@ var gubu_min = gubu_min$2.exports;
         }
         if (0 < V2.err.length) {
           if (K(V2.ctx.err)) V2.ctx.err.push(...V2.err);
-          else if (!V2.match && false !== V2.ctx.err) throw new Y(w, i2.prefix, V2.err, V2.ctx);
+          else if (!V2.match && false !== V2.ctx.err) throw new Y(w, i2.name, V2.err, V2.ctx);
         }
         return V2.match ? 0 === V2.err.length : V2.root;
       }
@@ -1246,7 +1246,7 @@ var gubu_min = gubu_min$2.exports;
     function ie(e2, t2) {
       var n2, r3;
       let l2, i2 = false;
-      "string" == typeof e2 && (e2 = { src: e2 });
+      "string" == typeof e2 && (e2 = { src: e2 }), e2.keymark = e2.keymark || "$$";
       const o2 = null === (n2 = null == t2 ? void 0 : t2.$) || void 0 === n2 ? void 0 : n2.gubu$;
       if (e2.i = e2.i || 0, null == e2.tokens) {
         l2 = null != e2.val ? ne(e2.val, (e2.d || 0) + 1, e2.meta) : void 0, i2 = true, e2.tokens = [];
@@ -1260,7 +1260,7 @@ var gubu_min = gubu_min$2.exports;
           }
           if ((r5 || n4 === e2.tokens.length) && void 0 !== t2) {
             let l3 = "token_" + e2.d + "_" + e2.i;
-            e2.refs = e2.refs || {}, e2.refs[l3] = t2, r5 ? e2.tokens.splice(n4, 0, "$$" + l3) : e2.tokens.push("(", "$$" + l3, ")");
+            e2.refs = e2.refs || {}, e2.refs[l3] = t2, r5 ? e2.tokens.splice(n4, 0, e2.keymark + l3) : e2.tokens.push("(", e2.keymark + l3, ")");
           }
         }
       }
@@ -1270,7 +1270,7 @@ var gubu_min = gubu_min$2.exports;
       let a2 = [];
       if (null == u2) try {
         let t3;
-        if (q[s2]) u2 = Te, a2.unshift(s2);
+        if (q[s2]) u2 = Ge, a2.unshift(s2);
         else {
           if (y === s2) return;
           if ("NaN" === s2) return NaN;
@@ -1296,10 +1296,13 @@ var gubu_min = gubu_min$2.exports;
       }
       return l2 = o2 ? u2.call(t2, ...a2) : u2.call(void 0, ...a2), "." === e2.tokens[e2.i] ? (e2.i++, l2 = ie(e2, l2)) : i2 && e2.i < e2.tokens.length && (l2 = ie(e2, l2)), l2;
     }
-    function oe(e2, t2 = true) {
-      let n2;
-      const r3 = Array.isArray(e2) ? "array" : null === e2 ? "null" : typeof e2;
-      return "string" === r3 ? n2 = ie(e2) : v === r3 ? n2 = Object.entries(e2).reduce((e3, t3) => (e3[t3[0]] = "$$" === t3[0] ? t3[1] : oe(t3[1], false), e3), {}) : p === r3 && (n2 = e2.map((e3) => oe(e3, false))), t2 ? Ze(n2, { keyspec: { active: true } }) : n2;
+    function oe(e2, t2 = {}, n2 = true) {
+      let r3;
+      const l2 = Array.isArray(e2) ? "array" : null === e2 ? "null" : typeof e2;
+      return "string" === l2 ? r3 = ie(e2) : "number" === l2 || "boolean" === l2 ? r3 = e2 : v === l2 ? r3 = Object.entries(e2).reduce((e3, n3) => {
+        var r4;
+        return e3[n3[0]] = ((null === (r4 = t2.valexpr) || void 0 === r4 ? void 0 : r4.keymark) || "$$") === n3[0] ? n3[1] : oe(n3[1], t2, false), e3;
+      }, {}) : p === l2 && (r3 = e2.map((e3) => oe(e3, t2, false))), n2 ? (t2.valexpr = t2.valexpr || {}, t2.valexpr.active = true, Ze(r3, t2)) : r3;
     }
     function se(e2, t2) {
       var n2;
@@ -1312,7 +1315,7 @@ var gubu_min = gubu_min$2.exports;
       let o2 = K(l2.err) ? 0 < l2.err.length : null != l2.err;
       if (!i2 || o2) {
         if (void 0 === t2.val && (t2.node.p || !t2.node.r) && true !== l2.done) return delete l2.err, l2;
-        let n3 = l2.why || S, i3 = ue(t2);
+        let n3 = l2.why || j, i3 = ue(t2);
         if (d === typeof l2.err) t2.curerr.push(ze(t2, l2.err));
         else if (v === typeof l2.err) t2.curerr.push(...[l2.err].flat().filter((e3) => null != e3).map((e3) => (e3.p = null == e3.p ? i3 : e3.p, e3.m = null == e3.m ? 2010 : e3.m, e3)));
         else {
@@ -1395,9 +1398,9 @@ var gubu_min = gubu_min$2.exports;
           let n3 = __spreadProps(__spreadValues({}, l2.ctx), { err: [] });
           e3(t3, n3), 0 < n3.err.length && (i2 = false);
         }
-        return i2 || (r4.why = T, r4.err = [ze(l2, E + " " + _2 + z + L + " does not satisfy all of: " + e2.map((e3) => qe(e3, null, true)).join(", "))]), i2;
+        return i2 || (r4.why = G, r4.err = [ze(l2, E + " " + _2 + z + L + " does not satisfy all of: " + e2.map((e3) => qe(e3, null, true)).join(", "))]), i2;
       };
-      return r3.n = T, r3.a = e2, t2.b.push(r3), t2;
+      return r3.n = G, r3.a = e2, t2.b.push(r3), t2;
     }, Ie = function(...e2) {
       let t2 = Pe(this);
       t2.t = b, t2.r = true;
@@ -1429,7 +1432,7 @@ var gubu_min = gubu_min$2.exports;
         return 1 !== i2 && (r4.why = F, r4.err = [ze(l2, E + " " + _2 + z + L + " does not satisfy one of: " + e2.map((e3) => qe(e3, null, true)).join(", "))]), true;
       };
       return r3.n = F, r3.a = e2, t2.b.push(r3), t2;
-    }, Se = function(...e2) {
+    }, je = function(...e2) {
       const t2 = Pe(this), n2 = function(t3, n3, r3) {
         for (let l2 = 0; l2 < e2.length; l2++) if (t3 === e2[l2]) return true;
         if (r3.node.hasOwnProperty("f") && void 0 === t3) {
@@ -1439,7 +1442,7 @@ var gubu_min = gubu_min$2.exports;
         return n3.err = ze(r3, E + " " + _2 + z + L + " must be exactly one of: " + e2.map((e3) => qe(e3, null, true)).join(", ")), n3.done = true, false;
       };
       return n2.n = J, n2.a = e2, n2.s = () => J + "(" + e2.map((e3) => qe(e3, null, true)).join(",") + ")", t2.b.push(n2), t2;
-    }, je = function(e2, t2) {
+    }, Se = function(e2, t2) {
       let n2 = Pe(this, t2);
       return n2.b.push(e2), n2;
     }, Ne = function(e2, t2) {
@@ -1449,11 +1452,11 @@ var gubu_min = gubu_min$2.exports;
       let n2 = Pe(this, t2);
       if (n2.r = true, h === typeof e2) {
         let t3 = e2;
-        t3.gubu$ = t3.gubu$ || {}, t3.gubu$.Check = true, t3.s = () => B + "(" + qe(e2, null, true) + ")", n2.b.push(e2), n2.t = S;
+        t3.gubu$ = t3.gubu$ || {}, t3.gubu$.Check = true, t3.s = () => B + "(" + qe(e2, null, true) + ")", n2.b.push(e2), n2.t = j;
       } else if (v === typeof e2) {
         if (Object.prototype.toString.call(e2).includes("RegExp")) {
           let t3 = (t4) => null != t4 && !Number.isNaN(t4) && !!String(t4).match(e2);
-          U(t3, s, { value: String(e2) }), U(t3, "gubu$", { value: { Check: true } }), t3.s = () => B + "(" + qe(e2, null, true) + ")", n2.b.push(t3), n2.t = S;
+          U(t3, s, { value: String(e2) }), U(t3, "gubu$", { value: { Check: true } }), t3.s = () => B + "(" + qe(e2, null, true) + ")", n2.b.push(t3), n2.t = j;
         }
       } else d === typeof e2 && (n2.t = e2);
       if (void 0 !== t2) {
@@ -1514,11 +1517,11 @@ var gubu_min = gubu_min$2.exports;
     }, Ce = function(e2, t2) {
       let n2 = Pe(this, t2 || []);
       return n2.t = "array", n2.c = ne(e2), n2.m = n2.m || {}, n2.m.rest = true, n2;
-    }, Te = function(e2, t2) {
+    }, Ge = function(e2, t2) {
       let n2 = ne(q[e2]), r3 = Pe(this, t2);
       return r3 !== n2 && (r3.t = n2.t, r3.r = n2.r, r3.p = n2.p, r3.v = n2.v), r3;
     };
-    function Ge(e2, t2, n2, r3, l2) {
+    function Te(e2, t2, n2, r3, l2) {
       let i2 = Pe(e2, n2);
       t2 = +t2;
       let o2 = function(e3, n3, r4) {
@@ -1529,32 +1532,32 @@ var gubu_min = gubu_min$2.exports;
       return Object.defineProperty(o2, s, { value: r3 }), o2.n = r3, o2.a = [t2], o2.s = () => r3 + "(" + t2 + ")", o2[Symbol.for("nodejs.util.inspect.custom")] = o2.s(), o2.toJSON = () => o2.s(), i2.b.push(o2), i2;
     }
     const Be = function(e2, t2) {
-      return Ge(this, e2, t2, W, (e3, t3, n2, r3, l2) => {
+      return Te(this, e2, t2, M, (e3, t3, n2, r3, l2) => {
         if (t3 <= e3) return true;
         l2.checkargs = { min: 1 };
         let i2 = c === typeof n2 ? "" : "length ";
         return r3.err = ze(l2, E + " " + _2 + z + L + ` must be a minimum ${i2}of ${t3} (was ${e3}).`), false;
       });
     }, Je = function(e2, t2) {
-      return Ge(this, e2, t2, M, (e3, t3, n2, r3, l2) => {
+      return Te(this, e2, t2, W, (e3, t3, n2, r3, l2) => {
         if (e3 <= t3) return true;
         let i2 = c === typeof n2 ? "" : "length ";
         return r3.err = ze(l2, E + " " + _2 + z + L + ` must be a maximum ${i2}of ${t3} (was ${e3}).`), false;
       });
-    }, Me = function(e2, t2) {
-      return Ge(this, e2, t2, C, (e3, t3, n2, r3, l2) => {
+    }, We = function(e2, t2) {
+      return Te(this, e2, t2, C, (e3, t3, n2, r3, l2) => {
         if (t3 < e3) return true;
         let i2 = c === typeof n2 ? "be" : "have length";
         return r3.err = ze(l2, E + " " + _2 + z + L + ` must ${i2} above ${t3} (was ${e3}).`), false;
       });
-    }, We = function(e2, t2) {
-      return Ge(this, e2, t2, G, (e3, t3, n2, r3, l2) => {
+    }, Me = function(e2, t2) {
+      return Te(this, e2, t2, T, (e3, t3, n2, r3, l2) => {
         if (e3 < t3) return true;
         let i2 = c === typeof n2 ? "be" : "have length";
         return r3.err = ze(l2, E + " " + _2 + z + L + ` must ${i2} below ${t3} (was ${e3}).`), false;
       });
     }, Fe = function(e2, t2) {
-      return Ge(this, e2, t2, G, (e3, t3, n2, r3, l2) => {
+      return Te(this, e2, t2, T, (e3, t3, n2, r3, l2) => {
         if (t3 === e3) return true;
         let i2 = c === typeof n2 ? "" : " in length";
         return r3.err = ze(l2, E + " " + _2 + z + L + ` must be exactly ${t3}${i2} (was ${e3}).`), false;
@@ -1569,18 +1572,18 @@ var gubu_min = gubu_min$2.exports;
         void 0 === n2.v && "list" !== n2.t && (n2.v = r4.v, n2.t = r4.t), ["f", "r", "p", "c", "e", "z"].map((e3) => n2[e3] = void 0 !== r4[e3] ? r4[e3] : n2[e3]), n2.u = Object.assign(__spreadValues({}, r4.u), n2.u), n2.m = Object.assign(__spreadValues({}, r4.m), n2.m), n2.a = r4.a.concat(n2.a), n2.b = r4.b.concat(n2.b);
       } else n2 = ne(e2);
       else n2 = ne(t2);
-      return n2.Above ? n2 : Object.assign(n2, { Above: Me, After: Ne, Any: he, Before: je, Below: We, Check: Oe, Child: Ee, Closed: Ve, Default: me, Define: Ae, Empty: be, Exact: Se, Fault: ve, Ignore: ge, Len: Fe, Max: Je, Min: Be, Never: $e, Open: fe, Refer: Re, Rename: De, Required: ce, Rest: Ce, Skip: de, Type: Te });
+      return n2.Above ? n2 : Object.assign(n2, { Above: We, After: Ne, Any: he, Before: Se, Below: Me, Check: Oe, Child: Ee, Closed: Ve, Default: me, Define: Ae, Empty: be, Exact: je, Fault: ve, Ignore: ge, Len: Fe, Max: Je, Min: Be, Never: $e, Open: fe, Refer: Re, Rename: De, Required: ce, Rest: Ce, Skip: de, Type: Ge });
     }
     function ze(e2, t2, n2, r3) {
-      return Le(n2 || S, e2, 4e3, t2, r3);
+      return Le(n2 || j, e2, 4e3, t2, r3);
     }
     function Le(e2, t2, n2, r3, l2, i2) {
       var o2;
-      let s2 = { k: t2.key, n: t2.node, v: t2.val, p: ue(t2), w: e2, c: (null === (o2 = t2.check) || void 0 === o2 ? void 0 : o2.name) || "none", a: t2.checkargs || {}, m: n2, t: "", u: l2 || {} }, u2 = ae((void 0 === t2.val ? y : qe(t2.val)).replace(/"/g, ""));
+      let s2 = { key: t2.key, type: t2.node.t, node: t2.node, value: t2.val, path: ue(t2), why: e2, check: (null === (o2 = t2.check) || void 0 === o2 ? void 0 : o2.name) || "none", args: t2.checkargs || {}, mark: n2, text: "", use: l2 || {} }, u2 = ae((void 0 === t2.val ? y : qe(t2.val)).replace(/"/g, ""));
       if (null == (r3 = r3 || t2.node.z) || "" === r3) {
         let n3 = u2.startsWith("[") ? p : u2.startsWith("{") ? v : null == t2.val || c === typeof t2.val && isNaN(t2.val) ? "value" : typeof t2.val, r4 = u2.startsWith("[") || K(t2.parents[t2.pI]) ? "index" : "property", o3 = "is", h2 = null == l2 ? void 0 : l2.k;
-        h2 = K(h2) ? (r4 = 1 < h2.length ? (o3 = "are", "properties") : r4, h2.join(", ")) : h2, s2.t = "Validation failed for " + (0 < s2.p.length ? `${r4} "${s2.p}" with ` : "") + `${n3} "${u2}" because ` + (x === e2 ? $ === t2.node.t ? `the ${n3} is not an instance of ${t2.node.u.n}` : `the ${n3} is not of type ${j === t2.node.t ? d : t2.node.t}` : f === e2 ? "" === t2.val ? "an empty string is not allowed" : `the ${n3} is required` : "closed" === e2 ? `the ${r4} "${h2}" ${o3} not allowed` : j === e2 ? "the string did not match " + t2.node.v : a === e2 ? "no value is allowed" : `check "${null == i2 ? e2 : i2}" failed`) + (s2.u.thrown ? " (threw: " + s2.u.thrown.message + ")" : ".");
-      } else s2.t = r3.replace(/\$VALUE/g, u2).replace(/\$PATH/g, s2.p);
+        h2 = K(h2) ? (r4 = 1 < h2.length ? (o3 = "are", "properties") : r4, h2.join(", ")) : h2, s2.text = "Validation failed for " + (0 < s2.path.length ? `${r4} "${s2.path}" with ` : "") + `${n3} "${u2}" because ` + (x === e2 ? $ === t2.node.t ? `the ${n3} is not an instance of ${t2.node.u.n}` : `the ${n3} is not of type ${S === t2.node.t ? d : t2.node.t}` : f === e2 ? "" === t2.val ? "an empty string is not allowed" : `the ${n3} is required` : "closed" === e2 ? `the ${r4} "${h2}" ${o3} not allowed` : S === e2 ? "the string did not match " + t2.node.v : a === e2 ? "no value is allowed" : `check "${null == i2 ? e2 : i2}" failed`) + (s2.use.thrown ? " (threw: " + s2.use.thrown.message + ")" : ".");
+      } else s2.text = r3.replace(/\$VALUE/g, u2).replace(/\$PATH/g, s2.path);
       return s2;
     }
     function _e(e2) {
@@ -1595,7 +1598,7 @@ var gubu_min = gubu_min$2.exports;
         let n3 = "";
         return e2.r && (n3 += "Required()"), "any" == (null === (t2 = e2.c) || void 0 === t2 ? void 0 : t2.t) && (n3 += ("" === n3 ? "" : ".") + "Open()"), n3 += e2.b.map((t3) => t3.s ? "." + t3.s(e2) : "").join(""), n3.startsWith(".") && (n3 = n3.slice(1)), "" === n3 && (n3 = "Any()"), n3;
       }
-      if (S === n2) {
+      if (j === n2) {
         let t3 = "";
         return t3 += e2.b.map((t4) => t4.s ? "." + t4.s(e2) : "").join(""), t3.startsWith(".") && (t3 = t3.slice(1)), t3;
       }
@@ -1637,7 +1640,7 @@ var gubu_min = gubu_min$2.exports;
     function He(e2) {
       return null == e2 || v !== typeof e2 ? e2 : Z(Q(e2));
     }
-    const Ue = (e2) => ne(__spreadProps(__spreadValues({}, e2), { $: { gubu$: true } })), Ke = { Above: Me, After: Ne, All: xe, Any: he, Before: je, Below: We, Check: Oe, Child: Ee, Closed: Ve, Default: me, Define: Ae, Empty: be, Exact: Se, Fault: ve, Func: ye, Ignore: ge, Key: ke, Len: Fe, Max: Je, Min: Be, Never: $e, One: we, Open: fe, Optional: pe, Refer: Re, Rename: De, Required: ce, Skip: de, Some: Ie, Rest: Ce, Type: Te };
+    const Ue = (e2) => ne(__spreadProps(__spreadValues({}, e2), { $: { gubu$: true } })), Ke = { Above: We, After: Ne, All: xe, Any: he, Before: Se, Below: Me, Check: Oe, Child: Ee, Closed: Ve, Default: me, Define: Ae, Empty: be, Exact: je, Fault: ve, Func: ye, Ignore: ge, Key: ke, Len: Fe, Max: Je, Min: Be, Never: $e, One: we, Open: fe, Optional: pe, Refer: Re, Rename: De, Required: ce, Skip: de, Some: Ie, Rest: Ce, Type: Ge };
     if (y !== typeof window) for (let Ye in Ke) U(Ke[Ye], s, { value: Ye });
     Object.assign(le, __spreadProps(__spreadValues(__spreadValues({ Gubu: le }, Ke), Object.entries(Ke).reduce((e2, t2) => (e2["G" + t2[0]] = t2[1], e2), {})), { isShape: (e2) => e2 && r2 === e2.gubu, G$: Ue, buildize: Pe, makeErr: ze, stringify: qe, truncate: ae, nodize: ne, expr: ie, build: oe, MakeArgu: Qe })), U(le, s, { value: o });
     const Ze = le;
@@ -1646,7 +1649,7 @@ var gubu_min = gubu_min$2.exports;
       return function(t2, n2, r3) {
         let l2 = false;
         d === typeof t2 && (l2 = true, r3 = n2, n2 = t2);
-        const i2 = Ze(r3 = r3 || n2, { prefix: e2 + (n2 = d === typeof n2 ? " (" + n2 + ")" : "") }), o2 = i2.node(), s2 = o2.k;
+        const i2 = Ze(r3 = r3 || n2, { name: e2 + (n2 = d === typeof n2 ? " (" + n2 + ")" : "") }), o2 = i2.node(), s2 = o2.k;
         let u2 = t2, a2 = {}, c2 = 0, f2 = 0;
         for (; c2 < s2.length; c2++) {
           let e3 = o2.v[s2[c2]];
@@ -1793,7 +1796,7 @@ function _objectWithoutPropertiesLoose(r2, e) {
   if (null == r2) return {};
   var t = {};
   for (var n in r2) if ({}.hasOwnProperty.call(r2, n)) {
-    if (e.indexOf(n) >= 0) continue;
+    if (e.includes(n)) continue;
     t[n] = r2[n];
   }
   return t;
@@ -2838,7 +2841,7 @@ function requireObjectWithoutPropertiesLoose() {
       if (null == r2) return {};
       var t = {};
       for (var n in r2) if ({}.hasOwnProperty.call(r2, n)) {
-        if (e.indexOf(n) >= 0) continue;
+        if (e.includes(n)) continue;
         t[n] = r2[n];
       }
       return t;
@@ -3975,7 +3978,7 @@ process.env.NODE_ENV !== "production" ? GlobalStyles$2.propTypes = {
 } : void 0;
 "use client";
 /**
- * @mui/styled-engine v5.15.14
+ * @mui/styled-engine v5.16.1
  *
  * @license MIT
  * This source code is licensed under the MIT license found in the
@@ -8296,7 +8299,7 @@ const visuallyHidden = {
   width: "1px"
 };
 /**
- * @mui/utils v5.16.0
+ * @mui/utils v5.16.1
  *
  * @license MIT
  * This source code is licensed under the MIT license found in the
@@ -8364,7 +8367,7 @@ if (process.env.NODE_ENV !== "production") {
   process.env.NODE_ENV !== "production" ? ThemeProvider$2.propTypes = exactProp(ThemeProvider$2.propTypes) : void 0;
 }
 /**
- * @mui/private-theming v5.16.0
+ * @mui/private-theming v5.16.1
  *
  * @license MIT
  * This source code is licensed under the MIT license found in the
@@ -10403,8 +10406,9 @@ const AppBarRoot = styled$1(Paper, {
   }, ownerState.color && !ownerState.color.match(/^(default|inherit|transparent)$/) && {
     "--AppBar-background": ownerState.enableColorOnDark ? theme.vars.palette[ownerState.color].main : joinVars(theme.vars.palette.AppBar.darkBg, theme.vars.palette[ownerState.color].main),
     "--AppBar-color": ownerState.enableColorOnDark ? theme.vars.palette[ownerState.color].contrastText : joinVars(theme.vars.palette.AppBar.darkColor, theme.vars.palette[ownerState.color].contrastText)
+  }, !["inherit", "transparent"].includes(ownerState.color) && {
+    backgroundColor: "var(--AppBar-background)"
   }, {
-    backgroundColor: "var(--AppBar-background)",
     color: ownerState.color === "inherit" ? "inherit" : "var(--AppBar-color)"
   }, ownerState.color === "transparent" && {
     backgroundImage: "none",
@@ -10599,7 +10603,7 @@ const BasicAccountToolSpecShape = gubu_minExports.Gubu({
   attr: {},
   sx: {},
   style: {}
-}, { prefix: CMPNAME$c });
+}, { name: CMPNAME$c });
 function BasicAccountTool(props) {
   var _a;
   const { ctx, spec } = props;
@@ -10684,7 +10688,7 @@ const BasicHeadToolSpecShape = gubu_minExports.Gubu({
   attr: {},
   sx: {},
   style: {}
-}, { prefix: CMPNAME$b });
+}, { name: CMPNAME$b });
 function BasicHeadTool(props) {
   const { ctx, spec } = props;
   const { seneca } = ctx();
@@ -10763,7 +10767,7 @@ const BasicHeadSpecShape = gubu_minExports.Gubu({
     AppBar: {},
     ToolBar: {}
   }
-}, { prefix: CMPNAME$a });
+}, { name: CMPNAME$a });
 function BasicHead(props) {
   const { ctx, spec } = props;
   const { seneca } = ctx();
@@ -50264,7 +50268,7 @@ const useFieldV7TextField = (params) => {
     });
   });
   const getInputContainerClickHandler = useEventCallback((sectionIndex) => (event) => {
-    if (event.isDefaultPrevented() || readOnly) {
+    if (event.isDefaultPrevented()) {
       return;
     }
     setSelectedSections(sectionIndex);
@@ -50273,9 +50277,6 @@ const useFieldV7TextField = (params) => {
     event.preventDefault();
   });
   const getInputContentFocusHandler = useEventCallback((sectionIndex) => () => {
-    if (readOnly) {
-      return;
-    }
     setSelectedSections(sectionIndex);
   });
   const handleInputContentPaste = useEventCallback((event) => {
@@ -50469,6 +50470,7 @@ const addPositionPropertiesToSections = (sections, localizedDigits, isRtl) => {
 const useFieldV6TextField = (params) => {
   const isRtl = useRtl();
   const focusTimeoutRef = React$1.useRef();
+  const selectionSyncTimeoutRef = React$1.useRef();
   const {
     forwardedProps: {
       onFocus,
@@ -50527,8 +50529,11 @@ const useFieldV6TextField = (params) => {
             inputRef.current.setSelectionRange(selectionStart, selectionEnd);
           }
         }
-        setTimeout(() => {
-          if (inputRef.current && inputRef.current === getActiveElement(document) && (inputRef.current.selectionStart !== selectionStart || inputRef.current.selectionEnd !== selectionEnd)) {
+        clearTimeout(selectionSyncTimeoutRef.current);
+        selectionSyncTimeoutRef.current = setTimeout(() => {
+          if (inputRef.current && inputRef.current === getActiveElement(document) && // The section might loose all selection, where `selectionStart === selectionEnd`
+          // https://github.com/mui/mui-x/pull/13652
+          inputRef.current.selectionStart === inputRef.current.selectionEnd && (inputRef.current.selectionStart !== selectionStart || inputRef.current.selectionEnd !== selectionEnd)) {
             interactions.syncSelectionToDOM();
           }
         });
@@ -50536,11 +50541,10 @@ const useFieldV6TextField = (params) => {
       inputRef.current.scrollTop = currentScrollTop;
     },
     getActiveSectionIndexFromDOM: () => {
-      var _a, _b, _c;
+      var _a, _b;
       const browserStartIndex = (_a = inputRef.current.selectionStart) != null ? _a : 0;
       const browserEndIndex = (_b = inputRef.current.selectionEnd) != null ? _b : 0;
-      const isInputReadOnly = !!((_c = inputRef.current) == null ? void 0 : _c.readOnly);
-      if (browserStartIndex === 0 && browserEndIndex === 0 || isInputReadOnly) {
+      if (browserStartIndex === 0 && browserEndIndex === 0) {
         return null;
       }
       const nextSectionIndex = browserStartIndex <= sections[0].startInInput ? 1 : sections.findIndex((section) => section.startInInput - section.startSeparator.length > browserStartIndex);
@@ -50556,10 +50560,6 @@ const useFieldV6TextField = (params) => {
   }), [inputRef, parsedSelectedSections, sections, setSelectedSections]);
   const syncSelectionFromDOM = () => {
     var _a;
-    if (readOnly) {
-      setSelectedSections(null);
-      return;
-    }
     const browserStartIndex = (_a = inputRef.current.selectionStart) != null ? _a : 0;
     let nextSectionIndex;
     if (browserStartIndex <= sections[0].startInInput) {
@@ -50580,7 +50580,7 @@ const useFieldV6TextField = (params) => {
       if (!input || input !== inputRef.current) {
         return;
       }
-      if (activeSectionIndex != null || readOnly) {
+      if (activeSectionIndex != null) {
         return;
       }
       if (
@@ -50703,6 +50703,7 @@ const useFieldV6TextField = (params) => {
     }
     return () => {
       clearTimeout(focusTimeoutRef.current);
+      clearTimeout(selectionSyncTimeoutRef.current);
     };
   }, []);
   const inputMode = React$1.useMemo(() => {
@@ -72192,7 +72193,7 @@ const Shape$2 = gubu_minExports.Gubu(Open$7({
   ent: String,
   order: [String],
   field: Child$5({}, {})
-}), { prefix: "BasicEntityList" });
+}), { name: "BasicEntityList" });
 function VxgBasicEntityListPlugin(options) {
   const seneca = this;
   const spec = Shape$2(options.spec);
@@ -74156,7 +74157,7 @@ function useForm(props = {}) {
 const CMPNAME$8 = "BasicEntityField";
 console.log(CMPNAME$8, "3");
 const { Open: Open$6 } = gubu_minExports.Gubu;
-const BasicEntityFieldSpecShape = gubu_minExports.Gubu(Open$6({}), { prefix: CMPNAME$8 });
+const BasicEntityFieldSpecShape = gubu_minExports.Gubu(Open$6({}), { name: CMPNAME$8 });
 const fieldMap = {
   Text: BasicEntityTextField,
   TextBox: BasicEntityTextBoxField,
@@ -74266,7 +74267,7 @@ const Shape$1 = gubu_minExports.Gubu(Open$5({
   ent: String,
   order: [String],
   field: Child$4({}, {})
-}), { prefix: "BasicEntityEdit" });
+}), { name: "BasicEntityEdit" });
 function VxgBasicEntityEditPlugin(options) {
   const seneca = this;
   const spec = Shape$1(options.spec);
@@ -74429,7 +74430,7 @@ const BasicLedHeadSpecShape = gubu_minExports.Gubu(Open$4({
   mui: Open$4({
     Toolbar: Open$4({})
   })
-}), { prefix: CMPNAME$6 });
+}), { name: CMPNAME$6 });
 function BasicLedHead(props) {
   const { ctx, spec } = props;
   const { seneca, custom } = ctx();
@@ -74493,7 +74494,7 @@ function BasicLedHead(props) {
 const CMPNAME$5 = "BasicLedFoot";
 console.log(CMPNAME$5, "1");
 const { Open: Open$3 } = gubu_minExports.Gubu;
-const BasicLedFootSpecShape = gubu_minExports.Gubu(Open$3({}), { prefix: CMPNAME$5 });
+const BasicLedFootSpecShape = gubu_minExports.Gubu(Open$3({}), { name: CMPNAME$5 });
 function BasicLedFoot(props) {
   const { ctx, spec } = props;
   const { seneca, model } = ctx();
@@ -74503,7 +74504,7 @@ function BasicLedFoot(props) {
 }
 const CMPNAME$4 = "BasicLoading";
 console.log(CMPNAME$4, "1");
-const BasicLoadingSpecShape = gubu_minExports.Gubu({}, { prefix: CMPNAME$4 });
+const BasicLoadingSpecShape = gubu_minExports.Gubu({}, { name: CMPNAME$4 });
 function BasicLoading(props) {
   return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { children: "Loading..." }) });
 }
@@ -74528,7 +74529,7 @@ const Shape = gubu_minExports.Gubu({
       active: false
     })
   }
-}, { prefix: "BasicLed" });
+}, { name: "BasicLed" });
 function VxgBasicLedPlugin(options) {
   const seneca = this;
   console.log("VxgBasicLedPlugin options", options);
@@ -74802,7 +74803,7 @@ const BasicSideSpecShape = gubu_minExports.Gubu({
   mui: {
     Drawer: {}
   }
-}, { prefix: CMPNAME$1 });
+}, { name: CMPNAME$1 });
 function BasicSide(props) {
   const { spec, ctx } = props;
   const basicSideSpec = BasicSideSpecShape(spec);
@@ -74887,7 +74888,7 @@ const BasicAdminSpecShape = gubu_minExports.Gubu({
     nav: {},
     tool: {}
   }
-}, { prefix: CMPNAME });
+}, { name: CMPNAME });
 function Loading() {
   return /* @__PURE__ */ jsxRuntimeExports.jsx(Container$2, { children: "LOADING" });
 }

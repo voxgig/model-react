@@ -30,7 +30,7 @@ const BasicAccountToolSpecShape = Gubu({
   attr: {},
   sx: {},
   style: {},
-}, {prefix: CMPNAME})
+}, {name: CMPNAME})
 
 
 function BasicAccountTool (props: BasicProps) {

@@ -11,7 +11,7 @@ const Shape = Gubu(Open({
   ent: String,
   order: [String],
   field: Child({}, {})
-}), { prefix: 'BasicEntityList' })
+}), { name: 'BasicEntityList' })
 
 
 function VxgBasicEntityListPlugin(this: any, options: any) {

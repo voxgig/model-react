@@ -36,7 +36,7 @@ const BasicAdminSpecShape = Gubu({
     nav:  {},
     tool: {},
   }
-}, {prefix: CMPNAME})
+}, {name: CMPNAME})
 
 
 // TODO: need a BasicLoadingSplash

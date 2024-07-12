@@ -33,7 +33,7 @@ const BasicHeadSpecShape = Gubu({
     ToolBar: {},
   }
   
-}, {prefix:CMPNAME})
+}, {name: CMPNAME})
 
 
 function BasicHead (props: BasicProps) {

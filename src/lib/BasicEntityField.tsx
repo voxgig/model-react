@@ -18,7 +18,7 @@ console.log(CMPNAME,'3')
 const { Open } = Gubu
 const BasicEntityFieldSpecShape = Gubu(Open({
   
-}), {prefix: CMPNAME})
+}), {name: CMPNAME})
 
 
 

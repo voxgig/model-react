@@ -32,7 +32,7 @@ console.log(CMPNAME,'1')
 
 // const { Open } = Gubu
 // const BasicEntityEditSpecShape = Gubu(Open({
-// }), {prefix: CMPNAME})
+// }), {name: CMPNAME})
 
 
 

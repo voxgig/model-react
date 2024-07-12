@@ -34,7 +34,7 @@ const BasicHeadToolSpecShape = Gubu({
   attr: {},
   sx: {},
   style: {},
-}, {prefix: CMPNAME})
+}, {name: CMPNAME})
 
 
 function BasicHeadTool (props: BasicProps) {

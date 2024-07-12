@@ -29,7 +29,7 @@ const BasicLedHeadSpecShape = Gubu(Open({
   mui: Open({
     Toolbar: Open({})
   })
-}), {prefix: CMPNAME})
+}), {name: CMPNAME})
 
 
 function BasicLedHead (props: any) {

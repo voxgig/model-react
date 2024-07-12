@@ -25,7 +25,7 @@ const Shape = Gubu({
       active: false,
     }),
   },
-}, { prefix: 'BasicLed' })
+}, { name: 'BasicLed' })
 
 
 function VxgBasicLedPlugin(this: any, options: any) {

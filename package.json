@@ -61,13 +61,13 @@
     "react-router-dom": ">=6",
     "redux": ">=5.0.1",
     "redux-thunk": ">=3",
-    "seneca-entity": ">=27",
+    "seneca-entity": ">=28",
     "@seneca/browser-store": ">=0",
     "@seneca/redux": ">=0",
     "styled-components": ">=6"
   },
   "devDependencies": {
-    "@babel/core": "7.24.7",
+    "@babel/core": "7.24.8",
     "@hapi/code": "^9.0.3",
     "@testing-library/jest-dom": "^6.4.6",
     "@testing-library/react": "^16.0.0",

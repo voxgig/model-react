@@ -12,7 +12,7 @@ console.log(CMPNAME,'1')
 
 const { Open } = Gubu
 const BasicLedFootSpecShape = Gubu(Open({
-}), {prefix: CMPNAME})
+}), {name: CMPNAME})
 
 
 function BasicLedFoot (props: any) {

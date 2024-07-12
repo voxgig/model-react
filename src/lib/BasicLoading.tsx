@@ -14,7 +14,7 @@ console.log(CMPNAME,'1')
 
 // const { Exact } = Gubu
 const BasicLoadingSpecShape = Gubu({
-}, {prefix: CMPNAME})
+}, {name: CMPNAME})
 
 
 

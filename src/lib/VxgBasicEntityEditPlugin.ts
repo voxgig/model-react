@@ -11,7 +11,7 @@ const Shape = Gubu(Open({
   ent: String,
   order: [String],
   field: Child({}, {})
-}), { prefix: 'BasicEntityEdit' })
+}), { name: 'BasicEntityEdit' })
 
 
 function VxgBasicEntityEditPlugin(this: any, options: any) {
