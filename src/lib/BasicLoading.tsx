@@ -9,7 +9,6 @@ import { Gubu } from 'gubu'
 
 
 const CMPNAME = 'BasicLoading'
-console.log(CMPNAME,'1')
 
 
 // const { Exact } = Gubu

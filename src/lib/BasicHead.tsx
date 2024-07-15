@@ -11,8 +11,6 @@ import { BasicHeadTool } from './BasicHeadTool'
 
 
 const CMPNAME = 'BasicHead'
-console.log(CMPNAME,'1')
-
 
 const { Child, Exact, Open, Required } = Gubu
 const BasicHeadSpecShape = Gubu({
@@ -54,8 +52,6 @@ function BasicHead (props: BasicProps) {
       ...t,
     }))
 
-  // console.log('TOOLS', tools)
-  
   const leftTools: Spec[] = tools.filter((t:Spec)=>'left'===t.align)
   const rightTools: Spec[] = tools.filter((t:Spec)=>'right'===t.align)
 

@@ -8,11 +8,8 @@ function VxgBasicAuthPlugin(this: any, options: any) {
 
   const { spec, setSigninStatus, setReady } = options
 
-  console.log('VxgBasicAuthPlugin define', spec)
-
 
   function handleSignin(event: any) {
-    console.log('handleSignin')
     event.preventDefault()
     const data = new FormData(event.currentTarget)
 

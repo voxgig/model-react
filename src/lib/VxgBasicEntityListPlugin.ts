@@ -19,14 +19,11 @@ function VxgBasicEntityListPlugin(this: any, options: any) {
 
   const spec = Shape(options.spec)
 
-  console.log('BasicEntityList spec', spec)
-
   const slot = spec.prefix + spec.name
 
   // TODO: error if field missing
   const columns = spec.order.reduce((a: any, fn: any) => {
     const field = spec.field[fn]
-    // console.log('CF', fn, field)
     a.push({
       accessorKey: fn,
       header: field.label,
@@ -34,8 +31,6 @@ function VxgBasicEntityListPlugin(this: any, options: any) {
     })
     return a
   }, [])
-
-  // console.log('BasicEntityList columns', columns)
 
   options.setPlugin(true)
 

@@ -7,7 +7,6 @@ import type { Spec } from './basic-types'
 import { Gubu } from 'gubu'
 
 const CMPNAME = 'BasicLedFoot'
-console.log(CMPNAME,'1')
 
 
 const { Open } = Gubu
@@ -20,8 +19,6 @@ function BasicLedFoot (props: any) {
   const { seneca, model } = ctx()
 
   const BasicEntityFootSpec: Spec = BasicLedFootSpecShape(spec)
-  console.log(CMPNAME,BasicEntityFootSpec)
-
   
   return (
     <Box className="bxg-BasicLedFoot">

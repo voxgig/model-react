@@ -31,8 +31,6 @@ const Shape = Gubu({
 function VxgBasicLedPlugin(this: any, options: any) {
   const seneca = this
 
-  console.log('VxgBasicLedPlugin options', options)
-
   const spec = Shape(options.spec)
   const navigate = options.navigate
 
@@ -47,8 +45,6 @@ function VxgBasicLedPlugin(this: any, options: any) {
       function(this: any, _msg: any, reply: any, meta: any) {
         const state = meta.custom.state()
         let view = state.view[name]
-
-        console.log('VxgBasicLedPlugin init:state', name, view)
 
         view.mode = 'list'
         view.status = 'init'
@@ -122,11 +118,13 @@ function VxgBasicLedPlugin(this: any, options: any) {
         let view = state.view[name]
         const { item_id } = msg
         view.mode = 'edit'
-        navigate('/view/' + name + '/edit/' + item_id)
+        const fields$ = Object.keys(spec.def.edit.field)
 
+        navigate('/view/' + name + '/edit/' + item_id)
         const item = await this.entity(entCanon).load$({
           id: msg.item_id,
           slot$: slotName,
+          fields$,
         })
 
         return item
@@ -140,7 +138,10 @@ function VxgBasicLedPlugin(this: any, options: any) {
 
     .message('aim:app,on:BasicLed,save:item',
       async function(this: any, msg: any) {
-        const data = msg.data
+        const data = Object.entries(spec.def.edit.field)
+          .filter((n: any[]) => false !== n[1].ux.edit)
+          .reduce((a: any, n: any[]) => (a[n[0]] = msg.data[n[0]], a), {})
+
         const item = await seneca.entity(entCanon).save$(data)
         navigate('/view/' + name + '/edit/' + item.id)
       })

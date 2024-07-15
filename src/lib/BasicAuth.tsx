@@ -14,8 +14,6 @@ import Alert from '@mui/material/Alert'
 import { VxgBasicAuthPlugin } from './VxgBasicAuthPlugin'
 
 
-console.log('BasicAuth 2')
-
 
 function BasicAuth (props: any) {
   const { spec, ctx } = props

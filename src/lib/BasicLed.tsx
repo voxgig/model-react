@@ -18,8 +18,6 @@ import { VxgBasicLedPlugin } from './VxgBasicLedPlugin'
 
 
 const CMPNAME = 'BasicLed'
-console.log(CMPNAME,'3')
-
 
 
 // BasicLed renders a list of entities (with BasicList) or a form to edit them (with BasicEdit)
@@ -32,7 +30,6 @@ function BasicLed (props: any) {
   
   const led = useSelector((state:any)=>state.main.view[name])
   const ready = true === led?.ready
-  console.log(CMPNAME,'ready', ready)
   
   if(!ready) {
     seneca.use({

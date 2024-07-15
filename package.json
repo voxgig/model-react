@@ -67,7 +67,7 @@
     "styled-components": ">=6"
   },
   "devDependencies": {
-    "@babel/core": "7.24.8",
+    "@babel/core": "7.24.9",
     "@hapi/code": "^9.0.3",
     "@testing-library/jest-dom": "^6.4.6",
     "@testing-library/react": "^16.0.0",
@@ -85,6 +85,6 @@
     "typescript": "^5.5.3",
     "vite": "^5.3.3",
     "vite-plugin-dts": "^3.9.1",
-    "vitest": "^2.0.2"
+    "vitest": "^2.0.3"
   }
 }

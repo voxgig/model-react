@@ -34,7 +34,6 @@ function VxgBasicAdminPlugin(this: any) {
 
     .prepare(async function(this: any) {
       await this.post('aim:app,prepare:app')
-      console.log('VxgBasicAdminPlugin prep done')
     })
 
 
@@ -44,7 +43,6 @@ function VxgBasicAdminPlugin(this: any) {
       (s + ('' === s ? '?' : '') +
         (encodeURIComponent(n[0]) + '=' + encodeURIComponent(n[1]))), '')
     const path = '/view/' + msg.view + q
-    console.log('PATH', path)
     msg.navigate(path)
   }
 
@@ -58,7 +56,6 @@ function VxgBasicAdminPlugin(this: any) {
     meta.custom.state().current.view.name = msg.name
     meta.custom.state().current.view.query = msg.query
     meta.custom.state().current.view.hash = msg.hash
-    console.log('syncView', msg.name)
   }
 
   async function prepareApp(_msg: any, meta: any) {

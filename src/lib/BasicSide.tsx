@@ -20,7 +20,6 @@ import { Gubu } from 'gubu'
 import { vmap, cmap } from './vxg-util'
 
 const CMPNAME = 'BasicSide'
-console.log(CMPNAME,'1')
 
 
 const { Child, Open, Required } = Gubu
@@ -49,7 +48,6 @@ function BasicSide (props: any) {
   const basicSideSpec = BasicSideSpecShape(spec)
 
   // const theme = useTheme()
-  // console.log('THEME', theme)
   const navigate = useNavigate()
   const nav = useSelector((state:any)=>state.main.nav)
 

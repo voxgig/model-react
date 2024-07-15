@@ -19,8 +19,6 @@ function VxgBasicEntityEditPlugin(this: any, options: any) {
 
   const spec = Shape(options.spec)
 
-  console.log('QQQ', spec)
-
   const slot = spec.prefix + spec.name
 
   const fields = spec.order.reduce((a: any, fn: any) =>

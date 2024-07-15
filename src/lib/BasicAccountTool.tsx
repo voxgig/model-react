@@ -108,7 +108,6 @@ function stringAvatar(s: string) {
   s = null == s ? '' : s
   s = s.toUpperCase().split('@')[0] || ''
   let parts = s.split(/[-\s_.]+/)
-  // console.log('QQQ',s,parts,(parts[0]||'')[1], (parts[1]||'')[0])
   parts[1] = (parts[1]||'')[0] || (parts[0]||'')[1] || '-'
   parts[0] = (parts[0]||'')[0] || '-'
   

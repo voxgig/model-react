@@ -16,8 +16,6 @@ import type { Spec } from './basic-types'
 import { Gubu } from 'gubu'
 
 const CMPNAME = 'BasicLedHead'
-console.log(CMPNAME,'1')
-
 
 const { Open, Child } = Gubu
 const BasicLedHeadSpecShape = Gubu(Open({
@@ -40,7 +38,6 @@ function BasicLedHead (props: any) {
   let loc = useLocation()
 
   const BasicEntityHeadSpec: Spec = BasicLedHeadSpecShape(spec)
-  console.log(CMPNAME,BasicEntityHeadSpec)
   const viewName = BasicEntityHeadSpec.name
   
   const name = spec.name
@@ -53,16 +50,13 @@ function BasicLedHead (props: any) {
   const viewState = useSelector((state:any)=>state.main.view[viewName])
 
   const state = { item, view:viewState, navigate }
-  console.log(CMPNAME,'state',slotName,state)
   
   const subview = '/view/'+viewName === loc.pathname ? 'list' : 'edit'
-  // console.log('LOC', location, subview, item)
 
   const customButtons = Object.values(spec.tool || {})
     .filter((t:any)=>'button'===t.kind)
     .map((t:any)=>(custom.BasicLedHead||{})[t.custom])
     .filter((t:any)=>null!=t)
-  console.log('CB', customButtons)
     
   return (
     <Box className="bxg-BasicLedHead">

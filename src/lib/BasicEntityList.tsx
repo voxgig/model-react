@@ -28,9 +28,6 @@ import { VxgBasicEntityListPlugin } from './VxgBasicEntityListPlugin'
 
 
 const CMPNAME = 'BasicEntityList'
-console.log(CMPNAME,'1')
-
-
 
 
 function BasicEntityList (props: any) {

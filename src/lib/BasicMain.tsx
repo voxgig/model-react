@@ -15,7 +15,6 @@ import { searchParamsToObject } from './vxg-util'
 
 
 const CMPNAME = 'BasicSide'
-console.log(CMPNAME,'1')
 
 
 const { Child, Open } = Gubu
@@ -66,8 +65,6 @@ function BasicMain (props: any) {
   const viewSpec = basicMainSpec.view[view.name]
   const kind = viewSpec?.kind
 
-  // console.log(CMPNAME, 'view', params, viewSpec)
-  
   const View =
     'custom' === kind ? cmp[viewSpec.cmp] :
     'led' === kind ? BasicLed :

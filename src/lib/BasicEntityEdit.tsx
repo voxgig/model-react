@@ -25,36 +25,26 @@ import { BasicEntityField } from './BasicEntityField'
 import { VxgBasicEntityEditPlugin } from './VxgBasicEntityEditPlugin'
 
 
-
 const CMPNAME = 'BasicEntityEdit'
-console.log(CMPNAME,'1')
 
 
-// const { Open } = Gubu
-// const BasicEntityEditSpecShape = Gubu(Open({
-// }), {name: CMPNAME})
+const makeResolver = (entity:any) => useCallback(async (data:any) => {
+  const shape = entity.valid$({shape:true})
+  entity = entity.make$().data$(data)
+  let errors = entity.valid$({errors:true})
+  errors = errors.reduce((a:any,e:any)=>(a[e.key]={
+    type: e.type,
+    message: e.text,
+  },a),{})
 
-
-
-const makeResolver = (shape:any) => useCallback(async (data:any) => {
-  console.log('RESOLVER', data)
-  const formdata = {
-    title: data.title,
-    host: data.host,
-  }
-  const err: any[] = []
-  const values = shape(formdata,{err})
-  console.log('ERR', err)
-  const errors = err.reduce((a:any,e:any)=>(a[e.k]=e.t,a),{})
-      
+  const values = entity.data$(false)
   const out = {
     values,
     errors,
   }
 
-  console.log('OUT', out)
   return out
-}, [shape])
+}, [entity.entity$])
 
 
 function BasicEntityEdit (props: any) {
@@ -103,8 +93,6 @@ function BasicEntityEdit (props: any) {
     })
   }
 
-  console.log('EDIT ITEM', item)
-  
   const params: any = useParams()
 
   useEffect(()=>{
@@ -121,13 +109,8 @@ function BasicEntityEdit (props: any) {
   },[null==item,ready])
 
 
-  const resolver = makeResolver(Gubu({
-    title: String,
-    host: String,
-  }))
+  const resolver = makeResolver(seneca.entity(ent))
 
-  console.log('resolver', resolver)
-  
   const {
     register,
     handleSubmit,
@@ -139,8 +122,6 @@ function BasicEntityEdit (props: any) {
     resolver,
   })
 
-  console.log('errors', errors)
-  
   const onSubmit = (data:any) => {
     seneca.act('aim:app,on:BasicLed,save:item',{view:name,data})
   }

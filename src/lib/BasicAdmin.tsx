@@ -14,19 +14,14 @@ import { VxgBasicAdminPlugin } from './VxgBasicAdminPlugin'
 import { BasicHead } from './BasicHead'
 import { BasicMain } from './BasicMain'
 import { BasicSide } from './BasicSide'
+//import { BasicFoot } from './BasicFoot'
 
-/*
-
-
-import BasicFoot from './BasicFoot'
-*/
 
 
 const CMPNAME = 'BasicAdmin'
-console.log('BasicAdmin 1')
 
 
-const { Child } = Gubu
+
 const BasicAdminSpecShape = Gubu({
   frame: {
     name: String,
@@ -53,12 +48,10 @@ function BasicAdmin (props: BasicProps) {
   const [ready, setReady] = useState('init')
   
   useEffect(()=>{
-    console.log('BasicAdmin useEffect', ready)
     if('init' !== ready) {
       return
     }
     init(ctxval, ()=>{
-      console.log('BasicAdmin init done')
       setReady('done')
     })
   },[])
@@ -111,8 +104,6 @@ function BasicAdmin (props: BasicProps) {
 
 
 async function init(ctx: any, done: any) {
-  console.log('BasicAdmin init')
-
   const { seneca, router } = ctx
   
   seneca.context.vxg = (seneca.context.vxg || {})
@@ -126,7 +117,6 @@ async function init(ctx: any, done: any) {
       .use(VxgBasicAdminPlugin)
     // await seneca.ready(done)
     await seneca.ready()
-    console.log('BasicAdmin READY DONE')
     return done()
   }
 }
