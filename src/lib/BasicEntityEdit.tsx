@@ -15,10 +15,6 @@ import {
 import { useForm } from 'react-hook-form'
 
 
-// import type { Spec } from './basic-types'
-
-import { Gubu } from 'gubu'
-
 import { BasicEntityField } from './BasicEntityField'
 
 
@@ -28,14 +24,24 @@ import { VxgBasicEntityEditPlugin } from './VxgBasicEntityEditPlugin'
 const CMPNAME = 'BasicEntityEdit'
 
 
+// TODO: make this debuggable
 const makeResolver = (entity:any) => useCallback(async (data:any) => {
-  const shape = entity.valid$({shape:true})
+  // const shape = entity.valid$({shape:true})
   entity = entity.make$().data$(data)
   let errors = entity.valid$({errors:true})
-  errors = errors.reduce((a:any,e:any)=>(a[e.key]={
-    type: e.type,
-    message: e.text,
-  },a),{})
+
+  // TODO: use a seneca sub message to provide errors for other uses - debugging etc.
+  
+  // TODO: need a better way to access this; also namespaced!
+  const errmsg = entity.private$.get_instance().context.errmsg
+  console.log('ERRORS', errors, 'ERRMSG', errmsg.print())
+  
+  errors = errors
+    .map((e:any)=>(e.tag_kind='ent',e))
+    .reduce((a:any,e:any,_:any)=>(a[e.key]={
+      type: e.type,
+      message: errmsg ? ((_=errmsg.find(e))?_.text:e.text) : e.text
+    },a),{})
 
   const values = entity.data$(false)
   const out = {
@@ -43,6 +49,8 @@ const makeResolver = (entity:any) => useCallback(async (data:any) => {
     errors,
   }
 
+  console.log('ERROUT', out)
+  
   return out
 }, [entity.entity$])
 
@@ -147,12 +155,13 @@ function BasicEntityEdit (props: any) {
                   field,
                   register,
                   getValues,
+                  errors,
                 }} />
             </Grid>
           )}
         </Grid>
 
-        <p>errors: {JSON.stringify(errors)}</p>
+        { /* <p>errors: {JSON.stringify(errors)}</p> */ }
         
         <Toolbar className="vxg-BasicEntityEdit-toolbar-foot">
           <Button type="submit" variant="contained">Save</Button>

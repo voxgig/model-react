@@ -52,6 +52,7 @@
     "@types/dinero.js": ">=1",
     "dinero.js": ">=1",
     "gubu": ">=8",
+    "gubu-errmsg": ">=0",
     "material-react-table": ">=2",
     "patrun": ">=7",
     "react": ">=18",

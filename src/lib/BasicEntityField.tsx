@@ -35,17 +35,29 @@ function BasicEntityField (props: any) {
   const basicEntityFieldSpec: Spec = BasicEntityFieldSpecShape(spec)
   const field: any = basicEntityFieldSpec.field
   const Field: any = fieldMap[field.ux.kind]
+
+  // console.log('BEF ERR', spec)
   
   return <Field ctx={ctx} spec={spec} />
 }
 
 
+function BasicEntityFieldError (props: any) {
+  const { err } = props
+  return err ?
+  <div className="vxg-BasicEntityFieldError-active">{err.message}</div> :
+  <div className="vxg-BasicEntityFieldError-none"></div>
+}
+
 
 function BasicEntityTextField (props: any) {
   const { spec } = props
 
-  const { field, register, getValues } = spec
+  const { field, register, getValues, errors } = spec
 
+  const err = errors[field.name]
+  // console.log('BET', err, field.name, errors)
+  
   const val = getValues(field.name)
   
   return (
@@ -59,6 +71,7 @@ function BasicEntityTextField (props: any) {
         InputLabelProps={{ shrink: val?.length > 0 }}
         {...register(field.name)} 
       />
+      <BasicEntityFieldError err={err}/>
     </div>
   )
 }
