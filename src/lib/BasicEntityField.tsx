@@ -10,6 +10,7 @@ import {
 import type { Spec } from './basic-types'
 
 import { Gubu } from 'gubu'
+import { BasicEntityRadioGroupField } from './BasicEntityRadioGroupField'
 
 const CMPNAME = 'BasicEntityField'
 
@@ -26,6 +27,7 @@ const fieldMap: any = {
   Date: BasicEntityDateField,
   DateTime: BasicEntityDateTimeField,
   Time: BasicEntityTimeField,
+  RadioGroup: BasicEntityRadioGroupField
 }
 
 
