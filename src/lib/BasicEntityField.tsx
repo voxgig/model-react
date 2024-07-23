@@ -93,7 +93,7 @@ function BasicEntityTextBoxField (props: any) {
         variant="outlined"
         fullWidth
         multiline
-        rows={3}
+        rows={field.ux.rows ?? 3}
                 InputLabelProps={{ shrink: val?.length > 0 }}
         {...register(field.name)} 
       />
