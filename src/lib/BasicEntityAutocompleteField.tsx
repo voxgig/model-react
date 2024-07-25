@@ -88,27 +88,4 @@ function resolveOptions(options: any) {
   }
 }
 
-// function resolveDefaultValue(options: any) {
-//   if(options.multiple === false) {
-//     const keys = Object.keys(options.default);
-//     if (keys.length > 0) {
-//       return { key: keys[0], value: options.default[keys[0]] }
-//     } else {
-//       return null
-//     } 
-//   } else {
-//     return Object.keys(options.default).map(key => ({
-//       label: options.default[key].label,
-//       value: key
-//     }))
-//   }
-// }
-
-// function resolveOptions(options: any) {
-//   return Object.keys(options.ents).map(key => ({
-//     label: options.ents[key].label,
-//     value: key
-//   }))
-// }
-
-export { BasicEntityAutocompleteField };
+export { BasicEntityAutocompleteField }
