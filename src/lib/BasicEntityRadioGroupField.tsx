@@ -32,9 +32,9 @@ function BasicEntityRadioGroupField(props: any) {
     
   return (
     <>
-      <FormLabel key={field.id}>{field.label}</FormLabel>
+      <FormLabel key={`${field.id}-label`}>{field.label}</FormLabel>
       <Controller
-        key={field.id}
+        key={`${field.id}-controller`}
         name={field.name}
         control={control}
         defaultValue={field.default}
@@ -42,7 +42,7 @@ function BasicEntityRadioGroupField(props: any) {
           <RadioGroup key={field.id} value={value} onChange={onChange} row={'row' === field.ux.direction}>
             {field.options.map((option: any) => (
               <FormControlLabel
-                key={option.value}
+                key={`${option.value}-option`}
                 value={option.value}
                 control={<Radio disabled={!field.ux.edit} />}
                 label={option.label}
