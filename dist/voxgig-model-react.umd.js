@@ -64689,9 +64689,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   const BasicEntityAutocompleteFieldSpecShape = gubu_minExports.Gubu(Open$7({
     field: Open$7({
       id: String,
-      name: gubu_minExports.Default("", String),
+      name: String,
+      kind: String,
       label: gubu_minExports.Default("", String),
-      multiple: gubu_minExports.Default(false, Boolean),
       options: Open$7({
         default: Open$7({}),
         label: { field: gubu_minExports.Default("label", String) },

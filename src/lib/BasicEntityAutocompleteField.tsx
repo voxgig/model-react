@@ -12,9 +12,9 @@ const { Open } = Gubu
 const BasicEntityAutocompleteFieldSpecShape = Gubu(Open({
   field: Open({
     id: String,
-    name: Default('', String),
+    name: String,
+    kind: String,
     label: Default('', String),
-    multiple: Default(false, Boolean),
     options: Open({
       default: Open({}),
       label: { field: Default('label', String) },
