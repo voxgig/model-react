@@ -27,8 +27,7 @@ const BasicEntitySliderFieldSpecShape = Gubu(Open({
         track: Exact('normal', 'inverted', 'disabled').Default('normal'),
       },
     })
-  }),
-  errors: Open({}),
+  })
 }), {name: CMPNAME})
 
 function BasicEntitySliderField(props: any) {
