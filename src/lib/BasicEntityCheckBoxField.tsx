@@ -39,15 +39,13 @@ function BasicEntityCheckBoxField(props: any) {
 
   return (
     <Box
-      key={field.id}
-      display="flex"
-      justifyContent={field.ux.justifyContent || "center"}
-      alignItems={field.ux.alignItems || "center"}
-      height={field.ux.height || "auto"}
+      key={`${field.id}-box`}
+      sx={{ ...field.ux.props }}
     >
       <FormControlLabel
         control={
           <Controller
+            key={`${field.id}-controller`}
             name={field.name}
             control={control}
             defaultValue={!!val}
