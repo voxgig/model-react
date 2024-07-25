@@ -23,7 +23,7 @@ const BasicEntitySliderFieldSpecShape = Gubu(Open({
       max: Default(100),
       props: {
         valueLabelDisplay: Exact('on', 'auto', 'off').Default('auto'),
-        orient: Exact('horizontal', 'vertical').Default('horizontal'),
+        direction: Exact('horizontal', 'vertical').Default('horizontal'),
         track: Exact('normal', 'inverted', 'disabled').Default('normal'),
       },
     })
@@ -50,7 +50,7 @@ function BasicEntitySliderField(props: any) {
           render={({ field: { onChange, value } }) => (
               <Slider 
                   disabled={!field.ux.edit}
-                  orientation={field.ux.orientation}
+                  orientation={field.ux.direction}
                   track={field.ux.track}
                   valueLabelDisplay={field.ux.valueLabelDisplay}
                   step={field.ux.step}
