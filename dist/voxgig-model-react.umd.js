@@ -64695,7 +64695,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       ux: Open$7({
         kind: gubu_minExports.Default("Text", String),
         edit: gubu_minExports.Default(true, Boolean),
-        step: gubu_minExports.Default(1, Number),
+        valueLabelDisplay: gubu_minExports.Exact("on", "auto", "off").Default("auto"),
+        orientation: gubu_minExports.Exact("horizontal", "vertical").Default("horizontal"),
+        track: gubu_minExports.Exact("normal", "inverted", false).Default("normal"),
+        step: gubu_minExports.One(null, Number),
         min: gubu_minExports.Default(0, Number),
         max: gubu_minExports.Default(100, Number)
       })
@@ -64718,13 +64721,16 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           render: ({ field: { onChange, value } }) => /* @__PURE__ */ jsxRuntimeExports.jsx(
             material.Slider,
             {
-              value,
-              onChange: (_2, newValue) => onChange(newValue),
-              valueLabelDisplay: "auto",
+              disabled: !field.ux.edit,
+              orientation: field.ux.orientation,
+              track: field.ux.track,
+              valueLabelDisplay: field.ux.valueLabelDisplay,
               step: field.ux.step,
               marks: resolveMarks(field.ux.marks),
               min: field.ux.min,
-              max: field.ux.max
+              max: field.ux.max,
+              value,
+              onChange: (_2, newValue) => onChange(newValue)
             }
           )
         }

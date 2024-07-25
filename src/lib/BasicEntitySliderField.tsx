@@ -5,7 +5,7 @@ import { Controller } from "react-hook-form";
 
 import type { Spec } from './basic-types'
 
-import { Default, Gubu } from 'gubu'
+import { Default, Exact, Gubu, One } from 'gubu'
 const CMPNAME = 'BasicEntitySliderField'
 
 const { Open } = Gubu
@@ -18,7 +18,10 @@ const BasicEntitySliderFieldSpecShape = Gubu(Open({
     ux: Open({
       kind: Default('Text', String),
       edit: Default(true, Boolean),
-      step: Default(1, Number),
+      valueLabelDisplay: Exact('on', 'auto', 'off').Default('auto'),
+      orientation: Exact('horizontal', 'vertical').Default('horizontal'),
+      track: Exact('normal', 'inverted', false).Default('normal'),
+      step: One(null, Number),
       min: Default(0, Number),
       max: Default(100, Number)
     })
@@ -44,13 +47,16 @@ function BasicEntitySliderField(props: any) {
           defaultValue={val || field.ux.min}
           render={({ field: { onChange, value } }) => (
               <Slider 
-                  value={value}
-                  onChange={(_, newValue) => onChange(newValue)}
-                  valueLabelDisplay="auto"
+                  disabled={!field.ux.edit}
+                  orientation={field.ux.orientation}
+                  track={field.ux.track}
+                  valueLabelDisplay={field.ux.valueLabelDisplay}
                   step={field.ux.step}
                   marks={resolveMarks(field.ux.marks)}
                   min={field.ux.min}
                   max={field.ux.max}
+                  value={value}
+                  onChange={(_, newValue) => onChange(newValue)}
               />
           )}
         />
