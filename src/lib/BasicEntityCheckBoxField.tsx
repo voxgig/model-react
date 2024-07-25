@@ -25,7 +25,6 @@ const BasicEntityCheckBoxFieldSpecShape = Gubu(Open({
       props: Open({}),
     })
   }),
-  errors: Open({}),
 }), {name: CMPNAME})
 
 function BasicEntityCheckBoxField(props: any) {
