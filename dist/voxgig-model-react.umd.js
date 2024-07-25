@@ -64761,7 +64761,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const { spec } = props;
     const basicEntityAutocompleteField = BasicEntityAutocompleteFieldSpecShape(spec);
     const { control, field } = basicEntityAutocompleteField;
-    const { resolvedOptions, resolvedDefault } = resolveOptions(field.options);
+    const { resolvedOptions, resolvedDefault } = resolveOptions$1(field.options);
     return /* @__PURE__ */ jsxRuntimeExports.jsx(
       Controller,
       {
@@ -64786,7 +64786,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       `${field.id}-controller`
     );
   }
-  function resolveOptions(options) {
+  function resolveOptions$1(options) {
     const { multiple, ents, label, value, default: defaultValues } = options;
     const labelField = label == null ? void 0 : label.field;
     const valueField = value == null ? void 0 : value.field;
@@ -64911,6 +64911,12 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         kind: gubu_minExports.Exact("RadioGroup"),
         edit: gubu_minExports.Default(true),
         direction: gubu_minExports.Exact("row", "column").Default("row")
+      }),
+      options: Open$c({
+        label: { field: gubu_minExports.Default("label") },
+        value: { field: gubu_minExports.Default("value") },
+        default: Open$c({}),
+        ents: Open$c({})
       })
     })
   }), { name: CMPNAME$e });
@@ -64918,6 +64924,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const { spec } = props;
     const basicEntityRadioGroupField = BasicEntityRadioGroupFieldSpecShape(spec);
     const { control, field } = basicEntityRadioGroupField;
+    const { resolvedOptions, resolvedDefault } = resolveOptions(field.options);
     return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(material.FormLabel, { children: field.label }, `${field.id}-label`),
       /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -64925,8 +64932,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         {
           name: field.name,
           control,
-          defaultValue: field.default,
-          render: ({ field: { onChange, value } }) => /* @__PURE__ */ jsxRuntimeExports.jsx(material.RadioGroup, { value, onChange, row: "row" === field.ux.direction, children: field.options.map((option) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+          defaultValue: resolvedDefault,
+          render: ({ field: { onChange, value } }) => /* @__PURE__ */ jsxRuntimeExports.jsx(material.RadioGroup, { value, onChange, row: "row" === field.ux.direction, children: resolvedOptions.map((option) => /* @__PURE__ */ jsxRuntimeExports.jsx(
             material.FormControlLabel,
             {
               value: option.value,
@@ -64939,6 +64946,36 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         `${field.id}-controller`
       )
     ] });
+  }
+  function resolveOptions(options) {
+    const { multiple, ents, label, value, default: defaultValues } = options;
+    const labelField = label == null ? void 0 : label.field;
+    const valueField = value == null ? void 0 : value.field;
+    const resolvedOptions = Object.keys(ents).map((key) => {
+      var _a;
+      return {
+        [labelField]: (_a = ents == null ? void 0 : ents[key]) == null ? void 0 : _a[labelField],
+        [valueField]: key
+      };
+    });
+    let resolvedDefault;
+    if (multiple === false) {
+      if (Object.keys(defaultValues).length > 0) {
+        const firstKey = Object.keys(defaultValues)[0];
+        resolvedDefault = { value: firstKey, label: defaultValues[firstKey][labelField] };
+      } else {
+        resolvedDefault = null;
+      }
+    } else {
+      resolvedDefault = Object.keys(defaultValues).map((key) => ({
+        label: defaultValues[key].label,
+        value: key
+      }));
+    }
+    return {
+      resolvedOptions,
+      resolvedDefault
+    };
   }
   const CMPNAME$d = "BasicEntityTextBoxField";
   const { Open: Open$b } = gubu_minExports.Gubu;
