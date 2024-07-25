@@ -124,6 +124,7 @@ function BasicEntityEdit (props: any) {
     handleSubmit,
     getValues,
     reset,
+    control,
     formState: { errors },
   } = useForm({
     mode: 'onChange',
@@ -155,6 +156,7 @@ function BasicEntityEdit (props: any) {
                   field,
                   register,
                   getValues,
+                  control,
                   errors,
                 }} />
             </Grid>
