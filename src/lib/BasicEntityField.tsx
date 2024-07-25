@@ -2,14 +2,12 @@ import React, { useEffect, forwardRef } from 'react'
 
 import {
   TextField,
-  FormControl,
-  FormLabel,
 } from '@mui/material'
 
 
 import type { Spec } from './basic-types'
 
-import { Default, Exact, Gubu } from 'gubu'
+import { Default, Exact, Gubu, Skip } from 'gubu'
 import { BasicEntityCheckBoxField } from './BasicEntityCheckBoxField'
 import { BasicEntityAutocompleteField } from './BasicEntityAutocompleteField'
 import { BasicEntitySliderField } from './BasicEntitySliderField'
@@ -20,19 +18,17 @@ const CMPNAME = 'BasicEntityField'
 const { Open } = Gubu
 const BasicEntityFieldSpecShape = Gubu(Open({
   field: Open({
-    field: Open({
-      id: String,
-      name: String,
-      kind: String,
-      label: Default('', String),
-      ux: Open({
-        kind: Exact('Text', 'TextBox', 'Date', 'DateTime', 'Time', 'CheckBox', 'Autocomplete', 'Slider', 'RadioGroup'),
-        edit: Default(true),
-        rows: Default(3),
-        props: Open({}),
-      })
-    }),
-  })
+    id: String,
+    name: String,
+    kind: Skip(String),
+    label: Default('', String),
+    ux: Open({
+      kind: Exact('Text', 'TextBox', 'Date', 'DateTime', 'Time', 'CheckBox', 'Autocomplete', 'Slider', 'RadioGroup'),
+      edit: Default(true),
+      rows: Default(3),
+      props: Open({}),
+    })
+  }),
 }), {name: CMPNAME})
 
 const fieldMap: any = {

@@ -9,7 +9,7 @@ import { Controller } from "react-hook-form";
 
 import type { Spec } from './basic-types'
 
-import { Default, Exact, Gubu, One } from 'gubu'
+import { Default, Exact, Gubu, Skip } from 'gubu'
 const CMPNAME = 'BasicEntitySliderField'
 
 const { Open } = Gubu
@@ -17,7 +17,7 @@ const BasicEntityCheckBoxFieldSpecShape = Gubu(Open({
   field: Open({
     id: String,
     name: String,
-    kind: String,
+    kind: Skip(String),
     label: Default('', String),
     ux: Open({
       kind: Exact('CheckBox'),
@@ -33,8 +33,6 @@ function BasicEntityCheckBoxField(props: any) {
   const basicEntityCheckBoxField: Spec = BasicEntityCheckBoxFieldSpecShape(spec)
   const { control, field, getValues } = basicEntityCheckBoxField
   const val = getValues(field.name)
-
-  console.log('BasicEntityCheckBoxField', field.ux.props)
 
   return (
     <Box
