@@ -40,6 +40,7 @@ function BasicEntityAutocompleteField(props: any) {
 
   return (
       <Controller
+        key={field.id}
         name={field.name}
         control={control}
         defaultValue={resolvedDefault}
