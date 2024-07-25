@@ -10588,8 +10588,8 @@ process.env.NODE_ENV !== "production" ? Toolbar.propTypes = {
    */
   variant: PropTypes.oneOfType([PropTypes.oneOf(["dense", "regular"]), PropTypes.string])
 } : void 0;
-const CMPNAME$c = "BasicAccountTool";
-console.log(CMPNAME$c, "1");
+const CMPNAME$d = "BasicAccountTool";
+console.log(CMPNAME$d, "1");
 const { Exact: Exact$2 } = gubu_minExports.Gubu;
 const BasicAccountToolSpecShape = gubu_minExports.Gubu({
   name: String,
@@ -10599,7 +10599,7 @@ const BasicAccountToolSpecShape = gubu_minExports.Gubu({
   attr: {},
   sx: {},
   style: {}
-}, { name: CMPNAME$c });
+}, { name: CMPNAME$d });
 function BasicAccountTool(props) {
   var _a;
   const { ctx, spec } = props;
@@ -10673,8 +10673,8 @@ function stringAvatar(s) {
     children: `${parts.join("")}`
   };
 }
-const CMPNAME$b = "BasicHeadTool";
-console.log(CMPNAME$b, "1");
+const CMPNAME$c = "BasicHeadTool";
+console.log(CMPNAME$c, "1");
 const { Exact: Exact$1 } = gubu_minExports.Gubu;
 const BasicHeadToolSpecShape = gubu_minExports.Gubu({
   name: String,
@@ -10684,7 +10684,7 @@ const BasicHeadToolSpecShape = gubu_minExports.Gubu({
   attr: {},
   sx: {},
   style: {}
-}, { name: CMPNAME$b });
+}, { name: CMPNAME$c });
 function BasicHeadTool(props) {
   const { ctx, spec } = props;
   const { seneca } = ctx();
@@ -10693,7 +10693,7 @@ function BasicHeadTool(props) {
   const { name, kind, attr, sx, style: style2 } = basicHeadToolSpec;
   let tool = /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, {});
   if ("" === kind) {
-    console.warn(CMPNAME$b, "empty-tool-kind", basicHeadToolSpec);
+    console.warn(CMPNAME$c, "empty-tool-kind", basicHeadToolSpec);
   } else if ("logo" === kind) {
     tool = /* @__PURE__ */ jsxRuntimeExports.jsxs(
       "div",
@@ -10710,7 +10710,7 @@ function BasicHeadTool(props) {
             {
               href: "/",
               style: style2,
-              className: `vxg-${CMPNAME$b}-logo`,
+              className: `vxg-${CMPNAME$c}-logo`,
               children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: attr.img })
             }
           ),
@@ -10742,17 +10742,17 @@ function BasicHeadTool(props) {
   } else if ("account" === kind) {
     tool = /* @__PURE__ */ jsxRuntimeExports.jsx(BasicAccountTool, { ctx, spec });
   } else {
-    console.warn(CMPNAME$b, "unknown-tool-kind", kind, basicHeadToolSpec);
+    console.warn(CMPNAME$c, "unknown-tool-kind", kind, basicHeadToolSpec);
   }
   return tool;
 }
-const CMPNAME$a = "BasicHead";
-const { Child: Child$5, Exact, Open: Open$8, Required: Required$1 } = gubu_minExports.Gubu;
+const CMPNAME$b = "BasicHead";
+const { Child: Child$5, Exact, Open: Open$9, Required: Required$1 } = gubu_minExports.Gubu;
 const BasicHeadSpecShape = gubu_minExports.Gubu({
   head: {
     name: String,
     active: Boolean,
-    tool: Child$5(Open$8({
+    tool: Child$5(Open$9({
       align: Exact("left", "right")
     }))
   },
@@ -10762,7 +10762,7 @@ const BasicHeadSpecShape = gubu_minExports.Gubu({
     AppBar: {},
     ToolBar: {}
   }
-}, { name: CMPNAME$a });
+}, { name: CMPNAME$b });
 function BasicHead(props) {
   const { ctx, spec } = props;
   const { seneca } = ctx();
@@ -62706,8 +62706,8 @@ const MaterialReactTable = (props) => {
   }
   return jsxRuntimeExports.jsx(MRT_TablePaper, { table });
 };
-const { Open: Open$7, Child: Child$4 } = gubu_minExports.Gubu;
-const Shape$2 = gubu_minExports.Gubu(Open$7({
+const { Open: Open$8, Child: Child$4 } = gubu_minExports.Gubu;
+const Shape$2 = gubu_minExports.Gubu(Open$8({
   name: String,
   prefix: String,
   ent: String,
@@ -62752,7 +62752,7 @@ Object.assign(VxgBasicEntityListPlugin, {
   }
 });
 Object.defineProperty(VxgBasicEntityListPlugin, "name", { value: "VxgBasicEntityListPlugin" });
-const CMPNAME$9 = "BasicEntityList";
+const CMPNAME$a = "BasicEntityList";
 function BasicEntityList(props) {
   const { ctx } = props;
   const { seneca } = ctx();
@@ -64672,27 +64672,49 @@ function useForm(props = {}) {
   _formControl.current.formState = getProxyFormState(formState, control);
   return _formControl.current;
 }
+const CMPNAME$9 = "BasicEntityAutocompleteField";
+const { Open: Open$7 } = gubu_minExports.Gubu;
+const BasicEntityAutocompleteFieldSpecShape = gubu_minExports.Gubu(Open$7({
+  field: Open$7({
+    id: String,
+    name: gubu_minExports.Default("", String),
+    label: gubu_minExports.Default("", String),
+    multiple: gubu_minExports.Default(false, Boolean),
+    options: Open$7({
+      default: Open$7({}),
+      label: { field: gubu_minExports.Default("label", String) },
+      multiple: gubu_minExports.Default(false, Boolean),
+      ents: Open$7({})
+    }),
+    ux: Open$7({
+      kind: gubu_minExports.Default("Text", String),
+      edit: gubu_minExports.Default(true, Boolean)
+    })
+  }),
+  errors: Open$7({})
+}), { name: CMPNAME$9 });
 function BasicEntityAutocompleteField(props) {
   const { spec } = props;
-  const { field, getValues, control } = spec;
-  const val = getValues(field.name);
+  const basicEntityAutocompleteField = BasicEntityAutocompleteFieldSpecShape(spec);
+  const { control, field } = basicEntityAutocompleteField;
+  const { resolvedOptions, resolvedDefault } = resolveOptions(field.options);
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
     Controller,
     {
       name: field.name,
       control,
-      defaultValue: resolveOptions(field.options.default),
+      defaultValue: resolvedDefault,
       render: ({ field: { onChange, value } }) => /* @__PURE__ */ jsxRuntimeExports.jsx(
         Autocomplete$1,
         {
           freeSolo: true,
           forcePopupIcon: true,
-          multiple: field.ux.multiple,
-          options: resolveOptions(field.options.ents),
-          isOptionEqualToValue: (option, value2) => option.value === value2.value,
+          multiple: field.options.multiple,
+          options: resolvedOptions,
+          isOptionEqualToValue: (opt, val) => opt === val || (opt == null ? void 0 : opt.id) != null && (val == null ? void 0 : val.id) != null && opt.id === val.id || (opt == null ? void 0 : opt.value) != null && (val == null ? void 0 : val.value) != null && opt.value === val.value,
           getOptionLabel: (option) => option.label,
           value,
-          onChange: (e, val2) => onChange(val2),
+          onChange: (e, val) => onChange(val),
           renderInput: (params) => /* @__PURE__ */ jsxRuntimeExports.jsx(TextField$1, __spreadProps(__spreadValues({}, params), { label: field.label }))
         },
         field.id
@@ -64701,10 +64723,18 @@ function BasicEntityAutocompleteField(props) {
   );
 }
 function resolveOptions(options) {
-  return Object.keys(options).map((key) => ({
-    label: options[key].label,
+  const resolvedOptions = Object.keys(options.ents).map((key) => ({
+    label: options.ents[key].label,
     value: key
   }));
+  const resolvedDefault = options.multiple === false ? Object.keys(options.default).length > 0 ? { value: Object.keys(options.default)[0], label: options.default[Object.keys(options.default)[0]].label } : null : Object.keys(options.default).map((key) => ({
+    label: options.default[key].label,
+    value: key
+  }));
+  return {
+    resolvedOptions,
+    resolvedDefault
+  };
 }
 const CMPNAME$8 = "BasicEntityField";
 const { Open: Open$6 } = gubu_minExports.Gubu;
