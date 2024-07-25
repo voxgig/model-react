@@ -40,13 +40,12 @@ function BasicEntityAutocompleteField(props: any) {
 
   return (
       <Controller
-        key={field.id}
+        key={`${field.id}-controller`}
         name={field.name}
         control={control}
         defaultValue={resolvedDefault}
         render={({ field: { onChange, value } }) => (
             <Autocomplete
-                key={field.id}
                 freeSolo
                 forcePopupIcon
                 multiple={field.options.multiple}
