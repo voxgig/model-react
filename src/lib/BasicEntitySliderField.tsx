@@ -56,7 +56,7 @@ function BasicEntitySliderField(props: any) {
                   min={field.ux.min}
                   max={field.ux.max}
                   value={value}
-                  onChange={(_, newValue) => onChange(newValue)}
+                  onChange={(_, newValue: any) => onChange(newValue)}
               />
           )}
         />
