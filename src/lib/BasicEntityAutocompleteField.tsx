@@ -5,7 +5,7 @@ import { Controller } from "react-hook-form";
 
 import type { Spec } from './basic-types'
 
-import { Default, Gubu } from 'gubu'
+import { Default, Exact, Gubu } from 'gubu'
 const CMPNAME = 'BasicEntityAutocompleteField'
 
 const { Open } = Gubu
@@ -14,16 +14,16 @@ const BasicEntityAutocompleteFieldSpecShape = Gubu(Open({
     id: String,
     name: String,
     kind: String,
-    label: Default('', String),
+    label: Default(''),
     options: Open({
       default: Open({}),
-      label: { field: Default('label', String) },
-      multiple: Default(false, Boolean),
+      label: { field: Default('label') },
+      multiple: Default(false),
       ents: Open({})
     }),
     ux: Open({
-      kind: Default('Text', String),
-      edit: Default(true, Boolean),
+      kind: Exact('Autocomplete'),
+      edit: Default(true),
     })
   }),
   errors: Open({}),
