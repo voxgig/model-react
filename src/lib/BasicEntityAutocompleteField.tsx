@@ -25,8 +25,7 @@ const BasicEntityAutocompleteFieldSpecShape = Gubu(Open({
       kind: Exact('Autocomplete'),
       edit: Default(true),
     })
-  }),
-  errors: Open({}),
+  })
 }), {name: CMPNAME})
 
 function BasicEntityAutocompleteField(props: any) {

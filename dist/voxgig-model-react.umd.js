@@ -64696,8 +64696,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         kind: gubu_minExports.Exact("Autocomplete"),
         edit: gubu_minExports.Default(true)
       })
-    }),
-    errors: Open$7({})
+    })
   }), { name: CMPNAME$9 });
   function BasicEntityAutocompleteField(props) {
     const { spec } = props;
@@ -64722,10 +64721,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
             value,
             onChange: (_2, newVal) => onChange(newVal),
             renderInput: (params) => /* @__PURE__ */ jsxRuntimeExports.jsx(material.TextField, __spreadProps(__spreadValues({}, params), { label: field.label }))
-          },
-          field.id
+          }
         )
-      }
+      },
+      `${field.id}-controller`
     );
   }
   function resolveOptions(options) {
