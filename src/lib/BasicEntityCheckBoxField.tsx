@@ -39,7 +39,7 @@ function BasicEntityCheckBoxField(props: any) {
   return (
     <Box
       key={`${field.id}-box`}
-      sx={{ ...field.ux.props }}
+      { ...field.ux.props }
     >
       <FormControlLabel
         control={
