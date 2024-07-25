@@ -20,8 +20,7 @@ const BasicEntityRadioGroupFieldSpecShape = Gubu(Open({
       edit: Default(true),
       direction: Exact('row', 'column').Default('row'),
     })
-  }),
-  errors: Open({}),
+  })
 }), {name: CMPNAME})
 
 function BasicEntityRadioGroupField(props: any) {
