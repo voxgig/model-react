@@ -22,6 +22,7 @@ const BasicEntitySliderFieldSpecShape = Gubu(Open({
       min: Default(0),
       max: Default(100),
       props: {
+        marks: Default({}),
         valueLabelDisplay: Exact('on', 'auto', 'off').Default('auto'),
         direction: Exact('horizontal', 'vertical').Default('horizontal'),
         track: Exact('normal', 'inverted', 'disabled').Default('normal'),
@@ -52,9 +53,9 @@ function BasicEntitySliderField(props: any) {
                   disabled={!field.ux.edit}
                   orientation={field.ux.direction}
                   track={field.ux.track}
-                  valueLabelDisplay={field.ux.valueLabelDisplay}
+                  valueLabelDisplay={field.ux.props.valueLabelDisplay}
                   step={field.ux.step}
-                  marks={resolveMarks(field.ux.marks)}
+                  marks={resolveMarks(field.ux.props.marks)}
                   min={field.ux.min}
                   max={field.ux.max}
                   value={value}
@@ -67,9 +68,14 @@ function BasicEntitySliderField(props: any) {
 }
 
 function resolveMarks(marks: any) {
-  return marks && typeof marks === 'object' 
-      ? Object.keys(marks).map(key => ({ label: marks[key], value: +key })) 
-      : marks
+  if (!marks || (typeof marks === 'object' && Object.keys(marks).length === 0)) {
+    return false;
+  }
+  if (typeof marks === 'object') {
+    return Object.entries(marks).map(([key, value]) => ({ label: value, value: +key }));
+  }
+
+  return marks
 }
 
 
