@@ -42,8 +42,9 @@ function BasicEntitySliderField(props: any) {
 
     return (
       <>
-        <FormLabel id={field.id}>{field.label}</FormLabel>
+        <FormLabel key={`${field.id}-label`}>{field.label}</FormLabel>
         <Controller
+          key={`${field.id}-controller`}
           name={field.name}
           control={control}
           defaultValue={val || field.ux.min}
