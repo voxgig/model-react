@@ -57,7 +57,7 @@ function BasicEntityAutocompleteField(props: any) {
                 }
                 getOptionLabel={(option: any) => option.label}
                 value={value}
-                onChange={(e: any, val: any) => onChange(val)}
+                onChange={(_, nweValue: any) => onChange(nweValue)}
                 renderInput={(params: any) => <TextField {...params} label={field.label} />}
             />
         )}

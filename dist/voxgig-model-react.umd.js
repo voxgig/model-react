@@ -64726,7 +64726,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
             isOptionEqualToValue: (opt, val) => opt === val || (opt == null ? void 0 : opt.id) != null && (val == null ? void 0 : val.id) != null && opt.id === val.id || (opt == null ? void 0 : opt.value) != null && (val == null ? void 0 : val.value) != null && opt.value === val.value,
             getOptionLabel: (option) => option.label,
             value,
-            onChange: (e, val) => onChange(val),
+            onChange: (_2, nweValue) => onChange(nweValue),
             renderInput: (params) => /* @__PURE__ */ jsxRuntimeExports.jsx(material.TextField, __spreadProps(__spreadValues({}, params), { label: field.label }))
           },
           field.id
