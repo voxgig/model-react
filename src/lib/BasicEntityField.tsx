@@ -26,7 +26,7 @@ const BasicEntityFieldSpecShape = Gubu(Open({
       kind: String,
       label: Default('', String),
       ux: Open({
-        kind: Exact('Text', 'TextBox', 'Date', 'DateTime', 'Time'),
+        kind: Exact('Text', 'TextBox', 'Date', 'DateTime', 'Time', 'CheckBox', 'Autocomplete', 'Slider', 'RadioGroup'),
         edit: Default(true),
         rows: Default(3),
         props: Open({}),
