@@ -11,6 +11,7 @@ import type { Spec } from './basic-types'
 
 import { Default, Exact, Gubu } from 'gubu'
 import { BasicEntityCheckBoxField } from './BasicEntityCheckBoxField'
+import { BasicEntityAutocompleteField } from './BasicEntityAutocompleteField'
 
 const CMPNAME = 'BasicEntityField'
 
@@ -38,7 +39,8 @@ const fieldMap: any = {
   Date: BasicEntityDateField,
   DateTime: BasicEntityDateTimeField,
   Time: BasicEntityTimeField,
-  CheckBox: BasicEntityCheckBoxField
+  CheckBox: BasicEntityCheckBoxField,
+  Autocomplete: BasicEntityAutocompleteField
 }
 
 
