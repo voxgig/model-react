@@ -64693,10 +64693,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       kind: String,
       label: gubu_minExports.Default("", String),
       ux: Open$7({
-        kind: gubu_minExports.Default("Text", String),
+        kind: gubu_minExports.Exact("Slider"),
         edit: gubu_minExports.Default(true, Boolean),
         valueLabelDisplay: gubu_minExports.Exact("on", "auto", "off").Default("auto"),
-        orientation: gubu_minExports.Exact("horizontal", "vertical").Default("horizontal"),
+        orient: gubu_minExports.Exact("horizontal", "vertical").Default("horizontal"),
         track: gubu_minExports.Exact("normal", "inverted", false).Default("normal"),
         step: gubu_minExports.One(null, Number),
         min: gubu_minExports.Default(0, Number),
