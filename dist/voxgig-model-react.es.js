@@ -54,7 +54,7 @@ var __async = (__this, __arguments, generator) => {
 };
 import * as React$1 from "react";
 import React__default, { isValidElement, Children, cloneElement, useMemo, useState, useReducer, useRef, useEffect, useCallback, memo as memo$2, Fragment, useLayoutEffect } from "react";
-import { Button as Button$1, Avatar, Menu as Menu$1, MenuItem as MenuItem$1, IconButton as IconButton$1, useTheme as useTheme$5, Box as Box$2, TextField as TextField$1, Grid as Grid$1, Toolbar as Toolbar$1, Container as Container$2, Drawer as Drawer$1, List as List$1, ListItem as ListItem$1, ListItemButton as ListItemButton$1, ListItemIcon as ListItemIcon$1, ListItemText as ListItemText$1, Divider as Divider$1, Typography as Typography$1 } from "@mui/material";
+import { Button as Button$1, Avatar, Menu as Menu$1, MenuItem as MenuItem$1, IconButton as IconButton$1, useTheme as useTheme$5, Box as Box$2, FormLabel as FormLabel$1, Slider as Slider$1, TextField as TextField$1, Grid as Grid$1, Toolbar as Toolbar$1, Container as Container$2, Drawer as Drawer$1, List as List$1, ListItem as ListItem$1, ListItemButton as ListItemButton$1, ListItemIcon as ListItemIcon$1, ListItemText as ListItemText$1, Divider as Divider$1, Typography as Typography$1 } from "@mui/material";
 import emStyled from "@emotion/styled";
 import { CacheProvider, Global, ThemeContext as ThemeContext$1, css, keyframes } from "@emotion/react";
 import { useSelector } from "react-redux";
@@ -2854,6 +2854,7 @@ function requireObjectWithoutPropertiesLoose() {
   })(objectWithoutPropertiesLoose$1);
   return objectWithoutPropertiesLoose$1.exports;
 }
+var isDevelopment = false;
 function sheetForTag(tag) {
   if (tag.sheet) {
     return tag.sheet;
@@ -2863,6 +2864,7 @@ function sheetForTag(tag) {
       return document.styleSheets[i];
     }
   }
+  return void 0;
 }
 function createStyleElement(options) {
   var tag = document.createElement("style");
@@ -2893,7 +2895,7 @@ var StyleSheet = /* @__PURE__ */ function() {
       _this.container.insertBefore(tag, before);
       _this.tags.push(tag);
     };
-    this.isSpeedy = options.speedy === void 0 ? process.env.NODE_ENV === "production" : options.speedy;
+    this.isSpeedy = options.speedy === void 0 ? !isDevelopment : options.speedy;
     this.tags = [];
     this.ctr = 0;
     this.nonce = options.nonce;
@@ -2912,21 +2914,11 @@ var StyleSheet = /* @__PURE__ */ function() {
       this._insertTag(createStyleElement(this));
     }
     var tag = this.tags[this.tags.length - 1];
-    if (process.env.NODE_ENV !== "production") {
-      var isImportRule3 = rule.charCodeAt(0) === 64 && rule.charCodeAt(1) === 105;
-      if (isImportRule3 && this._alreadyInsertedOrderInsensitiveRule) {
-        console.error("You're attempting to insert the following rule:\n" + rule + "\n\n`@import` rules must be before all other types of rules in a stylesheet but other rules have already been inserted. Please ensure that `@import` rules are before all other rules.");
-      }
-      this._alreadyInsertedOrderInsensitiveRule = this._alreadyInsertedOrderInsensitiveRule || !isImportRule3;
-    }
     if (this.isSpeedy) {
       var sheet = sheetForTag(tag);
       try {
         sheet.insertRule(rule, sheet.cssRules.length);
       } catch (e) {
-        if (process.env.NODE_ENV !== "production" && !/:(-moz-placeholder|-moz-focus-inner|-moz-focusring|-ms-input-placeholder|-moz-read-write|-moz-read-only|-ms-clear|-ms-expand|-ms-reveal){/.test(rule)) {
-          console.error('There was a problem inserting the following rule: "' + rule + '"', e);
-        }
       }
     } else {
       tag.appendChild(document.createTextNode(rule));
@@ -2935,13 +2927,11 @@ var StyleSheet = /* @__PURE__ */ function() {
   };
   _proto.flush = function flush() {
     this.tags.forEach(function(tag) {
-      return tag.parentNode && tag.parentNode.removeChild(tag);
+      var _tag$parentNode;
+      return (_tag$parentNode = tag.parentNode) == null ? void 0 : _tag$parentNode.removeChild(tag);
     });
     this.tags = [];
     this.ctr = 0;
-    if (process.env.NODE_ENV !== "production") {
-      this._alreadyInsertedOrderInsensitiveRule = false;
-    }
   };
   return StyleSheet2;
 }();
@@ -3626,68 +3616,6 @@ var removeLabel = function removeLabel2(element) {
     }
   }
 };
-var ignoreFlag = "emotion-disable-server-rendering-unsafe-selector-warning-please-do-not-use-this-the-warning-exists-for-a-reason";
-var isIgnoringComment = function isIgnoringComment2(element) {
-  return element.type === "comm" && element.children.indexOf(ignoreFlag) > -1;
-};
-var createUnsafeSelectorsAlarm = function createUnsafeSelectorsAlarm2(cache2) {
-  return function(element, index2, children2) {
-    if (element.type !== "rule" || cache2.compat) return;
-    var unsafePseudoClasses = element.value.match(/(:first|:nth|:nth-last)-child/g);
-    if (unsafePseudoClasses) {
-      var isNested = !!element.parent;
-      var commentContainer = isNested ? element.parent.children : (
-        // global rule at the root level
-        children2
-      );
-      for (var i = commentContainer.length - 1; i >= 0; i--) {
-        var node2 = commentContainer[i];
-        if (node2.line < element.line) {
-          break;
-        }
-        if (node2.column < element.column) {
-          if (isIgnoringComment(node2)) {
-            return;
-          }
-          break;
-        }
-      }
-      unsafePseudoClasses.forEach(function(unsafePseudoClass) {
-        console.error('The pseudo class "' + unsafePseudoClass + '" is potentially unsafe when doing server-side rendering. Try changing it to "' + unsafePseudoClass.split("-child")[0] + '-of-type".');
-      });
-    }
-  };
-};
-var isImportRule = function isImportRule2(element) {
-  return element.type.charCodeAt(1) === 105 && element.type.charCodeAt(0) === 64;
-};
-var isPrependedWithRegularRules = function isPrependedWithRegularRules2(index2, children2) {
-  for (var i = index2 - 1; i >= 0; i--) {
-    if (!isImportRule(children2[i])) {
-      return true;
-    }
-  }
-  return false;
-};
-var nullifyElement = function nullifyElement2(element) {
-  element.type = "";
-  element.value = "";
-  element["return"] = "";
-  element.children = "";
-  element.props = "";
-};
-var incorrectImportAlarm = function incorrectImportAlarm2(element, index2, children2) {
-  if (!isImportRule(element)) {
-    return;
-  }
-  if (element.parent) {
-    console.error("`@import` rules can't be nested inside other rules. Please move it to the top level and put it before regular rules. Keep in mind that they can only be used within global styles.");
-    nullifyElement(element);
-  } else if (isPrependedWithRegularRules(index2, children2)) {
-    console.error("`@import` rules can't be after other rules. Please put your `@import` rules before your other rules.");
-    nullifyElement(element);
-  }
-};
 function prefix(value, length2) {
   switch (hash$2(value, length2)) {
     case 5103:
@@ -3834,9 +3762,6 @@ var prefixer = function prefixer2(element, index2, children2, callback) {
 var defaultStylisPlugins = [prefixer];
 var createCache = function createCache2(options) {
   var key = options.key;
-  if (process.env.NODE_ENV !== "production" && !key) {
-    throw new Error("You have to configure `key` for your cache. Please make sure it's unique (and not equal to 'css') as it's used for linking styles to your cache.\nIf multiple caches share the same key they might \"fight\" for each other's style elements.");
-  }
   if (key === "css") {
     var ssrStyles = document.querySelectorAll("style[data-emotion]:not([data-s])");
     Array.prototype.forEach.call(ssrStyles, function(node2) {
@@ -3849,11 +3774,6 @@ var createCache = function createCache2(options) {
     });
   }
   var stylisPlugins = options.stylisPlugins || defaultStylisPlugins;
-  if (process.env.NODE_ENV !== "production") {
-    if (/[^a-z-]/.test(key)) {
-      throw new Error('Emotion key must only contain lower case alphabetical characters and - but "' + key + '" was passed');
-    }
-  }
   var inserted = {};
   var container;
   var nodesToHydrate = [];
@@ -3874,24 +3794,9 @@ var createCache = function createCache2(options) {
   }
   var _insert;
   var omnipresentPlugins = [compat, removeLabel];
-  if (process.env.NODE_ENV !== "production") {
-    omnipresentPlugins.push(createUnsafeSelectorsAlarm({
-      get compat() {
-        return cache2.compat;
-      }
-    }), incorrectImportAlarm);
-  }
   {
     var currentSheet;
-    var finalizingPlugins = [stringify, process.env.NODE_ENV !== "production" ? function(element) {
-      if (!element.root) {
-        if (element["return"]) {
-          currentSheet.insert(element["return"]);
-        } else if (element.value && element.type !== COMMENT) {
-          currentSheet.insert(element.value + "{}");
-        }
-      }
-    } : rulesheet(function(rule) {
+    var finalizingPlugins = [stringify, rulesheet(function(rule) {
       currentSheet.insert(rule);
     })];
     var serializer = middleware(omnipresentPlugins.concat(stylisPlugins, finalizingPlugins));
@@ -3900,13 +3805,6 @@ var createCache = function createCache2(options) {
     };
     _insert = function insert2(selector, serialized, sheet, shouldCache) {
       currentSheet = sheet;
-      if (process.env.NODE_ENV !== "production" && serialized.map !== void 0) {
-        currentSheet = {
-          insert: function insert3(rule) {
-            sheet.insert(rule + serialized.map);
-          }
-        };
-      }
       stylis(selector ? selector + "{" + serialized.styles + "}" : serialized.styles);
       if (shouldCache) {
         cache2.inserted[serialized.name] = true;
@@ -10690,8 +10588,8 @@ process.env.NODE_ENV !== "production" ? Toolbar.propTypes = {
    */
   variant: PropTypes.oneOfType([PropTypes.oneOf(["dense", "regular"]), PropTypes.string])
 } : void 0;
-const CMPNAME$c = "BasicAccountTool";
-console.log(CMPNAME$c, "1");
+const CMPNAME$d = "BasicAccountTool";
+console.log(CMPNAME$d, "1");
 const { Exact: Exact$2 } = gubu_minExports.Gubu;
 const BasicAccountToolSpecShape = gubu_minExports.Gubu({
   name: String,
@@ -10701,7 +10599,7 @@ const BasicAccountToolSpecShape = gubu_minExports.Gubu({
   attr: {},
   sx: {},
   style: {}
-}, { name: CMPNAME$c });
+}, { name: CMPNAME$d });
 function BasicAccountTool(props) {
   var _a;
   const { ctx, spec } = props;
@@ -10775,8 +10673,8 @@ function stringAvatar(s) {
     children: `${parts.join("")}`
   };
 }
-const CMPNAME$b = "BasicHeadTool";
-console.log(CMPNAME$b, "1");
+const CMPNAME$c = "BasicHeadTool";
+console.log(CMPNAME$c, "1");
 const { Exact: Exact$1 } = gubu_minExports.Gubu;
 const BasicHeadToolSpecShape = gubu_minExports.Gubu({
   name: String,
@@ -10786,7 +10684,7 @@ const BasicHeadToolSpecShape = gubu_minExports.Gubu({
   attr: {},
   sx: {},
   style: {}
-}, { name: CMPNAME$b });
+}, { name: CMPNAME$c });
 function BasicHeadTool(props) {
   const { ctx, spec } = props;
   const { seneca } = ctx();
@@ -10795,7 +10693,7 @@ function BasicHeadTool(props) {
   const { name, kind, attr, sx, style: style2 } = basicHeadToolSpec;
   let tool = /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, {});
   if ("" === kind) {
-    console.warn(CMPNAME$b, "empty-tool-kind", basicHeadToolSpec);
+    console.warn(CMPNAME$c, "empty-tool-kind", basicHeadToolSpec);
   } else if ("logo" === kind) {
     tool = /* @__PURE__ */ jsxRuntimeExports.jsxs(
       "div",
@@ -10812,7 +10710,7 @@ function BasicHeadTool(props) {
             {
               href: "/",
               style: style2,
-              className: `vxg-${CMPNAME$b}-logo`,
+              className: `vxg-${CMPNAME$c}-logo`,
               children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: attr.img })
             }
           ),
@@ -10844,17 +10742,17 @@ function BasicHeadTool(props) {
   } else if ("account" === kind) {
     tool = /* @__PURE__ */ jsxRuntimeExports.jsx(BasicAccountTool, { ctx, spec });
   } else {
-    console.warn(CMPNAME$b, "unknown-tool-kind", kind, basicHeadToolSpec);
+    console.warn(CMPNAME$c, "unknown-tool-kind", kind, basicHeadToolSpec);
   }
   return tool;
 }
-const CMPNAME$a = "BasicHead";
-const { Child: Child$5, Exact, Open: Open$8, Required: Required$1 } = gubu_minExports.Gubu;
+const CMPNAME$b = "BasicHead";
+const { Child: Child$5, Exact, Open: Open$9, Required: Required$1 } = gubu_minExports.Gubu;
 const BasicHeadSpecShape = gubu_minExports.Gubu({
   head: {
     name: String,
     active: Boolean,
-    tool: Child$5(Open$8({
+    tool: Child$5(Open$9({
       align: Exact("left", "right")
     }))
   },
@@ -10864,7 +10762,7 @@ const BasicHeadSpecShape = gubu_minExports.Gubu({
     AppBar: {},
     ToolBar: {}
   }
-}, { name: CMPNAME$a });
+}, { name: CMPNAME$b });
 function BasicHead(props) {
   const { ctx, spec } = props;
   const { seneca } = ctx();
@@ -39125,7 +39023,7 @@ const PickersLayoutContentWrapper = styled$1("div", {
   display: "flex",
   flexDirection: "column"
 });
-const PickersLayout = function PickersLayout2(inProps) {
+const PickersLayout = /* @__PURE__ */ React$1.forwardRef(function PickersLayout2(inProps, ref) {
   const props = useThemeProps({
     props: inProps,
     name: "MuiPickersLayout"
@@ -39141,7 +39039,6 @@ const PickersLayout = function PickersLayout2(inProps) {
     sx,
     className,
     isLandscape,
-    ref,
     wrapperVariant
   } = props;
   const classes = useUtilityClasses$J(props);
@@ -39159,7 +39056,7 @@ const PickersLayout = function PickersLayout2(inProps) {
       })
     }), actionBar]
   });
-};
+});
 process.env.NODE_ENV !== "production" ? PickersLayout.propTypes = {
   // ----------------------------- Warning --------------------------------
   // | These PropTypes are generated from the TypeScript type definitions |
@@ -45063,7 +44960,7 @@ const pickersCalendarHeaderClasses = generateUtilityClasses("MuiPickersCalendarH
 function getPickersArrowSwitcherUtilityClass(slot) {
   return generateUtilityClass("MuiPickersArrowSwitcher", slot);
 }
-const pickersArrowSwitcherClasses = generateUtilityClasses("MuiPickersArrowSwitcher", ["root", "spacer", "button"]);
+const pickersArrowSwitcherClasses = generateUtilityClasses("MuiPickersArrowSwitcher", ["root", "spacer", "button", "previousIconButton", "nextIconButton", "leftArrowIcon", "rightArrowIcon"]);
 const _excluded$E = ["children", "className", "slots", "slotProps", "isNextDisabled", "isNextHidden", "onGoToNext", "nextLabel", "isPreviousDisabled", "isPreviousHidden", "onGoToPrevious", "previousLabel", "labelId"], _excluded2$3 = ["ownerState"], _excluded3$1 = ["ownerState"];
 const PickersArrowSwitcherRoot = styled$1("div", {
   name: "MuiPickersArrowSwitcher",
@@ -45102,7 +44999,11 @@ const useUtilityClasses$u = (ownerState) => {
   const slots = {
     root: ["root"],
     spacer: ["spacer"],
-    button: ["button"]
+    button: ["button"],
+    previousIconButton: ["previousIconButton"],
+    nextIconButton: ["nextIconButton"],
+    leftArrowIcon: ["leftArrowIcon"],
+    rightArrowIcon: ["rightArrowIcon"]
   };
   return composeClasses(slots, getPickersArrowSwitcherUtilityClass, classes);
 };
@@ -45157,7 +45058,7 @@ const PickersArrowSwitcher = /* @__PURE__ */ React$1.forwardRef(function Pickers
     ownerState: _extends$1({}, ownerState, {
       hidden: previousProps.isHidden
     }),
-    className: classes.button
+    className: clsx(classes.button, classes.previousIconButton)
   });
   const NextIconButton = (_b = slots == null ? void 0 : slots.nextIconButton) != null ? _b : PickersArrowSwitcherButton;
   const nextIconButtonProps = useSlotProps({
@@ -45174,7 +45075,7 @@ const PickersArrowSwitcher = /* @__PURE__ */ React$1.forwardRef(function Pickers
     ownerState: _extends$1({}, ownerState, {
       hidden: nextProps.isHidden
     }),
-    className: classes.button
+    className: clsx(classes.button, classes.nextIconButton)
   });
   const LeftArrowIcon = (_c = slots == null ? void 0 : slots.leftArrowIcon) != null ? _c : ArrowLeftIcon;
   const _useSlotProps = useSlotProps({
@@ -45183,7 +45084,8 @@ const PickersArrowSwitcher = /* @__PURE__ */ React$1.forwardRef(function Pickers
     additionalProps: {
       fontSize: "inherit"
     },
-    ownerState: void 0
+    ownerState,
+    className: classes.leftArrowIcon
   }), leftArrowIconProps = _objectWithoutPropertiesLoose(_useSlotProps, _excluded2$3);
   const RightArrowIcon = (_d = slots == null ? void 0 : slots.rightArrowIcon) != null ? _d : ArrowRightIcon;
   const _useSlotProps2 = useSlotProps({
@@ -45192,7 +45094,8 @@ const PickersArrowSwitcher = /* @__PURE__ */ React$1.forwardRef(function Pickers
     additionalProps: {
       fontSize: "inherit"
     },
-    ownerState: void 0
+    ownerState,
+    className: classes.rightArrowIcon
   }), rightArrowIconProps = _objectWithoutPropertiesLoose(_useSlotProps2, _excluded3$1);
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(PickersArrowSwitcherRoot, _extends$1({
     ref,
@@ -45373,7 +45276,7 @@ const PickersCalendarHeader = /* @__PURE__ */ React$1.forwardRef(function Picker
   const _useSlotProps = useSlotProps({
     elementType: SwitchViewIcon,
     externalSlotProps: slotProps == null ? void 0 : slotProps.switchViewIcon,
-    ownerState: void 0,
+    ownerState,
     className: classes.switchViewIcon
   }), switchViewIconProps = _objectWithoutPropertiesLoose(_useSlotProps, _excluded2$2);
   const selectNextMonth = () => onMonthChange(utils2.addMonths(month, 1), "left");
@@ -50303,10 +50206,11 @@ function ClockPointer(inProps) {
 function getClockUtilityClass(slot) {
   return generateUtilityClass("MuiClock", slot);
 }
-const clockClasses = generateUtilityClasses("MuiClock", ["root", "clock", "wrapper", "squareMask", "pin", "amButton", "pmButton", "meridiemText"]);
+const clockClasses = generateUtilityClasses("MuiClock", ["root", "clock", "wrapper", "squareMask", "pin", "amButton", "pmButton", "meridiemText", "selected"]);
 const useUtilityClasses$h = (ownerState) => {
   const {
-    classes
+    classes,
+    meridiemMode
   } = ownerState;
   const slots = {
     root: ["root"],
@@ -50314,8 +50218,8 @@ const useUtilityClasses$h = (ownerState) => {
     wrapper: ["wrapper"],
     squareMask: ["squareMask"],
     pin: ["pin"],
-    amButton: ["amButton"],
-    pmButton: ["pmButton"],
+    amButton: ["amButton", meridiemMode === "am" && "selected"],
+    pmButton: ["pmButton", meridiemMode === "pm" && "selected"],
     meridiemText: ["meridiemText"]
   };
   return composeClasses(slots, getClockUtilityClass, classes);
@@ -50398,23 +50302,15 @@ const ClockPin = styled$1("div", {
   left: "50%",
   transform: "translate(-50%, -50%)"
 }));
-const ClockAmButton = styled$1(IconButton, {
-  name: "MuiClock",
-  slot: "AmButton",
-  overridesResolver: (_2, styles2) => styles2.amButton
-})(({
-  theme
-}) => ({
+const meridiemButtonCommonStyles = (theme, meridiemMode) => ({
   zIndex: 1,
-  position: "absolute",
   bottom: 8,
-  left: 8,
   paddingLeft: 4,
   paddingRight: 4,
   width: CLOCK_HOUR_WIDTH,
   variants: [{
     props: {
-      meridiemMode: "am"
+      meridiemMode
     },
     style: {
       backgroundColor: (theme.vars || theme).palette.primary.main,
@@ -50424,6 +50320,17 @@ const ClockAmButton = styled$1(IconButton, {
       }
     }
   }]
+});
+const ClockAmButton = styled$1(IconButton, {
+  name: "MuiClock",
+  slot: "AmButton",
+  overridesResolver: (_2, styles2) => styles2.amButton
+})(({
+  theme
+}) => _extends$1({}, meridiemButtonCommonStyles(theme, "am"), {
+  // keeping it here to make TS happy
+  position: "absolute",
+  left: 8
 }));
 const ClockPmButton = styled$1(IconButton, {
   name: "MuiClock",
@@ -50431,26 +50338,10 @@ const ClockPmButton = styled$1(IconButton, {
   overridesResolver: (_2, styles2) => styles2.pmButton
 })(({
   theme
-}) => ({
-  zIndex: 1,
+}) => _extends$1({}, meridiemButtonCommonStyles(theme, "pm"), {
+  // keeping it here to make TS happy
   position: "absolute",
-  bottom: 8,
-  right: 8,
-  paddingLeft: 4,
-  paddingRight: 4,
-  width: CLOCK_HOUR_WIDTH,
-  variants: [{
-    props: {
-      meridiemMode: "pm"
-    },
-    style: {
-      backgroundColor: (theme.vars || theme).palette.primary.main,
-      color: (theme.vars || theme).palette.primary.contrastText,
-      "&:hover": {
-        backgroundColor: (theme.vars || theme).palette.primary.light
-      }
-    }
-  }]
+  right: 8
 }));
 const ClockMeridiemText = styled$1(Typography, {
   name: "MuiClock",
@@ -52517,7 +52408,7 @@ const renderMultiSectionDigitalClockTimeView = ({
   skipDisabled,
   timezone
 });
-function DesktopDateTimePickerLayout(props) {
+const DesktopDateTimePickerLayout = /* @__PURE__ */ React$1.forwardRef(function DesktopDateTimePickerLayout2(props, ref) {
   var _a, _b;
   const isRtl = useRtl();
   const {
@@ -52531,7 +52422,6 @@ function DesktopDateTimePickerLayout(props) {
     sx,
     className,
     isLandscape,
-    ref,
     classes
   } = props;
   const isActionBarVisible = actionBar && ((_b = (_a = actionBar.props.actions) == null ? void 0 : _a.length) != null ? _b : 0) > 0;
@@ -52564,7 +52454,7 @@ function DesktopDateTimePickerLayout(props) {
       })]
     }), actionBar]
   });
-}
+});
 process.env.NODE_ENV !== "production" ? DesktopDateTimePickerLayout.propTypes = {
   // ----------------------------- Warning --------------------------------
   // | These PropTypes are generated from the TypeScript type definitions |
@@ -62816,8 +62706,8 @@ const MaterialReactTable = (props) => {
   }
   return jsxRuntimeExports.jsx(MRT_TablePaper, { table });
 };
-const { Open: Open$7, Child: Child$4 } = gubu_minExports.Gubu;
-const Shape$2 = gubu_minExports.Gubu(Open$7({
+const { Open: Open$8, Child: Child$4 } = gubu_minExports.Gubu;
+const Shape$2 = gubu_minExports.Gubu(Open$8({
   name: String,
   prefix: String,
   ent: String,
@@ -62862,7 +62752,7 @@ Object.assign(VxgBasicEntityListPlugin, {
   }
 });
 Object.defineProperty(VxgBasicEntityListPlugin, "name", { value: "VxgBasicEntityListPlugin" });
-const CMPNAME$9 = "BasicEntityList";
+const CMPNAME$a = "BasicEntityList";
 function BasicEntityList(props) {
   const { ctx } = props;
   const { seneca } = ctx();
@@ -64782,6 +64672,56 @@ function useForm(props = {}) {
   _formControl.current.formState = getProxyFormState(formState, control);
   return _formControl.current;
 }
+const CMPNAME$9 = "BasicEntitySliderField";
+const { Open: Open$7 } = gubu_minExports.Gubu;
+const BasicEntitySliderFieldSpecShape = gubu_minExports.Gubu(Open$7({
+  field: Open$7({
+    id: String,
+    name: String,
+    kind: String,
+    label: gubu_minExports.Default("", String),
+    ux: Open$7({
+      kind: gubu_minExports.Default("Text", String),
+      edit: gubu_minExports.Default(true, Boolean),
+      step: gubu_minExports.Default(1, Number),
+      min: gubu_minExports.Default(0, Number),
+      max: gubu_minExports.Default(100, Number)
+    })
+  }),
+  errors: Open$7({})
+}), { name: CMPNAME$9 });
+function BasicEntitySliderField(props) {
+  const { spec } = props;
+  const basicEntityAutocompleteField = BasicEntitySliderFieldSpecShape(spec);
+  const { control, field, getValues } = basicEntityAutocompleteField;
+  const val = getValues(field.name);
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(FormLabel$1, { id: field.id, children: field.label }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      Controller,
+      {
+        name: field.name,
+        control,
+        defaultValue: val || field.ux.min,
+        render: ({ field: { onChange, value } }) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+          Slider$1,
+          {
+            value,
+            onChange: (_2, newValue) => onChange(newValue),
+            valueLabelDisplay: "auto",
+            step: field.ux.step,
+            marks: resolveMarks(field.ux.marks),
+            min: field.ux.min,
+            max: field.ux.max
+          }
+        )
+      }
+    )
+  ] });
+}
+function resolveMarks(marks) {
+  return marks && typeof marks === "object" ? Object.keys(marks).map((key) => ({ label: marks[key], value: +key })) : marks;
+}
 const CMPNAME$8 = "BasicEntityField";
 const { Open: Open$6 } = gubu_minExports.Gubu;
 const BasicEntityFieldSpecShape = gubu_minExports.Gubu(Open$6({}), { name: CMPNAME$8 });
@@ -64790,7 +64730,8 @@ const fieldMap = {
   TextBox: BasicEntityTextBoxField,
   Date: BasicEntityDateField,
   DateTime: BasicEntityDateTimeField,
-  Time: BasicEntityTimeField
+  Time: BasicEntityTimeField,
+  Slider: BasicEntitySliderField
 };
 function BasicEntityField(props) {
   const { ctx, spec } = props;
@@ -65001,6 +64942,7 @@ function BasicEntityEdit(props) {
     handleSubmit,
     getValues,
     reset,
+    control,
     formState: { errors }
   } = useForm({
     mode: "onChange",
@@ -65029,6 +64971,7 @@ function BasicEntityEdit(props) {
                     field,
                     register,
                     getValues,
+                    control,
                     errors
                   }
                 }
