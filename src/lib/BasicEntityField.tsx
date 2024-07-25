@@ -9,16 +9,27 @@ import {
 
 import type { Spec } from './basic-types'
 
-import { Gubu } from 'gubu'
+import { Default, Exact, Gubu } from 'gubu'
 
 const CMPNAME = 'BasicEntityField'
 
 const { Open } = Gubu
 const BasicEntityFieldSpecShape = Gubu(Open({
-  
+  field: Open({
+    field: Open({
+      id: String,
+      name: String,
+      kind: String,
+      label: Default('', String),
+      ux: Open({
+        kind: Exact('Text', 'TextBox', 'Date', 'DateTime', 'Time'),
+        edit: Default(true),
+        rows: Default(3),
+        props: Open({}),
+      })
+    }),
+  })
 }), {name: CMPNAME})
-
-
 
 const fieldMap: any = {
   Text: BasicEntityTextField,
@@ -93,8 +104,8 @@ function BasicEntityTextBoxField (props: any) {
         variant="outlined"
         fullWidth
         multiline
-        rows={field.ux.rows ?? 3}
-                InputLabelProps={{ shrink: val?.length > 0 }}
+        rows={field.ux.rows}
+        InputLabelProps={{ shrink: val?.length > 0 }}
         {...register(field.name)} 
       />
     </div>

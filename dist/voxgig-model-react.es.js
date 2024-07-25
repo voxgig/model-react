@@ -64674,7 +64674,22 @@ function useForm(props = {}) {
 }
 const CMPNAME$8 = "BasicEntityField";
 const { Open: Open$6 } = gubu_minExports.Gubu;
-const BasicEntityFieldSpecShape = gubu_minExports.Gubu(Open$6({}), { name: CMPNAME$8 });
+const BasicEntityFieldSpecShape = gubu_minExports.Gubu(Open$6({
+  field: Open$6({
+    field: Open$6({
+      id: String,
+      name: String,
+      kind: String,
+      label: gubu_minExports.Default("", String),
+      ux: Open$6({
+        kind: gubu_minExports.Exact("Text", "TextBox", "Date", "DateTime", "Time"),
+        edit: gubu_minExports.Default(true),
+        rows: gubu_minExports.Default(3),
+        props: Open$6({})
+      })
+    })
+  })
+}), { name: CMPNAME$8 });
 const fieldMap = {
   Text: BasicEntityTextField,
   TextBox: BasicEntityTextBoxField,
@@ -64714,7 +64729,6 @@ function BasicEntityTextField(props) {
   ] }, field.id);
 }
 function BasicEntityTextBoxField(props) {
-  var _a;
   const { spec } = props;
   const { field, register, getValues } = spec;
   const val = getValues(field.name);
@@ -64727,7 +64741,7 @@ function BasicEntityTextBoxField(props) {
       variant: "outlined",
       fullWidth: true,
       multiline: true,
-      rows: (_a = field.ux.rows) != null ? _a : 3,
+      rows: field.ux.rows,
       InputLabelProps: { shrink: (val == null ? void 0 : val.length) > 0 }
     }, register(field.name))
   ) }, field.name);
