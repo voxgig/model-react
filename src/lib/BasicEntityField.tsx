@@ -12,6 +12,7 @@ import type { Spec } from './basic-types'
 import { Default, Exact, Gubu } from 'gubu'
 import { BasicEntityCheckBoxField } from './BasicEntityCheckBoxField'
 import { BasicEntityAutocompleteField } from './BasicEntityAutocompleteField'
+import { BasicEntitySliderField } from './BasicEntitySliderField'
 
 const CMPNAME = 'BasicEntityField'
 
@@ -40,7 +41,8 @@ const fieldMap: any = {
   DateTime: BasicEntityDateTimeField,
   Time: BasicEntityTimeField,
   CheckBox: BasicEntityCheckBoxField,
-  Autocomplete: BasicEntityAutocompleteField
+  Autocomplete: BasicEntityAutocompleteField,
+  Slider: BasicEntitySliderField
 }
 
 
