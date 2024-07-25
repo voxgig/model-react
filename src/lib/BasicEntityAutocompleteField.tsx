@@ -16,9 +16,10 @@ const BasicEntityAutocompleteFieldSpecShape = Gubu(Open({
     kind: String,
     label: Default(''),
     options: Open({
-      default: Open({}),
       label: { field: Default('label') },
+      value: { field: Default('value') },
       multiple: Default(false),
+      default: Open({}),
       ents: Open({})
     }),
     ux: Open({
@@ -30,8 +31,6 @@ const BasicEntityAutocompleteFieldSpecShape = Gubu(Open({
 
 function BasicEntityAutocompleteField(props: any) {
   const { spec } = props
-
-  // console.log('BasicEntityAutocompleteField', spec)
 
   const basicEntityAutocompleteField: Spec = BasicEntityAutocompleteFieldSpecShape(spec)
   const { control, field } = basicEntityAutocompleteField
@@ -55,7 +54,7 @@ function BasicEntityAutocompleteField(props: any) {
                   (opt?.value != null && val?.value != null && opt.value === val.value)
                 }
                 getOptionLabel={(option: any) => option[field.options.label.field]}
-                value={value}
+                value={resolveValue(field.options, value)}
                 onChange={(_, newVal: any) => onChange(newVal)}
                 renderInput={(params: any) => <TextField {...params} label={field.label} />}
             />
@@ -66,27 +65,52 @@ function BasicEntityAutocompleteField(props: any) {
 
 // Returns array of options and default value(s) based on the options object
 function resolveOptions(options: any) {
-  // Array of options
-  const resolvedOptions = Object.keys(options.ents).map(key => ({
-    label: options.ents[key].label,
-    value: key
-  }))
+  const { multiple, ents, label, value, default: defaultValues } = options;
+  const labelField = label?.field;
+  const valueField = value?.field; 
 
-  // Array of default values (or single value if multiple is false)
-  const resolvedDefault = options.multiple === false ? (
-    Object.keys(options.default).length > 0
-      ? { value: Object.keys(options.default)[0], label: options.default[Object.keys(options.default)[0]].label }
-      : null
-  ) : (
-    Object.keys(options.default).map(key => ({
-      label: options.default[key].label,
+  // Array of options
+  const resolvedOptions = Object.keys(ents).map(key => ({
+    [labelField]: ents?.[key]?.[labelField],
+    [valueField]: key
+  }));
+
+  let resolvedDefault;
+  if (multiple === false) {
+    if (Object.keys(defaultValues).length > 0) {
+      const firstKey = Object.keys(defaultValues)[0];
+      resolvedDefault = { value: firstKey, label: defaultValues[firstKey][labelField] };
+    } else {
+      resolvedDefault = null;
+    }
+  } else {
+    resolvedDefault = Object.keys(defaultValues).map(key => ({
+      label: defaultValues[key].label,
       value: key
-    }))
-  )
+    }));
+  }
 
   return {
     resolvedOptions,
     resolvedDefault
+  };
+}
+
+function resolveValue(options: any, val: any) {
+  const { multiple, ents, label, value } = options;
+  const labelField = label?.field;
+  const valueField = value?.field;
+
+  const getValue = (val: string) => ents?.[val]?.[labelField] ? { [valueField]: val, [labelField]: ents[val][labelField] || val } : undefined;
+
+  if (!multiple) {
+    return typeof val === 'string' ? getValue(val) : (val || undefined);
+  } else {
+    if (typeof val === 'string') {
+      const resolvedValue = getValue(val);
+      return resolvedValue ? [resolvedValue] : [];
+    }
+    return val || [];
   }
 }
 
