@@ -65,12 +65,15 @@ function BasicEntityAutocompleteField(props: any) {
   )
 }
 
+// Returns array of options and default value(s) based on the options object
 function resolveOptions(options: any) {
+  // Array of options
   const resolvedOptions = Object.keys(options.ents).map(key => ({
     label: options.ents[key].label,
     value: key
   }))
 
+  // Array of default values (or single value if multiple is false)
   const resolvedDefault = options.multiple === false ? (
     Object.keys(options.default).length > 0
       ? { value: Object.keys(options.default)[0], label: options.default[Object.keys(options.default)[0]].label }
