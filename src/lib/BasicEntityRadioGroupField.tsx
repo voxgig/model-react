@@ -1,6 +1,6 @@
 import React, { useEffect, forwardRef } from "react";
 
-import { FormControlLabel, Checkbox, Box, RadioGroup, Radio, FormLabel } from "@mui/material";
+import { FormControlLabel, RadioGroup, Radio, FormLabel } from "@mui/material";
 import { Controller } from "react-hook-form";
 
 function BasicEntityRadioGroupField(props: any) {
