@@ -13,6 +13,7 @@ import { Default, Exact, Gubu } from 'gubu'
 import { BasicEntityCheckBoxField } from './BasicEntityCheckBoxField'
 import { BasicEntityAutocompleteField } from './BasicEntityAutocompleteField'
 import { BasicEntitySliderField } from './BasicEntitySliderField'
+import { BasicEntityRadioGroupField } from './BasicEntityRadioGroupField'
 
 const CMPNAME = 'BasicEntityField'
 
@@ -42,7 +43,8 @@ const fieldMap: any = {
   Time: BasicEntityTimeField,
   CheckBox: BasicEntityCheckBoxField,
   Autocomplete: BasicEntityAutocompleteField,
-  Slider: BasicEntitySliderField
+  Slider: BasicEntitySliderField,
+  RadioGroup: BasicEntityRadioGroupField
 }
 
 
