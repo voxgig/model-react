@@ -21,18 +21,18 @@ const BasicEntityAutocompleteFieldSpecShape = Gubu(
         value: { field: Default('value') },
         multiple: Default(false),
         default: Open({}),
-        ents: Open({})
+        ents: Open({}),
       }),
       ux: Open({
         kind: Exact('Autocomplete'),
-        edit: Default(true)
-      })
-    })
+        edit: Default(true),
+      }),
+    }),
   }),
   { name: CMPNAME }
 )
 
-function BasicEntityAutocompleteField (props: any) {
+function BasicEntityAutocompleteField(props: any) {
   const { spec } = props
 
   const basicEntityAutocompleteField: Spec =
@@ -72,15 +72,15 @@ function BasicEntityAutocompleteField (props: any) {
 }
 
 // Returns array of options and default value(s) based on the options object
-function resolveOptions (options: any) {
+function resolveOptions(options: any) {
   const { multiple, ents, label, value, default: defaultValues } = options
   const labelField = label?.field
   const valueField = value?.field
 
   // Array of options
-  const resolvedOptions = Object.keys(ents).map(key => ({
+  const resolvedOptions = Object.keys(ents).map((key) => ({
     [labelField]: ents?.[key]?.[labelField],
-    [valueField]: key
+    [valueField]: key,
   }))
 
   let resolvedDefault
@@ -89,25 +89,25 @@ function resolveOptions (options: any) {
       const firstKey = Object.keys(defaultValues)[0]
       resolvedDefault = {
         value: firstKey,
-        label: defaultValues[firstKey][labelField]
+        label: defaultValues[firstKey][labelField],
       }
     } else {
       resolvedDefault = null
     }
   } else {
-    resolvedDefault = Object.keys(defaultValues).map(key => ({
+    resolvedDefault = Object.keys(defaultValues).map((key) => ({
       label: defaultValues[key].label,
-      value: key
+      value: key,
     }))
   }
 
   return {
     resolvedOptions,
-    resolvedDefault
+    resolvedDefault,
   }
 }
 
-function resolveValue (options: any, val: any) {
+function resolveValue(options: any, val: any) {
   const { multiple, ents, label, value } = options
   const labelField = label?.field
   const valueField = value?.field

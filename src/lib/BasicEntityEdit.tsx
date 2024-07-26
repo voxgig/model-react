@@ -38,7 +38,7 @@ const makeResolver = (entity: any) =>
                 ? (_ = errmsg.find(e))
                   ? _.text
                   : e.text
-                : e.text
+                : e.text,
             }),
             a
           ),
@@ -48,7 +48,7 @@ const makeResolver = (entity: any) =>
       const values = entity.data$(false)
       const out = {
         values,
-        errors
+        errors,
       }
 
       console.log('ERROUT', out)
@@ -58,7 +58,7 @@ const makeResolver = (entity: any) =>
     [entity.entity$]
   )
 
-function BasicEntityEdit (props: any) {
+function BasicEntityEdit(props: any) {
   const { ctx } = props
   const { seneca } = ctx()
 
@@ -74,15 +74,19 @@ function BasicEntityEdit (props: any) {
         define: VxgBasicEntityEditPlugin,
         options: {
           spec: props.spec,
-          setPlugin
-        }
+          setPlugin,
+        },
       })
     }
   }, [])
 
   const { spec, slot, fields } = seneca.export(
     'VxgBasicEntityEditPlugin/handle'
-  ) || { spec: {}, slot: null, fields: [] }
+  ) || {
+    spec: {},
+    slot: null,
+    fields: [],
+  }
 
   const { ent, name } = spec
 
@@ -99,7 +103,7 @@ function BasicEntityEdit (props: any) {
     item = seneca.direct('aim:app,on:BasicLed,modify:edit', {
       view: name,
       item,
-      fields
+      fields,
     })
   }
 
@@ -111,7 +115,7 @@ function BasicEntityEdit (props: any) {
         seneca.act('aim:app,on:BasicLed,edit:item', {
           view: name,
           fields,
-          item_id: params.item
+          item_id: params.item,
         })
       }
       reset(item)
@@ -126,10 +130,10 @@ function BasicEntityEdit (props: any) {
     getValues,
     reset,
     control,
-    formState: { errors }
+    formState: { errors },
   } = useForm({
     mode: 'onChange',
-    resolver
+    resolver,
   })
 
   const onSubmit = (data: any) => {
@@ -137,10 +141,10 @@ function BasicEntityEdit (props: any) {
   }
 
   return (
-    <Box className='vxg-BasicEntityEdit'>
+    <Box className="vxg-BasicEntityEdit">
       {item ? (
         <form
-          className='vxg-BasicEntityEdit-form'
+          className="vxg-BasicEntityEdit-form"
           onSubmit={handleSubmit(onSubmit)}
         >
           <Grid container spacing={2}>
@@ -153,7 +157,7 @@ function BasicEntityEdit (props: any) {
                     register,
                     getValues,
                     control,
-                    errors
+                    errors,
                   }}
                 />
               </Grid>
@@ -162,8 +166,8 @@ function BasicEntityEdit (props: any) {
 
           {/* <p>errors: {JSON.stringify(errors)}</p> */}
 
-          <Toolbar className='vxg-BasicEntityEdit-toolbar-foot'>
-            <Button type='submit' variant='contained'>
+          <Toolbar className="vxg-BasicEntityEdit-toolbar-foot">
+            <Button type="submit" variant="contained">
               Save
             </Button>
           </Toolbar>

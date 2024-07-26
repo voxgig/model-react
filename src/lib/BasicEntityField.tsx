@@ -39,9 +39,9 @@ const BasicEntityFieldSpecShape = Gubu(
         ),
         edit: Default(true),
         rows: Default(3),
-        props: Open({})
-      })
-    })
+        props: Open({}),
+      }),
+    }),
   }),
   { name: CMPNAME }
 )
@@ -56,10 +56,10 @@ const fieldMap: any = {
   Autocomplete: BasicEntityAutocompleteField,
   Slider: BasicEntitySliderField,
   RadioGroup: BasicEntityRadioGroupField,
-  Rating: BasicEntityRatingField
+  Rating: BasicEntityRatingField,
 }
 
-function BasicEntityField (props: any) {
+function BasicEntityField(props: any) {
   const { ctx, spec } = props
 
   const basicEntityFieldSpec: Spec = BasicEntityFieldSpecShape(spec)

@@ -26,15 +26,15 @@ const BasicEntitySliderFieldSpecShape = Gubu(
           marks: Default({}),
           valueLabelDisplay: Exact('on', 'auto', 'off').Default('auto'),
           direction: Exact('horizontal', 'vertical').Default('horizontal'),
-          track: Exact('normal', 'inverted', 'disabled').Default('normal')
-        }
-      })
-    })
+          track: Exact('normal', 'inverted', 'disabled').Default('normal'),
+        },
+      }),
+    }),
   }),
   { name: CMPNAME }
 )
 
-function BasicEntitySliderField (props: any) {
+function BasicEntitySliderField(props: any) {
   const { spec } = props
 
   const basicEntityAutocompleteField: Spec =
@@ -71,7 +71,7 @@ function BasicEntitySliderField (props: any) {
   )
 }
 
-function resolveMarks (marks: any) {
+function resolveMarks(marks: any) {
   if (
     !marks ||
     (typeof marks === 'object' && Object.keys(marks).length === 0)
@@ -81,7 +81,7 @@ function resolveMarks (marks: any) {
   if (typeof marks === 'object') {
     return Object.entries(marks).map(([key, value]) => ({
       label: value,
-      value: +key
+      value: +key,
     }))
   }
 

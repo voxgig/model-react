@@ -17,14 +17,14 @@ const BasicEntityDateTimeFieldSpecShape = Gubu(
       ux: Open({
         kind: Exact('DateTime'),
         edit: Default(true),
-        props: Open({})
-      })
-    })
+        props: Open({}),
+      }),
+    }),
   }),
   { name: CMPNAME }
 )
 
-function BasicEntityDateTimeField (props: any) {
+function BasicEntityDateTimeField(props: any) {
   const { spec } = props
 
   const basicEntityDateTimeField: Spec = BasicEntityDateTimeFieldSpecShape(spec)
@@ -39,8 +39,8 @@ function BasicEntityDateTimeField (props: any) {
         name={field.name}
         label={field.label}
         fullWidth
-        variant='outlined'
-        type='datetime-local'
+        variant="outlined"
+        type="datetime-local"
         disabled={!field.ux.edit}
         InputLabelProps={{ shrink: val?.length > 0 }}
         {...register(field.name)}

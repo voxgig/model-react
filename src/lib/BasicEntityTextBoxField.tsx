@@ -17,14 +17,14 @@ const BasicEntityTextBoxFieldSpecShape = Gubu(
       ux: Open({
         kind: Exact('TextBox'),
         edit: Default(true),
-        props: Open({})
-      })
-    })
+        props: Open({}),
+      }),
+    }),
   }),
   { name: CMPNAME }
 )
 
-function BasicEntityTextBoxField (props: any) {
+function BasicEntityTextBoxField(props: any) {
   const { spec } = props
 
   const basicEntityTextBoxField: Spec = BasicEntityTextBoxFieldSpecShape(spec)
@@ -37,7 +37,7 @@ function BasicEntityTextBoxField (props: any) {
         id={field.id}
         name={field.name}
         label={field.label}
-        variant='outlined'
+        variant="outlined"
         fullWidth
         multiline
         rows={field.ux.rows}
