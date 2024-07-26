@@ -82,11 +82,7 @@ function BasicEntityEdit(props: any) {
 
   const { spec, slot, fields } = seneca.export(
     'VxgBasicEntityEditPlugin/handle'
-  ) || {
-    spec: {},
-    slot: null,
-    fields: [],
-  }
+  ) || { spec: {}, slot: null, fields: [] }
 
   const { ent, name } = spec
 
