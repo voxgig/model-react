@@ -1,50 +1,50 @@
-import React, { useEffect, forwardRef } from "react";
+import React, { useEffect, forwardRef } from 'react'
 
 import {
   FormControlLabel,
   Checkbox,
   Box,
   Rating,
-  FormLabel,
-} from "@mui/material";
-import { Controller } from "react-hook-form";
+  FormLabel
+} from '@mui/material'
+import { Controller } from 'react-hook-form'
 
-import type { Spec } from "./basic-types";
+import type { Spec } from './basic-types'
 
-import { Default, Exact, Gubu, Skip } from "gubu";
-const CMPNAME = "BasicEntitySliderField";
+import { Default, Exact, Gubu, Skip } from 'gubu'
+const CMPNAME = 'BasicEntitySliderField'
 
-const { Open } = Gubu;
+const { Open } = Gubu
 const BasicEntityRatingFieldSpecShape = Gubu(
   Open({
     field: Open({
       id: String,
       name: String,
       kind: Skip(String),
-      label: Default("", String),
+      label: Default('', String),
       ux: Open({
-        kind: Exact("Rating"),
+        kind: Exact('Rating'),
         edit: Default(true),
         precision: 1,
-        props: Open({}),
-      }),
-    }),
+        props: Open({})
+      })
+    })
   }),
   { name: CMPNAME }
-);
+)
 
-function BasicEntityRatingField(props: any) {
-  const { spec } = props;
+function BasicEntityRatingField (props: any) {
+  const { spec } = props
 
-  const basicEntityRatingField: Spec = BasicEntityRatingFieldSpecShape(spec);
-  const { control, field, getValues } = basicEntityRatingField;
-  const val = getValues(field.name);
+  const basicEntityRatingField: Spec = BasicEntityRatingFieldSpecShape(spec)
+  const { control, field, getValues } = basicEntityRatingField
+  const val = getValues(field.name)
 
   //   console.log("BasicEntityRatingField", "val", val);
 
   return (
     <div key={`${field.id}-div`}>
-      <FormLabel component="legend">{field.label}</FormLabel>
+      <FormLabel component='legend'>{field.label}</FormLabel>
       <Controller
         key={`${field.id}-controller`}
         name={field.name}
@@ -61,7 +61,7 @@ function BasicEntityRatingField(props: any) {
         )}
       />
     </div>
-  );
+  )
 }
 
-export { BasicEntityRatingField };
+export { BasicEntityRatingField }

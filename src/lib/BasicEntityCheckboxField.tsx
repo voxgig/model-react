@@ -1,11 +1,7 @@
-import React, { useEffect, forwardRef } from "react";
+import React, { useEffect, forwardRef } from 'react'
 
-import {
-  FormControlLabel,
-  Checkbox,
-  Box
-} from "@mui/material";
-import { Controller } from "react-hook-form";
+import { FormControlLabel, Checkbox, Box } from '@mui/material'
+import { Controller } from 'react-hook-form'
 
 import type { Spec } from './basic-types'
 
@@ -13,32 +9,32 @@ import { Default, Exact, Gubu, Skip } from 'gubu'
 const CMPNAME = 'BasicEntitySliderField'
 
 const { Open } = Gubu
-const BasicEntityCheckboxFieldSpecShape = Gubu(Open({
-  field: Open({
-    id: String,
-    name: String,
-    kind: Skip(String),
-    label: Default('', String),
-    ux: Open({
-      kind: Exact('Checkbox'),
-      edit: Default(true),
-      props: Open({}),
+const BasicEntityCheckboxFieldSpecShape = Gubu(
+  Open({
+    field: Open({
+      id: String,
+      name: String,
+      kind: Skip(String),
+      label: Default('', String),
+      ux: Open({
+        kind: Exact('Checkbox'),
+        edit: Default(true),
+        props: Open({})
+      })
     })
   }),
-}), {name: CMPNAME})
+  { name: CMPNAME }
+)
 
-function BasicEntityCheckboxField(props: any) {
-  const { spec } = props;
+function BasicEntityCheckboxField (props: any) {
+  const { spec } = props
 
   const basicEntityCheckboxField: Spec = BasicEntityCheckboxFieldSpecShape(spec)
   const { control, field, getValues } = basicEntityCheckboxField
   const val = getValues(field.name)
 
   return (
-    <Box
-      key={`${field.id}-box`}
-      { ...field.ux.props }
-    >
+    <Box key={`${field.id}-box`} {...field.ux.props}>
       <FormControlLabel
         control={
           <Controller
@@ -60,7 +56,7 @@ function BasicEntityCheckboxField(props: any) {
         label={field.label}
       />
     </Box>
-  );
+  )
 }
 
-export { BasicEntityCheckboxField };
+export { BasicEntityCheckboxField }
