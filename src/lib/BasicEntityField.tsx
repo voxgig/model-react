@@ -5,7 +5,7 @@ import { TextField } from "@mui/material";
 import type { Spec } from "./basic-types";
 
 import { Default, Exact, Gubu, Skip } from "gubu";
-import { BasicEntityCheckboxField } from "./BasicEntityCheckboxField";
+import { BasicEntityCheckboxField } from "./BasicEntityCheckField";
 import { BasicEntityAutocompleteField } from "./BasicEntityAutocompleteField";
 import { BasicEntitySliderField } from "./BasicEntitySliderField";
 import { BasicEntityRadioGroupField } from "./BasicEntityRadioGroupField";
