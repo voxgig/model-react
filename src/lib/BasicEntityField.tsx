@@ -1,40 +1,52 @@
-import React, { useEffect, forwardRef } from 'react'
+import React, { useEffect, forwardRef } from "react";
 
-import {
-  TextField,
-} from '@mui/material'
+import { TextField } from "@mui/material";
 
+import type { Spec } from "./basic-types";
 
-import type { Spec } from './basic-types'
+import { Default, Exact, Gubu, Skip } from "gubu";
+import { BasicEntityCheckboxField } from "./BasicEntityCheckboxField";
+import { BasicEntityAutocompleteField } from "./BasicEntityAutocompleteField";
+import { BasicEntitySliderField } from "./BasicEntitySliderField";
+import { BasicEntityRadioGroupField } from "./BasicEntityRadioGroupField";
+import { BasicEntityTextBoxField } from "./BasicEntityTextBoxField";
+import { BasicEntityTextField } from "./BasicEntityTextField";
+import { BasicEntityDateField } from "./BasicEntityDateField";
+import { BasicEntityTimeField } from "./BasicEntityTimeField";
+import { BasicEntityDateTimeField } from "./BasicEntityDateTimeField";
+import { BasicEntityRatingField } from "./BasicEntityRatingField";
 
-import { Default, Exact, Gubu, Skip } from 'gubu'
-import { BasicEntityCheckBoxField } from './BasicEntityCheckBoxField'
-import { BasicEntityAutocompleteField } from './BasicEntityAutocompleteField'
-import { BasicEntitySliderField } from './BasicEntitySliderField'
-import { BasicEntityRadioGroupField } from './BasicEntityRadioGroupField'
-import { BasicEntityTextBoxField } from './BasicEntityTextBoxField'
-import { BasicEntityTextField } from './BasicEntityTextField'
-import { BasicEntityDateField } from './BasicEntityDateField'
-import { BasicEntityTimeField } from './BasicEntityTimeField'
-import { BasicEntityDateTimeField } from './BasicEntityDateTimeField'
+const CMPNAME = "BasicEntityField";
 
-const CMPNAME = 'BasicEntityField'
-
-const { Open } = Gubu
-const BasicEntityFieldSpecShape = Gubu(Open({
-  field: Open({
-    id: String,
-    name: String,
-    kind: Skip(String),
-    label: Default('', String),
-    ux: Open({
-      kind: Exact('Text', 'TextBox', 'Date', 'DateTime', 'Time', 'CheckBox', 'Autocomplete', 'Slider', 'RadioGroup'),
-      edit: Default(true),
-      rows: Default(3),
-      props: Open({}),
-    })
+const { Open } = Gubu;
+const BasicEntityFieldSpecShape = Gubu(
+  Open({
+    field: Open({
+      id: String,
+      name: String,
+      kind: Skip(String),
+      label: Default("", String),
+      ux: Open({
+        kind: Exact(
+          "Text",
+          "TextBox",
+          "Date",
+          "DateTime",
+          "Time",
+          "Checkbox",
+          "Autocomplete",
+          "Slider",
+          "RadioGroup",
+          "Rating"
+        ),
+        edit: Default(true),
+        rows: Default(3),
+        props: Open({}),
+      }),
+    }),
   }),
-}), {name: CMPNAME})
+  { name: CMPNAME }
+);
 
 const fieldMap: any = {
   Text: BasicEntityTextField,
@@ -42,23 +54,23 @@ const fieldMap: any = {
   Date: BasicEntityDateField,
   DateTime: BasicEntityDateTimeField,
   Time: BasicEntityTimeField,
-  CheckBox: BasicEntityCheckBoxField,
+  Checkbox: BasicEntityCheckboxField,
   Autocomplete: BasicEntityAutocompleteField,
   Slider: BasicEntitySliderField,
-  RadioGroup: BasicEntityRadioGroupField
-}
+  RadioGroup: BasicEntityRadioGroupField,
+  Rating: BasicEntityRatingField,
+};
 
+function BasicEntityField(props: any) {
+  const { ctx, spec } = props;
 
-function BasicEntityField (props: any) {
-  const { ctx, spec } = props
-
-  const basicEntityFieldSpec: Spec = BasicEntityFieldSpecShape(spec)
-  const field: any = basicEntityFieldSpec.field
-  const Field: any = fieldMap[field.ux.kind]
+  const basicEntityFieldSpec: Spec = BasicEntityFieldSpecShape(spec);
+  const field: any = basicEntityFieldSpec.field;
+  const Field: any = fieldMap[field.ux.kind];
 
   // console.log('BEF ERR', spec)
-  
-  return <Field ctx={ctx} spec={spec} />
+
+  return <Field ctx={ctx} spec={spec} />;
 }
 
 /*
@@ -105,9 +117,6 @@ function BasicEntityDateTimeField (props: any) {
 }
 */
 
-
-
-
 /* Notes
 
 https://www.react-hook-form.com/
@@ -119,8 +128,4 @@ https://mui.com/material-ui/react-grid/
 
  */
 
-
-
-export {
-  BasicEntityField
-}
+export { BasicEntityField };

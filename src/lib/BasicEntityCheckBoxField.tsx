@@ -13,25 +13,25 @@ import { Default, Exact, Gubu, Skip } from 'gubu'
 const CMPNAME = 'BasicEntitySliderField'
 
 const { Open } = Gubu
-const BasicEntityCheckBoxFieldSpecShape = Gubu(Open({
+const BasicEntityCheckboxFieldSpecShape = Gubu(Open({
   field: Open({
     id: String,
     name: String,
     kind: Skip(String),
     label: Default('', String),
     ux: Open({
-      kind: Exact('CheckBox'),
+      kind: Exact('Checkbox'),
       edit: Default(true),
       props: Open({}),
     })
   }),
 }), {name: CMPNAME})
 
-function BasicEntityCheckBoxField(props: any) {
+function BasicEntityCheckboxField(props: any) {
   const { spec } = props;
 
-  const basicEntityCheckBoxField: Spec = BasicEntityCheckBoxFieldSpecShape(spec)
-  const { control, field, getValues } = basicEntityCheckBoxField
+  const basicEntityCheckboxField: Spec = BasicEntityCheckboxFieldSpecShape(spec)
+  const { control, field, getValues } = basicEntityCheckboxField
   const val = getValues(field.name)
 
   return (
@@ -63,4 +63,4 @@ function BasicEntityCheckBoxField(props: any) {
   );
 }
 
-export { BasicEntityCheckBoxField };
+export { BasicEntityCheckboxField };
