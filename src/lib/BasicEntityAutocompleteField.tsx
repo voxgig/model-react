@@ -32,7 +32,7 @@ const BasicEntityAutocompleteFieldSpecShape = Gubu(
   { name: CMPNAME }
 )
 
-function BasicEntityAutocompleteField (props: any) {
+function BasicEntityAutocompleteField(props: any) {
   const { spec } = props
 
   const basicEntityAutocompleteField: Spec =
@@ -72,7 +72,7 @@ function BasicEntityAutocompleteField (props: any) {
 }
 
 // Returns array of options and default value(s) based on the options object
-function resolveOptions (options: any) {
+function resolveOptions(options: any) {
   const { multiple, ents, label, value, default: defaultValues } = options
   const labelField = label?.field
   const valueField = value?.field
@@ -107,7 +107,7 @@ function resolveOptions (options: any) {
   }
 }
 
-function resolveValue (options: any, val: any) {
+function resolveValue(options: any, val: any) {
   const { multiple, ents, label, value } = options
   const labelField = label?.field
   const valueField = value?.field

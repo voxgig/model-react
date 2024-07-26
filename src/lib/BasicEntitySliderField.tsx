@@ -34,7 +34,7 @@ const BasicEntitySliderFieldSpecShape = Gubu(
   { name: CMPNAME }
 )
 
-function BasicEntitySliderField (props: any) {
+function BasicEntitySliderField(props: any) {
   const { spec } = props
 
   const basicEntityAutocompleteField: Spec =
@@ -71,7 +71,7 @@ function BasicEntitySliderField (props: any) {
   )
 }
 
-function resolveMarks (marks: any) {
+function resolveMarks(marks: any) {
   if (
     !marks ||
     (typeof marks === 'object' && Object.keys(marks).length === 0)

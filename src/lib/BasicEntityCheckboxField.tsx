@@ -26,7 +26,7 @@ const BasicEntityCheckboxFieldSpecShape = Gubu(
   { name: CMPNAME }
 )
 
-function BasicEntityCheckboxField (props: any) {
+function BasicEntityCheckboxField(props: any) {
   const { spec } = props
 
   const basicEntityCheckboxField: Spec = BasicEntityCheckboxFieldSpecShape(spec)

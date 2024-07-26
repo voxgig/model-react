@@ -25,7 +25,7 @@ const BasicEntityTextFieldSpecShape = Gubu(
   { name: CMPNAME }
 )
 
-function BasicEntityTextField (props: any) {
+function BasicEntityTextField(props: any) {
   const { spec } = props
 
   const basicEntityTextBoxField: Spec = BasicEntityTextFieldSpecShape(spec)

@@ -1,6 +1,6 @@
 import React from 'react'
 
-function BasicEntityFieldError (props: any) {
+function BasicEntityFieldError(props: any) {
   const { err } = props
   return err ? (
     <div className='vxg-BasicEntityFieldError-active'>{err.message}</div>

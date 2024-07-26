@@ -1,32 +1,32 @@
-import React, { useEffect, useState, useCallback } from 'react'
+import React, { useEffect, useState, useCallback } from 'react';
 
-import { useSelector } from 'react-redux'
+import { useSelector } from 'react-redux';
 
-import { useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom';
 
-import { Box, Grid, Button, Toolbar } from '@mui/material'
+import { Box, Grid, Button, Toolbar } from '@mui/material';
 
-import { useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form';
 
-import { BasicEntityField } from './BasicEntityField'
+import { BasicEntityField } from './BasicEntityField';
 
-import { VxgBasicEntityEditPlugin } from './VxgBasicEntityEditPlugin'
+import { VxgBasicEntityEditPlugin } from './VxgBasicEntityEditPlugin';
 
-const CMPNAME = 'BasicEntityEdit'
+const CMPNAME = 'BasicEntityEdit';
 
 // TODO: make this debuggable
 const makeResolver = (entity: any) =>
   useCallback(
     async (data: any) => {
       // const shape = entity.valid$({shape:true})
-      entity = entity.make$().data$(data)
-      let errors = entity.valid$({ errors: true })
+      entity = entity.make$().data$(data);
+      let errors = entity.valid$({ errors: true });
 
       // TODO: use a seneca sub message to provide errors for other uses - debugging etc.
 
       // TODO: need a better way to access this; also namespaced!
-      const errmsg = entity.private$.get_instance().context.errmsg
-      console.log('ERRORS', errors, 'ERRMSG', errmsg.print())
+      const errmsg = entity.private$.get_instance().context.errmsg;
+      console.log('ERRORS', errors, 'ERRMSG', errmsg.print());
 
       errors = errors
         .map((e: any) => ((e.tag_kind = 'ent'), e))
@@ -38,34 +38,34 @@ const makeResolver = (entity: any) =>
                 ? (_ = errmsg.find(e))
                   ? _.text
                   : e.text
-                : e.text
+                : e.text,
             }),
             a
           ),
           {}
-        )
+        );
 
-      const values = entity.data$(false)
+      const values = entity.data$(false);
       const out = {
         values,
-        errors
-      }
+        errors,
+      };
 
-      console.log('ERROUT', out)
+      console.log('ERROUT', out);
 
-      return out
+      return out;
     },
     [entity.entity$]
-  )
+  );
 
-function BasicEntityEdit (props: any) {
-  const { ctx } = props
-  const { seneca } = ctx()
+function BasicEntityEdit(props: any) {
+  const { ctx } = props;
+  const { seneca } = ctx();
 
   // const query = useSelector((state:any)=>state.main.current.view.query)
 
-  const [plugin, setPlugin] = useState(false)
-  const [ready, setReady] = useState(false)
+  const [plugin, setPlugin] = useState(false);
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
     if (!plugin) {
@@ -74,36 +74,40 @@ function BasicEntityEdit (props: any) {
         define: VxgBasicEntityEditPlugin,
         options: {
           spec: props.spec,
-          setPlugin
-        }
-      })
+          setPlugin,
+        },
+      });
     }
-  }, [])
+  }, []);
 
   const { spec, slot, fields } = seneca.export(
     'VxgBasicEntityEditPlugin/handle'
-  ) || { spec: {}, slot: null, fields: [] }
+  ) || {
+    spec: {},
+    slot: null,
+    fields: [],
+  };
 
-  const { ent, name } = spec
+  const { ent, name } = spec;
 
   if (plugin && !ready) {
-    seneca.act('aim:app,on:BasicLed,ready:edit', { view: name, setReady })
+    seneca.act('aim:app,on:BasicLed,ready:edit', { view: name, setReady });
   }
 
-  const slotSelectors = seneca.export('Redux/slotSelectors')
-  let { selectItem, selectList, selectMeta } = slotSelectors(slot)
+  const slotSelectors = seneca.export('Redux/slotSelectors');
+  let { selectItem, selectList, selectMeta } = slotSelectors(slot);
 
-  let item = useSelector((state: any) => selectItem(state))
+  let item = useSelector((state: any) => selectItem(state));
 
   if (item && name) {
     item = seneca.direct('aim:app,on:BasicLed,modify:edit', {
       view: name,
       item,
-      fields
-    })
+      fields,
+    });
   }
 
-  const params: any = useParams()
+  const params: any = useParams();
 
   useEffect(() => {
     if (ready) {
@@ -111,14 +115,14 @@ function BasicEntityEdit (props: any) {
         seneca.act('aim:app,on:BasicLed,edit:item', {
           view: name,
           fields,
-          item_id: params.item
-        })
+          item_id: params.item,
+        });
       }
-      reset(item)
+      reset(item);
     }
-  }, [null == item, ready])
+  }, [null == item, ready]);
 
-  const resolver = makeResolver(seneca.entity(ent))
+  const resolver = makeResolver(seneca.entity(ent));
 
   const {
     register,
@@ -126,21 +130,21 @@ function BasicEntityEdit (props: any) {
     getValues,
     reset,
     control,
-    formState: { errors }
+    formState: { errors },
   } = useForm({
     mode: 'onChange',
-    resolver
-  })
+    resolver,
+  });
 
   const onSubmit = (data: any) => {
-    seneca.act('aim:app,on:BasicLed,save:item', { view: name, data })
-  }
+    seneca.act('aim:app,on:BasicLed,save:item', { view: name, data });
+  };
 
   return (
-    <Box className='vxg-BasicEntityEdit'>
+    <Box className="vxg-BasicEntityEdit">
       {item ? (
         <form
-          className='vxg-BasicEntityEdit-form'
+          className="vxg-BasicEntityEdit-form"
           onSubmit={handleSubmit(onSubmit)}
         >
           <Grid container spacing={2}>
@@ -153,7 +157,7 @@ function BasicEntityEdit (props: any) {
                     register,
                     getValues,
                     control,
-                    errors
+                    errors,
                   }}
                 />
               </Grid>
@@ -162,8 +166,8 @@ function BasicEntityEdit (props: any) {
 
           {/* <p>errors: {JSON.stringify(errors)}</p> */}
 
-          <Toolbar className='vxg-BasicEntityEdit-toolbar-foot'>
-            <Button type='submit' variant='contained'>
+          <Toolbar className="vxg-BasicEntityEdit-toolbar-foot">
+            <Button type="submit" variant="contained">
               Save
             </Button>
           </Toolbar>
@@ -172,7 +176,7 @@ function BasicEntityEdit (props: any) {
         <></>
       )}
     </Box>
-  )
+  );
 }
 
-export { BasicEntityEdit }
+export { BasicEntityEdit };

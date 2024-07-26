@@ -24,7 +24,7 @@ const BasicEntityTimeFieldSpecShape = Gubu(
   { name: CMPNAME }
 )
 
-function BasicEntityTimeField (props: any) {
+function BasicEntityTimeField(props: any) {
   const { spec } = props
 
   const basicEntityTimeField: Spec = BasicEntityTimeFieldSpecShape(spec)

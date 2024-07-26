@@ -32,7 +32,7 @@ const BasicEntityRadioGroupFieldSpecShape = Gubu(
   { name: CMPNAME }
 )
 
-function BasicEntityRadioGroupField (props: any) {
+function BasicEntityRadioGroupField(props: any) {
   const { spec } = props
 
   const basicEntityRadioGroupField: Spec =
@@ -72,7 +72,7 @@ function BasicEntityRadioGroupField (props: any) {
 }
 
 // Returns array of options and default value(s) based on the options object
-function resolveOptions (options: any) {
+function resolveOptions(options: any) {
   const { multiple, ents, label, value, default: defaultValues } = options
   const labelField = label?.field
   const valueField = value?.field

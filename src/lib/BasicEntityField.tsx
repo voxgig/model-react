@@ -59,7 +59,7 @@ const fieldMap: any = {
   Rating: BasicEntityRatingField
 }
 
-function BasicEntityField (props: any) {
+function BasicEntityField(props: any) {
   const { ctx, spec } = props
 
   const basicEntityFieldSpec: Spec = BasicEntityFieldSpecShape(spec)

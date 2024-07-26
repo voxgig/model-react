@@ -33,7 +33,7 @@ const BasicEntityRatingFieldSpecShape = Gubu(
   { name: CMPNAME }
 )
 
-function BasicEntityRatingField (props: any) {
+function BasicEntityRatingField(props: any) {
   const { spec } = props
 
   const basicEntityRatingField: Spec = BasicEntityRatingFieldSpecShape(spec)
