@@ -12,8 +12,8 @@ const BasicEntityTextBoxFieldSpecShape = Gubu(
     field: Open({
       id: String,
       name: String,
-      kind: Skip(String),
-      label: Default('', String),
+      kind: '',
+      label: '',
       ux: Open({
         kind: Exact('TextBox'),
         edit: Default(true),

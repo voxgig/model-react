@@ -14,8 +14,8 @@ const BasicEntityButtonFieldSpecShape = Gubu(
     field: Open({
       id: String,
       name: String,
-      kind: Skip(String),
-      label: Default('', String),
+      kind: '',
+      label: String,
       ux: Open({
         kind: Exact('Button'),
         edit: Default(true),

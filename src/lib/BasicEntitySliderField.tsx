@@ -14,20 +14,20 @@ const BasicEntitySliderFieldSpecShape = Gubu(
     field: Open({
       id: String,
       name: String,
-      kind: Skip(String),
-      label: Default('', String),
+      kind: '',
+      label: '',
       ux: Open({
         kind: Exact('Slider'),
         edit: Default(true),
         step: Default(1),
         min: Default(0),
         max: Default(100),
-        props: {
+        props: Open({
           marks: Default({}),
           valueLabelDisplay: Exact('on', 'auto', 'off').Default('auto'),
           direction: Exact('horizontal', 'vertical').Default('horizontal'),
           track: Exact('normal', 'inverted', 'disabled').Default('normal'),
-        },
+        }),
       }),
     }),
   }),

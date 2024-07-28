@@ -53,7 +53,7 @@ var __async = (__this, __arguments, generator) => {
   });
 };
 import * as React$1 from "react";
-import React__default, { isValidElement, Children, cloneElement, useMemo, useState, useReducer, useRef, useEffect, useCallback, memo as memo$2, Fragment as Fragment$2, useLayoutEffect } from "react";
+import React__default, { isValidElement, Children, cloneElement, useMemo, useState, useReducer, useRef, useEffect, useCallback, memo as memo$2, Fragment, useLayoutEffect } from "react";
 import { Button as Button$1, Avatar, Menu as Menu$1, MenuItem as MenuItem$1, IconButton as IconButton$1, useTheme as useTheme$5, Box as Box$2, FormControlLabel as FormControlLabel$1, Checkbox as Checkbox$1, Autocomplete as Autocomplete$1, TextField as TextField$1, FormLabel as FormLabel$1, Slider as Slider$1, RadioGroup, Radio as Radio$1, Rating, ButtonGroup, Grid as Grid$1, Toolbar as Toolbar$1, Container as Container$2, Drawer as Drawer$1, List as List$1, ListItem as ListItem$1, ListItemButton as ListItemButton$1, ListItemIcon as ListItemIcon$1, ListItemText as ListItemText$1, Divider as Divider$1, Typography as Typography$1 } from "@mui/material";
 import emStyled from "@emotion/styled";
 import { CacheProvider, Global, ThemeContext as ThemeContext$1, css, keyframes } from "@emotion/react";
@@ -66,31 +66,31 @@ var commonjsGlobal = typeof globalThis !== "undefined" ? globalThis : typeof win
 function getDefaultExportFromCjs(x) {
   return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, "default") ? x["default"] : x;
 }
-function getDefaultExportFromNamespaceIfPresent(n2) {
-  return n2 && Object.prototype.hasOwnProperty.call(n2, "default") ? n2["default"] : n2;
+function getDefaultExportFromNamespaceIfPresent(n) {
+  return n && Object.prototype.hasOwnProperty.call(n, "default") ? n["default"] : n;
 }
-function getDefaultExportFromNamespaceIfNotNamed(n2) {
-  return n2 && Object.prototype.hasOwnProperty.call(n2, "default") && Object.keys(n2).length === 1 ? n2["default"] : n2;
+function getDefaultExportFromNamespaceIfNotNamed(n) {
+  return n && Object.prototype.hasOwnProperty.call(n, "default") && Object.keys(n).length === 1 ? n["default"] : n;
 }
-function getAugmentedNamespace(n2) {
-  if (n2.__esModule) return n2;
-  var f2 = n2.default;
-  if (typeof f2 == "function") {
+function getAugmentedNamespace(n) {
+  if (n.__esModule) return n;
+  var f = n.default;
+  if (typeof f == "function") {
     var a = function a2() {
       if (this instanceof a2) {
-        return Reflect.construct(f2, arguments, this.constructor);
+        return Reflect.construct(f, arguments, this.constructor);
       }
-      return f2.apply(this, arguments);
+      return f.apply(this, arguments);
     };
-    a.prototype = f2.prototype;
+    a.prototype = f.prototype;
   } else a = {};
   Object.defineProperty(a, "__esModule", { value: true });
-  Object.keys(n2).forEach(function(k2) {
-    var d = Object.getOwnPropertyDescriptor(n2, k2);
-    Object.defineProperty(a, k2, d.get ? d : {
+  Object.keys(n).forEach(function(k) {
+    var d = Object.getOwnPropertyDescriptor(n, k);
+    Object.defineProperty(a, k, d.get ? d : {
       enumerable: true,
       get: function() {
-        return n2[k2];
+        return n[k];
       }
     });
   });
@@ -107,20 +107,26 @@ var reactJsxRuntime_production_min = {};
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
-"use strict";
-var f = React__default, k = Symbol.for("react.element"), l = Symbol.for("react.fragment"), m = Object.prototype.hasOwnProperty, n = f.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner, p = { key: true, ref: true, __self: true, __source: true };
-function q(c, a, g) {
-  var b, d = {}, e = null, h = null;
-  void 0 !== g && (e = "" + g);
-  void 0 !== a.key && (e = "" + a.key);
-  void 0 !== a.ref && (h = a.ref);
-  for (b in a) m.call(a, b) && !p.hasOwnProperty(b) && (d[b] = a[b]);
-  if (c && c.defaultProps) for (b in a = c.defaultProps, a) void 0 === d[b] && (d[b] = a[b]);
-  return { $$typeof: k, type: c, key: e, ref: h, props: d, _owner: n.current };
+var hasRequiredReactJsxRuntime_production_min;
+function requireReactJsxRuntime_production_min() {
+  if (hasRequiredReactJsxRuntime_production_min) return reactJsxRuntime_production_min;
+  hasRequiredReactJsxRuntime_production_min = 1;
+  "use strict";
+  var f = React__default, k = Symbol.for("react.element"), l = Symbol.for("react.fragment"), m = Object.prototype.hasOwnProperty, n = f.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner, p = { key: true, ref: true, __self: true, __source: true };
+  function q(c, a, g) {
+    var b, d = {}, e = null, h = null;
+    void 0 !== g && (e = "" + g);
+    void 0 !== a.key && (e = "" + a.key);
+    void 0 !== a.ref && (h = a.ref);
+    for (b in a) m.call(a, b) && !p.hasOwnProperty(b) && (d[b] = a[b]);
+    if (c && c.defaultProps) for (b in a = c.defaultProps, a) void 0 === d[b] && (d[b] = a[b]);
+    return { $$typeof: k, type: c, key: e, ref: h, props: d, _owner: n.current };
+  }
+  reactJsxRuntime_production_min.Fragment = l;
+  reactJsxRuntime_production_min.jsx = q;
+  reactJsxRuntime_production_min.jsxs = q;
+  return reactJsxRuntime_production_min;
 }
-var Fragment$1 = reactJsxRuntime_production_min.Fragment = l;
-var jsx = reactJsxRuntime_production_min.jsx = q;
-var jsxs = reactJsxRuntime_production_min.jsxs = q;
 var reactJsxRuntime_development = {};
 /**
  * @license React
@@ -131,905 +137,914 @@ var reactJsxRuntime_development = {};
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
-var jsxs_1;
-var jsx_1;
-var Fragment;
-"use strict";
-if (process.env.NODE_ENV !== "production") {
-  (function() {
-    "use strict";
-    var React2 = React__default;
-    var REACT_ELEMENT_TYPE = Symbol.for("react.element");
-    var REACT_PORTAL_TYPE = Symbol.for("react.portal");
-    var REACT_FRAGMENT_TYPE = Symbol.for("react.fragment");
-    var REACT_STRICT_MODE_TYPE = Symbol.for("react.strict_mode");
-    var REACT_PROFILER_TYPE = Symbol.for("react.profiler");
-    var REACT_PROVIDER_TYPE = Symbol.for("react.provider");
-    var REACT_CONTEXT_TYPE = Symbol.for("react.context");
-    var REACT_FORWARD_REF_TYPE = Symbol.for("react.forward_ref");
-    var REACT_SUSPENSE_TYPE = Symbol.for("react.suspense");
-    var REACT_SUSPENSE_LIST_TYPE = Symbol.for("react.suspense_list");
-    var REACT_MEMO_TYPE = Symbol.for("react.memo");
-    var REACT_LAZY_TYPE = Symbol.for("react.lazy");
-    var REACT_OFFSCREEN_TYPE = Symbol.for("react.offscreen");
-    var MAYBE_ITERATOR_SYMBOL = Symbol.iterator;
-    var FAUX_ITERATOR_SYMBOL = "@@iterator";
-    function getIteratorFn(maybeIterable) {
-      if (maybeIterable === null || typeof maybeIterable !== "object") {
+var hasRequiredReactJsxRuntime_development;
+function requireReactJsxRuntime_development() {
+  if (hasRequiredReactJsxRuntime_development) return reactJsxRuntime_development;
+  hasRequiredReactJsxRuntime_development = 1;
+  "use strict";
+  if (process.env.NODE_ENV !== "production") {
+    (function() {
+      "use strict";
+      var React2 = React__default;
+      var REACT_ELEMENT_TYPE = Symbol.for("react.element");
+      var REACT_PORTAL_TYPE = Symbol.for("react.portal");
+      var REACT_FRAGMENT_TYPE = Symbol.for("react.fragment");
+      var REACT_STRICT_MODE_TYPE = Symbol.for("react.strict_mode");
+      var REACT_PROFILER_TYPE = Symbol.for("react.profiler");
+      var REACT_PROVIDER_TYPE = Symbol.for("react.provider");
+      var REACT_CONTEXT_TYPE = Symbol.for("react.context");
+      var REACT_FORWARD_REF_TYPE = Symbol.for("react.forward_ref");
+      var REACT_SUSPENSE_TYPE = Symbol.for("react.suspense");
+      var REACT_SUSPENSE_LIST_TYPE = Symbol.for("react.suspense_list");
+      var REACT_MEMO_TYPE = Symbol.for("react.memo");
+      var REACT_LAZY_TYPE = Symbol.for("react.lazy");
+      var REACT_OFFSCREEN_TYPE = Symbol.for("react.offscreen");
+      var MAYBE_ITERATOR_SYMBOL = Symbol.iterator;
+      var FAUX_ITERATOR_SYMBOL = "@@iterator";
+      function getIteratorFn(maybeIterable) {
+        if (maybeIterable === null || typeof maybeIterable !== "object") {
+          return null;
+        }
+        var maybeIterator = MAYBE_ITERATOR_SYMBOL && maybeIterable[MAYBE_ITERATOR_SYMBOL] || maybeIterable[FAUX_ITERATOR_SYMBOL];
+        if (typeof maybeIterator === "function") {
+          return maybeIterator;
+        }
         return null;
       }
-      var maybeIterator = MAYBE_ITERATOR_SYMBOL && maybeIterable[MAYBE_ITERATOR_SYMBOL] || maybeIterable[FAUX_ITERATOR_SYMBOL];
-      if (typeof maybeIterator === "function") {
-        return maybeIterator;
-      }
-      return null;
-    }
-    var ReactSharedInternals = React2.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
-    function error(format) {
-      {
+      var ReactSharedInternals = React2.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+      function error(format) {
         {
-          for (var _len2 = arguments.length, args = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
-            args[_key2 - 1] = arguments[_key2];
+          {
+            for (var _len2 = arguments.length, args = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+              args[_key2 - 1] = arguments[_key2];
+            }
+            printWarning("error", format, args);
           }
-          printWarning("error", format, args);
         }
       }
-    }
-    function printWarning(level, format, args) {
+      function printWarning(level, format, args) {
+        {
+          var ReactDebugCurrentFrame2 = ReactSharedInternals.ReactDebugCurrentFrame;
+          var stack = ReactDebugCurrentFrame2.getStackAddendum();
+          if (stack !== "") {
+            format += "%s";
+            args = args.concat([stack]);
+          }
+          var argsWithFormat = args.map(function(item) {
+            return String(item);
+          });
+          argsWithFormat.unshift("Warning: " + format);
+          Function.prototype.apply.call(console[level], console, argsWithFormat);
+        }
+      }
+      var enableScopeAPI = false;
+      var enableCacheElement = false;
+      var enableTransitionTracing = false;
+      var enableLegacyHidden = false;
+      var enableDebugTracing = false;
+      var REACT_MODULE_REFERENCE;
       {
-        var ReactDebugCurrentFrame2 = ReactSharedInternals.ReactDebugCurrentFrame;
-        var stack = ReactDebugCurrentFrame2.getStackAddendum();
-        if (stack !== "") {
-          format += "%s";
-          args = args.concat([stack]);
-        }
-        var argsWithFormat = args.map(function(item) {
-          return String(item);
-        });
-        argsWithFormat.unshift("Warning: " + format);
-        Function.prototype.apply.call(console[level], console, argsWithFormat);
+        REACT_MODULE_REFERENCE = Symbol.for("react.module.reference");
       }
-    }
-    var enableScopeAPI = false;
-    var enableCacheElement = false;
-    var enableTransitionTracing = false;
-    var enableLegacyHidden = false;
-    var enableDebugTracing = false;
-    var REACT_MODULE_REFERENCE;
-    {
-      REACT_MODULE_REFERENCE = Symbol.for("react.module.reference");
-    }
-    function isValidElementType(type) {
-      if (typeof type === "string" || typeof type === "function") {
-        return true;
-      }
-      if (type === REACT_FRAGMENT_TYPE || type === REACT_PROFILER_TYPE || enableDebugTracing || type === REACT_STRICT_MODE_TYPE || type === REACT_SUSPENSE_TYPE || type === REACT_SUSPENSE_LIST_TYPE || enableLegacyHidden || type === REACT_OFFSCREEN_TYPE || enableScopeAPI || enableCacheElement || enableTransitionTracing) {
-        return true;
-      }
-      if (typeof type === "object" && type !== null) {
-        if (type.$$typeof === REACT_LAZY_TYPE || type.$$typeof === REACT_MEMO_TYPE || type.$$typeof === REACT_PROVIDER_TYPE || type.$$typeof === REACT_CONTEXT_TYPE || type.$$typeof === REACT_FORWARD_REF_TYPE || // This needs to include all possible module reference object
-        // types supported by any Flight configuration anywhere since
-        // we don't know which Flight build this will end up being used
-        // with.
-        type.$$typeof === REACT_MODULE_REFERENCE || type.getModuleId !== void 0) {
+      function isValidElementType(type) {
+        if (typeof type === "string" || typeof type === "function") {
           return true;
         }
+        if (type === REACT_FRAGMENT_TYPE || type === REACT_PROFILER_TYPE || enableDebugTracing || type === REACT_STRICT_MODE_TYPE || type === REACT_SUSPENSE_TYPE || type === REACT_SUSPENSE_LIST_TYPE || enableLegacyHidden || type === REACT_OFFSCREEN_TYPE || enableScopeAPI || enableCacheElement || enableTransitionTracing) {
+          return true;
+        }
+        if (typeof type === "object" && type !== null) {
+          if (type.$$typeof === REACT_LAZY_TYPE || type.$$typeof === REACT_MEMO_TYPE || type.$$typeof === REACT_PROVIDER_TYPE || type.$$typeof === REACT_CONTEXT_TYPE || type.$$typeof === REACT_FORWARD_REF_TYPE || // This needs to include all possible module reference object
+          // types supported by any Flight configuration anywhere since
+          // we don't know which Flight build this will end up being used
+          // with.
+          type.$$typeof === REACT_MODULE_REFERENCE || type.getModuleId !== void 0) {
+            return true;
+          }
+        }
+        return false;
       }
-      return false;
-    }
-    function getWrappedName2(outerType, innerType, wrapperName) {
-      var displayName = outerType.displayName;
-      if (displayName) {
-        return displayName;
+      function getWrappedName2(outerType, innerType, wrapperName) {
+        var displayName = outerType.displayName;
+        if (displayName) {
+          return displayName;
+        }
+        var functionName = innerType.displayName || innerType.name || "";
+        return functionName !== "" ? wrapperName + "(" + functionName + ")" : wrapperName;
       }
-      var functionName = innerType.displayName || innerType.name || "";
-      return functionName !== "" ? wrapperName + "(" + functionName + ")" : wrapperName;
-    }
-    function getContextName(type) {
-      return type.displayName || "Context";
-    }
-    function getComponentNameFromType(type) {
-      if (type == null) {
+      function getContextName(type) {
+        return type.displayName || "Context";
+      }
+      function getComponentNameFromType(type) {
+        if (type == null) {
+          return null;
+        }
+        {
+          if (typeof type.tag === "number") {
+            error("Received an unexpected object in getComponentNameFromType(). This is likely a bug in React. Please file an issue.");
+          }
+        }
+        if (typeof type === "function") {
+          return type.displayName || type.name || null;
+        }
+        if (typeof type === "string") {
+          return type;
+        }
+        switch (type) {
+          case REACT_FRAGMENT_TYPE:
+            return "Fragment";
+          case REACT_PORTAL_TYPE:
+            return "Portal";
+          case REACT_PROFILER_TYPE:
+            return "Profiler";
+          case REACT_STRICT_MODE_TYPE:
+            return "StrictMode";
+          case REACT_SUSPENSE_TYPE:
+            return "Suspense";
+          case REACT_SUSPENSE_LIST_TYPE:
+            return "SuspenseList";
+        }
+        if (typeof type === "object") {
+          switch (type.$$typeof) {
+            case REACT_CONTEXT_TYPE:
+              var context = type;
+              return getContextName(context) + ".Consumer";
+            case REACT_PROVIDER_TYPE:
+              var provider = type;
+              return getContextName(provider._context) + ".Provider";
+            case REACT_FORWARD_REF_TYPE:
+              return getWrappedName2(type, type.render, "ForwardRef");
+            case REACT_MEMO_TYPE:
+              var outerName = type.displayName || null;
+              if (outerName !== null) {
+                return outerName;
+              }
+              return getComponentNameFromType(type.type) || "Memo";
+            case REACT_LAZY_TYPE: {
+              var lazyComponent = type;
+              var payload = lazyComponent._payload;
+              var init2 = lazyComponent._init;
+              try {
+                return getComponentNameFromType(init2(payload));
+              } catch (x) {
+                return null;
+              }
+            }
+          }
+        }
         return null;
       }
-      {
-        if (typeof type.tag === "number") {
-          error("Received an unexpected object in getComponentNameFromType(). This is likely a bug in React. Please file an issue.");
+      var assign2 = Object.assign;
+      var disabledDepth = 0;
+      var prevLog;
+      var prevInfo;
+      var prevWarn;
+      var prevError;
+      var prevGroup;
+      var prevGroupCollapsed;
+      var prevGroupEnd;
+      function disabledLog() {
+      }
+      disabledLog.__reactDisabledLog = true;
+      function disableLogs() {
+        {
+          if (disabledDepth === 0) {
+            prevLog = console.log;
+            prevInfo = console.info;
+            prevWarn = console.warn;
+            prevError = console.error;
+            prevGroup = console.group;
+            prevGroupCollapsed = console.groupCollapsed;
+            prevGroupEnd = console.groupEnd;
+            var props = {
+              configurable: true,
+              enumerable: true,
+              value: disabledLog,
+              writable: true
+            };
+            Object.defineProperties(console, {
+              info: props,
+              log: props,
+              warn: props,
+              error: props,
+              group: props,
+              groupCollapsed: props,
+              groupEnd: props
+            });
+          }
+          disabledDepth++;
         }
       }
-      if (typeof type === "function") {
-        return type.displayName || type.name || null;
+      function reenableLogs() {
+        {
+          disabledDepth--;
+          if (disabledDepth === 0) {
+            var props = {
+              configurable: true,
+              enumerable: true,
+              writable: true
+            };
+            Object.defineProperties(console, {
+              log: assign2({}, props, {
+                value: prevLog
+              }),
+              info: assign2({}, props, {
+                value: prevInfo
+              }),
+              warn: assign2({}, props, {
+                value: prevWarn
+              }),
+              error: assign2({}, props, {
+                value: prevError
+              }),
+              group: assign2({}, props, {
+                value: prevGroup
+              }),
+              groupCollapsed: assign2({}, props, {
+                value: prevGroupCollapsed
+              }),
+              groupEnd: assign2({}, props, {
+                value: prevGroupEnd
+              })
+            });
+          }
+          if (disabledDepth < 0) {
+            error("disabledDepth fell below zero. This is a bug in React. Please file an issue.");
+          }
+        }
       }
-      if (typeof type === "string") {
-        return type;
-      }
-      switch (type) {
-        case REACT_FRAGMENT_TYPE:
-          return "Fragment";
-        case REACT_PORTAL_TYPE:
-          return "Portal";
-        case REACT_PROFILER_TYPE:
-          return "Profiler";
-        case REACT_STRICT_MODE_TYPE:
-          return "StrictMode";
-        case REACT_SUSPENSE_TYPE:
-          return "Suspense";
-        case REACT_SUSPENSE_LIST_TYPE:
-          return "SuspenseList";
-      }
-      if (typeof type === "object") {
-        switch (type.$$typeof) {
-          case REACT_CONTEXT_TYPE:
-            var context = type;
-            return getContextName(context) + ".Consumer";
-          case REACT_PROVIDER_TYPE:
-            var provider = type;
-            return getContextName(provider._context) + ".Provider";
-          case REACT_FORWARD_REF_TYPE:
-            return getWrappedName2(type, type.render, "ForwardRef");
-          case REACT_MEMO_TYPE:
-            var outerName = type.displayName || null;
-            if (outerName !== null) {
-              return outerName;
-            }
-            return getComponentNameFromType(type.type) || "Memo";
-          case REACT_LAZY_TYPE: {
-            var lazyComponent = type;
-            var payload = lazyComponent._payload;
-            var init2 = lazyComponent._init;
+      var ReactCurrentDispatcher = ReactSharedInternals.ReactCurrentDispatcher;
+      var prefix2;
+      function describeBuiltInComponentFrame(name, source, ownerFn) {
+        {
+          if (prefix2 === void 0) {
             try {
-              return getComponentNameFromType(init2(payload));
-            } catch (x) {
-              return null;
-            }
-          }
-        }
-      }
-      return null;
-    }
-    var assign2 = Object.assign;
-    var disabledDepth = 0;
-    var prevLog;
-    var prevInfo;
-    var prevWarn;
-    var prevError;
-    var prevGroup;
-    var prevGroupCollapsed;
-    var prevGroupEnd;
-    function disabledLog() {
-    }
-    disabledLog.__reactDisabledLog = true;
-    function disableLogs() {
-      {
-        if (disabledDepth === 0) {
-          prevLog = console.log;
-          prevInfo = console.info;
-          prevWarn = console.warn;
-          prevError = console.error;
-          prevGroup = console.group;
-          prevGroupCollapsed = console.groupCollapsed;
-          prevGroupEnd = console.groupEnd;
-          var props = {
-            configurable: true,
-            enumerable: true,
-            value: disabledLog,
-            writable: true
-          };
-          Object.defineProperties(console, {
-            info: props,
-            log: props,
-            warn: props,
-            error: props,
-            group: props,
-            groupCollapsed: props,
-            groupEnd: props
-          });
-        }
-        disabledDepth++;
-      }
-    }
-    function reenableLogs() {
-      {
-        disabledDepth--;
-        if (disabledDepth === 0) {
-          var props = {
-            configurable: true,
-            enumerable: true,
-            writable: true
-          };
-          Object.defineProperties(console, {
-            log: assign2({}, props, {
-              value: prevLog
-            }),
-            info: assign2({}, props, {
-              value: prevInfo
-            }),
-            warn: assign2({}, props, {
-              value: prevWarn
-            }),
-            error: assign2({}, props, {
-              value: prevError
-            }),
-            group: assign2({}, props, {
-              value: prevGroup
-            }),
-            groupCollapsed: assign2({}, props, {
-              value: prevGroupCollapsed
-            }),
-            groupEnd: assign2({}, props, {
-              value: prevGroupEnd
-            })
-          });
-        }
-        if (disabledDepth < 0) {
-          error("disabledDepth fell below zero. This is a bug in React. Please file an issue.");
-        }
-      }
-    }
-    var ReactCurrentDispatcher = ReactSharedInternals.ReactCurrentDispatcher;
-    var prefix2;
-    function describeBuiltInComponentFrame(name, source, ownerFn) {
-      {
-        if (prefix2 === void 0) {
-          try {
-            throw Error();
-          } catch (x) {
-            var match2 = x.stack.trim().match(/\n( *(at )?)/);
-            prefix2 = match2 && match2[1] || "";
-          }
-        }
-        return "\n" + prefix2 + name;
-      }
-    }
-    var reentry = false;
-    var componentFrameCache;
-    {
-      var PossiblyWeakMap = typeof WeakMap === "function" ? WeakMap : Map;
-      componentFrameCache = new PossiblyWeakMap();
-    }
-    function describeNativeComponentFrame(fn2, construct) {
-      if (!fn2 || reentry) {
-        return "";
-      }
-      {
-        var frame = componentFrameCache.get(fn2);
-        if (frame !== void 0) {
-          return frame;
-        }
-      }
-      var control;
-      reentry = true;
-      var previousPrepareStackTrace = Error.prepareStackTrace;
-      Error.prepareStackTrace = void 0;
-      var previousDispatcher;
-      {
-        previousDispatcher = ReactCurrentDispatcher.current;
-        ReactCurrentDispatcher.current = null;
-        disableLogs();
-      }
-      try {
-        if (construct) {
-          var Fake = function() {
-            throw Error();
-          };
-          Object.defineProperty(Fake.prototype, "props", {
-            set: function() {
               throw Error();
-            }
-          });
-          if (typeof Reflect === "object" && Reflect.construct) {
-            try {
-              Reflect.construct(Fake, []);
             } catch (x) {
-              control = x;
+              var match2 = x.stack.trim().match(/\n( *(at )?)/);
+              prefix2 = match2 && match2[1] || "";
             }
-            Reflect.construct(fn2, [], Fake);
+          }
+          return "\n" + prefix2 + name;
+        }
+      }
+      var reentry = false;
+      var componentFrameCache;
+      {
+        var PossiblyWeakMap = typeof WeakMap === "function" ? WeakMap : Map;
+        componentFrameCache = new PossiblyWeakMap();
+      }
+      function describeNativeComponentFrame(fn2, construct) {
+        if (!fn2 || reentry) {
+          return "";
+        }
+        {
+          var frame = componentFrameCache.get(fn2);
+          if (frame !== void 0) {
+            return frame;
+          }
+        }
+        var control;
+        reentry = true;
+        var previousPrepareStackTrace = Error.prepareStackTrace;
+        Error.prepareStackTrace = void 0;
+        var previousDispatcher;
+        {
+          previousDispatcher = ReactCurrentDispatcher.current;
+          ReactCurrentDispatcher.current = null;
+          disableLogs();
+        }
+        try {
+          if (construct) {
+            var Fake = function() {
+              throw Error();
+            };
+            Object.defineProperty(Fake.prototype, "props", {
+              set: function() {
+                throw Error();
+              }
+            });
+            if (typeof Reflect === "object" && Reflect.construct) {
+              try {
+                Reflect.construct(Fake, []);
+              } catch (x) {
+                control = x;
+              }
+              Reflect.construct(fn2, [], Fake);
+            } else {
+              try {
+                Fake.call();
+              } catch (x) {
+                control = x;
+              }
+              fn2.call(Fake.prototype);
+            }
           } else {
             try {
-              Fake.call();
+              throw Error();
             } catch (x) {
               control = x;
             }
-            fn2.call(Fake.prototype);
+            fn2();
           }
-        } else {
-          try {
-            throw Error();
-          } catch (x) {
-            control = x;
-          }
-          fn2();
-        }
-      } catch (sample) {
-        if (sample && control && typeof sample.stack === "string") {
-          var sampleLines = sample.stack.split("\n");
-          var controlLines = control.stack.split("\n");
-          var s = sampleLines.length - 1;
-          var c = controlLines.length - 1;
-          while (s >= 1 && c >= 0 && sampleLines[s] !== controlLines[c]) {
-            c--;
-          }
-          for (; s >= 1 && c >= 0; s--, c--) {
-            if (sampleLines[s] !== controlLines[c]) {
-              if (s !== 1 || c !== 1) {
-                do {
-                  s--;
-                  c--;
-                  if (c < 0 || sampleLines[s] !== controlLines[c]) {
-                    var _frame = "\n" + sampleLines[s].replace(" at new ", " at ");
-                    if (fn2.displayName && _frame.includes("<anonymous>")) {
-                      _frame = _frame.replace("<anonymous>", fn2.displayName);
-                    }
-                    {
-                      if (typeof fn2 === "function") {
-                        componentFrameCache.set(fn2, _frame);
+        } catch (sample) {
+          if (sample && control && typeof sample.stack === "string") {
+            var sampleLines = sample.stack.split("\n");
+            var controlLines = control.stack.split("\n");
+            var s = sampleLines.length - 1;
+            var c = controlLines.length - 1;
+            while (s >= 1 && c >= 0 && sampleLines[s] !== controlLines[c]) {
+              c--;
+            }
+            for (; s >= 1 && c >= 0; s--, c--) {
+              if (sampleLines[s] !== controlLines[c]) {
+                if (s !== 1 || c !== 1) {
+                  do {
+                    s--;
+                    c--;
+                    if (c < 0 || sampleLines[s] !== controlLines[c]) {
+                      var _frame = "\n" + sampleLines[s].replace(" at new ", " at ");
+                      if (fn2.displayName && _frame.includes("<anonymous>")) {
+                        _frame = _frame.replace("<anonymous>", fn2.displayName);
                       }
+                      {
+                        if (typeof fn2 === "function") {
+                          componentFrameCache.set(fn2, _frame);
+                        }
+                      }
+                      return _frame;
                     }
-                    return _frame;
-                  }
-                } while (s >= 1 && c >= 0);
-              }
-              break;
-            }
-          }
-        }
-      } finally {
-        reentry = false;
-        {
-          ReactCurrentDispatcher.current = previousDispatcher;
-          reenableLogs();
-        }
-        Error.prepareStackTrace = previousPrepareStackTrace;
-      }
-      var name = fn2 ? fn2.displayName || fn2.name : "";
-      var syntheticFrame = name ? describeBuiltInComponentFrame(name) : "";
-      {
-        if (typeof fn2 === "function") {
-          componentFrameCache.set(fn2, syntheticFrame);
-        }
-      }
-      return syntheticFrame;
-    }
-    function describeFunctionComponentFrame(fn2, source, ownerFn) {
-      {
-        return describeNativeComponentFrame(fn2, false);
-      }
-    }
-    function shouldConstruct(Component) {
-      var prototype = Component.prototype;
-      return !!(prototype && prototype.isReactComponent);
-    }
-    function describeUnknownElementTypeFrameInDEV(type, source, ownerFn) {
-      if (type == null) {
-        return "";
-      }
-      if (typeof type === "function") {
-        {
-          return describeNativeComponentFrame(type, shouldConstruct(type));
-        }
-      }
-      if (typeof type === "string") {
-        return describeBuiltInComponentFrame(type);
-      }
-      switch (type) {
-        case REACT_SUSPENSE_TYPE:
-          return describeBuiltInComponentFrame("Suspense");
-        case REACT_SUSPENSE_LIST_TYPE:
-          return describeBuiltInComponentFrame("SuspenseList");
-      }
-      if (typeof type === "object") {
-        switch (type.$$typeof) {
-          case REACT_FORWARD_REF_TYPE:
-            return describeFunctionComponentFrame(type.render);
-          case REACT_MEMO_TYPE:
-            return describeUnknownElementTypeFrameInDEV(type.type, source, ownerFn);
-          case REACT_LAZY_TYPE: {
-            var lazyComponent = type;
-            var payload = lazyComponent._payload;
-            var init2 = lazyComponent._init;
-            try {
-              return describeUnknownElementTypeFrameInDEV(init2(payload), source, ownerFn);
-            } catch (x) {
-            }
-          }
-        }
-      }
-      return "";
-    }
-    var hasOwnProperty = Object.prototype.hasOwnProperty;
-    var loggedTypeFailures = {};
-    var ReactDebugCurrentFrame = ReactSharedInternals.ReactDebugCurrentFrame;
-    function setCurrentlyValidatingElement(element) {
-      {
-        if (element) {
-          var owner = element._owner;
-          var stack = describeUnknownElementTypeFrameInDEV(element.type, element._source, owner ? owner.type : null);
-          ReactDebugCurrentFrame.setExtraStackFrame(stack);
-        } else {
-          ReactDebugCurrentFrame.setExtraStackFrame(null);
-        }
-      }
-    }
-    function checkPropTypes(typeSpecs, values2, location, componentName, element) {
-      {
-        var has2 = Function.call.bind(hasOwnProperty);
-        for (var typeSpecName in typeSpecs) {
-          if (has2(typeSpecs, typeSpecName)) {
-            var error$1 = void 0;
-            try {
-              if (typeof typeSpecs[typeSpecName] !== "function") {
-                var err = Error((componentName || "React class") + ": " + location + " type `" + typeSpecName + "` is invalid; it must be a function, usually from the `prop-types` package, but received `" + typeof typeSpecs[typeSpecName] + "`.This often happens because of typos such as `PropTypes.function` instead of `PropTypes.func`.");
-                err.name = "Invariant Violation";
-                throw err;
-              }
-              error$1 = typeSpecs[typeSpecName](values2, typeSpecName, componentName, location, null, "SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED");
-            } catch (ex) {
-              error$1 = ex;
-            }
-            if (error$1 && !(error$1 instanceof Error)) {
-              setCurrentlyValidatingElement(element);
-              error("%s: type specification of %s `%s` is invalid; the type checker function must return `null` or an `Error` but returned a %s. You may have forgotten to pass an argument to the type checker creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and shape all require an argument).", componentName || "React class", location, typeSpecName, typeof error$1);
-              setCurrentlyValidatingElement(null);
-            }
-            if (error$1 instanceof Error && !(error$1.message in loggedTypeFailures)) {
-              loggedTypeFailures[error$1.message] = true;
-              setCurrentlyValidatingElement(element);
-              error("Failed %s type: %s", location, error$1.message);
-              setCurrentlyValidatingElement(null);
-            }
-          }
-        }
-      }
-    }
-    var isArrayImpl = Array.isArray;
-    function isArray(a) {
-      return isArrayImpl(a);
-    }
-    function typeName(value) {
-      {
-        var hasToStringTag = typeof Symbol === "function" && Symbol.toStringTag;
-        var type = hasToStringTag && value[Symbol.toStringTag] || value.constructor.name || "Object";
-        return type;
-      }
-    }
-    function willCoercionThrow(value) {
-      {
-        try {
-          testStringCoercion(value);
-          return false;
-        } catch (e) {
-          return true;
-        }
-      }
-    }
-    function testStringCoercion(value) {
-      return "" + value;
-    }
-    function checkKeyStringCoercion(value) {
-      {
-        if (willCoercionThrow(value)) {
-          error("The provided key is an unsupported type %s. This value must be coerced to a string before before using it here.", typeName(value));
-          return testStringCoercion(value);
-        }
-      }
-    }
-    var ReactCurrentOwner = ReactSharedInternals.ReactCurrentOwner;
-    var RESERVED_PROPS = {
-      key: true,
-      ref: true,
-      __self: true,
-      __source: true
-    };
-    var specialPropKeyWarningShown;
-    var specialPropRefWarningShown;
-    var didWarnAboutStringRefs;
-    {
-      didWarnAboutStringRefs = {};
-    }
-    function hasValidRef(config2) {
-      {
-        if (hasOwnProperty.call(config2, "ref")) {
-          var getter = Object.getOwnPropertyDescriptor(config2, "ref").get;
-          if (getter && getter.isReactWarning) {
-            return false;
-          }
-        }
-      }
-      return config2.ref !== void 0;
-    }
-    function hasValidKey(config2) {
-      {
-        if (hasOwnProperty.call(config2, "key")) {
-          var getter = Object.getOwnPropertyDescriptor(config2, "key").get;
-          if (getter && getter.isReactWarning) {
-            return false;
-          }
-        }
-      }
-      return config2.key !== void 0;
-    }
-    function warnIfStringRefCannotBeAutoConverted(config2, self2) {
-      {
-        if (typeof config2.ref === "string" && ReactCurrentOwner.current && self2 && ReactCurrentOwner.current.stateNode !== self2) {
-          var componentName = getComponentNameFromType(ReactCurrentOwner.current.type);
-          if (!didWarnAboutStringRefs[componentName]) {
-            error('Component "%s" contains the string ref "%s". Support for string refs will be removed in a future major release. This case cannot be automatically converted to an arrow function. We ask you to manually fix this case by using useRef() or createRef() instead. Learn more about using refs safely here: https://reactjs.org/link/strict-mode-string-ref', getComponentNameFromType(ReactCurrentOwner.current.type), config2.ref);
-            didWarnAboutStringRefs[componentName] = true;
-          }
-        }
-      }
-    }
-    function defineKeyPropWarningGetter(props, displayName) {
-      {
-        var warnAboutAccessingKey = function() {
-          if (!specialPropKeyWarningShown) {
-            specialPropKeyWarningShown = true;
-            error("%s: `key` is not a prop. Trying to access it will result in `undefined` being returned. If you need to access the same value within the child component, you should pass it as a different prop. (https://reactjs.org/link/special-props)", displayName);
-          }
-        };
-        warnAboutAccessingKey.isReactWarning = true;
-        Object.defineProperty(props, "key", {
-          get: warnAboutAccessingKey,
-          configurable: true
-        });
-      }
-    }
-    function defineRefPropWarningGetter(props, displayName) {
-      {
-        var warnAboutAccessingRef = function() {
-          if (!specialPropRefWarningShown) {
-            specialPropRefWarningShown = true;
-            error("%s: `ref` is not a prop. Trying to access it will result in `undefined` being returned. If you need to access the same value within the child component, you should pass it as a different prop. (https://reactjs.org/link/special-props)", displayName);
-          }
-        };
-        warnAboutAccessingRef.isReactWarning = true;
-        Object.defineProperty(props, "ref", {
-          get: warnAboutAccessingRef,
-          configurable: true
-        });
-      }
-    }
-    var ReactElement = function(type, key, ref, self2, source, owner, props) {
-      var element = {
-        // This tag allows us to uniquely identify this as a React Element
-        $$typeof: REACT_ELEMENT_TYPE,
-        // Built-in properties that belong on the element
-        type,
-        key,
-        ref,
-        props,
-        // Record the component responsible for creating this element.
-        _owner: owner
-      };
-      {
-        element._store = {};
-        Object.defineProperty(element._store, "validated", {
-          configurable: false,
-          enumerable: false,
-          writable: true,
-          value: false
-        });
-        Object.defineProperty(element, "_self", {
-          configurable: false,
-          enumerable: false,
-          writable: false,
-          value: self2
-        });
-        Object.defineProperty(element, "_source", {
-          configurable: false,
-          enumerable: false,
-          writable: false,
-          value: source
-        });
-        if (Object.freeze) {
-          Object.freeze(element.props);
-          Object.freeze(element);
-        }
-      }
-      return element;
-    };
-    function jsxDEV(type, config2, maybeKey, source, self2) {
-      {
-        var propName;
-        var props = {};
-        var key = null;
-        var ref = null;
-        if (maybeKey !== void 0) {
-          {
-            checkKeyStringCoercion(maybeKey);
-          }
-          key = "" + maybeKey;
-        }
-        if (hasValidKey(config2)) {
-          {
-            checkKeyStringCoercion(config2.key);
-          }
-          key = "" + config2.key;
-        }
-        if (hasValidRef(config2)) {
-          ref = config2.ref;
-          warnIfStringRefCannotBeAutoConverted(config2, self2);
-        }
-        for (propName in config2) {
-          if (hasOwnProperty.call(config2, propName) && !RESERVED_PROPS.hasOwnProperty(propName)) {
-            props[propName] = config2[propName];
-          }
-        }
-        if (type && type.defaultProps) {
-          var defaultProps2 = type.defaultProps;
-          for (propName in defaultProps2) {
-            if (props[propName] === void 0) {
-              props[propName] = defaultProps2[propName];
-            }
-          }
-        }
-        if (key || ref) {
-          var displayName = typeof type === "function" ? type.displayName || type.name || "Unknown" : type;
-          if (key) {
-            defineKeyPropWarningGetter(props, displayName);
-          }
-          if (ref) {
-            defineRefPropWarningGetter(props, displayName);
-          }
-        }
-        return ReactElement(type, key, ref, self2, source, ReactCurrentOwner.current, props);
-      }
-    }
-    var ReactCurrentOwner$1 = ReactSharedInternals.ReactCurrentOwner;
-    var ReactDebugCurrentFrame$1 = ReactSharedInternals.ReactDebugCurrentFrame;
-    function setCurrentlyValidatingElement$1(element) {
-      {
-        if (element) {
-          var owner = element._owner;
-          var stack = describeUnknownElementTypeFrameInDEV(element.type, element._source, owner ? owner.type : null);
-          ReactDebugCurrentFrame$1.setExtraStackFrame(stack);
-        } else {
-          ReactDebugCurrentFrame$1.setExtraStackFrame(null);
-        }
-      }
-    }
-    var propTypesMisspellWarningShown;
-    {
-      propTypesMisspellWarningShown = false;
-    }
-    function isValidElement2(object) {
-      {
-        return typeof object === "object" && object !== null && object.$$typeof === REACT_ELEMENT_TYPE;
-      }
-    }
-    function getDeclarationErrorAddendum() {
-      {
-        if (ReactCurrentOwner$1.current) {
-          var name = getComponentNameFromType(ReactCurrentOwner$1.current.type);
-          if (name) {
-            return "\n\nCheck the render method of `" + name + "`.";
-          }
-        }
-        return "";
-      }
-    }
-    function getSourceInfoErrorAddendum(source) {
-      {
-        if (source !== void 0) {
-          var fileName = source.fileName.replace(/^.*[\\\/]/, "");
-          var lineNumber = source.lineNumber;
-          return "\n\nCheck your code at " + fileName + ":" + lineNumber + ".";
-        }
-        return "";
-      }
-    }
-    var ownerHasKeyUseWarning = {};
-    function getCurrentComponentErrorInfo(parentType) {
-      {
-        var info = getDeclarationErrorAddendum();
-        if (!info) {
-          var parentName = typeof parentType === "string" ? parentType : parentType.displayName || parentType.name;
-          if (parentName) {
-            info = "\n\nCheck the top-level render call using <" + parentName + ">.";
-          }
-        }
-        return info;
-      }
-    }
-    function validateExplicitKey(element, parentType) {
-      {
-        if (!element._store || element._store.validated || element.key != null) {
-          return;
-        }
-        element._store.validated = true;
-        var currentComponentErrorInfo = getCurrentComponentErrorInfo(parentType);
-        if (ownerHasKeyUseWarning[currentComponentErrorInfo]) {
-          return;
-        }
-        ownerHasKeyUseWarning[currentComponentErrorInfo] = true;
-        var childOwner = "";
-        if (element && element._owner && element._owner !== ReactCurrentOwner$1.current) {
-          childOwner = " It was passed a child from " + getComponentNameFromType(element._owner.type) + ".";
-        }
-        setCurrentlyValidatingElement$1(element);
-        error('Each child in a list should have a unique "key" prop.%s%s See https://reactjs.org/link/warning-keys for more information.', currentComponentErrorInfo, childOwner);
-        setCurrentlyValidatingElement$1(null);
-      }
-    }
-    function validateChildKeys(node2, parentType) {
-      {
-        if (typeof node2 !== "object") {
-          return;
-        }
-        if (isArray(node2)) {
-          for (var i = 0; i < node2.length; i++) {
-            var child = node2[i];
-            if (isValidElement2(child)) {
-              validateExplicitKey(child, parentType);
-            }
-          }
-        } else if (isValidElement2(node2)) {
-          if (node2._store) {
-            node2._store.validated = true;
-          }
-        } else if (node2) {
-          var iteratorFn = getIteratorFn(node2);
-          if (typeof iteratorFn === "function") {
-            if (iteratorFn !== node2.entries) {
-              var iterator = iteratorFn.call(node2);
-              var step;
-              while (!(step = iterator.next()).done) {
-                if (isValidElement2(step.value)) {
-                  validateExplicitKey(step.value, parentType);
+                  } while (s >= 1 && c >= 0);
                 }
+                break;
+              }
+            }
+          }
+        } finally {
+          reentry = false;
+          {
+            ReactCurrentDispatcher.current = previousDispatcher;
+            reenableLogs();
+          }
+          Error.prepareStackTrace = previousPrepareStackTrace;
+        }
+        var name = fn2 ? fn2.displayName || fn2.name : "";
+        var syntheticFrame = name ? describeBuiltInComponentFrame(name) : "";
+        {
+          if (typeof fn2 === "function") {
+            componentFrameCache.set(fn2, syntheticFrame);
+          }
+        }
+        return syntheticFrame;
+      }
+      function describeFunctionComponentFrame(fn2, source, ownerFn) {
+        {
+          return describeNativeComponentFrame(fn2, false);
+        }
+      }
+      function shouldConstruct(Component) {
+        var prototype = Component.prototype;
+        return !!(prototype && prototype.isReactComponent);
+      }
+      function describeUnknownElementTypeFrameInDEV(type, source, ownerFn) {
+        if (type == null) {
+          return "";
+        }
+        if (typeof type === "function") {
+          {
+            return describeNativeComponentFrame(type, shouldConstruct(type));
+          }
+        }
+        if (typeof type === "string") {
+          return describeBuiltInComponentFrame(type);
+        }
+        switch (type) {
+          case REACT_SUSPENSE_TYPE:
+            return describeBuiltInComponentFrame("Suspense");
+          case REACT_SUSPENSE_LIST_TYPE:
+            return describeBuiltInComponentFrame("SuspenseList");
+        }
+        if (typeof type === "object") {
+          switch (type.$$typeof) {
+            case REACT_FORWARD_REF_TYPE:
+              return describeFunctionComponentFrame(type.render);
+            case REACT_MEMO_TYPE:
+              return describeUnknownElementTypeFrameInDEV(type.type, source, ownerFn);
+            case REACT_LAZY_TYPE: {
+              var lazyComponent = type;
+              var payload = lazyComponent._payload;
+              var init2 = lazyComponent._init;
+              try {
+                return describeUnknownElementTypeFrameInDEV(init2(payload), source, ownerFn);
+              } catch (x) {
+              }
+            }
+          }
+        }
+        return "";
+      }
+      var hasOwnProperty = Object.prototype.hasOwnProperty;
+      var loggedTypeFailures = {};
+      var ReactDebugCurrentFrame = ReactSharedInternals.ReactDebugCurrentFrame;
+      function setCurrentlyValidatingElement(element) {
+        {
+          if (element) {
+            var owner = element._owner;
+            var stack = describeUnknownElementTypeFrameInDEV(element.type, element._source, owner ? owner.type : null);
+            ReactDebugCurrentFrame.setExtraStackFrame(stack);
+          } else {
+            ReactDebugCurrentFrame.setExtraStackFrame(null);
+          }
+        }
+      }
+      function checkPropTypes(typeSpecs, values2, location, componentName, element) {
+        {
+          var has2 = Function.call.bind(hasOwnProperty);
+          for (var typeSpecName in typeSpecs) {
+            if (has2(typeSpecs, typeSpecName)) {
+              var error$1 = void 0;
+              try {
+                if (typeof typeSpecs[typeSpecName] !== "function") {
+                  var err = Error((componentName || "React class") + ": " + location + " type `" + typeSpecName + "` is invalid; it must be a function, usually from the `prop-types` package, but received `" + typeof typeSpecs[typeSpecName] + "`.This often happens because of typos such as `PropTypes.function` instead of `PropTypes.func`.");
+                  err.name = "Invariant Violation";
+                  throw err;
+                }
+                error$1 = typeSpecs[typeSpecName](values2, typeSpecName, componentName, location, null, "SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED");
+              } catch (ex) {
+                error$1 = ex;
+              }
+              if (error$1 && !(error$1 instanceof Error)) {
+                setCurrentlyValidatingElement(element);
+                error("%s: type specification of %s `%s` is invalid; the type checker function must return `null` or an `Error` but returned a %s. You may have forgotten to pass an argument to the type checker creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and shape all require an argument).", componentName || "React class", location, typeSpecName, typeof error$1);
+                setCurrentlyValidatingElement(null);
+              }
+              if (error$1 instanceof Error && !(error$1.message in loggedTypeFailures)) {
+                loggedTypeFailures[error$1.message] = true;
+                setCurrentlyValidatingElement(element);
+                error("Failed %s type: %s", location, error$1.message);
+                setCurrentlyValidatingElement(null);
               }
             }
           }
         }
       }
-    }
-    function validatePropTypes(element) {
-      {
-        var type = element.type;
-        if (type === null || type === void 0 || typeof type === "string") {
-          return;
-        }
-        var propTypes2;
-        if (typeof type === "function") {
-          propTypes2 = type.propTypes;
-        } else if (typeof type === "object" && (type.$$typeof === REACT_FORWARD_REF_TYPE || // Note: Memo only checks outer props here.
-        // Inner props are checked in the reconciler.
-        type.$$typeof === REACT_MEMO_TYPE)) {
-          propTypes2 = type.propTypes;
-        } else {
-          return;
-        }
-        if (propTypes2) {
-          var name = getComponentNameFromType(type);
-          checkPropTypes(propTypes2, element.props, "prop", name, element);
-        } else if (type.PropTypes !== void 0 && !propTypesMisspellWarningShown) {
-          propTypesMisspellWarningShown = true;
-          var _name = getComponentNameFromType(type);
-          error("Component %s declared `PropTypes` instead of `propTypes`. Did you misspell the property assignment?", _name || "Unknown");
-        }
-        if (typeof type.getDefaultProps === "function" && !type.getDefaultProps.isReactClassApproved) {
-          error("getDefaultProps is only used on classic React.createClass definitions. Use a static property named `defaultProps` instead.");
+      var isArrayImpl = Array.isArray;
+      function isArray(a) {
+        return isArrayImpl(a);
+      }
+      function typeName(value) {
+        {
+          var hasToStringTag = typeof Symbol === "function" && Symbol.toStringTag;
+          var type = hasToStringTag && value[Symbol.toStringTag] || value.constructor.name || "Object";
+          return type;
         }
       }
-    }
-    function validateFragmentProps(fragment) {
-      {
-        var keys = Object.keys(fragment.props);
-        for (var i = 0; i < keys.length; i++) {
-          var key = keys[i];
-          if (key !== "children" && key !== "key") {
-            setCurrentlyValidatingElement$1(fragment);
-            error("Invalid prop `%s` supplied to `React.Fragment`. React.Fragment can only have `key` and `children` props.", key);
-            setCurrentlyValidatingElement$1(null);
-            break;
+      function willCoercionThrow(value) {
+        {
+          try {
+            testStringCoercion(value);
+            return false;
+          } catch (e) {
+            return true;
           }
         }
-        if (fragment.ref !== null) {
-          setCurrentlyValidatingElement$1(fragment);
-          error("Invalid attribute `ref` supplied to `React.Fragment`.");
+      }
+      function testStringCoercion(value) {
+        return "" + value;
+      }
+      function checkKeyStringCoercion(value) {
+        {
+          if (willCoercionThrow(value)) {
+            error("The provided key is an unsupported type %s. This value must be coerced to a string before before using it here.", typeName(value));
+            return testStringCoercion(value);
+          }
+        }
+      }
+      var ReactCurrentOwner = ReactSharedInternals.ReactCurrentOwner;
+      var RESERVED_PROPS = {
+        key: true,
+        ref: true,
+        __self: true,
+        __source: true
+      };
+      var specialPropKeyWarningShown;
+      var specialPropRefWarningShown;
+      var didWarnAboutStringRefs;
+      {
+        didWarnAboutStringRefs = {};
+      }
+      function hasValidRef(config2) {
+        {
+          if (hasOwnProperty.call(config2, "ref")) {
+            var getter = Object.getOwnPropertyDescriptor(config2, "ref").get;
+            if (getter && getter.isReactWarning) {
+              return false;
+            }
+          }
+        }
+        return config2.ref !== void 0;
+      }
+      function hasValidKey(config2) {
+        {
+          if (hasOwnProperty.call(config2, "key")) {
+            var getter = Object.getOwnPropertyDescriptor(config2, "key").get;
+            if (getter && getter.isReactWarning) {
+              return false;
+            }
+          }
+        }
+        return config2.key !== void 0;
+      }
+      function warnIfStringRefCannotBeAutoConverted(config2, self2) {
+        {
+          if (typeof config2.ref === "string" && ReactCurrentOwner.current && self2 && ReactCurrentOwner.current.stateNode !== self2) {
+            var componentName = getComponentNameFromType(ReactCurrentOwner.current.type);
+            if (!didWarnAboutStringRefs[componentName]) {
+              error('Component "%s" contains the string ref "%s". Support for string refs will be removed in a future major release. This case cannot be automatically converted to an arrow function. We ask you to manually fix this case by using useRef() or createRef() instead. Learn more about using refs safely here: https://reactjs.org/link/strict-mode-string-ref', getComponentNameFromType(ReactCurrentOwner.current.type), config2.ref);
+              didWarnAboutStringRefs[componentName] = true;
+            }
+          }
+        }
+      }
+      function defineKeyPropWarningGetter(props, displayName) {
+        {
+          var warnAboutAccessingKey = function() {
+            if (!specialPropKeyWarningShown) {
+              specialPropKeyWarningShown = true;
+              error("%s: `key` is not a prop. Trying to access it will result in `undefined` being returned. If you need to access the same value within the child component, you should pass it as a different prop. (https://reactjs.org/link/special-props)", displayName);
+            }
+          };
+          warnAboutAccessingKey.isReactWarning = true;
+          Object.defineProperty(props, "key", {
+            get: warnAboutAccessingKey,
+            configurable: true
+          });
+        }
+      }
+      function defineRefPropWarningGetter(props, displayName) {
+        {
+          var warnAboutAccessingRef = function() {
+            if (!specialPropRefWarningShown) {
+              specialPropRefWarningShown = true;
+              error("%s: `ref` is not a prop. Trying to access it will result in `undefined` being returned. If you need to access the same value within the child component, you should pass it as a different prop. (https://reactjs.org/link/special-props)", displayName);
+            }
+          };
+          warnAboutAccessingRef.isReactWarning = true;
+          Object.defineProperty(props, "ref", {
+            get: warnAboutAccessingRef,
+            configurable: true
+          });
+        }
+      }
+      var ReactElement = function(type, key, ref, self2, source, owner, props) {
+        var element = {
+          // This tag allows us to uniquely identify this as a React Element
+          $$typeof: REACT_ELEMENT_TYPE,
+          // Built-in properties that belong on the element
+          type,
+          key,
+          ref,
+          props,
+          // Record the component responsible for creating this element.
+          _owner: owner
+        };
+        {
+          element._store = {};
+          Object.defineProperty(element._store, "validated", {
+            configurable: false,
+            enumerable: false,
+            writable: true,
+            value: false
+          });
+          Object.defineProperty(element, "_self", {
+            configurable: false,
+            enumerable: false,
+            writable: false,
+            value: self2
+          });
+          Object.defineProperty(element, "_source", {
+            configurable: false,
+            enumerable: false,
+            writable: false,
+            value: source
+          });
+          if (Object.freeze) {
+            Object.freeze(element.props);
+            Object.freeze(element);
+          }
+        }
+        return element;
+      };
+      function jsxDEV(type, config2, maybeKey, source, self2) {
+        {
+          var propName;
+          var props = {};
+          var key = null;
+          var ref = null;
+          if (maybeKey !== void 0) {
+            {
+              checkKeyStringCoercion(maybeKey);
+            }
+            key = "" + maybeKey;
+          }
+          if (hasValidKey(config2)) {
+            {
+              checkKeyStringCoercion(config2.key);
+            }
+            key = "" + config2.key;
+          }
+          if (hasValidRef(config2)) {
+            ref = config2.ref;
+            warnIfStringRefCannotBeAutoConverted(config2, self2);
+          }
+          for (propName in config2) {
+            if (hasOwnProperty.call(config2, propName) && !RESERVED_PROPS.hasOwnProperty(propName)) {
+              props[propName] = config2[propName];
+            }
+          }
+          if (type && type.defaultProps) {
+            var defaultProps2 = type.defaultProps;
+            for (propName in defaultProps2) {
+              if (props[propName] === void 0) {
+                props[propName] = defaultProps2[propName];
+              }
+            }
+          }
+          if (key || ref) {
+            var displayName = typeof type === "function" ? type.displayName || type.name || "Unknown" : type;
+            if (key) {
+              defineKeyPropWarningGetter(props, displayName);
+            }
+            if (ref) {
+              defineRefPropWarningGetter(props, displayName);
+            }
+          }
+          return ReactElement(type, key, ref, self2, source, ReactCurrentOwner.current, props);
+        }
+      }
+      var ReactCurrentOwner$1 = ReactSharedInternals.ReactCurrentOwner;
+      var ReactDebugCurrentFrame$1 = ReactSharedInternals.ReactDebugCurrentFrame;
+      function setCurrentlyValidatingElement$1(element) {
+        {
+          if (element) {
+            var owner = element._owner;
+            var stack = describeUnknownElementTypeFrameInDEV(element.type, element._source, owner ? owner.type : null);
+            ReactDebugCurrentFrame$1.setExtraStackFrame(stack);
+          } else {
+            ReactDebugCurrentFrame$1.setExtraStackFrame(null);
+          }
+        }
+      }
+      var propTypesMisspellWarningShown;
+      {
+        propTypesMisspellWarningShown = false;
+      }
+      function isValidElement2(object) {
+        {
+          return typeof object === "object" && object !== null && object.$$typeof === REACT_ELEMENT_TYPE;
+        }
+      }
+      function getDeclarationErrorAddendum() {
+        {
+          if (ReactCurrentOwner$1.current) {
+            var name = getComponentNameFromType(ReactCurrentOwner$1.current.type);
+            if (name) {
+              return "\n\nCheck the render method of `" + name + "`.";
+            }
+          }
+          return "";
+        }
+      }
+      function getSourceInfoErrorAddendum(source) {
+        {
+          if (source !== void 0) {
+            var fileName = source.fileName.replace(/^.*[\\\/]/, "");
+            var lineNumber = source.lineNumber;
+            return "\n\nCheck your code at " + fileName + ":" + lineNumber + ".";
+          }
+          return "";
+        }
+      }
+      var ownerHasKeyUseWarning = {};
+      function getCurrentComponentErrorInfo(parentType) {
+        {
+          var info = getDeclarationErrorAddendum();
+          if (!info) {
+            var parentName = typeof parentType === "string" ? parentType : parentType.displayName || parentType.name;
+            if (parentName) {
+              info = "\n\nCheck the top-level render call using <" + parentName + ">.";
+            }
+          }
+          return info;
+        }
+      }
+      function validateExplicitKey(element, parentType) {
+        {
+          if (!element._store || element._store.validated || element.key != null) {
+            return;
+          }
+          element._store.validated = true;
+          var currentComponentErrorInfo = getCurrentComponentErrorInfo(parentType);
+          if (ownerHasKeyUseWarning[currentComponentErrorInfo]) {
+            return;
+          }
+          ownerHasKeyUseWarning[currentComponentErrorInfo] = true;
+          var childOwner = "";
+          if (element && element._owner && element._owner !== ReactCurrentOwner$1.current) {
+            childOwner = " It was passed a child from " + getComponentNameFromType(element._owner.type) + ".";
+          }
+          setCurrentlyValidatingElement$1(element);
+          error('Each child in a list should have a unique "key" prop.%s%s See https://reactjs.org/link/warning-keys for more information.', currentComponentErrorInfo, childOwner);
           setCurrentlyValidatingElement$1(null);
         }
       }
-    }
-    var didWarnAboutKeySpread = {};
-    function jsxWithValidation(type, props, key, isStaticChildren, source, self2) {
-      {
-        var validType = isValidElementType(type);
-        if (!validType) {
-          var info = "";
-          if (type === void 0 || typeof type === "object" && type !== null && Object.keys(type).length === 0) {
-            info += " You likely forgot to export your component from the file it's defined in, or you might have mixed up default and named imports.";
+      function validateChildKeys(node2, parentType) {
+        {
+          if (typeof node2 !== "object") {
+            return;
           }
-          var sourceInfo = getSourceInfoErrorAddendum(source);
-          if (sourceInfo) {
-            info += sourceInfo;
-          } else {
-            info += getDeclarationErrorAddendum();
-          }
-          var typeString;
-          if (type === null) {
-            typeString = "null";
-          } else if (isArray(type)) {
-            typeString = "array";
-          } else if (type !== void 0 && type.$$typeof === REACT_ELEMENT_TYPE) {
-            typeString = "<" + (getComponentNameFromType(type.type) || "Unknown") + " />";
-            info = " Did you accidentally export a JSX literal instead of a component?";
-          } else {
-            typeString = typeof type;
-          }
-          error("React.jsx: type is invalid -- expected a string (for built-in components) or a class/function (for composite components) but got: %s.%s", typeString, info);
-        }
-        var element = jsxDEV(type, props, key, source, self2);
-        if (element == null) {
-          return element;
-        }
-        if (validType) {
-          var children2 = props.children;
-          if (children2 !== void 0) {
-            if (isStaticChildren) {
-              if (isArray(children2)) {
-                for (var i = 0; i < children2.length; i++) {
-                  validateChildKeys(children2[i], type);
+          if (isArray(node2)) {
+            for (var i = 0; i < node2.length; i++) {
+              var child = node2[i];
+              if (isValidElement2(child)) {
+                validateExplicitKey(child, parentType);
+              }
+            }
+          } else if (isValidElement2(node2)) {
+            if (node2._store) {
+              node2._store.validated = true;
+            }
+          } else if (node2) {
+            var iteratorFn = getIteratorFn(node2);
+            if (typeof iteratorFn === "function") {
+              if (iteratorFn !== node2.entries) {
+                var iterator = iteratorFn.call(node2);
+                var step;
+                while (!(step = iterator.next()).done) {
+                  if (isValidElement2(step.value)) {
+                    validateExplicitKey(step.value, parentType);
+                  }
                 }
-                if (Object.freeze) {
-                  Object.freeze(children2);
+              }
+            }
+          }
+        }
+      }
+      function validatePropTypes(element) {
+        {
+          var type = element.type;
+          if (type === null || type === void 0 || typeof type === "string") {
+            return;
+          }
+          var propTypes2;
+          if (typeof type === "function") {
+            propTypes2 = type.propTypes;
+          } else if (typeof type === "object" && (type.$$typeof === REACT_FORWARD_REF_TYPE || // Note: Memo only checks outer props here.
+          // Inner props are checked in the reconciler.
+          type.$$typeof === REACT_MEMO_TYPE)) {
+            propTypes2 = type.propTypes;
+          } else {
+            return;
+          }
+          if (propTypes2) {
+            var name = getComponentNameFromType(type);
+            checkPropTypes(propTypes2, element.props, "prop", name, element);
+          } else if (type.PropTypes !== void 0 && !propTypesMisspellWarningShown) {
+            propTypesMisspellWarningShown = true;
+            var _name = getComponentNameFromType(type);
+            error("Component %s declared `PropTypes` instead of `propTypes`. Did you misspell the property assignment?", _name || "Unknown");
+          }
+          if (typeof type.getDefaultProps === "function" && !type.getDefaultProps.isReactClassApproved) {
+            error("getDefaultProps is only used on classic React.createClass definitions. Use a static property named `defaultProps` instead.");
+          }
+        }
+      }
+      function validateFragmentProps(fragment) {
+        {
+          var keys = Object.keys(fragment.props);
+          for (var i = 0; i < keys.length; i++) {
+            var key = keys[i];
+            if (key !== "children" && key !== "key") {
+              setCurrentlyValidatingElement$1(fragment);
+              error("Invalid prop `%s` supplied to `React.Fragment`. React.Fragment can only have `key` and `children` props.", key);
+              setCurrentlyValidatingElement$1(null);
+              break;
+            }
+          }
+          if (fragment.ref !== null) {
+            setCurrentlyValidatingElement$1(fragment);
+            error("Invalid attribute `ref` supplied to `React.Fragment`.");
+            setCurrentlyValidatingElement$1(null);
+          }
+        }
+      }
+      var didWarnAboutKeySpread = {};
+      function jsxWithValidation(type, props, key, isStaticChildren, source, self2) {
+        {
+          var validType = isValidElementType(type);
+          if (!validType) {
+            var info = "";
+            if (type === void 0 || typeof type === "object" && type !== null && Object.keys(type).length === 0) {
+              info += " You likely forgot to export your component from the file it's defined in, or you might have mixed up default and named imports.";
+            }
+            var sourceInfo = getSourceInfoErrorAddendum(source);
+            if (sourceInfo) {
+              info += sourceInfo;
+            } else {
+              info += getDeclarationErrorAddendum();
+            }
+            var typeString;
+            if (type === null) {
+              typeString = "null";
+            } else if (isArray(type)) {
+              typeString = "array";
+            } else if (type !== void 0 && type.$$typeof === REACT_ELEMENT_TYPE) {
+              typeString = "<" + (getComponentNameFromType(type.type) || "Unknown") + " />";
+              info = " Did you accidentally export a JSX literal instead of a component?";
+            } else {
+              typeString = typeof type;
+            }
+            error("React.jsx: type is invalid -- expected a string (for built-in components) or a class/function (for composite components) but got: %s.%s", typeString, info);
+          }
+          var element = jsxDEV(type, props, key, source, self2);
+          if (element == null) {
+            return element;
+          }
+          if (validType) {
+            var children2 = props.children;
+            if (children2 !== void 0) {
+              if (isStaticChildren) {
+                if (isArray(children2)) {
+                  for (var i = 0; i < children2.length; i++) {
+                    validateChildKeys(children2[i], type);
+                  }
+                  if (Object.freeze) {
+                    Object.freeze(children2);
+                  }
+                } else {
+                  error("React.jsx: Static children should always be an array. You are likely explicitly calling React.jsxs or React.jsxDEV. Use the Babel transform instead.");
                 }
               } else {
-                error("React.jsx: Static children should always be an array. You are likely explicitly calling React.jsxs or React.jsxDEV. Use the Babel transform instead.");
+                validateChildKeys(children2, type);
               }
-            } else {
-              validateChildKeys(children2, type);
             }
           }
+          {
+            if (hasOwnProperty.call(props, "key")) {
+              var componentName = getComponentNameFromType(type);
+              var keys = Object.keys(props).filter(function(k) {
+                return k !== "key";
+              });
+              var beforeExample = keys.length > 0 ? "{key: someKey, " + keys.join(": ..., ") + ": ...}" : "{key: someKey}";
+              if (!didWarnAboutKeySpread[componentName + beforeExample]) {
+                var afterExample = keys.length > 0 ? "{" + keys.join(": ..., ") + ": ...}" : "{}";
+                error('A props object containing a "key" prop is being spread into JSX:\n  let props = %s;\n  <%s {...props} />\nReact keys must be passed directly to JSX without using spread:\n  let props = %s;\n  <%s key={someKey} {...props} />', beforeExample, componentName, afterExample, componentName);
+                didWarnAboutKeySpread[componentName + beforeExample] = true;
+              }
+            }
+          }
+          if (type === REACT_FRAGMENT_TYPE) {
+            validateFragmentProps(element);
+          } else {
+            validatePropTypes(element);
+          }
+          return element;
         }
+      }
+      function jsxWithValidationStatic(type, props, key) {
         {
-          if (hasOwnProperty.call(props, "key")) {
-            var componentName = getComponentNameFromType(type);
-            var keys = Object.keys(props).filter(function(k2) {
-              return k2 !== "key";
-            });
-            var beforeExample = keys.length > 0 ? "{key: someKey, " + keys.join(": ..., ") + ": ...}" : "{key: someKey}";
-            if (!didWarnAboutKeySpread[componentName + beforeExample]) {
-              var afterExample = keys.length > 0 ? "{" + keys.join(": ..., ") + ": ...}" : "{}";
-              error('A props object containing a "key" prop is being spread into JSX:\n  let props = %s;\n  <%s {...props} />\nReact keys must be passed directly to JSX without using spread:\n  let props = %s;\n  <%s key={someKey} {...props} />', beforeExample, componentName, afterExample, componentName);
-              didWarnAboutKeySpread[componentName + beforeExample] = true;
-            }
-          }
+          return jsxWithValidation(type, props, key, true);
         }
-        if (type === REACT_FRAGMENT_TYPE) {
-          validateFragmentProps(element);
-        } else {
-          validatePropTypes(element);
+      }
+      function jsxWithValidationDynamic(type, props, key) {
+        {
+          return jsxWithValidation(type, props, key, false);
         }
-        return element;
       }
-    }
-    function jsxWithValidationStatic(type, props, key) {
-      {
-        return jsxWithValidation(type, props, key, true);
-      }
-    }
-    function jsxWithValidationDynamic(type, props, key) {
-      {
-        return jsxWithValidation(type, props, key, false);
-      }
-    }
-    var jsx2 = jsxWithValidationDynamic;
-    var jsxs2 = jsxWithValidationStatic;
-    Fragment = reactJsxRuntime_development.Fragment = REACT_FRAGMENT_TYPE;
-    jsx_1 = reactJsxRuntime_development.jsx = jsx2;
-    jsxs_1 = reactJsxRuntime_development.jsxs = jsxs2;
-  })();
+      var jsx = jsxWithValidationDynamic;
+      var jsxs = jsxWithValidationStatic;
+      reactJsxRuntime_development.Fragment = REACT_FRAGMENT_TYPE;
+      reactJsxRuntime_development.jsx = jsx;
+      reactJsxRuntime_development.jsxs = jsxs;
+    })();
+  }
+  return reactJsxRuntime_development;
 }
-var jsxRuntime = jsxRuntime$2.exports;
-"use strict";
-if (process.env.NODE_ENV === "production") {
-  jsxRuntime$2.exports = reactJsxRuntime_production_min;
-} else {
-  jsxRuntime$2.exports = reactJsxRuntime_development;
+var jsxRuntime$1 = jsxRuntime$2.exports;
+var hasRequiredJsxRuntime;
+function requireJsxRuntime() {
+  if (hasRequiredJsxRuntime) return jsxRuntime$2.exports;
+  hasRequiredJsxRuntime = 1;
+  "use strict";
+  if (process.env.NODE_ENV === "production") {
+    jsxRuntime$2.exports = requireReactJsxRuntime_production_min();
+  } else {
+    jsxRuntime$2.exports = requireReactJsxRuntime_development();
+  }
+  return jsxRuntime$2.exports;
 }
-var jsxRuntimeExports = jsxRuntime$2.exports;
-const jsxRuntime$1 = /* @__PURE__ */ getDefaultExportFromCjs(jsxRuntimeExports);
+var jsxRuntimeExports = requireJsxRuntime();
+const jsxRuntime = /* @__PURE__ */ getDefaultExportFromCjs(jsxRuntimeExports);
 var gubu_min$2 = { exports: {} };
 var gubu_min = gubu_min$2.exports;
 (function(module, exports) {
@@ -1042,10 +1057,10 @@ var gubu_min = gubu_min$2.exports;
   }(function() {
     var e = {}, t = {};
     Object.defineProperty(t, "__esModule", { value: true }), t.Gubu = void 0;
-    const n2 = Symbol.for("gubu$"), r2 = { gubu$: n2, v$: "8.3.0" }, l2 = /^[A-Z]/, { toString: i } = Object.prototype, o = "gubu", s = "name", u = "nan", a = "never", c = "number", f2 = "required", p2 = "array", h = "function", v = "object", d = "string", g = "boolean", y = "undefined", m2 = "any", b = "list", $ = "instance", k2 = "null", x = "type", I = "closed", w = "shape", S = "check", j = "regexp", N = "String", O = "Number", V = "Boolean", A = "Object", R = "Array", D = "Function", E = "Value", C = "Above", G = "All", T = "Any", B = "Below", J = "Check", W = "Child", M = "Exact", F = "Max", P = "Min", z = "One", L = "Open", _2 = "Required", q2 = "Some", H = " for property ", U = '"$PATH"', K = '"$VALUE"', Z = { [N]: String, [O]: Number, [V]: Boolean, [A]: Object, [R]: Array, ["Symbol"]: Symbol, [D]: Function }, Q = (e2) => Object.keys(e2), X = (e2, t2, n3) => Object.defineProperty(e2, t2, n3), Y = (e2) => Array.isArray(e2), ee = (e2) => JSON.parse(e2), te = (e2, t2) => JSON.stringify(e2, t2);
+    const n = Symbol.for("gubu$"), r2 = { gubu$: n, v$: "8.3.0" }, l = /^[A-Z]/, { toString: i } = Object.prototype, o = "gubu", s = "name", u = "nan", a = "never", c = "number", f = "required", p = "array", h = "function", v = "object", d = "string", g = "boolean", y = "undefined", m = "any", b = "list", $ = "instance", k = "null", x = "type", I = "closed", w = "shape", S = "check", j = "regexp", N = "String", O = "Number", V = "Boolean", A = "Object", R = "Array", D = "Function", E = "Value", C = "Above", G = "All", T = "Any", B = "Below", J = "Check", W = "Child", M = "Exact", F = "Max", P = "Min", z = "One", L = "Open", _2 = "Required", q = "Some", H = " for property ", U = '"$PATH"', K = '"$VALUE"', Z = { [N]: String, [O]: Number, [V]: Boolean, [A]: Object, [R]: Array, ["Symbol"]: Symbol, [D]: Function }, Q = (e2) => Object.keys(e2), X = (e2, t2, n2) => Object.defineProperty(e2, t2, n2), Y = (e2) => Array.isArray(e2), ee = (e2) => JSON.parse(e2), te = (e2, t2) => JSON.stringify(e2, t2);
     class ne {
-      constructor(e2, t2, n3, r3) {
-        this.match = false, this.dI = 0, this.nI = 2, this.cI = -1, this.pI = 0, this.sI = -1, this.valType = a, this.isRoot = false, this.key = "", this.type = a, this.stop = true, this.nextSibling = true, this.fromDflt = false, this.ignoreVal = void 0, this.curerr = [], this.err = [], this.parents = [], this.keys = [], this.ancestors = [], this.path = [], this.root = e2, this.vals = [e2, -1], this.node = t2, this.nodes = [t2, -1], this.ctx = n3 || {}, this.match = !!r3;
+      constructor(e2, t2, n2, r3) {
+        this.match = false, this.dI = 0, this.nI = 2, this.cI = -1, this.pI = 0, this.sI = -1, this.valType = a, this.isRoot = false, this.key = "", this.type = a, this.stop = true, this.nextSibling = true, this.fromDflt = false, this.ignoreVal = void 0, this.curerr = [], this.err = [], this.parents = [], this.keys = [], this.ancestors = [], this.path = [], this.root = e2, this.vals = [e2, -1], this.node = t2, this.nodes = [t2, -1], this.ctx = n2 || {}, this.match = !!r3;
       }
       next() {
         this.stop = false, this.fromDflt = false, this.ignoreVal = void 0, this.isRoot = 0 === this.pI, this.check = void 0;
@@ -1058,9 +1073,9 @@ var gubu_min = gubu_min$2.exports;
       }
     }
     class re extends TypeError {
-      constructor(e2, t2, n3, r3) {
-        var l3;
-        super((t2 = null == t2 || t2.startsWith("G$") ? "" : t2 + ": ") + n3.map((e3) => e3.text).join("\n")), this.gubu = true, this.name = "GubuError", this.code = e2, this.gname = t2, this.desc = () => ({ name: "GubuError", code: e2, err: n3, ctx: r3 }), this.stack = null === (l3 = this.stack) || void 0 === l3 ? void 0 : l3.replace(/.*\/gubu\/gubu\.[tj]s.*\n/g, ""), this.props = n3.map((e3) => {
+      constructor(e2, t2, n2, r3) {
+        var l2;
+        super((t2 = null == t2 || t2.startsWith("G$") ? "" : t2 + ": ") + n2.map((e3) => e3.text).join("\n")), this.gubu = true, this.name = "GubuError", this.code = e2, this.gname = t2, this.desc = () => ({ name: "GubuError", code: e2, err: n2, ctx: r3 }), this.stack = null === (l2 = this.stack) || void 0 === l2 ? void 0 : l2.replace(/.*\/gubu\/gubu\.[tj]s.*\n/g, ""), this.props = n2.map((e3) => {
           var t3;
           return { path: e3.path, what: e3.why, type: null === (t3 = e3.node) || void 0 === t3 ? void 0 : t3.t, value: e3.value };
         });
@@ -1071,47 +1086,47 @@ var gubu_min = gubu_min$2.exports;
     }
     const le = { Array: true, BigInt: true, Boolean: true, Function: true, Number: true, Object: true, String: true, Symbol: true }, ie = { string: "", number: 0, boolean: false, object: {}, array: [], symbol: Symbol(""), bigint: BigInt(0), null: null, regexp: /.*/ };
     function oe(e2, t2, o2) {
-      var s2, a2, f3, g2;
+      var s2, a2, f2, g2;
       if (ue === e2) e2 = void 0;
       else if (null != e2 && (null === (s2 = e2.$) || void 0 === s2 ? void 0 : s2.gubu$)) {
-        if (n2 === e2.$.gubu$) return e2.d = null == t2 ? e2.d : t2, e2;
+        if (n === e2.$.gubu$) return e2.d = null == t2 ? e2.d : t2, e2;
         if (true === e2.$.gubu$) {
           let r3 = __spreadValues({}, e2);
-          return r3.$ = __spreadProps(__spreadValues({ v$: "8.3.0" }, r3.$), { gubu$: n2 }), r3.v = null != r3.v && v === typeof r3.v ? __spreadValues({}, r3.v) : r3.v, r3.t = r3.t || typeof r3.v, h === r3.t && le[r3.v.name] && (r3.t = r3.v.name.toLowerCase(), r3.v = Qe(ie[r3.t]), r3.f = r3.v), r3.r = !!r3.r, r3.p = !!r3.p, r3.d = null == t2 ? null == r3.d ? -1 : r3.d : t2, r3.b = r3.b || [], r3.a = r3.a || [], r3.u = r3.u || {}, r3.m = r3.m || o2 || {}, r3;
+          return r3.$ = __spreadProps(__spreadValues({ v$: "8.3.0" }, r3.$), { gubu$: n }), r3.v = null != r3.v && v === typeof r3.v ? __spreadValues({}, r3.v) : r3.v, r3.t = r3.t || typeof r3.v, h === r3.t && le[r3.v.name] && (r3.t = r3.v.name.toLowerCase(), r3.v = Qe(ie[r3.t]), r3.f = r3.v), r3.r = !!r3.r, r3.p = !!r3.p, r3.d = null == t2 ? null == r3.d ? -1 : r3.d : t2, r3.b = r3.b || [], r3.a = r3.a || [], r3.u = r3.u || {}, r3.m = r3.m || o2 || {}, r3;
         }
       }
-      let b2 = null === e2 ? k2 : typeof e2;
-      b2 = y === b2 ? m2 : b2;
+      let b2 = null === e2 ? k : typeof e2;
+      b2 = y === b2 ? m : b2;
       let x2, I2 = e2, w2 = I2, S2 = false, N2 = {}, O2 = [], V2 = [];
-      if (v === b2) w2 = void 0, Y(I2) ? (b2 = p2, 1 === I2.length && (x2 = I2[0], I2 = [])) : null != I2 && Function !== I2.constructor && Object !== I2.constructor && null != I2.constructor ? ("[object RegExp]" === i.call(I2) ? (b2 = j, S2 = true) : (b2 = $, N2.n = I2.constructor.name, N2.i = I2.constructor), w2 = I2) : 0 === Q(I2).length && (x2 = ye());
+      if (v === b2) w2 = void 0, Y(I2) ? (b2 = p, 1 === I2.length && (x2 = I2[0], I2 = [])) : null != I2 && Function !== I2.constructor && Object !== I2.constructor && null != I2.constructor ? ("[object RegExp]" === i.call(I2) ? (b2 = j, S2 = true) : (b2 = $, N2.n = I2.constructor.name, N2.i = I2.constructor), w2 = I2) : 0 === Q(I2).length && (x2 = ye());
       else if (h === b2) if (le[e2.name]) b2 = e2.name.toLowerCase(), S2 = true, I2 = Qe(ie[b2]), w2 = I2, A === e2.name && (x2 = ye());
       else if (I2.gubu === r2 || true === (null === (a2 = I2.$) || void 0 === a2 ? void 0 : a2.gubu)) {
         let e3 = I2.node ? I2.node() : I2;
         b2 = e3.t, I2 = e3.v, w2 = I2, S2 = e3.r, N2 = __spreadValues({}, e3.u), O2 = [...e3.a], V2 = [...e3.b];
-      } else D === I2.constructor.name && l2.test(I2.name) && (b2 = $, S2 = true, N2.n = null === (g2 = null === (f3 = I2.prototype) || void 0 === f3 ? void 0 : f3.constructor) || void 0 === g2 ? void 0 : g2.name, N2.i = I2);
+      } else D === I2.constructor.name && l.test(I2.name) && (b2 = $, S2 = true, N2.n = null === (g2 = null === (f2 = I2.prototype) || void 0 === f2 ? void 0 : f2.constructor) || void 0 === g2 ? void 0 : g2.name, N2.i = I2);
       else c === b2 && isNaN(I2) ? b2 = u : d === b2 && "" === I2 && (N2.empty = true);
-      let R2 = null == I2 || v !== b2 && p2 !== b2 ? I2 : __spreadValues({}, I2);
+      let R2 = null == I2 || v !== b2 && p !== b2 ? I2 : __spreadValues({}, I2);
       return { $: r2, t: b2, v: R2, f: w2, n: null != R2 && v === typeof R2 ? Q(R2).length : 0, c: x2, r: S2, p: false, d: null == t2 ? -1 : t2, k: [], e: true, u: N2, a: O2, b: V2, m: o2 || {}, [Symbol.for("nodejs.util.inspect.custom")]() {
         const e3 = __spreadValues({}, this);
         return delete e3.$, JSON.stringify(e3, (e4, t3) => "function" != typeof t3 || Ye[t3.name] ? t3 : t3.name).replace(/"/g, "").replace(/,/g, " ");
       } };
     }
     function se(e2, t2) {
-      var n3;
+      var n2;
       const r3 = [[{}, "root", e2, t2]];
-      for (let l3 = 0; l3 < r3.length; l3++) {
-        const e3 = r3[l3], t3 = e3[0][e3[1]] = oe(e3[2], e3[3]);
-        void 0 !== t3.c && ((null === (n3 = t3.c.$) || void 0 === n3 ? void 0 : n3.gubu$) || r3.push([t3, "c", t3.c, t3.d]));
+      for (let l2 = 0; l2 < r3.length; l2++) {
+        const e3 = r3[l2], t3 = e3[0][e3[1]] = oe(e3[2], e3[3]);
+        void 0 !== t3.c && ((null === (n2 = t3.c.$) || void 0 === n2 ? void 0 : n2.gubu$) || r3.push([t3, "c", t3.c, t3.d]));
         let i2 = typeof t3.v;
         v === i2 && null != t3.v && Object.entries(t3.v).map((e4) => {
-          var n4;
-          (null === (n4 = e4[1].$) || void 0 === n4 ? void 0 : n4.gubu$) || r3.push([t3.v, e4[0], e4[1], t3.d + 1]);
+          var n3;
+          (null === (n3 = e4[1].$) || void 0 === n3 ? void 0 : n3.gubu$) || r3.push([t3.v, e4[0], e4[1], t3.d + 1]);
         });
       }
       return r3[0][0].root;
     }
-    function ue(t2, l3) {
-      const i2 = null == l3 ? {} : l3;
+    function ue(t2, l2) {
+      const i2 = null == l2 ? {} : l2;
       i2.name = null == i2.name ? "G$" + ("" + Math.random()).substring(2, 8) : "" + i2.name;
       let o2 = i2.meta = i2.meta || {};
       o2.active = true === o2.active || false, o2.suffix = d == typeof o2.suffix ? o2.suffix : "$$";
@@ -1120,95 +1135,95 @@ var gubu_min = gubu_min$2.exports;
       let u2 = i2.valexpr = i2.valexpr || {};
       u2.active = true === u2.active, u2.keymark = d == typeof u2.keymark ? u2.keymark : o2.suffix;
       let c2, h2 = oe(t2, 0), g2 = "";
-      function N2(e2, t3, n3) {
-        var r3, l4, c3;
-        const g3 = null === (r3 = null == t3 ? void 0 : t3.skip) || void 0 === r3 ? void 0 : r3.depth, N3 = Array.isArray(null === (l4 = null == t3 ? void 0 : t3.skip) || void 0 === l4 ? void 0 : l4.depth) ? t3.skip.depth : null, O3 = Array.isArray(null === (c3 = null == t3 ? void 0 : t3.skip) || void 0 === c3 ? void 0 : c3.keys) ? t3.skip.keys : null, V2 = new ne(e2, h2, t3, n3);
+      function N2(e2, t3, n2) {
+        var r3, l3, c3;
+        const g3 = null === (r3 = null == t3 ? void 0 : t3.skip) || void 0 === r3 ? void 0 : r3.depth, N3 = Array.isArray(null === (l3 = null == t3 ? void 0 : t3.skip) || void 0 === l3 ? void 0 : l3.depth) ? t3.skip.depth : null, O3 = Array.isArray(null === (c3 = null == t3 ? void 0 : t3.skip) || void 0 === c3 ? void 0 : c3.keys) ? t3.skip.keys : null, V2 = new ne(e2, h2, t3, n2);
         for (; V2.next(), !V2.stop; ) {
-          let t4 = V2.node, n4 = false, r4 = false, l5 = !!(t4.d === g3 || N3 && N3.includes(t4.d) || O3 && 1 === t4.d && O3.includes(V2.key)) || t4.p;
+          let t4 = V2.node, n3 = false, r4 = false, l4 = !!(t4.d === g3 || N3 && N3.includes(t4.d) || O3 && 1 === t4.d && O3.includes(V2.key)) || t4.p;
           if (0 < t4.b.length) for (let e3 = 0; e3 < t4.b.length; e3++) {
-            let l6 = fe(t4.b[e3], V2);
-            t4 = V2.node, void 0 !== l6.done && (n4 = l6.done), r4 = r4 || !!l6.fatal;
+            let l5 = fe(t4.b[e3], V2);
+            t4 = V2.node, void 0 !== l5.done && (n3 = l5.done), r4 = r4 || !!l5.fatal;
           }
-          if (!n4) {
-            let n5 = true, r5 = void 0 === V2.val;
+          if (!n3) {
+            let n4 = true, r5 = void 0 === V2.val;
             if (a === V2.type) V2.curerr.push(Ue(a, V2, 1070));
             else if (v === V2.type) {
               let e3;
-              if (void 0 !== t4.c && (t4.c = se(t4.c, 1 + V2.dI)), t4.r && r5 ? (V2.ignoreVal = true, V2.curerr.push(Ue(f2, V2, 1010))) : r5 || null !== V2.val && v === V2.valType && !Y(V2.val) ? !l5 && r5 && void 0 !== t4.f ? (V2.updateVal(t4.f), V2.fromDflt = true, e3 = V2.val, n5 = false) : l5 && r5 || (V2.updateVal(V2.val || (V2.fromDflt = true, {})), e3 = V2.val) : (V2.curerr.push(Ue(x, V2, 1020)), e3 = Y(V2.val) ? V2.val : {}), n5 && (e3 = null == e3 && false === V2.ctx.err ? {} : e3, null != e3)) {
+              if (void 0 !== t4.c && (t4.c = se(t4.c, 1 + V2.dI)), t4.r && r5 ? (V2.ignoreVal = true, V2.curerr.push(Ue(f, V2, 1010))) : r5 || null !== V2.val && v === V2.valType && !Y(V2.val) ? !l4 && r5 && void 0 !== t4.f ? (V2.updateVal(t4.f), V2.fromDflt = true, e3 = V2.val, n4 = false) : l4 && r5 || (V2.updateVal(V2.val || (V2.fromDflt = true, {})), e3 = V2.val) : (V2.curerr.push(Ue(x, V2, 1020)), e3 = Y(V2.val) ? V2.val : {}), n4 && (e3 = null == e3 && false === V2.ctx.err ? {} : e3, null != e3)) {
                 V2.ctx.log && V2.ctx.log("so", V2);
-                let n6 = false, r6 = Q(t4.v), l6 = V2.nI;
+                let n5 = false, r6 = Q(t4.v), l5 = V2.nI;
                 if (0 < r6.length) {
-                  n6 = true, V2.pI = l6;
-                  for (let n7 = 0; n7 < r6.length; n7++) {
-                    let l7, i5 = r6[n7];
+                  n5 = true, V2.pI = l5;
+                  for (let n6 = 0; n6 < r6.length; n6++) {
+                    let l6, i5 = r6[n6];
                     if (o2.active && i5.endsWith(o2.suffix)) {
-                      if (l7 = { short: "" }, d === typeof t4.v[i5] ? l7.short = t4.v[i5] : l7 = __spreadValues(__spreadValues({}, l7), t4.v[i5]), delete t4.v[i5], n7++, r6.length <= n7) break;
-                      if (r6[n7] !== i5.substring(0, i5.length - o2.suffix.length)) throw new Error("Invalid meta key: " + i5);
-                      i5 = r6[n7];
+                      if (l6 = { short: "" }, d === typeof t4.v[i5] ? l6.short = t4.v[i5] : l6 = __spreadValues(__spreadValues({}, l6), t4.v[i5]), delete t4.v[i5], n6++, r6.length <= n6) break;
+                      if (r6[n6] !== i5.substring(0, i5.length - o2.suffix.length)) throw new Error("Invalid meta key: " + i5);
+                      i5 = r6[n6];
                     }
                     let a2 = i5, c4 = t4.v[i5];
                     if (s2.active) {
                       let e4 = /^\s*("(\\.|[^"\\])*"|[^\s]+):\s*(.*?)\s*$/.exec(i5);
-                      e4 && (a2 = e4[1], c4 = ae({ src: e4[3], d: 1 + V2.dI, meta: l7 }, c4), delete t4.v[i5]);
+                      e4 && (a2 = e4[1], c4 = ae({ src: e4[3], d: 1 + V2.dI, meta: l6 }, c4), delete t4.v[i5]);
                     }
                     if (u2.active && i5.startsWith(u2.keymark)) {
                       if (i5 === u2.keymark) {
-                        let e4 = ae({ src: c4, d: 1 + V2.dI, meta: l7, ancestors: V2.ancestors, node: t4 }, t4);
+                        let e4 = ae({ src: c4, d: 1 + V2.dI, meta: l6, ancestors: V2.ancestors, node: t4 }, t4);
                         Object.assign(t4, e4);
                       } else t4.m.$$ = t4.m.$$ || {}, t4.m.$$[i5.substring(u2.keymark.length)] = t4.v[i5];
                       delete t4.v[i5];
                       continue;
                     }
-                    let f3 = oe(c4, 1 + V2.dI, l7);
-                    t4.v[a2] = f3, t4.k.includes(a2) || t4.k.push(a2), V2.nodes[V2.nI] = f3, V2.vals[V2.nI] = e3[a2], V2.parents[V2.nI] = e3, V2.keys[V2.nI] = a2, V2.nI++;
+                    let f2 = oe(c4, 1 + V2.dI, l6);
+                    t4.v[a2] = f2, t4.k.includes(a2) || t4.k.push(a2), V2.nodes[V2.nI] = f2, V2.vals[V2.nI] = e3[a2], V2.parents[V2.nI] = e3, V2.keys[V2.nI] = a2, V2.nI++;
                   }
                 }
                 let i4 = Q(e3).filter((e4) => void 0 === t4.v[e4]);
                 if (0 < i4.length) if (void 0 === t4.c) V2.ignoreVal = true, V2.curerr.push(Ue(I, V2, 1100, void 0, { k: i4 }));
                 else {
-                  n6 = true, V2.pI = l6;
-                  for (let n7 of i4) {
+                  n5 = true, V2.pI = l5;
+                  for (let n6 of i4) {
                     let r7 = t4.c = oe(t4.c, 1 + V2.dI);
-                    V2.nodes[V2.nI] = r7, V2.vals[V2.nI] = e3[n7], V2.parents[V2.nI] = e3, V2.keys[V2.nI] = n7, V2.nI++;
+                    V2.nodes[V2.nI] = r7, V2.vals[V2.nI] = e3[n6], V2.parents[V2.nI] = e3, V2.keys[V2.nI] = n6, V2.nI++;
                   }
                 }
-                n6 ? (V2.dI++, V2.nodes[V2.nI] = V2.sI, V2.parents[V2.nI] = e3, V2.nextSibling = false, V2.nI++) : V2.ctx.log && V2.ctx.log("eo", V2);
+                n5 ? (V2.dI++, V2.nodes[V2.nI] = V2.sI, V2.parents[V2.nI] = e3, V2.nextSibling = false, V2.nI++) : V2.ctx.log && V2.ctx.log("eo", V2);
               }
-            } else if (p2 === V2.type) if (t4.r && r5) V2.ignoreVal = true, V2.curerr.push(Ue(f2, V2, 1030));
+            } else if (p === V2.type) if (t4.r && r5) V2.ignoreVal = true, V2.curerr.push(Ue(f, V2, 1030));
             else if (r5 || Y(V2.val)) {
-              if (!l5 && r5 && void 0 !== t4.f) V2.updateVal(t4.f), V2.fromDflt = true;
-              else if (!l5 || null != V2.val) {
+              if (!l4 && r5 && void 0 !== t4.f) V2.updateVal(t4.f), V2.fromDflt = true;
+              else if (!l4 || null != V2.val) {
                 V2.updateVal(V2.val || (V2.fromDflt = true, []));
-                let n6 = void 0 !== t4.c, r6 = 0 < V2.val.length, l6 = Q(t4.v).filter((e3) => !isNaN(+e3)), i4 = 0 < l6.length;
-                if (n6 && (t4.c = se(t4.c, 1 + V2.dI)), V2.ctx.log && V2.ctx.log("sa", V2), r6 || i4) {
+                let n5 = void 0 !== t4.c, r6 = 0 < V2.val.length, l5 = Q(t4.v).filter((e3) => !isNaN(+e3)), i4 = 0 < l5.length;
+                if (n5 && (t4.c = se(t4.c, 1 + V2.dI)), V2.ctx.log && V2.ctx.log("sa", V2), r6 || i4) {
                   V2.pI = V2.nI;
                   let e3 = 0;
-                  if (i4) if (l6.length < V2.val.length && !n6) V2.ignoreVal = true, V2.curerr.push(Ue(I, V2, 1090, void 0, { k: l6.length }));
-                  else for (; e3 < l6.length; e3++) {
-                    let n7 = t4.v[e3] = oe(t4.v[e3], 1 + V2.dI);
-                    V2.nodes[V2.nI] = n7, V2.vals[V2.nI] = V2.val[e3], V2.parents[V2.nI] = V2.val, V2.keys[V2.nI] = "" + e3, V2.nI++;
+                  if (i4) if (l5.length < V2.val.length && !n5) V2.ignoreVal = true, V2.curerr.push(Ue(I, V2, 1090, void 0, { k: l5.length }));
+                  else for (; e3 < l5.length; e3++) {
+                    let n6 = t4.v[e3] = oe(t4.v[e3], 1 + V2.dI);
+                    V2.nodes[V2.nI] = n6, V2.vals[V2.nI] = V2.val[e3], V2.parents[V2.nI] = V2.val, V2.keys[V2.nI] = "" + e3, V2.nI++;
                   }
-                  if (n6 && r6) {
-                    let n7 = t4.c;
-                    for (; e3 < V2.val.length; e3++) V2.nodes[V2.nI] = n7, V2.vals[V2.nI] = V2.val[e3], V2.parents[V2.nI] = V2.val, V2.keys[V2.nI] = "" + e3, V2.nI++;
+                  if (n5 && r6) {
+                    let n6 = t4.c;
+                    for (; e3 < V2.val.length; e3++) V2.nodes[V2.nI] = n6, V2.vals[V2.nI] = V2.val[e3], V2.parents[V2.nI] = V2.val, V2.keys[V2.nI] = "" + e3, V2.nI++;
                   }
                   V2.ignoreVal || (V2.dI++, V2.nodes[V2.nI] = V2.sI, V2.parents[V2.nI] = V2.val, V2.nextSibling = false, V2.nI++);
-                } else V2.ctx.log && n6 && null == e2 && V2.ctx.log("kv", __spreadProps(__spreadValues({}, V2), { key: 0, val: t4.c })), V2.ctx.log && V2.ctx.log("ea", V2);
+                } else V2.ctx.log && n5 && null == e2 && V2.ctx.log("kv", __spreadProps(__spreadValues({}, V2), { key: 0, val: t4.c })), V2.ctx.log && V2.ctx.log("ea", V2);
               }
             } else V2.curerr.push(Ue(x, V2, 1040));
             else if (j === V2.type) r5 && !t4.r ? V2.ignoreVal = true : d !== V2.valType ? (V2.ignoreVal = true, V2.curerr.push(Ue(x, V2, 1045))) : V2.val.match(t4.v) || (V2.ignoreVal = true, V2.curerr.push(Ue(j, V2, 1045)));
-            else if (m2 === V2.type || b === V2.type || S === V2.type || void 0 === V2.val || V2.type === V2.valType || $ === V2.type && t4.u.i && V2.val instanceof t4.u.i || k2 === V2.type && null === V2.val) if (void 0 === V2.val) {
+            else if (m === V2.type || b === V2.type || S === V2.type || void 0 === V2.val || V2.type === V2.valType || $ === V2.type && t4.u.i && V2.val instanceof t4.u.i || k === V2.type && null === V2.val) if (void 0 === V2.val) {
               let e3 = V2.path[V2.dI];
-              l5 || !t4.r || y === V2.type && V2.parent.hasOwnProperty(e3) ? void 0 !== t4.f && !l5 || y === V2.type ? (V2.updateVal(t4.f), V2.fromDflt = true) : m2 === V2.type && (V2.ignoreVal = void 0 === V2.ignoreVal || V2.ignoreVal) : (V2.ignoreVal = true, V2.curerr.push(Ue(f2, V2, 1060))), V2.ctx.log && V2.ctx.log("kv", V2);
-            } else d !== V2.type || "" !== V2.val || t4.u.empty || V2.curerr.push(Ue(f2, V2, 1080)), V2.ctx.log && V2.ctx.log("kv", V2);
+              l4 || !t4.r || y === V2.type && V2.parent.hasOwnProperty(e3) ? void 0 !== t4.f && !l4 || y === V2.type ? (V2.updateVal(t4.f), V2.fromDflt = true) : m === V2.type && (V2.ignoreVal = void 0 === V2.ignoreVal || V2.ignoreVal) : (V2.ignoreVal = true, V2.curerr.push(Ue(f, V2, 1060))), V2.ctx.log && V2.ctx.log("kv", V2);
+            } else d !== V2.type || "" !== V2.val || t4.u.empty || V2.curerr.push(Ue(f, V2, 1080)), V2.ctx.log && V2.ctx.log("kv", V2);
             else V2.curerr.push(Ue(x, V2, 1050));
           }
           if (0 < t4.a.length) for (let e3 = 0; e3 < t4.a.length; e3++) {
-            let l6 = fe(t4.a[e3], V2);
-            t4 = V2.node, void 0 !== l6.done && (n4 = l6.done), r4 = r4 || !!l6.fatal;
+            let l5 = fe(t4.a[e3], V2);
+            t4 = V2.node, void 0 !== l5.done && (n3 = l5.done), r4 = r4 || !!l5.fatal;
           }
-          let i3 = l5 ? false !== V2.ignoreVal : !!V2.ignoreVal;
-          !V2.match && null != V2.parent && !n4 && !i3 && (V2.parent[V2.key] = V2.val), V2.nextSibling && (V2.pI = V2.sI), (V2.node.e || r4) && V2.err.push(...V2.curerr);
+          let i3 = l4 ? false !== V2.ignoreVal : !!V2.ignoreVal;
+          !V2.match && null != V2.parent && !n3 && !i3 && (V2.parent[V2.key] = V2.val), V2.nextSibling && (V2.pI = V2.sI), (V2.node.e || r4) && V2.err.push(...V2.curerr);
         }
         if (0 < V2.err.length) {
           if (Y(V2.ctx.err)) V2.ctx.err.push(...V2.err);
@@ -1220,38 +1235,38 @@ var gubu_min = gubu_min$2.exports;
         return N2(e2, t3, false);
       }
       return O2.valid = function(e2, t3) {
-        let n3 = t3 || {};
-        return n3.err = n3.err || [], N2(e2, n3, false), 0 === n3.err.length;
+        let n2 = t3 || {};
+        return n2.err = n2.err || [], N2(e2, n2, false), 0 === n2.err.length;
       }, O2.match = (e2, t3) => N2(e2, t3 = t3 || {}, true), O2.error = (e2, t3) => {
-        let n3 = t3 || {};
-        return n3.err = n3.err || [], N2(e2, n3, false), n3.err;
+        let n2 = t3 || {};
+        return n2.err = n2.err || [], N2(e2, n2, false), n2.err;
       }, O2.spec = () => {
         O2(void 0, { err: false });
-        const e2 = Ze(h2, (e3, t3) => n2 === t3 || t3, false, true);
+        const e2 = Ze(h2, (e3, t3) => n === t3 || t3, false, true);
         return ee(e2);
       }, O2.node = () => (O2.spec(), h2), O2.stringify = (...e2) => {
         const t3 = O2.jsonify();
         return "" === g2 ? g2 = "string" == typeof t3 ? t3.replace(/^"(.*)"$/, "$1") : JSON.stringify(t3, ...e2) : g2;
-      }, O2.jsonify = () => null == c2 ? c2 = Ke(O2.node()) : c2, O2.toString = () => (g2 = he("" === g2 ? Ze(null == h2 || !h2.$ || n2 !== h2.$.gubu$ && true !== h2.$.gubu$ ? h2 : h2.v, null, true) : g2), `[Gubu ${i2.name} ${g2}]`), e.inspect && e.inspect.custom && (O2[e.inspect.custom] = O2.toString), O2.gubu = r2, O2.spec(), O2;
+      }, O2.jsonify = () => null == c2 ? c2 = Ke(O2.node()) : c2, O2.toString = () => (g2 = he("" === g2 ? Ze(null == h2 || !h2.$ || n !== h2.$.gubu$ && true !== h2.$.gubu$ ? h2 : h2.v, null, true) : g2), `[Gubu ${i2.name} ${g2}]`), e.inspect && e.inspect.custom && (O2[e.inspect.custom] = O2.toString), O2.gubu = r2, O2.spec(), O2;
     }
     function ae(e2, t2) {
-      var n3, r3;
-      let l3, i2 = false;
+      var n2, r3;
+      let l2, i2 = false;
       "string" == typeof e2 && (e2 = { src: e2 }), e2.keymark = e2.keymark || "$$";
-      const o2 = null === (n3 = null == t2 ? void 0 : t2.$) || void 0 === n3 ? void 0 : n3.gubu$;
+      const o2 = null === (n2 = null == t2 ? void 0 : t2.$) || void 0 === n2 ? void 0 : n2.gubu$;
       if (e2.i = e2.i || 0, null == e2.tokens) {
-        l3 = null != e2.val ? oe(e2.val, (e2.d || 0) + 1, e2.meta) : void 0, i2 = true, e2.tokens = [];
-        let n4 = /\s*,?\s*([)(\.]|"(\\.|[^"\\])*"|\/(\\.|[^\/\\])*\/[a-z]?|[^)(,.\s]+)\s*/g, r4 = null;
-        for (; r4 = n4.exec(e2.src); ) e2.tokens.push(r4[1]);
+        l2 = null != e2.val ? oe(e2.val, (e2.d || 0) + 1, e2.meta) : void 0, i2 = true, e2.tokens = [];
+        let n3 = /\s*,?\s*([)(\.]|"(\\.|[^"\\])*"|\/(\\.|[^\/\\])*\/[a-z]?|[^)(,.\s]+)\s*/g, r4 = null;
+        for (; r4 = n3.exec(e2.src); ) e2.tokens.push(r4[1]);
         if (!o2) {
-          let n5 = 0, r5 = false;
-          for (; n5 < e2.tokens.length; n5++) if (")" == e2.tokens[n5]) {
+          let n4 = 0, r5 = false;
+          for (; n4 < e2.tokens.length; n4++) if (")" == e2.tokens[n4]) {
             r5 = true;
             break;
           }
-          if ((r5 || n5 === e2.tokens.length) && void 0 !== t2) {
-            let l4 = "token_" + e2.d + "_" + e2.i;
-            e2.refs = e2.refs || {}, e2.refs[l4] = t2, r5 ? e2.tokens.splice(n5, 0, e2.keymark + l4) : e2.tokens.push("(", e2.keymark + l4, ")");
+          if ((r5 || n4 === e2.tokens.length) && void 0 !== t2) {
+            let l3 = "token_" + e2.d + "_" + e2.i;
+            e2.refs = e2.refs || {}, e2.refs[l3] = t2, r5 ? e2.tokens.splice(n4, 0, e2.keymark + l3) : e2.tokens.push("(", e2.keymark + l3, ")");
           }
         }
       }
@@ -1285,49 +1300,49 @@ var gubu_min = gubu_min$2.exports;
         }
         e2.i++;
       }
-      return l3 = o2 ? u2.call(t2, ...a2) : u2.call(void 0, ...a2), "." === e2.tokens[e2.i] ? (e2.i++, l3 = ae(e2, l3)) : i2 && e2.i < e2.tokens.length && (l3 = ae(e2, l3)), l3;
+      return l2 = o2 ? u2.call(t2, ...a2) : u2.call(void 0, ...a2), "." === e2.tokens[e2.i] ? (e2.i++, l2 = ae(e2, l2)) : i2 && e2.i < e2.tokens.length && (l2 = ae(e2, l2)), l2;
     }
-    function ce(e2, t2 = {}, n3 = true) {
+    function ce(e2, t2 = {}, n2 = true) {
       let r3;
-      const l3 = Array.isArray(e2) ? "array" : null === e2 ? "null" : typeof e2;
-      return "string" === l3 ? r3 = ae(e2) : "number" === l3 || "boolean" === l3 ? r3 = e2 : v === l3 ? r3 = Object.entries(e2).reduce((e3, n4) => {
+      const l2 = Array.isArray(e2) ? "array" : null === e2 ? "null" : typeof e2;
+      return "string" === l2 ? r3 = ae(e2) : "number" === l2 || "boolean" === l2 ? r3 = e2 : v === l2 ? r3 = Object.entries(e2).reduce((e3, n3) => {
         var r4;
-        return e3[n4[0]] = ((null === (r4 = t2.valexpr) || void 0 === r4 ? void 0 : r4.keymark) || "$$") === n4[0] ? n4[1] : ce(n4[1], t2, false), e3;
-      }, {}) : p2 === l3 && (r3 = e2.map((e3) => ce(e3, t2, false))), n3 ? (t2.valexpr = t2.valexpr || {}, t2.valexpr.active = true, et(r3, t2)) : r3;
+        return e3[n3[0]] = ((null === (r4 = t2.valexpr) || void 0 === r4 ? void 0 : r4.keymark) || "$$") === n3[0] ? n3[1] : ce(n3[1], t2, false), e3;
+      }, {}) : p === l2 && (r3 = e2.map((e3) => ce(e3, t2, false))), n2 ? (t2.valexpr = t2.valexpr || {}, t2.valexpr.active = true, et(r3, t2)) : r3;
     }
     function fe(e2, t2) {
-      var n3;
-      let r3, l3 = {}, i2 = false;
+      var n2;
+      let r3, l2 = {}, i2 = false;
       try {
-        i2 = !(void 0 !== t2.val || !(null === (n3 = e2.gubu$) || void 0 === n3 ? void 0 : n3.Check)) || (t2.check = e2, e2(t2.val, l3, t2));
+        i2 = !(void 0 !== t2.val || !(null === (n2 = e2.gubu$) || void 0 === n2 ? void 0 : n2.Check)) || (t2.check = e2, e2(t2.val, l2, t2));
       } catch (s2) {
         r3 = s2;
       }
-      let o2 = Y(l3.err) ? 0 < l3.err.length : null != l3.err;
+      let o2 = Y(l2.err) ? 0 < l2.err.length : null != l2.err;
       if (!i2 || o2) {
-        if (void 0 === t2.val && (t2.node.p || !t2.node.r) && true !== l3.done) return delete l3.err, l3;
-        let n4 = l3.why || S, i3 = pe(t2);
-        if (d === typeof l3.err) t2.curerr.push(He(t2, l3.err));
-        else if (v === typeof l3.err) t2.curerr.push(...[l3.err].flat().filter((e3) => null != e3).map((e3) => (e3.path = null == e3.path ? i3 : e3.path, e3.mark = null == e3.mark ? 2010 : e3.mark, e3)));
+        if (void 0 === t2.val && (t2.node.p || !t2.node.r) && true !== l2.done) return delete l2.err, l2;
+        let n3 = l2.why || S, i3 = pe(t2);
+        if (d === typeof l2.err) t2.curerr.push(He(t2, l2.err));
+        else if (v === typeof l2.err) t2.curerr.push(...[l2.err].flat().filter((e3) => null != e3).map((e3) => (e3.path = null == e3.path ? i3 : e3.path, e3.mark = null == e3.mark ? 2010 : e3.mark, e3)));
         else {
-          let l4 = e2.name;
-          null != l4 && "" != l4 || (l4 = he(e2.toString().replace(/[ \t\r\n]+/g, " "))), t2.curerr.push(Ue(n4, t2, 1045, void 0, { thrown: r3 }, l4));
+          let l3 = e2.name;
+          null != l3 && "" != l3 || (l3 = he(e2.toString().replace(/[ \t\r\n]+/g, " "))), t2.curerr.push(Ue(n3, t2, 1045, void 0, { thrown: r3 }, l3));
         }
-        l3.done = null == l3.done || l3.done;
+        l2.done = null == l2.done || l2.done;
       }
-      return l3.hasOwnProperty("uval") ? (t2.updateVal(l3.uval), t2.ignoreVal = false) : void 0 === l3.val || Number.isNaN(l3.val) || (t2.updateVal(l3.val), t2.ignoreVal = false), void 0 !== l3.node && (t2.node = l3.node), void 0 !== l3.type && (t2.type = l3.type), l3;
+      return l2.hasOwnProperty("uval") ? (t2.updateVal(l2.uval), t2.ignoreVal = false) : void 0 === l2.val || Number.isNaN(l2.val) || (t2.updateVal(l2.val), t2.ignoreVal = false), void 0 !== l2.node && (t2.node = l2.node), void 0 !== l2.type && (t2.type = l2.type), l2;
     }
     function pe(e2) {
       return e2.path.slice(1, e2.dI + 1).filter((e3) => null != e3).join(".");
     }
     function he(e2, t2) {
-      let n3 = String(e2), r3 = null == t2 || isNaN(t2) ? 30 : t2 < 0 ? 0 : ~~t2, l3 = null == e2 ? 0 : n3.length, i2 = null == e2 ? "" : n3.substring(0, l3);
-      return i2 = r3 < l3 ? i2.substring(0, r3 - 3) + "..." : i2, i2.substring(0, r3);
+      let n2 = String(e2), r3 = null == t2 || isNaN(t2) ? 30 : t2 < 0 ? 0 : ~~t2, l2 = null == e2 ? 0 : n2.length, i2 = null == e2 ? "" : n2.substring(0, l2);
+      return i2 = r3 < l2 ? i2.substring(0, r3 - 3) + "..." : i2, i2.substring(0, r3);
     }
     const ve = function(e2) {
       var t2;
-      let n3 = qe(this, e2);
-      return n3.r = true, n3.p = false, void 0 === e2 ? (n3.f = void 0, 1 === arguments.length && (n3.t = y, n3.v = void 0)) : (null === (t2 = null == this ? void 0 : this.$) || void 0 === t2 ? void 0 : t2.gubu$) && (n3.f = void 0), n3;
+      let n2 = qe(this, e2);
+      return n2.r = true, n2.p = false, void 0 === e2 ? (n2.f = void 0, 1 === arguments.length && (n2.t = y, n2.v = void 0)) : (null === (t2 = null == this ? void 0 : this.$) || void 0 === t2 ? void 0 : t2.gubu$) && (n2.f = void 0), n2;
     }, de = function(e2) {
       let t2 = qe(this, e2);
       return t2.c = ye(), t2;
@@ -1336,30 +1351,30 @@ var gubu_min = gubu_min$2.exports;
       return t2.r = false, void 0 === e2 && 1 === arguments.length && (t2.t = y, t2.v = void 0), t2;
     }, ye = function(e2) {
       let t2 = qe(this, e2);
-      return t2.t = m2, void 0 !== e2 && (t2.v = e2, t2.f = e2), t2;
+      return t2.t = m, void 0 !== e2 && (t2.v = e2, t2.f = e2), t2;
     }, me = function(e2, t2) {
-      let n3 = qe(this, t2);
-      return n3.z = e2, n3;
+      let n2 = qe(this, t2);
+      return n2.z = e2, n2;
     }, be = function(e2) {
       let t2 = qe(this, e2);
       return t2.r = false, t2.p = true, t2;
     }, $e = function(e2) {
       let t2 = qe(this, e2);
-      return t2.r = false, t2.p = true, t2.e = false, t2.a.push(function(e3, t3, n3) {
-        return 0 < n3.curerr.length && (t3.uval = void 0, t3.done = false), true;
+      return t2.r = false, t2.p = true, t2.e = false, t2.a.push(function(e3, t3, n2) {
+        return 0 < n2.curerr.length && (t3.uval = void 0, t3.done = false), true;
       }), t2;
     }, ke = function(e2) {
       let t2 = qe(this);
       return t2.t = h, t2.v = e2, t2.f = e2, t2;
     }, xe = function(e2, t2) {
-      let n3 = qe(this, e2);
-      if (void 0 !== t2 && (n3 = qe(n3, t2)), n3.r = false, n3.f = e2, void 0 === t2) {
-        h === typeof e2 && le[e2.name] && (n3.t = e2.name.toLowerCase(), n3.f = Qe(ie[n3.t]));
+      let n2 = qe(this, e2);
+      if (void 0 !== t2 && (n2 = qe(n2, t2)), n2.r = false, n2.f = e2, void 0 === t2) {
+        h === typeof e2 && le[e2.name] && (n2.t = e2.name.toLowerCase(), n2.f = Qe(ie[n2.t]));
       } else {
         const e3 = oe(t2);
-        n3.t = e3.t;
+        n2.t = e3.t;
       }
-      return n3.p = false, n3;
+      return n2.p = false, n2;
     }, Ie = function(e2) {
       let t2 = qe(this, e2);
       return t2.u.empty = true, t2;
@@ -1367,259 +1382,259 @@ var gubu_min = gubu_min$2.exports;
       let t2 = qe(this, e2);
       return t2.t = a, t2;
     }, Se = function(e2, t2) {
-      let n3 = qe(this), r3 = c === typeof e2;
-      n3.t = d, r3 && null == t2 && (n3 = oe([]));
-      let l3 = null;
-      return h === typeof e2 && (l3 = e2, n3 = ye()), n3.b.push(function(n4, i2, o2) {
-        if (l3) i2.val = l3(o2.path, o2);
+      let n2 = qe(this), r3 = c === typeof e2;
+      n2.t = d, r3 && null == t2 && (n2 = oe([]));
+      let l2 = null;
+      return h === typeof e2 && (l2 = e2, n2 = ye()), n2.b.push(function(n3, i2, o2) {
+        if (l2) i2.val = l2(o2.path, o2);
         else if (r3) {
-          let n5 = e2;
-          i2.val = o2.path.slice(o2.path.length - 1 - (0 <= n5 ? n5 : 0), o2.path.length - 1 + (0 <= n5 ? 0 : 1)), d === typeof t2 && (i2.val = i2.val.join(t2));
+          let n4 = e2;
+          i2.val = o2.path.slice(o2.path.length - 1 - (0 <= n4 ? n4 : 0), o2.path.length - 1 + (0 <= n4 ? 0 : 1)), d === typeof t2 && (i2.val = i2.val.join(t2));
         } else null == e2 && (i2.val = o2.path[o2.path.length - 2]);
         return true;
-      }), n3;
+      }), n2;
     }, je = function(...e2) {
       const t2 = qe(this);
       t2.t = b, t2.r = true;
-      const n3 = e2.map((e3) => et(e3));
-      t2.u.list = n3.map((e3) => e3.node());
-      const r3 = function(t3, r4, l3) {
+      const n2 = e2.map((e3) => et(e3));
+      t2.u.list = n2.map((e3) => e3.node());
+      const r3 = function(t3, r4, l2) {
         let i2 = true;
-        for (let e3 of n3) {
-          let n4 = __spreadProps(__spreadValues({}, l3.ctx), { err: [] });
-          e3(t3, n4), 0 < n4.err.length && (i2 = false);
+        for (let e3 of n2) {
+          let n3 = __spreadProps(__spreadValues({}, l2.ctx), { err: [] });
+          e3(t3, n3), 0 < n3.err.length && (i2 = false);
         }
-        return i2 || (r4.why = G, r4.err = [He(l3, E + " " + K + H + U + " does not satisfy all of: " + e2.map((e3) => Ze(e3, null, true)).join(", "))]), i2;
+        return i2 || (r4.why = G, r4.err = [He(l2, E + " " + K + H + U + " does not satisfy all of: " + e2.map((e3) => Ze(e3, null, true)).join(", "))]), i2;
       };
       return r3.n = G, r3.a = e2, t2.b.push(r3), t2;
     }, Ne = function(...e2) {
       let t2 = qe(this);
       t2.t = b, t2.r = true;
-      let n3 = e2.map((e3) => et(e3));
-      t2.u.list = n3.map((e3) => e3.node());
-      const r3 = function(t3, r4, l3) {
+      let n2 = e2.map((e3) => et(e3));
+      t2.u.list = n2.map((e3) => e3.node());
+      const r3 = function(t3, r4, l2) {
         let i2 = false;
-        for (let e3 of n3) {
-          let n4 = __spreadProps(__spreadValues({}, l3.ctx), { err: [] }), o2 = e3.match(t3, n4);
-          o2 && (r4.val = e3(t3, n4)), i2 || (i2 = o2);
+        for (let e3 of n2) {
+          let n3 = __spreadProps(__spreadValues({}, l2.ctx), { err: [] }), o2 = e3.match(t3, n3);
+          o2 && (r4.val = e3(t3, n3)), i2 || (i2 = o2);
         }
-        return i2 || (r4.why = q2, r4.err = [He(l3, E + " " + K + H + U + " does not satisfy any of: " + e2.map((e3) => Ze(e3, null, true)).join(", "))]), i2;
+        return i2 || (r4.why = q, r4.err = [He(l2, E + " " + K + H + U + " does not satisfy any of: " + e2.map((e3) => Ze(e3, null, true)).join(", "))]), i2;
       };
-      return r3.n = q2, r3.a = e2, t2.b.push(r3), t2;
+      return r3.n = q, r3.a = e2, t2.b.push(r3), t2;
     }, Oe = function(...e2) {
       let t2 = qe(this);
       t2.t = b, t2.r = true;
-      let n3 = e2.map((e3) => et(e3));
-      t2.u.list = n3.map((e3) => e3.node());
-      const r3 = function(t3, r4, l3) {
+      let n2 = e2.map((e3) => et(e3));
+      t2.u.list = n2.map((e3) => e3.node());
+      const r3 = function(t3, r4, l2) {
         let i2 = 0;
-        for (let e3 of n3) {
-          let n4 = __spreadProps(__spreadValues({}, l3.ctx), { err: [] });
-          if (e3.match(t3, n4)) {
-            i2++, r4.val = e3(t3, n4);
+        for (let e3 of n2) {
+          let n3 = __spreadProps(__spreadValues({}, l2.ctx), { err: [] });
+          if (e3.match(t3, n3)) {
+            i2++, r4.val = e3(t3, n3);
             break;
           }
         }
-        return 1 !== i2 && (r4.why = z, r4.err = [He(l3, E + " " + K + H + U + " does not satisfy one of: " + e2.map((e3) => Ze(e3, null, true)).join(", "))]), true;
+        return 1 !== i2 && (r4.why = z, r4.err = [He(l2, E + " " + K + H + U + " does not satisfy one of: " + e2.map((e3) => Ze(e3, null, true)).join(", "))]), true;
       };
       return r3.n = z, r3.a = e2, t2.b.push(r3), t2;
     }, Ve = function(...e2) {
-      const t2 = qe(this), n3 = function(t3, n4, r3) {
-        for (let l3 = 0; l3 < e2.length; l3++) if (t3 === e2[l3]) return true;
+      const t2 = qe(this), n2 = function(t3, n3, r3) {
+        for (let l2 = 0; l2 < e2.length; l2++) if (t3 === e2[l2]) return true;
         if (r3.node.hasOwnProperty("f") && void 0 === t3) {
           const t4 = r3.node.f;
-          for (let n5 = 0; n5 < e2.length; n5++) if (t4 === e2[n5]) return true;
+          for (let n4 = 0; n4 < e2.length; n4++) if (t4 === e2[n4]) return true;
         }
-        return n4.err = He(r3, E + " " + K + H + U + " must be exactly one of: " + e2.map((e3) => Ze(e3, null, true)).join(", ")), n4.done = true, false;
+        return n3.err = He(r3, E + " " + K + H + U + " must be exactly one of: " + e2.map((e3) => Ze(e3, null, true)).join(", ")), n3.done = true, false;
       };
-      return n3.n = M, n3.a = e2, n3.s = () => M + "(" + e2.map((e3) => Ze(e3, null, true)).join(",") + ")", t2.b.push(n3), t2;
+      return n2.n = M, n2.a = e2, n2.s = () => M + "(" + e2.map((e3) => Ze(e3, null, true)).join(",") + ")", t2.b.push(n2), t2;
     }, Ae = function(e2, t2) {
-      let n3 = qe(this, t2);
-      return n3.b.push(e2), n3;
+      let n2 = qe(this, t2);
+      return n2.b.push(e2), n2;
     }, Re = function(e2, t2) {
-      let n3 = qe(this, t2);
-      return n3.a.push(e2), n3;
+      let n2 = qe(this, t2);
+      return n2.a.push(e2), n2;
     }, De = function(e2, t2) {
-      let n3 = qe(this, t2);
-      if (n3.r = true, h === typeof e2) {
+      let n2 = qe(this, t2);
+      if (n2.r = true, h === typeof e2) {
         let t3 = e2;
-        t3.gubu$ = t3.gubu$ || {}, t3.gubu$.Check = true, t3.s = () => J + "(" + Ze(e2, null, true) + ")", n3.b.push(e2), n3.t = S;
+        t3.gubu$ = t3.gubu$ || {}, t3.gubu$.Check = true, t3.s = () => J + "(" + Ze(e2, null, true) + ")", n2.b.push(e2), n2.t = S;
       } else if (v === typeof e2) {
         if (Object.prototype.toString.call(e2).includes("RegExp")) {
           let t3 = (t4) => null != t4 && !Number.isNaN(t4) && !!String(t4).match(e2);
-          X(t3, s, { value: String(e2) }), X(t3, "gubu$", { value: { Check: true } }), t3.s = () => J + "(" + Ze(e2, null, true) + ")", n3.b.push(t3), n3.t = S;
+          X(t3, s, { value: String(e2) }), X(t3, "gubu$", { value: { Check: true } }), t3.s = () => J + "(" + Ze(e2, null, true) + ")", n2.b.push(t3), n2.t = S;
         }
-      } else d === typeof e2 && (n3.t = e2);
+      } else d === typeof e2 && (n2.t = e2);
       if (void 0 !== t2) {
         const e3 = oe(t2);
-        n3.t = e3.t;
+        n2.t = e3.t;
       }
-      return n3;
+      return n2;
     }, Ee = function(e2) {
       let t2 = qe(this, e2);
-      return p2 === t2.t && void 0 !== t2.c && 0 === t2.n && (t2.v = [t2.c]), t2.c = void 0, t2;
+      return p === t2.t && void 0 !== t2.c && 0 === t2.n && (t2.v = [t2.c]), t2.c = void 0, t2;
     }, Ce = function(e2, t2) {
-      let n3 = qe(this, t2), r3 = d === typeof e2 ? e2 : (v === typeof e2 && e2 || {}).name;
-      return null != r3 && "" != r3 && n3.b.push(function(e3, t3, n4) {
-        return (n4.ctx.ref = n4.ctx.ref || {})[r3] = n4.node, true;
-      }), n3;
+      let n2 = qe(this, t2), r3 = d === typeof e2 ? e2 : (v === typeof e2 && e2 || {}).name;
+      return null != r3 && "" != r3 && n2.b.push(function(e3, t3, n3) {
+        return (n3.ctx.ref = n3.ctx.ref || {})[r3] = n3.node, true;
+      }), n2;
     }, Ge = function(e2, t2) {
-      let n3 = qe(this, t2), r3 = v === typeof e2 && e2 || {}, l3 = d === typeof e2 ? e2 : r3.name, i2 = !!r3.fill;
-      return null != l3 && "" != l3 && n3.b.push(function(e3, t3, n4) {
+      let n2 = qe(this, t2), r3 = v === typeof e2 && e2 || {}, l2 = d === typeof e2 ? e2 : r3.name, i2 = !!r3.fill;
+      return null != l2 && "" != l2 && n2.b.push(function(e3, t3, n3) {
         if (void 0 !== e3 || i2) {
-          let e4 = n4.ctx.ref = n4.ctx.ref || {};
-          if (void 0 !== e4[l3]) {
-            let n5 = __spreadValues({}, e4[l3]);
-            n5.t = n5.t || a, t3.node = n5, t3.type = n5.t;
+          let e4 = n3.ctx.ref = n3.ctx.ref || {};
+          if (void 0 !== e4[l2]) {
+            let n4 = __spreadValues({}, e4[l2]);
+            n4.t = n4.t || a, t3.node = n4, t3.type = n4.t;
           }
         }
         return true;
-      }), n3;
+      }), n2;
     }, Te = function(e2, t2) {
-      let n3 = qe(this, t2), r3 = v === typeof e2 && e2 || {}, l3 = d === typeof e2 ? e2 : r3.name, i2 = g === typeof r3.keep ? r3.keep : void 0, o2 = Y(r3.claim) ? r3.claim : [];
-      if (null != l3 && "" != l3) {
-        let e3 = (e4, t4, n4) => {
+      let n2 = qe(this, t2), r3 = v === typeof e2 && e2 || {}, l2 = d === typeof e2 ? e2 : r3.name, i2 = g === typeof r3.keep ? r3.keep : void 0, o2 = Y(r3.claim) ? r3.claim : [];
+      if (null != l2 && "" != l2) {
+        let e3 = (e4, t4, n3) => {
           if (void 0 === e4 && 0 < o2.length) {
-            n4.ctx.Rename = n4.ctx.Rename || {}, n4.ctx.Rename.fromDflt = n4.ctx.Rename.fromDflt || {};
+            n3.ctx.Rename = n3.ctx.Rename || {}, n3.ctx.Rename.fromDflt = n3.ctx.Rename.fromDflt || {};
             for (let e5 of o2) {
-              let r4 = n4.ctx.Rename.fromDflt[e5] || {};
-              if (void 0 !== n4.parent[e5] && !r4.yes) {
-                t4.val = n4.parent[e5], n4.match || (n4.parent[l3] = t4.val), t4.node = r4.node;
-                for (let e6 = 0; e6 < n4.err.length; e6++) n4.err[e6].k === r4.key && (n4.err.splice(e6, 1), e6--);
+              let r4 = n3.ctx.Rename.fromDflt[e5] || {};
+              if (void 0 !== n3.parent[e5] && !r4.yes) {
+                t4.val = n3.parent[e5], n3.match || (n3.parent[l2] = t4.val), t4.node = r4.node;
+                for (let e6 = 0; e6 < n3.err.length; e6++) n3.err[e6].k === r4.key && (n3.err.splice(e6, 1), e6--);
                 if (i2) {
-                  let t5 = n4.cI + 1;
-                  n4.nodes.splice(t5, 0, oe(r4.dval)), n4.vals.splice(t5, 0, void 0), n4.parents.splice(t5, 0, n4.parent), n4.keys.splice(t5, 0, e5), n4.nI++, n4.pI++;
-                } else delete n4.parent[e5];
+                  let t5 = n3.cI + 1;
+                  n3.nodes.splice(t5, 0, oe(r4.dval)), n3.vals.splice(t5, 0, void 0), n3.parents.splice(t5, 0, n3.parent), n3.keys.splice(t5, 0, e5), n3.nI++, n3.pI++;
+                } else delete n3.parent[e5];
                 break;
               }
             }
-            void 0 === t4.val && (t4.val = n4.node.v);
+            void 0 === t4.val && (t4.val = n3.node.v);
           }
           return true;
         };
-        X(e3, s, { value: "Rename:" + l3 }), n3.b.push(e3);
-        let t3 = (e4, t4, n4) => (n4.parent[l3] = e4, n4.match || i2 || n4.key === l3 || Y(n4.parent) && false !== i2 || (delete n4.parent[n4.key], t4.done = true), n4.ctx.Rename = n4.ctx.Rename || {}, n4.ctx.Rename.fromDflt = n4.ctx.Rename.fromDflt || {}, n4.ctx.Rename.fromDflt[l3] = { yes: n4.fromDflt, key: n4.key, dval: n4.node.v, node: n4.node }, true);
-        X(t3, s, { value: "Rename:" + l3 }), n3.a.push(t3);
+        X(e3, s, { value: "Rename:" + l2 }), n2.b.push(e3);
+        let t3 = (e4, t4, n3) => (n3.parent[l2] = e4, n3.match || i2 || n3.key === l2 || Y(n3.parent) && false !== i2 || (delete n3.parent[n3.key], t4.done = true), n3.ctx.Rename = n3.ctx.Rename || {}, n3.ctx.Rename.fromDflt = n3.ctx.Rename.fromDflt || {}, n3.ctx.Rename.fromDflt[l2] = { yes: n3.fromDflt, key: n3.key, dval: n3.node.v, node: n3.node }, true);
+        X(t3, s, { value: "Rename:" + l2 }), n2.a.push(t3);
       }
-      return n3;
+      return n2;
     }, Be = function(e2, t2) {
-      let n3 = qe(this, t2);
-      return n3.c = oe(e2), void 0 === n3.v && (n3.t = "object", n3.v = {}, n3.f = {}), n3;
+      let n2 = qe(this, t2);
+      return n2.c = oe(e2), void 0 === n2.v && (n2.t = "object", n2.v = {}, n2.f = {}), n2;
     }, Je = function(e2, t2) {
-      let n3 = qe(this, t2 || []);
-      return n3.t = "array", n3.c = oe(e2), n3.m = n3.m || {}, n3.m.rest = true, n3;
+      let n2 = qe(this, t2 || []);
+      return n2.t = "array", n2.c = oe(e2), n2.m = n2.m || {}, n2.m.rest = true, n2;
     }, We = function(e2, t2) {
-      let n3 = oe(Z[e2]), r3 = qe(this, t2);
-      return r3 !== n3 && (r3.t = n3.t, r3.r = n3.r, r3.p = n3.p, r3.v = n3.v), r3;
+      let n2 = oe(Z[e2]), r3 = qe(this, t2);
+      return r3 !== n2 && (r3.t = n2.t, r3.r = n2.r, r3.p = n2.p, r3.v = n2.v), r3;
     };
-    function Me(e2, t2, n3, r3, l3) {
-      let i2 = qe(e2, n3);
+    function Me(e2, t2, n2, r3, l2) {
+      let i2 = qe(e2, n2);
       t2 = +t2;
-      let o2 = function(e3, n4, r4) {
-        return l3(function(e4) {
+      let o2 = function(e3, n3, r4) {
+        return l2(function(e4) {
           return c === typeof e4 ? e4 : c === typeof (null == e4 ? void 0 : e4.length) ? e4.length : null != e4 && v === typeof e4 ? Q(e4).length : NaN;
-        }(e3), t2, e3, n4, r4);
+        }(e3), t2, e3, n3, r4);
       };
       return Object.defineProperty(o2, s, { value: r3 }), o2.n = r3, o2.a = [t2], o2.s = () => r3 + "(" + t2 + ")", o2[Symbol.for("nodejs.util.inspect.custom")] = o2.s(), o2.toJSON = () => o2.s(), i2.b.push(o2), i2;
     }
     const Fe = function(e2, t2) {
-      return Me(this, e2, t2, P, (e3, t3, n3, r3, l3) => {
+      return Me(this, e2, t2, P, (e3, t3, n2, r3, l2) => {
         if (t3 <= e3) return true;
-        l3.checkargs = { min: 1 };
-        let i2 = c === typeof n3 ? "" : "length ";
-        return r3.err = He(l3, E + " " + K + H + U + ` must be a minimum ${i2}of ${t3} (was ${e3}).`), false;
+        l2.checkargs = { min: 1 };
+        let i2 = c === typeof n2 ? "" : "length ";
+        return r3.err = He(l2, E + " " + K + H + U + ` must be a minimum ${i2}of ${t3} (was ${e3}).`), false;
       });
     }, Pe = function(e2, t2) {
-      return Me(this, e2, t2, F, (e3, t3, n3, r3, l3) => {
+      return Me(this, e2, t2, F, (e3, t3, n2, r3, l2) => {
         if (e3 <= t3) return true;
-        let i2 = c === typeof n3 ? "" : "length ";
-        return r3.err = He(l3, E + " " + K + H + U + ` must be a maximum ${i2}of ${t3} (was ${e3}).`), false;
+        let i2 = c === typeof n2 ? "" : "length ";
+        return r3.err = He(l2, E + " " + K + H + U + ` must be a maximum ${i2}of ${t3} (was ${e3}).`), false;
       });
     }, ze = function(e2, t2) {
-      return Me(this, e2, t2, C, (e3, t3, n3, r3, l3) => {
+      return Me(this, e2, t2, C, (e3, t3, n2, r3, l2) => {
         if (t3 < e3) return true;
-        let i2 = c === typeof n3 ? "be" : "have length";
-        return r3.err = He(l3, E + " " + K + H + U + ` must ${i2} above ${t3} (was ${e3}).`), false;
+        let i2 = c === typeof n2 ? "be" : "have length";
+        return r3.err = He(l2, E + " " + K + H + U + ` must ${i2} above ${t3} (was ${e3}).`), false;
       });
     }, Le = function(e2, t2) {
-      return Me(this, e2, t2, B, (e3, t3, n3, r3, l3) => {
+      return Me(this, e2, t2, B, (e3, t3, n2, r3, l2) => {
         if (e3 < t3) return true;
-        let i2 = c === typeof n3 ? "be" : "have length";
-        return r3.err = He(l3, E + " " + K + H + U + ` must ${i2} below ${t3} (was ${e3}).`), false;
+        let i2 = c === typeof n2 ? "be" : "have length";
+        return r3.err = He(l2, E + " " + K + H + U + ` must ${i2} below ${t3} (was ${e3}).`), false;
       });
     }, _e = function(e2, t2) {
-      return Me(this, e2, t2, B, (e3, t3, n3, r3, l3) => {
+      return Me(this, e2, t2, B, (e3, t3, n2, r3, l2) => {
         if (t3 === e3) return true;
-        let i2 = c === typeof n3 ? "" : " in length";
-        return r3.err = He(l3, E + " " + K + H + U + ` must be exactly ${t3}${i2} (was ${e3}).`), false;
+        let i2 = c === typeof n2 ? "" : " in length";
+        return r3.err = He(l2, E + " " + K + H + U + ` must be exactly ${t3}${i2} (was ${e3}).`), false;
       });
     };
     function qe(e2, t2) {
-      let n3, r3 = null != e2 && (e2.window === e2 || e2.global === e2);
-      if (void 0 !== e2 && !r3 || void 0 === t2) if (void 0 === e2 || r3) n3 = oe(void 0);
+      let n2, r3 = null != e2 && (e2.window === e2 || e2.global === e2);
+      if (void 0 !== e2 && !r3 || void 0 === t2) if (void 0 === e2 || r3) n2 = oe(void 0);
       else if (void 0 !== t2) {
-        n3 = oe(t2);
+        n2 = oe(t2);
         let r4 = oe(e2);
-        void 0 === n3.v && "list" !== n3.t && (n3.v = r4.v, n3.t = r4.t), ["f", "r", "p", "c", "e", "z"].map((e3) => n3[e3] = void 0 !== r4[e3] ? r4[e3] : n3[e3]), n3.u = Object.assign(__spreadValues({}, r4.u), n3.u), n3.m = Object.assign(__spreadValues({}, r4.m), n3.m), n3.a = r4.a.concat(n3.a), n3.b = r4.b.concat(n3.b);
-      } else n3 = oe(e2);
-      else n3 = oe(t2);
-      return n3.Above ? n3 : Object.assign(n3, { Above: ze, After: Re, Any: ye, Before: Ae, Below: Le, Check: De, Child: Be, Closed: Ee, Default: xe, Define: Ce, Empty: Ie, Exact: Ve, Fault: me, Ignore: $e, Len: _e, Max: Pe, Min: Fe, Never: we, Open: de, Refer: Ge, Rename: Te, Required: ve, Rest: Je, Skip: be, Type: We });
+        void 0 === n2.v && "list" !== n2.t && (n2.v = r4.v, n2.t = r4.t), ["f", "r", "p", "c", "e", "z"].map((e3) => n2[e3] = void 0 !== r4[e3] ? r4[e3] : n2[e3]), n2.u = Object.assign(__spreadValues({}, r4.u), n2.u), n2.m = Object.assign(__spreadValues({}, r4.m), n2.m), n2.a = r4.a.concat(n2.a), n2.b = r4.b.concat(n2.b);
+      } else n2 = oe(e2);
+      else n2 = oe(t2);
+      return n2.Above ? n2 : Object.assign(n2, { Above: ze, After: Re, Any: ye, Before: Ae, Below: Le, Check: De, Child: Be, Closed: Ee, Default: xe, Define: Ce, Empty: Ie, Exact: Ve, Fault: me, Ignore: $e, Len: _e, Max: Pe, Min: Fe, Never: we, Open: de, Refer: Ge, Rename: Te, Required: ve, Rest: Je, Skip: be, Type: We });
     }
-    function He(e2, t2, n3, r3) {
-      return Ue(n3 || S, e2, 4e3, t2, r3);
+    function He(e2, t2, n2, r3) {
+      return Ue(n2 || S, e2, 4e3, t2, r3);
     }
-    function Ue(e2, t2, n3, r3, l3, i2) {
+    function Ue(e2, t2, n2, r3, l2, i2) {
       var o2;
-      let s2 = { key: t2.key, type: t2.node.t, node: t2.node, value: t2.val, path: pe(t2), why: e2, check: (null === (o2 = t2.check) || void 0 === o2 ? void 0 : o2.name) || "none", args: t2.checkargs || {}, mark: n3, text: "", use: l3 || {} }, u2 = he((void 0 === t2.val ? y : Ze(t2.val)).replace(/"/g, ""));
+      let s2 = { key: t2.key, type: t2.node.t, node: t2.node, value: t2.val, path: pe(t2), why: e2, check: (null === (o2 = t2.check) || void 0 === o2 ? void 0 : o2.name) || "none", args: t2.checkargs || {}, mark: n2, text: "", use: l2 || {} }, u2 = he((void 0 === t2.val ? y : Ze(t2.val)).replace(/"/g, ""));
       if (null == (r3 = r3 || t2.node.z) || "" === r3) {
-        let n4 = u2.startsWith("[") ? p2 : u2.startsWith("{") ? v : null == t2.val || c === typeof t2.val && isNaN(t2.val) ? "value" : typeof t2.val, r4 = u2.startsWith("[") || Y(t2.parents[t2.pI]) ? "index" : "property", o3 = "is", h2 = null == l3 ? void 0 : l3.k;
-        h2 = Y(h2) ? (r4 = 1 < h2.length ? (o3 = "are", "properties") : r4, h2.join(", ")) : h2, s2.text = "Validation failed for " + (0 < s2.path.length ? `${r4} "${s2.path}" with ` : "") + `${n4} "${u2}" because ` + (x === e2 ? $ === t2.node.t ? `the ${n4} is not an instance of ${t2.node.u.n}` : `the ${n4} is not of type ${j === t2.node.t ? d : t2.node.t}` : f2 === e2 ? "" === t2.val ? "an empty string is not allowed" : `the ${n4} is required` : "closed" === e2 ? `the ${r4} "${h2}" ${o3} not allowed` : j === e2 ? "the string did not match " + t2.node.v : a === e2 ? "no value is allowed" : `check "${null == i2 ? e2 : i2}" failed`) + (s2.use.thrown ? " (threw: " + s2.use.thrown.message + ")" : ".");
+        let n3 = u2.startsWith("[") ? p : u2.startsWith("{") ? v : null == t2.val || c === typeof t2.val && isNaN(t2.val) ? "value" : typeof t2.val, r4 = u2.startsWith("[") || Y(t2.parents[t2.pI]) ? "index" : "property", o3 = "is", h2 = null == l2 ? void 0 : l2.k;
+        h2 = Y(h2) ? (r4 = 1 < h2.length ? (o3 = "are", "properties") : r4, h2.join(", ")) : h2, s2.text = "Validation failed for " + (0 < s2.path.length ? `${r4} "${s2.path}" with ` : "") + `${n3} "${u2}" because ` + (x === e2 ? $ === t2.node.t ? `the ${n3} is not an instance of ${t2.node.u.n}` : `the ${n3} is not of type ${j === t2.node.t ? d : t2.node.t}` : f === e2 ? "" === t2.val ? "an empty string is not allowed" : `the ${n3} is required` : "closed" === e2 ? `the ${r4} "${h2}" ${o3} not allowed` : j === e2 ? "the string did not match " + t2.node.v : a === e2 ? "no value is allowed" : `check "${null == i2 ? e2 : i2}" failed`) + (s2.use.thrown ? " (threw: " + s2.use.thrown.message + ")" : ".");
       } else s2.text = r3.replace(/\$VALUE/g, u2).replace(/\$PATH/g, s2.path);
       return s2;
     }
     function Ke(e2) {
       var t2;
-      let n3 = e2.t;
+      let n2 = e2.t;
       const r3 = { number: O, string: N, boolean: V };
-      if (r3[n3]) {
+      if (r3[n2]) {
         let t3 = "";
-        return e2.r && (t3 += r3[n3]), "" === t3 && (t3 = JSON.stringify(e2.v)), t3 += e2.b.map((t4) => t4.s ? "." + t4.s(e2) : "").join(""), t3;
+        return e2.r && (t3 += r3[n2]), "" === t3 && (t3 = JSON.stringify(e2.v)), t3 += e2.b.map((t4) => t4.s ? "." + t4.s(e2) : "").join(""), t3;
       }
-      if (m2 === n3) {
-        let n4 = "";
-        return e2.r && (n4 += _2), m2 == (null === (t2 = e2.c) || void 0 === t2 ? void 0 : t2.t) && (n4 += ("" === n4 ? "" : ".") + L), n4 += e2.b.map((t3) => t3.s ? "." + t3.s(e2) : "").join(""), n4.startsWith(".") && (n4 = n4.slice(1)), "" === n4 && (n4 = T), n4;
+      if (m === n2) {
+        let n3 = "";
+        return e2.r && (n3 += _2), m == (null === (t2 = e2.c) || void 0 === t2 ? void 0 : t2.t) && (n3 += ("" === n3 ? "" : ".") + L), n3 += e2.b.map((t3) => t3.s ? "." + t3.s(e2) : "").join(""), n3.startsWith(".") && (n3 = n3.slice(1)), "" === n3 && (n3 = T), n3;
       }
-      if (S === n3) {
+      if (S === n2) {
         let t3 = "";
         return t3 += e2.b.map((t4) => t4.s ? "." + t4.s(e2) : "").join(""), t3.startsWith(".") && (t3 = t3.slice(1)), t3;
       }
-      if (v === n3) {
+      if (v === n2) {
         let t3 = {};
-        for (let n4 in e2.v) t3[n4] = Ke(e2.v[n4]);
+        for (let n3 in e2.v) t3[n3] = Ke(e2.v[n3]);
         return void 0 !== e2.c && (r3[e2.c.t] ? t3.$$ = W + "(" + r3[e2.c.t] + ")" : "any" === e2.c.t ? t3.$$ = L : (t3.$$ = W + "($$child)", t3.$$child = Ke(e2.c))), 0 < e2.b.length && (void 0 === t3.$$ && (t3.$$ = ""), t3.$$ += e2.b.map((t4) => t4.s ? "." + t4.s(e2) : "").join(""), t3.$$.startsWith(".") && (t3.$$ = t3.$$.slice(1))), t3.$$ && 1 === Object.keys(t3).length && t3.$$.startsWith(W) ? t3.$$ : t3;
       }
-      if (b === n3) {
-        let t3 = {}, n4 = 0, r4 = e2.u.list.map((e3) => Ke(e3)).map((e3, r5) => v === typeof e3 ? (t3[r5 = "$$ref" + n4++] = e3, r5) : e3), l3 = (e2.b[0].n || e2.b[0].name) + "(" + r4.join(",") + ")";
-        return 0 === n4 ? l3 : __spreadValues({ $$: l3 }, t3);
+      if (b === n2) {
+        let t3 = {}, n3 = 0, r4 = e2.u.list.map((e3) => Ke(e3)).map((e3, r5) => v === typeof e3 ? (t3[r5 = "$$ref" + n3++] = e3, r5) : e3), l2 = (e2.b[0].n || e2.b[0].name) + "(" + r4.join(",") + ")";
+        return 0 === n3 ? l2 : __spreadValues({ $$: l2 }, t3);
       }
-      if (p2 === n3) {
+      if (p === n2) {
         let t3 = [];
-        return void 0 !== e2.c ? t3[0] = Ke(e2.c) : t3 = Object.keys(e2.v).reduce((t4, n4) => (t4[+n4] = e2.v[n4], t4), []).map((e3) => Ke(e3)), t3;
+        return void 0 !== e2.c ? t3[0] = Ke(e2.c) : t3 = Object.keys(e2.v).reduce((t4, n3) => (t4[+n3] = e2.v[n3], t4), []).map((e3) => Ke(e3)), t3;
       }
-      if (j === n3) return e2.v.toString();
+      if (j === n2) return e2.v.toString();
     }
-    function Ze(e2, t2, r3, l3) {
+    function Ze(e2, t2, r3, l2) {
       let o2;
-      if (!l3 && e2 && e2.$ && (n2 === e2.$.gubu$ || true === e2.$.gubu$)) return e2 = JSON.stringify(Ke(e2)), r3 && (e2 = "string" == typeof e2 ? e2.replace(/\\/g, "").replace(/"/g, "") : ""), e2;
+      if (!l2 && e2 && e2.$ && (n === e2.$.gubu$ || true === e2.$.gubu$)) return e2 = JSON.stringify(Ke(e2)), r3 && (e2 = "string" == typeof e2 ? e2.replace(/\\/g, "").replace(/"/g, "") : ""), e2;
       try {
         o2 = te(e2, (e3, o3) => {
           var s2, u2, a2;
           if (t2 && (o3 = t2(e3, o3)), null != o3 && v === typeof o3 && o3.constructor && A !== o3.constructor.name && R !== o3.constructor.name) o3 = "[object RegExp]" === i.call(o3) || h === typeof o3.toString ? o3.toString() : o3.constructor.name;
-          else if (l3 || n2 !== (null === (s2 = null == o3 ? void 0 : o3.$) || void 0 === s2 ? void 0 : s2.gubu$)) if (h === typeof o3) o3 = h === typeof ue[o3.name] && isNaN(+e3) ? void 0 : null != o3.name && "" !== o3.name ? o3.name : he(o3.toString().replace(/[ \t\r\n]+/g, " "));
+          else if (l2 || n !== (null === (s2 = null == o3 ? void 0 : o3.$) || void 0 === s2 ? void 0 : s2.gubu$)) if (h === typeof o3) o3 = h === typeof ue[o3.name] && isNaN(+e3) ? void 0 : null != o3.name && "" !== o3.name ? o3.name : he(o3.toString().replace(/[ \t\r\n]+/g, " "));
           else if ("bigint" == typeof o3) o3 = String(o3.toString());
           else {
             if (Number.isNaN(o3)) return "NaN";
-            true === l3 || true !== (null === (u2 = null == o3 ? void 0 : o3.$) || void 0 === u2 ? void 0 : u2.gubu$) && n2 !== (null === (a2 = null == o3 ? void 0 : o3.$) || void 0 === a2 ? void 0 : a2.gubu$) || (o3 = JSON.stringify(Ke(o3)));
+            true === l2 || true !== (null === (u2 = null == o3 ? void 0 : o3.$) || void 0 === u2 ? void 0 : u2.gubu$) && n !== (null === (a2 = null == o3 ? void 0 : o3.$) || void 0 === a2 ? void 0 : a2.gubu$) || (o3 = JSON.stringify(Ke(o3)));
           }
           else "number" === o3.t || "string" === o3.t || "boolean" === o3.t ? o3 = o3.v : (o3 = Ke(o3), o3 = JSON.stringify(o3), r3 && (o3 = "string" == typeof o3 ? o3.replace(/\\/g, "").replace(/"/g, "") : ""));
           return o3;
@@ -1638,34 +1653,34 @@ var gubu_min = gubu_min$2.exports;
     const et = ue;
     t.Gubu = et;
     function tt(e2) {
-      return function(t2, n3, r3) {
-        let l3 = false;
-        d === typeof t2 && (l3 = true, r3 = n3, n3 = t2);
-        const i2 = et(r3 = r3 || n3, { name: e2 + (n3 = d === typeof n3 ? " (" + n3 + ")" : "") }), o2 = i2.node(), s2 = o2.k;
-        let u2 = t2, a2 = {}, c2 = 0, f3 = 0;
+      return function(t2, n2, r3) {
+        let l2 = false;
+        d === typeof t2 && (l2 = true, r3 = n2, n2 = t2);
+        const i2 = et(r3 = r3 || n2, { name: e2 + (n2 = d === typeof n2 ? " (" + n2 + ")" : "") }), o2 = i2.node(), s2 = o2.k;
+        let u2 = t2, a2 = {}, c2 = 0, f2 = 0;
         for (; c2 < s2.length; c2++) {
           let e3 = o2.v[s2[c2]];
-          e3.p && (e3 = o2.v[s2[c2]] = ((t3) => Re(function(e4, n4, r4) {
+          e3.p && (e3 = o2.v[s2[c2]] = ((t3) => Re(function(e4, n3, r4) {
             if (0 < r4.curerr.length) {
-              f3++;
+              f2++;
               for (let e5 = s2.length - 1; e5 > t3; e5--) o2.v[s2[e5]].m.rest ? a2[s2[e5]].splice(o2.v[s2[e5]].m.rest_pos + t3 - e5, 0, a2[s2[e5 - 1]]) : (r4.vals[r4.pI + e5 - t3] = r4.vals[r4.pI + e5 - t3 - 1], a2[s2[e5]] = a2[s2[e5 - 1]]);
-              n4.uval = void 0, n4.done = false;
+              n3.uval = void 0, n3.done = false;
             }
             return true;
-          }, e3))(c2), e3.e = false), c2 !== s2.length - 1 || o2.v[s2[c2]].m.rest || (o2.v[s2[c2]] = Re(function(e4, t3, n4) {
-            return !(s2.length - f3 < u2.length && (0 === n4.curerr.length && (t3.err = `Too many arguments for type signature (was ${u2.length}, expected ${s2.length - f3})`), t3.fatal = true, 1));
+          }, e3))(c2), e3.e = false), c2 !== s2.length - 1 || o2.v[s2[c2]].m.rest || (o2.v[s2[c2]] = Re(function(e4, t3, n3) {
+            return !(s2.length - f2 < u2.length && (0 === n3.curerr.length && (t3.err = `Too many arguments for type signature (was ${u2.length}, expected ${s2.length - f2})`), t3.fatal = true, 1));
           }, o2.v[s2[c2]]));
         }
-        function p3(e3) {
+        function p2(e3) {
           for (let t3 = 0; t3 < s2.length; t3++) {
-            let n4 = o2.v[s2[t3]];
-            n4.m.rest ? (a2[s2[t3]] = [...e3].slice(t3), n4.m.rest_pos = a2[s2[t3]].length) : a2[s2[t3]] = e3[t3];
+            let n3 = o2.v[s2[t3]];
+            n3.m.rest ? (a2[s2[t3]] = [...e3].slice(t3), n3.m.rest_pos = a2[s2[t3]].length) : a2[s2[t3]] = e3[t3];
           }
           return a2;
         }
-        return l3 ? function(e3) {
-          return u2 = e3, a2 = {}, c2 = 0, f3 = 0, i2(p3(e3));
-        } : i2(p3(t2));
+        return l2 ? function(e3) {
+          return u2 = e3, a2 = {}, c2 = 0, f2 = 0, i2(p2(e3));
+        } : i2(p2(t2));
       };
     }
     const { Gubu: nt } = t;
@@ -1674,31 +1689,31 @@ var gubu_min = gubu_min$2.exports;
 })(gubu_min$2, gubu_min$2.exports);
 var gubu_minExports = gubu_min$2.exports;
 const gubu_min$1 = /* @__PURE__ */ getDefaultExportFromCjs(gubu_minExports);
-function cmap(o, p2) {
-  return Object.entries(o).reduce((r2, n2, _2) => (_2 = Object.entries(p2).reduce((s, m2) => cmap.FILTER === s ? s : (s[m2[0]] = // transfom(val,key,current,parentkey,parent)
-  "function" === typeof m2[1] ? m2[1](n2[1][m2[0]], {
-    skey: m2[0],
-    self: n2[1],
-    key: n2[0],
+function cmap(o, p) {
+  return Object.entries(o).reduce((r2, n, _2) => (_2 = Object.entries(p).reduce((s, m) => cmap.FILTER === s ? s : (s[m[0]] = // transfom(val,key,current,parentkey,parent)
+  "function" === typeof m[1] ? m[1](n[1][m[0]], {
+    skey: m[0],
+    self: n[1],
+    key: n[0],
     parent: o
-  }) : m2[1], cmap.FILTER === s[m2[0]] ? cmap.FILTER : s), {}), cmap.FILTER === _2 ? 0 : r2[n2[0]] = _2, r2), {});
+  }) : m[1], cmap.FILTER === s[m[0]] ? cmap.FILTER : s), {}), cmap.FILTER === _2 ? 0 : r2[n[0]] = _2, r2), {});
 }
 cmap.COPY = (x) => x;
-cmap.FILTER = (x) => "function" === typeof x ? (y, p2, _2) => (_2 = x(y, p2), Array.isArray(_2) ? !_2[0] ? _2[1] : cmap.FILTER : _2) : x ? x : cmap.FILTER;
-cmap.KEY = (_2, p2) => p2.key;
-function vmap(o, p2) {
-  return Object.entries(o).reduce((r2, n2, _2) => (_2 = Object.entries(p2).reduce((s, m2) => vmap.FILTER === s ? s : (s[m2[0]] = // transfom(val,key,current,parentkey,parent)
+cmap.FILTER = (x) => "function" === typeof x ? (y, p, _2) => (_2 = x(y, p), Array.isArray(_2) ? !_2[0] ? _2[1] : cmap.FILTER : _2) : x ? x : cmap.FILTER;
+cmap.KEY = (_2, p) => p.key;
+function vmap(o, p) {
+  return Object.entries(o).reduce((r2, n, _2) => (_2 = Object.entries(p).reduce((s, m) => vmap.FILTER === s ? s : (s[m[0]] = // transfom(val,key,current,parentkey,parent)
   // 'function' === typeof m[1] ? m[1](n[1][m[0]], m[0], n[1], n[0], o) : m[1]
-  "function" === typeof m2[1] ? m2[1](n2[1][m2[0]], {
-    skey: m2[0],
-    self: n2[1],
-    key: n2[0],
+  "function" === typeof m[1] ? m[1](n[1][m[0]], {
+    skey: m[0],
+    self: n[1],
+    key: n[0],
     parent: o
-  }) : m2[1], vmap.FILTER === s[m2[0]] ? vmap.FILTER : s), {}), vmap.FILTER === _2 ? 0 : r2.push(_2), r2), []);
+  }) : m[1], vmap.FILTER === s[m[0]] ? vmap.FILTER : s), {}), vmap.FILTER === _2 ? 0 : r2.push(_2), r2), []);
 }
 vmap.COPY = (x) => x;
-vmap.FILTER = (x) => "function" === typeof x ? (y, p2, _2) => (_2 = x(y, p2), Array.isArray(_2) ? !_2[0] ? _2[1] : vmap.FILTER : _2) : x ? x : vmap.FILTER;
-vmap.KEY = (_2, p2) => p2.key;
+vmap.FILTER = (x) => "function" === typeof x ? (y, p, _2) => (_2 = x(y, p), Array.isArray(_2) ? !_2[0] ? _2[1] : vmap.FILTER : _2) : x ? x : vmap.FILTER;
+vmap.KEY = (_2, p) => p.key;
 function searchParamsToObject(searchParams) {
   let params = /* @__PURE__ */ Object.create(null);
   for (let [key, value] of searchParams.entries()) {
@@ -1730,8 +1745,8 @@ function VxgBasicAdminPlugin() {
   });
   function setPath(msg, meta) {
     return __async(this, null, function* () {
-      const q2 = Object.entries(msg.query).reduce((s, n2) => s + ("" === s ? "?" : "") + (encodeURIComponent(n2[0]) + "=" + encodeURIComponent(n2[1])), "");
-      const path = "/view/" + msg.view + q2;
+      const q = Object.entries(msg.query).reduce((s, n) => s + ("" === s ? "?" : "") + (encodeURIComponent(n[0]) + "=" + encodeURIComponent(n[1])), "");
+      const path = "/view/" + msg.view + q;
       msg.navigate(path);
     });
   }
@@ -1784,19 +1799,19 @@ function VxgBasicAdminPlugin() {
 function _objectWithoutPropertiesLoose(r2, e) {
   if (null == r2) return {};
   var t = {};
-  for (var n2 in r2) if ({}.hasOwnProperty.call(r2, n2)) {
-    if (e.includes(n2)) continue;
-    t[n2] = r2[n2];
+  for (var n in r2) if ({}.hasOwnProperty.call(r2, n)) {
+    if (e.includes(n)) continue;
+    t[n] = r2[n];
   }
   return t;
 }
 function _extends$1() {
-  return _extends$1 = Object.assign ? Object.assign.bind() : function(n2) {
+  return _extends$1 = Object.assign ? Object.assign.bind() : function(n) {
     for (var e = 1; e < arguments.length; e++) {
       var t = arguments[e];
-      for (var r2 in t) ({}).hasOwnProperty.call(t, r2) && (n2[r2] = t[r2]);
+      for (var r2 in t) ({}).hasOwnProperty.call(t, r2) && (n[r2] = t[r2]);
     }
-    return n2;
+    return n;
   }, _extends$1.apply(null, arguments);
 }
 var propTypes$1 = { exports: {} };
@@ -1815,24 +1830,24 @@ function requireReactIs_production_min$1() {
   if (hasRequiredReactIs_production_min$1) return reactIs_production_min$1;
   hasRequiredReactIs_production_min$1 = 1;
   "use strict";
-  var b = "function" === typeof Symbol && Symbol.for, c = b ? Symbol.for("react.element") : 60103, d = b ? Symbol.for("react.portal") : 60106, e = b ? Symbol.for("react.fragment") : 60107, f2 = b ? Symbol.for("react.strict_mode") : 60108, g = b ? Symbol.for("react.profiler") : 60114, h = b ? Symbol.for("react.provider") : 60109, k2 = b ? Symbol.for("react.context") : 60110, l2 = b ? Symbol.for("react.async_mode") : 60111, m2 = b ? Symbol.for("react.concurrent_mode") : 60111, n2 = b ? Symbol.for("react.forward_ref") : 60112, p2 = b ? Symbol.for("react.suspense") : 60113, q2 = b ? Symbol.for("react.suspense_list") : 60120, r2 = b ? Symbol.for("react.memo") : 60115, t = b ? Symbol.for("react.lazy") : 60116, v = b ? Symbol.for("react.block") : 60121, w = b ? Symbol.for("react.fundamental") : 60117, x = b ? Symbol.for("react.responder") : 60118, y = b ? Symbol.for("react.scope") : 60119;
+  var b = "function" === typeof Symbol && Symbol.for, c = b ? Symbol.for("react.element") : 60103, d = b ? Symbol.for("react.portal") : 60106, e = b ? Symbol.for("react.fragment") : 60107, f = b ? Symbol.for("react.strict_mode") : 60108, g = b ? Symbol.for("react.profiler") : 60114, h = b ? Symbol.for("react.provider") : 60109, k = b ? Symbol.for("react.context") : 60110, l = b ? Symbol.for("react.async_mode") : 60111, m = b ? Symbol.for("react.concurrent_mode") : 60111, n = b ? Symbol.for("react.forward_ref") : 60112, p = b ? Symbol.for("react.suspense") : 60113, q = b ? Symbol.for("react.suspense_list") : 60120, r2 = b ? Symbol.for("react.memo") : 60115, t = b ? Symbol.for("react.lazy") : 60116, v = b ? Symbol.for("react.block") : 60121, w = b ? Symbol.for("react.fundamental") : 60117, x = b ? Symbol.for("react.responder") : 60118, y = b ? Symbol.for("react.scope") : 60119;
   function z(a) {
     if ("object" === typeof a && null !== a) {
       var u = a.$$typeof;
       switch (u) {
         case c:
           switch (a = a.type, a) {
-            case l2:
-            case m2:
+            case l:
+            case m:
             case e:
             case g:
-            case f2:
-            case p2:
+            case f:
+            case p:
               return a;
             default:
               switch (a = a && a.$$typeof, a) {
-                case k2:
-                case n2:
+                case k:
+                case n:
                 case t:
                 case r2:
                 case h:
@@ -1847,27 +1862,27 @@ function requireReactIs_production_min$1() {
     }
   }
   function A(a) {
-    return z(a) === m2;
+    return z(a) === m;
   }
-  reactIs_production_min$1.AsyncMode = l2;
-  reactIs_production_min$1.ConcurrentMode = m2;
-  reactIs_production_min$1.ContextConsumer = k2;
+  reactIs_production_min$1.AsyncMode = l;
+  reactIs_production_min$1.ConcurrentMode = m;
+  reactIs_production_min$1.ContextConsumer = k;
   reactIs_production_min$1.ContextProvider = h;
   reactIs_production_min$1.Element = c;
-  reactIs_production_min$1.ForwardRef = n2;
+  reactIs_production_min$1.ForwardRef = n;
   reactIs_production_min$1.Fragment = e;
   reactIs_production_min$1.Lazy = t;
   reactIs_production_min$1.Memo = r2;
   reactIs_production_min$1.Portal = d;
   reactIs_production_min$1.Profiler = g;
-  reactIs_production_min$1.StrictMode = f2;
-  reactIs_production_min$1.Suspense = p2;
+  reactIs_production_min$1.StrictMode = f;
+  reactIs_production_min$1.Suspense = p;
   reactIs_production_min$1.isAsyncMode = function(a) {
-    return A(a) || z(a) === l2;
+    return A(a) || z(a) === l;
   };
   reactIs_production_min$1.isConcurrentMode = A;
   reactIs_production_min$1.isContextConsumer = function(a) {
-    return z(a) === k2;
+    return z(a) === k;
   };
   reactIs_production_min$1.isContextProvider = function(a) {
     return z(a) === h;
@@ -1876,7 +1891,7 @@ function requireReactIs_production_min$1() {
     return "object" === typeof a && null !== a && a.$$typeof === c;
   };
   reactIs_production_min$1.isForwardRef = function(a) {
-    return z(a) === n2;
+    return z(a) === n;
   };
   reactIs_production_min$1.isFragment = function(a) {
     return z(a) === e;
@@ -1894,13 +1909,13 @@ function requireReactIs_production_min$1() {
     return z(a) === g;
   };
   reactIs_production_min$1.isStrictMode = function(a) {
-    return z(a) === f2;
+    return z(a) === f;
   };
   reactIs_production_min$1.isSuspense = function(a) {
-    return z(a) === p2;
+    return z(a) === p;
   };
   reactIs_production_min$1.isValidElementType = function(a) {
-    return "string" === typeof a || "function" === typeof a || a === e || a === m2 || a === g || a === f2 || a === p2 || a === q2 || "object" === typeof a && null !== a && (a.$$typeof === t || a.$$typeof === r2 || a.$$typeof === h || a.$$typeof === k2 || a.$$typeof === n2 || a.$$typeof === w || a.$$typeof === x || a.$$typeof === y || a.$$typeof === v);
+    return "string" === typeof a || "function" === typeof a || a === e || a === m || a === g || a === f || a === p || a === q || "object" === typeof a && null !== a && (a.$$typeof === t || a.$$typeof === r2 || a.$$typeof === h || a.$$typeof === k || a.$$typeof === n || a.$$typeof === w || a.$$typeof === x || a.$$typeof === y || a.$$typeof === v);
   };
   reactIs_production_min$1.typeOf = z;
   return reactIs_production_min$1;
@@ -2116,8 +2131,8 @@ function requireObjectAssign() {
       for (var i = 0; i < 10; i++) {
         test2["_" + String.fromCharCode(i)] = i;
       }
-      var order2 = Object.getOwnPropertyNames(test2).map(function(n2) {
-        return test2[n2];
+      var order2 = Object.getOwnPropertyNames(test2).map(function(n) {
+        return test2[n];
       });
       if (order2.join("") !== "0123456789") {
         return false;
@@ -2752,17 +2767,17 @@ if (process.env.NODE_ENV !== "production") {
 var propTypesExports = propTypes$1.exports;
 const PropTypes = /* @__PURE__ */ getDefaultExportFromCjs(propTypesExports);
 function r(e) {
-  var t, f2, n2 = "";
-  if ("string" == typeof e || "number" == typeof e) n2 += e;
+  var t, f, n = "";
+  if ("string" == typeof e || "number" == typeof e) n += e;
   else if ("object" == typeof e) if (Array.isArray(e)) {
     var o = e.length;
-    for (t = 0; t < o; t++) e[t] && (f2 = r(e[t])) && (n2 && (n2 += " "), n2 += f2);
-  } else for (f2 in e) e[f2] && (n2 && (n2 += " "), n2 += f2);
-  return n2;
+    for (t = 0; t < o; t++) e[t] && (f = r(e[t])) && (n && (n += " "), n += f);
+  } else for (f in e) e[f] && (n && (n += " "), n += f);
+  return n;
 }
 function clsx() {
-  for (var e, t, f2 = 0, n2 = "", o = arguments.length; f2 < o; f2++) (e = arguments[f2]) && (t = r(e)) && (n2 && (n2 += " "), n2 += t);
-  return n2;
+  for (var e, t, f = 0, n = "", o = arguments.length; f < o; f++) (e = arguments[f]) && (t = r(e)) && (n && (n += " "), n += t);
+  return n;
 }
 function composeClasses(slots, getUtilityClass, classes = void 0) {
   const output = {};
@@ -2807,12 +2822,12 @@ function require_extends() {
   hasRequired_extends = 1;
   (function(module) {
     function _extends3() {
-      return module.exports = _extends3 = Object.assign ? Object.assign.bind() : function(n2) {
+      return module.exports = _extends3 = Object.assign ? Object.assign.bind() : function(n) {
         for (var e = 1; e < arguments.length; e++) {
           var t = arguments[e];
-          for (var r2 in t) ({}).hasOwnProperty.call(t, r2) && (n2[r2] = t[r2]);
+          for (var r2 in t) ({}).hasOwnProperty.call(t, r2) && (n[r2] = t[r2]);
         }
-        return n2;
+        return n;
       }, module.exports.__esModule = true, module.exports["default"] = module.exports, _extends3.apply(null, arguments);
     }
     module.exports = _extends3, module.exports.__esModule = true, module.exports["default"] = module.exports;
@@ -2829,9 +2844,9 @@ function requireObjectWithoutPropertiesLoose() {
     function _objectWithoutPropertiesLoose3(r2, e) {
       if (null == r2) return {};
       var t = {};
-      for (var n2 in r2) if ({}.hasOwnProperty.call(r2, n2)) {
-        if (e.includes(n2)) continue;
-        t[n2] = r2[n2];
+      for (var n in r2) if ({}.hasOwnProperty.call(r2, n)) {
+        if (e.includes(n)) continue;
+        t[n] = r2[n];
       }
       return t;
     }
@@ -3234,10 +3249,10 @@ function ruleset(value, root, parent, index2, offset2, rules2, points, type, pro
   var post = offset2 - 1;
   var rule = offset2 === 0 ? rules2 : [""];
   var size = sizeof(rule);
-  for (var i = 0, j = 0, k2 = 0; i < index2; ++i)
+  for (var i = 0, j = 0, k = 0; i < index2; ++i)
     for (var x = 0, y = substr(value, post + 1, post = abs(j = points[i])), z = value; x < size; ++x)
       if (z = trim(j > 0 ? rule[x] + " " + y : replace(y, /&\f/g, rule[x])))
-        props[k2++] = z;
+        props[k++] = z;
   return node(value, root, parent, offset2 === 0 ? RULESET : type, props, children2, length2);
 }
 function comment(value, root, parent) {
@@ -3369,8 +3384,8 @@ function prefix$1(value, length2, children2) {
       break;
     case 5152:
     case 5920:
-      return replace(value, /(.+?):(\d+)(\s*\/\s*(span)?\s*(\d+))?(.*)/, function(_2, a, b, c, d, e, f2) {
-        return MS + a + ":" + b + f2 + (c ? MS + a + "-span:" + (d ? e : +e - +b) + f2 : "") + value;
+      return replace(value, /(.+?):(\d+)(\s*\/\s*(span)?\s*(\d+))?(.*)/, function(_2, a, b, c, d, e, f) {
+        return MS + a + ":" + b + f + (c ? MS + a + "-span:" + (d ? e : +e - +b) + f : "") + value;
       });
     case 4949:
       if (charat(value, length2 + 6) === 121)
@@ -3582,9 +3597,9 @@ var compat = function compat2(element) {
   var points = [];
   var rules2 = getRules(value, points);
   var parentRules = parent.props;
-  for (var i = 0, k2 = 0; i < rules2.length; i++) {
-    for (var j = 0; j < parentRules.length; j++, k2++) {
-      element.props[k2] = points[i] ? rules2[i].replace(/&\f/g, parentRules[j]) : parentRules[j] + " " + rules2[i];
+  for (var i = 0, k = 0; i < rules2.length; i++) {
+    for (var j = 0; j < parentRules.length; j++, k++) {
+      element.props[k] = points[i] ? rules2[i].replace(/&\f/g, parentRules[j]) : parentRules[j] + " " + rules2[i];
     }
   }
 };
@@ -3982,7 +3997,7 @@ function requireReactIs_production_min() {
   if (hasRequiredReactIs_production_min) return reactIs_production_min;
   hasRequiredReactIs_production_min = 1;
   "use strict";
-  var b = Symbol.for("react.element"), c = Symbol.for("react.portal"), d = Symbol.for("react.fragment"), e = Symbol.for("react.strict_mode"), f2 = Symbol.for("react.profiler"), g = Symbol.for("react.provider"), h = Symbol.for("react.context"), k2 = Symbol.for("react.server_context"), l2 = Symbol.for("react.forward_ref"), m2 = Symbol.for("react.suspense"), n2 = Symbol.for("react.suspense_list"), p2 = Symbol.for("react.memo"), q2 = Symbol.for("react.lazy"), t = Symbol.for("react.offscreen"), u;
+  var b = Symbol.for("react.element"), c = Symbol.for("react.portal"), d = Symbol.for("react.fragment"), e = Symbol.for("react.strict_mode"), f = Symbol.for("react.profiler"), g = Symbol.for("react.provider"), h = Symbol.for("react.context"), k = Symbol.for("react.server_context"), l = Symbol.for("react.forward_ref"), m = Symbol.for("react.suspense"), n = Symbol.for("react.suspense_list"), p = Symbol.for("react.memo"), q = Symbol.for("react.lazy"), t = Symbol.for("react.offscreen"), u;
   u = Symbol.for("react.module.reference");
   function v(a) {
     if ("object" === typeof a && null !== a) {
@@ -3991,18 +4006,18 @@ function requireReactIs_production_min() {
         case b:
           switch (a = a.type, a) {
             case d:
-            case f2:
+            case f:
             case e:
-            case m2:
-            case n2:
+            case m:
+            case n:
               return a;
             default:
               switch (a = a && a.$$typeof, a) {
-                case k2:
+                case k:
                 case h:
-                case l2:
-                case q2:
-                case p2:
+                case l:
+                case q:
+                case p:
                 case g:
                   return a;
                 default:
@@ -4017,15 +4032,15 @@ function requireReactIs_production_min() {
   reactIs_production_min.ContextConsumer = h;
   reactIs_production_min.ContextProvider = g;
   reactIs_production_min.Element = b;
-  reactIs_production_min.ForwardRef = l2;
+  reactIs_production_min.ForwardRef = l;
   reactIs_production_min.Fragment = d;
-  reactIs_production_min.Lazy = q2;
-  reactIs_production_min.Memo = p2;
+  reactIs_production_min.Lazy = q;
+  reactIs_production_min.Memo = p;
   reactIs_production_min.Portal = c;
-  reactIs_production_min.Profiler = f2;
+  reactIs_production_min.Profiler = f;
   reactIs_production_min.StrictMode = e;
-  reactIs_production_min.Suspense = m2;
-  reactIs_production_min.SuspenseList = n2;
+  reactIs_production_min.Suspense = m;
+  reactIs_production_min.SuspenseList = n;
   reactIs_production_min.isAsyncMode = function() {
     return false;
   };
@@ -4042,34 +4057,34 @@ function requireReactIs_production_min() {
     return "object" === typeof a && null !== a && a.$$typeof === b;
   };
   reactIs_production_min.isForwardRef = function(a) {
-    return v(a) === l2;
+    return v(a) === l;
   };
   reactIs_production_min.isFragment = function(a) {
     return v(a) === d;
   };
   reactIs_production_min.isLazy = function(a) {
-    return v(a) === q2;
+    return v(a) === q;
   };
   reactIs_production_min.isMemo = function(a) {
-    return v(a) === p2;
+    return v(a) === p;
   };
   reactIs_production_min.isPortal = function(a) {
     return v(a) === c;
   };
   reactIs_production_min.isProfiler = function(a) {
-    return v(a) === f2;
+    return v(a) === f;
   };
   reactIs_production_min.isStrictMode = function(a) {
     return v(a) === e;
   };
   reactIs_production_min.isSuspense = function(a) {
-    return v(a) === m2;
+    return v(a) === m;
   };
   reactIs_production_min.isSuspenseList = function(a) {
-    return v(a) === n2;
+    return v(a) === n;
   };
   reactIs_production_min.isValidElementType = function(a) {
-    return "string" === typeof a || "function" === typeof a || a === d || a === f2 || a === e || a === m2 || a === n2 || a === t || "object" === typeof a && null !== a && (a.$$typeof === q2 || a.$$typeof === p2 || a.$$typeof === g || a.$$typeof === h || a.$$typeof === l2 || a.$$typeof === u || void 0 !== a.getModuleId) ? true : false;
+    return "string" === typeof a || "function" === typeof a || a === d || a === f || a === e || a === m || a === n || a === t || "object" === typeof a && null !== a && (a.$$typeof === q || a.$$typeof === p || a.$$typeof === g || a.$$typeof === h || a.$$typeof === l || a.$$typeof === u || void 0 !== a.getModuleId) ? true : false;
   };
   reactIs_production_min.typeOf = v;
   return reactIs_production_min;
@@ -5509,12 +5524,12 @@ function _interopRequireWildcard$1(e, r2) {
   if (null === e || "object" != typeof e && "function" != typeof e) return { default: e };
   var t = _getRequireWildcardCache$1(r2);
   if (t && t.has(e)) return t.get(e);
-  var n2 = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor;
+  var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor;
   for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) {
     var i = a ? Object.getOwnPropertyDescriptor(e, u) : null;
-    i && (i.get || i.set) ? Object.defineProperty(n2, u, i) : n2[u] = e[u];
+    i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u];
   }
-  return n2.default = e, t && t.set(e, n2), n2;
+  return n.default = e, t && t.set(e, n), n;
 }
 function isEmpty$3(obj) {
   return Object.keys(obj).length === 0;
@@ -5822,10 +5837,10 @@ function hexToRgb$1(color2) {
   const re = new RegExp(`.{1,${color2.length >= 6 ? 2 : 1}}`, "g");
   let colors = color2.match(re);
   if (colors && colors[0].length === 1) {
-    colors = colors.map((n2) => n2 + n2);
+    colors = colors.map((n) => n + n);
   }
-  return colors ? `rgb${colors.length === 4 ? "a" : ""}(${colors.map((n2, index2) => {
-    return index2 < 3 ? parseInt(n2, 16) : Math.round(parseInt(n2, 16) / 255 * 1e3) / 1e3;
+  return colors ? `rgb${colors.length === 4 ? "a" : ""}(${colors.map((n, index2) => {
+    return index2 < 3 ? parseInt(n, 16) : Math.round(parseInt(n, 16) / 255 * 1e3) / 1e3;
   }).join(", ")})` : "";
 }
 function intToHex$1(int) {
@@ -5892,7 +5907,7 @@ function recomposeColor$1(color2) {
     values: values2
   } = color2;
   if (type.indexOf("rgb") !== -1) {
-    values2 = values2.map((n2, i) => i < 3 ? parseInt(n2, 10) : n2);
+    values2 = values2.map((n, i) => i < 3 ? parseInt(n, 10) : n);
   } else if (type.indexOf("hsl") !== -1) {
     values2[1] = `${values2[1]}%`;
     values2[2] = `${values2[2]}%`;
@@ -5911,7 +5926,7 @@ function rgbToHex$1(color2) {
   const {
     values: values2
   } = decomposeColor$1(color2);
-  return `#${values2.map((n2, i) => intToHex$1(i === 3 ? Math.round(255 * n2) : n2)).join("")}`;
+  return `#${values2.map((n, i) => intToHex$1(i === 3 ? Math.round(255 * n) : n)).join("")}`;
 }
 function hslToRgb$1(color2) {
   color2 = decomposeColor$1(color2);
@@ -5920,11 +5935,11 @@ function hslToRgb$1(color2) {
   } = color2;
   const h = values2[0];
   const s = values2[1] / 100;
-  const l2 = values2[2] / 100;
-  const a = s * Math.min(l2, 1 - l2);
-  const f2 = (n2, k2 = (n2 + h / 30) % 12) => l2 - a * Math.max(Math.min(k2 - 3, 9 - k2, 1), -1);
+  const l = values2[2] / 100;
+  const a = s * Math.min(l, 1 - l);
+  const f = (n, k = (n + h / 30) % 12) => l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
   let type = "rgb";
-  const rgb = [Math.round(f2(0) * 255), Math.round(f2(8) * 255), Math.round(f2(4) * 255)];
+  const rgb = [Math.round(f(0) * 255), Math.round(f(8) * 255), Math.round(f(4) * 255)];
   if (color2.type === "hsla") {
     type += "a";
     rgb.push(values2[3]);
@@ -7483,10 +7498,10 @@ function hexToRgb(color2) {
   const re = new RegExp(`.{1,${color2.length >= 6 ? 2 : 1}}`, "g");
   let colors = color2.match(re);
   if (colors && colors[0].length === 1) {
-    colors = colors.map((n2) => n2 + n2);
+    colors = colors.map((n) => n + n);
   }
-  return colors ? `rgb${colors.length === 4 ? "a" : ""}(${colors.map((n2, index2) => {
-    return index2 < 3 ? parseInt(n2, 16) : Math.round(parseInt(n2, 16) / 255 * 1e3) / 1e3;
+  return colors ? `rgb${colors.length === 4 ? "a" : ""}(${colors.map((n, index2) => {
+    return index2 < 3 ? parseInt(n, 16) : Math.round(parseInt(n, 16) / 255 * 1e3) / 1e3;
   }).join(", ")})` : "";
 }
 function intToHex(int) {
@@ -7551,7 +7566,7 @@ function recomposeColor(color2) {
     values: values2
   } = color2;
   if (type.indexOf("rgb") !== -1) {
-    values2 = values2.map((n2, i) => i < 3 ? parseInt(n2, 10) : n2);
+    values2 = values2.map((n, i) => i < 3 ? parseInt(n, 10) : n);
   } else if (type.indexOf("hsl") !== -1) {
     values2[1] = `${values2[1]}%`;
     values2[2] = `${values2[2]}%`;
@@ -7570,7 +7585,7 @@ function rgbToHex(color2) {
   const {
     values: values2
   } = decomposeColor(color2);
-  return `#${values2.map((n2, i) => intToHex(i === 3 ? Math.round(255 * n2) : n2)).join("")}`;
+  return `#${values2.map((n, i) => intToHex(i === 3 ? Math.round(255 * n) : n)).join("")}`;
 }
 function hslToRgb(color2) {
   color2 = decomposeColor(color2);
@@ -7579,11 +7594,11 @@ function hslToRgb(color2) {
   } = color2;
   const h = values2[0];
   const s = values2[1] / 100;
-  const l2 = values2[2] / 100;
-  const a = s * Math.min(l2, 1 - l2);
-  const f2 = (n2, k2 = (n2 + h / 30) % 12) => l2 - a * Math.max(Math.min(k2 - 3, 9 - k2, 1), -1);
+  const l = values2[2] / 100;
+  const a = s * Math.min(l, 1 - l);
+  const f = (n, k = (n + h / 30) % 12) => l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
   let type = "rgb";
-  const rgb = [Math.round(f2(0) * 255), Math.round(f2(8) * 255), Math.round(f2(4) * 255)];
+  const rgb = [Math.round(f(0) * 255), Math.round(f(8) * 255), Math.round(f(4) * 255)];
   if (color2.type === "hsla") {
     type += "a";
     rgb.push(values2[3]);
@@ -9019,18 +9034,18 @@ function createGetCssVar$1(prefix2 = "") {
 }
 const assignNestedKeys = (obj, keys, value, arrayKeys = []) => {
   let temp = obj;
-  keys.forEach((k2, index2) => {
+  keys.forEach((k, index2) => {
     if (index2 === keys.length - 1) {
       if (Array.isArray(temp)) {
-        temp[Number(k2)] = value;
+        temp[Number(k)] = value;
       } else if (temp && typeof temp === "object") {
-        temp[k2] = value;
+        temp[k] = value;
       }
     } else if (temp && typeof temp === "object") {
-      if (!temp[k2]) {
-        temp[k2] = arrayKeys.includes(k2) ? [] : {};
+      if (!temp[k]) {
+        temp[k] = arrayKeys.includes(k) ? [] : {};
       }
-      temp = temp[k2];
+      temp = temp[k];
     }
   });
 };
@@ -10756,9 +10771,9 @@ function BasicHead(props) {
   const { head } = basicHeadSpec;
   const tools = vmap2(head.tool, {
     active: vmap2.FILTER,
-    name: vmap2.FILTER((_2, p2) => {
+    name: vmap2.FILTER((_2, p) => {
       var _a;
-      return [(_a = basicHeadSpec.tool[p2.key]) == null ? void 0 : _a.active, p2.key];
+      return [(_a = basicHeadSpec.tool[p.key]) == null ? void 0 : _a.active, p.key];
     }),
     align: vmap2.COPY
   }).map((t) => __spreadValues(__spreadValues({}, basicHeadSpec.tool[t.name]), t));
@@ -15331,8 +15346,8 @@ function getNextChildMapping(nextProps, prevChildMapping, onExited) {
   return children2;
 }
 var values = Object.values || function(obj) {
-  return Object.keys(obj).map(function(k2) {
-    return obj[k2];
+  return Object.keys(obj).map(function(k) {
+    return obj[k];
   });
 };
 var defaultProps = {
@@ -16973,9 +16988,9 @@ const defaultDarkOverlays = [...Array(25)].map((_2, index2) => {
   return `linear-gradient(rgba(255 255 255 / ${overlay}), rgba(255 255 255 / ${overlay}))`;
 });
 function assignNode(obj, keys) {
-  keys.forEach((k2) => {
-    if (!obj[k2]) {
-      obj[k2] = {};
+  keys.forEach((k) => {
+    if (!obj[k]) {
+      obj[k] = {};
     }
   });
 }
@@ -17553,12 +17568,12 @@ function _interopRequireWildcard(e, r2) {
   if (null === e || "object" != typeof e && "function" != typeof e) return { default: e };
   var t = _getRequireWildcardCache(r2);
   if (t && t.has(e)) return t.get(e);
-  var n2 = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor;
+  var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor;
   for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) {
     var i = a ? Object.getOwnPropertyDescriptor(e, u) : null;
-    i && (i.get || i.set) ? Object.defineProperty(n2, u, i) : n2[u] = e[u];
+    i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u];
   }
-  return n2.default = e, t && t.set(e, n2), n2;
+  return n.default = e, t && t.set(e, n), n;
 }
 function isObjectEmpty(obj) {
   return Object.keys(obj).length === 0;
@@ -18822,8 +18837,8 @@ function popperGenerator(generatorOptions) {
           popper: listScrollParents(popper2)
         };
         var orderedModifiers = orderModifiers(mergeByName([].concat(defaultModifiers2, state.options.modifiers)));
-        state.orderedModifiers = orderedModifiers.filter(function(m2) {
-          return m2.enabled;
+        state.orderedModifiers = orderedModifiers.filter(function(m) {
+          return m.enabled;
         });
         runModifierEffects();
         return instance.update();
@@ -22592,7 +22607,7 @@ function getOffsetLeft(rect, horizontal) {
   return offset2;
 }
 function getTransformOriginValue(transformOrigin) {
-  return [transformOrigin.horizontal, transformOrigin.vertical].map((n2) => typeof n2 === "number" ? `${n2}px` : n2).join(" ");
+  return [transformOrigin.horizontal, transformOrigin.vertical].map((n) => typeof n === "number" ? `${n}px` : n).join(" ");
 }
 function resolveAnchorEl(anchorEl) {
   return typeof anchorEl === "function" ? anchorEl() : anchorEl;
@@ -25296,7 +25311,7 @@ Object.defineProperty(ArrowDownward, "__esModule", {
 });
 var default_1$x = ArrowDownward.default = void 0;
 var _createSvgIcon$x = _interopRequireDefault$x(requireCreateSvgIcon());
-var _jsxRuntime$x = jsxRuntimeExports;
+var _jsxRuntime$x = requireJsxRuntime();
 var _default$x = default_1$x = ArrowDownward.default = (0, _createSvgIcon$x.default)(/* @__PURE__ */ (0, _jsxRuntime$x.jsx)("path", {
   d: "m20 12-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8z"
 }), "ArrowDownward");
@@ -25309,7 +25324,7 @@ Object.defineProperty(ArrowRight, "__esModule", {
 });
 var default_1$w = ArrowRight.default = void 0;
 var _createSvgIcon$w = _interopRequireDefault$w(requireCreateSvgIcon());
-var _jsxRuntime$w = jsxRuntimeExports;
+var _jsxRuntime$w = requireJsxRuntime();
 var _default$w = default_1$w = ArrowRight.default = (0, _createSvgIcon$w.default)(/* @__PURE__ */ (0, _jsxRuntime$w.jsx)("path", {
   d: "m10 17 5-5-5-5z"
 }), "ArrowRight");
@@ -25322,7 +25337,7 @@ Object.defineProperty(Cancel, "__esModule", {
 });
 var default_1$v = Cancel.default = void 0;
 var _createSvgIcon$v = _interopRequireDefault$v(requireCreateSvgIcon());
-var _jsxRuntime$v = jsxRuntimeExports;
+var _jsxRuntime$v = requireJsxRuntime();
 var _default$v = default_1$v = Cancel.default = (0, _createSvgIcon$v.default)(/* @__PURE__ */ (0, _jsxRuntime$v.jsx)("path", {
   d: "M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2m5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12z"
 }), "Cancel");
@@ -25335,7 +25350,7 @@ Object.defineProperty(ChevronLeft, "__esModule", {
 });
 var default_1$u = ChevronLeft.default = void 0;
 var _createSvgIcon$u = _interopRequireDefault$u(requireCreateSvgIcon());
-var _jsxRuntime$u = jsxRuntimeExports;
+var _jsxRuntime$u = requireJsxRuntime();
 var _default$u = default_1$u = ChevronLeft.default = (0, _createSvgIcon$u.default)(/* @__PURE__ */ (0, _jsxRuntime$u.jsx)("path", {
   d: "M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"
 }), "ChevronLeft");
@@ -25348,7 +25363,7 @@ Object.defineProperty(ChevronRight, "__esModule", {
 });
 var default_1$t = ChevronRight.default = void 0;
 var _createSvgIcon$t = _interopRequireDefault$t(requireCreateSvgIcon());
-var _jsxRuntime$t = jsxRuntimeExports;
+var _jsxRuntime$t = requireJsxRuntime();
 var _default$t = default_1$t = ChevronRight.default = (0, _createSvgIcon$t.default)(/* @__PURE__ */ (0, _jsxRuntime$t.jsx)("path", {
   d: "M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
 }), "ChevronRight");
@@ -25361,7 +25376,7 @@ Object.defineProperty(ClearAll, "__esModule", {
 });
 var default_1$s = ClearAll.default = void 0;
 var _createSvgIcon$s = _interopRequireDefault$s(requireCreateSvgIcon());
-var _jsxRuntime$s = jsxRuntimeExports;
+var _jsxRuntime$s = requireJsxRuntime();
 var _default$s = default_1$s = ClearAll.default = (0, _createSvgIcon$s.default)(/* @__PURE__ */ (0, _jsxRuntime$s.jsx)("path", {
   d: "M5 13h14v-2H5zm-2 4h14v-2H3zM7 7v2h14V7z"
 }), "ClearAll");
@@ -25374,7 +25389,7 @@ Object.defineProperty(Close, "__esModule", {
 });
 var default_1$r = Close.default = void 0;
 var _createSvgIcon$r = _interopRequireDefault$r(requireCreateSvgIcon());
-var _jsxRuntime$r = jsxRuntimeExports;
+var _jsxRuntime$r = requireJsxRuntime();
 var _default$r = default_1$r = Close.default = (0, _createSvgIcon$r.default)(/* @__PURE__ */ (0, _jsxRuntime$r.jsx)("path", {
   d: "M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
 }), "Close");
@@ -25387,7 +25402,7 @@ Object.defineProperty(ContentCopy, "__esModule", {
 });
 var default_1$q = ContentCopy.default = void 0;
 var _createSvgIcon$q = _interopRequireDefault$q(requireCreateSvgIcon());
-var _jsxRuntime$q = jsxRuntimeExports;
+var _jsxRuntime$q = requireJsxRuntime();
 var _default$q = default_1$q = ContentCopy.default = (0, _createSvgIcon$q.default)(/* @__PURE__ */ (0, _jsxRuntime$q.jsx)("path", {
   d: "M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2m0 16H8V7h11z"
 }), "ContentCopy");
@@ -25400,7 +25415,7 @@ Object.defineProperty(DensityLarge, "__esModule", {
 });
 var default_1$p = DensityLarge.default = void 0;
 var _createSvgIcon$p = _interopRequireDefault$p(requireCreateSvgIcon());
-var _jsxRuntime$p = jsxRuntimeExports;
+var _jsxRuntime$p = requireJsxRuntime();
 var _default$p = default_1$p = DensityLarge.default = (0, _createSvgIcon$p.default)(/* @__PURE__ */ (0, _jsxRuntime$p.jsx)("path", {
   d: "M3 3h18v2H3zm0 16h18v2H3z"
 }), "DensityLarge");
@@ -25413,7 +25428,7 @@ Object.defineProperty(DensityMedium, "__esModule", {
 });
 var default_1$o = DensityMedium.default = void 0;
 var _createSvgIcon$o = _interopRequireDefault$o(requireCreateSvgIcon());
-var _jsxRuntime$o = jsxRuntimeExports;
+var _jsxRuntime$o = requireJsxRuntime();
 var _default$o = default_1$o = DensityMedium.default = (0, _createSvgIcon$o.default)(/* @__PURE__ */ (0, _jsxRuntime$o.jsx)("path", {
   d: "M3 3h18v2H3zm0 16h18v2H3zm0-8h18v2H3z"
 }), "DensityMedium");
@@ -25426,7 +25441,7 @@ Object.defineProperty(DensitySmall, "__esModule", {
 });
 var default_1$n = DensitySmall.default = void 0;
 var _createSvgIcon$n = _interopRequireDefault$n(requireCreateSvgIcon());
-var _jsxRuntime$n = jsxRuntimeExports;
+var _jsxRuntime$n = requireJsxRuntime();
 var _default$n = default_1$n = DensitySmall.default = (0, _createSvgIcon$n.default)(/* @__PURE__ */ (0, _jsxRuntime$n.jsx)("path", {
   d: "M3 2h18v2H3zm0 18h18v2H3zm0-6h18v2H3zm0-6h18v2H3z"
 }), "DensitySmall");
@@ -25439,7 +25454,7 @@ Object.defineProperty(DragHandle, "__esModule", {
 });
 var default_1$m = DragHandle.default = void 0;
 var _createSvgIcon$m = _interopRequireDefault$m(requireCreateSvgIcon());
-var _jsxRuntime$m = jsxRuntimeExports;
+var _jsxRuntime$m = requireJsxRuntime();
 var _default$m = default_1$m = DragHandle.default = (0, _createSvgIcon$m.default)(/* @__PURE__ */ (0, _jsxRuntime$m.jsx)("path", {
   d: "M20 9H4v2h16zM4 15h16v-2H4z"
 }), "DragHandle");
@@ -25452,7 +25467,7 @@ Object.defineProperty(DynamicFeed, "__esModule", {
 });
 var default_1$l = DynamicFeed.default = void 0;
 var _createSvgIcon$l = _interopRequireDefault$l(requireCreateSvgIcon());
-var _jsxRuntime$l = jsxRuntimeExports;
+var _jsxRuntime$l = requireJsxRuntime();
 var _default$l = default_1$l = DynamicFeed.default = (0, _createSvgIcon$l.default)([/* @__PURE__ */ (0, _jsxRuntime$l.jsx)("path", {
   d: "M8 8H6v7c0 1.1.9 2 2 2h9v-2H8z"
 }, "0"), /* @__PURE__ */ (0, _jsxRuntime$l.jsx)("path", {
@@ -25467,7 +25482,7 @@ Object.defineProperty(Edit, "__esModule", {
 });
 var default_1$k = Edit.default = void 0;
 var _createSvgIcon$k = _interopRequireDefault$k(requireCreateSvgIcon());
-var _jsxRuntime$k = jsxRuntimeExports;
+var _jsxRuntime$k = requireJsxRuntime();
 var _default$k = default_1$k = Edit.default = (0, _createSvgIcon$k.default)(/* @__PURE__ */ (0, _jsxRuntime$k.jsx)("path", {
   d: "M3 17.25V21h3.75L17.81 9.94l-3.75-3.75zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75z"
 }), "Edit");
@@ -25480,7 +25495,7 @@ Object.defineProperty(ExpandMore, "__esModule", {
 });
 var default_1$j = ExpandMore.default = void 0;
 var _createSvgIcon$j = _interopRequireDefault$j(requireCreateSvgIcon());
-var _jsxRuntime$j = jsxRuntimeExports;
+var _jsxRuntime$j = requireJsxRuntime();
 var _default$j = default_1$j = ExpandMore.default = (0, _createSvgIcon$j.default)(/* @__PURE__ */ (0, _jsxRuntime$j.jsx)("path", {
   d: "M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
 }), "ExpandMore");
@@ -25493,7 +25508,7 @@ Object.defineProperty(FilterAlt, "__esModule", {
 });
 var default_1$i = FilterAlt.default = void 0;
 var _createSvgIcon$i = _interopRequireDefault$i(requireCreateSvgIcon());
-var _jsxRuntime$i = jsxRuntimeExports;
+var _jsxRuntime$i = requireJsxRuntime();
 var _default$i = default_1$i = FilterAlt.default = (0, _createSvgIcon$i.default)(/* @__PURE__ */ (0, _jsxRuntime$i.jsx)("path", {
   d: "M4.25 5.61C6.27 8.2 10 13 10 13v6c0 .55.45 1 1 1h2c.55 0 1-.45 1-1v-6s3.72-4.8 5.74-7.39c.51-.66.04-1.61-.79-1.61H5.04c-.83 0-1.3.95-.79 1.61"
 }), "FilterAlt");
@@ -25506,7 +25521,7 @@ Object.defineProperty(FilterList, "__esModule", {
 });
 var default_1$h = FilterList.default = void 0;
 var _createSvgIcon$h = _interopRequireDefault$h(requireCreateSvgIcon());
-var _jsxRuntime$h = jsxRuntimeExports;
+var _jsxRuntime$h = requireJsxRuntime();
 var _default$h = default_1$h = FilterList.default = (0, _createSvgIcon$h.default)(/* @__PURE__ */ (0, _jsxRuntime$h.jsx)("path", {
   d: "M10 18h4v-2h-4zM3 6v2h18V6zm3 7h12v-2H6z"
 }), "FilterList");
@@ -25519,7 +25534,7 @@ Object.defineProperty(FilterListOff, "__esModule", {
 });
 var default_1$g = FilterListOff.default = void 0;
 var _createSvgIcon$g = _interopRequireDefault$g(requireCreateSvgIcon());
-var _jsxRuntime$g = jsxRuntimeExports;
+var _jsxRuntime$g = requireJsxRuntime();
 var _default$g = default_1$g = FilterListOff.default = (0, _createSvgIcon$g.default)(/* @__PURE__ */ (0, _jsxRuntime$g.jsx)("path", {
   d: "M10.83 8H21V6H8.83zm5 5H18v-2h-4.17zM14 16.83V18h-4v-2h3.17l-3-3H6v-2h2.17l-3-3H3V6h.17L1.39 4.22 2.8 2.81l18.38 18.38-1.41 1.41z"
 }), "FilterListOff");
@@ -25532,7 +25547,7 @@ Object.defineProperty(FirstPage, "__esModule", {
 });
 var default_1$f = FirstPage.default = void 0;
 var _createSvgIcon$f = _interopRequireDefault$f(requireCreateSvgIcon());
-var _jsxRuntime$f = jsxRuntimeExports;
+var _jsxRuntime$f = requireJsxRuntime();
 var _default$f = default_1$f = FirstPage.default = (0, _createSvgIcon$f.default)(/* @__PURE__ */ (0, _jsxRuntime$f.jsx)("path", {
   d: "M18.41 16.59 13.82 12l4.59-4.59L17 6l-6 6 6 6zM6 6h2v12H6z"
 }), "FirstPage");
@@ -25545,7 +25560,7 @@ Object.defineProperty(Fullscreen, "__esModule", {
 });
 var default_1$e = Fullscreen.default = void 0;
 var _createSvgIcon$e = _interopRequireDefault$e(requireCreateSvgIcon());
-var _jsxRuntime$e = jsxRuntimeExports;
+var _jsxRuntime$e = requireJsxRuntime();
 var _default$e = default_1$e = Fullscreen.default = (0, _createSvgIcon$e.default)(/* @__PURE__ */ (0, _jsxRuntime$e.jsx)("path", {
   d: "M7 14H5v5h5v-2H7zm-2-4h2V7h3V5H5zm12 7h-3v2h5v-5h-2zM14 5v2h3v3h2V5z"
 }), "Fullscreen");
@@ -25558,7 +25573,7 @@ Object.defineProperty(FullscreenExit, "__esModule", {
 });
 var default_1$d = FullscreenExit.default = void 0;
 var _createSvgIcon$d = _interopRequireDefault$d(requireCreateSvgIcon());
-var _jsxRuntime$d = jsxRuntimeExports;
+var _jsxRuntime$d = requireJsxRuntime();
 var _default$d = default_1$d = FullscreenExit.default = (0, _createSvgIcon$d.default)(/* @__PURE__ */ (0, _jsxRuntime$d.jsx)("path", {
   d: "M5 16h3v3h2v-5H5zm3-8H5v2h5V5H8zm6 11h2v-3h3v-2h-5zm2-11V5h-2v5h5V8z"
 }), "FullscreenExit");
@@ -25571,7 +25586,7 @@ Object.defineProperty(KeyboardDoubleArrowDown, "__esModule", {
 });
 var default_1$c = KeyboardDoubleArrowDown.default = void 0;
 var _createSvgIcon$c = _interopRequireDefault$c(requireCreateSvgIcon());
-var _jsxRuntime$c = jsxRuntimeExports;
+var _jsxRuntime$c = requireJsxRuntime();
 var _default$c = default_1$c = KeyboardDoubleArrowDown.default = (0, _createSvgIcon$c.default)([/* @__PURE__ */ (0, _jsxRuntime$c.jsx)("path", {
   d: "M18 6.41 16.59 5 12 9.58 7.41 5 6 6.41l6 6z"
 }, "0"), /* @__PURE__ */ (0, _jsxRuntime$c.jsx)("path", {
@@ -25586,7 +25601,7 @@ Object.defineProperty(LastPage, "__esModule", {
 });
 var default_1$b = LastPage.default = void 0;
 var _createSvgIcon$b = _interopRequireDefault$b(requireCreateSvgIcon());
-var _jsxRuntime$b = jsxRuntimeExports;
+var _jsxRuntime$b = requireJsxRuntime();
 var _default$b = default_1$b = LastPage.default = (0, _createSvgIcon$b.default)(/* @__PURE__ */ (0, _jsxRuntime$b.jsx)("path", {
   d: "M5.59 7.41 10.18 12l-4.59 4.59L7 18l6-6-6-6zM16 6h2v12h-2z"
 }), "LastPage");
@@ -25599,7 +25614,7 @@ Object.defineProperty(MoreHoriz, "__esModule", {
 });
 var default_1$a = MoreHoriz.default = void 0;
 var _createSvgIcon$a = _interopRequireDefault$a(requireCreateSvgIcon());
-var _jsxRuntime$a = jsxRuntimeExports;
+var _jsxRuntime$a = requireJsxRuntime();
 var _default$a = default_1$a = MoreHoriz.default = (0, _createSvgIcon$a.default)(/* @__PURE__ */ (0, _jsxRuntime$a.jsx)("path", {
   d: "M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
 }), "MoreHoriz");
@@ -25612,7 +25627,7 @@ Object.defineProperty(MoreVert, "__esModule", {
 });
 var default_1$9 = MoreVert.default = void 0;
 var _createSvgIcon$9 = _interopRequireDefault$9(requireCreateSvgIcon());
-var _jsxRuntime$9 = jsxRuntimeExports;
+var _jsxRuntime$9 = requireJsxRuntime();
 var _default$9 = default_1$9 = MoreVert.default = (0, _createSvgIcon$9.default)(/* @__PURE__ */ (0, _jsxRuntime$9.jsx)("path", {
   d: "M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2m0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
 }), "MoreVert");
@@ -25625,7 +25640,7 @@ Object.defineProperty(PushPin, "__esModule", {
 });
 var default_1$8 = PushPin.default = void 0;
 var _createSvgIcon$8 = _interopRequireDefault$8(requireCreateSvgIcon());
-var _jsxRuntime$8 = jsxRuntimeExports;
+var _jsxRuntime$8 = requireJsxRuntime();
 var _default$8 = default_1$8 = PushPin.default = (0, _createSvgIcon$8.default)(/* @__PURE__ */ (0, _jsxRuntime$8.jsx)("path", {
   fillRule: "evenodd",
   d: "M16 9V4h1c.55 0 1-.45 1-1s-.45-1-1-1H7c-.55 0-1 .45-1 1s.45 1 1 1h1v5c0 1.66-1.34 3-3 3v2h5.97v7l1 1 1-1v-7H19v-2c-1.66 0-3-1.34-3-3"
@@ -25639,7 +25654,7 @@ Object.defineProperty(RestartAlt, "__esModule", {
 });
 var default_1$7 = RestartAlt.default = void 0;
 var _createSvgIcon$7 = _interopRequireDefault$7(requireCreateSvgIcon());
-var _jsxRuntime$7 = jsxRuntimeExports;
+var _jsxRuntime$7 = requireJsxRuntime();
 var _default$7 = default_1$7 = RestartAlt.default = (0, _createSvgIcon$7.default)(/* @__PURE__ */ (0, _jsxRuntime$7.jsx)("path", {
   d: "M12 5V2L8 6l4 4V7c3.31 0 6 2.69 6 6 0 2.97-2.17 5.43-5 5.91v2.02c3.95-.49 7-3.85 7-7.93 0-4.42-3.58-8-8-8m-6 8c0-1.65.67-3.15 1.76-4.24L6.34 7.34C4.9 8.79 4 10.79 4 13c0 4.08 3.05 7.44 7 7.93v-2.02c-2.83-.48-5-2.94-5-5.91"
 }), "RestartAlt");
@@ -25652,7 +25667,7 @@ Object.defineProperty(Save, "__esModule", {
 });
 var default_1$6 = Save.default = void 0;
 var _createSvgIcon$6 = _interopRequireDefault$6(requireCreateSvgIcon());
-var _jsxRuntime$6 = jsxRuntimeExports;
+var _jsxRuntime$6 = requireJsxRuntime();
 var _default$6 = default_1$6 = Save.default = (0, _createSvgIcon$6.default)(/* @__PURE__ */ (0, _jsxRuntime$6.jsx)("path", {
   d: "M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3m3-10H5V5h10z"
 }), "Save");
@@ -25665,7 +25680,7 @@ Object.defineProperty(Search, "__esModule", {
 });
 var default_1$5 = Search.default = void 0;
 var _createSvgIcon$5 = _interopRequireDefault$5(requireCreateSvgIcon());
-var _jsxRuntime$5 = jsxRuntimeExports;
+var _jsxRuntime$5 = requireJsxRuntime();
 var _default$5 = default_1$5 = Search.default = (0, _createSvgIcon$5.default)(/* @__PURE__ */ (0, _jsxRuntime$5.jsx)("path", {
   d: "M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"
 }), "Search");
@@ -25678,7 +25693,7 @@ Object.defineProperty(SearchOff, "__esModule", {
 });
 var default_1$4 = SearchOff.default = void 0;
 var _createSvgIcon$4 = _interopRequireDefault$4(requireCreateSvgIcon());
-var _jsxRuntime$4 = jsxRuntimeExports;
+var _jsxRuntime$4 = requireJsxRuntime();
 var _default$4 = default_1$4 = SearchOff.default = (0, _createSvgIcon$4.default)([/* @__PURE__ */ (0, _jsxRuntime$4.jsx)("path", {
   d: "M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3 6.08 3 3.28 5.64 3.03 9h2.02C5.3 6.75 7.18 5 9.5 5 11.99 5 14 7.01 14 9.5S11.99 14 9.5 14c-.17 0-.33-.03-.5-.05v2.02c.17.02.33.03.5.03 1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19z"
 }, "0"), /* @__PURE__ */ (0, _jsxRuntime$4.jsx)("path", {
@@ -25693,7 +25708,7 @@ Object.defineProperty(Sort, "__esModule", {
 });
 var default_1$3 = Sort.default = void 0;
 var _createSvgIcon$3 = _interopRequireDefault$3(requireCreateSvgIcon());
-var _jsxRuntime$3 = jsxRuntimeExports;
+var _jsxRuntime$3 = requireJsxRuntime();
 var _default$3 = default_1$3 = Sort.default = (0, _createSvgIcon$3.default)(/* @__PURE__ */ (0, _jsxRuntime$3.jsx)("path", {
   d: "M3 18h6v-2H3zM3 6v2h18V6zm0 7h12v-2H3z"
 }), "Sort");
@@ -25706,7 +25721,7 @@ Object.defineProperty(SyncAlt, "__esModule", {
 });
 var default_1$2 = SyncAlt.default = void 0;
 var _createSvgIcon$2 = _interopRequireDefault$2(requireCreateSvgIcon());
-var _jsxRuntime$2 = jsxRuntimeExports;
+var _jsxRuntime$2 = requireJsxRuntime();
 var _default$2 = default_1$2 = SyncAlt.default = (0, _createSvgIcon$2.default)(/* @__PURE__ */ (0, _jsxRuntime$2.jsx)("path", {
   d: "m18 12 4-4-4-4v3H3v2h15zM6 12l-4 4 4 4v-3h15v-2H6z"
 }), "SyncAlt");
@@ -25719,7 +25734,7 @@ Object.defineProperty(ViewColumn, "__esModule", {
 });
 var default_1$1 = ViewColumn.default = void 0;
 var _createSvgIcon$1 = _interopRequireDefault$1(requireCreateSvgIcon());
-var _jsxRuntime$1 = jsxRuntimeExports;
+var _jsxRuntime$1 = requireJsxRuntime();
 var _default$1 = default_1$1 = ViewColumn.default = (0, _createSvgIcon$1.default)(/* @__PURE__ */ (0, _jsxRuntime$1.jsx)("path", {
   d: "M14.67 5v14H9.33V5zm1 14H21V5h-5.33zm-7.34 0V5H3v14z"
 }), "ViewColumn");
@@ -25732,7 +25747,7 @@ Object.defineProperty(VisibilityOff, "__esModule", {
 });
 var default_1 = VisibilityOff.default = void 0;
 var _createSvgIcon = _interopRequireDefault(requireCreateSvgIcon());
-var _jsxRuntime = jsxRuntimeExports;
+var _jsxRuntime = requireJsxRuntime();
 var _default = default_1 = VisibilityOff.default = (0, _createSvgIcon.default)(/* @__PURE__ */ (0, _jsxRuntime.jsx)("path", {
   d: "M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7M2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2m4.31-.78 3.15 3.15.02-.16c0-1.66-1.34-3-3-3z"
 }), "VisibilityOff");
@@ -26089,8 +26104,8 @@ class Virtualizer {
     this.getFurthestMeasurement = (measurements, index2) => {
       const furthestMeasurementsFound = /* @__PURE__ */ new Map();
       const furthestMeasurements = /* @__PURE__ */ new Map();
-      for (let m2 = index2 - 1; m2 >= 0; m2--) {
-        const measurement = measurements[m2];
+      for (let m = index2 - 1; m >= 0; m--) {
+        const measurement = measurements[m];
         if (furthestMeasurementsFound.has(measurement.lane)) {
           continue;
         }
@@ -26238,8 +26253,8 @@ class Virtualizer {
       () => [this.getIndexes(), this.getMeasurements()],
       (indexes, measurements) => {
         const virtualItems = [];
-        for (let k2 = 0, len = indexes.length; k2 < len; k2++) {
-          const i = indexes[k2];
+        for (let k = 0, len = indexes.length; k < len; k++) {
+          const i = indexes[k];
           const measurement = measurements[i];
           virtualItems.push(measurement);
         }
@@ -26366,7 +26381,7 @@ class Virtualizer {
         end2 = this.options.paddingStart;
       } else {
         end2 = this.options.lanes === 1 ? (_a2 = (_a = measurements[measurements.length - 1]) == null ? void 0 : _a.end) != null ? _a2 : 0 : Math.max(
-          ...measurements.slice(-this.options.lanes).map((m2) => m2.end)
+          ...measurements.slice(-this.options.lanes).map((m) => m.end)
         );
       }
       return end2 - this.options.scrollMargin + this.options.paddingEnd;
@@ -50645,8 +50660,8 @@ const getMinutesNumbers = ({
   getClockNumberText,
   selectedId
 }) => {
-  const f2 = utils2.formatNumber;
-  return [[5, f2("05")], [10, f2("10")], [15, f2("15")], [20, f2("20")], [25, f2("25")], [30, f2("30")], [35, f2("35")], [40, f2("40")], [45, f2("45")], [50, f2("50")], [55, f2("55")], [0, f2("00")]].map(([numberValue, label], index2) => {
+  const f = utils2.formatNumber;
+  return [[5, f("05")], [10, f("10")], [15, f("15")], [20, f("20")], [25, f("25")], [30, f("30")], [35, f("35")], [40, f("40")], [45, f("45")], [50, f("50")], [55, f("55")], [0, f("00")]].map(([numberValue, label], index2) => {
     const selected = numberValue === value;
     return /* @__PURE__ */ jsxRuntimeExports.jsx(ClockNumber, {
       label,
@@ -59810,12 +59825,12 @@ const MRT_FilterFns = Object.assign(Object.assign({}, filterFns), {
 });
 function __rest(s, e) {
   var t = {};
-  for (var p2 in s) if (Object.prototype.hasOwnProperty.call(s, p2) && e.indexOf(p2) < 0)
-    t[p2] = s[p2];
+  for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+    t[p] = s[p];
   if (s != null && typeof Object.getOwnPropertySymbols === "function")
-    for (var i = 0, p2 = Object.getOwnPropertySymbols(s); i < p2.length; i++) {
-      if (e.indexOf(p2[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p2[i]))
-        t[p2[i]] = s[p2[i]];
+    for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+      if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+        t[p[i]] = s[p[i]];
     }
   return t;
 }
@@ -62108,7 +62123,7 @@ const MRT_ToolbarAlertBanner = (_a) => {
   const totalRowCount = rowCount !== null && rowCount !== void 0 ? rowCount : getPrePaginationRowModel().flatRows.length;
   const selectedRowCount = useMemo(() => manualPagination ? Object.values(rowSelection).filter(Boolean).length : getFilteredSelectedRowModel().rows.length, [rowSelection, totalRowCount, manualPagination]);
   const selectedAlert = selectedRowCount > 0 ? jsxRuntimeExports.jsxs(Stack, { alignItems: "center", direction: "row", gap: "16px", children: [(_c = (_b = localization.selectedCountOfRowCountRowsSelected) === null || _b === void 0 ? void 0 : _b.replace("{selectedCount}", selectedRowCount.toLocaleString())) === null || _c === void 0 ? void 0 : _c.replace("{rowCount}", totalRowCount.toString()), jsxRuntimeExports.jsx(Button, { onClick: (event) => getMRT_SelectAllHandler({ table })(event, false, true), size: "small", sx: { p: "2px" }, children: localization.clearSelection })] }) : null;
-  const groupedAlert = grouping.length > 0 ? jsxRuntimeExports.jsxs("span", { children: [localization.groupedBy, " ", grouping.map((columnId, index2) => jsxRuntimeExports.jsxs(Fragment$2, { children: [index2 > 0 ? localization.thenBy : "", jsxRuntimeExports.jsx(Chip, Object.assign({ label: table.getColumn(columnId).columnDef.header, onDelete: () => table.getColumn(columnId).toggleGrouping() }, chipProps))] }, `${index2}-${columnId}`))] }) : null;
+  const groupedAlert = grouping.length > 0 ? jsxRuntimeExports.jsxs("span", { children: [localization.groupedBy, " ", grouping.map((columnId, index2) => jsxRuntimeExports.jsxs(Fragment, { children: [index2 > 0 ? localization.thenBy : "", jsxRuntimeExports.jsx(Chip, Object.assign({ label: table.getColumn(columnId).columnDef.header, onDelete: () => table.getColumn(columnId).toggleGrouping() }, chipProps))] }, `${index2}-${columnId}`))] }) : null;
   return jsxRuntimeExports.jsx(Collapse, { in: showAlertBanner || !!selectedAlert || !!groupedAlert, timeout: stackAlertBanner ? 200 : 0, children: jsxRuntimeExports.jsx(Alert, Object.assign({ color: "info", icon: false }, alertProps, { sx: (theme) => {
     var _a2, _b2;
     return Object.assign({ "& .MuiAlert-message": {
@@ -62725,8 +62740,8 @@ function VxgBasicEntityListPlugin(options) {
   };
 }
 function buildFilter(query) {
-  const filter = Object.entries(query).reduce((a, n2) => (n2[0].startsWith("f_") ? a[n2[0].substring(2)] = n2[1] : null, a), {});
-  const filterDesc = Object.entries(filter).reduce((a, n2) => a + "~" + n2[0] + "=" + n2[1], "");
+  const filter = Object.entries(query).reduce((a, n) => (n[0].startsWith("f_") ? a[n[0].substring(2)] = n[1] : null, a), {});
+  const filterDesc = Object.entries(filter).reduce((a, n) => a + "~" + n[0] + "=" + n[1], "");
   return { filter, filterDesc };
 }
 Object.assign(VxgBasicEntityListPlugin, {
@@ -64665,7 +64680,7 @@ const BasicEntityCheckboxFieldSpecShape = gubu_minExports.Gubu(
       id: String,
       name: String,
       kind: "",
-      label: gubu_minExports.Default("", String),
+      label: "",
       ux: Open$i({
         kind: gubu_minExports.Exact("Checkbox"),
         edit: gubu_minExports.Default(true),
@@ -64714,7 +64729,7 @@ const BasicEntityAutocompleteFieldSpecShape = gubu_minExports.Gubu(
       id: String,
       name: String,
       kind: "",
-      label: gubu_minExports.Default(""),
+      label: "",
       options: Open$h({
         label: { field: gubu_minExports.Default("label") },
         value: { field: gubu_minExports.Default("value") },
@@ -64818,19 +64833,19 @@ const BasicEntitySliderFieldSpecShape = gubu_minExports.Gubu(
       id: String,
       name: String,
       kind: "",
-      label: gubu_minExports.Default("", String),
+      label: "",
       ux: Open$g({
         kind: gubu_minExports.Exact("Slider"),
         edit: gubu_minExports.Default(true),
         step: gubu_minExports.Default(1),
         min: gubu_minExports.Default(0),
         max: gubu_minExports.Default(100),
-        props: {
+        props: Open$g({
           marks: gubu_minExports.Default({}),
           valueLabelDisplay: gubu_minExports.Exact("on", "auto", "off").Default("auto"),
           direction: gubu_minExports.Exact("horizontal", "vertical").Default("horizontal"),
           track: gubu_minExports.Exact("normal", "inverted", "disabled").Default("normal")
-        }
+        })
       })
     })
   }),
@@ -64889,7 +64904,7 @@ const BasicEntityRadioGroupFieldSpecShape = gubu_minExports.Gubu(
       id: String,
       name: String,
       kind: "",
-      label: gubu_minExports.Default("", String),
+      llabel: "",
       ux: Open$f({
         kind: gubu_minExports.Exact("RadioGroup"),
         edit: gubu_minExports.Default(true),
@@ -64982,7 +64997,7 @@ const BasicEntityTextBoxFieldSpecShape = gubu_minExports.Gubu(
       id: String,
       name: String,
       kind: "",
-      label: gubu_minExports.Default("", String),
+      label: "",
       ux: Open$e({
         kind: gubu_minExports.Exact("TextBox"),
         edit: gubu_minExports.Default(true),
@@ -65023,7 +65038,7 @@ const BasicEntityTextFieldSpecShape = gubu_minExports.Gubu(
       id: String,
       name: String,
       kind: "",
-      label: gubu_minExports.Default("", String),
+      label: "",
       ux: Open$d({
         kind: gubu_minExports.Exact("Text"),
         edit: gubu_minExports.Default(true),
@@ -65062,7 +65077,7 @@ const BasicEntityDateFieldSpecShape = gubu_minExports.Gubu(
       id: String,
       name: String,
       kind: "",
-      label: gubu_minExports.Default("", String),
+      label: "",
       ux: Open$c({
         kind: gubu_minExports.Exact("Date"),
         edit: gubu_minExports.Default(true),
@@ -65099,7 +65114,7 @@ const BasicEntityTimeFieldSpecShape = gubu_minExports.Gubu(
       id: String,
       name: String,
       kind: "",
-      label: gubu_minExports.Default("", String),
+      label: "",
       ux: Open$b({
         kind: gubu_minExports.Exact("Time"),
         edit: gubu_minExports.Default(true),
@@ -65136,7 +65151,7 @@ const BasicEntityDateTimeFieldSpecShape = gubu_minExports.Gubu(
       id: String,
       name: String,
       kind: "",
-      label: gubu_minExports.Default("", String),
+      label: "",
       ux: Open$a({
         kind: gubu_minExports.Exact("DateTime"),
         edit: gubu_minExports.Default(true),
@@ -65173,7 +65188,7 @@ const BasicEntityRatingFieldSpecShape = gubu_minExports.Gubu(
       id: String,
       name: String,
       kind: "",
-      label: gubu_minExports.Default("", String),
+      label: "",
       ux: Open$9({
         kind: gubu_minExports.Exact("Rating"),
         edit: gubu_minExports.Default(true),
@@ -65219,7 +65234,7 @@ const BasicEntityButtonFieldSpecShape = gubu_minExports.Gubu(
       id: String,
       name: String,
       kind: "",
-      label: "",
+      label: String,
       ux: Open$8({
         kind: gubu_minExports.Exact("Button"),
         edit: gubu_minExports.Default(true),
@@ -65260,7 +65275,12 @@ const BasicEntityButtonGroupFieldSpecShape = gubu_minExports.Gubu(
       id: String,
       name: String,
       kind: "",
-      label: String,
+      label: "",
+      options: Open$7({
+        label: { field: "label" },
+        value: { field: "value" },
+        ents: Open$7({})
+      }),
       ux: Open$7({
         kind: gubu_minExports.Exact("ButtonGroup"),
         edit: gubu_minExports.Default(true),
@@ -65301,8 +65321,8 @@ const BasicEntityFieldSpecShape = gubu_minExports.Gubu(
     field: Open$6({
       id: String,
       name: String,
-      kind: String,
-      label: gubu_minExports.Default("", String),
+      kind: "",
+      label: "",
       ux: Open$6({
         kind: gubu_minExports.Exact(
           "Text",
@@ -65697,7 +65717,7 @@ function VxgBasicLedPlugin(options) {
     "aim:app,on:BasicLed,save:item",
     function(msg) {
       return __async(this, null, function* () {
-        const data = Object.entries(spec.def.edit.field).filter((n2) => false !== n2[1].ux.edit).reduce((a, n2) => (a[n2[0]] = msg.data[n2[0]], a), {});
+        const data = Object.entries(spec.def.edit.field).filter((n) => false !== n[1].ux.edit).reduce((a, n) => (a[n[0]] = msg.data[n[0]], a), {});
         const item = yield seneca.entity(entCanon).save$(data);
         navigate("/view/" + name + "/edit/" + item.id);
       });
@@ -65881,13 +65901,13 @@ function BasicSide(props) {
   const sections = vmap(nav.section, {
     active: vmap.FILTER,
     name: vmap.COPY,
-    items: (_2, p2) => vmap(p2.self.item, {
+    items: (_2, p) => vmap(p.self.item, {
       active: vmap.FILTER,
       name: vmap.COPY,
       view: vmap.COPY,
-      title: vmap.FILTER((_22, p22) => {
+      title: vmap.FILTER((_22, p2) => {
         var _a;
-        return (_a = viewMap[p22.self.view]) == null ? void 0 : _a.title;
+        return (_a = viewMap[p2.self.view]) == null ? void 0 : _a.title;
       })
     })
   });
@@ -65908,7 +65928,7 @@ function BasicSide(props) {
       })
     }, spec.mui.Drawer), {
       children: sections.map(
-        (section) => /* @__PURE__ */ jsxRuntimeExports.jsxs(Fragment$2, { children: [
+        (section) => /* @__PURE__ */ jsxRuntimeExports.jsxs(Fragment, { children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(
             List$1,
             {
@@ -66051,8 +66071,8 @@ var patrun_min = patrun_min$1.exports;
     var e = { exports: {} };
     (function(t2) {
       (function() {
-        !function(n3) {
-          "object" == typeof e.exports ? e.exports = n3() : ("undefined" != typeof window ? window : void 0 !== t2 ? t2 : "undefined" != typeof self ? self : this).Gex = n3();
+        !function(n2) {
+          "object" == typeof e.exports ? e.exports = n2() : ("undefined" != typeof window ? window : void 0 !== t2 ? t2 : "undefined" != typeof self ? self : this).Gex = n2();
         }(function() {
           var e2 = { exports: {} };
           Object.defineProperty(e2.exports, "__esModule", { value: true }), e2.exports.Gex = void 0;
@@ -66071,8 +66091,8 @@ var patrun_min = patrun_min$1.exports;
             }
             match(e3) {
               e3 = "" + e3;
-              let t4 = false, n4 = Object.keys(this.gexmap);
-              for (let r3 = 0; r3 < n4.length && !t4; r3++) t4 = !!this.gexmap[n4[r3]].exec(e3);
+              let t4 = false, n3 = Object.keys(this.gexmap);
+              for (let r3 = 0; r3 < n3.length && !t4; r3++) t4 = !!this.gexmap[n3[r3]].exec(e3);
               return t4;
             }
             on(e3) {
@@ -66081,12 +66101,12 @@ var patrun_min = patrun_min$1.exports;
               if ("string" === t4 || "number" === t4 || "boolean" === t4 || e3 instanceof Date || e3 instanceof RegExp) return this.match(e3) ? e3 : null;
               if (Array.isArray(e3)) {
                 let t5 = [];
-                for (let n4 = 0; n4 < e3.length; n4++) !this.dodgy(e3[n4]) && this.match(e3[n4]) && t5.push(e3[n4]);
+                for (let n3 = 0; n3 < e3.length; n3++) !this.dodgy(e3[n3]) && this.match(e3[n3]) && t5.push(e3[n3]);
                 return t5;
               }
               {
                 let t5 = {};
-                for (let n4 in e3) Object.prototype.hasOwnProperty.call(e3, n4) && this.match(n4) && (t5[n4] = e3[n4]);
+                for (let n3 in e3) Object.prototype.hasOwnProperty.call(e3, n3) && this.match(n3) && (t5[n3] = e3[n3]);
                 return t5;
               }
             }
@@ -66112,41 +66132,41 @@ var patrun_min = patrun_min$1.exports;
               return this.toString();
             }
           }
-          function n3(e3) {
+          function n2(e3) {
             return new t3(e3);
           }
-          return e2.exports.Gex = n3, e2.exports = n3, e2.exports.Gex = n3, e2.exports.default = n3, e2.exports;
+          return e2.exports.Gex = n2, e2.exports = n2, e2.exports.Gex = n2, e2.exports.default = n2, e2.exports;
         });
       }).call(this);
     }).call(this, "undefined" != typeof commonjsGlobal ? commonjsGlobal : "undefined" != typeof self ? self : "undefined" != typeof window ? window : {}), e = e.exports;
-    var t, n2, r2, s, i, o, l2, u, a, f2 = {}, p2 = this && this.__classPrivateFieldGet || function(e2, t2, n3, r3) {
-      if ("a" === n3 && !r3) throw new TypeError("Private accessor was defined without a getter");
+    var t, n, r2, s, i, o, l, u, a, f = {}, p = this && this.__classPrivateFieldGet || function(e2, t2, n2, r3) {
+      if ("a" === n2 && !r3) throw new TypeError("Private accessor was defined without a getter");
       if ("function" == typeof t2 ? e2 !== t2 || !r3 : !t2.has(e2)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
-      return "m" === n3 ? r3 : "a" === n3 ? r3.call(e2) : r3 ? r3.value : t2.get(e2);
+      return "m" === n2 ? r3 : "a" === n2 ? r3.call(e2) : r3 ? r3.value : t2.get(e2);
     };
-    Object.defineProperty(f2, "__esModule", { value: true }), f2.IntervalMatcher = f2.GexMatcher = void 0, f2.GexMatcher = class {
+    Object.defineProperty(f, "__esModule", { value: true }), f.IntervalMatcher = f.GexMatcher = void 0, f.GexMatcher = class {
       constructor() {
       }
-      make(t2, n3) {
-        if ("string" == typeof n3 && n3.match(/[*?]/)) {
-          let t3 = (0, e.Gex)(n3);
-          return { kind: "gex", match: (e2) => null != t3.on(e2), fix: n3, meta: {}, same(e2) {
+      make(t2, n2) {
+        if ("string" == typeof n2 && n2.match(/[*?]/)) {
+          let t3 = (0, e.Gex)(n2);
+          return { kind: "gex", match: (e2) => null != t3.on(e2), fix: n2, meta: {}, same(e2) {
             return null != e2 && e2.kind === this.kind && e2.fix === this.fix;
           } };
         }
       }
       scan(e2, t2) {
-        let n3 = e2.filter((e3) => "*" === e3.fix).length > 0;
-        return { complete: n3, sound: n3, gaps: [], overs: [], why: "no-star" };
+        let n2 = e2.filter((e3) => "*" === e3.fix).length > 0;
+        return { complete: n2, sound: n2, gaps: [], overs: [], why: "no-star" };
       }
     };
     const h = new RegExp(["^/s*", "(=*[<>/(/[]?=*)?/s*([-+0-9a-fA-FeEoOxX]+(/.([0-9a-fA-FeEoOxX]+))?)([/)/]]?)(/s*(,|&+|/|+|/./.)/s*(=*[<>]?=*)/s*([-+.0-9a-fA-FeEoOxX]+)/s*([/)/]]?))?/s*$"].join("").replace(/\//g, "\\"));
     class c {
       constructor() {
-        this.kind = "interval", t.set(this, (e2, t2) => function(n3) {
-          return e2(n3) && t2(n3);
-        }), n2.set(this, (e2, t2) => function(n3) {
-          return e2(n3) || t2(n3);
+        this.kind = "interval", t.set(this, (e2, t2) => function(n2) {
+          return e2(n2) && t2(n2);
+        }), n.set(this, (e2, t2) => function(n2) {
+          return e2(n2) || t2(n2);
         }), r2.set(this, (e2) => function(e3) {
           return false;
         }), s.set(this, (e2) => function(e3) {
@@ -66155,7 +66175,7 @@ var patrun_min = patrun_min$1.exports;
           return t2 > e2;
         }), o.set(this, (e2) => function(t2) {
           return t2 >= e2;
-        }), l2.set(this, (e2) => function(t2) {
+        }), l.set(this, (e2) => function(t2) {
           return t2 < e2;
         }), u.set(this, (e2) => function(t2) {
           return t2 <= e2;
@@ -66163,183 +66183,183 @@ var patrun_min = patrun_min$1.exports;
           return t2 === e2;
         });
       }
-      make(e2, f3) {
-        if ("string" == typeof f3 && f3.match(/[=<>.[()\]]/)) {
-          let e3 = f3.match(h), d2 = { jo: "and", o0: "err", n0: NaN, o1: "err", n1: NaN }, g2 = (e4) => false;
+      make(e2, f2) {
+        if ("string" == typeof f2 && f2.match(/[=<>.[()\]]/)) {
+          let e3 = f2.match(h), d2 = { jo: "and", o0: "err", n0: NaN, o1: "err", n1: NaN }, g2 = (e4) => false;
           if (null != e3) {
-            let h2 = c.normop(e3[1]) || c.normop(e3[5]), m3 = c.normop(e3[8]) || c.normop(e3[10]), v = p2(this, "=" === h2 ? a : "<" === h2 || ")" === h2 ? l2 : "<=" === h2 || "]" === h2 ? u : ">" === h2 || "(" === h2 ? i : ">=" === h2 || "[" === h2 ? o : s, "f"), x = Number(e3[2]), k2 = null == e3[9] ? NaN : Number(e3[9]), y = e3[7], w = null == y ? p2(this, n2, "f") : "&" === y.substring(0, 1) || "," === y.substring(0, 1) ? p2(this, t, "f") : p2(this, n2, "f");
-            ".." === y && (w = p2(this, t, "f"), v = p2(this, s, "f") === v ? p2(this, o, "f") : v, m3 = "" === m3 ? "<=" : m3);
-            let N = p2(this, null == m3 ? r2 : "=" === m3 ? a : "<" === m3 || ")" === m3 ? l2 : "<=" === m3 || "]" === m3 ? u : ">" === m3 ? i : ">=" === m3 ? o : s, "f");
-            if (x === k2 && ("=" === h2 && null != m3 ? (k2 = NaN, N = p2(this, r2, "f"), v = m3.includes("<") ? p2(this, u, "f") : m3.includes(">") ? p2(this, o, "f") : m3.includes("=") ? p2(this, a, "f") : p2(this, s, "f")) : "=" === m3 && null != h2 && (k2 = NaN, N = p2(this, r2, "f"), v = h2.includes("<") ? p2(this, u, "f") : h2.includes(">") ? p2(this, o, "f") : p2(this, s, "f"))), p2(this, s, "f") !== v && p2(this, r2, "f") === N && (p2(this, l2, "f") === v || p2(this, u, "f") === v ? (N = v, k2 = x, v = p2(this, o, "f"), x = Number.NEGATIVE_INFINITY, w = p2(this, t, "f")) : p2(this, i, "f") !== v && p2(this, o, "f") !== v || (N = p2(this, u, "f"), k2 = Number.POSITIVE_INFINITY, w = p2(this, t, "f"))), !isNaN(k2) && k2 < x) {
-              let e4 = N, t2 = k2;
-              k2 = x, x = t2, ".." !== y && (N = v, v = e4);
+            let h2 = c.normop(e3[1]) || c.normop(e3[5]), m2 = c.normop(e3[8]) || c.normop(e3[10]), v = p(this, "=" === h2 ? a : "<" === h2 || ")" === h2 ? l : "<=" === h2 || "]" === h2 ? u : ">" === h2 || "(" === h2 ? i : ">=" === h2 || "[" === h2 ? o : s, "f"), x = Number(e3[2]), k = null == e3[9] ? NaN : Number(e3[9]), y = e3[7], w = null == y ? p(this, n, "f") : "&" === y.substring(0, 1) || "," === y.substring(0, 1) ? p(this, t, "f") : p(this, n, "f");
+            ".." === y && (w = p(this, t, "f"), v = p(this, s, "f") === v ? p(this, o, "f") : v, m2 = "" === m2 ? "<=" : m2);
+            let N = p(this, null == m2 ? r2 : "=" === m2 ? a : "<" === m2 || ")" === m2 ? l : "<=" === m2 || "]" === m2 ? u : ">" === m2 ? i : ">=" === m2 ? o : s, "f");
+            if (x === k && ("=" === h2 && null != m2 ? (k = NaN, N = p(this, r2, "f"), v = m2.includes("<") ? p(this, u, "f") : m2.includes(">") ? p(this, o, "f") : m2.includes("=") ? p(this, a, "f") : p(this, s, "f")) : "=" === m2 && null != h2 && (k = NaN, N = p(this, r2, "f"), v = h2.includes("<") ? p(this, u, "f") : h2.includes(">") ? p(this, o, "f") : p(this, s, "f"))), p(this, s, "f") !== v && p(this, r2, "f") === N && (p(this, l, "f") === v || p(this, u, "f") === v ? (N = v, k = x, v = p(this, o, "f"), x = Number.NEGATIVE_INFINITY, w = p(this, t, "f")) : p(this, i, "f") !== v && p(this, o, "f") !== v || (N = p(this, u, "f"), k = Number.POSITIVE_INFINITY, w = p(this, t, "f"))), !isNaN(k) && k < x) {
+              let e4 = N, t2 = k;
+              k = x, x = t2, ".." !== y && (N = v, v = e4);
             }
-            let b = v(x), O = N(k2), j = w(b, O);
-            return d2 = { jo: j.name, o0: b.name, n0: x, o1: O.name, n1: k2 }, g2 = (e4) => {
-              let t2 = false, n3 = parseFloat(e4);
-              return isNaN(n3) || (t2 = j(n3)), t2;
-            }, { kind: "interval", fix: f3, meta: d2, match: g2, same(e4) {
+            let b = v(x), O = N(k), j = w(b, O);
+            return d2 = { jo: j.name, o0: b.name, n0: x, o1: O.name, n1: k }, g2 = (e4) => {
+              let t2 = false, n2 = parseFloat(e4);
+              return isNaN(n2) || (t2 = j(n2)), t2;
+            }, { kind: "interval", fix: f2, meta: d2, match: g2, same(e4) {
               return null != e4 && e4.kind === this.kind && e4.meta.jo === this.meta.jo && e4.meta.o0 === this.meta.o0 && e4.meta.n0 === this.meta.n0 && e4.meta.o1 === this.meta.o1 && e4.meta.n1 === this.meta.n1;
             } };
           }
         }
       }
       scan(e2, t2) {
-        let n3 = { complete: false, sound: false, gaps: [], overs: [], lower: null, upper: null }, r3 = Number.NEGATIVE_INFINITY, s2 = Number.POSITIVE_INFINITY, i2 = this.half_intervals(e2);
+        let n2 = { complete: false, sound: false, gaps: [], overs: [], lower: null, upper: null }, r3 = Number.NEGATIVE_INFINITY, s2 = Number.POSITIVE_INFINITY, i2 = this.half_intervals(e2);
         i2.reduce((e3, t3) => {
-          let n4 = "eq" === t3.o, s3 = "lt" === t3.o, i3 = "lte" === t3.o, o3 = "gt" === t3.o, l3 = "gte" === t3.o, u2 = t3.n;
+          let n3 = "eq" === t3.o, s3 = "lt" === t3.o, i3 = "lte" === t3.o, o3 = "gt" === t3.o, l2 = "gte" === t3.o, u2 = t3.n;
           if (null == e3.lower) {
             let s4 = { n: r3, o: "gte" };
-            e3.lower = s4, e3.upper = t3, r3 == u2 && l3 || (o3 || l3 ? e3.gaps.push([s4, { n: u2, o: o3 ? "lte" : "lt", m: 0 }]) : n4 && e3.gaps.push([s4, { n: u2, o: "lte", m: 1 }]));
+            e3.lower = s4, e3.upper = t3, r3 == u2 && l2 || (o3 || l2 ? e3.gaps.push([s4, { n: u2, o: o3 ? "lte" : "lt", m: 0 }]) : n3 && e3.gaps.push([s4, { n: u2, o: "lte", m: 1 }]));
           } else {
-            let r4 = "eq" === e3.upper.o, a2 = "lt" === e3.upper.o, f3 = "lte" === e3.upper.o, p3 = (e3.upper.o, e3.upper.o, e3.upper.n), h2 = e3.upper;
-            u2 === p3 ? a2 && (l3 || n4) || (f3 || r4) && o3 || (r4 || a2 || f3) && e3.gaps.push([{ n: p3, o: r4 || f3 ? "gt" : "gte", m: 2, d: { u: h2, h: t3 } }, { n: u2, o: n4 || l3 ? "lt" : "lte", m: 3 }]) : p3 < u2 ? s3 || i3 || (r4 || a2 || f3) && e3.gaps.push([{ n: p3, o: r4 || f3 ? "gt" : "gte", m: 4 }, { n: u2, o: n4 || l3 ? "lt" : "lte", m: 5 }]) : e3.overs.push([{ n: u2, o: n4 || l3 ? "gte" : "gt", m: 10 }, { n: p3, o: r4 || f3 ? "lte" : "lt", m: 11 }]), e3.upper = t3;
+            let r4 = "eq" === e3.upper.o, a2 = "lt" === e3.upper.o, f2 = "lte" === e3.upper.o, p2 = (e3.upper.o, e3.upper.o, e3.upper.n), h2 = e3.upper;
+            u2 === p2 ? a2 && (l2 || n3) || (f2 || r4) && o3 || (r4 || a2 || f2) && e3.gaps.push([{ n: p2, o: r4 || f2 ? "gt" : "gte", m: 2, d: { u: h2, h: t3 } }, { n: u2, o: n3 || l2 ? "lt" : "lte", m: 3 }]) : p2 < u2 ? s3 || i3 || (r4 || a2 || f2) && e3.gaps.push([{ n: p2, o: r4 || f2 ? "gt" : "gte", m: 4 }, { n: u2, o: n3 || l2 ? "lt" : "lte", m: 5 }]) : e3.overs.push([{ n: u2, o: n3 || l2 ? "gte" : "gt", m: 10 }, { n: p2, o: r4 || f2 ? "lte" : "lt", m: 11 }]), e3.upper = t3;
           }
           return e3;
-        }, n3);
+        }, n2);
         let o2 = 0 < i2.length && i2[i2.length - 1];
-        return o2 && s2 !== o2.n && "gt" !== o2.o && "gte" !== o2.o && n3.gaps.push([{ n: o2.n, o: "eq" === o2.o || "lte" === o2.o ? "gt" : "gte", m: 6 }, { n: s2, o: "lte", m: 7 }]), n3.complete = 0 === n3.gaps.length, n3.sound = 0 === n3.overs.length, n3;
+        return o2 && s2 !== o2.n && "gt" !== o2.o && "gte" !== o2.o && n2.gaps.push([{ n: o2.n, o: "eq" === o2.o || "lte" === o2.o ? "gt" : "gte", m: 6 }, { n: s2, o: "lte", m: 7 }]), n2.complete = 0 === n2.gaps.length, n2.sound = 0 === n2.overs.length, n2;
       }
       half_intervals(e2) {
         let t2 = [];
         for (let r3 of e2) t2.push([{ n: r3.meta.n0, o: r3.meta.o0 }, { n: r3.meta.n1, o: r3.meta.o1 }]);
-        var n3 = ["lt", "lte", "eq", "gte", "gt"];
+        var n2 = ["lt", "lte", "eq", "gte", "gt"];
         return t2.map((e3) => [isNaN(e3[0].n) || null == e3[0].n ? null : e3[0], isNaN(e3[1].n) || null == e3[1].n ? null : e3[1]].filter((e4) => null != e4)).sort((e3, t3) => {
           if (e3[0].n < t3[0].n) return -1;
           if (t3[0].n < e3[0].n) return 1;
-          var r3 = n3.indexOf(e3[0].o), s2 = n3.indexOf(t3[0].o);
+          var r3 = n2.indexOf(e3[0].o), s2 = n2.indexOf(t3[0].o);
           if (r3 < s2) return -1;
           if (s2 < r3) return 1;
           if (e3[1].n < t3[1].n) return -1;
           if (t3[1].n < e3[1].n) return 1;
-          var i2 = n3.indexOf(e3[1].o), o2 = n3.indexOf(t3[1].o);
+          var i2 = n2.indexOf(e3[1].o), o2 = n2.indexOf(t3[1].o);
           return i2 < o2 ? -1 : o2 < i2 ? 1 : 0;
         }).reduce((e3, t3) => e3.concat(...t3), []);
       }
     }
-    f2.IntervalMatcher = c, t = /* @__PURE__ */ new WeakMap(), n2 = /* @__PURE__ */ new WeakMap(), r2 = /* @__PURE__ */ new WeakMap(), s = /* @__PURE__ */ new WeakMap(), i = /* @__PURE__ */ new WeakMap(), o = /* @__PURE__ */ new WeakMap(), l2 = /* @__PURE__ */ new WeakMap(), u = /* @__PURE__ */ new WeakMap(), a = /* @__PURE__ */ new WeakMap(), c.normop = (e2) => null == e2 ? null : ((e2.match(/([<>\(\)\[\]])/) || [])[1] || "") + ((e2.match(/(=)/) || [])[1] || "");
+    f.IntervalMatcher = c, t = /* @__PURE__ */ new WeakMap(), n = /* @__PURE__ */ new WeakMap(), r2 = /* @__PURE__ */ new WeakMap(), s = /* @__PURE__ */ new WeakMap(), i = /* @__PURE__ */ new WeakMap(), o = /* @__PURE__ */ new WeakMap(), l = /* @__PURE__ */ new WeakMap(), u = /* @__PURE__ */ new WeakMap(), a = /* @__PURE__ */ new WeakMap(), c.normop = (e2) => null == e2 ? null : ((e2.match(/([<>\(\)\[\]])/) || [])[1] || "") + ((e2.match(/(=)/) || [])[1] || "");
     var d = { exports: {} };
     function g(t2) {
-      var n3 = {}, r3 = {};
+      var n2 = {}, r3 = {};
       let s2 = [];
-      return (t2 = t2 || {}).gex && s2.push(new f2.GexMatcher()), t2.interval && s2.push(new f2.IntervalMatcher()), n3.top = function() {
+      return (t2 = t2 || {}).gex && s2.push(new f.GexMatcher()), t2.interval && s2.push(new f.IntervalMatcher()), n2.top = function() {
         return r3;
-      }, n3.add = function(e2, i2) {
+      }, n2.add = function(e2, i2) {
         e2 = __spreadValues({}, e2);
-        var o2 = "function" == typeof t2 ? t2.call(n3, e2, i2) : null, l3 = Object.keys(e2).filter((t3) => null != e2[t3]).sort();
-        l3.forEach(function(t3) {
+        var o2 = "function" == typeof t2 ? t2.call(n2, e2, i2) : null, l2 = Object.keys(e2).filter((t3) => null != e2[t3]).sort();
+        l2.forEach(function(t3) {
           e2[t3] = String(e2[t3]);
         });
-        for (var u2, a2 = r3, f3 = 0; f3 < l3.length; f3++) {
-          var p3 = l3[f3], h2 = e2[p3];
-          let t3 = s2.reduce((e3, t4) => e3 || t4.make(p3, h2), void 0);
-          if ((u2 = a2.v) && p3 == a2.k) if (t3) {
-            var c2 = (g2 = a2.g = a2.g || {})[p3] = g2[p3] || [];
+        for (var u2, a2 = r3, f2 = 0; f2 < l2.length; f2++) {
+          var p2 = l2[f2], h2 = e2[p2];
+          let t3 = s2.reduce((e3, t4) => e3 || t4.make(p2, h2), void 0);
+          if ((u2 = a2.v) && p2 == a2.k) if (t3) {
+            var c2 = (g2 = a2.g = a2.g || {})[p2] = g2[p2] || [];
             t3 = c2.find((e3) => e3.same(t3)) || (c2.push(t3), t3), a2 = t3.keymap || (t3.keymap = {});
           } else a2 = u2[h2] || (u2[h2] = {});
-          else if (a2.k) if (p3 < a2.k) {
+          else if (a2.k) if (p2 < a2.k) {
             var d2 = a2.s;
-            g2 = a2.g, a2.s = { k: a2.k, v: a2.v }, d2 && (a2.s.s = d2), g2 && (a2.s.g = g2), a2.g && (a2.g = {}), a2.k = p3, a2.v = {}, t3 ? (c2 = (g2 = a2.g = a2.g || {})[p3] = g2[p3] || [], t3 = c2.find((e3) => e3.same(t3)) || (c2.push(t3), t3), a2 = t3.keymap || (t3.keymap = {})) : a2 = a2.v[h2] = {};
-          } else a2 = a2.s || (a2.s = {}), f3--;
-          else if (a2.k = p3, a2.v = {}, t3) {
+            g2 = a2.g, a2.s = { k: a2.k, v: a2.v }, d2 && (a2.s.s = d2), g2 && (a2.s.g = g2), a2.g && (a2.g = {}), a2.k = p2, a2.v = {}, t3 ? (c2 = (g2 = a2.g = a2.g || {})[p2] = g2[p2] || [], t3 = c2.find((e3) => e3.same(t3)) || (c2.push(t3), t3), a2 = t3.keymap || (t3.keymap = {})) : a2 = a2.v[h2] = {};
+          } else a2 = a2.s || (a2.s = {}), f2--;
+          else if (a2.k = p2, a2.v = {}, t3) {
             var g2;
-            c2 = (g2 = a2.g = a2.g || {})[p3] = g2[p3] || [];
+            c2 = (g2 = a2.g = a2.g || {})[p2] = g2[p2] || [];
             t3 = c2.find((e3) => e3.same(t3)) || (c2.push(t3), t3), a2 = t3.keymap || (t3.keymap = {});
           } else a2 = a2.v[h2] = {};
         }
-        return void 0 !== i2 && a2 && (a2.d = i2, o2 && (a2.f = "function" == typeof o2 ? o2 : o2.find, a2.r = "function" == typeof o2.remove ? o2.remove : void 0)), n3;
-      }, n3.findexact = function(e2) {
-        return n3.find(e2, true);
-      }, n3.find = function(e2, t3, s3) {
+        return void 0 !== i2 && a2 && (a2.d = i2, o2 && (a2.f = "function" == typeof o2 ? o2 : o2.find, a2.r = "function" == typeof o2.remove ? o2.remove : void 0)), n2;
+      }, n2.findexact = function(e2) {
+        return n2.find(e2, true);
+      }, n2.find = function(e2, t3, s3) {
         if (null == e2) return null;
-        var i2 = r3, o2 = void 0 === r3.d ? null : r3.d, l3 = r3.f, u2 = null, a2 = [], f3 = {}, p3 = Object.keys(e2).length, h2 = [];
+        var i2 = r3, o2 = void 0 === r3.d ? null : r3.d, l2 = r3.f, u2 = null, a2 = [], f2 = {}, p2 = Object.keys(e2).length, h2 = [];
         void 0 !== r3.d && h2.push(r3.d);
         do {
           if (u2 = i2.k, i2.v) {
             var c2 = e2[u2], d2 = i2.v[c2];
             if (!d2 && i2.g && i2.g[u2]) {
-              for (var g2 = i2.g[u2], m3 = 0; m3 < g2.length; m3++) if (g2[m3].match(c2)) {
-                d2 = g2[m3].keymap;
+              for (var g2 = i2.g[u2], m2 = 0; m2 < g2.length; m2++) if (g2[m2].match(c2)) {
+                d2 = g2[m2].keymap;
                 break;
               }
             }
-            d2 ? (f3[u2] = true, i2.s && a2.push(i2.s), o2 = void 0 === d2.d ? t3 ? null : o2 : d2.d, s3 && void 0 !== d2.d && h2.push(d2.d), l3 = d2.f, i2 = d2) : i2 = i2.s;
+            d2 ? (f2[u2] = true, i2.s && a2.push(i2.s), o2 = void 0 === d2.d ? t3 ? null : o2 : d2.d, s3 && void 0 !== d2.d && h2.push(d2.d), l2 = d2.f, i2 = d2) : i2 = i2.s;
           } else i2 = null;
           null == i2 && 0 < a2.length && (null == o2 || s3 && !t3) && (i2 = a2.pop());
         } while (i2);
-        return t3 ? Object.keys(f3).length !== p3 && (o2 = null) : null == o2 && void 0 !== r3.d && (o2 = r3.d), l3 && (o2 = l3.call(n3, e2, o2)), s3 ? h2 : o2;
-      }, n3.remove = function(e2) {
-        var t3, n4 = r3, s3 = null, i2 = [];
+        return t3 ? Object.keys(f2).length !== p2 && (o2 = null) : null == o2 && void 0 !== r3.d && (o2 = r3.d), l2 && (o2 = l2.call(n2, e2, o2)), s3 ? h2 : o2;
+      }, n2.remove = function(e2) {
+        var t3, n3 = r3, s3 = null, i2 = [];
         do {
-          if (t3 = n4.k, n4.v || n4.g) {
-            if (n4.v) {
-              var o2 = n4.v[e2[t3]];
-              o2 && i2.push({ km: n4, v: e2[t3] });
+          if (t3 = n3.k, n3.v || n3.g) {
+            if (n3.v) {
+              var o2 = n3.v[e2[t3]];
+              o2 && i2.push({ km: n3, v: e2[t3] });
             }
-            if (null == o2 && n4.g) {
-              let r4 = n4.g[t3] || [];
+            if (null == o2 && n3.g) {
+              let r4 = n3.g[t3] || [];
               for (let s4 = 0; s4 < r4.length; s4++) if (r4[s4].fix === e2[t3]) {
-                i2.push({ km: n4, v: e2[t3], mv: r4[s4] }), o2 = r4[s4].keymap;
+                i2.push({ km: n3, v: e2[t3], mv: r4[s4] }), o2 = r4[s4].keymap;
                 break;
               }
             }
-            o2 ? (s3 = o2.d, n4 = o2) : n4 = n4.s;
-          } else n4 = null;
-        } while (n4);
+            o2 ? (s3 = o2.d, n3 = o2) : n3 = n3.s;
+          } else n3 = null;
+        } while (n3);
         if (void 0 !== s3) {
-          var l3 = i2[i2.length - 1];
-          if (l3 && l3.km && l3.km.v) {
-            var u2 = l3.km.v[l3.v] || l3.mv && l3.mv.keymap;
+          var l2 = i2[i2.length - 1];
+          if (l2 && l2.km && l2.km.v) {
+            var u2 = l2.km.v[l2.v] || l2.mv && l2.mv.keymap;
             !u2 || u2.r && !u2.r(e2, u2.d) || delete u2.d;
           }
         }
-      }, n3.list = function(t3, n4) {
+      }, n2.list = function(t3, n3) {
         t3 = t3 || {};
         var s3 = [];
-        return r3.d && s3.push({ match: {}, data: r3.d, find: r3.f }), function r4(s4, i2, o2, l3) {
+        return r3.d && s3.push({ match: {}, data: r3.d, find: r3.f }), function r4(s4, i2, o2, l2) {
           if (s4.v) {
-            var u2, a2 = s4.k, f3 = (0, e.Gex)(t3 ? null == t3[a2] ? n4 ? null : "*" : t3[a2] : "*"), p3 = __spreadValues({}, i2), h2 = __spreadValues({}, o2);
-            for (var c2 in s4.v) if (c2 === t3[a2] || !n4 && null == t3[a2] || f3.on(c2)) {
-              var d2 = __spreadValues({}, p3);
+            var u2, a2 = s4.k, f2 = (0, e.Gex)(t3 ? null == t3[a2] ? n3 ? null : "*" : t3[a2] : "*"), p2 = __spreadValues({}, i2), h2 = __spreadValues({}, o2);
+            for (var c2 in s4.v) if (c2 === t3[a2] || !n3 && null == t3[a2] || f2.on(c2)) {
+              var d2 = __spreadValues({}, p2);
               d2[a2] = c2;
               var g2 = __spreadValues({}, h2);
-              delete g2[a2], u2 = s4.v[c2], 0 === Object.keys(g2).length && u2 && u2.d && l3.push({ match: d2, data: u2.d, find: u2.f }), u2 && null != u2.v && r4(u2, __spreadValues({}, d2), __spreadValues({}, g2), l3);
+              delete g2[a2], u2 = s4.v[c2], 0 === Object.keys(g2).length && u2 && u2.d && l2.push({ match: d2, data: u2.d, find: u2.f }), u2 && null != u2.v && r4(u2, __spreadValues({}, d2), __spreadValues({}, g2), l2);
             }
-            (u2 = s4.s) && r4(u2, __spreadValues({}, p3), __spreadValues({}, h2), l3);
+            (u2 = s4.s) && r4(u2, __spreadValues({}, p2), __spreadValues({}, h2), l2);
           }
         }(r3, {}, __spreadValues({}, t3), s3), s3;
-      }, n3.toString = function(e2, t3) {
-        var n4 = true === e2 || !!t3, s3 = "function" == typeof e2 ? e2 : function(e3) {
+      }, n2.toString = function(e2, t3) {
+        var n3 = true === e2 || !!t3, s3 = "function" == typeof e2 ? e2 : function(e3) {
           return "function" == typeof e3 ? "<" + e3.name + ">" : "<" + e3 + ">";
         };
         function i2(e3, t4) {
-          for (var n5 = 0; n5 < t4; n5++) e3.push(" ");
+          for (var n4 = 0; n4 < t4; n4++) e3.push(" ");
         }
-        var o2 = [], l3 = [];
-        return function e3(t4, n5, r4, l4) {
+        var o2 = [], l2 = [];
+        return function e3(t4, n4, r4, l3) {
           var u2;
-          if (void 0 !== t4.d && (n5.push(" " + s3(t4.d)), o2.push(l4.join(", ") + " -> " + s3(t4.d))), t4.k && (n5.push("\n"), i2(n5, r4), n5.push(t4.k + ":")), (t4.v || t4.s || t4.g) && r4++, t4.v) for (var a2 = Object.keys(t4.v).sort(), f3 = 0; f3 < a2.length; f3++) {
-            var p3 = a2[f3];
-            n5.push("\n"), i2(n5, r4), n5.push(p3 + " ->"), (u2 = l4.slice()).push(t4.k + "=" + p3), e3(t4.v[p3], n5, r4 + 1, u2);
+          if (void 0 !== t4.d && (n4.push(" " + s3(t4.d)), o2.push(l3.join(", ") + " -> " + s3(t4.d))), t4.k && (n4.push("\n"), i2(n4, r4), n4.push(t4.k + ":")), (t4.v || t4.s || t4.g) && r4++, t4.v) for (var a2 = Object.keys(t4.v).sort(), f2 = 0; f2 < a2.length; f2++) {
+            var p2 = a2[f2];
+            n4.push("\n"), i2(n4, r4), n4.push(p2 + " ->"), (u2 = l3.slice()).push(t4.k + "=" + p2), e3(t4.v[p2], n4, r4 + 1, u2);
           }
-          if (t4.g) for (a2 = Object.keys(t4.g).sort(), f3 = 0; f3 < a2.length; f3++) for (var h2 = t4.g[a2[f3]], c2 = 0; c2 < h2.length; c2++) {
+          if (t4.g) for (a2 = Object.keys(t4.g).sort(), f2 = 0; f2 < a2.length; f2++) for (var h2 = t4.g[a2[f2]], c2 = 0; c2 < h2.length; c2++) {
             var d2 = h2[c2];
-            n5.push("\n"), i2(n5, r4), n5.push(d2.fix + " ~>"), (u2 = l4.slice()).push(t4.k + "~" + d2.fix), e3(d2.keymap, n5, r4 + 1, u2);
+            n4.push("\n"), i2(n4, r4), n4.push(d2.fix + " ~>"), (u2 = l3.slice()).push(t4.k + "~" + d2.fix), e3(d2.keymap, n4, r4 + 1, u2);
           }
-          t4.s && (n5.push("\n"), i2(n5, r4), n5.push("|"), u2 = l4.slice(), e3(t4.s, n5, r4 + 1, u2));
-        }(r3, l3, 0, []), n4 ? l3.join("") : o2.join("\n");
-      }, n3.inspect = n3.toString, n3.toJSON = function(e2) {
+          t4.s && (n4.push("\n"), i2(n4, r4), n4.push("|"), u2 = l3.slice(), e3(t4.s, n4, r4 + 1, u2));
+        }(r3, l2, 0, []), n3 ? l2.join("") : o2.join("\n");
+      }, n2.inspect = n2.toString, n2.toJSON = function(e2) {
         return JSON.stringify(r3, function(e3, t3) {
           return "function" == typeof t3 ? "[Function]" : t3;
         }, e2);
-      }, n3;
+      }, n2;
     }
-    function m2(e2) {
+    function m(e2) {
       return new g(e2);
     }
     return Object.defineProperty(d.exports, "__esModule", { value: true }), d.exports.Gex = void 0, d.exports.Patrun = g, Object.defineProperty(d.exports, "Gex", { enumerable: true, get: function() {
       return e.Gex;
-    } }), d.exports = m2, d.exports.Patrun = g, d.exports.Gex = e.Gex, d.exports.default = m2, d = d.exports;
+    } }), d.exports = m, d.exports.Patrun = g, d.exports.Gex = e.Gex, d.exports.default = m, d = d.exports;
   });
 })(patrun_min$1, patrun_min$1.exports);
 var patrun_minExports = patrun_min$1.exports;
@@ -66452,9 +66472,9 @@ function requireLexer() {
       }
       let pnt = lex.pnt;
       let fwd = lex.src.substring(pnt.sI);
-      let m2 = fwd.match(fixed);
-      if (m2) {
-        let msrc = m2[1];
+      let m = fwd.match(fixed);
+      if (m) {
+        let msrc = m[1];
         let mlen = msrc.length;
         if (0 < mlen) {
           let tkn = void 0;
@@ -66491,13 +66511,13 @@ function requireLexer() {
       let oc = "o" === rule.state ? 0 : 1;
       for (let valueMatcher of valueMatchers) {
         if (valueMatcher.match instanceof RegExp) {
-          let m2 = fwd.match(valueMatcher.match);
-          if (m2) {
-            let msrc = m2[0];
+          let m = fwd.match(valueMatcher.match);
+          if (m) {
+            let msrc = m[0];
             let mlen = msrc.length;
             if (0 < mlen) {
               let tkn = void 0;
-              let val = valueMatcher.val ? valueMatcher.val(m2) : msrc;
+              let val = valueMatcher.val ? valueMatcher.val(m) : msrc;
               tkn = lex.token("#VL", val, msrc, pnt);
               pnt.sI += mlen;
               pnt.cI += mlen;
@@ -66516,9 +66536,9 @@ function requireLexer() {
           continue;
         }
         if (tokenMatcher instanceof RegExp) {
-          let m2 = fwd.match(tokenMatcher);
-          if (m2) {
-            let msrc = m2[0];
+          let m = fwd.match(tokenMatcher);
+          if (m) {
+            let msrc = m[0];
             let mlen = msrc.length;
             if (0 < mlen) {
               let tkn = void 0;
@@ -66652,10 +66672,10 @@ function requireLexer() {
       let fwd = lex.src.substring(pnt.sI);
       let def = cfg.value.def;
       let defre = cfg.value.defre;
-      let m2 = fwd.match(ender);
-      if (m2) {
-        let msrc = m2[1];
-        let tsrc = m2[2];
+      let m = fwd.match(ender);
+      if (m) {
+        let msrc = m[1];
+        let tsrc = m[2];
         let out = void 0;
         if (null != msrc) {
           let mlen = msrc.length;
@@ -66735,10 +66755,10 @@ function requireLexer() {
       let pnt = lex.pnt;
       let fwd = lex.src.substring(pnt.sI);
       let valdef = cfg.value.def;
-      let m2 = fwd.match(ender);
-      if (m2) {
-        let msrc = m2[1];
-        let tsrc = m2[9];
+      let m = fwd.match(ender);
+      if (m) {
+        let msrc = m[1];
+        let tsrc = m[9];
         let out = void 0;
         let included = true;
         if (null != msrc && (included = !cfg.number.exclude || !msrc.match(cfg.number.exclude))) {
@@ -66807,10 +66827,10 @@ function requireLexer() {
       let { sI, rI, cI } = pnt;
       let srclen = src.length;
       if (quoteMap[src[sI]]) {
-        const q2 = src[sI];
+        const q = src[sI];
         const qI = sI;
         const qrI = rI;
-        const isMultiLine = multiChars[q2];
+        const isMultiLine = multiChars[q];
         ++sI;
         ++cI;
         let s = [];
@@ -66819,7 +66839,7 @@ function requireLexer() {
           cI++;
           let c = src[sI];
           rs = void 0;
-          if (q2 === c) {
+          if (q === c) {
             sI++;
             break;
           } else if (escChar === c) {
@@ -66879,7 +66899,7 @@ function requireLexer() {
             cI++;
           } else {
             let bI = sI;
-            let qc = q2.charCodeAt(0);
+            let qc = q.charCodeAt(0);
             let cc = src.charCodeAt(sI);
             while ((!hasReplace || void 0 === (rs = replaceCodeMap[cc])) && sI < srclen && 32 <= cc && qc !== cc && escCharCode !== cc) {
               cc = src.charCodeAt(++sI);
@@ -66907,7 +66927,7 @@ function requireLexer() {
             }
           }
         }
-        if (src[sI - 1] !== q2 || pnt.sI === sI - 1) {
+        if (src[sI - 1] !== q || pnt.sI === sI - 1) {
           if (mcfg.abandon) {
             return void 0;
           }
@@ -67102,9 +67122,9 @@ function requireUtility() {
   utility.isarr = isarr;
   const defprop = Object.defineProperty;
   utility.defprop = defprop;
-  const omap = (o, f2) => {
+  const omap = (o, f) => {
     return Object.entries(o || {}).reduce((o2, e) => {
-      let me = f2 ? f2(e) : e;
+      let me = f ? f(e) : e;
       if (void 0 === me[0]) {
         delete o2[e[0]];
       } else {
@@ -67231,7 +67251,7 @@ function requireUtility() {
       tin,
       (matcher.tin$ = +tin, matcher)
     ]);
-    const tokenSet = opts.tokenSet ? Object.keys(opts.tokenSet).reduce((a, n2) => (a[n2] = opts.tokenSet[n2].filter((x) => null != x).map((n3) => t(n3)), a), {}) : {};
+    const tokenSet = opts.tokenSet ? Object.keys(opts.tokenSet).reduce((a, n) => (a[n] = opts.tokenSet[n].filter((x) => null != x).map((n2) => t(n2)), a), {}) : {};
     cfg.tokenSet = cfg.tokenSet || {};
     entries(tokenSet).map((entry) => {
       let name = entry[0];
@@ -67259,7 +67279,7 @@ function requireUtility() {
     };
     cfg.text = {
       lex: !!((_q = opts.text) === null || _q === void 0 ? void 0 : _q.lex),
-      modify: (((_r = cfg.text) === null || _r === void 0 ? void 0 : _r.modify) || []).concat([(_s = opts.text) === null || _s === void 0 ? void 0 : _s.modify].flat()).filter((m2) => null != m2),
+      modify: (((_r = cfg.text) === null || _r === void 0 ? void 0 : _r.modify) || []).concat([(_s = opts.text) === null || _s === void 0 ? void 0 : _s.modify].flat()).filter((m) => null != m),
       check: (_t7 = opts.text) === null || _t7 === void 0 ? void 0 : _t7.check
     };
     cfg.number = {
@@ -67339,7 +67359,7 @@ function requireUtility() {
           list.push(matcher);
         }
         return list;
-      }, []).filter((m2) => null != m2 && false !== m2 && -1 < +m2.order).sort((a, b) => a.order - b.order) : []
+      }, []).filter((m) => null != m && false !== m && -1 < +m.order).sort((a, b) => a.order - b.order) : []
     };
     cfg.parse = {
       prepare: values2((_19 = opts.parse) === null || _19 === void 0 ? void 0 : _19.prepare)
@@ -67399,10 +67419,10 @@ function requireUtility() {
   }
   utility.mesc = mesc;
   function regexp(flags, ...parts) {
-    return new RegExp(parts.map((p2) => p2.esc ? (
+    return new RegExp(parts.map((p) => p.esc ? (
       //p.replace(/[-\\|\]{}()[^$+*?.!=]/g, '\\$&')
-      escre(p2.toString())
-    ) : p2).join(types_12.EMPTY), null == flags ? "" : flags);
+      escre(p.toString())
+    ) : p).join(types_12.EMPTY), null == flags ? "" : flags);
   }
   utility.regexp = regexp;
   function escre(s) {
@@ -67417,8 +67437,8 @@ function requireUtility() {
       let over_iso = null != over && (S.object === typeof over || over_isf);
       let over_ctor;
       if (base_iso && over_iso && !over_isf && Array.isArray(base) === Array.isArray(over)) {
-        for (let k2 in over) {
-          base[k2] = deep(base[k2], over[k2]);
+        for (let k in over) {
+          base[k] = deep(base[k], over[k]);
         }
       } else {
         base = void 0 === over ? base : over_isf ? over : over_iso ? S.function === typeof (over_ctor = over.constructor) && S.Object !== over_ctor.name && S.Array !== over_ctor.name ? over : deep(Array.isArray(over) ? [] : {}, over) : over;
@@ -67484,7 +67504,7 @@ function requireUtility() {
         errinject((cfg.hint[code] || ((_c = (_b = details.use) === null || _b === void 0 ? void 0 : _b.err) === null || _c === void 0 ? void 0 : _c.message) || cfg.hint.unknown || "").trim().split("\n").map((s) => "  " + s).join("\n"), code, details, token2, rule, ctx),
         "",
         "  \x1B[2mhttps://jsonic.senecajs.org\x1B[0m",
-        "  \x1B[2m--internal: rule=" + rule.name + "~" + rule.state + "; token=" + tokenize2(token2.tin, ctx.cfg) + (null == token2.why ? "" : "~" + token2.why) + "; plugins=" + ctx.plgn().map((p2) => p2.name).join(",") + "--\x1B[0m\n"
+        "  \x1B[2m--internal: rule=" + rule.name + "~" + rule.state + "; token=" + tokenize2(token2.tin, ctx.cfg) + (null == token2.why ? "" : "~" + token2.why) + "; plugins=" + ctx.plgn().map((p) => p.name).join(",") + "--\x1B[0m\n"
       ].join("\n");
       let desc = {
         internal: {
@@ -67579,13 +67599,13 @@ function requireUtility() {
   }
   utility.clone = clone;
   function charset(...parts) {
-    return null == parts ? {} : parts.filter((p2) => false !== p2).map((p2) => "object" === typeof p2 ? keys(p2).join(types_12.EMPTY) : p2).join(types_12.EMPTY).split(types_12.EMPTY).reduce((a, c) => (a[c] = c.charCodeAt(0), a), {});
+    return null == parts ? {} : parts.filter((p) => false !== p).map((p) => "object" === typeof p ? keys(p).join(types_12.EMPTY) : p).join(types_12.EMPTY).split(types_12.EMPTY).reduce((a, c) => (a[c] = c.charCodeAt(0), a), {});
   }
   utility.charset = charset;
   function clean(o) {
-    for (let p2 in o) {
-      if (null == o[p2]) {
-        delete o[p2];
+    for (let p in o) {
+      if (null == o[p]) {
+        delete o[p];
       }
     }
     return o;
@@ -67971,8 +67991,8 @@ const defaults = {
   }
 };
 defaults_2 = defaults$1.defaults = defaults;
-function make_hint(d = (t, r2 = "replace") => t[r2](/[A-Z]/g, (m2) => " " + m2.toLowerCase())[r2](/[~%][a-z]/g, (m2) => ("~" == m2[0] ? " " : "") + m2[1].toUpperCase()), s = "~sinceTheErrorIsUnknown,ThisIsProbablyABugInsideJsonic\nitself,OrAPlugin.~pleaseConsiderPostingAGithubIssue -Thanks!\n\n~code: $code,~details: \n$details|~theCharacter(s) $srcWereNotExpectedAtThisPointAsTheyDoNot\nmatchTheExpectedSyntax,EvenUnderTheRelaxedJsonicRules.~ifIt\nisNotObviouslyWrong,TheActualSyntaxErrorMayBeElsewhere.~try\ncommentingOutLargerAreasAroundThisPointUntilYouGetNoErrors,\nthenRemoveTheCommentsInSmallSectionsUntilYouFindThe\noffendingSyntax.~n%o%t%e:~alsoCheckIfAnyPluginsYouAreUsing\nexpectDifferentSyntaxInThisCase.|~theEscapeSequence $srcDoesNotEncodeAValidUnicodeCodePoint\nnumber.~youMayNeedToValidateYourStringDataManuallyUsingTest\ncodeToSeeHow~javaScriptWillInterpretIt.~alsoConsiderThatYour\ndataMayHaveBecomeCorrupted,OrTheEscapeSequenceHasNotBeen\ngeneratedCorrectly.|~theEscapeSequence $srcDoesNotEncodeAValid~a%s%c%i%iCharacter.~you\nmayNeedToValidateYourStringDataManuallyUsingTestCodeToSee\nhow~javaScriptWillInterpretIt.~alsoConsiderThatYourDataMay\nhaveBecomeCorrupted,OrTheEscapeSequenceHasNotBeenGenerated\ncorrectly.|~stringValuesCannotContainUnprintableCharacters (characterCodes\nbelow 32).~theCharacter $srcIsUnprintable.~youMayNeedToRemove\ntheseCharactersFromYourSourceData.~alsoCheckThatItHasNot\nbecomeCorrupted.|~thisStringHasNoEndQuote.|~thisCommentIsNeverClosed.|~noRuleNamed $rulenameIsDefined.~thisIsProbablyAnErrorInThe\ngrammarOfAPlugin.".split("|")) {
-  return "unknown|unexpected|invalid_unicode|invalid_ascii|unprintable|unterminated_string|unterminated_comment|unknown_rule".split("|").reduce((a, n2, i) => (a[n2] = d(s[i]), a), {});
+function make_hint(d = (t, r2 = "replace") => t[r2](/[A-Z]/g, (m) => " " + m.toLowerCase())[r2](/[~%][a-z]/g, (m) => ("~" == m[0] ? " " : "") + m[1].toUpperCase()), s = "~sinceTheErrorIsUnknown,ThisIsProbablyABugInsideJsonic\nitself,OrAPlugin.~pleaseConsiderPostingAGithubIssue -Thanks!\n\n~code: $code,~details: \n$details|~theCharacter(s) $srcWereNotExpectedAtThisPointAsTheyDoNot\nmatchTheExpectedSyntax,EvenUnderTheRelaxedJsonicRules.~ifIt\nisNotObviouslyWrong,TheActualSyntaxErrorMayBeElsewhere.~try\ncommentingOutLargerAreasAroundThisPointUntilYouGetNoErrors,\nthenRemoveTheCommentsInSmallSectionsUntilYouFindThe\noffendingSyntax.~n%o%t%e:~alsoCheckIfAnyPluginsYouAreUsing\nexpectDifferentSyntaxInThisCase.|~theEscapeSequence $srcDoesNotEncodeAValidUnicodeCodePoint\nnumber.~youMayNeedToValidateYourStringDataManuallyUsingTest\ncodeToSeeHow~javaScriptWillInterpretIt.~alsoConsiderThatYour\ndataMayHaveBecomeCorrupted,OrTheEscapeSequenceHasNotBeen\ngeneratedCorrectly.|~theEscapeSequence $srcDoesNotEncodeAValid~a%s%c%i%iCharacter.~you\nmayNeedToValidateYourStringDataManuallyUsingTestCodeToSee\nhow~javaScriptWillInterpretIt.~alsoConsiderThatYourDataMay\nhaveBecomeCorrupted,OrTheEscapeSequenceHasNotBeenGenerated\ncorrectly.|~stringValuesCannotContainUnprintableCharacters (characterCodes\nbelow 32).~theCharacter $srcIsUnprintable.~youMayNeedToRemove\ntheseCharactersFromYourSourceData.~alsoCheckThatItHasNot\nbecomeCorrupted.|~thisStringHasNoEndQuote.|~thisCommentIsNeverClosed.|~noRuleNamed $rulenameIsDefined.~thisIsProbablyAnErrorInThe\ngrammarOfAPlugin.".split("|")) {
+  return "unknown|unexpected|invalid_unicode|invalid_ascii|unprintable|unterminated_string|unterminated_comment|unknown_rule".split("|").reduce((a, n, i) => (a[n] = d(s[i]), a), {});
 }
 var parser$1 = {};
 var rules = {};
@@ -68850,7 +68870,7 @@ function grammar(jsonic2) {
       }
     ], { append: true, delete: [0, 1] });
   });
-  jsonic2.rule("elem", (rs, p2) => {
+  jsonic2.rule("elem", (rs, p) => {
     rs.open([
       // Empty commas insert null elements.
       // Note that close consumes a comma, so b:2 works.
@@ -68869,7 +68889,7 @@ function grammar(jsonic2) {
       },
       {
         s: [KEY, CL],
-        e: p2.cfg.list.property ? void 0 : (_r, ctx) => ctx.t0,
+        e: p.cfg.list.property ? void 0 : (_r, ctx) => ctx.t0,
         p: "val",
         n: { pk: 1, dmap: 1 },
         u: { done: true, pair: true, list: true },
@@ -69129,9 +69149,9 @@ var jsonic = jsonic$1.exports;
     }
     (0, utility_12.defprop)(jsonic2, "internal", { value: () => internal });
     if (parent) {
-      for (let k2 in parent) {
-        if (void 0 === jsonic2[k2]) {
-          jsonic2[k2] = parent[k2];
+      for (let k in parent) {
+        if (void 0 === jsonic2[k]) {
+          jsonic2[k] = parent[k];
         }
       }
       jsonic2.parent = parent;
@@ -69214,8 +69234,8 @@ class Vxg {
     const mm = Jsonic(match2);
     const ms = Array.isArray(match2) ? match2 : Object.keys(mm).map((x) => mm[x]);
     let found = null;
-    for (const m2 of ms) {
-      const pat = this.config.allow.modify(__spreadValues({}, m2 || {}));
+    for (const m of ms) {
+      const pat = this.config.allow.modify(__spreadValues({}, m || {}));
       found = this.match.allow.find(pat);
       if (found) {
         break;

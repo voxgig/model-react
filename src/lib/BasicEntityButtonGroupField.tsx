@@ -15,7 +15,12 @@ const BasicEntityButtonGroupFieldSpecShape = Gubu(
       id: String,
       name: String,
       kind: '',
-      label: String,
+      label: '',
+      options: Open({
+        label: { field: 'label' },
+        value: { field: 'value' },
+        ents: Open({}),
+      }),
       ux: Open({
         kind: Exact('ButtonGroup'),
         edit: Default(true),

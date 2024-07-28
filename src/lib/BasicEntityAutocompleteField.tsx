@@ -14,8 +14,8 @@ const BasicEntityAutocompleteFieldSpecShape = Gubu(
     field: Open({
       id: String,
       name: String,
-      kind: Skip(String),
-      label: Default(''),
+      kind: '',
+      label: '',
       options: Open({
         label: { field: Default('label') },
         value: { field: Default('value') },

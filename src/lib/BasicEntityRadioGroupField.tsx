@@ -14,8 +14,8 @@ const BasicEntityRadioGroupFieldSpecShape = Gubu(
     field: Open({
       id: String,
       name: String,
-      kind: Skip(String),
-      label: Default('', String),
+      kind: '',
+      llabel: '',
       ux: Open({
         kind: Exact('RadioGroup'),
         edit: Default(true),

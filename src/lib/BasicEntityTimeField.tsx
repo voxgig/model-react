@@ -12,8 +12,8 @@ const BasicEntityTimeFieldSpecShape = Gubu(
     field: Open({
       id: String,
       name: String,
-      kind: Skip(String),
-      label: Default('', String),
+      kind: '',
+      label: '',
       ux: Open({
         kind: Exact('Time'),
         edit: Default(true),
