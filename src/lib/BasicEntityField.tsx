@@ -14,6 +14,7 @@ import { BasicEntityTimeField } from './BasicEntityTimeField'
 import { BasicEntityDateTimeField } from './BasicEntityDateTimeField'
 import { BasicEntityRatingField } from './BasicEntityRatingField'
 import { BasicEntityButtonField } from './BasicEntityButtonField'
+import { BasicEntityButtonGroupField } from './BasicEntityButtonGroupField'
 
 const CMPNAME = 'BasicEntityField'
 
@@ -37,7 +38,8 @@ const BasicEntityFieldSpecShape = Gubu(
           'Slider',
           'RadioGroup',
           'Rating',
-          'Button'
+          'Button',
+          'ButtonGroup'
         ),
         edit: Default(true),
         rows: Default(3),
@@ -60,6 +62,7 @@ const fieldMap: any = {
   RadioGroup: BasicEntityRadioGroupField,
   Rating: BasicEntityRatingField,
   Button: BasicEntityButtonField,
+  ButtonGroup: BasicEntityButtonGroupField,
 }
 
 function BasicEntityField(props: any) {
