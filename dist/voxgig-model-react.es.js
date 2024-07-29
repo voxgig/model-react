@@ -65062,15 +65062,16 @@ function BasicEntityTextField(props) {
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx(
       TextField$1,
-      __spreadValues(__spreadValues({
+      __spreadValues(__spreadProps(__spreadValues({
         id: field.id,
         name: field.name,
         label: field.label,
         fullWidth: true,
         variant: "outlined",
-        InputLabelProps: { shrink: (val == null ? void 0 : val.length) > 0 },
+        InputLabelProps: { shrink: (val == null ? void 0 : val.length) > 0 }
+      }, register(field.name)), {
         disabled: !field.ux.edit
-      }, field.ux.props), register(field.name))
+      }), field.ux.props)
     ),
     /* @__PURE__ */ jsxRuntimeExports.jsx(BasicEntityFieldError, { err })
   ] }, field.id);
@@ -65305,7 +65306,8 @@ function BasicEntityButtonGroupField(props) {
         ([key, val]) => /* @__PURE__ */ jsxRuntimeExports.jsx(
           Button$1,
           {
-            onClick: () => onChange(key),
+            onClick: () => {
+            },
             children: val == null ? void 0 : val[field.options.label.field]
           },
           `${field.id}-${key}`

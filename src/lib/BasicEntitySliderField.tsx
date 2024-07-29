@@ -5,7 +5,7 @@ import { Controller } from 'react-hook-form'
 
 import type { Spec } from './basic-types'
 
-import { Default, Exact, Gubu, Skip } from 'gubu'
+import { Default, Exact, Gubu } from 'gubu'
 const CMPNAME = 'BasicEntitySliderField'
 
 const { Open } = Gubu
@@ -54,16 +54,16 @@ function BasicEntitySliderField(props: any) {
         defaultValue={val || field.ux.min}
         render={({ field: { onChange, value } }) => (
           <Slider
-            disabled={!field.ux.edit}
-            orientation={field.ux.direction}
-            track={field.ux.track}
-            valueLabelDisplay={field.ux.props.valueLabelDisplay}
             step={field.ux.step}
             marks={resolveMarks(field.ux.props.marks)}
             min={field.ux.min}
             max={field.ux.max}
             value={value}
             onChange={(_, newVal: any) => onChange(newVal)}
+            disabled={!field.ux.edit}
+            orientation={field.ux.direction}
+            track={field.ux.track}
+            valueLabelDisplay={field.ux.props.valueLabelDisplay}
           />
         )}
       />

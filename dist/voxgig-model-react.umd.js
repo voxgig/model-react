@@ -65074,15 +65074,16 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(
         material.TextField,
-        __spreadValues(__spreadValues({
+        __spreadValues(__spreadProps(__spreadValues({
           id: field.id,
           name: field.name,
           label: field.label,
           fullWidth: true,
           variant: "outlined",
-          InputLabelProps: { shrink: (val == null ? void 0 : val.length) > 0 },
+          InputLabelProps: { shrink: (val == null ? void 0 : val.length) > 0 }
+        }, register(field.name)), {
           disabled: !field.ux.edit
-        }, field.ux.props), register(field.name))
+        }), field.ux.props)
       ),
       /* @__PURE__ */ jsxRuntimeExports.jsx(BasicEntityFieldError, { err })
     ] }, field.id);
@@ -65317,7 +65318,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           ([key, val]) => /* @__PURE__ */ jsxRuntimeExports.jsx(
             material.Button,
             {
-              onClick: () => onChange(key),
+              onClick: () => {
+              },
               children: val == null ? void 0 : val[field.options.label.field]
             },
             `${field.id}-${key}`

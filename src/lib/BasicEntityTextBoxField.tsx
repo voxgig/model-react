@@ -24,6 +24,7 @@ const BasicEntityTextBoxFieldSpecShape = Gubu(
   { name: CMPNAME }
 )
 
+// TODO: Decide on naming convention for TextBox
 function BasicEntityTextBoxField(props: any) {
   const { spec } = props
 
