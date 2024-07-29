@@ -36,8 +36,6 @@ function BasicEntityField (props: any) {
   const field: any = basicEntityFieldSpec.field
   const Field: any = fieldMap[field.ux.kind]
 
-  // console.log('BEF ERR', spec)
-  
   return <Field ctx={ctx} spec={spec} />
 }
 
@@ -56,7 +54,6 @@ function BasicEntityTextField (props: any) {
   const { field, register, getValues, errors } = spec
 
   const err = errors[field.name]
-  // console.log('BET', err, field.name, errors)
   
   const val = getValues(field.name)
   
@@ -176,51 +173,6 @@ function BasicEntityDateTimeField (props: any) {
   )
 }
 
-
-
-/*
-function BasicEntityDateTimeField (props: any) {
-  const { spec } = props
-
-  const field = spec.field
-  const register = spec.register
-
-  return (
-    <TextField
-      id={field.id}
-      name={field.name}
-      label={field.label}
-      fullWidth
-      variant="outlined"
-      disabled={!field.ux.edit}
-      value=" "
-      InputProps={{
-        inputComponent: forwardRef(()=>
-          <div
-            className="MuiInputBase-input MuiOutlinedInput-input"
-            style={{padding:'16px'}}
-          >
-        <input
-          id={field.id+'_date$'}
-          name={field.name+'_date$'}
-          type="date"
-          disabled={!field.ux.edit}
-          {...register(field.name+'_date$')}
-        />
-        <input
-          id={field.id+'_time$'}
-          name={field.name+'_time$'}
-          type="time"
-          disabled={!field.ux.edit}
-          {...register(field.name+'_time$')} 
-        />
-      </div>
-        ),
-      }}
-    />
-  )
-}
-*/
 
 
 

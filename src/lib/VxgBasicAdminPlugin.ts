@@ -58,6 +58,7 @@ function VxgBasicAdminPlugin(this: any) {
     meta.custom.state().current.view.hash = msg.hash
   }
 
+
   async function prepareApp(_msg: any, meta: any) {
     let state = meta.custom.state()
 
