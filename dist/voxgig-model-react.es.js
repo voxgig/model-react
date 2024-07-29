@@ -64728,7 +64728,6 @@ const BasicEntityAutocompleteFieldSpecShape = gubu_minExports.Gubu(
       id: String,
       label: String,
       kind: String,
-      valid: String,
       name: String,
       cat: Open$k({
         default: String,
@@ -64751,10 +64750,9 @@ const BasicEntityAutocompleteFieldSpecShape = gubu_minExports.Gubu(
 );
 function BasicEntityAutocompleteField(props) {
   const { spec } = props;
-  console.log("BasicEntityAutocompleteField", "spec", spec);
   const basicEntityAutocompleteField = BasicEntityAutocompleteFieldSpecShape(spec);
   const { control, field } = basicEntityAutocompleteField;
-  const { resolvedCategories, resolvedDefault } = resolveCategories(field.cat);
+  const { resolvedCategories, resolvedDefault } = resolveCategories$2(field.cat);
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
     Controller,
     {
@@ -64770,7 +64768,7 @@ function BasicEntityAutocompleteField(props) {
           options: resolvedCategories,
           isOptionEqualToValue: (opt, val) => opt === val || (opt == null ? void 0 : opt.id) != null && (val == null ? void 0 : val.id) != null && opt.id === val.id || (opt == null ? void 0 : opt.key) != null && (val == null ? void 0 : val.key) != null && opt.key === val.key,
           getOptionLabel: (option) => option.title,
-          value: resolveValue$1(field.cat, value),
+          value: resolveValue$2(value, field.cat),
           disabled: !field.ux.edit
         }, field.ux.props), {
           onChange: (_2, newVal) => onChange(newVal),
@@ -64781,7 +64779,7 @@ function BasicEntityAutocompleteField(props) {
     `${field.id}-controller`
   );
 }
-function resolveCategories(cat) {
+function resolveCategories$2(cat) {
   const { multiple, item: items, default: defaultValues } = cat;
   const resolvedCategories = Object.keys(items).map((key) => {
     var _a;
@@ -64814,10 +64812,26 @@ function resolveCategories(cat) {
     resolvedDefault
   };
 }
-function resolveValue$1(cat, value) {
-  const { multiple, item: items } = cat;
-  console.log("resolveValue", "value", value);
-  return value;
+function resolveValue$2(value, cat) {
+  var _a;
+  const { item: items } = cat;
+  if (Array.isArray(value)) {
+    return value;
+  }
+  switch (cat.multiple) {
+    case 1:
+      return { key: value, title: (_a = items[value]) == null ? void 0 : _a.title };
+    case -1:
+      return value.split(",").map((k) => {
+        var _a2;
+        return { key: k, title: (_a2 = items[k]) == null ? void 0 : _a2.title };
+      });
+    default:
+      return value.split(",").slice(0, cat.multiple).map((k) => {
+        var _a2;
+        return { key: k, title: (_a2 = items[k]) == null ? void 0 : _a2.title };
+      });
+  }
 }
 const CMPNAME$l = "BasicEntitySliderField";
 const { Open: Open$j } = gubu_minExports.Gubu;
@@ -64904,11 +64918,16 @@ const BasicEntityRadioGroupFieldSpecShape = gubu_minExports.Gubu(
         edit: gubu_minExports.Default(true),
         direction: gubu_minExports.Exact("row", "column").Default("row")
       }),
-      options: Open$i({
-        label: { field: gubu_minExports.Default("label") },
-        value: { field: gubu_minExports.Default("value") },
-        default: Open$i({}),
-        ents: Open$i({})
+      cat: Open$i({
+        default: "",
+        title: String,
+        multiple: Number,
+        order: {
+          sort: "",
+          exclude: "",
+          include: ""
+        },
+        item: Open$i({})
       })
     })
   }),
@@ -64918,7 +64937,7 @@ function BasicEntityRadioGroupField(props) {
   const { spec } = props;
   const basicEntityRadioGroupField = BasicEntityRadioGroupFieldSpecShape(spec);
   const { control, field } = basicEntityRadioGroupField;
-  const { resolvedOptions, resolvedDefault } = resolveOptions$1(field.options);
+  const { resolvedCategories, resolvedDefault } = resolveCategories$1(field.cat);
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx(FormLabel$1, { children: field.label }, `${field.id}-label`),
     /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -64930,19 +64949,19 @@ function BasicEntityRadioGroupField(props) {
         render: ({ field: { onChange, value } }) => /* @__PURE__ */ jsxRuntimeExports.jsx(
           RadioGroup,
           __spreadProps(__spreadValues({
-            value,
+            value: resolveValue$1(value, field.cat),
             onChange,
             row: "row" === field.ux.direction,
             disabled: !field.ux.edit
           }, field.ux.props), {
-            children: resolvedOptions.map((option) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+            children: resolvedCategories.map((option) => /* @__PURE__ */ jsxRuntimeExports.jsx(
               FormControlLabel$1,
               {
-                value: option.value,
+                value: option.key,
                 control: /* @__PURE__ */ jsxRuntimeExports.jsx(Radio$1, { disabled: !field.ux.edit }),
-                label: option.label
+                label: option.title
               },
-              `${option.value}-option`
+              `${option.key}-option`
             ))
           }),
           field.id
@@ -64952,38 +64971,59 @@ function BasicEntityRadioGroupField(props) {
     )
   ] });
 }
-function resolveOptions$1(options) {
-  const { multiple, ents, label, value, default: defaultValues } = options;
-  const labelField = label == null ? void 0 : label.field;
-  const valueField = value == null ? void 0 : value.field;
-  const resolvedOptions = Object.keys(ents).map((key) => {
+function resolveCategories$1(cat) {
+  const { multiple, item: items, default: defaultValues } = cat;
+  const resolvedCategories = Object.keys(items).map((key) => {
     var _a;
     return {
-      [labelField]: (_a = ents == null ? void 0 : ents[key]) == null ? void 0 : _a[labelField],
-      [valueField]: key
+      title: (_a = items == null ? void 0 : items[key]) == null ? void 0 : _a.title,
+      key
     };
   });
-  let resolvedDefault;
-  if (multiple === false) {
-    if (Object.keys(defaultValues).length > 0) {
-      const firstKey = Object.keys(defaultValues)[0];
-      resolvedDefault = {
-        value: firstKey,
-        label: defaultValues[firstKey][labelField]
-      };
-    } else {
-      resolvedDefault = null;
-    }
-  } else {
-    resolvedDefault = Object.keys(defaultValues).map((key) => ({
-      label: defaultValues[key].label,
-      value: key
-    }));
+  let resolvedDefault = multiple === 1 ? null : [];
+  let defaultList = [];
+  if (typeof defaultValues === "string") {
+    defaultList = defaultValues.split(",");
+  }
+  const mapResolvedDefault = (list) => list.map((val) => ({
+    title: items[val].title,
+    key: val
+  }));
+  if (multiple === 1) {
+    resolvedDefault = {
+      title: items[defaultList[0]].title,
+      key: defaultList[0]
+    };
+  } else if (multiple === -1) {
+    resolvedDefault = mapResolvedDefault(defaultList);
+  } else if (multiple > 1) {
+    resolvedDefault = mapResolvedDefault(defaultList.slice(0, multiple));
   }
   return {
-    resolvedOptions,
+    resolvedCategories,
     resolvedDefault
   };
+}
+function resolveValue$1(value, cat) {
+  var _a;
+  const { item: items, multiple } = cat;
+  if (Array.isArray(value)) {
+    return value;
+  }
+  switch (multiple) {
+    case 1:
+      return { key: value, title: (_a = items[value]) == null ? void 0 : _a.title };
+    case -1:
+      return value.split(",").map((k) => {
+        var _a2;
+        return { key: k, title: (_a2 = items[k]) == null ? void 0 : _a2.title };
+      });
+    default:
+      return value.split(",").slice(0, multiple).map((k) => {
+        var _a2;
+        return { key: k, title: (_a2 = items[k]) == null ? void 0 : _a2.title };
+      });
+  }
 }
 const CMPNAME$j = "BasicEntityTextBoxField";
 const { Open: Open$h } = gubu_minExports.Gubu;
@@ -65319,12 +65359,16 @@ const BasicEntitySelectFieldSpecShape = gubu_minExports.Gubu(
       name: String,
       kind: "",
       label: "",
-      options: Open$9({
-        label: { field: gubu_minExports.Default("label") },
-        value: { field: gubu_minExports.Default("value") },
-        multiple: gubu_minExports.Default(false),
-        default: Open$9({}),
-        ents: Open$9({})
+      cat: Open$9({
+        default: "",
+        title: String,
+        multiple: Number,
+        order: {
+          sort: "",
+          exclude: "",
+          include: ""
+        },
+        item: Open$9({})
       }),
       ux: Open$9({
         kind: gubu_minExports.Exact("Select"),
@@ -65338,18 +65382,15 @@ function BasicEntitySelectField(props) {
   const { spec } = props;
   const basicEntitySelectField = BasicEntitySelectFieldSpecShape(spec);
   const { control, field, getValues } = basicEntitySelectField;
-  const { resolvedOptions, resolvedDefault } = resolveOptions(field.options);
+  const { resolvedCategories, resolvedDefault } = resolveCategories(field.cat);
   const val = getValues(field.name);
-  console.log("field", field);
-  console.log("val", val);
   console.log("resolvedDefault", resolvedDefault);
-  console.log("resolvedOptions", resolvedOptions);
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
     Controller,
     {
       name: field.name,
       control,
-      defaultValue: val || "",
+      defaultValue: resolvedDefault,
       render: ({ field: { onChange, value } }) => /* @__PURE__ */ jsxRuntimeExports.jsxs(FormControl$1, { fullWidth: true, children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx(InputLabel$1, { id: `${field.id}-label`, children: field.label }),
         /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -65357,13 +65398,13 @@ function BasicEntitySelectField(props) {
           __spreadProps(__spreadValues({
             labelId: `${field.id}-label`,
             id: `${field.id}-select`,
-            value: resolveValue(field.options, value),
-            multiple: field.options.multiple,
+            value: resolveValue(value, field.cat),
+            multiple: field.cat.multiple === 1 ? false : true,
             label: field.name,
             onChange: (event) => onChange(event.target.value),
             disabled: !field.ux.edit
           }, field.ux.props), {
-            children: resolvedOptions.map((opt) => /* @__PURE__ */ jsxRuntimeExports.jsx(MenuItem$1, { value: opt.value, children: opt.label }, opt.value))
+            children: resolvedCategories.map((opt) => /* @__PURE__ */ jsxRuntimeExports.jsx(MenuItem$1, { value: opt.key, children: opt.title }, opt.key))
           })
         )
       ] })
@@ -65371,49 +65412,56 @@ function BasicEntitySelectField(props) {
     `${field.id}-controller`
   );
 }
-function resolveOptions(options) {
-  const { multiple, ents, label, value, default: defaultValues } = options;
-  const labelField = label == null ? void 0 : label.field;
-  const valueField = value == null ? void 0 : value.field;
-  const resolvedOptions = Object.keys(ents).map((key) => {
+function resolveCategories(cat) {
+  const { multiple, item: items, default: defaultValues } = cat;
+  const resolvedCategories = Object.keys(items).map((key) => {
     var _a;
     return {
-      [labelField]: (_a = ents == null ? void 0 : ents[key]) == null ? void 0 : _a[labelField],
-      [valueField]: key
+      title: (_a = items == null ? void 0 : items[key]) == null ? void 0 : _a.title,
+      key
     };
   });
-  let resolvedDefault;
-  if (multiple === false) {
-    if (Object.keys(defaultValues).length > 0) {
-      const firstKey = Object.keys(defaultValues)[0];
-      resolvedDefault = {
-        value: firstKey,
-        label: defaultValues[firstKey][labelField]
-      };
-    } else {
-      resolvedDefault = null;
-    }
-  } else {
-    resolvedDefault = Object.keys(defaultValues).map((key) => ({
-      label: defaultValues[key].label,
-      value: key
-    }));
+  let resolvedDefault = multiple === 1 ? null : [];
+  let defaultList = [];
+  if (typeof defaultValues === "string") {
+    defaultList = defaultValues.split(",");
+  }
+  const mapResolvedDefault = (list) => list.map((val) => ({
+    title: items[val].title,
+    key: val
+  }));
+  if (multiple === 1) {
+    resolvedDefault = {
+      title: items[defaultList[0]].title,
+      key: defaultList[0]
+    };
+  } else if (multiple === -1) {
+    resolvedDefault = mapResolvedDefault(defaultList);
+  } else if (multiple > 1) {
+    resolvedDefault = mapResolvedDefault(defaultList.slice(0, multiple));
   }
   return {
-    resolvedOptions,
+    resolvedCategories,
     resolvedDefault
   };
 }
-function resolveValue(options, val) {
-  const { multiple } = options;
-  if (multiple) {
-    if (typeof val === "string") {
-      return val ? [val] : [];
-    }
-    return val || [];
-  } else {
-    return val || "";
+function resolveValue(value, cat) {
+  var _a;
+  const { item: items, multiple } = cat;
+  if (Array.isArray(value)) {
+    return value;
   }
+  switch (multiple) {
+    case 1:
+      return { key: value, title: (_a = items[value]) == null ? void 0 : _a.title };
+    case -1:
+      return value.split(",");
+    default:
+      if (cat.multiple > 1) {
+        return value.split(",").slice(0, multiple);
+      }
+  }
+  return value;
 }
 const CMPNAME$a = "BasicEntitySliderField";
 const { Open: Open$8 } = gubu_minExports.Gubu;
@@ -65472,10 +65520,16 @@ const BasicEntityToggleButtonFieldSpecShape = gubu_minExports.Gubu(
       name: String,
       kind: "",
       label: "",
-      options: Open$7({
-        label: { field: "label" },
-        value: { field: "value" },
-        ents: Open$7({})
+      cat: Open$7({
+        default: "",
+        title: String,
+        multiple: Number,
+        order: {
+          sort: "",
+          exclude: "",
+          include: ""
+        },
+        item: Open$7({})
       }),
       ux: Open$7({
         kind: gubu_minExports.Exact("ToggleButton"),
@@ -65499,12 +65553,13 @@ function BasicEntityToggleButtonField(props) {
         ToggleButtonGroup,
         __spreadProps(__spreadValues({
           value,
-          onChange,
+          exclusive: field.cat.multiple === 1 ? true : false,
+          onChange: (_2, v) => {
+            field.cat.multiple === 1 ? onChange(v) : onChange([v]);
+          },
           disabled: !field.ux.edit
         }, field.ux.props), {
-          children: Object.entries(field.options.ents).map(
-            ([key, val]) => /* @__PURE__ */ jsxRuntimeExports.jsx(ToggleButton, { value: key, children: val == null ? void 0 : val[field.options.label.field] }, `${field.id}-${key}`)
-          )
+          children: Object.entries(field.cat.item).map(([key, val]) => /* @__PURE__ */ jsxRuntimeExports.jsx(ToggleButton, { value: key, children: val == null ? void 0 : val.title }, `${field.id}-${key}`))
         })
       )
     },

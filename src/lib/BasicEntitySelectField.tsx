@@ -1,13 +1,6 @@
 import React from 'react'
 
-import {
-  TextField,
-  Autocomplete,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-} from '@mui/material'
+import { FormControl, InputLabel, Select, MenuItem } from '@mui/material'
 import { Controller } from 'react-hook-form'
 
 import type { Spec } from './basic-types'
@@ -23,12 +16,16 @@ const BasicEntitySelectFieldSpecShape = Gubu(
       name: String,
       kind: '',
       label: '',
-      options: Open({
-        label: { field: Default('label') },
-        value: { field: Default('value') },
-        multiple: Default(false),
-        default: Open({}),
-        ents: Open({}),
+      cat: Open({
+        default: '',
+        title: String,
+        multiple: Number,
+        order: {
+          sort: '',
+          exclude: '',
+          include: '',
+        },
+        item: Open({}),
       }),
       ux: Open({
         kind: Exact('Select'),
@@ -39,41 +36,41 @@ const BasicEntitySelectFieldSpecShape = Gubu(
   { name: CMPNAME }
 )
 
-function BasicEntitySelectField(props: any) {
+function BasicEntitySelectField (props: any) {
   const { spec } = props
 
   const basicEntitySelectField: Spec = BasicEntitySelectFieldSpecShape(spec)
   const { control, field, getValues } = basicEntitySelectField
-  const { resolvedOptions, resolvedDefault } = resolveOptions(field.options)
+  const { resolvedCategories, resolvedDefault } = resolveCategories(field.cat)
   const val = getValues(field.name)
 
-  console.log('field', field)
-  console.log('val', val)
+  // console.log('field', field)
+  // console.log('val', val)
   console.log('resolvedDefault', resolvedDefault)
-  console.log('resolvedOptions', resolvedOptions)
+  // console.log('resolvedCategories', resolvedCategories)
 
   return (
     <Controller
       key={`${field.id}-controller`}
       name={field.name}
       control={control}
-      defaultValue={val || ''}
+      defaultValue={resolvedDefault}
       render={({ field: { onChange, value } }) => (
         <FormControl fullWidth>
           <InputLabel id={`${field.id}-label`}>{field.label}</InputLabel>
           <Select
             labelId={`${field.id}-label`}
             id={`${field.id}-select`}
-            value={resolveValue(field.options, value)}
-            multiple={field.options.multiple}
+            value={resolveValue(value, field.cat)}
+            multiple={field.cat.multiple === 1 ? false : true}
             label={field.name}
             onChange={(event: any) => onChange(event.target.value)}
             disabled={!field.ux.edit}
             {...field.ux.props}
           >
-            {resolvedOptions.map((opt: any) => (
-              <MenuItem key={opt.value} value={opt.value}>
-                {opt.label}
+            {resolvedCategories.map((opt: any) => (
+              <MenuItem key={opt.key} value={opt.key}>
+                {opt.title}
               </MenuItem>
             ))}
           </Select>
@@ -83,53 +80,74 @@ function BasicEntitySelectField(props: any) {
   )
 }
 
+// TODO: Make it DRY
 // Returns array of options and default value(s) based on the options object
-function resolveOptions(options: any) {
-  const { multiple, ents, label, value, default: defaultValues } = options
-  const labelField = label?.field
-  const valueField = value?.field
+function resolveCategories (cat: any) {
+  const { multiple, item: items, default: defaultValues } = cat
+
+  // console.log('resolveCat', 'cat', cat)
 
   // Array of options
-  const resolvedOptions = Object.keys(ents).map((key) => ({
-    [labelField]: ents?.[key]?.[labelField],
-    [valueField]: key,
+  const resolvedCategories = Object.keys(items).map((key) => ({
+    title: items?.[key]?.title,
+    key: key,
   }))
 
-  let resolvedDefault
-  if (multiple === false) {
-    if (Object.keys(defaultValues).length > 0) {
-      const firstKey = Object.keys(defaultValues)[0]
-      resolvedDefault = {
-        value: firstKey,
-        label: defaultValues[firstKey][labelField],
-      }
-    } else {
-      resolvedDefault = null
-    }
-  } else {
-    resolvedDefault = Object.keys(defaultValues).map((key) => ({
-      label: defaultValues[key].label,
-      value: key,
-    }))
+  let resolvedDefault: any = multiple === 1 ? null : []
+  let defaultList: any[] = []
+
+  if (typeof defaultValues === 'string') {
+    defaultList = defaultValues.split(',')
   }
 
+  const mapResolvedDefault = (list: any[]) =>
+    list.map((val: any) => ({
+      title: items[val].title,
+      key: val,
+    }))
+
+  if (multiple === 1) {
+    resolvedDefault = {
+      title: items[defaultList[0]].title,
+      key: defaultList[0],
+    }
+  } else if (multiple === -1) {
+    resolvedDefault = mapResolvedDefault(defaultList)
+  } else if (multiple > 1) {
+    resolvedDefault = mapResolvedDefault(defaultList.slice(0, multiple))
+  }
+
+  // console.log('resolveCat', 'resolvedDefault', resolvedDefault)
+
   return {
-    resolvedOptions,
+    resolvedCategories,
     resolvedDefault,
   }
 }
 
-function resolveValue(options: any, val: any) {
-  const { multiple } = options
+// TODO: Make it DRY
+function resolveValue (
+  value: any,
+  cat: { multiple: number; item: Record<string, { title: string }> }
+) {
+  const { item: items, multiple } = cat
 
-  if (multiple) {
-    if (typeof val === 'string') {
-      return val ? [val] : []
-    }
-    return val || []
-  } else {
-    return val || ''
+  if (Array.isArray(value)) {
+    return value
   }
+
+  switch (multiple) {
+    case 1:
+      return { key: value, title: items[value]?.title }
+    case -1:
+      return value.split(',')
+    default:
+      if (cat.multiple > 1) {
+        return value.split(',').slice(0, multiple)
+      }
+  }
+
+  return value
 }
 
 export { BasicEntitySelectField }
