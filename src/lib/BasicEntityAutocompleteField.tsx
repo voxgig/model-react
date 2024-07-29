@@ -103,16 +103,28 @@ function resolveCategories (cat: any) {
       key: val,
     }))
 
-  if (multiple === 1) {
-    resolvedDefault = {
-      title: items[defaultList[0]].title,
-      key: defaultList[0],
-    }
-  } else if (multiple === -1) {
-    resolvedDefault = mapResolvedDefault(defaultList)
-  } else if (multiple > 1) {
-    resolvedDefault = mapResolvedDefault(defaultList.slice(0, multiple))
+  switch (multiple) {
+    case 1:
+      resolvedDefault = {
+        key: defaultList[0],
+        title: items[defaultList[0]]?.title,
+      }
+    case -1:
+      resolvedDefault = mapResolvedDefault(defaultList)
+    default:
+      resolvedDefault = mapResolvedDefault(defaultList.slice(0, multiple))
   }
+
+  // if (multiple === 1) {
+  //   resolvedDefault = {
+  //     title: items[defaultList[0]].title,
+  //     key: defaultList[0],
+  //   }
+  // } else if (multiple === -1) {
+  //   resolvedDefault = mapResolvedDefault(defaultList)
+  // } else if (multiple > 1) {
+  //   resolvedDefault = mapResolvedDefault(defaultList.slice(0, multiple))
+  // }
 
   // console.log('resolveCat', 'resolvedDefault', resolvedDefault)
 
