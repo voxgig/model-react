@@ -36,26 +36,15 @@ const BasicEntityAutocompleteFieldSpecShape = Gubu(
   { name: CMPNAME }
 )
 
-function BasicEntityAutocompleteField(props: any) {
+function BasicEntityAutocompleteField (props: any) {
   const { spec } = props
 
-  console.log('BasicEntityAutocompleteField', 'spec', spec)
+  // console.log('BasicEntityAutocompleteField', 'spec', spec)
 
   const basicEntityAutocompleteField: Spec =
     BasicEntityAutocompleteFieldSpecShape(spec)
   const { control, field } = basicEntityAutocompleteField
   const { resolvedCategories, resolvedDefault } = resolveCategories(field.cat)
-
-  // console.log(
-  //   'BasicEntityAutocompleteField',
-  //   'resolvedCategories',
-  //   resolvedCategories
-  // )
-  // console.log(
-  //   'BasicEntityAutocompleteField',
-  //   'resolvedDefault',
-  //   resolvedDefault
-  // )
 
   return (
     <Controller
@@ -75,7 +64,7 @@ function BasicEntityAutocompleteField(props: any) {
             (opt?.key != null && val?.key != null && opt.key === val.key)
           }
           getOptionLabel={(option: any) => option.title}
-          value={resolveValue(field.cat, value)}
+          value={resolveValue(value, field.cat)}
           disabled={!field.ux.edit}
           {...field.ux.props}
           onChange={(_, newVal: any) => onChange(newVal)}
@@ -88,8 +77,9 @@ function BasicEntityAutocompleteField(props: any) {
   )
 }
 
+// TODO: Make it DRY
 // Returns array of options and default value(s) based on the options object
-function resolveCategories(cat: any) {
+function resolveCategories (cat: any) {
   const { multiple, item: items, default: defaultValues } = cat
 
   // console.log('resolveCat', 'cat', cat)
@@ -132,10 +122,33 @@ function resolveCategories(cat: any) {
   }
 }
 
-function resolveValue(cat: any, value: any) {
-  const { multiple, item: items } = cat
-  console.log('resolveValue', 'value', value)
-  return value
+// TODO: Make it DRY
+function resolveValue (
+  value: any,
+  cat: {
+    multiple: number
+    item: Record<string, { title: string }>
+  }
+) {
+  const { item: items } = cat
+
+  if (Array.isArray(value)) {
+    return value
+  }
+
+  switch (cat.multiple) {
+    case 1:
+      return { key: value, title: items[value]?.title }
+    case -1:
+      return value
+        .split(',')
+        .map((k: any) => ({ key: k, title: items[k]?.title }))
+    default:
+      return value
+        .split(',')
+        .slice(0, cat.multiple)
+        .map((k: any) => ({ key: k, title: items[k]?.title }))
+  }
 }
 
 export { BasicEntityAutocompleteField }
