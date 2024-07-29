@@ -11,6 +11,7 @@ import { Controller } from 'react-hook-form'
 import type { Spec } from './basic-types'
 
 import { Default, Exact, Gubu, Skip } from 'gubu'
+import { on } from 'events'
 const CMPNAME = 'BasicEntitySliderField'
 
 const { Open } = Gubu
@@ -21,10 +22,16 @@ const BasicEntityToggleButtonFieldSpecShape = Gubu(
       name: String,
       kind: '',
       label: '',
-      options: Open({
-        label: { field: 'label' },
-        value: { field: 'value' },
-        ents: Open({}),
+      cat: Open({
+        default: '',
+        title: String,
+        multiple: Number,
+        order: {
+          sort: '',
+          exclude: '',
+          include: '',
+        },
+        item: Open({}),
       }),
       ux: Open({
         kind: Exact('ToggleButton'),
@@ -36,13 +43,12 @@ const BasicEntityToggleButtonFieldSpecShape = Gubu(
   { name: CMPNAME }
 )
 
-function BasicEntityToggleButtonField(props: any) {
+function BasicEntityToggleButtonField (props: any) {
   const { spec } = props
 
   const basicEntityToggleButtonField: Spec =
     BasicEntityToggleButtonFieldSpecShape(spec)
   const { control, field } = basicEntityToggleButtonField
-  //   const val = getValues(field.name)
 
   return (
     <div key={`${field.id}-div`}>
@@ -53,17 +59,18 @@ function BasicEntityToggleButtonField(props: any) {
         render={({ field: { onChange, value } }) => (
           <ToggleButtonGroup
             value={value}
-            onChange={onChange}
+            exclusive={field.cat.multiple === 1 ? true : false}
+            onChange={(_, v) => {
+              field.cat.multiple === 1 ? onChange(v) : onChange([v])
+            }}
             disabled={!field.ux.edit}
             {...field.ux.props}
           >
-            {Object.entries(field.options.ents).map(
-              ([key, val]: [any, any]) => (
-                <ToggleButton key={`${field.id}-${key}`} value={key}>
-                  {val?.[field.options.label.field]}
-                </ToggleButton>
-              )
-            )}
+            {Object.entries(field.cat.item).map(([key, val]: [any, any]) => (
+              <ToggleButton key={`${field.id}-${key}`} value={key}>
+                {val?.title}
+              </ToggleButton>
+            ))}
           </ToggleButtonGroup>
         )}
       />
