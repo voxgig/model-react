@@ -18,7 +18,8 @@ const BasicEntityButtonFieldSpecShape = Gubu(
       label: String,
       ux: Open({
         kind: Exact('Button'),
-        edit: Default(true),
+        edit: true,
+        variant: 'contained',
         props: Open({}),
       }),
     }),
@@ -30,26 +31,21 @@ function BasicEntityButtonField(props: any) {
   const { spec } = props
 
   const basicEntityButtonField: Spec = BasicEntityButtonFieldSpecShape(spec)
-  const { control, field } = basicEntityButtonField
-  //   const val = getValues(field.name)
+  const { field } = basicEntityButtonField
 
   return (
     <div key={`${field.id}-div`}>
-      <Controller
-        key={`${field.id}-controller`}
-        name={field.name}
-        control={control}
-        render={({ field: { onChange, value } }) => (
-          <Button
-            name={field.name}
-            value={value}
-            onClick={(_) => onChange(value)}
-            {...field.ux.props}
-          >
-            {field.label}
-          </Button>
-        )}
-      />
+      <Button
+        variant={field.ux.variant}
+        disabled={!field.ux.edit}
+        onClick={() => {
+          // Handle the button click
+          console.log('Button clicked')
+        }}
+        {...field.ux.props}
+      >
+        {field.label}
+      </Button>
     </div>
   )
 }
