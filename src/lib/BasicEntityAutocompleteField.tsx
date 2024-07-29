@@ -13,15 +13,20 @@ const BasicEntityAutocompleteFieldSpecShape = Gubu(
   Open({
     field: Open({
       id: String,
+      label: String,
+      kind: String,
+      valid: String,
       name: String,
-      kind: '',
-      label: '',
-      options: Open({
-        label: { field: Default('label') },
-        value: { field: Default('value') },
-        multiple: Default(false),
-        default: Open({}),
-        ents: Open({}),
+      cat: Open({
+        default: String,
+        title: String,
+        multiple: Number,
+        order: {
+          sort: '',
+          exclude: '',
+          include: '',
+        },
+        item: Open({}),
       }),
       ux: Open({
         kind: Exact('Autocomplete'),
@@ -35,10 +40,23 @@ const BasicEntityAutocompleteFieldSpecShape = Gubu(
 function BasicEntityAutocompleteField(props: any) {
   const { spec } = props
 
+  console.log('BasicEntityAutocompleteField', 'spec', spec)
+
   const basicEntityAutocompleteField: Spec =
     BasicEntityAutocompleteFieldSpecShape(spec)
   const { control, field } = basicEntityAutocompleteField
-  const { resolvedOptions, resolvedDefault } = resolveOptions(field.options)
+  const { resolvedCategories, resolvedDefault } = resolveCategories(field.cat)
+
+  // console.log(
+  //   'BasicEntityAutocompleteField',
+  //   'resolvedCategories',
+  //   resolvedCategories
+  // )
+  // console.log(
+  //   'BasicEntityAutocompleteField',
+  //   'resolvedDefault',
+  //   resolvedDefault
+  // )
 
   return (
     <Controller
@@ -50,17 +68,15 @@ function BasicEntityAutocompleteField(props: any) {
         <Autocomplete
           freeSolo
           forcePopupIcon
-          multiple={field.options.multiple}
-          options={resolvedOptions}
+          multiple={field.cat.multiple === 1 ? false : true}
+          options={resolvedCategories}
           isOptionEqualToValue={(opt: any, val: any) =>
             opt === val ||
             (opt?.id != null && val?.id != null && opt.id === val.id) ||
-            (opt?.value != null &&
-              val?.value != null &&
-              opt.value === val.value)
+            (opt?.key != null && val?.key != null && opt.key === val.key)
           }
-          getOptionLabel={(option: any) => option[field.options.label.field]}
-          value={resolveValue(field.options, value)}
+          getOptionLabel={(option: any) => option.title}
+          value={resolveValue(field.cat, value)}
           disabled={!field.ux.edit}
           {...field.ux.props}
           onChange={(_, newVal: any) => onChange(newVal)}
@@ -74,60 +90,53 @@ function BasicEntityAutocompleteField(props: any) {
 }
 
 // Returns array of options and default value(s) based on the options object
-function resolveOptions(options: any) {
-  const { multiple, ents, label, value, default: defaultValues } = options
-  const labelField = label?.field
-  const valueField = value?.field
+function resolveCategories(cat: any) {
+  const { multiple, item: items, default: defaultValues } = cat
+
+  // console.log('resolveCat', 'cat', cat)
 
   // Array of options
-  const resolvedOptions = Object.keys(ents).map((key) => ({
-    [labelField]: ents?.[key]?.[labelField],
-    [valueField]: key,
+  const resolvedCategories = Object.keys(items).map((key) => ({
+    title: items?.[key]?.title,
+    key: key,
   }))
 
-  let resolvedDefault
-  if (multiple === false) {
-    if (Object.keys(defaultValues).length > 0) {
-      const firstKey = Object.keys(defaultValues)[0]
-      resolvedDefault = {
-        value: firstKey,
-        label: defaultValues[firstKey][labelField],
-      }
-    } else {
-      resolvedDefault = null
-    }
-  } else {
-    resolvedDefault = Object.keys(defaultValues).map((key) => ({
-      label: defaultValues[key].label,
-      value: key,
-    }))
+  let resolvedDefault: any = multiple === 1 ? null : []
+  let defaultList: any[] = []
+
+  if (typeof defaultValues === 'string') {
+    defaultList = defaultValues.split(',')
   }
 
+  const mapResolvedDefault = (list: any[]) =>
+    list.map((val: any) => ({
+      title: items[val].title,
+      key: val,
+    }))
+
+  if (multiple === 1) {
+    resolvedDefault = {
+      title: items[defaultList[0]].title,
+      key: defaultList[0],
+    }
+  } else if (multiple === -1) {
+    resolvedDefault = mapResolvedDefault(defaultList)
+  } else if (multiple > 1) {
+    resolvedDefault = mapResolvedDefault(defaultList.slice(0, multiple))
+  }
+
+  // console.log('resolveCat', 'resolvedDefault', resolvedDefault)
+
   return {
-    resolvedOptions,
+    resolvedCategories,
     resolvedDefault,
   }
 }
 
-function resolveValue(options: any, val: any) {
-  const { multiple, ents, label, value } = options
-  const labelField = label?.field
-  const valueField = value?.field
-
-  const getValue = (val: string) =>
-    ents?.[val]?.[labelField]
-      ? { [valueField]: val, [labelField]: ents[val][labelField] || val }
-      : undefined
-
-  if (!multiple) {
-    return typeof val === 'string' ? getValue(val) : val || undefined
-  } else {
-    if (typeof val === 'string') {
-      const resolvedValue = getValue(val)
-      return resolvedValue ? [resolvedValue] : []
-    }
-    return val || []
-  }
+function resolveValue(cat: any, value: any) {
+  const { multiple, item: items } = cat
+  console.log('resolveValue', 'value', value)
+  return value
 }
 
 export { BasicEntityAutocompleteField }
