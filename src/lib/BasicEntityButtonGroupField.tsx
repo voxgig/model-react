@@ -46,15 +46,17 @@ function BasicEntityButtonGroupField(props: any) {
         name={field.name}
         control={control}
         render={({ field: { onChange, value } }) => (
-          <ButtonGroup {...field.ux.props}>
-            {Object.entries(field.options.ents).map(([key, value]) => (
-              <Button
-                key={`${field.id}-${key}`}
-                onClick={() => onChange(value)}
-              >
-                {field.options.ents?.[key]?.[field.options.label.field]}
-              </Button>
-            ))}
+          <ButtonGroup disabled={!field.ux.edit} {...field.ux.props}>
+            {Object.entries(field.options.ents).map(
+              ([key, val]: [any, any]) => (
+                <Button
+                  key={`${field.id}-${key}`}
+                  onClick={() => onChange(key)}
+                >
+                  {val?.[field.options.label.field]}
+                </Button>
+              )
+            )}
           </ButtonGroup>
         )}
       />
