@@ -45,6 +45,8 @@ function BasicEntityTextField(props: any) {
         variant="outlined"
         InputLabelProps={{ shrink: val?.length > 0 }}
         {...register(field.name)}
+        disabled={!field.ux.edit}
+        {...field.ux.props}
       />
       <BasicEntityFieldError err={err} />
     </div>

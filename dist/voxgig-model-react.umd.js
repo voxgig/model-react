@@ -64769,7 +64769,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         defaultValue: resolvedDefault,
         render: ({ field: { onChange, value } }) => /* @__PURE__ */ jsxRuntimeExports.jsx(
           material.Autocomplete,
-          {
+          __spreadProps(__spreadValues({
             freeSolo: true,
             forcePopupIcon: true,
             multiple: field.options.multiple,
@@ -64777,9 +64777,11 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
             isOptionEqualToValue: (opt, val) => opt === val || (opt == null ? void 0 : opt.id) != null && (val == null ? void 0 : val.id) != null && opt.id === val.id || (opt == null ? void 0 : opt.value) != null && (val == null ? void 0 : val.value) != null && opt.value === val.value,
             getOptionLabel: (option) => option[field.options.label.field],
             value: resolveValue$1(field.options, value),
+            disabled: !field.ux.edit
+          }, field.ux.props), {
             onChange: (_2, newVal) => onChange(newVal),
             renderInput: (params) => /* @__PURE__ */ jsxRuntimeExports.jsx(material.TextField, __spreadProps(__spreadValues({}, params), { label: field.label }))
-          }
+          })
         )
       },
       `${field.id}-controller`
@@ -64878,16 +64880,16 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           render: ({ field: { onChange, value } }) => /* @__PURE__ */ jsxRuntimeExports.jsx(
             material.Slider,
             {
-              disabled: !field.ux.edit,
-              orientation: field.ux.direction,
-              track: field.ux.track,
-              valueLabelDisplay: field.ux.props.valueLabelDisplay,
               step: field.ux.step,
               marks: resolveMarks(field.ux.props.marks),
               min: field.ux.min,
               max: field.ux.max,
               value,
-              onChange: (_2, newVal) => onChange(newVal)
+              onChange: (_2, newVal) => onChange(newVal),
+              disabled: !field.ux.edit,
+              orientation: field.ux.direction,
+              track: field.ux.track,
+              valueLabelDisplay: field.ux.props.valueLabelDisplay
             }
           )
         },
@@ -64946,10 +64948,12 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           defaultValue: resolvedDefault,
           render: ({ field: { onChange, value } }) => /* @__PURE__ */ jsxRuntimeExports.jsx(
             material.RadioGroup,
-            {
+            __spreadProps(__spreadValues({
               value,
               onChange,
               row: "row" === field.ux.direction,
+              disabled: !field.ux.edit
+            }, field.ux.props), {
               children: resolvedOptions.map((option) => /* @__PURE__ */ jsxRuntimeExports.jsx(
                 material.FormControlLabel,
                 {
@@ -64959,7 +64963,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
                 },
                 `${option.value}-option`
               ))
-            },
+            }),
             field.id
           )
         },
@@ -65025,7 +65029,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const val = getValues(field.name);
     return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
       material.TextField,
-      __spreadValues({
+      __spreadValues(__spreadProps(__spreadValues({
         id: field.id,
         name: field.name,
         label: field.label,
@@ -65034,7 +65038,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         multiline: true,
         rows: field.ux.rows,
         InputLabelProps: { shrink: (val == null ? void 0 : val.length) > 0 }
-      }, register(field.name))
+      }, register(field.name)), {
+        disabled: !field.ux.edit
+      }), field.ux.props)
     ) }, field.name);
   }
   function BasicEntityFieldError(props) {
@@ -65068,14 +65074,15 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(
         material.TextField,
-        __spreadValues({
+        __spreadValues(__spreadValues({
           id: field.id,
           name: field.name,
           label: field.label,
           fullWidth: true,
           variant: "outlined",
-          InputLabelProps: { shrink: (val == null ? void 0 : val.length) > 0 }
-        }, register(field.name))
+          InputLabelProps: { shrink: (val == null ? void 0 : val.length) > 0 },
+          disabled: !field.ux.edit
+        }, field.ux.props), register(field.name))
       ),
       /* @__PURE__ */ jsxRuntimeExports.jsx(BasicEntityFieldError, { err })
     ] }, field.id);
@@ -65142,7 +65149,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const val = getValues(field.name);
     return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
       material.TextField,
-      __spreadValues({
+      __spreadValues(__spreadValues({
         id: field.id,
         name: field.name,
         label: field.label,
@@ -65151,7 +65158,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         type: "time",
         disabled: !field.ux.edit,
         InputLabelProps: { shrink: (val == null ? void 0 : val.length) > 0 }
-      }, register(field.name))
+      }, register(field.name)), field.ux.props)
     ) }, field.id);
   }
   const CMPNAME$f = "BasicEntityDateTimeField";
@@ -65229,7 +65236,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
               name: field.name,
               value,
               precision: field.ux.precision,
-              onChange: (_2, newValue) => onChange(newValue)
+              onChange: (_2, newValue) => onChange(newValue),
+              disabled: !field.ux.edit
             }, field.ux.props)
           )
         },
@@ -65259,7 +65267,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   function BasicEntityButtonField(props) {
     const { spec } = props;
     const basicEntityButtonField = BasicEntityButtonFieldSpecShape(spec);
-    const { control, field } = basicEntityButtonField;
+    const { field } = basicEntityButtonField;
     return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
       material.Button,
       __spreadProps(__spreadValues({
@@ -65305,7 +65313,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       {
         name: field.name,
         control,
-        render: ({ field: { onChange, value } }) => /* @__PURE__ */ jsxRuntimeExports.jsx(material.ButtonGroup, __spreadProps(__spreadValues({}, field.ux.props), { children: Object.entries(field.options.ents).map(
+        render: ({ field: { onChange, value } }) => /* @__PURE__ */ jsxRuntimeExports.jsx(material.ButtonGroup, __spreadProps(__spreadValues({ disabled: !field.ux.edit }, field.ux.props), { children: Object.entries(field.options.ents).map(
           ([key, val]) => /* @__PURE__ */ jsxRuntimeExports.jsx(
             material.Button,
             {
@@ -65363,15 +65371,17 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           /* @__PURE__ */ jsxRuntimeExports.jsx(material.InputLabel, { id: `${field.id}-label`, children: field.label }),
           /* @__PURE__ */ jsxRuntimeExports.jsx(
             material.Select,
-            {
+            __spreadProps(__spreadValues({
               labelId: `${field.id}-label`,
               id: `${field.id}-select`,
               value: resolveValue(field.options, value),
               multiple: field.options.multiple,
               label: field.name,
               onChange: (event) => onChange(event.target.value),
+              disabled: !field.ux.edit
+            }, field.ux.props), {
               children: resolvedOptions.map((opt) => /* @__PURE__ */ jsxRuntimeExports.jsx(material.MenuItem, { value: opt.value, children: opt.label }, opt.value))
-            }
+            })
           )
         ] })
       },
@@ -65506,7 +65516,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           material.ToggleButtonGroup,
           __spreadProps(__spreadValues({
             value,
-            onChange
+            onChange,
+            disabled: !field.ux.edit
           }, field.ux.props), {
             children: Object.entries(field.options.ents).map(
               ([key, val]) => /* @__PURE__ */ jsxRuntimeExports.jsx(material.ToggleButton, { value: key, children: val == null ? void 0 : val[field.options.label.field] }, `${field.id}-${key}`)

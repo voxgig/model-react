@@ -43,6 +43,8 @@ function BasicEntityTextBoxField(props: any) {
         rows={field.ux.rows}
         InputLabelProps={{ shrink: val?.length > 0 }}
         {...register(field.name)}
+        disabled={!field.ux.edit}
+        {...field.ux.props}
       />
     </div>
   )

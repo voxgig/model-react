@@ -55,6 +55,8 @@ function BasicEntityRadioGroupField(props: any) {
             value={value}
             onChange={onChange}
             row={'row' === field.ux.direction}
+            disabled={!field.ux.edit}
+            {...field.ux.props}
           >
             {resolvedOptions.map((option: any) => (
               <FormControlLabel

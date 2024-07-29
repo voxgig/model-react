@@ -64757,7 +64757,7 @@ function BasicEntityAutocompleteField(props) {
       defaultValue: resolvedDefault,
       render: ({ field: { onChange, value } }) => /* @__PURE__ */ jsxRuntimeExports.jsx(
         Autocomplete$1,
-        {
+        __spreadProps(__spreadValues({
           freeSolo: true,
           forcePopupIcon: true,
           multiple: field.options.multiple,
@@ -64765,9 +64765,11 @@ function BasicEntityAutocompleteField(props) {
           isOptionEqualToValue: (opt, val) => opt === val || (opt == null ? void 0 : opt.id) != null && (val == null ? void 0 : val.id) != null && opt.id === val.id || (opt == null ? void 0 : opt.value) != null && (val == null ? void 0 : val.value) != null && opt.value === val.value,
           getOptionLabel: (option) => option[field.options.label.field],
           value: resolveValue$1(field.options, value),
+          disabled: !field.ux.edit
+        }, field.ux.props), {
           onChange: (_2, newVal) => onChange(newVal),
           renderInput: (params) => /* @__PURE__ */ jsxRuntimeExports.jsx(TextField$1, __spreadProps(__spreadValues({}, params), { label: field.label }))
-        }
+        })
       )
     },
     `${field.id}-controller`
@@ -64866,16 +64868,16 @@ function BasicEntitySliderField(props) {
         render: ({ field: { onChange, value } }) => /* @__PURE__ */ jsxRuntimeExports.jsx(
           Slider$1,
           {
-            disabled: !field.ux.edit,
-            orientation: field.ux.direction,
-            track: field.ux.track,
-            valueLabelDisplay: field.ux.props.valueLabelDisplay,
             step: field.ux.step,
             marks: resolveMarks(field.ux.props.marks),
             min: field.ux.min,
             max: field.ux.max,
             value,
-            onChange: (_2, newVal) => onChange(newVal)
+            onChange: (_2, newVal) => onChange(newVal),
+            disabled: !field.ux.edit,
+            orientation: field.ux.direction,
+            track: field.ux.track,
+            valueLabelDisplay: field.ux.props.valueLabelDisplay
           }
         )
       },
@@ -64934,10 +64936,12 @@ function BasicEntityRadioGroupField(props) {
         defaultValue: resolvedDefault,
         render: ({ field: { onChange, value } }) => /* @__PURE__ */ jsxRuntimeExports.jsx(
           RadioGroup,
-          {
+          __spreadProps(__spreadValues({
             value,
             onChange,
             row: "row" === field.ux.direction,
+            disabled: !field.ux.edit
+          }, field.ux.props), {
             children: resolvedOptions.map((option) => /* @__PURE__ */ jsxRuntimeExports.jsx(
               FormControlLabel$1,
               {
@@ -64947,7 +64951,7 @@ function BasicEntityRadioGroupField(props) {
               },
               `${option.value}-option`
             ))
-          },
+          }),
           field.id
         )
       },
@@ -65013,7 +65017,7 @@ function BasicEntityTextBoxField(props) {
   const val = getValues(field.name);
   return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
     TextField$1,
-    __spreadValues({
+    __spreadValues(__spreadProps(__spreadValues({
       id: field.id,
       name: field.name,
       label: field.label,
@@ -65022,7 +65026,9 @@ function BasicEntityTextBoxField(props) {
       multiline: true,
       rows: field.ux.rows,
       InputLabelProps: { shrink: (val == null ? void 0 : val.length) > 0 }
-    }, register(field.name))
+    }, register(field.name)), {
+      disabled: !field.ux.edit
+    }), field.ux.props)
   ) }, field.name);
 }
 function BasicEntityFieldError(props) {
@@ -65056,14 +65062,15 @@ function BasicEntityTextField(props) {
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx(
       TextField$1,
-      __spreadValues({
+      __spreadValues(__spreadValues({
         id: field.id,
         name: field.name,
         label: field.label,
         fullWidth: true,
         variant: "outlined",
-        InputLabelProps: { shrink: (val == null ? void 0 : val.length) > 0 }
-      }, register(field.name))
+        InputLabelProps: { shrink: (val == null ? void 0 : val.length) > 0 },
+        disabled: !field.ux.edit
+      }, field.ux.props), register(field.name))
     ),
     /* @__PURE__ */ jsxRuntimeExports.jsx(BasicEntityFieldError, { err })
   ] }, field.id);
@@ -65130,7 +65137,7 @@ function BasicEntityTimeField(props) {
   const val = getValues(field.name);
   return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
     TextField$1,
-    __spreadValues({
+    __spreadValues(__spreadValues({
       id: field.id,
       name: field.name,
       label: field.label,
@@ -65139,7 +65146,7 @@ function BasicEntityTimeField(props) {
       type: "time",
       disabled: !field.ux.edit,
       InputLabelProps: { shrink: (val == null ? void 0 : val.length) > 0 }
-    }, register(field.name))
+    }, register(field.name)), field.ux.props)
   ) }, field.id);
 }
 const CMPNAME$f = "BasicEntityDateTimeField";
@@ -65217,7 +65224,8 @@ function BasicEntityRatingField(props) {
             name: field.name,
             value,
             precision: field.ux.precision,
-            onChange: (_2, newValue) => onChange(newValue)
+            onChange: (_2, newValue) => onChange(newValue),
+            disabled: !field.ux.edit
           }, field.ux.props)
         )
       },
@@ -65247,7 +65255,7 @@ const BasicEntityButtonFieldSpecShape = gubu_minExports.Gubu(
 function BasicEntityButtonField(props) {
   const { spec } = props;
   const basicEntityButtonField = BasicEntityButtonFieldSpecShape(spec);
-  const { control, field } = basicEntityButtonField;
+  const { field } = basicEntityButtonField;
   return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
     Button$1,
     __spreadProps(__spreadValues({
@@ -65293,7 +65301,7 @@ function BasicEntityButtonGroupField(props) {
     {
       name: field.name,
       control,
-      render: ({ field: { onChange, value } }) => /* @__PURE__ */ jsxRuntimeExports.jsx(ButtonGroup, __spreadProps(__spreadValues({}, field.ux.props), { children: Object.entries(field.options.ents).map(
+      render: ({ field: { onChange, value } }) => /* @__PURE__ */ jsxRuntimeExports.jsx(ButtonGroup, __spreadProps(__spreadValues({ disabled: !field.ux.edit }, field.ux.props), { children: Object.entries(field.options.ents).map(
         ([key, val]) => /* @__PURE__ */ jsxRuntimeExports.jsx(
           Button$1,
           {
@@ -65351,15 +65359,17 @@ function BasicEntitySelectField(props) {
         /* @__PURE__ */ jsxRuntimeExports.jsx(InputLabel$1, { id: `${field.id}-label`, children: field.label }),
         /* @__PURE__ */ jsxRuntimeExports.jsx(
           Select$1,
-          {
+          __spreadProps(__spreadValues({
             labelId: `${field.id}-label`,
             id: `${field.id}-select`,
             value: resolveValue(field.options, value),
             multiple: field.options.multiple,
             label: field.name,
             onChange: (event) => onChange(event.target.value),
+            disabled: !field.ux.edit
+          }, field.ux.props), {
             children: resolvedOptions.map((opt) => /* @__PURE__ */ jsxRuntimeExports.jsx(MenuItem$1, { value: opt.value, children: opt.label }, opt.value))
-          }
+          })
         )
       ] })
     },
@@ -65494,7 +65504,8 @@ function BasicEntityToggleButtonField(props) {
         ToggleButtonGroup,
         __spreadProps(__spreadValues({
           value,
-          onChange
+          onChange,
+          disabled: !field.ux.edit
         }, field.ux.props), {
           children: Object.entries(field.options.ents).map(
             ([key, val]) => /* @__PURE__ */ jsxRuntimeExports.jsx(ToggleButton, { value: key, children: val == null ? void 0 : val[field.options.label.field] }, `${field.id}-${key}`)

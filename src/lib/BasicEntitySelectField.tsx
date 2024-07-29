@@ -68,6 +68,8 @@ function BasicEntitySelectField(props: any) {
             multiple={field.options.multiple}
             label={field.name}
             onChange={(event: any) => onChange(event.target.value)}
+            disabled={!field.ux.edit}
+            {...field.ux.props}
           >
             {resolvedOptions.map((opt: any) => (
               <MenuItem key={opt.value} value={opt.value}>

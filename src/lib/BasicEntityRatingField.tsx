@@ -50,6 +50,7 @@ function BasicEntityRatingField(props: any) {
             value={value}
             precision={field.ux.precision}
             onChange={(_, newValue) => onChange(newValue)}
+            disabled={!field.ux.edit}
             {...field.ux.props}
           />
         )}

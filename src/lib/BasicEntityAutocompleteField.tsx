@@ -61,6 +61,8 @@ function BasicEntityAutocompleteField(props: any) {
           }
           getOptionLabel={(option: any) => option[field.options.label.field]}
           value={resolveValue(field.options, value)}
+          disabled={!field.ux.edit}
+          {...field.ux.props}
           onChange={(_, newVal: any) => onChange(newVal)}
           renderInput={(params: any) => (
             <TextField {...params} label={field.label} />

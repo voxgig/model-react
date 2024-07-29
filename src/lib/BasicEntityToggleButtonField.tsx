@@ -54,6 +54,7 @@ function BasicEntityToggleButtonField(props: any) {
           <ToggleButtonGroup
             value={value}
             onChange={onChange}
+            disabled={!field.ux.edit}
             {...field.ux.props}
           >
             {Object.entries(field.options.ents).map(

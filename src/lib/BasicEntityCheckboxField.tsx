@@ -48,7 +48,7 @@ function BasicEntityCheckboxField(props: any) {
                 checked={value}
                 onChange={onChange}
                 disabled={!field.ux.edit}
-                required={field.ux.required || false}
+                {...field.ux.props}
               />
             )}
           />

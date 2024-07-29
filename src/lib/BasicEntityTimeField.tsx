@@ -44,6 +44,7 @@ function BasicEntityTimeField(props: any) {
         disabled={!field.ux.edit}
         InputLabelProps={{ shrink: val?.length > 0 }}
         {...register(field.name)}
+        {...field.ux.props}
       />
     </div>
   )
