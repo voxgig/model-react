@@ -33,8 +33,9 @@ function BasicEntityCheckboxField(props: any) {
   const { control, field, getValues } = basicEntityCheckboxField
   const val = getValues(field.name)
 
+  // TODO: Style wrapper box
   return (
-    <Box key={`${field.id}-box`} {...field.ux.props}>
+    <Box key={`${field.id}-box`}>
       <FormControlLabel
         control={
           <Controller
