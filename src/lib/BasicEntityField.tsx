@@ -81,8 +81,6 @@ function BasicEntityField(props: any) {
   const field: any = basicEntityFieldSpec.field
   const Field: any = fieldMap[field.ux.kind]
 
-  // console.log('BEF ERR', spec)
-
   return <Field ctx={ctx} spec={spec} />
 }
 

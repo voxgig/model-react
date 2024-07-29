@@ -28,6 +28,7 @@ const Shape = Gubu({
 }, { name: 'BasicLed' })
 
 
+
 function VxgBasicLedPlugin(this: any, options: any) {
   const seneca = this
 
@@ -39,6 +40,8 @@ function VxgBasicLedPlugin(this: any, options: any) {
   const slotName = 'BasicLed_' + name
 
   seneca
+    .add('on:BasicLed')
+
     .fix({ view: name })
 
     .add('aim:app,on:view,init:state,redux$:true',
@@ -87,6 +90,7 @@ function VxgBasicLedPlugin(this: any, options: any) {
 
         item = { ...item }
 
+        // This code does not belong here
         for (const field of fields) {
           if ('Date' === field.ux.kind) {
             const dt = util.dateTimeFromUTC(item[field.name])
@@ -130,11 +134,13 @@ function VxgBasicLedPlugin(this: any, options: any) {
         return item
       })
 
+
     .message('aim:app,on:BasicLed,add:item',
       async function(this: any, _msg: any) {
         await seneca.entity(entCanon).save$({ add$: true, slot$: slotName })
         navigate('/view/' + name + '/add')
       })
+
 
     .message('aim:app,on:BasicLed,save:item',
       async function(this: any, msg: any) {

@@ -25,17 +25,30 @@ const CMPNAME = 'BasicEntityEdit'
 
 
 // TODO: make this debuggable
-const makeResolver = (entity:any) => useCallback(async (data:any) => {
-  // const shape = entity.valid$({shape:true})
+// Resolver for react-hook-form
+const makeResolver = (seneca:any, spec:any) => useCallback(async (data:any) => {
+  const { ent, name } = spec
+  
+  const view = name
+  let entity = seneca.entity(ent)
+  
   entity = entity.make$().data$(data)
   let errors = entity.valid$({errors:true})
 
-  // TODO: use a seneca sub message to provide errors for other uses - debugging etc.
+  // Emit a seneca message to provide errors for other uses - debugging etc.
+  // To listen for these, use seneca.sub('aim:app,on:BasicLed,entity:valid,view:VIEW', listener)
+  // Also useful for introspecting the error details for gubu-errmsg patterns
+  seneca.act('aim:app,on:BasicLed,entity:valid',{
+    view,
+    entity,
+    errors,
+  })
   
   // TODO: need a better way to access this; also namespaced!
-  const errmsg = entity.private$.get_instance().context.errmsg
-  console.log('ERRORS', errors, 'ERRMSG', errmsg.print())
-  
+  // NOTE: uses gubu-errmsg
+  const errmsg = seneca.context.errmsg
+
+  // Convert to react-hook-form errors
   errors = errors
     .map((e:any)=>(e.tag_kind='ent',e))
     .reduce((a:any,e:any,_:any)=>(a[e.key]={
@@ -49,19 +62,14 @@ const makeResolver = (entity:any) => useCallback(async (data:any) => {
     errors,
   }
 
-  console.log('ERROUT', out)
-  
   return out
-}, [entity.entity$])
+},[spec.ent])
 
 
 function BasicEntityEdit (props: any) {
   const { ctx } = props
   const { seneca } = ctx()
 
-
-  // const query = useSelector((state:any)=>state.main.current.view.query)
-  
   const [plugin,setPlugin] = useState(false)
   const [ready, setReady] = useState(false)
   
@@ -116,8 +124,7 @@ function BasicEntityEdit (props: any) {
     }
   },[null==item,ready])
 
-
-  const resolver = makeResolver(seneca.entity(ent))
+  const resolver = makeResolver(seneca, spec)
 
   const {
     register,
@@ -163,8 +170,6 @@ function BasicEntityEdit (props: any) {
           )}
         </Grid>
 
-        { /* <p>errors: {JSON.stringify(errors)}</p> */ }
-        
         <Toolbar className="vxg-BasicEntityEdit-toolbar-foot">
           <Button type="submit" variant="contained">Save</Button>
         </Toolbar>
