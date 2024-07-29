@@ -51,7 +51,9 @@ function BasicEntityButtonGroupField(props: any) {
               ([key, val]: [any, any]) => (
                 <Button
                   key={`${field.id}-${key}`}
-                  onClick={() => onChange(key)}
+                  onClick={() => {
+                    // Handle the click
+                  }}
                 >
                   {val?.[field.options.label.field]}
                 </Button>
