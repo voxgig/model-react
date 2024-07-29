@@ -25,7 +25,6 @@ const BasicEntityRadioGroupFieldSpecShape = Gubu(
       cat: Open({
         default: '',
         title: String,
-        multiple: Number,
         order: {
           sort: '',
           exclude: '',
@@ -58,7 +57,7 @@ function BasicEntityRadioGroupField (props: any) {
         render={({ field: { onChange, value } }) => (
           <RadioGroup
             key={field.id}
-            value={resolveValue(value, field.cat)}
+            value={value}
             onChange={onChange}
             row={'row' === field.ux.direction}
             disabled={!field.ux.edit}
@@ -79,12 +78,9 @@ function BasicEntityRadioGroupField (props: any) {
   )
 }
 
-// TODO: Make it DRY
 // Returns array of options and default value(s) based on the options object
 function resolveCategories (cat: any) {
-  const { multiple, item: items, default: defaultValues } = cat
-
-  // console.log('resolveCat', 'cat', cat)
+  const { item: items, default: defaultValues } = cat
 
   // Array of options
   const resolvedCategories = Object.keys(items).map((key) => ({
@@ -92,64 +88,11 @@ function resolveCategories (cat: any) {
     key: key,
   }))
 
-  let resolvedDefault: any = multiple === 1 ? null : []
-  let defaultList: any[] = []
-
-  if (typeof defaultValues === 'string') {
-    defaultList = defaultValues.split(',')
-  }
-
-  const mapResolvedDefault = (list: any[]) =>
-    list.map((val: any) => ({
-      title: items[val].title,
-      key: val,
-    }))
-
-  if (multiple === 1) {
-    resolvedDefault = {
-      title: items[defaultList[0]].title,
-      key: defaultList[0],
-    }
-  } else if (multiple === -1) {
-    resolvedDefault = mapResolvedDefault(defaultList)
-  } else if (multiple > 1) {
-    resolvedDefault = mapResolvedDefault(defaultList.slice(0, multiple))
-  }
-
-  // console.log('resolveCat', 'resolvedDefault', resolvedDefault)
+  const resolvedDefault = defaultValues
 
   return {
     resolvedCategories,
     resolvedDefault,
-  }
-}
-
-// TODO: Make it DRY
-function resolveValue (
-  value: any,
-  cat: {
-    multiple: number
-    item: Record<string, { title: string }>
-  }
-) {
-  const { item: items, multiple } = cat
-
-  if (Array.isArray(value)) {
-    return value
-  }
-
-  switch (multiple) {
-    case 1:
-      return { key: value, title: items[value]?.title }
-    case -1:
-      return value
-        .split(',')
-        .map((k: any) => ({ key: k, title: items[k]?.title }))
-    default:
-      return value
-        .split(',')
-        .slice(0, multiple)
-        .map((k: any) => ({ key: k, title: items[k]?.title }))
   }
 }
 

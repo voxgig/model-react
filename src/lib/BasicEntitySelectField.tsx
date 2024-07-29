@@ -46,7 +46,7 @@ function BasicEntitySelectField (props: any) {
 
   // console.log('field', field)
   // console.log('val', val)
-  console.log('resolvedDefault', resolvedDefault)
+  // console.log('resolvedDefault', resolvedDefault)
   // console.log('resolvedCategories', resolvedCategories)
 
   return (

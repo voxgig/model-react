@@ -64768,7 +64768,7 @@ function BasicEntityAutocompleteField(props) {
           options: resolvedCategories,
           isOptionEqualToValue: (opt, val) => opt === val || (opt == null ? void 0 : opt.id) != null && (val == null ? void 0 : val.id) != null && opt.id === val.id || (opt == null ? void 0 : opt.key) != null && (val == null ? void 0 : val.key) != null && opt.key === val.key,
           getOptionLabel: (option) => option.title,
-          value: resolveValue$2(value, field.cat),
+          value: resolveValue$1(value, field.cat),
           disabled: !field.ux.edit
         }, field.ux.props), {
           onChange: (_2, newVal) => onChange(newVal),
@@ -64780,11 +64780,12 @@ function BasicEntityAutocompleteField(props) {
   );
 }
 function resolveCategories$2(cat) {
+  var _a;
   const { multiple, item: items, default: defaultValues } = cat;
   const resolvedCategories = Object.keys(items).map((key) => {
-    var _a;
+    var _a2;
     return {
-      title: (_a = items == null ? void 0 : items[key]) == null ? void 0 : _a.title,
+      title: (_a2 = items == null ? void 0 : items[key]) == null ? void 0 : _a2.title,
       key
     };
   });
@@ -64797,22 +64798,23 @@ function resolveCategories$2(cat) {
     title: items[val].title,
     key: val
   }));
-  if (multiple === 1) {
-    resolvedDefault = {
-      title: items[defaultList[0]].title,
-      key: defaultList[0]
-    };
-  } else if (multiple === -1) {
-    resolvedDefault = mapResolvedDefault(defaultList);
-  } else if (multiple > 1) {
-    resolvedDefault = mapResolvedDefault(defaultList.slice(0, multiple));
+  switch (multiple) {
+    case 1:
+      resolvedDefault = {
+        key: defaultList[0],
+        title: (_a = items[defaultList[0]]) == null ? void 0 : _a.title
+      };
+    case -1:
+      resolvedDefault = mapResolvedDefault(defaultList);
+    default:
+      resolvedDefault = mapResolvedDefault(defaultList.slice(0, multiple));
   }
   return {
     resolvedCategories,
     resolvedDefault
   };
 }
-function resolveValue$2(value, cat) {
+function resolveValue$1(value, cat) {
   var _a;
   const { item: items } = cat;
   if (Array.isArray(value)) {
@@ -64921,7 +64923,6 @@ const BasicEntityRadioGroupFieldSpecShape = gubu_minExports.Gubu(
       cat: Open$i({
         default: "",
         title: String,
-        multiple: Number,
         order: {
           sort: "",
           exclude: "",
@@ -64949,7 +64950,7 @@ function BasicEntityRadioGroupField(props) {
         render: ({ field: { onChange, value } }) => /* @__PURE__ */ jsxRuntimeExports.jsx(
           RadioGroup,
           __spreadProps(__spreadValues({
-            value: resolveValue$1(value, field.cat),
+            value,
             onChange,
             row: "row" === field.ux.direction,
             disabled: !field.ux.edit
@@ -64972,7 +64973,7 @@ function BasicEntityRadioGroupField(props) {
   ] });
 }
 function resolveCategories$1(cat) {
-  const { multiple, item: items, default: defaultValues } = cat;
+  const { item: items, default: defaultValues } = cat;
   const resolvedCategories = Object.keys(items).map((key) => {
     var _a;
     return {
@@ -64980,50 +64981,11 @@ function resolveCategories$1(cat) {
       key
     };
   });
-  let resolvedDefault = multiple === 1 ? null : [];
-  let defaultList = [];
-  if (typeof defaultValues === "string") {
-    defaultList = defaultValues.split(",");
-  }
-  const mapResolvedDefault = (list) => list.map((val) => ({
-    title: items[val].title,
-    key: val
-  }));
-  if (multiple === 1) {
-    resolvedDefault = {
-      title: items[defaultList[0]].title,
-      key: defaultList[0]
-    };
-  } else if (multiple === -1) {
-    resolvedDefault = mapResolvedDefault(defaultList);
-  } else if (multiple > 1) {
-    resolvedDefault = mapResolvedDefault(defaultList.slice(0, multiple));
-  }
+  const resolvedDefault = defaultValues;
   return {
     resolvedCategories,
     resolvedDefault
   };
-}
-function resolveValue$1(value, cat) {
-  var _a;
-  const { item: items, multiple } = cat;
-  if (Array.isArray(value)) {
-    return value;
-  }
-  switch (multiple) {
-    case 1:
-      return { key: value, title: (_a = items[value]) == null ? void 0 : _a.title };
-    case -1:
-      return value.split(",").map((k) => {
-        var _a2;
-        return { key: k, title: (_a2 = items[k]) == null ? void 0 : _a2.title };
-      });
-    default:
-      return value.split(",").slice(0, multiple).map((k) => {
-        var _a2;
-        return { key: k, title: (_a2 = items[k]) == null ? void 0 : _a2.title };
-      });
-  }
 }
 const CMPNAME$j = "BasicEntityTextBoxField";
 const { Open: Open$h } = gubu_minExports.Gubu;
@@ -65384,7 +65346,6 @@ function BasicEntitySelectField(props) {
   const { control, field, getValues } = basicEntitySelectField;
   const { resolvedCategories, resolvedDefault } = resolveCategories(field.cat);
   const val = getValues(field.name);
-  console.log("resolvedDefault", resolvedDefault);
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
     Controller,
     {
