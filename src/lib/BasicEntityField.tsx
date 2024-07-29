@@ -16,6 +16,8 @@ import { BasicEntityRatingField } from './BasicEntityRatingField'
 import { BasicEntityButtonField } from './BasicEntityButtonField'
 import { BasicEntityButtonGroupField } from './BasicEntityButtonGroupField'
 import { BasicEntitySelectField } from './BasicEntitySelectField'
+import { BasicEntitySwitchField } from './BasicEntitySwitchField'
+import { BasicEntityToggleButtonField } from './BasicEntityToggleButtonField'
 
 const CMPNAME = 'BasicEntityField'
 
@@ -41,7 +43,9 @@ const BasicEntityFieldSpecShape = Gubu(
           'Rating',
           'Button',
           'ButtonGroup',
-          'Select'
+          'Select',
+          'Switch',
+          'ToggleButton'
         ),
         edit: Default(true),
         rows: Default(3),
@@ -66,6 +70,8 @@ const fieldMap: any = {
   Button: BasicEntityButtonField,
   ButtonGroup: BasicEntityButtonGroupField,
   Select: BasicEntitySelectField,
+  Switch: BasicEntitySwitchField,
+  ToggleButton: BasicEntityToggleButtonField,
 }
 
 function BasicEntityField(props: any) {
