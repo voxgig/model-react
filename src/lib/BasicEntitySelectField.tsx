@@ -1,11 +1,12 @@
 import React from 'react'
 
-import { FormControl, InputLabel, Select, MenuItem } from '@mui/material'
+import { FormControl, InputLabel, Select, MenuItem, Box } from '@mui/material'
 import { Controller } from 'react-hook-form'
 
 import type { Spec } from './basic-types'
 
 import { Default, Exact, Gubu } from 'gubu'
+import { BasicEntityFieldError } from './BasicEntityFieldError'
 const CMPNAME = 'BasicEntitySelectField'
 
 const { Open } = Gubu
@@ -40,36 +41,41 @@ function BasicEntitySelectField (props: any) {
   const { spec } = props
 
   const basicEntitySelectField: Spec = BasicEntitySelectFieldSpecShape(spec)
-  const { control, field } = basicEntitySelectField
+  const { control, field, errors } = basicEntitySelectField
+
+  const err = errors[field.name]
 
   return (
-    <Controller
-      key={`${field.id}-controller`}
-      name={field.name}
-      control={control}
-      defaultValue={resolveDefault(field.cat)}
-      render={({ field: { onChange, value } }) => (
-        <FormControl fullWidth>
-          <InputLabel id={`${field.id}-label`}>{field.label}</InputLabel>
-          <Select
-            labelId={`${field.id}-label`}
-            id={`${field.id}-select`}
-            value={resolveValue(value, field.cat)}
-            multiple={field.cat.multiple !== 1}
-            label={field.name}
-            onChange={(event: any) => onChange(event.target.value)}
-            disabled={!field.ux.edit}
-            {...field.ux.props}
-          >
-            {resolveCategories(field.cat).map((opt: any) => (
-              <MenuItem key={opt.key} value={opt.key}>
-                {opt.title}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-      )}
-    />
+    <Box key={`${field.id}-box`}>
+      <Controller
+        key={`${field.id}-controller`}
+        name={field.name}
+        control={control}
+        defaultValue={resolveDefault(field.cat)}
+        render={({ field: { onChange, value } }) => (
+          <FormControl fullWidth>
+            <InputLabel id={`${field.id}-label`}>{field.label}</InputLabel>
+            <Select
+              labelId={`${field.id}-label`}
+              id={`${field.id}-select`}
+              value={resolveValue(value, field.cat)}
+              multiple={field.cat.multiple !== 1}
+              label={field.name}
+              onChange={(event: any) => onChange(event.target.value)}
+              disabled={!field.ux.edit}
+              {...field.ux.props}
+            >
+              {resolveCategories(field.cat).map((opt: any) => (
+                <MenuItem key={opt.key} value={opt.key}>
+                  {opt.title}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        )}
+      />
+      <BasicEntityFieldError err={err} />
+    </Box>
   )
 }
 
