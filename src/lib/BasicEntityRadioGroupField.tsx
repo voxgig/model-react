@@ -6,6 +6,7 @@ import { Controller } from 'react-hook-form'
 import type { Spec } from './basic-types'
 
 import { Default, Exact, Gubu } from 'gubu'
+import { BasicEntityFieldError } from './BasicEntityFieldError'
 const CMPNAME = 'BasicEntitySliderField'
 
 const { Open } = Gubu
@@ -40,7 +41,9 @@ function BasicEntityRadioGroupField (props: any) {
   const { spec } = props
 
   const basicEntityRadioGroupField: Spec = BasicEntityRadioGroupFieldSpecShape(spec)
-  const { control, field } = basicEntityRadioGroupField
+  const { control, field, errors } = basicEntityRadioGroupField
+
+  const err = errors[field.name]
 
   return (
     <>
@@ -70,6 +73,7 @@ function BasicEntityRadioGroupField (props: any) {
           </RadioGroup>
         )}
       />
+      <BasicEntityFieldError err={err} />
     </>
   )
 }
