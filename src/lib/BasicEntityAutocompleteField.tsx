@@ -5,7 +5,7 @@ import { Controller } from 'react-hook-form'
 
 import type { Spec } from './basic-types'
 
-import { Default, Exact, Gubu, Skip } from 'gubu'
+import { Default, Exact, Gubu } from 'gubu'
 const CMPNAME = 'BasicEntityAutocompleteField'
 
 const { Open } = Gubu
@@ -39,25 +39,21 @@ const BasicEntityAutocompleteFieldSpecShape = Gubu(
 function BasicEntityAutocompleteField (props: any) {
   const { spec } = props
 
-  // console.log('BasicEntityAutocompleteField', 'spec', spec)
-
-  const basicEntityAutocompleteField: Spec =
-    BasicEntityAutocompleteFieldSpecShape(spec)
+  const basicEntityAutocompleteField: Spec = BasicEntityAutocompleteFieldSpecShape(spec)
   const { control, field } = basicEntityAutocompleteField
-  const { resolvedCategories, resolvedDefault } = resolveCategories(field.cat)
 
   return (
     <Controller
       key={`${field.id}-controller`}
       name={field.name}
       control={control}
-      defaultValue={resolvedDefault}
+      defaultValue={resolveDefault(field.cat)}
       render={({ field: { onChange, value } }) => (
         <Autocomplete
           freeSolo
           forcePopupIcon
-          multiple={field.cat.multiple === 1 ? false : true}
-          options={resolvedCategories}
+          multiple={field.cat.multiple !== 1}
+          options={resolveCategories(field.cat)}
           isOptionEqualToValue={(opt: any, val: any) =>
             opt === val ||
             (opt?.id != null && val?.id != null && opt.id === val.id) ||
@@ -68,98 +64,78 @@ function BasicEntityAutocompleteField (props: any) {
           disabled={!field.ux.edit}
           {...field.ux.props}
           onChange={(_, newVal: any) => onChange(newVal)}
-          renderInput={(params: any) => (
-            <TextField {...params} label={field.label} />
-          )}
+          renderInput={(params: any) => <TextField {...params} label={field.label} />}
         />
       )}
     />
   )
 }
 
-// TODO: Make it DRY
-// Returns array of options and default value(s) based on the options object
-function resolveCategories (cat: any) {
-  const { multiple, item: items, default: defaultValues } = cat
-
-  // console.log('resolveCat', 'cat', cat)
-
-  // Array of options
-  const resolvedCategories = Object.keys(items).map((key) => ({
-    title: items?.[key]?.title,
+export function resolveCategories (cat: { item: Record<string, { title: string }> }) {
+  return Object.keys(cat.item).map((key) => ({
+    title: cat.item?.[key]?.title,
     key: key,
   }))
+}
 
-  let resolvedDefault: any = multiple === 1 ? null : []
-  let defaultList: any[] = []
+export function resolveDefault (cat: { multiple: number; item: any; default: string }) {
+  const { multiple, item: items, default: defaultValues } = cat
 
-  if (typeof defaultValues === 'string') {
-    defaultList = defaultValues.split(',')
+  if (Object.keys(items).length === 0) {
+    return multiple === 1 ? '' : []
   }
 
-  const mapResolvedDefault = (list: any[]) =>
+  const defaultItems = defaultValues.split(',')
+
+  const mapResolvedDefault = (list: string[]) =>
     list.map((val: any) => ({
-      title: items[val].title,
+      title: items[val]?.title,
       key: val,
     }))
 
   switch (multiple) {
     case 1:
-      resolvedDefault = {
-        key: defaultList[0],
-        title: items[defaultList[0]]?.title,
-      }
+      return defaultItems[0]
+        ? {
+            key: defaultItems[0],
+            title: items[defaultItems[0]]?.title,
+          }
+        : ''
     case -1:
-      resolvedDefault = mapResolvedDefault(defaultList)
+      return mapResolvedDefault(defaultItems) || []
     default:
-      resolvedDefault = mapResolvedDefault(defaultList.slice(0, multiple))
-  }
-
-  // if (multiple === 1) {
-  //   resolvedDefault = {
-  //     title: items[defaultList[0]].title,
-  //     key: defaultList[0],
-  //   }
-  // } else if (multiple === -1) {
-  //   resolvedDefault = mapResolvedDefault(defaultList)
-  // } else if (multiple > 1) {
-  //   resolvedDefault = mapResolvedDefault(defaultList.slice(0, multiple))
-  // }
-
-  // console.log('resolveCat', 'resolvedDefault', resolvedDefault)
-
-  return {
-    resolvedCategories,
-    resolvedDefault,
+      return mapResolvedDefault(defaultItems.slice(0, multiple)) || []
   }
 }
 
-// TODO: Make it DRY
-function resolveValue (
+export function resolveValue (
   value: any,
-  cat: {
-    multiple: number
-    item: Record<string, { title: string }>
-  }
+  cat: { multiple: number; item: Record<string, { title: string }> }
 ) {
-  const { item: items } = cat
+  const { item: items, multiple } = cat
+
+  if (Object.keys(items).length === 0) {
+    return multiple === 1 ? '' : []
+  }
 
   if (Array.isArray(value)) {
-    return value
+    return multiple === 1 && value[0] ? value[0] : value.slice(0, multiple)
   }
 
-  switch (cat.multiple) {
+  if (typeof value === 'object') {
+    return multiple === 1 ? value : [value]
+  }
+
+  const mapValue = (val: string) => (items[val] ? { key: val, title: items[val].title } : undefined)
+  const splitValue = value.split(',')
+
+  switch (multiple) {
     case 1:
-      return { key: value, title: items[value]?.title }
+      return mapValue(splitValue[0]) || ''
     case -1:
-      return value
-        .split(',')
-        .map((k: any) => ({ key: k, title: items[k]?.title }))
+      return splitValue.map(mapValue).filter(Boolean) || []
     default:
-      return value
-        .split(',')
-        .slice(0, cat.multiple)
-        .map((k: any) => ({ key: k, title: items[k]?.title }))
+      return splitValue.slice(0, multiple).map(mapValue).filter(Boolean)
   }
 }
 
