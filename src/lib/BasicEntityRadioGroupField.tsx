@@ -5,8 +5,7 @@ import { Controller } from 'react-hook-form'
 
 import type { Spec } from './basic-types'
 
-import { Default, Exact, Gubu, Skip } from 'gubu'
-import { resolve } from 'path'
+import { Default, Exact, Gubu } from 'gubu'
 const CMPNAME = 'BasicEntitySliderField'
 
 const { Open } = Gubu
@@ -40,11 +39,8 @@ const BasicEntityRadioGroupFieldSpecShape = Gubu(
 function BasicEntityRadioGroupField (props: any) {
   const { spec } = props
 
-  const basicEntityRadioGroupField: Spec =
-    BasicEntityRadioGroupFieldSpecShape(spec)
+  const basicEntityRadioGroupField: Spec = BasicEntityRadioGroupFieldSpecShape(spec)
   const { control, field } = basicEntityRadioGroupField
-
-  const { resolvedCategories, resolvedDefault } = resolveCategories(field.cat)
 
   return (
     <>
@@ -53,7 +49,7 @@ function BasicEntityRadioGroupField (props: any) {
         key={`${field.id}-controller`}
         name={field.name}
         control={control}
-        defaultValue={resolvedDefault}
+        defaultValue={field.cat.default}
         render={({ field: { onChange, value } }) => (
           <RadioGroup
             key={field.id}
@@ -63,7 +59,7 @@ function BasicEntityRadioGroupField (props: any) {
             disabled={!field.ux.edit}
             {...field.ux.props}
           >
-            {resolvedCategories.map((option: any) => (
+            {resolveCategories(field.cat).map((option: any) => (
               <FormControlLabel
                 key={`${option.key}-option`}
                 value={option.key}
@@ -78,22 +74,16 @@ function BasicEntityRadioGroupField (props: any) {
   )
 }
 
-// Returns array of options and default value(s) based on the options object
-function resolveCategories (cat: any) {
-  const { item: items, default: defaultValues } = cat
-
-  // Array of options
-  const resolvedCategories = Object.keys(items).map((key) => ({
-    title: items?.[key]?.title,
+export function resolveCategories (cat: any) {
+  return Object.keys(cat.item).map((key) => ({
+    title: cat.item?.[key]?.title,
     key: key,
   }))
+}
 
-  const resolvedDefault = defaultValues
-
-  return {
-    resolvedCategories,
-    resolvedDefault,
-  }
+export function resolveDefault (cat: any) {
+  const { default: defaultValues } = cat
+  return defaultValues
 }
 
 export { BasicEntityRadioGroupField }

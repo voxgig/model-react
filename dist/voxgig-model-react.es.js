@@ -64752,20 +64752,19 @@ function BasicEntityAutocompleteField(props) {
   const { spec } = props;
   const basicEntityAutocompleteField = BasicEntityAutocompleteFieldSpecShape(spec);
   const { control, field } = basicEntityAutocompleteField;
-  const { resolvedCategories, resolvedDefault } = resolveCategories$2(field.cat);
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
     Controller,
     {
       name: field.name,
       control,
-      defaultValue: resolvedDefault,
+      defaultValue: resolveDefault$2(field.cat),
       render: ({ field: { onChange, value } }) => /* @__PURE__ */ jsxRuntimeExports.jsx(
         Autocomplete$1,
         __spreadProps(__spreadValues({
           freeSolo: true,
           forcePopupIcon: true,
-          multiple: field.cat.multiple === 1 ? false : true,
-          options: resolvedCategories,
+          multiple: field.cat.multiple !== 1,
+          options: resolveCategories$2(field.cat),
           isOptionEqualToValue: (opt, val) => opt === val || (opt == null ? void 0 : opt.id) != null && (val == null ? void 0 : val.id) != null && opt.id === val.id || (opt == null ? void 0 : opt.key) != null && (val == null ? void 0 : val.key) != null && opt.key === val.key,
           getOptionLabel: (option) => option.title,
           value: resolveValue$1(value, field.cat),
@@ -64780,59 +64779,60 @@ function BasicEntityAutocompleteField(props) {
   );
 }
 function resolveCategories$2(cat) {
-  var _a;
-  const { multiple, item: items, default: defaultValues } = cat;
-  const resolvedCategories = Object.keys(items).map((key) => {
-    var _a2;
+  return Object.keys(cat.item).map((key) => {
+    var _a, _b;
     return {
-      title: (_a2 = items == null ? void 0 : items[key]) == null ? void 0 : _a2.title,
+      title: (_b = (_a = cat.item) == null ? void 0 : _a[key]) == null ? void 0 : _b.title,
       key
     };
   });
-  let resolvedDefault = multiple === 1 ? null : [];
-  let defaultList = [];
-  if (typeof defaultValues === "string") {
-    defaultList = defaultValues.split(",");
+}
+function resolveDefault$2(cat) {
+  var _a;
+  const { multiple, item: items, default: defaultValues } = cat;
+  if (Object.keys(items).length === 0) {
+    return multiple === 1 ? "" : [];
   }
-  const mapResolvedDefault = (list) => list.map((val) => ({
-    title: items[val].title,
-    key: val
-  }));
+  const defaultItems = defaultValues.split(",");
+  const mapResolvedDefault = (list) => list.map((val) => {
+    var _a2;
+    return {
+      title: (_a2 = items[val]) == null ? void 0 : _a2.title,
+      key: val
+    };
+  });
   switch (multiple) {
     case 1:
-      resolvedDefault = {
-        key: defaultList[0],
-        title: (_a = items[defaultList[0]]) == null ? void 0 : _a.title
-      };
+      return defaultItems[0] ? {
+        key: defaultItems[0],
+        title: (_a = items[defaultItems[0]]) == null ? void 0 : _a.title
+      } : "";
     case -1:
-      resolvedDefault = mapResolvedDefault(defaultList);
+      return mapResolvedDefault(defaultItems) || [];
     default:
-      resolvedDefault = mapResolvedDefault(defaultList.slice(0, multiple));
+      return mapResolvedDefault(defaultItems.slice(0, multiple)) || [];
   }
-  return {
-    resolvedCategories,
-    resolvedDefault
-  };
 }
 function resolveValue$1(value, cat) {
-  var _a;
-  const { item: items } = cat;
-  if (Array.isArray(value)) {
-    return value;
+  const { item: items, multiple } = cat;
+  if (Object.keys(items).length === 0) {
+    return multiple === 1 ? "" : [];
   }
-  switch (cat.multiple) {
+  if (Array.isArray(value)) {
+    return multiple === 1 && value[0] ? value[0] : value.slice(0, multiple);
+  }
+  if (typeof value === "object") {
+    return multiple === 1 ? value : [value];
+  }
+  const mapValue = (val) => items[val] ? { key: val, title: items[val].title } : void 0;
+  const splitValue = value.split(",");
+  switch (multiple) {
     case 1:
-      return { key: value, title: (_a = items[value]) == null ? void 0 : _a.title };
+      return mapValue(splitValue[0]) || "";
     case -1:
-      return value.split(",").map((k) => {
-        var _a2;
-        return { key: k, title: (_a2 = items[k]) == null ? void 0 : _a2.title };
-      });
+      return splitValue.map(mapValue).filter(Boolean) || [];
     default:
-      return value.split(",").slice(0, cat.multiple).map((k) => {
-        var _a2;
-        return { key: k, title: (_a2 = items[k]) == null ? void 0 : _a2.title };
-      });
+      return splitValue.slice(0, multiple).map(mapValue).filter(Boolean);
   }
 }
 const CMPNAME$l = "BasicEntitySliderField";
@@ -64938,7 +64938,6 @@ function BasicEntityRadioGroupField(props) {
   const { spec } = props;
   const basicEntityRadioGroupField = BasicEntityRadioGroupFieldSpecShape(spec);
   const { control, field } = basicEntityRadioGroupField;
-  const { resolvedCategories, resolvedDefault } = resolveCategories$1(field.cat);
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx(FormLabel$1, { children: field.label }, `${field.id}-label`),
     /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -64946,46 +64945,25 @@ function BasicEntityRadioGroupField(props) {
       {
         name: field.name,
         control,
-        defaultValue: resolvedDefault,
-        render: ({ field: { onChange, value } }) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-          RadioGroup,
-          __spreadProps(__spreadValues({
-            value,
-            onChange,
-            row: "row" === field.ux.direction,
-            disabled: !field.ux.edit
-          }, field.ux.props), {
-            children: resolvedCategories.map((option) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-              FormControlLabel$1,
-              {
-                value: option.key,
-                control: /* @__PURE__ */ jsxRuntimeExports.jsx(Radio$1, { disabled: !field.ux.edit }),
-                label: option.title
-              },
-              `${option.key}-option`
-            ))
-          }),
-          field.id
-        )
+        defaultValue: field.cat.default,
+        render: ({ field: { onChange, value } }) => /* @__PURE__ */ jsxRuntimeExports.jsx(RadioGroup, __spreadProps(__spreadValues({ value, onChange, row: "row" === field.ux.direction, disabled: !field.ux.edit }, field.ux.props), { children: resolveCategories$1(field.cat).map((option) => /* @__PURE__ */ jsxRuntimeExports.jsx(FormControlLabel$1, { value: option.key, control: /* @__PURE__ */ jsxRuntimeExports.jsx(Radio$1, { disabled: !field.ux.edit }), label: option.title }, `${option.key}-option`)) }), field.id)
       },
       `${field.id}-controller`
     )
   ] });
 }
 function resolveCategories$1(cat) {
-  const { item: items, default: defaultValues } = cat;
-  const resolvedCategories = Object.keys(items).map((key) => {
-    var _a;
+  return Object.keys(cat.item).map((key) => {
+    var _a, _b;
     return {
-      title: (_a = items == null ? void 0 : items[key]) == null ? void 0 : _a.title,
+      title: (_b = (_a = cat.item) == null ? void 0 : _a[key]) == null ? void 0 : _b.title,
       key
     };
   });
-  const resolvedDefault = defaultValues;
-  return {
-    resolvedCategories,
-    resolvedDefault
-  };
+}
+function resolveDefault$1(cat) {
+  const { default: defaultValues } = cat;
+  return defaultValues;
 }
 const CMPNAME$j = "BasicEntityTextBoxField";
 const { Open: Open$h } = gubu_minExports.Gubu;
@@ -65343,86 +65321,67 @@ const BasicEntitySelectFieldSpecShape = gubu_minExports.Gubu(
 function BasicEntitySelectField(props) {
   const { spec } = props;
   const basicEntitySelectField = BasicEntitySelectFieldSpecShape(spec);
-  const { control, field, getValues } = basicEntitySelectField;
-  const { resolvedCategories, resolvedDefault } = resolveCategories(field.cat);
-  const val = getValues(field.name);
+  const { control, field } = basicEntitySelectField;
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
     Controller,
     {
       name: field.name,
       control,
-      defaultValue: resolvedDefault,
+      defaultValue: resolveDefault(field.cat),
       render: ({ field: { onChange, value } }) => /* @__PURE__ */ jsxRuntimeExports.jsxs(FormControl$1, { fullWidth: true, children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx(InputLabel$1, { id: `${field.id}-label`, children: field.label }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          Select$1,
-          __spreadProps(__spreadValues({
-            labelId: `${field.id}-label`,
-            id: `${field.id}-select`,
-            value: resolveValue(value, field.cat),
-            multiple: field.cat.multiple === 1 ? false : true,
-            label: field.name,
-            onChange: (event) => onChange(event.target.value),
-            disabled: !field.ux.edit
-          }, field.ux.props), {
-            children: resolvedCategories.map((opt) => /* @__PURE__ */ jsxRuntimeExports.jsx(MenuItem$1, { value: opt.key, children: opt.title }, opt.key))
-          })
-        )
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Select$1, __spreadProps(__spreadValues({ labelId: `${field.id}-label`, id: `${field.id}-select`, value: resolveValue(value, field.cat), multiple: field.cat.multiple !== 1, label: field.name, onChange: (event) => onChange(event.target.value), disabled: !field.ux.edit }, field.ux.props), { children: resolveCategories(field.cat).map((opt) => /* @__PURE__ */ jsxRuntimeExports.jsx(MenuItem$1, { value: opt.key, children: opt.title }, opt.key)) }))
       ] })
     },
     `${field.id}-controller`
   );
 }
 function resolveCategories(cat) {
-  const { multiple, item: items, default: defaultValues } = cat;
-  const resolvedCategories = Object.keys(items).map((key) => {
-    var _a;
+  return Object.keys(cat.item).map((key) => {
+    var _a, _b;
     return {
-      title: (_a = items == null ? void 0 : items[key]) == null ? void 0 : _a.title,
+      title: (_b = (_a = cat.item) == null ? void 0 : _a[key]) == null ? void 0 : _b.title,
       key
     };
   });
-  let resolvedDefault = multiple === 1 ? null : [];
-  let defaultList = [];
-  if (typeof defaultValues === "string") {
-    defaultList = defaultValues.split(",");
-  }
-  const mapResolvedDefault = (list) => list.map((val) => ({
-    title: items[val].title,
-    key: val
-  }));
-  if (multiple === 1) {
-    resolvedDefault = {
-      title: items[defaultList[0]].title,
-      key: defaultList[0]
-    };
-  } else if (multiple === -1) {
-    resolvedDefault = mapResolvedDefault(defaultList);
-  } else if (multiple > 1) {
-    resolvedDefault = mapResolvedDefault(defaultList.slice(0, multiple));
-  }
-  return {
-    resolvedCategories,
-    resolvedDefault
-  };
 }
-function resolveValue(value, cat) {
-  var _a;
-  const { item: items, multiple } = cat;
-  if (Array.isArray(value)) {
-    return value;
+function resolveDefault(cat) {
+  const { multiple, item: items, default: defaultValues } = cat;
+  if (Object.keys(items).length === 0) {
+    return multiple === 1 ? "" : [];
   }
+  const defaultItems = defaultValues.split(",");
+  const mapResolvedDefault = (list) => list.map((val) => items[val] ? val : void 0);
   switch (multiple) {
     case 1:
-      return { key: value, title: (_a = items[value]) == null ? void 0 : _a.title };
+      return defaultItems[0] ? defaultItems[0] : "";
     case -1:
-      return value.split(",");
+      return mapResolvedDefault(defaultItems).filter(Boolean) || [];
     default:
-      if (cat.multiple > 1) {
-        return value.split(",").slice(0, multiple);
-      }
+      return mapResolvedDefault(defaultItems.slice(0, multiple)).filter(Boolean) || [];
   }
-  return value;
+}
+function resolveValue(value, cat) {
+  const { item: items, multiple } = cat;
+  if (Object.keys(items).length === 0) {
+    return multiple === 1 ? "" : [];
+  }
+  if (Array.isArray(value)) {
+    return multiple === 1 && value[0] ? value[0] : value.slice(0, multiple);
+  }
+  if (typeof value === "object") {
+    return multiple === 1 ? value : [value];
+  }
+  const mapValue = (val) => items[val] ? val : void 0;
+  const splitValue = value.split(",");
+  switch (multiple) {
+    case 1:
+      return mapValue(splitValue[0]) || "";
+    case -1:
+      return splitValue.map(mapValue).filter(Boolean) || [];
+    default:
+      return splitValue.slice(0, multiple).map(mapValue).filter(Boolean) || [];
+  }
 }
 const CMPNAME$a = "BasicEntitySliderField";
 const { Open: Open$8 } = gubu_minExports.Gubu;
@@ -65624,29 +65583,36 @@ Object.assign(VxgBasicEntityEditPlugin, {
 });
 Object.defineProperty(VxgBasicEntityEditPlugin, "name", { value: "VxgBasicEntityEditPlugin" });
 const CMPNAME$7 = "BasicEntityEdit";
-const makeResolver = (seneca, spec) => useCallback((data) => __async(void 0, null, function* () {
-  const { ent, name } = spec;
-  const view = name;
-  let entity = seneca.entity(ent);
-  entity = entity.make$().data$(data);
-  let errors = entity.valid$({ errors: true });
-  seneca.act("aim:app,on:BasicLed,entity:valid", {
-    view,
-    entity,
-    errors
-  });
-  const errmsg = seneca.context.errmsg;
-  errors = errors.map((e) => (e.tag_kind = "ent", e)).reduce((a, e, _2) => (a[e.key] = {
-    type: e.type,
-    message: errmsg ? (_2 = errmsg.find(e)) ? _2.text : e.text : e.text
-  }, a), {});
-  const values2 = entity.data$(false);
-  const out = {
-    values: values2,
-    errors
-  };
-  return out;
-}), [spec.ent]);
+const makeResolver = (seneca, spec) => useCallback(
+  (data) => __async(void 0, null, function* () {
+    const { ent, name } = spec;
+    const view = name;
+    let entity = seneca.entity(ent);
+    entity = entity.make$().data$(data);
+    let errors = entity.valid$({ errors: true });
+    seneca.act("aim:app,on:BasicLed,entity:valid", {
+      view,
+      entity,
+      errors
+    });
+    const errmsg = seneca.context.errmsg;
+    errors = errors.map((e) => (e.tag_kind = "ent", e)).reduce(
+      (a, e, _2) => (a[e.key] = {
+        type: e.type,
+        message: errmsg ? (_2 = errmsg.find(e)) ? _2.text : e.text : e.text
+      }, a),
+      {}
+    );
+    const values2 = entity.data$(false);
+    const out = {
+      values: values2,
+      errors
+    };
+    console.log("makeResolver", out);
+    return out;
+  }),
+  [spec.ent]
+);
 function BasicEntityEdit(props) {
   const { ctx } = props;
   const { seneca } = ctx();
@@ -65664,7 +65630,9 @@ function BasicEntityEdit(props) {
       });
     }
   }, []);
-  const { spec, slot, fields } = seneca.export("VxgBasicEntityEditPlugin/handle") || { spec: {}, slot: null, fields: [] };
+  const { spec, slot, fields } = seneca.export(
+    "VxgBasicEntityEditPlugin/handle"
+  ) || { spec: {}, slot: null, fields: [] };
   const { ent, name } = spec;
   if (plugin && !ready) {
     seneca.act("aim:app,on:BasicLed,ready:edit", { view: name, setReady });
@@ -65713,29 +65681,19 @@ function BasicEntityEdit(props) {
       className: "vxg-BasicEntityEdit-form",
       onSubmit: handleSubmit(onSubmit),
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(Grid$1, { container: true, spacing: 2, children: fields.map(
-          (field) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-            Grid$1,
-            {
-              item: true,
-              xs: field.ux.size,
-              children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-                BasicEntityField,
-                {
-                  ctx,
-                  spec: {
-                    field,
-                    register,
-                    getValues,
-                    control,
-                    errors
-                  }
-                }
-              )
-            },
-            field.id
-          )
-        ) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Grid$1, { container: true, spacing: 2, children: fields.map((field) => /* @__PURE__ */ jsxRuntimeExports.jsx(Grid$1, { item: true, xs: field.ux.size, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+          BasicEntityField,
+          {
+            ctx,
+            spec: {
+              field,
+              register,
+              getValues,
+              control,
+              errors
+            }
+          }
+        ) }, field.id)) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx(Toolbar$1, { className: "vxg-BasicEntityEdit-toolbar-foot", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Button$1, { type: "submit", variant: "contained", children: "Save" }) })
       ]
     }
@@ -65825,27 +65783,30 @@ function BasicLoading(props) {
   return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { children: "Loading..." }) });
 }
 const { Open: Open$2 } = gubu_minExports.Gubu;
-const Shape = gubu_minExports.Gubu({
-  name: String,
-  title: String,
-  active: Boolean,
-  kind: String,
-  def: {
-    ent: String,
-    head: Open$2({
-      active: false
-    }),
-    list: Open$2({
-      active: false
-    }),
-    edit: Open$2({
-      active: false
-    }),
-    foot: Open$2({
-      active: false
-    })
-  }
-}, { name: "BasicLed" });
+const Shape = gubu_minExports.Gubu(
+  {
+    name: String,
+    title: String,
+    active: Boolean,
+    kind: String,
+    def: {
+      ent: String,
+      head: Open$2({
+        active: false
+      }),
+      list: Open$2({
+        active: false
+      }),
+      edit: Open$2({
+        active: false
+      }),
+      foot: Open$2({
+        active: false
+      })
+    }
+  },
+  { name: "BasicLed" }
+);
 function VxgBasicLedPlugin(options) {
   const seneca = this;
   const spec = Shape(options.spec);
@@ -65884,34 +65845,32 @@ function VxgBasicLedPlugin(options) {
       setReady(true);
       reply();
     }
-  ).add(
-    "aim:app,on:BasicLed,modify:edit",
-    function(msg) {
-      let item = msg.item;
-      let fields = msg.fields;
-      if (null == item) return item;
-      item = __spreadValues({}, item);
-      for (const field of fields) {
-        if ("Date" === field.ux.kind) {
-          const dt = util$1.dateTimeFromUTC(item[field.name]);
-          item[field.name + "_orig$"] = item[field.name];
-          item[field.name + "_udm$"] = dt.udm;
-          item[field.name] = dt.locald;
-        } else if ("Time" === field.ux.kind) {
-          const dt = util$1.dateTimeFromUTC(item[field.name]);
-          item[field.name + "_orig$"] = item[field.name];
-          item[field.name + "_udm$"] = dt.udm;
-          item[field.name] = dt.localt;
-        } else if ("DateTime" === field.ux.kind) {
-          const dt = util$1.dateTimeFromUTC(item[field.name]);
-          item[field.name + "_orig$"] = item[field.name];
-          item[field.name + "_udm$"] = dt.udm;
-          item[field.name] = dt.locald + "T" + dt.localt;
-        }
+  ).add("aim:app,on:BasicLed,modify:edit", function(msg) {
+    let item = msg.item;
+    let fields = msg.fields;
+    if (null == item) return item;
+    item = __spreadValues({}, item);
+    for (const field of fields) {
+      if ("Date" === field.ux.kind) {
+        const dt = util$1.dateTimeFromUTC(item[field.name]);
+        item[field.name + "_orig$"] = item[field.name];
+        item[field.name + "_udm$"] = dt.udm;
+        item[field.name] = dt.locald;
+      } else if ("Time" === field.ux.kind) {
+        const dt = util$1.dateTimeFromUTC(item[field.name]);
+        item[field.name + "_orig$"] = item[field.name];
+        item[field.name + "_udm$"] = dt.udm;
+        item[field.name] = dt.localt;
+      } else if ("DateTime" === field.ux.kind) {
+        const dt = util$1.dateTimeFromUTC(item[field.name]);
+        item[field.name + "_orig$"] = item[field.name];
+        item[field.name + "_udm$"] = dt.udm;
+        item[field.name] = dt.locald + "T" + dt.localt;
       }
-      return item;
     }
-  ).message(
+    return item;
+  }).add("aim:app,on:BasicLed,modify:save", function(msg) {
+  }).message(
     "aim:app,on:BasicLed,edit:item,redux$:true",
     { item_id: String },
     function(msg, meta) {
