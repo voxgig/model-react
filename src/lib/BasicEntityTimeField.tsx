@@ -3,7 +3,8 @@ import { TextField } from '@mui/material'
 
 import type { Spec } from './basic-types'
 
-import { Default, Exact, Gubu, Skip } from 'gubu'
+import { Default, Exact, Gubu } from 'gubu'
+import { BasicEntityFieldError } from './BasicEntityFieldError'
 const CMPNAME = 'BasicEntityTimeField'
 
 const { Open } = Gubu
@@ -24,13 +25,15 @@ const BasicEntityTimeFieldSpecShape = Gubu(
   { name: CMPNAME }
 )
 
-function BasicEntityTimeField(props: any) {
+function BasicEntityTimeField (props: any) {
   const { spec } = props
 
   const basicEntityTimeField: Spec = BasicEntityTimeFieldSpecShape(spec)
-  const { field, getValues, register } = basicEntityTimeField
+  const { field, getValues, register, errors } = basicEntityTimeField
 
   const val = getValues(field.name)
+
+  const err = errors[field.name]
 
   return (
     <div key={field.id}>
@@ -39,13 +42,14 @@ function BasicEntityTimeField(props: any) {
         name={field.name}
         label={field.label}
         fullWidth
-        variant="outlined"
-        type="time"
+        variant='outlined'
+        type='time'
         disabled={!field.ux.edit}
         InputLabelProps={{ shrink: val?.length > 0 }}
         {...register(field.name)}
         {...field.ux.props}
       />
+      <BasicEntityFieldError err={err} />
     </div>
   )
 }
