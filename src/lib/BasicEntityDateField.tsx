@@ -4,6 +4,7 @@ import { TextField } from '@mui/material'
 import type { Spec } from './basic-types'
 
 import { Default, Exact, Gubu, Skip } from 'gubu'
+import { BasicEntityFieldError } from './BasicEntityFieldError'
 const CMPNAME = 'BasicEntityDateField'
 
 const { Open } = Gubu
@@ -24,12 +25,14 @@ const BasicEntityDateFieldSpecShape = Gubu(
   { name: CMPNAME }
 )
 
-function BasicEntityDateField(props: any) {
+function BasicEntityDateField (props: any) {
   const { spec } = props
 
   const basicEntityDateField: Spec = BasicEntityDateFieldSpecShape(spec)
-  const { field, getValues, register } = basicEntityDateField
+  const { field, getValues, register, errors } = basicEntityDateField
   const val = getValues(field.name)
+
+  const err = errors[field.name]
 
   return (
     <div key={field.id}>
@@ -38,12 +41,13 @@ function BasicEntityDateField(props: any) {
         name={field.name}
         label={field.label}
         fullWidth
-        variant="outlined"
-        type="date"
+        variant='outlined'
+        type='date'
         disabled={!field.ux.edit}
         InputLabelProps={{ shrink: val?.length > 0 }}
         {...register(field.name)}
       />
+      <BasicEntityFieldError err={err} />
     </div>
   )
 }
