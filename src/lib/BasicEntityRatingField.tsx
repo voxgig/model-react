@@ -27,7 +27,7 @@ const BasicEntityRatingFieldSpecShape = Gubu(
   { name: CMPNAME }
 )
 
-function BasicEntityRatingField(props: any) {
+function BasicEntityRatingField (props: any) {
   const { spec } = props
 
   const basicEntityRatingField: Spec = BasicEntityRatingFieldSpecShape(spec)
@@ -38,7 +38,7 @@ function BasicEntityRatingField(props: any) {
 
   return (
     <div key={`${field.id}-div`}>
-      <FormLabel component="legend">{field.label}</FormLabel>
+      <FormLabel key={`${field.id}-label`}>{field.label}</FormLabel>
       <Controller
         key={`${field.id}-controller`}
         name={field.name}
