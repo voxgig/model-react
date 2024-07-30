@@ -74,58 +74,63 @@ function BasicEntitySelectField (props: any) {
 }
 
 // Returns array of options based on field.cat object
-function resolveCategories (cat: any) {
+export function resolveCategories (cat: any) {
   return Object.keys(cat.item).map((key) => ({
     title: cat.item?.[key]?.title,
     key: key,
   }))
 }
 
-function resolveDefault (cat: any) {
-  const { multiple, default: defaultValues } = cat
+export function resolveDefault (cat: { multiple: number; item: any; default: string }) {
+  const { multiple, item: items, default: defaultValues } = cat
 
-  if (!defaultValues) {
-    return multiple === 1 ? '' : ['']
+  if (Object.keys(items).length === 0) {
+    return multiple === 1 ? '' : []
   }
 
   const defaultItems = defaultValues.split(',')
 
-  const mapResolvedDefault = (list: string[]) => list.map((val) => val)
+  const mapResolvedDefault = (list: string[]) =>
+    list.map((val: any) => (items[val] ? val : undefined))
 
   switch (multiple) {
     case 1:
-      return defaultItems.length > 0 ? defaultItems[0] : ''
+      return defaultItems[0] ? defaultItems[0] : ''
     case -1:
-      return mapResolvedDefault(defaultItems)
+      return mapResolvedDefault(defaultItems).filter(Boolean) || []
     default:
-      return mapResolvedDefault(defaultItems.slice(0, multiple))
+      return mapResolvedDefault(defaultItems.slice(0, multiple)).filter(Boolean) || []
   }
 }
 
-// TODO: Make it DRY
-function resolveValue (
+export function resolveValue (
   value: any,
   cat: { multiple: number; item: Record<string, { title: string }> }
 ) {
-  const { multiple } = cat
+  const { item: items, multiple } = cat
+
+  if (Object.keys(items).length === 0) {
+    return multiple === 1 ? '' : []
+  }
 
   if (Array.isArray(value)) {
-    const items = value.map((val) => val.key)
-    return multiple === 1 ? items[0] : items.slice(0, multiple)
+    return multiple === 1 && value[0] ? value[0] : value.slice(0, multiple)
   }
 
-  if (typeof value === 'object' && value !== null) {
-    return multiple === 1 ? value.key : [value.key]
+  if (typeof value === 'object') {
+    return multiple === 1 ? value : [value]
   }
 
-  let items = value.split(',')
+  const mapValue = (val: string) => (items[val] ? val : undefined)
+  const splitValue = value.split(',')
+
   switch (multiple) {
     case 1:
-      return items[0] || ''
+      return mapValue(splitValue[0]) || ''
     case -1:
-      return items
+      return splitValue.map(mapValue).filter(Boolean) || []
     default:
-      return items.slice(0, multiple)
+      return splitValue.slice(0, multiple).map(mapValue).filter(Boolean) || []
   }
 }
 
