@@ -3,7 +3,7 @@ import { TextField } from '@mui/material'
 
 import type { Spec } from './basic-types'
 
-import { Default, Exact, Gubu, Skip } from 'gubu'
+import { Default, Exact, Gubu } from 'gubu'
 import { BasicEntityFieldError } from './BasicEntityFieldError'
 const CMPNAME = 'BasicEntityDateTimeField'
 
