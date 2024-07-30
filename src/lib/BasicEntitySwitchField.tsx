@@ -1,11 +1,12 @@
 import React, { useEffect, forwardRef } from 'react'
 
-import { FormControlLabel, Checkbox, Box, Switch } from '@mui/material'
+import { FormControlLabel, Box, Switch } from '@mui/material'
 import { Controller } from 'react-hook-form'
 
 import type { Spec } from './basic-types'
 
-import { Default, Exact, Gubu, Skip } from 'gubu'
+import { Default, Exact, Gubu } from 'gubu'
+import { BasicEntityFieldError } from './BasicEntityFieldError'
 const CMPNAME = 'BasicEntitySliderField'
 
 const { Open } = Gubu
@@ -26,12 +27,14 @@ const BasicEntitySwitchFieldSpecShape = Gubu(
   { name: CMPNAME }
 )
 
-function BasicEntitySwitchField(props: any) {
+function BasicEntitySwitchField (props: any) {
   const { spec } = props
 
   const basicEntitySwitchField: Spec = BasicEntitySwitchFieldSpecShape(spec)
-  const { control, field, getValues } = basicEntitySwitchField
+  const { control, field, getValues, errors } = basicEntitySwitchField
   const val = getValues(field.name)
+
+  const err = errors[field.name]
 
   return (
     <Box key={`${field.id}-box`}>
@@ -55,6 +58,7 @@ function BasicEntitySwitchField(props: any) {
         }
         label={field.label}
       />
+      <BasicEntityFieldError err={err} />
     </Box>
   )
 }
