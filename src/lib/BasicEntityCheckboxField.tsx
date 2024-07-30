@@ -6,6 +6,7 @@ import { Controller } from 'react-hook-form'
 import type { Spec } from './basic-types'
 
 import { Default, Exact, Gubu, Skip } from 'gubu'
+import { BasicEntityFieldError } from './BasicEntityFieldError'
 const CMPNAME = 'BasicEntitySliderField'
 
 const { Open } = Gubu
@@ -26,12 +27,14 @@ const BasicEntityCheckboxFieldSpecShape = Gubu(
   { name: CMPNAME }
 )
 
-function BasicEntityCheckboxField(props: any) {
+function BasicEntityCheckboxField (props: any) {
   const { spec } = props
 
   const basicEntityCheckboxField: Spec = BasicEntityCheckboxFieldSpecShape(spec)
-  const { control, field, getValues } = basicEntityCheckboxField
+  const { control, field, getValues, errors } = basicEntityCheckboxField
   const val = getValues(field.name)
+
+  const err = errors[field.name]
 
   // TODO: Style wrapper box
   return (
@@ -56,6 +59,7 @@ function BasicEntityCheckboxField(props: any) {
         }
         label={field.label}
       />
+      <BasicEntityFieldError err={err} />
     </Box>
   )
 }
