@@ -1,17 +1,12 @@
 import React from 'react'
 
-import {
-  Button,
-  ButtonGroup,
-  ToggleButton,
-  ToggleButtonGroup,
-} from '@mui/material'
+import { FormLabel, ToggleButton, ToggleButtonGroup } from '@mui/material'
 import { Controller } from 'react-hook-form'
 
 import type { Spec } from './basic-types'
 
-import { Default, Exact, Gubu, Skip } from 'gubu'
-import { on } from 'events'
+import { Default, Exact, Gubu } from 'gubu'
+import { BasicEntityFieldError } from './BasicEntityFieldError'
 const CMPNAME = 'BasicEntitySliderField'
 
 const { Open } = Gubu
@@ -48,10 +43,13 @@ function BasicEntityToggleButtonField (props: any) {
 
   const basicEntityToggleButtonField: Spec =
     BasicEntityToggleButtonFieldSpecShape(spec)
-  const { control, field } = basicEntityToggleButtonField
+  const { control, field, errors } = basicEntityToggleButtonField
+
+  const err = errors[field.name]
 
   return (
-    <div key={`${field.id}-div`}>
+    <div key={`${field.id}-box`}>
+      <FormLabel component='legend'>{field.label}</FormLabel>
       <Controller
         key={`${field.id}-controller`}
         name={field.name}
@@ -74,6 +72,7 @@ function BasicEntityToggleButtonField (props: any) {
           </ToggleButtonGroup>
         )}
       />
+      <BasicEntityFieldError err={err} />
     </div>
   )
 }
