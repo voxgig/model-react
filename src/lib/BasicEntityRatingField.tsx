@@ -5,7 +5,8 @@ import { Controller } from 'react-hook-form'
 
 import type { Spec } from './basic-types'
 
-import { Default, Exact, Gubu, Skip } from 'gubu'
+import { Default, Exact, Gubu } from 'gubu'
+import { BasicEntityFieldError } from './BasicEntityFieldError'
 const CMPNAME = 'BasicEntitySliderField'
 
 const { Open } = Gubu
@@ -31,14 +32,14 @@ function BasicEntityRatingField (props: any) {
   const { spec } = props
 
   const basicEntityRatingField: Spec = BasicEntityRatingFieldSpecShape(spec)
-  const { control, field, getValues } = basicEntityRatingField
+  const { control, field, getValues, errors } = basicEntityRatingField
   const val = getValues(field.name)
 
-  //   console.log("BasicEntityRatingField", "val", val);
+  const err = errors[field.name]
 
   return (
     <div key={`${field.id}-div`}>
-      <FormLabel key={`${field.id}-label`}>{field.label}</FormLabel>
+      <FormLabel component='legend'>{field.label}</FormLabel>
       <Controller
         key={`${field.id}-controller`}
         name={field.name}
@@ -55,6 +56,7 @@ function BasicEntityRatingField (props: any) {
           />
         )}
       />
+      <BasicEntityFieldError err={err} />
     </div>
   )
 }
