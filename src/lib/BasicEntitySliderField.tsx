@@ -6,6 +6,7 @@ import { Controller } from 'react-hook-form'
 import type { Spec } from './basic-types'
 
 import { Default, Exact, Gubu } from 'gubu'
+import { BasicEntityFieldError } from './BasicEntityFieldError'
 const CMPNAME = 'BasicEntitySliderField'
 
 const { Open } = Gubu
@@ -34,15 +35,17 @@ const BasicEntitySliderFieldSpecShape = Gubu(
   { name: CMPNAME }
 )
 
-function BasicEntitySliderField(props: any) {
+function BasicEntitySliderField (props: any) {
   const { spec } = props
 
-  const basicEntityAutocompleteField: Spec =
-    BasicEntitySliderFieldSpecShape(spec)
-  const { control, field, getValues } = basicEntityAutocompleteField
+  const basicEntityAutocompleteField: Spec = BasicEntitySliderFieldSpecShape(spec)
+  const { control, field, getValues, errors } = basicEntityAutocompleteField
+
+  // if cmp not ready, call seneca.add('modify:edit') and seneca.add('modify:save')
+
   const val = getValues(field.name)
 
-  //   console.log('BESF', field, val)
+  const err = errors[field.name]
 
   return (
     <>
@@ -67,15 +70,13 @@ function BasicEntitySliderField(props: any) {
           />
         )}
       />
+      <BasicEntityFieldError err={err} />
     </>
   )
 }
 
-function resolveMarks(marks: any) {
-  if (
-    !marks ||
-    (typeof marks === 'object' && Object.keys(marks).length === 0)
-  ) {
+function resolveMarks (marks: any) {
+  if (!marks || (typeof marks === 'object' && Object.keys(marks).length === 0)) {
     return false
   }
   if (typeof marks === 'object') {
