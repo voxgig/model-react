@@ -64684,6 +64684,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     _formControl.current.formState = getProxyFormState(formState, control);
     return _formControl.current;
   }
+  function BasicEntityFieldError(props) {
+    const { err } = props;
+    return err ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "vxg-BasicEntityFieldError-active", children: err.message }) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "vxg-BasicEntityFieldError-none" });
+  }
   const CMPNAME$n = "BasicEntitySliderField";
   const { Open: Open$l } = gubu_minExports.Gubu;
   const BasicEntityCheckboxFieldSpecShape = gubu_minExports.Gubu(
@@ -64705,32 +64709,36 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   function BasicEntityCheckboxField(props) {
     const { spec } = props;
     const basicEntityCheckboxField = BasicEntityCheckboxFieldSpecShape(spec);
-    const { control, field, getValues } = basicEntityCheckboxField;
+    const { control, field, getValues, errors } = basicEntityCheckboxField;
     const val = getValues(field.name);
-    return /* @__PURE__ */ jsxRuntimeExports.jsx(material.Box, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-      material.FormControlLabel,
-      {
-        control: /* @__PURE__ */ jsxRuntimeExports.jsx(
-          Controller,
-          {
-            name: field.name,
-            control,
-            defaultValue: !!val,
-            render: ({ field: { onChange, value } }) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-              material.Checkbox,
-              __spreadValues({
-                id: field.id,
-                checked: value,
-                onChange,
-                disabled: !field.ux.edit
-              }, field.ux.props)
-            )
-          },
-          `${field.id}-controller`
-        ),
-        label: field.label
-      }
-    ) }, `${field.id}-box`);
+    const err = errors[field.name];
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(material.Box, { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        material.FormControlLabel,
+        {
+          control: /* @__PURE__ */ jsxRuntimeExports.jsx(
+            Controller,
+            {
+              name: field.name,
+              control,
+              defaultValue: !!val,
+              render: ({ field: { onChange, value } }) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+                material.Checkbox,
+                __spreadValues({
+                  id: field.id,
+                  checked: value,
+                  onChange,
+                  disabled: !field.ux.edit
+                }, field.ux.props)
+              )
+            },
+            `${field.id}-controller`
+          ),
+          label: field.label
+        }
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(BasicEntityFieldError, { err })
+    ] }, `${field.id}-box`);
   }
   const CMPNAME$m = "BasicEntityAutocompleteField";
   const { Open: Open$k } = gubu_minExports.Gubu;
@@ -64763,32 +64771,36 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   function BasicEntityAutocompleteField(props) {
     const { spec } = props;
     const basicEntityAutocompleteField = BasicEntityAutocompleteFieldSpecShape(spec);
-    const { control, field } = basicEntityAutocompleteField;
-    return /* @__PURE__ */ jsxRuntimeExports.jsx(
-      Controller,
-      {
-        name: field.name,
-        control,
-        defaultValue: resolveDefault$2(field.cat),
-        render: ({ field: { onChange, value } }) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-          material.Autocomplete,
-          __spreadProps(__spreadValues({
-            freeSolo: true,
-            forcePopupIcon: true,
-            multiple: field.cat.multiple !== 1,
-            options: resolveCategories$2(field.cat),
-            isOptionEqualToValue: (opt, val) => opt === val || (opt == null ? void 0 : opt.id) != null && (val == null ? void 0 : val.id) != null && opt.id === val.id || (opt == null ? void 0 : opt.key) != null && (val == null ? void 0 : val.key) != null && opt.key === val.key,
-            getOptionLabel: (option) => option.title,
-            value: resolveValue$1(value, field.cat),
-            disabled: !field.ux.edit
-          }, field.ux.props), {
-            onChange: (_2, newVal) => onChange(newVal),
-            renderInput: (params) => /* @__PURE__ */ jsxRuntimeExports.jsx(material.TextField, __spreadProps(__spreadValues({}, params), { label: field.label }))
-          })
-        )
-      },
-      `${field.id}-controller`
-    );
+    const { control, field, errors } = basicEntityAutocompleteField;
+    const err = errors[field.name];
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(material.Box, { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        Controller,
+        {
+          name: field.name,
+          control,
+          defaultValue: resolveDefault$2(field.cat),
+          render: ({ field: { onChange, value } }) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+            material.Autocomplete,
+            __spreadProps(__spreadValues({
+              freeSolo: true,
+              forcePopupIcon: true,
+              multiple: field.cat.multiple !== 1,
+              options: resolveCategories$2(field.cat),
+              isOptionEqualToValue: (opt, val) => opt === val || (opt == null ? void 0 : opt.id) != null && (val == null ? void 0 : val.id) != null && opt.id === val.id || (opt == null ? void 0 : opt.key) != null && (val == null ? void 0 : val.key) != null && opt.key === val.key,
+              getOptionLabel: (option) => option.title,
+              value: resolveValue$1(value, field.cat),
+              disabled: !field.ux.edit
+            }, field.ux.props), {
+              onChange: (_2, newVal) => onChange(newVal),
+              renderInput: (params) => /* @__PURE__ */ jsxRuntimeExports.jsx(material.TextField, __spreadProps(__spreadValues({}, params), { label: field.label }))
+            })
+          )
+        },
+        `${field.id}-controller`
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(BasicEntityFieldError, { err })
+    ] }, `${field.id}-box`);
   }
   function resolveCategories$2(cat) {
     return Object.keys(cat.item).map((key) => {
@@ -64876,8 +64888,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   function BasicEntitySliderField(props) {
     const { spec } = props;
     const basicEntityAutocompleteField = BasicEntitySliderFieldSpecShape(spec);
-    const { control, field, getValues } = basicEntityAutocompleteField;
+    const { control, field, getValues, errors } = basicEntityAutocompleteField;
     const val = getValues(field.name);
+    const err = errors[field.name];
     return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(material.FormLabel, { children: field.label }, `${field.id}-label`),
       /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -64903,7 +64916,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           )
         },
         `${field.id}-controller`
-      )
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(BasicEntityFieldError, { err })
     ] });
   }
   function resolveMarks(marks) {
@@ -64949,7 +64963,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   function BasicEntityRadioGroupField(props) {
     const { spec } = props;
     const basicEntityRadioGroupField = BasicEntityRadioGroupFieldSpecShape(spec);
-    const { control, field } = basicEntityRadioGroupField;
+    const { control, field, errors } = basicEntityRadioGroupField;
+    const err = errors[field.name];
     return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(material.FormLabel, { children: field.label }, `${field.id}-label`),
       /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -64958,10 +64973,30 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           name: field.name,
           control,
           defaultValue: field.cat.default,
-          render: ({ field: { onChange, value } }) => /* @__PURE__ */ jsxRuntimeExports.jsx(material.RadioGroup, __spreadProps(__spreadValues({ value, onChange, row: "row" === field.ux.direction, disabled: !field.ux.edit }, field.ux.props), { children: resolveCategories$1(field.cat).map((option) => /* @__PURE__ */ jsxRuntimeExports.jsx(material.FormControlLabel, { value: option.key, control: /* @__PURE__ */ jsxRuntimeExports.jsx(material.Radio, { disabled: !field.ux.edit }), label: option.title }, `${option.key}-option`)) }), field.id)
+          render: ({ field: { onChange, value } }) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+            material.RadioGroup,
+            __spreadProps(__spreadValues({
+              value,
+              onChange,
+              row: "row" === field.ux.direction,
+              disabled: !field.ux.edit
+            }, field.ux.props), {
+              children: resolveCategories$1(field.cat).map((option) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+                material.FormControlLabel,
+                {
+                  value: option.key,
+                  control: /* @__PURE__ */ jsxRuntimeExports.jsx(material.Radio, { disabled: !field.ux.edit }),
+                  label: option.title
+                },
+                `${option.key}-option`
+              ))
+            }),
+            field.id
+          )
         },
         `${field.id}-controller`
-      )
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(BasicEntityFieldError, { err })
     ] });
   }
   function resolveCategories$1(cat) {
@@ -64998,27 +65033,26 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   function BasicEntityTextBoxField(props) {
     const { spec } = props;
     const basicEntityTextBoxField = BasicEntityTextBoxFieldSpecShape(spec);
-    const { field, getValues, register } = basicEntityTextBoxField;
+    const { field, getValues, register, errors } = basicEntityTextBoxField;
     const val = getValues(field.name);
-    return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-      material.TextField,
-      __spreadValues(__spreadProps(__spreadValues({
-        id: field.id,
-        name: field.name,
-        label: field.label,
-        variant: "outlined",
-        fullWidth: true,
-        multiline: true,
-        rows: field.ux.rows,
-        InputLabelProps: { shrink: (val == null ? void 0 : val.length) > 0 }
-      }, register(field.name)), {
-        disabled: !field.ux.edit
-      }), field.ux.props)
-    ) }, field.name);
-  }
-  function BasicEntityFieldError(props) {
-    const { err } = props;
-    return err ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "vxg-BasicEntityFieldError-active", children: err.message }) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "vxg-BasicEntityFieldError-none" });
+    const err = errors[field.name];
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        material.TextField,
+        __spreadValues(__spreadValues({
+          id: field.id,
+          name: field.name,
+          label: field.label,
+          variant: "outlined",
+          fullWidth: true,
+          multiline: true,
+          rows: field.ux.rows,
+          InputLabelProps: { shrink: (val == null ? void 0 : val.length) > 0 },
+          disabled: !field.ux.edit
+        }, field.ux.props), register(field.name))
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(BasicEntityFieldError, { err })
+    ] }, field.name);
   }
   const CMPNAME$i = "BasicEntityTextField";
   const { Open: Open$g } = gubu_minExports.Gubu;
@@ -65082,21 +65116,25 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   function BasicEntityDateField(props) {
     const { spec } = props;
     const basicEntityDateField = BasicEntityDateFieldSpecShape(spec);
-    const { field, getValues, register } = basicEntityDateField;
+    const { field, getValues, register, errors } = basicEntityDateField;
     const val = getValues(field.name);
-    return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-      material.TextField,
-      __spreadValues({
-        id: field.id,
-        name: field.name,
-        label: field.label,
-        fullWidth: true,
-        variant: "outlined",
-        type: "date",
-        disabled: !field.ux.edit,
-        InputLabelProps: { shrink: (val == null ? void 0 : val.length) > 0 }
-      }, register(field.name))
-    ) }, field.id);
+    const err = errors[field.name];
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        material.TextField,
+        __spreadValues({
+          id: field.id,
+          name: field.name,
+          label: field.label,
+          fullWidth: true,
+          variant: "outlined",
+          type: "date",
+          disabled: !field.ux.edit,
+          InputLabelProps: { shrink: (val == null ? void 0 : val.length) > 0 }
+        }, register(field.name))
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(BasicEntityFieldError, { err })
+    ] }, field.id);
   }
   const CMPNAME$g = "BasicEntityTimeField";
   const { Open: Open$e } = gubu_minExports.Gubu;
@@ -65119,21 +65157,25 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   function BasicEntityTimeField(props) {
     const { spec } = props;
     const basicEntityTimeField = BasicEntityTimeFieldSpecShape(spec);
-    const { field, getValues, register } = basicEntityTimeField;
+    const { field, getValues, register, errors } = basicEntityTimeField;
     const val = getValues(field.name);
-    return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-      material.TextField,
-      __spreadValues(__spreadValues({
-        id: field.id,
-        name: field.name,
-        label: field.label,
-        fullWidth: true,
-        variant: "outlined",
-        type: "time",
-        disabled: !field.ux.edit,
-        InputLabelProps: { shrink: (val == null ? void 0 : val.length) > 0 }
-      }, register(field.name)), field.ux.props)
-    ) }, field.id);
+    const err = errors[field.name];
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        material.TextField,
+        __spreadValues(__spreadValues({
+          id: field.id,
+          name: field.name,
+          label: field.label,
+          fullWidth: true,
+          variant: "outlined",
+          type: "time",
+          disabled: !field.ux.edit,
+          InputLabelProps: { shrink: (val == null ? void 0 : val.length) > 0 }
+        }, register(field.name)), field.ux.props)
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(BasicEntityFieldError, { err })
+    ] }, field.id);
   }
   const CMPNAME$f = "BasicEntityDateTimeField";
   const { Open: Open$d } = gubu_minExports.Gubu;
@@ -65156,21 +65198,25 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   function BasicEntityDateTimeField(props) {
     const { spec } = props;
     const basicEntityDateTimeField = BasicEntityDateTimeFieldSpecShape(spec);
-    const { field, getValues, register } = basicEntityDateTimeField;
+    const { field, getValues, register, errors } = basicEntityDateTimeField;
     const val = getValues(field.name);
-    return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-      material.TextField,
-      __spreadValues({
-        id: field.id,
-        name: field.name,
-        label: field.label,
-        fullWidth: true,
-        variant: "outlined",
-        type: "datetime-local",
-        disabled: !field.ux.edit,
-        InputLabelProps: { shrink: (val == null ? void 0 : val.length) > 0 }
-      }, register(field.name))
-    ) }, field.id);
+    const err = errors[field.name];
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        material.TextField,
+        __spreadValues({
+          id: field.id,
+          name: field.name,
+          label: field.label,
+          fullWidth: true,
+          variant: "outlined",
+          type: "datetime-local",
+          disabled: !field.ux.edit,
+          InputLabelProps: { shrink: (val == null ? void 0 : val.length) > 0 }
+        }, register(field.name))
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(BasicEntityFieldError, { err })
+    ] }, field.id);
   }
   const CMPNAME$e = "BasicEntitySliderField";
   const { Open: Open$c } = gubu_minExports.Gubu;
@@ -65194,8 +65240,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   function BasicEntityRatingField(props) {
     const { spec } = props;
     const basicEntityRatingField = BasicEntityRatingFieldSpecShape(spec);
-    const { control, field, getValues } = basicEntityRatingField;
+    const { control, field, getValues, errors } = basicEntityRatingField;
     const val = getValues(field.name);
+    const err = errors[field.name];
     return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(material.FormLabel, { component: "legend", children: field.label }),
       /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -65216,7 +65263,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           )
         },
         `${field.id}-controller`
-      )
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(BasicEntityFieldError, { err })
     ] }, `${field.id}-div`);
   }
   const CMPNAME$d = "BasicEntitySliderField";
@@ -65333,20 +65381,37 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   function BasicEntitySelectField(props) {
     const { spec } = props;
     const basicEntitySelectField = BasicEntitySelectFieldSpecShape(spec);
-    const { control, field } = basicEntitySelectField;
-    return /* @__PURE__ */ jsxRuntimeExports.jsx(
-      Controller,
-      {
-        name: field.name,
-        control,
-        defaultValue: resolveDefault(field.cat),
-        render: ({ field: { onChange, value } }) => /* @__PURE__ */ jsxRuntimeExports.jsxs(material.FormControl, { fullWidth: true, children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(material.InputLabel, { id: `${field.id}-label`, children: field.label }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(material.Select, __spreadProps(__spreadValues({ labelId: `${field.id}-label`, id: `${field.id}-select`, value: resolveValue(value, field.cat), multiple: field.cat.multiple !== 1, label: field.name, onChange: (event) => onChange(event.target.value), disabled: !field.ux.edit }, field.ux.props), { children: resolveCategories(field.cat).map((opt) => /* @__PURE__ */ jsxRuntimeExports.jsx(material.MenuItem, { value: opt.key, children: opt.title }, opt.key)) }))
-        ] })
-      },
-      `${field.id}-controller`
-    );
+    const { control, field, errors } = basicEntitySelectField;
+    const err = errors[field.name];
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(material.Box, { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        Controller,
+        {
+          name: field.name,
+          control,
+          defaultValue: resolveDefault(field.cat),
+          render: ({ field: { onChange, value } }) => /* @__PURE__ */ jsxRuntimeExports.jsxs(material.FormControl, { fullWidth: true, children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(material.InputLabel, { id: `${field.id}-label`, children: field.label }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              material.Select,
+              __spreadProps(__spreadValues({
+                labelId: `${field.id}-label`,
+                id: `${field.id}-select`,
+                value: resolveValue(value, field.cat),
+                multiple: field.cat.multiple !== 1,
+                label: field.name,
+                onChange: (event) => onChange(event.target.value),
+                disabled: !field.ux.edit
+              }, field.ux.props), {
+                children: resolveCategories(field.cat).map((opt) => /* @__PURE__ */ jsxRuntimeExports.jsx(material.MenuItem, { value: opt.key, children: opt.title }, opt.key))
+              })
+            )
+          ] })
+        },
+        `${field.id}-controller`
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(BasicEntityFieldError, { err })
+    ] }, `${field.id}-box`);
   }
   function resolveCategories(cat) {
     return Object.keys(cat.item).map((key) => {
@@ -65416,32 +65481,36 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   function BasicEntitySwitchField(props) {
     const { spec } = props;
     const basicEntitySwitchField = BasicEntitySwitchFieldSpecShape(spec);
-    const { control, field, getValues } = basicEntitySwitchField;
+    const { control, field, getValues, errors } = basicEntitySwitchField;
     const val = getValues(field.name);
-    return /* @__PURE__ */ jsxRuntimeExports.jsx(material.Box, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-      material.FormControlLabel,
-      {
-        control: /* @__PURE__ */ jsxRuntimeExports.jsx(
-          Controller,
-          {
-            name: field.name,
-            control,
-            defaultValue: !!val,
-            render: ({ field: { onChange, value } }) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-              material.Switch,
-              __spreadValues({
-                id: field.id,
-                checked: value,
-                onChange,
-                disabled: !field.ux.edit
-              }, field.ux.props)
-            )
-          },
-          `${field.id}-controller`
-        ),
-        label: field.label
-      }
-    ) }, `${field.id}-box`);
+    const err = errors[field.name];
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(material.Box, { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        material.FormControlLabel,
+        {
+          control: /* @__PURE__ */ jsxRuntimeExports.jsx(
+            Controller,
+            {
+              name: field.name,
+              control,
+              defaultValue: !!val,
+              render: ({ field: { onChange, value } }) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+                material.Switch,
+                __spreadValues({
+                  id: field.id,
+                  checked: value,
+                  onChange,
+                  disabled: !field.ux.edit
+                }, field.ux.props)
+              )
+            },
+            `${field.id}-controller`
+          ),
+          label: field.label
+        }
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(BasicEntityFieldError, { err })
+    ] }, `${field.id}-box`);
   }
   const CMPNAME$9 = "BasicEntitySliderField";
   const { Open: Open$7 } = gubu_minExports.Gubu;
@@ -65475,28 +65544,33 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   function BasicEntityToggleButtonField(props) {
     const { spec } = props;
     const basicEntityToggleButtonField = BasicEntityToggleButtonFieldSpecShape(spec);
-    const { control, field } = basicEntityToggleButtonField;
-    return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-      Controller,
-      {
-        name: field.name,
-        control,
-        render: ({ field: { onChange, value } }) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-          material.ToggleButtonGroup,
-          __spreadProps(__spreadValues({
-            value,
-            exclusive: field.cat.multiple === 1 ? true : false,
-            onChange: (_2, v) => {
-              field.cat.multiple === 1 ? onChange(v) : onChange([v]);
-            },
-            disabled: !field.ux.edit
-          }, field.ux.props), {
-            children: Object.entries(field.cat.item).map(([key, val]) => /* @__PURE__ */ jsxRuntimeExports.jsx(material.ToggleButton, { value: key, children: val == null ? void 0 : val.title }, `${field.id}-${key}`))
-          })
-        )
-      },
-      `${field.id}-controller`
-    ) }, `${field.id}-div`);
+    const { control, field, errors } = basicEntityToggleButtonField;
+    const err = errors[field.name];
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(material.FormLabel, { component: "legend", children: field.label }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        Controller,
+        {
+          name: field.name,
+          control,
+          render: ({ field: { onChange, value } }) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+            material.ToggleButtonGroup,
+            __spreadProps(__spreadValues({
+              value,
+              exclusive: field.cat.multiple === 1 ? true : false,
+              onChange: (_2, v) => {
+                field.cat.multiple === 1 ? onChange(v) : onChange([v]);
+              },
+              disabled: !field.ux.edit
+            }, field.ux.props), {
+              children: Object.entries(field.cat.item).map(([key, val]) => /* @__PURE__ */ jsxRuntimeExports.jsx(material.ToggleButton, { value: key, children: val == null ? void 0 : val.title }, `${field.id}-${key}`))
+            })
+          )
+        },
+        `${field.id}-controller`
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(BasicEntityFieldError, { err })
+    ] }, `${field.id}-box`);
   }
   const CMPNAME$8 = "BasicEntityField";
   const { Open: Open$6 } = gubu_minExports.Gubu;

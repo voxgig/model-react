@@ -64672,6 +64672,10 @@ function useForm(props = {}) {
   _formControl.current.formState = getProxyFormState(formState, control);
   return _formControl.current;
 }
+function BasicEntityFieldError(props) {
+  const { err } = props;
+  return err ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "vxg-BasicEntityFieldError-active", children: err.message }) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "vxg-BasicEntityFieldError-none" });
+}
 const CMPNAME$n = "BasicEntitySliderField";
 const { Open: Open$l } = gubu_minExports.Gubu;
 const BasicEntityCheckboxFieldSpecShape = gubu_minExports.Gubu(
@@ -64693,32 +64697,36 @@ const BasicEntityCheckboxFieldSpecShape = gubu_minExports.Gubu(
 function BasicEntityCheckboxField(props) {
   const { spec } = props;
   const basicEntityCheckboxField = BasicEntityCheckboxFieldSpecShape(spec);
-  const { control, field, getValues } = basicEntityCheckboxField;
+  const { control, field, getValues, errors } = basicEntityCheckboxField;
   const val = getValues(field.name);
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(Box$2, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-    FormControlLabel$1,
-    {
-      control: /* @__PURE__ */ jsxRuntimeExports.jsx(
-        Controller,
-        {
-          name: field.name,
-          control,
-          defaultValue: !!val,
-          render: ({ field: { onChange, value } }) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-            Checkbox$1,
-            __spreadValues({
-              id: field.id,
-              checked: value,
-              onChange,
-              disabled: !field.ux.edit
-            }, field.ux.props)
-          )
-        },
-        `${field.id}-controller`
-      ),
-      label: field.label
-    }
-  ) }, `${field.id}-box`);
+  const err = errors[field.name];
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(Box$2, { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      FormControlLabel$1,
+      {
+        control: /* @__PURE__ */ jsxRuntimeExports.jsx(
+          Controller,
+          {
+            name: field.name,
+            control,
+            defaultValue: !!val,
+            render: ({ field: { onChange, value } }) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+              Checkbox$1,
+              __spreadValues({
+                id: field.id,
+                checked: value,
+                onChange,
+                disabled: !field.ux.edit
+              }, field.ux.props)
+            )
+          },
+          `${field.id}-controller`
+        ),
+        label: field.label
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(BasicEntityFieldError, { err })
+  ] }, `${field.id}-box`);
 }
 const CMPNAME$m = "BasicEntityAutocompleteField";
 const { Open: Open$k } = gubu_minExports.Gubu;
@@ -64751,32 +64759,36 @@ const BasicEntityAutocompleteFieldSpecShape = gubu_minExports.Gubu(
 function BasicEntityAutocompleteField(props) {
   const { spec } = props;
   const basicEntityAutocompleteField = BasicEntityAutocompleteFieldSpecShape(spec);
-  const { control, field } = basicEntityAutocompleteField;
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(
-    Controller,
-    {
-      name: field.name,
-      control,
-      defaultValue: resolveDefault$2(field.cat),
-      render: ({ field: { onChange, value } }) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-        Autocomplete$1,
-        __spreadProps(__spreadValues({
-          freeSolo: true,
-          forcePopupIcon: true,
-          multiple: field.cat.multiple !== 1,
-          options: resolveCategories$2(field.cat),
-          isOptionEqualToValue: (opt, val) => opt === val || (opt == null ? void 0 : opt.id) != null && (val == null ? void 0 : val.id) != null && opt.id === val.id || (opt == null ? void 0 : opt.key) != null && (val == null ? void 0 : val.key) != null && opt.key === val.key,
-          getOptionLabel: (option) => option.title,
-          value: resolveValue$1(value, field.cat),
-          disabled: !field.ux.edit
-        }, field.ux.props), {
-          onChange: (_2, newVal) => onChange(newVal),
-          renderInput: (params) => /* @__PURE__ */ jsxRuntimeExports.jsx(TextField$1, __spreadProps(__spreadValues({}, params), { label: field.label }))
-        })
-      )
-    },
-    `${field.id}-controller`
-  );
+  const { control, field, errors } = basicEntityAutocompleteField;
+  const err = errors[field.name];
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(Box$2, { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      Controller,
+      {
+        name: field.name,
+        control,
+        defaultValue: resolveDefault$2(field.cat),
+        render: ({ field: { onChange, value } }) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+          Autocomplete$1,
+          __spreadProps(__spreadValues({
+            freeSolo: true,
+            forcePopupIcon: true,
+            multiple: field.cat.multiple !== 1,
+            options: resolveCategories$2(field.cat),
+            isOptionEqualToValue: (opt, val) => opt === val || (opt == null ? void 0 : opt.id) != null && (val == null ? void 0 : val.id) != null && opt.id === val.id || (opt == null ? void 0 : opt.key) != null && (val == null ? void 0 : val.key) != null && opt.key === val.key,
+            getOptionLabel: (option) => option.title,
+            value: resolveValue$1(value, field.cat),
+            disabled: !field.ux.edit
+          }, field.ux.props), {
+            onChange: (_2, newVal) => onChange(newVal),
+            renderInput: (params) => /* @__PURE__ */ jsxRuntimeExports.jsx(TextField$1, __spreadProps(__spreadValues({}, params), { label: field.label }))
+          })
+        )
+      },
+      `${field.id}-controller`
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(BasicEntityFieldError, { err })
+  ] }, `${field.id}-box`);
 }
 function resolveCategories$2(cat) {
   return Object.keys(cat.item).map((key) => {
@@ -64864,8 +64876,9 @@ const BasicEntitySliderFieldSpecShape = gubu_minExports.Gubu(
 function BasicEntitySliderField(props) {
   const { spec } = props;
   const basicEntityAutocompleteField = BasicEntitySliderFieldSpecShape(spec);
-  const { control, field, getValues } = basicEntityAutocompleteField;
+  const { control, field, getValues, errors } = basicEntityAutocompleteField;
   const val = getValues(field.name);
+  const err = errors[field.name];
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx(FormLabel$1, { children: field.label }, `${field.id}-label`),
     /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -64891,7 +64904,8 @@ function BasicEntitySliderField(props) {
         )
       },
       `${field.id}-controller`
-    )
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(BasicEntityFieldError, { err })
   ] });
 }
 function resolveMarks(marks) {
@@ -64937,7 +64951,8 @@ const BasicEntityRadioGroupFieldSpecShape = gubu_minExports.Gubu(
 function BasicEntityRadioGroupField(props) {
   const { spec } = props;
   const basicEntityRadioGroupField = BasicEntityRadioGroupFieldSpecShape(spec);
-  const { control, field } = basicEntityRadioGroupField;
+  const { control, field, errors } = basicEntityRadioGroupField;
+  const err = errors[field.name];
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx(FormLabel$1, { children: field.label }, `${field.id}-label`),
     /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -64946,10 +64961,30 @@ function BasicEntityRadioGroupField(props) {
         name: field.name,
         control,
         defaultValue: field.cat.default,
-        render: ({ field: { onChange, value } }) => /* @__PURE__ */ jsxRuntimeExports.jsx(RadioGroup, __spreadProps(__spreadValues({ value, onChange, row: "row" === field.ux.direction, disabled: !field.ux.edit }, field.ux.props), { children: resolveCategories$1(field.cat).map((option) => /* @__PURE__ */ jsxRuntimeExports.jsx(FormControlLabel$1, { value: option.key, control: /* @__PURE__ */ jsxRuntimeExports.jsx(Radio$1, { disabled: !field.ux.edit }), label: option.title }, `${option.key}-option`)) }), field.id)
+        render: ({ field: { onChange, value } }) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+          RadioGroup,
+          __spreadProps(__spreadValues({
+            value,
+            onChange,
+            row: "row" === field.ux.direction,
+            disabled: !field.ux.edit
+          }, field.ux.props), {
+            children: resolveCategories$1(field.cat).map((option) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+              FormControlLabel$1,
+              {
+                value: option.key,
+                control: /* @__PURE__ */ jsxRuntimeExports.jsx(Radio$1, { disabled: !field.ux.edit }),
+                label: option.title
+              },
+              `${option.key}-option`
+            ))
+          }),
+          field.id
+        )
       },
       `${field.id}-controller`
-    )
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(BasicEntityFieldError, { err })
   ] });
 }
 function resolveCategories$1(cat) {
@@ -64986,27 +65021,26 @@ const BasicEntityTextBoxFieldSpecShape = gubu_minExports.Gubu(
 function BasicEntityTextBoxField(props) {
   const { spec } = props;
   const basicEntityTextBoxField = BasicEntityTextBoxFieldSpecShape(spec);
-  const { field, getValues, register } = basicEntityTextBoxField;
+  const { field, getValues, register, errors } = basicEntityTextBoxField;
   const val = getValues(field.name);
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-    TextField$1,
-    __spreadValues(__spreadProps(__spreadValues({
-      id: field.id,
-      name: field.name,
-      label: field.label,
-      variant: "outlined",
-      fullWidth: true,
-      multiline: true,
-      rows: field.ux.rows,
-      InputLabelProps: { shrink: (val == null ? void 0 : val.length) > 0 }
-    }, register(field.name)), {
-      disabled: !field.ux.edit
-    }), field.ux.props)
-  ) }, field.name);
-}
-function BasicEntityFieldError(props) {
-  const { err } = props;
-  return err ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "vxg-BasicEntityFieldError-active", children: err.message }) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "vxg-BasicEntityFieldError-none" });
+  const err = errors[field.name];
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      TextField$1,
+      __spreadValues(__spreadValues({
+        id: field.id,
+        name: field.name,
+        label: field.label,
+        variant: "outlined",
+        fullWidth: true,
+        multiline: true,
+        rows: field.ux.rows,
+        InputLabelProps: { shrink: (val == null ? void 0 : val.length) > 0 },
+        disabled: !field.ux.edit
+      }, field.ux.props), register(field.name))
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(BasicEntityFieldError, { err })
+  ] }, field.name);
 }
 const CMPNAME$i = "BasicEntityTextField";
 const { Open: Open$g } = gubu_minExports.Gubu;
@@ -65070,21 +65104,25 @@ const BasicEntityDateFieldSpecShape = gubu_minExports.Gubu(
 function BasicEntityDateField(props) {
   const { spec } = props;
   const basicEntityDateField = BasicEntityDateFieldSpecShape(spec);
-  const { field, getValues, register } = basicEntityDateField;
+  const { field, getValues, register, errors } = basicEntityDateField;
   const val = getValues(field.name);
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-    TextField$1,
-    __spreadValues({
-      id: field.id,
-      name: field.name,
-      label: field.label,
-      fullWidth: true,
-      variant: "outlined",
-      type: "date",
-      disabled: !field.ux.edit,
-      InputLabelProps: { shrink: (val == null ? void 0 : val.length) > 0 }
-    }, register(field.name))
-  ) }, field.id);
+  const err = errors[field.name];
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      TextField$1,
+      __spreadValues({
+        id: field.id,
+        name: field.name,
+        label: field.label,
+        fullWidth: true,
+        variant: "outlined",
+        type: "date",
+        disabled: !field.ux.edit,
+        InputLabelProps: { shrink: (val == null ? void 0 : val.length) > 0 }
+      }, register(field.name))
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(BasicEntityFieldError, { err })
+  ] }, field.id);
 }
 const CMPNAME$g = "BasicEntityTimeField";
 const { Open: Open$e } = gubu_minExports.Gubu;
@@ -65107,21 +65145,25 @@ const BasicEntityTimeFieldSpecShape = gubu_minExports.Gubu(
 function BasicEntityTimeField(props) {
   const { spec } = props;
   const basicEntityTimeField = BasicEntityTimeFieldSpecShape(spec);
-  const { field, getValues, register } = basicEntityTimeField;
+  const { field, getValues, register, errors } = basicEntityTimeField;
   const val = getValues(field.name);
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-    TextField$1,
-    __spreadValues(__spreadValues({
-      id: field.id,
-      name: field.name,
-      label: field.label,
-      fullWidth: true,
-      variant: "outlined",
-      type: "time",
-      disabled: !field.ux.edit,
-      InputLabelProps: { shrink: (val == null ? void 0 : val.length) > 0 }
-    }, register(field.name)), field.ux.props)
-  ) }, field.id);
+  const err = errors[field.name];
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      TextField$1,
+      __spreadValues(__spreadValues({
+        id: field.id,
+        name: field.name,
+        label: field.label,
+        fullWidth: true,
+        variant: "outlined",
+        type: "time",
+        disabled: !field.ux.edit,
+        InputLabelProps: { shrink: (val == null ? void 0 : val.length) > 0 }
+      }, register(field.name)), field.ux.props)
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(BasicEntityFieldError, { err })
+  ] }, field.id);
 }
 const CMPNAME$f = "BasicEntityDateTimeField";
 const { Open: Open$d } = gubu_minExports.Gubu;
@@ -65144,21 +65186,25 @@ const BasicEntityDateTimeFieldSpecShape = gubu_minExports.Gubu(
 function BasicEntityDateTimeField(props) {
   const { spec } = props;
   const basicEntityDateTimeField = BasicEntityDateTimeFieldSpecShape(spec);
-  const { field, getValues, register } = basicEntityDateTimeField;
+  const { field, getValues, register, errors } = basicEntityDateTimeField;
   const val = getValues(field.name);
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-    TextField$1,
-    __spreadValues({
-      id: field.id,
-      name: field.name,
-      label: field.label,
-      fullWidth: true,
-      variant: "outlined",
-      type: "datetime-local",
-      disabled: !field.ux.edit,
-      InputLabelProps: { shrink: (val == null ? void 0 : val.length) > 0 }
-    }, register(field.name))
-  ) }, field.id);
+  const err = errors[field.name];
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      TextField$1,
+      __spreadValues({
+        id: field.id,
+        name: field.name,
+        label: field.label,
+        fullWidth: true,
+        variant: "outlined",
+        type: "datetime-local",
+        disabled: !field.ux.edit,
+        InputLabelProps: { shrink: (val == null ? void 0 : val.length) > 0 }
+      }, register(field.name))
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(BasicEntityFieldError, { err })
+  ] }, field.id);
 }
 const CMPNAME$e = "BasicEntitySliderField";
 const { Open: Open$c } = gubu_minExports.Gubu;
@@ -65182,8 +65228,9 @@ const BasicEntityRatingFieldSpecShape = gubu_minExports.Gubu(
 function BasicEntityRatingField(props) {
   const { spec } = props;
   const basicEntityRatingField = BasicEntityRatingFieldSpecShape(spec);
-  const { control, field, getValues } = basicEntityRatingField;
+  const { control, field, getValues, errors } = basicEntityRatingField;
   const val = getValues(field.name);
+  const err = errors[field.name];
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx(FormLabel$1, { component: "legend", children: field.label }),
     /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -65204,7 +65251,8 @@ function BasicEntityRatingField(props) {
         )
       },
       `${field.id}-controller`
-    )
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(BasicEntityFieldError, { err })
   ] }, `${field.id}-div`);
 }
 const CMPNAME$d = "BasicEntitySliderField";
@@ -65321,20 +65369,37 @@ const BasicEntitySelectFieldSpecShape = gubu_minExports.Gubu(
 function BasicEntitySelectField(props) {
   const { spec } = props;
   const basicEntitySelectField = BasicEntitySelectFieldSpecShape(spec);
-  const { control, field } = basicEntitySelectField;
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(
-    Controller,
-    {
-      name: field.name,
-      control,
-      defaultValue: resolveDefault(field.cat),
-      render: ({ field: { onChange, value } }) => /* @__PURE__ */ jsxRuntimeExports.jsxs(FormControl$1, { fullWidth: true, children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(InputLabel$1, { id: `${field.id}-label`, children: field.label }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(Select$1, __spreadProps(__spreadValues({ labelId: `${field.id}-label`, id: `${field.id}-select`, value: resolveValue(value, field.cat), multiple: field.cat.multiple !== 1, label: field.name, onChange: (event) => onChange(event.target.value), disabled: !field.ux.edit }, field.ux.props), { children: resolveCategories(field.cat).map((opt) => /* @__PURE__ */ jsxRuntimeExports.jsx(MenuItem$1, { value: opt.key, children: opt.title }, opt.key)) }))
-      ] })
-    },
-    `${field.id}-controller`
-  );
+  const { control, field, errors } = basicEntitySelectField;
+  const err = errors[field.name];
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(Box$2, { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      Controller,
+      {
+        name: field.name,
+        control,
+        defaultValue: resolveDefault(field.cat),
+        render: ({ field: { onChange, value } }) => /* @__PURE__ */ jsxRuntimeExports.jsxs(FormControl$1, { fullWidth: true, children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(InputLabel$1, { id: `${field.id}-label`, children: field.label }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            Select$1,
+            __spreadProps(__spreadValues({
+              labelId: `${field.id}-label`,
+              id: `${field.id}-select`,
+              value: resolveValue(value, field.cat),
+              multiple: field.cat.multiple !== 1,
+              label: field.name,
+              onChange: (event) => onChange(event.target.value),
+              disabled: !field.ux.edit
+            }, field.ux.props), {
+              children: resolveCategories(field.cat).map((opt) => /* @__PURE__ */ jsxRuntimeExports.jsx(MenuItem$1, { value: opt.key, children: opt.title }, opt.key))
+            })
+          )
+        ] })
+      },
+      `${field.id}-controller`
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(BasicEntityFieldError, { err })
+  ] }, `${field.id}-box`);
 }
 function resolveCategories(cat) {
   return Object.keys(cat.item).map((key) => {
@@ -65404,32 +65469,36 @@ const BasicEntitySwitchFieldSpecShape = gubu_minExports.Gubu(
 function BasicEntitySwitchField(props) {
   const { spec } = props;
   const basicEntitySwitchField = BasicEntitySwitchFieldSpecShape(spec);
-  const { control, field, getValues } = basicEntitySwitchField;
+  const { control, field, getValues, errors } = basicEntitySwitchField;
   const val = getValues(field.name);
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(Box$2, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-    FormControlLabel$1,
-    {
-      control: /* @__PURE__ */ jsxRuntimeExports.jsx(
-        Controller,
-        {
-          name: field.name,
-          control,
-          defaultValue: !!val,
-          render: ({ field: { onChange, value } }) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-            Switch$1,
-            __spreadValues({
-              id: field.id,
-              checked: value,
-              onChange,
-              disabled: !field.ux.edit
-            }, field.ux.props)
-          )
-        },
-        `${field.id}-controller`
-      ),
-      label: field.label
-    }
-  ) }, `${field.id}-box`);
+  const err = errors[field.name];
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(Box$2, { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      FormControlLabel$1,
+      {
+        control: /* @__PURE__ */ jsxRuntimeExports.jsx(
+          Controller,
+          {
+            name: field.name,
+            control,
+            defaultValue: !!val,
+            render: ({ field: { onChange, value } }) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+              Switch$1,
+              __spreadValues({
+                id: field.id,
+                checked: value,
+                onChange,
+                disabled: !field.ux.edit
+              }, field.ux.props)
+            )
+          },
+          `${field.id}-controller`
+        ),
+        label: field.label
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(BasicEntityFieldError, { err })
+  ] }, `${field.id}-box`);
 }
 const CMPNAME$9 = "BasicEntitySliderField";
 const { Open: Open$7 } = gubu_minExports.Gubu;
@@ -65463,28 +65532,33 @@ const BasicEntityToggleButtonFieldSpecShape = gubu_minExports.Gubu(
 function BasicEntityToggleButtonField(props) {
   const { spec } = props;
   const basicEntityToggleButtonField = BasicEntityToggleButtonFieldSpecShape(spec);
-  const { control, field } = basicEntityToggleButtonField;
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-    Controller,
-    {
-      name: field.name,
-      control,
-      render: ({ field: { onChange, value } }) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-        ToggleButtonGroup,
-        __spreadProps(__spreadValues({
-          value,
-          exclusive: field.cat.multiple === 1 ? true : false,
-          onChange: (_2, v) => {
-            field.cat.multiple === 1 ? onChange(v) : onChange([v]);
-          },
-          disabled: !field.ux.edit
-        }, field.ux.props), {
-          children: Object.entries(field.cat.item).map(([key, val]) => /* @__PURE__ */ jsxRuntimeExports.jsx(ToggleButton, { value: key, children: val == null ? void 0 : val.title }, `${field.id}-${key}`))
-        })
-      )
-    },
-    `${field.id}-controller`
-  ) }, `${field.id}-div`);
+  const { control, field, errors } = basicEntityToggleButtonField;
+  const err = errors[field.name];
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(FormLabel$1, { component: "legend", children: field.label }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      Controller,
+      {
+        name: field.name,
+        control,
+        render: ({ field: { onChange, value } }) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+          ToggleButtonGroup,
+          __spreadProps(__spreadValues({
+            value,
+            exclusive: field.cat.multiple === 1 ? true : false,
+            onChange: (_2, v) => {
+              field.cat.multiple === 1 ? onChange(v) : onChange([v]);
+            },
+            disabled: !field.ux.edit
+          }, field.ux.props), {
+            children: Object.entries(field.cat.item).map(([key, val]) => /* @__PURE__ */ jsxRuntimeExports.jsx(ToggleButton, { value: key, children: val == null ? void 0 : val.title }, `${field.id}-${key}`))
+          })
+        )
+      },
+      `${field.id}-controller`
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(BasicEntityFieldError, { err })
+  ] }, `${field.id}-box`);
 }
 const CMPNAME$8 = "BasicEntityField";
 const { Open: Open$6 } = gubu_minExports.Gubu;

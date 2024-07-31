@@ -1,7 +1,6 @@
 import React from 'react'
 
 import { Button } from '@mui/material'
-import { Controller } from 'react-hook-form'
 
 import type { Spec } from './basic-types'
 
@@ -27,7 +26,7 @@ const BasicEntityButtonFieldSpecShape = Gubu(
   { name: CMPNAME }
 )
 
-function BasicEntityButtonField(props: any) {
+function BasicEntityButtonField (props: any) {
   const { spec } = props
 
   const basicEntityButtonField: Spec = BasicEntityButtonFieldSpecShape(spec)
