@@ -1,6 +1,8 @@
 declare function VxgBasicEntityFieldPlugin(this: any, options: any): {
     exports: {
-        handle: {};
+        handle: {
+            Field: any;
+        };
     };
 };
 export { VxgBasicEntityFieldPlugin };
