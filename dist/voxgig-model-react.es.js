@@ -65747,7 +65747,12 @@ function BasicEntityEdit(props) {
     resolver
   });
   const onSubmit = (data) => {
-    seneca.act("aim:app,on:BasicLed,save:item", { view: name, data });
+    const formItem = seneca.direct("aim:app,on:BasicLed,modify:save", {
+      view: name,
+      data,
+      fields
+    });
+    seneca.act("aim:app,on:BasicLed,save:item", { view: name, data: formItem });
   };
   return /* @__PURE__ */ jsxRuntimeExports.jsx(Box$2, { className: "vxg-BasicEntityEdit", children: item ? /* @__PURE__ */ jsxRuntimeExports.jsxs(
     "form",
@@ -65940,10 +65945,25 @@ function VxgBasicLedPlugin(options) {
         item[field.name + "_orig$"] = item[field.name];
         item[field.name + "_udm$"] = dt.udm;
         item[field.name] = dt.locald + "T" + dt.localt;
+      } else if ("Slider" === field.ux.kind) {
+        item[field.name + "_orig$"] = item[field.name];
+        item[field.name] = Number(item[field.name]) / 60;
       }
     }
+    console.log("modify:edit", "item", item);
     return item;
   }).add("aim:app,on:BasicLed,modify:save", function(msg) {
+    let item = msg.data;
+    let fields = msg.fields;
+    if (null == item) return item;
+    item = __spreadValues({}, item);
+    for (const field of fields) {
+      if ("Slider" === field.ux.kind) {
+        item[field.name] = Number(item[field.name]) * 60;
+      }
+    }
+    console.log("modify:save", "item", item);
+    return item;
   }).message(
     "aim:app,on:BasicLed,edit:item,redux$:true",
     { item_id: String },

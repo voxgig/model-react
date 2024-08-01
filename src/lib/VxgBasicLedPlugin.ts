@@ -112,13 +112,36 @@ function VxgBasicLedPlugin (this: any, options: any) {
           item[field.name + '_orig$'] = item[field.name]
           item[field.name + '_udm$'] = dt.udm
           item[field.name] = dt.locald + 'T' + dt.localt
+        } else if ('Slider' === field.ux.kind) {
+          item[field.name + '_orig$'] = item[field.name]
+          item[field.name] = Number(item[field.name]) / 60
         }
       }
+
+      console.log('modify:edit', 'item', item)
 
       return item
     })
 
-    .add('aim:app,on:BasicLed,modify:save', function (msg: any) {})
+    .add('aim:app,on:BasicLed,modify:save', function (msg: any) {
+      let item = msg.data
+      let fields = msg.fields
+
+      if (null == item) return item
+
+      item = { ...item }
+
+      // This code does not belong here
+      for (const field of fields) {
+        if ('Slider' === field.ux.kind) {
+          item[field.name] = Number(item[field.name]) * 60
+        }
+      }
+
+      console.log('modify:save', 'item', item)
+
+      return item
+    })
 
     .message(
       'aim:app,on:BasicLed,edit:item,redux$:true',

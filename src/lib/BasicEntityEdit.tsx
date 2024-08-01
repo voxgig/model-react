@@ -144,8 +144,12 @@ function BasicEntityEdit (props: any) {
   })
 
   const onSubmit = (data: any) => {
-    // seneca.direct('')
-    seneca.act('aim:app,on:BasicLed,save:item', { view: name, data })
+    const formItem = seneca.direct('aim:app,on:BasicLed,modify:save', {
+      view: name,
+      data,
+      fields,
+    })
+    seneca.act('aim:app,on:BasicLed,save:item', { view: name, data: formItem })
   }
 
   return (
