@@ -63,9 +63,10 @@ function BasicEntitySelectField (props: any) {
           value={resolveValue(controllerField.value, field.cat)}
           multiple={field.cat.multiple !== 1}
           label={field.name}
-          onChange={(event: any) =>
-            controllerField.onChange(event.target.value)
-          }
+          onChange={(event: any) => {
+            const v = event.target.value
+            controllerField.onChange(Array.isArray(v) ? v.join(',') : v)
+          }}
           disabled={!field.ux.edit}
           {...field.ux.props}
         >
