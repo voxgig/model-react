@@ -59,14 +59,10 @@ const makeResolver = (seneca: any, spec: any) =>
         )
 
       const values = entity.data$(false)
-      // console.log('makeResolver', 'data', data)
-      // console.log('makeResolver', 'values', values)
       const out = {
         values,
         errors,
       }
-
-      // console.log('makeResolver', 'out', out)
 
       return out
     },

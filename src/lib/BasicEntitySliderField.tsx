@@ -43,7 +43,8 @@ function BasicEntitySliderField (props: any) {
   const { control, field, getValues, errors } = basicEntityAutocompleteField
 
   // if cmp not ready, call seneca.add('modify:edit') and seneca.add('modify:save')
-  const val = getValues(field.name) // field.name + '_uival$'
+  // const val = getValues(field.name + '_uival$')
+  const val = getValues(field.name)
   const err = errors[field.name]
 
   const { field: controllerField } = useController({
@@ -51,12 +52,6 @@ function BasicEntitySliderField (props: any) {
     control,
     defaultValue: val || field.ux.min,
   })
-
-  // console.log(
-  //   'BasicEntitySliderField',
-  //   'controllerField',
-  //   controllerField.value
-  // )
 
   return (
     <div>
@@ -78,46 +73,6 @@ function BasicEntitySliderField (props: any) {
     </div>
   )
 }
-
-// function BasicEntitySliderField (props: any) {
-//   const { spec } = props
-
-//   const basicEntityAutocompleteField: Spec =
-//     BasicEntitySliderFieldSpecShape(spec)
-//   const { control, field, getValues, errors } = basicEntityAutocompleteField
-
-//   // if cmp not ready, call seneca.add('modify:edit') and seneca.add('modify:save')
-//   const val = getValues(field.name) // field.name + '_uival$'
-
-//   const err = errors[field.name]
-
-//   return (
-//     <>
-//       <FormLabel key={`${field.id}-label`}>{field.label}</FormLabel>
-//       <Controller
-//         key={`${field.id}-controller`}
-//         name={field.name}
-//         control={control}
-//         defaultValue={val || field.ux.min}
-//         render={({ field: { onChange, value } }) => (
-//           <Slider
-//             step={field.ux.step}
-//             marks={resolveMarks(field.ux.props.marks)}
-//             min={field.ux.min}
-//             max={field.ux.max}
-//             value={value}
-//             onChange={(_, newVal: any) => onChange(newVal)}
-//             disabled={!field.ux.edit}
-//             orientation={field.ux.direction}
-//             track={field.ux.track}
-//             valueLabelDisplay={field.ux.props.valueLabelDisplay}
-//           />
-//         )}
-//       />
-//       <BasicEntityFieldError err={err} />
-//     </>
-//   )
-// }
 
 function resolveMarks (marks: any) {
   if (

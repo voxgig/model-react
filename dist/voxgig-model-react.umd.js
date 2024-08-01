@@ -64792,7 +64792,11 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           getOptionLabel: (option) => option.title,
           value: resolveValue$1(controllerField.value, field.cat),
           disabled: !field.ux.edit,
-          onChange: (_2, newVal) => controllerField.onChange(newVal),
+          onChange: (_2, v) => {
+            controllerField.onChange(
+              Array.isArray(v) ? v.map((val) => val.key).join(",") : v == null ? void 0 : v.key
+            );
+          },
           renderInput: (params) => /* @__PURE__ */ jsxRuntimeExports.jsx(material.TextField, __spreadProps(__spreadValues({}, params), { label: field.label }))
         }, field.ux.props)
       ),
@@ -65377,7 +65381,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
             value: resolveValue(controllerField.value, field.cat),
             multiple: field.cat.multiple !== 1,
             label: field.name,
-            onChange: (event) => controllerField.onChange(event.target.value),
+            onChange: (event) => {
+              const v = event.target.value;
+              controllerField.onChange(Array.isArray(v) ? v.join(",") : v);
+            },
             disabled: !field.ux.edit
           }, field.ux.props), {
             children: resolveCategories(field.cat).map((opt) => /* @__PURE__ */ jsxRuntimeExports.jsx(material.MenuItem, { value: opt.key, children: opt.title }, opt.key))
@@ -66140,7 +66147,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         return __async(this, null, function* () {
           const data = Object.entries(spec.def.edit.field).filter((n) => false !== n[1].ux.edit).reduce((a, n) => (a[n[0]] = msg.data[n[0]], a), {});
           const item = yield seneca.entity(entCanon).save$(data);
-          navigate("/view/" + name + "/edit/" + item.id);
+          navigate("/view/" + name);
         });
       }
     );
