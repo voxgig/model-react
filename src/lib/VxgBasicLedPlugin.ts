@@ -39,6 +39,8 @@ function VxgBasicLedPlugin (this: any, options: any) {
   const entCanon = spec.def.ent
   const slotName = 'BasicLed_' + name
 
+  console.log('VxgBasicLedPlugin', 'name', name, 'init')
+
   seneca
     .add('on:BasicLed')
 
@@ -77,8 +79,9 @@ function VxgBasicLedPlugin (this: any, options: any) {
       'aim:app,on:BasicLed,ready:edit,redux$:true',
       function (msg: any, reply: any, meta: any) {
         const setReady = msg.setReady
-        const view = meta.custom.state().view[name]
 
+        // Update the view state
+        const view = meta.custom.state().view[name]
         view.mode = 'edit'
         view.status = 'edit-item'
 
@@ -87,7 +90,7 @@ function VxgBasicLedPlugin (this: any, options: any) {
       }
     )
 
-    .add('aim:app,on:BasicLed,modify:edit', function (msg: any) {
+    .add('aim:app,on:BasicLed,modify:edit', function modify_edit (msg: any) {
       let item = msg.item
       let fields = msg.fields
 
@@ -118,12 +121,12 @@ function VxgBasicLedPlugin (this: any, options: any) {
         }
       }
 
-      console.log('modify:edit', 'item', item)
+      console.log('VxgBasicLedPlugin', 'modify:edit', 'item', item)
 
       return item
     })
 
-    .add('aim:app,on:BasicLed,modify:save', function (msg: any) {
+    .add('aim:app,on:BasicLed,modify:save', function modify_save (msg: any) {
       let item = msg.data
       let fields = msg.fields
 
