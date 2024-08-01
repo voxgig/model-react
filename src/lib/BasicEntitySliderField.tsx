@@ -52,6 +52,12 @@ function BasicEntitySliderField (props: any) {
     defaultValue: val || field.ux.min,
   })
 
+  // console.log(
+  //   'BasicEntitySliderField',
+  //   'controllerField',
+  //   controllerField.value
+  // )
+
   return (
     <div>
       <FormLabel key={`${field.id}-label`}>{field.label}</FormLabel>

@@ -53,31 +53,6 @@ function VxgBasicEntityFieldPlugin (this: any, options: any) {
   const field: any = spec.field
   const Field: any = fieldMap[field.ux.kind]
 
-  console.log('VxgBasicEntityFieldPlugin', 'init', field.name, field.ux.kind)
-
-  // if ('Slider' === field.ux.kind) {
-  //   console.log(
-  //     'VxgBasicEntityFieldPlugin',
-  //     'seneca.add',
-  //     field.name,
-  //     field.ux.kind
-  //   )
-  //   seneca.add(
-  //     'aim:app,on:BasicLed,modify:edit,view:podcast',
-  //     function modify_edit_Slider (this: any, msg: any) {
-  //       const item = msg.item
-
-  //       const out = this.prior(msg)
-
-  //       console.log('VxgBasicLedPlugin', 'modify:edit', 'Slider', out)
-
-  //       return item
-  //     }
-  //   )
-  // }
-
-  // seneca.add('aim:app,on:BasicLed,modify:save', function (msg: any) {})
-
   options.setPlugin(true)
 
   return {
