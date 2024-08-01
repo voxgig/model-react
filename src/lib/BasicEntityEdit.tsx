@@ -98,6 +98,7 @@ function BasicEntityEdit (props: any) {
   const { ent, name } = spec
 
   if (plugin && !ready) {
+    console.log('BasicEntityEdit', 'useEffect', 'ready:edit')
     seneca.act('aim:app,on:BasicLed,ready:edit', { view: name, setReady })
   }
 
@@ -107,6 +108,7 @@ function BasicEntityEdit (props: any) {
   let item = useSelector((state: any) => selectItem(state))
 
   if (item && name) {
+    console.log('BasicEntityEdit', 'useEffect', 'modify:edit')
     item = seneca.direct('aim:app,on:BasicLed,modify:edit', {
       view: name,
       item,
@@ -118,13 +120,16 @@ function BasicEntityEdit (props: any) {
 
   useEffect(() => {
     if (ready) {
+      console.log('BasicEntityEdit', 'useEffect', 'ready')
       if (null == item && null != params.item) {
+        console.log('BasicEntityEdit', 'useEffect', 'edit:item')
         seneca.act('aim:app,on:BasicLed,edit:item', {
           view: name,
           fields,
           item_id: params.item,
         })
       }
+      console.log('BasicEntityEdit', 'useEffect', 'reset(item)')
       reset(item)
     }
   }, [null == item, ready])

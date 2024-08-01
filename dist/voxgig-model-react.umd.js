@@ -10759,12 +10759,12 @@ try {
     return tool;
   }
   const CMPNAME$p = "BasicHead";
-  const { Child: Child$5, Exact, Open: Open$n, Required: Required$1 } = gubu_minExports.Gubu;
+  const { Child: Child$6, Exact, Open: Open$o, Required: Required$1 } = gubu_minExports.Gubu;
   const BasicHeadSpecShape = gubu_minExports.Gubu({
     head: {
       name: String,
       active: Boolean,
-      tool: Child$5(Open$n({
+      tool: Child$6(Open$o({
         align: Exact("left", "right")
       }))
     },
@@ -62718,17 +62718,17 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }
     return jsxRuntimeExports.jsx(MRT_TablePaper, { table });
   };
-  const { Open: Open$m, Child: Child$4 } = gubu_minExports.Gubu;
-  const Shape$2 = gubu_minExports.Gubu(Open$m({
+  const { Open: Open$n, Child: Child$5 } = gubu_minExports.Gubu;
+  const Shape$3 = gubu_minExports.Gubu(Open$n({
     name: String,
     prefix: String,
     ent: String,
     order: [String],
-    field: Child$4({}, {})
+    field: Child$5({}, {})
   }), { name: "BasicEntityList" });
   function VxgBasicEntityListPlugin(options) {
     const seneca = this;
-    const spec = Shape$2(options.spec);
+    const spec = Shape$3(options.spec);
     const slot = spec.prefix + spec.name;
     const columns = spec.order.reduce((a, fn) => {
       const field = spec.field[fn];
@@ -64689,18 +64689,18 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     return err ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "vxg-BasicEntityFieldError-active", children: err.message }) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "vxg-BasicEntityFieldError-none" });
   }
   const CMPNAME$n = "BasicEntitySliderField";
-  const { Open: Open$l } = gubu_minExports.Gubu;
+  const { Open: Open$m } = gubu_minExports.Gubu;
   const BasicEntityCheckboxFieldSpecShape = gubu_minExports.Gubu(
-    Open$l({
-      field: Open$l({
+    Open$m({
+      field: Open$m({
         id: String,
         name: String,
         kind: "",
         label: "",
-        ux: Open$l({
+        ux: Open$m({
           kind: gubu_minExports.Exact("Checkbox"),
           edit: gubu_minExports.Default(true),
-          props: Open$l({})
+          props: Open$m({})
         })
       })
     }),
@@ -64740,15 +64740,15 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     ] }, `${field.id}-box`);
   }
   const CMPNAME$m = "BasicEntityAutocompleteField";
-  const { Open: Open$k } = gubu_minExports.Gubu;
+  const { Open: Open$l } = gubu_minExports.Gubu;
   const BasicEntityAutocompleteFieldSpecShape = gubu_minExports.Gubu(
-    Open$k({
-      field: Open$k({
+    Open$l({
+      field: Open$l({
         id: String,
         label: String,
         kind: String,
         name: String,
-        cat: Open$k({
+        cat: Open$l({
           default: String,
           title: String,
           multiple: Number,
@@ -64757,9 +64757,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
             exclude: "",
             include: ""
           },
-          item: Open$k({})
+          item: Open$l({})
         }),
-        ux: Open$k({
+        ux: Open$l({
           kind: gubu_minExports.Exact("Autocomplete"),
           edit: gubu_minExports.Default(true)
         })
@@ -64857,21 +64857,21 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }
   }
   const CMPNAME$l = "BasicEntitySliderField";
-  const { Open: Open$j } = gubu_minExports.Gubu;
+  const { Open: Open$k } = gubu_minExports.Gubu;
   const BasicEntitySliderFieldSpecShape = gubu_minExports.Gubu(
-    Open$j({
-      field: Open$j({
+    Open$k({
+      field: Open$k({
         id: String,
         name: String,
         kind: "",
         label: "",
-        ux: Open$j({
+        ux: Open$k({
           kind: gubu_minExports.Exact("Slider"),
           edit: gubu_minExports.Default(true),
           step: gubu_minExports.Default(1),
           min: gubu_minExports.Default(0),
           max: gubu_minExports.Default(100),
-          props: Open$j({
+          props: Open$k({
             marks: gubu_minExports.Default({}),
             valueLabelDisplay: gubu_minExports.Exact("on", "auto", "off").Default("auto"),
             direction: gubu_minExports.Exact("horizontal", "vertical").Default("horizontal"),
@@ -64927,20 +64927,20 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     return marks;
   }
   const CMPNAME$k = "BasicEntitySliderField";
-  const { Open: Open$i } = gubu_minExports.Gubu;
+  const { Open: Open$j } = gubu_minExports.Gubu;
   const BasicEntityRadioGroupFieldSpecShape = gubu_minExports.Gubu(
-    Open$i({
-      field: Open$i({
+    Open$j({
+      field: Open$j({
         id: String,
         name: String,
         kind: "",
         llabel: "",
-        ux: Open$i({
+        ux: Open$j({
           kind: gubu_minExports.Exact("RadioGroup"),
           edit: gubu_minExports.Default(true),
           direction: gubu_minExports.Exact("row", "column").Default("row")
         }),
-        cat: Open$i({
+        cat: Open$j({
           default: "",
           title: String,
           order: {
@@ -64948,7 +64948,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
             exclude: "",
             include: ""
           },
-          item: Open$i({})
+          item: Open$j({})
         })
       })
     }),
@@ -65006,18 +65006,18 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     return defaultValues;
   }
   const CMPNAME$j = "BasicEntityTextBoxField";
-  const { Open: Open$h } = gubu_minExports.Gubu;
+  const { Open: Open$i } = gubu_minExports.Gubu;
   const BasicEntityTextBoxFieldSpecShape = gubu_minExports.Gubu(
-    Open$h({
-      field: Open$h({
+    Open$i({
+      field: Open$i({
         id: String,
         name: String,
         kind: "",
         label: "",
-        ux: Open$h({
+        ux: Open$i({
           kind: gubu_minExports.Exact("TextBox"),
           edit: gubu_minExports.Default(true),
-          props: Open$h({})
+          props: Open$i({})
         })
       })
     }),
@@ -65048,18 +65048,18 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     ] }, field.name);
   }
   const CMPNAME$i = "BasicEntityTextField";
-  const { Open: Open$g } = gubu_minExports.Gubu;
+  const { Open: Open$h } = gubu_minExports.Gubu;
   const BasicEntityTextFieldSpecShape = gubu_minExports.Gubu(
-    Open$g({
-      field: Open$g({
+    Open$h({
+      field: Open$h({
         id: String,
         name: String,
         kind: "",
         label: "",
-        ux: Open$g({
+        ux: Open$h({
           kind: gubu_minExports.Exact("Text"),
           edit: gubu_minExports.Default(true),
-          props: Open$g({})
+          props: Open$h({})
         })
       })
     }),
@@ -65089,18 +65089,18 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     ] }, field.id);
   }
   const CMPNAME$h = "BasicEntityDateField";
-  const { Open: Open$f } = gubu_minExports.Gubu;
+  const { Open: Open$g } = gubu_minExports.Gubu;
   const BasicEntityDateFieldSpecShape = gubu_minExports.Gubu(
-    Open$f({
-      field: Open$f({
+    Open$g({
+      field: Open$g({
         id: String,
         name: String,
         kind: "",
         label: "",
-        ux: Open$f({
+        ux: Open$g({
           kind: gubu_minExports.Exact("Date"),
           edit: gubu_minExports.Default(true),
-          props: Open$f({})
+          props: Open$g({})
         })
       })
     }),
@@ -65130,18 +65130,18 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     ] }, field.id);
   }
   const CMPNAME$g = "BasicEntityTimeField";
-  const { Open: Open$e } = gubu_minExports.Gubu;
+  const { Open: Open$f } = gubu_minExports.Gubu;
   const BasicEntityTimeFieldSpecShape = gubu_minExports.Gubu(
-    Open$e({
-      field: Open$e({
+    Open$f({
+      field: Open$f({
         id: String,
         name: String,
         kind: "",
         label: "",
-        ux: Open$e({
+        ux: Open$f({
           kind: gubu_minExports.Exact("Time"),
           edit: gubu_minExports.Default(true),
-          props: Open$e({})
+          props: Open$f({})
         })
       })
     }),
@@ -65171,18 +65171,18 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     ] }, field.id);
   }
   const CMPNAME$f = "BasicEntityDateTimeField";
-  const { Open: Open$d } = gubu_minExports.Gubu;
+  const { Open: Open$e } = gubu_minExports.Gubu;
   const BasicEntityDateTimeFieldSpecShape = gubu_minExports.Gubu(
-    Open$d({
-      field: Open$d({
+    Open$e({
+      field: Open$e({
         id: String,
         name: String,
         kind: "",
         label: "",
-        ux: Open$d({
+        ux: Open$e({
           kind: gubu_minExports.Exact("DateTime"),
           edit: gubu_minExports.Default(true),
-          props: Open$d({})
+          props: Open$e({})
         })
       })
     }),
@@ -65212,19 +65212,19 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     ] }, field.id);
   }
   const CMPNAME$e = "BasicEntitySliderField";
-  const { Open: Open$c } = gubu_minExports.Gubu;
+  const { Open: Open$d } = gubu_minExports.Gubu;
   const BasicEntityRatingFieldSpecShape = gubu_minExports.Gubu(
-    Open$c({
-      field: Open$c({
+    Open$d({
+      field: Open$d({
         id: String,
         name: String,
         kind: "",
         label: "",
-        ux: Open$c({
+        ux: Open$d({
           kind: gubu_minExports.Exact("Rating"),
           edit: gubu_minExports.Default(true),
           precision: 1,
-          props: Open$c({})
+          props: Open$d({})
         })
       })
     }),
@@ -65260,19 +65260,19 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     ] }, `${field.id}-div`);
   }
   const CMPNAME$d = "BasicEntitySliderField";
-  const { Open: Open$b } = gubu_minExports.Gubu;
+  const { Open: Open$c } = gubu_minExports.Gubu;
   const BasicEntityButtonFieldSpecShape = gubu_minExports.Gubu(
-    Open$b({
-      field: Open$b({
+    Open$c({
+      field: Open$c({
         id: String,
         name: String,
         kind: "",
         label: String,
-        ux: Open$b({
+        ux: Open$c({
           kind: gubu_minExports.Exact("Button"),
           edit: true,
           variant: "contained",
-          props: Open$b({})
+          props: Open$c({})
         })
       })
     }),
@@ -65296,23 +65296,23 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     ) }, `${field.id}-div`);
   }
   const CMPNAME$c = "BasicEntitySliderField";
-  const { Open: Open$a } = gubu_minExports.Gubu;
+  const { Open: Open$b } = gubu_minExports.Gubu;
   const BasicEntityButtonGroupFieldSpecShape = gubu_minExports.Gubu(
-    Open$a({
-      field: Open$a({
+    Open$b({
+      field: Open$b({
         id: String,
         name: String,
         kind: "",
         label: "",
-        options: Open$a({
+        options: Open$b({
           label: { field: "label" },
           value: { field: "value" },
-          ents: Open$a({})
+          ents: Open$b({})
         }),
-        ux: Open$a({
+        ux: Open$b({
           kind: gubu_minExports.Exact("ButtonGroup"),
           edit: gubu_minExports.Default(true),
-          props: Open$a({})
+          props: Open$b({})
         })
       })
     }),
@@ -65326,15 +65326,15 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }, children: val == null ? void 0 : val[field.options.label.field] }, `${field.id}-${key}`)) })) }, `${field.id}-div`);
   }
   const CMPNAME$b = "BasicEntitySelectField";
-  const { Open: Open$9 } = gubu_minExports.Gubu;
+  const { Open: Open$a } = gubu_minExports.Gubu;
   const BasicEntitySelectFieldSpecShape = gubu_minExports.Gubu(
-    Open$9({
-      field: Open$9({
+    Open$a({
+      field: Open$a({
         id: String,
         name: String,
         kind: "",
         label: "",
-        cat: Open$9({
+        cat: Open$a({
           default: "",
           title: String,
           multiple: Number,
@@ -65343,9 +65343,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
             exclude: "",
             include: ""
           },
-          item: Open$9({})
+          item: Open$a({})
         }),
-        ux: Open$9({
+        ux: Open$a({
           kind: gubu_minExports.Exact("Select"),
           edit: gubu_minExports.Default(true)
         })
@@ -65435,18 +65435,18 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }
   }
   const CMPNAME$a = "BasicEntitySliderField";
-  const { Open: Open$8 } = gubu_minExports.Gubu;
+  const { Open: Open$9 } = gubu_minExports.Gubu;
   const BasicEntitySwitchFieldSpecShape = gubu_minExports.Gubu(
-    Open$8({
-      field: Open$8({
+    Open$9({
+      field: Open$9({
         id: String,
         name: String,
         kind: "",
         label: "",
-        ux: Open$8({
+        ux: Open$9({
           kind: gubu_minExports.Exact("Switch"),
           edit: gubu_minExports.Default(true),
-          props: Open$8({})
+          props: Open$9({})
         })
       })
     }),
@@ -65486,15 +65486,15 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     ] }, `${field.id}-box`);
   }
   const CMPNAME$9 = "BasicEntitySliderField";
-  const { Open: Open$7 } = gubu_minExports.Gubu;
+  const { Open: Open$8 } = gubu_minExports.Gubu;
   const BasicEntityToggleButtonFieldSpecShape = gubu_minExports.Gubu(
-    Open$7({
-      field: Open$7({
+    Open$8({
+      field: Open$8({
         id: String,
         name: String,
         kind: "",
         label: "",
-        cat: Open$7({
+        cat: Open$8({
           default: "",
           title: String,
           multiple: Number,
@@ -65503,12 +65503,12 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
             exclude: "",
             include: ""
           },
-          item: Open$7({})
+          item: Open$8({})
         }),
-        ux: Open$7({
+        ux: Open$8({
           kind: gubu_minExports.Exact("ToggleButton"),
           edit: gubu_minExports.Default(true),
-          props: Open$7({})
+          props: Open$8({})
         })
       })
     }),
@@ -65544,6 +65544,52 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       /* @__PURE__ */ jsxRuntimeExports.jsx(BasicEntityFieldError, { err })
     ] }, `${field.id}-box`);
   }
+  const { Open: Open$7, Child: Child$4 } = gubu_minExports.Gubu;
+  const Shape$2 = gubu_minExports.Gubu(
+    Open$7({
+      field: {}
+    }),
+    { name: "BasicEntityField" }
+  );
+  const fieldMap = {
+    Text: BasicEntityTextField,
+    TextBox: BasicEntityTextBoxField,
+    Date: BasicEntityDateField,
+    DateTime: BasicEntityDateTimeField,
+    Time: BasicEntityTimeField,
+    Checkbox: BasicEntityCheckboxField,
+    Autocomplete: BasicEntityAutocompleteField,
+    Slider: BasicEntitySliderField,
+    RadioGroup: BasicEntityRadioGroupField,
+    Rating: BasicEntityRatingField,
+    Button: BasicEntityButtonField,
+    ButtonGroup: BasicEntityButtonGroupField,
+    Select: BasicEntitySelectField,
+    Switch: BasicEntitySwitchField,
+    ToggleButton: BasicEntityToggleButtonField
+  };
+  function VxgBasicEntityFieldPlugin(options) {
+    const seneca = this;
+    const spec = Shape$2(options.spec);
+    const field = spec.field;
+    const Field = fieldMap[field.ux.kind];
+    console.log("VxgBasicEntityFieldPlugin", "init", field.name, field.ux.kind);
+    options.setPlugin(true);
+    return {
+      exports: {
+        handle: { Field }
+      }
+    };
+  }
+  Object.assign(VxgBasicEntityFieldPlugin, {
+    defaults: {
+      spec: {},
+      setPlugin: Function
+    }
+  });
+  Object.defineProperty(VxgBasicEntityFieldPlugin, "name", {
+    value: "VxgBasicEntityFieldPlugin"
+  });
   const CMPNAME$8 = "BasicEntityField";
   const { Open: Open$6 } = gubu_minExports.Gubu;
   const BasicEntityFieldSpecShape = gubu_minExports.Gubu(
@@ -65579,43 +65625,49 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     }),
     { name: CMPNAME$8 }
   );
-  const fieldMap = {
-    Text: BasicEntityTextField,
-    TextBox: BasicEntityTextBoxField,
-    Date: BasicEntityDateField,
-    DateTime: BasicEntityDateTimeField,
-    Time: BasicEntityTimeField,
-    Checkbox: BasicEntityCheckboxField,
-    Autocomplete: BasicEntityAutocompleteField,
-    Slider: BasicEntitySliderField,
-    RadioGroup: BasicEntityRadioGroupField,
-    Rating: BasicEntityRatingField,
-    Button: BasicEntityButtonField,
-    ButtonGroup: BasicEntityButtonGroupField,
-    Select: BasicEntitySelectField,
-    Switch: BasicEntitySwitchField,
-    ToggleButton: BasicEntityToggleButtonField
-  };
   function BasicEntityField(props) {
     const { ctx, spec } = props;
-    const basicEntityFieldSpec = BasicEntityFieldSpecShape(spec);
-    const field = basicEntityFieldSpec.field;
-    const Field = fieldMap[field.ux.kind];
-    return /* @__PURE__ */ jsxRuntimeExports.jsx(Field, { ctx, spec });
+    const { seneca } = ctx();
+    const basicEntityField = BasicEntityFieldSpecShape(spec);
+    const [plugin, setPlugin] = React$1.useState(false);
+    React$1.useEffect(() => {
+      if (!plugin) {
+        seneca.use({
+          tag: basicEntityField.field.name,
+          define: VxgBasicEntityFieldPlugin,
+          options: {
+            spec: {
+              field: basicEntityField.field
+            },
+            setPlugin
+          }
+        });
+      }
+    }, []);
+    const { Field } = seneca.export(
+      "VxgBasicEntityFieldPlugin$" + spec.field.name + "/handle"
+    ) || { Field: null };
+    return Field ? /* @__PURE__ */ jsxRuntimeExports.jsx(Field, { ctx, spec: basicEntityField }) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", {});
   }
   const { Open: Open$5, Child: Child$3 } = gubu_minExports.Gubu;
-  const Shape$1 = gubu_minExports.Gubu(Open$5({
-    name: String,
-    prefix: String,
-    ent: String,
-    order: [String],
-    field: Child$3({}, {})
-  }), { name: "BasicEntityEdit" });
+  const Shape$1 = gubu_minExports.Gubu(
+    Open$5({
+      name: String,
+      prefix: String,
+      ent: String,
+      order: [String],
+      field: Child$3({}, {})
+    }),
+    { name: "BasicEntityEdit" }
+  );
   function VxgBasicEntityEditPlugin(options) {
     const seneca = this;
     const spec = Shape$1(options.spec);
     const slot = spec.prefix + spec.name;
-    const fields = spec.order.reduce((a, fn) => (fixField(fn, spec.field[fn], spec), a.push(spec.field[fn]), a), []);
+    const fields = spec.order.reduce(
+      (a, fn) => (fixField(fn, spec.field[fn], spec), a.push(spec.field[fn]), a),
+      []
+    );
     options.setPlugin(true);
     return {
       exports: {
@@ -65639,7 +65691,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       setPlugin: Function
     }
   });
-  Object.defineProperty(VxgBasicEntityEditPlugin, "name", { value: "VxgBasicEntityEditPlugin" });
+  Object.defineProperty(VxgBasicEntityEditPlugin, "name", {
+    value: "VxgBasicEntityEditPlugin"
+  });
   const CMPNAME$7 = "BasicEntityEdit";
   const makeResolver = (seneca, spec) => React$1.useCallback(
     (data) => __async(this, null, function* () {
@@ -65693,12 +65747,14 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     ) || { spec: {}, slot: null, fields: [] };
     const { ent, name } = spec;
     if (plugin && !ready) {
+      console.log("BasicEntityEdit", "useEffect", "ready:edit");
       seneca.act("aim:app,on:BasicLed,ready:edit", { view: name, setReady });
     }
     const slotSelectors = seneca.export("Redux/slotSelectors");
     let { selectItem, selectList, selectMeta } = slotSelectors(slot);
     let item = reactRedux.useSelector((state) => selectItem(state));
     if (item && name) {
+      console.log("BasicEntityEdit", "useEffect", "modify:edit");
       item = seneca.direct("aim:app,on:BasicLed,modify:edit", {
         view: name,
         item,
@@ -65708,13 +65764,16 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const params = reactRouterDom.useParams();
     React$1.useEffect(() => {
       if (ready) {
+        console.log("BasicEntityEdit", "useEffect", "ready");
         if (null == item && null != params.item) {
+          console.log("BasicEntityEdit", "useEffect", "edit:item");
           seneca.act("aim:app,on:BasicLed,edit:item", {
             view: name,
             fields,
             item_id: params.item
           });
         }
+        console.log("BasicEntityEdit", "useEffect", "reset(item)");
         reset(item);
       }
     }, [null == item, ready]);
@@ -65877,6 +65936,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const name = spec.name;
     const entCanon = spec.def.ent;
     const slotName = "BasicLed_" + name;
+    console.log("VxgBasicLedPlugin", "name", name, "init");
     seneca.add("on:BasicLed").fix({ view: name }).add(
       "aim:app,on:view,init:state,redux$:true",
       function(_msg, reply, meta) {
@@ -65908,7 +65968,7 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         setReady(true);
         reply();
       }
-    ).add("aim:app,on:BasicLed,modify:edit", function(msg) {
+    ).add("aim:app,on:BasicLed,modify:edit", function modify_edit(msg) {
       let item = msg.item;
       let fields = msg.fields;
       if (null == item) return item;
@@ -65934,9 +65994,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           item[field.name] = Number(item[field.name]) / 60;
         }
       }
-      console.log("modify:edit", "item", item);
+      console.log("VxgBasicLedPlugin", "modify:edit", "item", item);
       return item;
-    }).add("aim:app,on:BasicLed,modify:save", function(msg) {
+    }).add("aim:app,on:BasicLed,modify:save", function modify_save(msg) {
       let item = msg.data;
       let fields = msg.fields;
       if (null == item) return item;
