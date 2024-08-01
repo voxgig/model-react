@@ -1,7 +1,7 @@
-import React, { useEffect, forwardRef } from 'react'
+import React from 'react'
 
 import { FormLabel, Slider } from '@mui/material'
-import { Controller } from 'react-hook-form'
+import { useController } from 'react-hook-form'
 
 import type { Spec } from './basic-types'
 
@@ -43,38 +43,75 @@ function BasicEntitySliderField (props: any) {
   const { control, field, getValues, errors } = basicEntityAutocompleteField
 
   // if cmp not ready, call seneca.add('modify:edit') and seneca.add('modify:save')
-
   const val = getValues(field.name) // field.name + '_uival$'
-
   const err = errors[field.name]
 
+  const { field: controllerField } = useController({
+    name: field.name,
+    control,
+    defaultValue: val || field.ux.min,
+  })
+
   return (
-    <>
+    <div>
       <FormLabel key={`${field.id}-label`}>{field.label}</FormLabel>
-      <Controller
-        key={`${field.id}-controller`}
-        name={field.name}
-        control={control}
-        defaultValue={val || field.ux.min}
-        render={({ field: { onChange, value } }) => (
-          <Slider
-            step={field.ux.step}
-            marks={resolveMarks(field.ux.props.marks)}
-            min={field.ux.min}
-            max={field.ux.max}
-            value={value}
-            onChange={(_, newVal: any) => onChange(newVal)}
-            disabled={!field.ux.edit}
-            orientation={field.ux.direction}
-            track={field.ux.track}
-            valueLabelDisplay={field.ux.props.valueLabelDisplay}
-          />
-        )}
+      <Slider
+        key={`${field.id}-slider`}
+        step={field.ux.step}
+        marks={resolveMarks(field.ux.props.marks)}
+        min={field.ux.min}
+        max={field.ux.max}
+        value={controllerField.value}
+        onChange={(_, newVal) => controllerField.onChange(newVal)}
+        disabled={!field.ux.edit}
+        orientation={field.ux.direction}
+        track={field.ux.track}
+        valueLabelDisplay={field.ux.props.valueLabelDisplay}
       />
       <BasicEntityFieldError err={err} />
-    </>
+    </div>
   )
 }
+
+// function BasicEntitySliderField (props: any) {
+//   const { spec } = props
+
+//   const basicEntityAutocompleteField: Spec =
+//     BasicEntitySliderFieldSpecShape(spec)
+//   const { control, field, getValues, errors } = basicEntityAutocompleteField
+
+//   // if cmp not ready, call seneca.add('modify:edit') and seneca.add('modify:save')
+//   const val = getValues(field.name) // field.name + '_uival$'
+
+//   const err = errors[field.name]
+
+//   return (
+//     <>
+//       <FormLabel key={`${field.id}-label`}>{field.label}</FormLabel>
+//       <Controller
+//         key={`${field.id}-controller`}
+//         name={field.name}
+//         control={control}
+//         defaultValue={val || field.ux.min}
+//         render={({ field: { onChange, value } }) => (
+//           <Slider
+//             step={field.ux.step}
+//             marks={resolveMarks(field.ux.props.marks)}
+//             min={field.ux.min}
+//             max={field.ux.max}
+//             value={value}
+//             onChange={(_, newVal: any) => onChange(newVal)}
+//             disabled={!field.ux.edit}
+//             orientation={field.ux.direction}
+//             track={field.ux.track}
+//             valueLabelDisplay={field.ux.props.valueLabelDisplay}
+//           />
+//         )}
+//       />
+//       <BasicEntityFieldError err={err} />
+//     </>
+//   )
+// }
 
 function resolveMarks (marks: any) {
   if (

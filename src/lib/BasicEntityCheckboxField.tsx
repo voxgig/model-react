@@ -1,7 +1,7 @@
-import React, { useEffect, forwardRef } from 'react'
+import React from 'react'
 
 import { FormControlLabel, Checkbox, Box } from '@mui/material'
-import { Controller } from 'react-hook-form'
+import { useController } from 'react-hook-form'
 
 import type { Spec } from './basic-types'
 
@@ -33,28 +33,28 @@ function BasicEntityCheckboxField (props: any) {
   const basicEntityCheckboxField: Spec = BasicEntityCheckboxFieldSpecShape(spec)
   const { control, field, getValues, errors } = basicEntityCheckboxField
   const val = getValues(field.name)
-
   const err = errors[field.name]
+
+  const {
+    field: controllerField,
+    fieldState: { error },
+  } = useController({
+    name: field.name,
+    control,
+    defaultValue: !!val,
+  })
 
   // TODO: Style wrapper box
   return (
     <Box key={`${field.id}-box`}>
       <FormControlLabel
         control={
-          <Controller
-            key={`${field.id}-controller`}
-            name={field.name}
-            control={control}
-            defaultValue={!!val}
-            render={({ field: { onChange, value } }) => (
-              <Checkbox
-                id={field.id}
-                checked={value}
-                onChange={onChange}
-                disabled={!field.ux.edit}
-                {...field.ux.props}
-              />
-            )}
+          <Checkbox
+            id={field.id}
+            checked={controllerField.value}
+            onChange={controllerField.onChange}
+            disabled={!field.ux.edit}
+            {...field.ux.props}
           />
         }
         label={field.label}
@@ -63,5 +63,42 @@ function BasicEntityCheckboxField (props: any) {
     </Box>
   )
 }
+
+// function BasicEntityCheckboxField (props: any) {
+//   const { spec } = props
+
+//   const basicEntityCheckboxField: Spec = BasicEntityCheckboxFieldSpecShape(spec)
+//   const { control, field, getValues, errors } = basicEntityCheckboxField
+//   const val = getValues(field.name)
+
+//   const err = errors[field.name]
+
+//   // TODO: Style wrapper box
+//   return (
+//     <Box key={`${field.id}-box`}>
+//       <FormControlLabel
+//         control={
+//           <Controller
+//             key={`${field.id}-controller`}
+//             name={field.name}
+//             control={control}
+//             defaultValue={!!val}
+//             render={({ field: { onChange, value } }) => (
+//               <Checkbox
+//                 id={field.id}
+//                 checked={value}
+//                 onChange={onChange}
+//                 disabled={!field.ux.edit}
+//                 {...field.ux.props}
+//               />
+//             )}
+//           />
+//         }
+//         label={field.label}
+//       />
+//       <BasicEntityFieldError err={err} />
+//     </Box>
+//   )
+// }
 
 export { BasicEntityCheckboxField }

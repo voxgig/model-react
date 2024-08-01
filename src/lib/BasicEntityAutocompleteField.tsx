@@ -1,7 +1,7 @@
-import React, { useEffect, forwardRef } from 'react'
+import React from 'react'
 
 import { TextField, Autocomplete, Box } from '@mui/material'
-import { Controller } from 'react-hook-form'
+import { useController } from 'react-hook-form'
 
 import type { Spec } from './basic-types'
 
@@ -40,51 +40,100 @@ const BasicEntityAutocompleteFieldSpecShape = Gubu(
 function BasicEntityAutocompleteField (props: any) {
   const { spec } = props
 
-  const basicEntityAutocompleteField: Spec = BasicEntityAutocompleteFieldSpecShape(spec)
+  const basicEntityAutocompleteField: Spec =
+    BasicEntityAutocompleteFieldSpecShape(spec)
   const { control, field, errors } = basicEntityAutocompleteField
-
   const err = errors[field.name]
+
+  const {
+    field: controllerField,
+    fieldState: { error },
+  } = useController({
+    name: field.name,
+    control,
+    defaultValue: resolveDefault(field.cat),
+  })
 
   return (
     <Box key={`${field.id}-box`}>
-      <Controller
-        key={`${field.id}-controller`}
-        name={field.name}
-        control={control}
-        defaultValue={resolveDefault(field.cat)}
-        render={({ field: { onChange, value } }) => (
-          <Autocomplete
-            freeSolo
-            forcePopupIcon
-            multiple={field.cat.multiple !== 1}
-            options={resolveCategories(field.cat)}
-            isOptionEqualToValue={(opt: any, val: any) =>
-              opt === val ||
-              (opt?.id != null && val?.id != null && opt.id === val.id) ||
-              (opt?.key != null && val?.key != null && opt.key === val.key)
-            }
-            getOptionLabel={(option: any) => option.title}
-            value={resolveValue(value, field.cat)}
-            disabled={!field.ux.edit}
-            {...field.ux.props}
-            onChange={(_, newVal: any) => onChange(newVal)}
-            renderInput={(params: any) => <TextField {...params} label={field.label} />}
-          />
+      <Autocomplete
+        freeSolo
+        forcePopupIcon
+        multiple={field.cat.multiple !== 1}
+        options={resolveCategories(field.cat)}
+        isOptionEqualToValue={(opt: any, val: any) =>
+          opt === val ||
+          (opt?.id != null && val?.id != null && opt.id === val.id) ||
+          (opt?.key != null && val?.key != null && opt.key === val.key)
+        }
+        getOptionLabel={(option: any) => option.title}
+        value={resolveValue(controllerField.value, field.cat)}
+        disabled={!field.ux.edit}
+        onChange={(_, newVal: any) => controllerField.onChange(newVal)}
+        renderInput={(params: any) => (
+          <TextField {...params} label={field.label} />
         )}
+        {...field.ux.props}
       />
       <BasicEntityFieldError err={err} />
     </Box>
   )
 }
 
-export function resolveCategories (cat: { item: Record<string, { title: string }> }) {
+// function BasicEntityAutocompleteField (props: any) {
+//   const { spec } = props
+
+//   const basicEntityAutocompleteField: Spec = BasicEntityAutocompleteFieldSpecShape(spec)
+//   const { control, field, errors } = basicEntityAutocompleteField
+
+//   const err = errors[field.name]
+
+//   return (
+//     <Box key={`${field.id}-box`}>
+//       <Controller
+//         key={`${field.id}-controller`}
+//         name={field.name}
+//         control={control}
+//         defaultValue={resolveDefault(field.cat)}
+//         render={({ field: { onChange, value } }) => (
+//           <Autocomplete
+//             freeSolo
+//             forcePopupIcon
+//             multiple={field.cat.multiple !== 1}
+//             options={resolveCategories(field.cat)}
+//             isOptionEqualToValue={(opt: any, val: any) =>
+//               opt === val ||
+//               (opt?.id != null && val?.id != null && opt.id === val.id) ||
+//               (opt?.key != null && val?.key != null && opt.key === val.key)
+//             }
+//             getOptionLabel={(option: any) => option.title}
+//             value={resolveValue(value, field.cat)}
+//             disabled={!field.ux.edit}
+//             {...field.ux.props}
+//             onChange={(_, newVal: any) => onChange(newVal)}
+//             renderInput={(params: any) => <TextField {...params} label={field.label} />}
+//           />
+//         )}
+//       />
+//       <BasicEntityFieldError err={err} />
+//     </Box>
+//   )
+// }
+
+export function resolveCategories (cat: {
+  item: Record<string, { title: string }>
+}) {
   return Object.keys(cat.item).map((key) => ({
     title: cat.item?.[key]?.title,
     key: key,
   }))
 }
 
-export function resolveDefault (cat: { multiple: number; item: any; default: string }) {
+export function resolveDefault (cat: {
+  multiple: number
+  item: any
+  default: string
+}) {
   const { multiple, item: items, default: defaultValues } = cat
 
   if (Object.keys(items).length === 0) {
@@ -132,7 +181,8 @@ export function resolveValue (
     return multiple === 1 ? value : [value]
   }
 
-  const mapValue = (val: string) => (items[val] ? { key: val, title: items[val].title } : undefined)
+  const mapValue = (val: string) =>
+    items[val] ? { key: val, title: items[val].title } : undefined
   const splitValue = value.split(',')
 
   switch (multiple) {

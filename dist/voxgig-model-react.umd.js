@@ -64712,27 +64712,26 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const { control, field, getValues, errors } = basicEntityCheckboxField;
     const val = getValues(field.name);
     const err = errors[field.name];
+    const {
+      field: controllerField,
+      fieldState: { error }
+    } = useController({
+      name: field.name,
+      control,
+      defaultValue: !!val
+    });
     return /* @__PURE__ */ jsxRuntimeExports.jsxs(material.Box, { children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(
         material.FormControlLabel,
         {
           control: /* @__PURE__ */ jsxRuntimeExports.jsx(
-            Controller,
-            {
-              name: field.name,
-              control,
-              defaultValue: !!val,
-              render: ({ field: { onChange, value } }) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-                material.Checkbox,
-                __spreadValues({
-                  id: field.id,
-                  checked: value,
-                  onChange,
-                  disabled: !field.ux.edit
-                }, field.ux.props)
-              )
-            },
-            `${field.id}-controller`
+            material.Checkbox,
+            __spreadValues({
+              id: field.id,
+              checked: controllerField.value,
+              onChange: controllerField.onChange,
+              disabled: !field.ux.edit
+            }, field.ux.props)
           ),
           label: field.label
         }
@@ -64773,31 +64772,29 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const basicEntityAutocompleteField = BasicEntityAutocompleteFieldSpecShape(spec);
     const { control, field, errors } = basicEntityAutocompleteField;
     const err = errors[field.name];
+    const {
+      field: controllerField,
+      fieldState: { error }
+    } = useController({
+      name: field.name,
+      control,
+      defaultValue: resolveDefault$2(field.cat)
+    });
     return /* @__PURE__ */ jsxRuntimeExports.jsxs(material.Box, { children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(
-        Controller,
-        {
-          name: field.name,
-          control,
-          defaultValue: resolveDefault$2(field.cat),
-          render: ({ field: { onChange, value } }) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-            material.Autocomplete,
-            __spreadProps(__spreadValues({
-              freeSolo: true,
-              forcePopupIcon: true,
-              multiple: field.cat.multiple !== 1,
-              options: resolveCategories$2(field.cat),
-              isOptionEqualToValue: (opt, val) => opt === val || (opt == null ? void 0 : opt.id) != null && (val == null ? void 0 : val.id) != null && opt.id === val.id || (opt == null ? void 0 : opt.key) != null && (val == null ? void 0 : val.key) != null && opt.key === val.key,
-              getOptionLabel: (option) => option.title,
-              value: resolveValue$1(value, field.cat),
-              disabled: !field.ux.edit
-            }, field.ux.props), {
-              onChange: (_2, newVal) => onChange(newVal),
-              renderInput: (params) => /* @__PURE__ */ jsxRuntimeExports.jsx(material.TextField, __spreadProps(__spreadValues({}, params), { label: field.label }))
-            })
-          )
-        },
-        `${field.id}-controller`
+        material.Autocomplete,
+        __spreadValues({
+          freeSolo: true,
+          forcePopupIcon: true,
+          multiple: field.cat.multiple !== 1,
+          options: resolveCategories$2(field.cat),
+          isOptionEqualToValue: (opt, val) => opt === val || (opt == null ? void 0 : opt.id) != null && (val == null ? void 0 : val.id) != null && opt.id === val.id || (opt == null ? void 0 : opt.key) != null && (val == null ? void 0 : val.key) != null && opt.key === val.key,
+          getOptionLabel: (option) => option.title,
+          value: resolveValue$1(controllerField.value, field.cat),
+          disabled: !field.ux.edit,
+          onChange: (_2, newVal) => controllerField.onChange(newVal),
+          renderInput: (params) => /* @__PURE__ */ jsxRuntimeExports.jsx(material.TextField, __spreadProps(__spreadValues({}, params), { label: field.label }))
+        }, field.ux.props)
       ),
       /* @__PURE__ */ jsxRuntimeExports.jsx(BasicEntityFieldError, { err })
     ] }, `${field.id}-box`);
@@ -64891,31 +64888,28 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const { control, field, getValues, errors } = basicEntityAutocompleteField;
     const val = getValues(field.name);
     const err = errors[field.name];
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+    const { field: controllerField } = useController({
+      name: field.name,
+      control,
+      defaultValue: val || field.ux.min
+    });
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(material.FormLabel, { children: field.label }, `${field.id}-label`),
       /* @__PURE__ */ jsxRuntimeExports.jsx(
-        Controller,
+        material.Slider,
         {
-          name: field.name,
-          control,
-          defaultValue: val || field.ux.min,
-          render: ({ field: { onChange, value } }) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-            material.Slider,
-            {
-              step: field.ux.step,
-              marks: resolveMarks(field.ux.props.marks),
-              min: field.ux.min,
-              max: field.ux.max,
-              value,
-              onChange: (_2, newVal) => onChange(newVal),
-              disabled: !field.ux.edit,
-              orientation: field.ux.direction,
-              track: field.ux.track,
-              valueLabelDisplay: field.ux.props.valueLabelDisplay
-            }
-          )
+          step: field.ux.step,
+          marks: resolveMarks(field.ux.props.marks),
+          min: field.ux.min,
+          max: field.ux.max,
+          value: controllerField.value,
+          onChange: (_2, newVal) => controllerField.onChange(newVal),
+          disabled: !field.ux.edit,
+          orientation: field.ux.direction,
+          track: field.ux.track,
+          valueLabelDisplay: field.ux.props.valueLabelDisplay
         },
-        `${field.id}-controller`
+        `${field.id}-slider`
       ),
       /* @__PURE__ */ jsxRuntimeExports.jsx(BasicEntityFieldError, { err })
     ] });
@@ -64965,36 +64959,35 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const basicEntityRadioGroupField = BasicEntityRadioGroupFieldSpecShape(spec);
     const { control, field, errors } = basicEntityRadioGroupField;
     const err = errors[field.name];
+    const {
+      field: controllerField,
+      fieldState: { error }
+    } = useController({
+      name: field.name,
+      control,
+      defaultValue: field.cat.default
+    });
     return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(material.FormLabel, { children: field.label }, `${field.id}-label`),
       /* @__PURE__ */ jsxRuntimeExports.jsx(
-        Controller,
-        {
-          name: field.name,
-          control,
-          defaultValue: field.cat.default,
-          render: ({ field: { onChange, value } }) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-            material.RadioGroup,
-            __spreadProps(__spreadValues({
-              value,
-              onChange,
-              row: "row" === field.ux.direction,
-              disabled: !field.ux.edit
-            }, field.ux.props), {
-              children: resolveCategories$1(field.cat).map((option) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-                material.FormControlLabel,
-                {
-                  value: option.key,
-                  control: /* @__PURE__ */ jsxRuntimeExports.jsx(material.Radio, { disabled: !field.ux.edit }),
-                  label: option.title
-                },
-                `${option.key}-option`
-              ))
-            }),
-            field.id
-          )
-        },
-        `${field.id}-controller`
+        material.RadioGroup,
+        __spreadProps(__spreadValues({
+          value: controllerField.value,
+          onChange: controllerField.onChange,
+          row: "row" === field.ux.direction,
+          disabled: !field.ux.edit
+        }, field.ux.props), {
+          children: resolveCategories$1(field.cat).map((option) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+            material.FormControlLabel,
+            {
+              value: option.key,
+              control: /* @__PURE__ */ jsxRuntimeExports.jsx(material.Radio, { disabled: !field.ux.edit }),
+              label: option.title
+            },
+            `${option.key}-option`
+          ))
+        }),
+        field.id
       ),
       /* @__PURE__ */ jsxRuntimeExports.jsx(BasicEntityFieldError, { err })
     ] });
@@ -65243,26 +65236,25 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const { control, field, getValues, errors } = basicEntityRatingField;
     const val = getValues(field.name);
     const err = errors[field.name];
+    const {
+      field: controllerField,
+      fieldState: { error }
+    } = useController({
+      name: field.name,
+      control,
+      defaultValue: !!val || 0
+    });
     return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(material.FormLabel, { component: "legend", children: field.label }),
       /* @__PURE__ */ jsxRuntimeExports.jsx(
-        Controller,
-        {
+        material.Rating,
+        __spreadValues({
           name: field.name,
-          control,
-          defaultValue: !!val || 0,
-          render: ({ field: { onChange, value } }) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-            material.Rating,
-            __spreadValues({
-              name: field.name,
-              value,
-              precision: field.ux.precision,
-              onChange: (_2, newValue) => onChange(newValue),
-              disabled: !field.ux.edit
-            }, field.ux.props)
-          )
-        },
-        `${field.id}-controller`
+          value: controllerField.value,
+          precision: field.ux.precision,
+          onChange: (_2, newValue) => controllerField.onChange(newValue),
+          disabled: !field.ux.edit
+        }, field.ux.props)
       ),
       /* @__PURE__ */ jsxRuntimeExports.jsx(BasicEntityFieldError, { err })
     ] }, `${field.id}-div`);
@@ -65329,26 +65321,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
   function BasicEntityButtonGroupField(props) {
     const { spec } = props;
     const basicEntityButtonGroupField = BasicEntityButtonGroupFieldSpecShape(spec);
-    const { control, field } = basicEntityButtonGroupField;
-    return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-      Controller,
-      {
-        name: field.name,
-        control,
-        render: ({ field: { onChange, value } }) => /* @__PURE__ */ jsxRuntimeExports.jsx(material.ButtonGroup, __spreadProps(__spreadValues({ disabled: !field.ux.edit }, field.ux.props), { children: Object.entries(field.options.ents).map(
-          ([key, val]) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-            material.Button,
-            {
-              onClick: () => {
-              },
-              children: val == null ? void 0 : val[field.options.label.field]
-            },
-            `${field.id}-${key}`
-          )
-        ) }))
-      },
-      `${field.id}-controller`
-    ) }, `${field.id}-div`);
+    const { field } = basicEntityButtonGroupField;
+    return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(material.ButtonGroup, __spreadProps(__spreadValues({ disabled: !field.ux.edit }, field.ux.props), { children: Object.entries(field.options.ents).map(([key, val]) => /* @__PURE__ */ jsxRuntimeExports.jsx(material.Button, { onClick: () => {
+    }, children: val == null ? void 0 : val[field.options.label.field] }, `${field.id}-${key}`)) })) }, `${field.id}-div`);
   }
   const CMPNAME$b = "BasicEntitySelectField";
   const { Open: Open$9 } = gubu_minExports.Gubu;
@@ -65383,33 +65358,32 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const basicEntitySelectField = BasicEntitySelectFieldSpecShape(spec);
     const { control, field, errors } = basicEntitySelectField;
     const err = errors[field.name];
+    const {
+      field: controllerField,
+      fieldState: { error }
+    } = useController({
+      name: field.name,
+      control,
+      defaultValue: resolveDefault(field.cat)
+    });
     return /* @__PURE__ */ jsxRuntimeExports.jsxs(material.Box, { children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx(
-        Controller,
-        {
-          name: field.name,
-          control,
-          defaultValue: resolveDefault(field.cat),
-          render: ({ field: { onChange, value } }) => /* @__PURE__ */ jsxRuntimeExports.jsxs(material.FormControl, { fullWidth: true, children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(material.InputLabel, { id: `${field.id}-label`, children: field.label }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(
-              material.Select,
-              __spreadProps(__spreadValues({
-                labelId: `${field.id}-label`,
-                id: `${field.id}-select`,
-                value: resolveValue(value, field.cat),
-                multiple: field.cat.multiple !== 1,
-                label: field.name,
-                onChange: (event) => onChange(event.target.value),
-                disabled: !field.ux.edit
-              }, field.ux.props), {
-                children: resolveCategories(field.cat).map((opt) => /* @__PURE__ */ jsxRuntimeExports.jsx(material.MenuItem, { value: opt.key, children: opt.title }, opt.key))
-              })
-            )
-          ] })
-        },
-        `${field.id}-controller`
-      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs(material.FormControl, { fullWidth: true, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(material.InputLabel, { id: `${field.id}-label`, children: field.label }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          material.Select,
+          __spreadProps(__spreadValues({
+            labelId: `${field.id}-label`,
+            id: `${field.id}-select`,
+            value: resolveValue(controllerField.value, field.cat),
+            multiple: field.cat.multiple !== 1,
+            label: field.name,
+            onChange: (event) => controllerField.onChange(event.target.value),
+            disabled: !field.ux.edit
+          }, field.ux.props), {
+            children: resolveCategories(field.cat).map((opt) => /* @__PURE__ */ jsxRuntimeExports.jsx(material.MenuItem, { value: opt.key, children: opt.title }, opt.key))
+          })
+        )
+      ] }),
       /* @__PURE__ */ jsxRuntimeExports.jsx(BasicEntityFieldError, { err })
     ] }, `${field.id}-box`);
   }
@@ -65484,27 +65458,26 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const { control, field, getValues, errors } = basicEntitySwitchField;
     const val = getValues(field.name);
     const err = errors[field.name];
+    const {
+      field: controllerField,
+      fieldState: { error }
+    } = useController({
+      name: field.name,
+      control,
+      defaultValue: !!val
+    });
     return /* @__PURE__ */ jsxRuntimeExports.jsxs(material.Box, { children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(
         material.FormControlLabel,
         {
           control: /* @__PURE__ */ jsxRuntimeExports.jsx(
-            Controller,
-            {
-              name: field.name,
-              control,
-              defaultValue: !!val,
-              render: ({ field: { onChange, value } }) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-                material.Switch,
-                __spreadValues({
-                  id: field.id,
-                  checked: value,
-                  onChange,
-                  disabled: !field.ux.edit
-                }, field.ux.props)
-              )
-            },
-            `${field.id}-controller`
+            material.Switch,
+            __spreadValues({
+              id: field.id,
+              checked: controllerField.value,
+              onChange: controllerField.onChange,
+              disabled: !field.ux.edit
+            }, field.ux.props)
           ),
           label: field.label
         }
@@ -65546,28 +65519,27 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const basicEntityToggleButtonField = BasicEntityToggleButtonFieldSpecShape(spec);
     const { control, field, errors } = basicEntityToggleButtonField;
     const err = errors[field.name];
+    const {
+      field: controllerField,
+      fieldState: { error }
+    } = useController({
+      name: field.name,
+      control
+    });
     return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(material.FormLabel, { component: "legend", children: field.label }),
       /* @__PURE__ */ jsxRuntimeExports.jsx(
-        Controller,
-        {
-          name: field.name,
-          control,
-          render: ({ field: { onChange, value } }) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-            material.ToggleButtonGroup,
-            __spreadProps(__spreadValues({
-              value,
-              exclusive: field.cat.multiple === 1 ? true : false,
-              onChange: (_2, v) => {
-                field.cat.multiple === 1 ? onChange(v) : onChange([v]);
-              },
-              disabled: !field.ux.edit
-            }, field.ux.props), {
-              children: Object.entries(field.cat.item).map(([key, val]) => /* @__PURE__ */ jsxRuntimeExports.jsx(material.ToggleButton, { value: key, children: val == null ? void 0 : val.title }, `${field.id}-${key}`))
-            })
-          )
-        },
-        `${field.id}-controller`
+        material.ToggleButtonGroup,
+        __spreadProps(__spreadValues({
+          value: controllerField.value,
+          exclusive: field.cat.multiple === 1 ? true : false,
+          onChange: (_2, v) => {
+            field.cat.multiple === 1 ? controllerField.onChange(v) : controllerField.onChange([v]);
+          },
+          disabled: !field.ux.edit
+        }, field.ux.props), {
+          children: Object.entries(field.cat.item).map(([key, val]) => /* @__PURE__ */ jsxRuntimeExports.jsx(material.ToggleButton, { value: key, children: val == null ? void 0 : val.title }, `${field.id}-${key}`))
+        })
       ),
       /* @__PURE__ */ jsxRuntimeExports.jsx(BasicEntityFieldError, { err })
     ] }, `${field.id}-box`);

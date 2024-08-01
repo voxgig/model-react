@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { FormControl, InputLabel, Select, MenuItem, Box } from '@mui/material'
-import { Controller } from 'react-hook-form'
+import { useController } from 'react-hook-form'
 
 import type { Spec } from './basic-types'
 
@@ -42,42 +42,86 @@ function BasicEntitySelectField (props: any) {
 
   const basicEntitySelectField: Spec = BasicEntitySelectFieldSpecShape(spec)
   const { control, field, errors } = basicEntitySelectField
-
   const err = errors[field.name]
+
+  const {
+    field: controllerField,
+    fieldState: { error },
+  } = useController({
+    name: field.name,
+    control,
+    defaultValue: resolveDefault(field.cat),
+  })
 
   return (
     <Box key={`${field.id}-box`}>
-      <Controller
-        key={`${field.id}-controller`}
-        name={field.name}
-        control={control}
-        defaultValue={resolveDefault(field.cat)}
-        render={({ field: { onChange, value } }) => (
-          <FormControl fullWidth>
-            <InputLabel id={`${field.id}-label`}>{field.label}</InputLabel>
-            <Select
-              labelId={`${field.id}-label`}
-              id={`${field.id}-select`}
-              value={resolveValue(value, field.cat)}
-              multiple={field.cat.multiple !== 1}
-              label={field.name}
-              onChange={(event: any) => onChange(event.target.value)}
-              disabled={!field.ux.edit}
-              {...field.ux.props}
-            >
-              {resolveCategories(field.cat).map((opt: any) => (
-                <MenuItem key={opt.key} value={opt.key}>
-                  {opt.title}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        )}
-      />
+      <FormControl fullWidth>
+        <InputLabel id={`${field.id}-label`}>{field.label}</InputLabel>
+        <Select
+          labelId={`${field.id}-label`}
+          id={`${field.id}-select`}
+          value={resolveValue(controllerField.value, field.cat)}
+          multiple={field.cat.multiple !== 1}
+          label={field.name}
+          onChange={(event: any) =>
+            controllerField.onChange(event.target.value)
+          }
+          disabled={!field.ux.edit}
+          {...field.ux.props}
+        >
+          {resolveCategories(field.cat).map((opt: any) => (
+            <MenuItem key={opt.key} value={opt.key}>
+              {opt.title}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
       <BasicEntityFieldError err={err} />
     </Box>
   )
 }
+
+// function BasicEntitySelectField (props: any) {
+//   const { spec } = props
+
+//   const basicEntitySelectField: Spec = BasicEntitySelectFieldSpecShape(spec)
+//   const { control, field, errors } = basicEntitySelectField
+
+//   const err = errors[field.name]
+
+//   return (
+//     <Box key={`${field.id}-box`}>
+//       <Controller
+//         key={`${field.id}-controller`}
+//         name={field.name}
+//         control={control}
+//         defaultValue={resolveDefault(field.cat)}
+//         render={({ field: { onChange, value } }) => (
+//           <FormControl fullWidth>
+//             <InputLabel id={`${field.id}-label`}>{field.label}</InputLabel>
+//             <Select
+//               labelId={`${field.id}-label`}
+//               id={`${field.id}-select`}
+//               value={resolveValue(value, field.cat)}
+//               multiple={field.cat.multiple !== 1}
+//               label={field.name}
+//               onChange={(event: any) => onChange(event.target.value)}
+//               disabled={!field.ux.edit}
+//               {...field.ux.props}
+//             >
+//               {resolveCategories(field.cat).map((opt: any) => (
+//                 <MenuItem key={opt.key} value={opt.key}>
+//                   {opt.title}
+//                 </MenuItem>
+//               ))}
+//             </Select>
+//           </FormControl>
+//         )}
+//       />
+//       <BasicEntityFieldError err={err} />
+//     </Box>
+//   )
+// }
 
 // Returns array of options based on field.cat object
 export function resolveCategories (cat: any) {
@@ -87,7 +131,11 @@ export function resolveCategories (cat: any) {
   }))
 }
 
-export function resolveDefault (cat: { multiple: number; item: any; default: string }) {
+export function resolveDefault (cat: {
+  multiple: number
+  item: any
+  default: string
+}) {
   const { multiple, item: items, default: defaultValues } = cat
 
   if (Object.keys(items).length === 0) {
@@ -105,7 +153,10 @@ export function resolveDefault (cat: { multiple: number; item: any; default: str
     case -1:
       return mapResolvedDefault(defaultItems).filter(Boolean) || []
     default:
-      return mapResolvedDefault(defaultItems.slice(0, multiple)).filter(Boolean) || []
+      return (
+        mapResolvedDefault(defaultItems.slice(0, multiple)).filter(Boolean) ||
+        []
+      )
   }
 }
 
