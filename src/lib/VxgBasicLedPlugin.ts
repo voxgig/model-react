@@ -39,7 +39,7 @@ function VxgBasicLedPlugin (this: any, options: any) {
   const entCanon = spec.def.ent
   const slotName = 'BasicLed_' + name
 
-  console.log('VxgBasicLedPlugin', 'name', name, 'init')
+  // console.log('VxgBasicLedPlugin', 'name', name, 'init')
 
   seneca
     .add('on:BasicLed')

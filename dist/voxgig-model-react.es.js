@@ -65651,67 +65651,81 @@ function VxgBasicEntityEditPlugin(options) {
   const seneca = this;
   const spec = Shape$1(options.spec);
   const slot = spec.prefix + spec.name;
-  const fields = spec.order.reduce((a, fn2) => (fixField(fn2, spec.field[fn2], spec), a.push(spec.field[fn2]), a), []);
-  console.log("VxgBasicEntityEditPlugin", "init", spec.name, fields);
+  const fields = spec.order.reduce(
+    (a, fn2) => (fixField(fn2, spec.field[fn2], spec), a.push(spec.field[fn2]), a),
+    []
+  );
   for (const field of fields) {
     if ("Date" === field.ux.kind) {
-      seneca.add("aim:app,on:BasicLed,modify:edit,view:" + spec.name, function modify_edit_Date(msg) {
-        return __async(this, null, function* () {
-          const out = yield this.prior(msg);
-          let { item } = out;
-          item = __spreadValues({}, item);
-          if (!item[field.name + "_orig$"]) {
-            const dt = util$2.dateTimeFromUTC(item[field.name]);
-            item[field.name + "_orig$"] = item[field.name];
-            item[field.name + "_udm$"] = dt.udm;
-            item[field.name] = dt.localt;
-          }
-          return __spreadProps(__spreadValues({}, msg), { item });
-        });
-      });
+      seneca.add(
+        "aim:app,on:BasicLed,modify:edit,view:" + spec.name,
+        function modify_edit_Date(msg) {
+          return __async(this, null, function* () {
+            const out = yield this.prior(msg);
+            let { item } = out;
+            item = __spreadValues({}, item);
+            if (!item[field.name + "_orig$"]) {
+              const dt = util$2.dateTimeFromUTC(item[field.name]);
+              item[field.name + "_orig$"] = item[field.name];
+              item[field.name + "_udm$"] = dt.udm;
+              item[field.name] = dt.localt;
+            }
+            return __spreadProps(__spreadValues({}, msg), { item });
+          });
+        }
+      );
     } else if ("Time" === field.ux.kind) {
-      seneca.add("aim:app,on:BasicLed,modify:edit,view:" + spec.name, function modify_edit_Time(msg) {
-        return __async(this, null, function* () {
-          const out = yield this.prior(msg);
-          let { item } = out;
-          item = __spreadValues({}, item);
-          if (!item[field.name + "_orig$"]) {
-            const dt = util$2.dateTimeFromUTC(item[field.name]);
-            item[field.name + "_orig$"] = item[field.name];
-            item[field.name + "_udm$"] = dt.udm;
-            item[field.name] = dt.localt;
-          }
-          return __spreadProps(__spreadValues({}, msg), { item });
-        });
-      });
+      seneca.add(
+        "aim:app,on:BasicLed,modify:edit,view:" + spec.name,
+        function modify_edit_Time(msg) {
+          return __async(this, null, function* () {
+            const out = yield this.prior(msg);
+            let { item } = out;
+            item = __spreadValues({}, item);
+            if (!item[field.name + "_orig$"]) {
+              const dt = util$2.dateTimeFromUTC(item[field.name]);
+              item[field.name + "_orig$"] = item[field.name];
+              item[field.name + "_udm$"] = dt.udm;
+              item[field.name] = dt.localt;
+            }
+            return __spreadProps(__spreadValues({}, msg), { item });
+          });
+        }
+      );
     } else if ("DateTime" === field.ux.kind) {
-      seneca.add("aim:app,on:BasicLed,modify:edit,view:" + spec.name, function modify_edit_Datetime(msg) {
-        return __async(this, null, function* () {
-          const out = yield this.prior(msg);
-          let { item } = out;
-          item = __spreadValues({}, item);
-          if (!item[field.name + "_orig$"]) {
-            const dt = util$2.dateTimeFromUTC(item[field.name]);
-            item[field.name + "_orig$"] = item[field.name];
-            item[field.name + "_udm$"] = dt.udm;
-            item[field.name] = dt.locald + "T" + dt.localt;
-          }
-          return __spreadProps(__spreadValues({}, msg), { item });
-        });
-      });
+      seneca.add(
+        "aim:app,on:BasicLed,modify:edit,view:" + spec.name,
+        function modify_edit_Datetime(msg) {
+          return __async(this, null, function* () {
+            const out = yield this.prior(msg);
+            let { item } = out;
+            item = __spreadValues({}, item);
+            if (!item[field.name + "_orig$"]) {
+              const dt = util$2.dateTimeFromUTC(item[field.name]);
+              item[field.name + "_orig$"] = item[field.name];
+              item[field.name + "_udm$"] = dt.udm;
+              item[field.name] = dt.locald + "T" + dt.localt;
+            }
+            return __spreadProps(__spreadValues({}, msg), { item });
+          });
+        }
+      );
     } else if ("Slider" === field.ux.kind) {
-      seneca.add("aim:app,on:BasicLed,modify:edit,view:" + spec.name, function modify_edit_Slider(msg) {
-        return __async(this, null, function* () {
-          const out = yield this.prior(msg);
-          let { item } = out;
-          item = __spreadValues({}, item);
-          if (!item[field.name + "_orig$"]) {
-            item[field.name + "_orig$"] = item[field.name];
-            item[field.name] = Number(item[field.name]) / 60;
-          }
-          return __spreadProps(__spreadValues({}, msg), { item });
-        });
-      });
+      seneca.add(
+        "aim:app,on:BasicLed,modify:edit,view:" + spec.name,
+        function modify_edit_Slider(msg) {
+          return __async(this, null, function* () {
+            const out = yield this.prior(msg);
+            let { item } = out;
+            item = __spreadValues({}, item);
+            if (!item[field.name + "_orig$"]) {
+              item[field.name + "_orig$"] = item[field.name];
+              item[field.name] = Number(item[field.name]) / 60;
+            }
+            return __spreadProps(__spreadValues({}, msg), { item });
+          });
+        }
+      );
     }
   }
   options.setPlugin(true);
@@ -65827,7 +65841,6 @@ function BasicEntityEdit(props) {
   ) || { spec: {}, slot: null, fields: [] };
   const { ent, name } = spec;
   if (plugin && !ready) {
-    console.log("BasicEntityEdit", "useEffect", "ready:edit");
     seneca.act("aim:app,on:BasicLed,ready:edit", { view: name, setReady });
   }
   const slotSelectors = seneca.export("Redux/slotSelectors");
@@ -65835,6 +65848,16 @@ function BasicEntityEdit(props) {
   let item = useSelector((state) => selectItem(state));
   useEffect(() => {
     const fetchData = () => __async(this, null, function* () {
+      console.log(
+        "BasicEntityEdit",
+        "useEffect",
+        "modify:edit",
+        "init",
+        "view",
+        name,
+        "item",
+        item == null ? void 0 : item.title
+      );
       if (item && name) {
         const res = yield seneca.direct("aim:app,on:BasicLed,modify:edit", {
           view: name,
@@ -65842,14 +65865,11 @@ function BasicEntityEdit(props) {
           fields
         });
         item = res.item;
-        reset(item);
       }
+      reset(item);
     });
     fetchData();
-  }, [item, fields, name]);
-  useEffect(() => {
-    console.log("BasicEntityEdit", "useEffect", "reset", item);
-  }, [item]);
+  }, [item, name]);
   const params = useParams();
   useEffect(() => {
     if (ready) {
@@ -66025,7 +66045,6 @@ function VxgBasicLedPlugin(options) {
   const name = spec.name;
   const entCanon = spec.def.ent;
   const slotName = "BasicLed_" + name;
-  console.log("VxgBasicLedPlugin", "name", name, "init");
   seneca.add("on:BasicLed").fix({ view: name }).add(
     "aim:app,on:view,init:state,redux$:true",
     function(_msg, reply, meta) {

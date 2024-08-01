@@ -22,78 +22,93 @@ function VxgBasicEntityEditPlugin (this: any, options: any) {
 
   const slot = spec.prefix + spec.name
 
-  const fields = spec.order.reduce((a: any, fn: any) => (fixField(fn, spec.field[fn], spec), a.push(spec.field[fn]), a), [])
-
-  console.log('VxgBasicEntityEditPlugin', 'init', spec.name, fields)
+  const fields = spec.order.reduce(
+    (a: any, fn: any) => (
+      fixField(fn, spec.field[fn], spec), a.push(spec.field[fn]), a
+    ),
+    []
+  )
 
   for (const field of fields) {
     if ('Date' === field.ux.kind) {
-      seneca.add('aim:app,on:BasicLed,modify:edit,view:' + spec.name, async function modify_edit_Date (this: any, msg: any) {
-        const out = await this.prior(msg)
+      seneca.add(
+        'aim:app,on:BasicLed,modify:edit,view:' + spec.name,
+        async function modify_edit_Date (this: any, msg: any) {
+          const out = await this.prior(msg)
 
-        let { item } = out
+          let { item } = out
 
-        item = { ...item }
+          item = { ...item }
 
-        if (!item[field.name + '_orig$']) {
-          const dt = util.dateTimeFromUTC(item[field.name])
-          item[field.name + '_orig$'] = item[field.name]
-          item[field.name + '_udm$'] = dt.udm
-          item[field.name] = dt.localt
+          if (!item[field.name + '_orig$']) {
+            const dt = util.dateTimeFromUTC(item[field.name])
+            item[field.name + '_orig$'] = item[field.name]
+            item[field.name + '_udm$'] = dt.udm
+            item[field.name] = dt.localt
+          }
+
+          return { ...msg, item }
         }
-
-        return { ...msg, item }
-      })
+      )
     } else if ('Time' === field.ux.kind) {
-      seneca.add('aim:app,on:BasicLed,modify:edit,view:' + spec.name, async function modify_edit_Time (this: any, msg: any) {
-        const out = await this.prior(msg)
+      seneca.add(
+        'aim:app,on:BasicLed,modify:edit,view:' + spec.name,
+        async function modify_edit_Time (this: any, msg: any) {
+          const out = await this.prior(msg)
 
-        let { item } = out
+          let { item } = out
 
-        item = { ...item }
+          item = { ...item }
 
-        if (!item[field.name + '_orig$']) {
-          const dt = util.dateTimeFromUTC(item[field.name])
-          item[field.name + '_orig$'] = item[field.name]
-          item[field.name + '_udm$'] = dt.udm
-          item[field.name] = dt.localt
+          if (!item[field.name + '_orig$']) {
+            const dt = util.dateTimeFromUTC(item[field.name])
+            item[field.name + '_orig$'] = item[field.name]
+            item[field.name + '_udm$'] = dt.udm
+            item[field.name] = dt.localt
+          }
+
+          return { ...msg, item }
         }
-
-        return { ...msg, item }
-      })
+      )
     } else if ('DateTime' === field.ux.kind) {
-      seneca.add('aim:app,on:BasicLed,modify:edit,view:' + spec.name, async function modify_edit_Datetime (this: any, msg: any) {
-        const out = await this.prior(msg)
+      seneca.add(
+        'aim:app,on:BasicLed,modify:edit,view:' + spec.name,
+        async function modify_edit_Datetime (this: any, msg: any) {
+          const out = await this.prior(msg)
 
-        let { item } = out
+          let { item } = out
 
-        item = { ...item }
+          item = { ...item }
 
-        if (!item[field.name + '_orig$']) {
-          const dt = util.dateTimeFromUTC(item[field.name])
-          item[field.name + '_orig$'] = item[field.name]
-          item[field.name + '_udm$'] = dt.udm
-          item[field.name] = dt.locald + 'T' + dt.localt
+          if (!item[field.name + '_orig$']) {
+            const dt = util.dateTimeFromUTC(item[field.name])
+            item[field.name + '_orig$'] = item[field.name]
+            item[field.name + '_udm$'] = dt.udm
+            item[field.name] = dt.locald + 'T' + dt.localt
+          }
+
+          return { ...msg, item }
         }
-
-        return { ...msg, item }
-      })
+      )
     } else if ('Slider' === field.ux.kind) {
       // console.log('VxgBasicEntityEditPlugin', 'Slider')
-      seneca.add('aim:app,on:BasicLed,modify:edit,view:' + spec.name, async function modify_edit_Slider (this: any, msg: any) {
-        const out = await this.prior(msg)
+      seneca.add(
+        'aim:app,on:BasicLed,modify:edit,view:' + spec.name,
+        async function modify_edit_Slider (this: any, msg: any) {
+          const out = await this.prior(msg)
 
-        let { item } = out
+          let { item } = out
 
-        item = { ...item }
+          item = { ...item }
 
-        if (!item[field.name + '_orig$']) {
-          item[field.name + '_orig$'] = item[field.name]
-          item[field.name] = Number(item[field.name]) / 60
+          if (!item[field.name + '_orig$']) {
+            item[field.name + '_orig$'] = item[field.name]
+            item[field.name] = Number(item[field.name]) / 60
+          }
+
+          return { ...msg, item }
         }
-
-        return { ...msg, item }
-      })
+      )
     }
   }
 
@@ -125,7 +140,11 @@ const util = {
     const isot = iso.split('T')[1].split('.')[0]
 
     // UTC millis into day (since midnight)
-    const udm = date.getUTCHours() * 60 * 60 * 1000 + date.getUTCMinutes() * 60 * 1000 + date.getUTCSeconds() * 1000 + date.getUTCMilliseconds()
+    const udm =
+      date.getUTCHours() * 60 * 60 * 1000 +
+      date.getUTCMinutes() * 60 * 1000 +
+      date.getUTCSeconds() * 1000 +
+      date.getUTCMilliseconds()
 
     let out: any = {
       utc,
@@ -151,8 +170,10 @@ const util = {
       hour12: false,
     })
 
-    const [{ value: day }, , { value: month }, , { value: year }] = dateFormatter.formatToParts(date)
-    const [{ value: hour }, , { value: minute }, , { value: second }] = timeFormatter.formatToParts(date)
+    const [{ value: day }, , { value: month }, , { value: year }] =
+      dateFormatter.formatToParts(date)
+    const [{ value: hour }, , { value: minute }, , { value: second }] =
+      timeFormatter.formatToParts(date)
 
     out.locald = `${year}-${month}-${day}`
     out.localt = `${hour}:${minute}:${second}`
