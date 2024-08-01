@@ -100,7 +100,7 @@ function BasicEntityEdit (props: any) {
   const { ent, name } = spec
 
   if (plugin && !ready) {
-    console.log('BasicEntityEdit', 'useEffect', 'ready:edit')
+    // console.log('BasicEntityEdit', 'useEffect', 'ready:edit')
     seneca.act('aim:app,on:BasicLed,ready:edit', { view: name, setReady })
   }
 
@@ -120,6 +120,16 @@ function BasicEntityEdit (props: any) {
 
   useEffect(() => {
     const fetchData = async () => {
+      console.log(
+        'BasicEntityEdit',
+        'useEffect',
+        'modify:edit',
+        'init',
+        'view',
+        name,
+        'item',
+        item?.title
+      )
       if (item && name) {
         // console.log('BasicEntityEdit', 'useEffect', 'modify:edit', 'init')
         const res = await seneca.direct('aim:app,on:BasicLed,modify:edit', {
@@ -130,16 +140,12 @@ function BasicEntityEdit (props: any) {
         item = res.item
         // console.log('BasicEntityEdit', 'useEffect', 'modify:edit', 'got-item')
         // console.log('BasicEntityEdit', 'useEffect', 'resetting')
-        reset(item)
       }
+      reset(item)
     }
 
     fetchData()
-  }, [item, fields, name])
-
-  useEffect(() => {
-    console.log('BasicEntityEdit', 'useEffect', 'reset', item)
-  }, [item])
+  }, [item, name])
 
   const params: any = useParams()
 
