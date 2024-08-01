@@ -1,5 +1,21 @@
 import React, { useEffect, useState } from 'react'
 
+import { BasicEntityCheckboxField } from './BasicEntityCheckboxField'
+import { BasicEntityAutocompleteField } from './BasicEntityAutocompleteField'
+import { BasicEntitySliderField } from './BasicEntitySliderField'
+import { BasicEntityRadioGroupField } from './BasicEntityRadioGroupField'
+import { BasicEntityTextBoxField } from './BasicEntityTextBoxField'
+import { BasicEntityTextField } from './BasicEntityTextField'
+import { BasicEntityDateField } from './BasicEntityDateField'
+import { BasicEntityTimeField } from './BasicEntityTimeField'
+import { BasicEntityDateTimeField } from './BasicEntityDateTimeField'
+import { BasicEntityRatingField } from './BasicEntityRatingField'
+import { BasicEntityButtonField } from './BasicEntityButtonField'
+import { BasicEntityButtonGroupField } from './BasicEntityButtonGroupField'
+import { BasicEntitySelectField } from './BasicEntitySelectField'
+import { BasicEntitySwitchField } from './BasicEntitySwitchField'
+import { BasicEntityToggleButtonField } from './BasicEntityToggleButtonField'
+
 import type { Spec } from './basic-types'
 
 import { Default, Exact, Gubu, Skip } from 'gubu'
@@ -42,6 +58,24 @@ const BasicEntityFieldSpecShape = Gubu(
   { name: CMPNAME }
 )
 
+const fieldMap: any = {
+  Text: BasicEntityTextField,
+  TextBox: BasicEntityTextBoxField,
+  Date: BasicEntityDateField,
+  DateTime: BasicEntityDateTimeField,
+  Time: BasicEntityTimeField,
+  Checkbox: BasicEntityCheckboxField,
+  Autocomplete: BasicEntityAutocompleteField,
+  Slider: BasicEntitySliderField,
+  RadioGroup: BasicEntityRadioGroupField,
+  Rating: BasicEntityRatingField,
+  Button: BasicEntityButtonField,
+  ButtonGroup: BasicEntityButtonGroupField,
+  Select: BasicEntitySelectField,
+  Switch: BasicEntitySwitchField,
+  ToggleButton: BasicEntityToggleButtonField,
+}
+
 function BasicEntityField (props: any) {
   const { ctx, spec } = props
   const { seneca } = ctx()
@@ -65,9 +99,12 @@ function BasicEntityField (props: any) {
     }
   }, [])
 
-  const { Field } = seneca.export(
-    'VxgBasicEntityFieldPlugin$' + spec.field.name + '/handle'
-  ) || { Field: null }
+  // const { Field } = seneca.export(
+  //   'VxgBasicEntityFieldPlugin$' + spec.field.name + '/handle'
+  // ) || { Field: null }
+
+  const field: any = spec.field
+  const Field: any = fieldMap[field.ux.kind]
 
   return Field ? <Field ctx={ctx} spec={basicEntityField} /> : <div></div>
 }

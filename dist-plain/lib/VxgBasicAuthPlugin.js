@@ -1,13 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.VxgBasicAuthPlugin = void 0;
+exports.VxgBasicAuthPlugin = VxgBasicAuthPlugin;
 const gubu_1 = require("gubu");
 function VxgBasicAuthPlugin(options) {
     const seneca = this;
     const { spec, setSigninStatus, setReady } = options;
-    console.log('VxgBasicAuthPlugin define', spec);
     function handleSignin(event) {
-        console.log('handleSignin');
         event.preventDefault();
         const data = new FormData(event.currentTarget);
         const email = data.get('email');
@@ -39,7 +37,6 @@ function VxgBasicAuthPlugin(options) {
         }
     };
 }
-exports.VxgBasicAuthPlugin = VxgBasicAuthPlugin;
 VxgBasicAuthPlugin.default = {
     setSigninStatus: Function,
     setReady: Function,
