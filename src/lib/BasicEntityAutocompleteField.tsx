@@ -69,7 +69,11 @@ function BasicEntityAutocompleteField (props: any) {
         getOptionLabel={(option: any) => option.title}
         value={resolveValue(controllerField.value, field.cat)}
         disabled={!field.ux.edit}
-        onChange={(_, newVal: any) => controllerField.onChange(newVal)}
+        onChange={(_, v: any) => {
+          controllerField.onChange(
+            Array.isArray(v) ? v.map((val) => val.key).join(',') : v?.key
+          )
+        }}
         renderInput={(params: any) => (
           <TextField {...params} label={field.label} />
         )}
