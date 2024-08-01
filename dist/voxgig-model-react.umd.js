@@ -65573,7 +65573,6 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const spec = Shape$2(options.spec);
     const field = spec.field;
     const Field = fieldMap[field.ux.kind];
-    console.log("VxgBasicEntityFieldPlugin", "init", field.name, field.ux.kind);
     options.setPlugin(true);
     return {
       exports: {
@@ -65664,10 +65663,69 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const seneca = this;
     const spec = Shape$1(options.spec);
     const slot = spec.prefix + spec.name;
-    const fields = spec.order.reduce(
-      (a, fn) => (fixField(fn, spec.field[fn], spec), a.push(spec.field[fn]), a),
-      []
-    );
+    const fields = spec.order.reduce((a, fn) => (fixField(fn, spec.field[fn], spec), a.push(spec.field[fn]), a), []);
+    console.log("VxgBasicEntityEditPlugin", "init", spec.name, fields);
+    for (const field of fields) {
+      if ("Date" === field.ux.kind) {
+        seneca.add("aim:app,on:BasicLed,modify:edit,view:" + spec.name, function modify_edit_Date(msg) {
+          return __async(this, null, function* () {
+            const out = yield this.prior(msg);
+            let { item } = out;
+            item = __spreadValues({}, item);
+            if (!item[field.name + "_orig$"]) {
+              const dt = util$2.dateTimeFromUTC(item[field.name]);
+              item[field.name + "_orig$"] = item[field.name];
+              item[field.name + "_udm$"] = dt.udm;
+              item[field.name] = dt.localt;
+            }
+            return __spreadProps(__spreadValues({}, msg), { item });
+          });
+        });
+      } else if ("Time" === field.ux.kind) {
+        seneca.add("aim:app,on:BasicLed,modify:edit,view:" + spec.name, function modify_edit_Time(msg) {
+          return __async(this, null, function* () {
+            const out = yield this.prior(msg);
+            let { item } = out;
+            item = __spreadValues({}, item);
+            if (!item[field.name + "_orig$"]) {
+              const dt = util$2.dateTimeFromUTC(item[field.name]);
+              item[field.name + "_orig$"] = item[field.name];
+              item[field.name + "_udm$"] = dt.udm;
+              item[field.name] = dt.localt;
+            }
+            return __spreadProps(__spreadValues({}, msg), { item });
+          });
+        });
+      } else if ("DateTime" === field.ux.kind) {
+        seneca.add("aim:app,on:BasicLed,modify:edit,view:" + spec.name, function modify_edit_Datetime(msg) {
+          return __async(this, null, function* () {
+            const out = yield this.prior(msg);
+            let { item } = out;
+            item = __spreadValues({}, item);
+            if (!item[field.name + "_orig$"]) {
+              const dt = util$2.dateTimeFromUTC(item[field.name]);
+              item[field.name + "_orig$"] = item[field.name];
+              item[field.name + "_udm$"] = dt.udm;
+              item[field.name] = dt.locald + "T" + dt.localt;
+            }
+            return __spreadProps(__spreadValues({}, msg), { item });
+          });
+        });
+      } else if ("Slider" === field.ux.kind) {
+        seneca.add("aim:app,on:BasicLed,modify:edit,view:" + spec.name, function modify_edit_Slider(msg) {
+          return __async(this, null, function* () {
+            const out = yield this.prior(msg);
+            let { item } = out;
+            item = __spreadValues({}, item);
+            if (!item[field.name + "_orig$"]) {
+              item[field.name + "_orig$"] = item[field.name];
+              item[field.name] = Number(item[field.name]) / 60;
+            }
+            return __spreadProps(__spreadValues({}, msg), { item });
+          });
+        });
+      }
+    }
     options.setPlugin(true);
     return {
       exports: {
@@ -65685,6 +65743,41 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     field.ux = field.ux || {};
     field.ux.size = null == field.ux.size ? 4 : parseInt(field.ux.size, 10);
   }
+  const util$2 = {
+    dateTimeFromUTC: (utc, tz) => {
+      const date = new Date(utc);
+      const iso = date.toISOString();
+      const isod = iso.split("T")[0];
+      const isot = iso.split("T")[1].split(".")[0];
+      const udm = date.getUTCHours() * 60 * 60 * 1e3 + date.getUTCMinutes() * 60 * 1e3 + date.getUTCSeconds() * 1e3 + date.getUTCMilliseconds();
+      let out = {
+        utc,
+        date,
+        isod,
+        isot,
+        udm
+      };
+      tz = tz || Intl.DateTimeFormat().resolvedOptions().timeZone;
+      const dateFormatter = new Intl.DateTimeFormat("en-GB", {
+        timeZone: tz,
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit"
+      });
+      const timeFormatter = new Intl.DateTimeFormat("en-GB", {
+        timeZone: tz,
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: false
+      });
+      const [{ value: day }, , { value: month }, , { value: year }] = dateFormatter.formatToParts(date);
+      const [{ value: hour }, , { value: minute }, , { value: second }] = timeFormatter.formatToParts(date);
+      out.locald = `${year}-${month}-${day}`;
+      out.localt = `${hour}:${minute}:${second}`;
+      return out;
+    }
+  };
   Object.assign(VxgBasicEntityEditPlugin, {
     defaults: {
       spec: {},
@@ -65720,7 +65813,6 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
         values: values2,
         errors
       };
-      console.log("makeResolver", out);
       return out;
     }),
     [spec.ent]
@@ -65753,28 +65845,33 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const slotSelectors = seneca.export("Redux/slotSelectors");
     let { selectItem, selectList, selectMeta } = slotSelectors(slot);
     let item = reactRedux.useSelector((state) => selectItem(state));
-    if (item && name) {
-      console.log("BasicEntityEdit", "useEffect", "modify:edit");
-      item = seneca.direct("aim:app,on:BasicLed,modify:edit", {
-        view: name,
-        item,
-        fields
+    React$1.useEffect(() => {
+      const fetchData = () => __async(this, null, function* () {
+        if (item && name) {
+          const res = yield seneca.direct("aim:app,on:BasicLed,modify:edit", {
+            view: name,
+            item,
+            fields
+          });
+          item = res.item;
+          reset(item);
+        }
       });
-    }
+      fetchData();
+    }, [item, fields, name]);
+    React$1.useEffect(() => {
+      console.log("BasicEntityEdit", "useEffect", "reset", item);
+    }, [item]);
     const params = reactRouterDom.useParams();
     React$1.useEffect(() => {
       if (ready) {
-        console.log("BasicEntityEdit", "useEffect", "ready");
         if (null == item && null != params.item) {
-          console.log("BasicEntityEdit", "useEffect", "edit:item");
           seneca.act("aim:app,on:BasicLed,edit:item", {
             view: name,
             fields,
             item_id: params.item
           });
         }
-        console.log("BasicEntityEdit", "useEffect", "reset(item)");
-        reset(item);
       }
     }, [null == item, ready]);
     const resolver = makeResolver(seneca, spec);
@@ -65790,12 +65887,16 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       resolver
     });
     const onSubmit = (data) => {
-      const formItem = seneca.direct("aim:app,on:BasicLed,modify:save", {
+      console.log("BasicEntityEdit", "onSubmit", "data", data);
+      const modifiedData = seneca.direct("aim:app,on:BasicLed,modify:save", {
         view: name,
         data,
         fields
       });
-      seneca.act("aim:app,on:BasicLed,save:item", { view: name, data: formItem });
+      seneca.act("aim:app,on:BasicLed,save:item", {
+        view: name,
+        data: modifiedData
+      });
     };
     return /* @__PURE__ */ jsxRuntimeExports.jsx(material.Box, { className: "vxg-BasicEntityEdit", children: item ? /* @__PURE__ */ jsxRuntimeExports.jsxs(
       "form",
@@ -65970,32 +66071,9 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       }
     ).add("aim:app,on:BasicLed,modify:edit", function modify_edit(msg) {
       let item = msg.item;
-      let fields = msg.fields;
       if (null == item) return item;
       item = __spreadValues({}, item);
-      for (const field of fields) {
-        if ("Date" === field.ux.kind) {
-          const dt = util$1.dateTimeFromUTC(item[field.name]);
-          item[field.name + "_orig$"] = item[field.name];
-          item[field.name + "_udm$"] = dt.udm;
-          item[field.name] = dt.locald;
-        } else if ("Time" === field.ux.kind) {
-          const dt = util$1.dateTimeFromUTC(item[field.name]);
-          item[field.name + "_orig$"] = item[field.name];
-          item[field.name + "_udm$"] = dt.udm;
-          item[field.name] = dt.localt;
-        } else if ("DateTime" === field.ux.kind) {
-          const dt = util$1.dateTimeFromUTC(item[field.name]);
-          item[field.name + "_orig$"] = item[field.name];
-          item[field.name + "_udm$"] = dt.udm;
-          item[field.name] = dt.locald + "T" + dt.localt;
-        } else if ("Slider" === field.ux.kind) {
-          item[field.name + "_orig$"] = item[field.name];
-          item[field.name] = Number(item[field.name]) / 60;
-        }
-      }
-      console.log("VxgBasicLedPlugin", "modify:edit", "item", item);
-      return item;
+      return __spreadProps(__spreadValues({}, msg), { item });
     }).add("aim:app,on:BasicLed,modify:save", function modify_save(msg) {
       let item = msg.data;
       let fields = msg.fields;
@@ -66003,6 +66081,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       item = __spreadValues({}, item);
       for (const field of fields) {
         if ("Slider" === field.ux.kind) {
+          console.log("VxgBasicLedPlugin", "modify:save", "field", field);
+          console.log("VxgBasicLedPlugin", "modify:save", "item", item);
           item[field.name] = Number(item[field.name]) * 60;
         }
       }

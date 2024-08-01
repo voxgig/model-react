@@ -59,12 +59,14 @@ const makeResolver = (seneca: any, spec: any) =>
         )
 
       const values = entity.data$(false)
+      // console.log('makeResolver', 'data', data)
+      // console.log('makeResolver', 'values', values)
       const out = {
         values,
         errors,
       }
 
-      console.log('makeResolver', out)
+      // console.log('makeResolver', 'out', out)
 
       return out
     },
@@ -107,30 +109,51 @@ function BasicEntityEdit (props: any) {
 
   let item = useSelector((state: any) => selectItem(state))
 
-  if (item && name) {
-    console.log('BasicEntityEdit', 'useEffect', 'modify:edit')
-    item = seneca.direct('aim:app,on:BasicLed,modify:edit', {
-      view: name,
-      item,
-      fields,
-    })
-  }
+  // if (item && name) {
+  //   console.log('BasicEntityEdit', 'useEffect', 'modify:edit')
+  //   item = seneca.direct('aim:app,on:BasicLed,modify:edit', {
+  //     view: name,
+  //     item,
+  //     fields,
+  //   })
+  // }
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (item && name) {
+        // console.log('BasicEntityEdit', 'useEffect', 'modify:edit', 'init')
+        const res = await seneca.direct('aim:app,on:BasicLed,modify:edit', {
+          view: name,
+          item,
+          fields,
+        })
+        item = res.item
+        // console.log('BasicEntityEdit', 'useEffect', 'modify:edit', 'got-item')
+        // console.log('BasicEntityEdit', 'useEffect', 'resetting')
+        reset(item)
+      }
+    }
+
+    fetchData()
+  }, [item, fields, name])
+
+  useEffect(() => {
+    console.log('BasicEntityEdit', 'useEffect', 'reset', item)
+  }, [item])
 
   const params: any = useParams()
 
   useEffect(() => {
     if (ready) {
-      console.log('BasicEntityEdit', 'useEffect', 'ready')
+      // console.log('BasicEntityEdit', 'useEffect', 'ready')
       if (null == item && null != params.item) {
-        console.log('BasicEntityEdit', 'useEffect', 'edit:item')
+        // console.log('BasicEntityEdit', 'useEffect', 'edit:item')
         seneca.act('aim:app,on:BasicLed,edit:item', {
           view: name,
           fields,
           item_id: params.item,
         })
       }
-      console.log('BasicEntityEdit', 'useEffect', 'reset(item)')
-      reset(item)
     }
   }, [null == item, ready])
 
@@ -149,12 +172,17 @@ function BasicEntityEdit (props: any) {
   })
 
   const onSubmit = (data: any) => {
-    const formItem = seneca.direct('aim:app,on:BasicLed,modify:save', {
+    console.log('BasicEntityEdit', 'onSubmit', 'data', data)
+    const modifiedData = seneca.direct('aim:app,on:BasicLed,modify:save', {
       view: name,
       data,
       fields,
     })
-    seneca.act('aim:app,on:BasicLed,save:item', { view: name, data: formItem })
+    // console.log('BasicEntityEdit', 'onSubmit', 'formItem', formItem)
+    seneca.act('aim:app,on:BasicLed,save:item', {
+      view: name,
+      data: modifiedData,
+    })
   }
 
   return (

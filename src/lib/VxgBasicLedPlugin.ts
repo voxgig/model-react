@@ -92,38 +92,13 @@ function VxgBasicLedPlugin (this: any, options: any) {
 
     .add('aim:app,on:BasicLed,modify:edit', function modify_edit (msg: any) {
       let item = msg.item
-      let fields = msg.fields
+      // let fields = msg.fields
 
       if (null == item) return item
 
       item = { ...item }
 
-      // This code does not belong here
-      for (const field of fields) {
-        if ('Date' === field.ux.kind) {
-          const dt = util.dateTimeFromUTC(item[field.name])
-          item[field.name + '_orig$'] = item[field.name]
-          item[field.name + '_udm$'] = dt.udm
-          item[field.name] = dt.locald
-        } else if ('Time' === field.ux.kind) {
-          const dt = util.dateTimeFromUTC(item[field.name])
-          item[field.name + '_orig$'] = item[field.name]
-          item[field.name + '_udm$'] = dt.udm
-          item[field.name] = dt.localt
-        } else if ('DateTime' === field.ux.kind) {
-          const dt = util.dateTimeFromUTC(item[field.name])
-          item[field.name + '_orig$'] = item[field.name]
-          item[field.name + '_udm$'] = dt.udm
-          item[field.name] = dt.locald + 'T' + dt.localt
-        } else if ('Slider' === field.ux.kind) {
-          item[field.name + '_orig$'] = item[field.name]
-          item[field.name] = Number(item[field.name]) / 60
-        }
-      }
-
-      console.log('VxgBasicLedPlugin', 'modify:edit', 'item', item)
-
-      return item
+      return { ...msg, item }
     })
 
     .add('aim:app,on:BasicLed,modify:save', function modify_save (msg: any) {
@@ -137,6 +112,8 @@ function VxgBasicLedPlugin (this: any, options: any) {
       // This code does not belong here
       for (const field of fields) {
         if ('Slider' === field.ux.kind) {
+          console.log('VxgBasicLedPlugin', 'modify:save', 'field', field)
+          console.log('VxgBasicLedPlugin', 'modify:save', 'item', item)
           item[field.name] = Number(item[field.name]) * 60
         }
       }
