@@ -160,7 +160,9 @@ function VxgBasicLedPlugin (this: any, options: any) {
           .reduce((a: any, n: any[]) => ((a[n[0]] = msg.data[n[0]]), a), {})
 
         const item = await seneca.entity(entCanon).save$(data)
-        navigate('/view/' + name + '/edit/' + item.id)
+        // TODO: navigate to edit view
+        // navigate('/view/' + name + '/edit/' + item.id)
+        navigate('/view/' + name)
       }
     )
 
