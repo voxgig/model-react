@@ -163,14 +163,17 @@ function BasicEntityEdit (props: any) {
     resolver,
   })
 
-  const onSubmit = (data: any) => {
+  const onSubmit = async (data: any) => {
     console.log('BasicEntityEdit', 'onSubmit', 'data', data)
-    const modifiedData = seneca.direct('aim:app,on:BasicLed,modify:save', {
-      view: name,
-      data,
-      fields,
-    })
-    // console.log('BasicEntityEdit', 'onSubmit', 'formItem', formItem)
+    const modifiedData = await seneca.direct(
+      'aim:app,on:BasicLed,modify:save',
+      {
+        view: name,
+        data,
+        fields,
+      }
+    )
+    // console.log('BasicEntityEdit', 'onSubmit', 'modifiedData', modifiedData)
     seneca.act('aim:app,on:BasicLed,save:item', {
       view: name,
       data: modifiedData,

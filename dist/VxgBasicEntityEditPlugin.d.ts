@@ -7,6 +7,8 @@ declare function VxgBasicEntityEditPlugin(this: any, options: any): {
         };
         util: {
             dateTimeFromUTC: (utc: number, tz?: string) => any;
+            localTimeToUTC: (timeString: string, tz?: string) => number;
+            localDateTimeToUTC: (dateOrDateTimeString: string, tz?: string) => number;
         };
     };
 };

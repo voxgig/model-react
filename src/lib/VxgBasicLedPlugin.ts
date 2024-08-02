@@ -103,22 +103,10 @@ function VxgBasicLedPlugin (this: any, options: any) {
 
     .add('aim:app,on:BasicLed,modify:save', function modify_save (msg: any) {
       let item = msg.data
-      let fields = msg.fields
 
       if (null == item) return item
 
       item = { ...item }
-
-      // This code does not belong here
-      for (const field of fields) {
-        if ('Slider' === field.ux.kind) {
-          // console.log('VxgBasicLedPlugin', 'modify:save', 'field', field)
-          // console.log('VxgBasicLedPlugin', 'modify:save', 'item', item)
-          item[field.name] = Number(item[field.name]) * 60
-        }
-      }
-
-      console.log('modify:save', 'item', item)
 
       return item
     })

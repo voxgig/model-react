@@ -64890,10 +64890,10 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const { spec } = props;
     const basicEntityAutocompleteField = BasicEntitySliderFieldSpecShape(spec);
     const { control, field, getValues, errors } = basicEntityAutocompleteField;
-    const val = getValues(field.name + "_uival$");
+    const val = getValues(field.name);
     const err = errors[field.name];
     const { field: controllerField } = useController({
-      name: field.name + "_uival$",
+      name: field.name,
       control,
       defaultValue: val || field.ux.min
     });
@@ -65683,8 +65683,21 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
                 const dt = util$1.dateTimeFromUTC(item[field.name]);
                 item[field.name + "_orig$"] = item[field.name];
                 item[field.name + "_udm$"] = dt.udm;
-                item[field.name] = dt.localt;
+                item[field.name] = dt.locald;
+                console.log("modify_edit_Date", item[field.name]);
               }
+              return item;
+            });
+          }
+        ).add(
+          "aim:app,on:BasicLed,modify:save",
+          { view: spec.name },
+          function modify_save_Date(msg) {
+            return __async(this, null, function* () {
+              const out = yield this.prior(msg);
+              let item = __spreadValues({}, out);
+              const dt = util$1.localDateTimeToUTC(item[field.name]);
+              item[field.name] = dt;
               return item;
             });
           }
@@ -65701,7 +65714,20 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
                 item[field.name + "_orig$"] = item[field.name];
                 item[field.name + "_udm$"] = dt.udm;
                 item[field.name] = dt.localt;
+                console.log("modify_edit_Time", item[field.name]);
               }
+              return item;
+            });
+          }
+        ).add(
+          "aim:app,on:BasicLed,modify:save",
+          { view: spec.name },
+          function modify_save_Time(msg) {
+            return __async(this, null, function* () {
+              const out = yield this.prior(msg);
+              let item = __spreadValues({}, out);
+              const dt = util$1.localTimeToUTC(item[field.name]);
+              item[field.name] = dt;
               return item;
             });
           }
@@ -65712,7 +65738,6 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
           function modify_edit_Datetime(msg) {
             return __async(this, null, function* () {
               const out = yield this.prior(msg);
-              console.log("out", out);
               let item = __spreadValues({}, out);
               if (!item[field.name + "_orig$"]) {
                 const dt = util$1.dateTimeFromUTC(item[field.name]);
@@ -65720,6 +65745,18 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
                 item[field.name + "_udm$"] = dt.udm;
                 item[field.name] = dt.locald + "T" + dt.localt;
               }
+              return item;
+            });
+          }
+        ).add(
+          "aim:app,on:BasicLed,modify:save",
+          { view: spec.name },
+          function modify_save_Datetime(msg) {
+            return __async(this, null, function* () {
+              const out = yield this.prior(msg);
+              let item = __spreadValues({}, out);
+              const dt = util$1.localDateTimeToUTC(item[field.name]);
+              item[field.name] = dt;
               return item;
             });
           }
@@ -65732,9 +65769,21 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
             return __async(this, null, function* () {
               const out = yield this.prior(msg);
               let item = __spreadValues({}, out);
-              if (!item[field.name + "_uival$"]) {
-                item[field.name + "_uival$"] = Number(item[field.name]) / 60;
+              if (!item[field.name + "_orig$"]) {
+                item[field.name + "_orig$"] = item[field.name];
+                item[field.name] = Number(item[field.name]) / 60;
               }
+              return item;
+            });
+          }
+        ).add(
+          "aim:app,on:BasicLed,modify:save",
+          { view: spec.name },
+          function modify_save_Slider(msg) {
+            return __async(this, null, function* () {
+              const out = yield this.prior(msg);
+              let item = __spreadValues({}, out);
+              item[field.name] = Number(item[field.name]) * 60;
               return item;
             });
           }
@@ -65792,6 +65841,41 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       out.locald = `${year}-${month}-${day}`;
       out.localt = `${hour}:${minute}:${second}`;
       return out;
+    },
+    localTimeToUTC: (timeString, tz) => {
+      tz = tz || Intl.DateTimeFormat().resolvedOptions().timeZone;
+      const now = /* @__PURE__ */ new Date();
+      const [hours, minutes, seconds] = timeString.split(":").map(Number);
+      const localDate = new Date(
+        now.getFullYear(),
+        now.getMonth(),
+        now.getDate(),
+        hours,
+        minutes,
+        seconds
+      );
+      const utcTimestamp = Date.UTC(
+        localDate.getFullYear(),
+        localDate.getMonth(),
+        localDate.getDate(),
+        localDate.getHours(),
+        localDate.getMinutes(),
+        localDate.getSeconds()
+      );
+      const tzOffset = new Date(utcTimestamp).getTimezoneOffset() * 6e4;
+      return utcTimestamp - tzOffset;
+    },
+    localDateTimeToUTC: (dateOrDateTimeString, tz) => {
+      const date = new Date(dateOrDateTimeString);
+      if (isNaN(date.getTime())) {
+        throw new Error("Invalid date or datetime string");
+      }
+      if (tz) {
+        const tzDate = new Date(date.toLocaleString("en-GB", { timeZone: tz }));
+        const offset2 = date.getTime() - tzDate.getTime();
+        return date.getTime() + offset2;
+      }
+      return date.getTime();
     }
   };
   Object.assign(VxgBasicEntityEditPlugin, {
@@ -65809,7 +65893,6 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       const { ent, name } = spec;
       const view = name;
       let entity = seneca.entity(ent);
-      console.log("makeResolver", "data", data);
       entity = entity.make$().data$(data);
       let errors = entity.valid$({ errors: true });
       seneca.act("aim:app,on:BasicLed,entity:valid", {
@@ -65901,18 +65984,21 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       mode: "onChange",
       resolver
     });
-    const onSubmit = (data) => {
+    const onSubmit = (data) => __async(this, null, function* () {
       console.log("BasicEntityEdit", "onSubmit", "data", data);
-      const modifiedData = seneca.direct("aim:app,on:BasicLed,modify:save", {
-        view: name,
-        data,
-        fields
-      });
+      const modifiedData = yield seneca.direct(
+        "aim:app,on:BasicLed,modify:save",
+        {
+          view: name,
+          data,
+          fields
+        }
+      );
       seneca.act("aim:app,on:BasicLed,save:item", {
         view: name,
         data: modifiedData
       });
-    };
+    });
     return /* @__PURE__ */ jsxRuntimeExports.jsx(material.Box, { className: "vxg-BasicEntityEdit", children: item ? /* @__PURE__ */ jsxRuntimeExports.jsxs(
       "form",
       {
@@ -66090,17 +66176,8 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
       return item;
     }).add("aim:app,on:BasicLed,modify:save", function modify_save(msg) {
       let item = msg.data;
-      let fields = msg.fields;
       if (null == item) return item;
       item = __spreadValues({}, item);
-      for (const field of fields) {
-        if ("Slider" === field.ux.kind) {
-          console.log("VxgBasicLedPlugin", "modify:save", "field", field);
-          console.log("VxgBasicLedPlugin", "modify:save", "item", item);
-          item[field.name] = Number(item[field.name + "_uival$"]) * 60;
-        }
-      }
-      console.log("modify:save", "item", item);
       return item;
     }).message(
       "aim:app,on:BasicLed,edit:item,redux$:true",
