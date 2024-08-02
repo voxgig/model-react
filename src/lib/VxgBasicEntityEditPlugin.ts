@@ -36,9 +36,7 @@ function VxgBasicEntityEditPlugin (this: any, options: any) {
         async function modify_edit_Date (this: any, msg: any) {
           const out = await this.prior(msg)
 
-          let { item } = out
-
-          item = { ...item }
+          let item = { ...out }
 
           if (!item[field.name + '_orig$']) {
             const dt = util.dateTimeFromUTC(item[field.name])
@@ -47,7 +45,7 @@ function VxgBasicEntityEditPlugin (this: any, options: any) {
             item[field.name] = dt.localt
           }
 
-          return { ...msg, item }
+          return item
         }
       )
     } else if ('Time' === field.ux.kind) {
@@ -56,9 +54,7 @@ function VxgBasicEntityEditPlugin (this: any, options: any) {
         async function modify_edit_Time (this: any, msg: any) {
           const out = await this.prior(msg)
 
-          let { item } = out
-
-          item = { ...item }
+          let item = { ...out }
 
           if (!item[field.name + '_orig$']) {
             const dt = util.dateTimeFromUTC(item[field.name])
@@ -67,7 +63,7 @@ function VxgBasicEntityEditPlugin (this: any, options: any) {
             item[field.name] = dt.localt
           }
 
-          return { ...msg, item }
+          return item
         }
       )
     } else if ('DateTime' === field.ux.kind) {
@@ -76,9 +72,7 @@ function VxgBasicEntityEditPlugin (this: any, options: any) {
         async function modify_edit_Datetime (this: any, msg: any) {
           const out = await this.prior(msg)
 
-          let { item } = out
-
-          item = { ...item }
+          let item = { ...out }
 
           if (!item[field.name + '_orig$']) {
             const dt = util.dateTimeFromUTC(item[field.name])
@@ -87,26 +81,26 @@ function VxgBasicEntityEditPlugin (this: any, options: any) {
             item[field.name] = dt.locald + 'T' + dt.localt
           }
 
-          return { ...msg, item }
+          return item
         }
       )
     } else if ('Slider' === field.ux.kind) {
       // console.log('VxgBasicEntityEditPlugin', 'Slider')
       seneca.add(
-        'aim:app,on:BasicLed,modify:edit,view:' + spec.name,
+        'aim:app,on:BasicLed,modify:edit',
+        { view: spec.name },
         async function modify_edit_Slider (this: any, msg: any) {
           const out = await this.prior(msg)
 
-          let { item } = out
-
-          item = { ...item }
+          let item = { ...out }
 
           if (!item[field.name + '_orig$']) {
             item[field.name + '_orig$'] = item[field.name]
             item[field.name] = Number(item[field.name]) / 60
           }
 
-          return { ...msg, item }
+          // return { ...msg, item }
+          return item
         }
       )
     }

@@ -116,28 +116,18 @@ function BasicEntityEdit (props: any) {
 
   useEffect(() => {
     const fetchData = async () => {
-      console.log(
-        'BasicEntityEdit',
-        'useEffect',
-        'modify:edit',
-        'init',
-        'view',
-        name,
-        'item',
-        item?.title
-      )
+      console.log('BEE', 'effect', 'mod:edit', 'init', 'view', name)
+      console.log('BEE', 'effect', 'mod:edit', 'init', 'item', item?.title)
       if (item && name) {
-        // console.log('BasicEntityEdit', 'useEffect', 'modify:edit', 'init')
-        const res = await seneca.direct('aim:app,on:BasicLed,modify:edit', {
+        // console.log('BEE', 'effect', 'modify:edit', 'init')
+        item = await seneca.direct('aim:app,on:BasicLed,modify:edit', {
           view: name,
           item,
           fields,
         })
-        item = res.item
-        // console.log('BasicEntityEdit', 'useEffect', 'modify:edit', 'got-item')
-        // console.log('BasicEntityEdit', 'useEffect', 'resetting')
+        console.log('BEE', 'effect', 'resetting', item)
+        reset(item)
       }
-      reset(item)
     }
 
     fetchData()

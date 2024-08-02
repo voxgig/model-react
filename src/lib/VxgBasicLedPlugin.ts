@@ -98,7 +98,7 @@ function VxgBasicLedPlugin (this: any, options: any) {
 
       item = { ...item }
 
-      return { ...msg, item }
+      return item
     })
 
     .add('aim:app,on:BasicLed,modify:save', function modify_save (msg: any) {
@@ -112,8 +112,8 @@ function VxgBasicLedPlugin (this: any, options: any) {
       // This code does not belong here
       for (const field of fields) {
         if ('Slider' === field.ux.kind) {
-          console.log('VxgBasicLedPlugin', 'modify:save', 'field', field)
-          console.log('VxgBasicLedPlugin', 'modify:save', 'item', item)
+          // console.log('VxgBasicLedPlugin', 'modify:save', 'field', field)
+          // console.log('VxgBasicLedPlugin', 'modify:save', 'item', item)
           item[field.name] = Number(item[field.name]) * 60
         }
       }
@@ -160,9 +160,7 @@ function VxgBasicLedPlugin (this: any, options: any) {
           .reduce((a: any, n: any[]) => ((a[n[0]] = msg.data[n[0]]), a), {})
 
         const item = await seneca.entity(entCanon).save$(data)
-        // TODO: navigate to edit view
-        // navigate('/view/' + name + '/edit/' + item.id)
-        navigate('/view/' + name)
+        navigate('/view/' + name + '/edit/' + item.id)
       }
     )
 
