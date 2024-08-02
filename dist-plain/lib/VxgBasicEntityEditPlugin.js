@@ -12,7 +12,6 @@ const Shape = (0, gubu_1.Gubu)(Open({
 }), { name: 'BasicEntityEdit' });
 function VxgBasicEntityEditPlugin(options) {
     const seneca = this;
-    console.log('VxgBasicEntityEditPlugin', 'options', options);
     const spec = Shape(options.spec);
     const slot = spec.prefix + spec.name;
     const fields = spec.order.reduce((a, fn) => (fixField(fn, spec.field[fn], spec), a.push(spec.field[fn]), a), []);
@@ -81,6 +80,7 @@ function VxgBasicEntityEditPlugin(options) {
                 slot,
                 fields,
             },
+            util,
         },
     };
 }

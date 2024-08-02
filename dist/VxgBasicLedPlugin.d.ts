@@ -6,9 +6,6 @@ declare function VxgBasicLedPlugin(this: any, options: any): {
             head: any;
             foot: any;
         };
-        util: {
-            dateTimeFromUTC: (utc: number, tz?: string) => any;
-        };
     };
 };
 declare namespace VxgBasicLedPlugin {

@@ -5,6 +5,9 @@ declare function VxgBasicEntityEditPlugin(this: any, options: any): {
             slot: any;
             fields: any;
         };
+        util: {
+            dateTimeFromUTC: (utc: number, tz?: string) => any;
+        };
     };
 };
 export { VxgBasicEntityEditPlugin };

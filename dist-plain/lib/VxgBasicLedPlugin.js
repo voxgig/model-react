@@ -145,49 +145,9 @@ function VxgBasicLedPlugin(options) {
                 head: headSpec,
                 foot: footSpec,
             },
-            util,
         },
     };
 }
-const util = {
-    dateTimeFromUTC: (utc, tz) => {
-        const date = new Date(utc);
-        const iso = date.toISOString();
-        const isod = iso.split('T')[0];
-        const isot = iso.split('T')[1].split('.')[0];
-        // UTC millis into day (since midnight)
-        const udm = date.getUTCHours() * 60 * 60 * 1000 +
-            date.getUTCMinutes() * 60 * 1000 +
-            date.getUTCSeconds() * 1000 +
-            date.getUTCMilliseconds();
-        let out = {
-            utc,
-            date,
-            isod,
-            isot,
-            udm,
-        };
-        tz = tz || Intl.DateTimeFormat().resolvedOptions().timeZone;
-        const dateFormatter = new Intl.DateTimeFormat('en-GB', {
-            timeZone: tz,
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit',
-        });
-        const timeFormatter = new Intl.DateTimeFormat('en-GB', {
-            timeZone: tz,
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit',
-            hour12: false,
-        });
-        const [{ value: day }, , { value: month }, , { value: year }] = dateFormatter.formatToParts(date);
-        const [{ value: hour }, , { value: minute }, , { value: second }] = timeFormatter.formatToParts(date);
-        out.locald = `${year}-${month}-${day}`;
-        out.localt = `${hour}:${minute}:${second}`;
-        return out;
-    },
-};
 VxgBasicLedPlugin.defaults = {
     spec: {},
     navigate: Function,

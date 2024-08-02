@@ -121,6 +121,7 @@ function VxgBasicEntityEditPlugin (this: any, options: any) {
         slot,
         fields,
       },
+      util,
     },
   }
 }
