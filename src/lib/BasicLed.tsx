@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate, useParams, Routes, Route } from 'react-router-dom'
-import { Box } from '@mui/material'
+import { Alert, Box } from '@mui/material'
+import CheckIcon from '@mui/icons-material/Check'
 
 import { Gubu } from 'gubu'
 
@@ -22,8 +23,8 @@ function BasicLed (props: any) {
   const { ctx } = props
   const { seneca } = ctx()
   const name = props.spec.name
-  // TODO: const cid =  seneca.util.nid() -
-  // tag = props.spec.name +
+  const uniqueIdRef = useRef(seneca.util.Nid())
+  const cid = name // + '-' + uniqueIdRef.current
 
   const navigate = useNavigate()
 
@@ -32,7 +33,7 @@ function BasicLed (props: any) {
 
   if (!ready) {
     seneca.use({
-      tag: name,
+      tag: cid,
       define: VxgBasicLedPlugin,
       options: {
         spec: props.spec,
@@ -42,7 +43,7 @@ function BasicLed (props: any) {
   }
 
   const { head, list, edit, foot } =
-    seneca.export('VxgBasicLedPlugin$' + name + '/spec') || {}
+    seneca.export('VxgBasicLedPlugin$' + cid + '/spec') || {}
 
   return ready ? (
     <Box className='vxg-BasicLed'>
