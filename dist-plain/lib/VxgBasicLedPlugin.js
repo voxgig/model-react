@@ -67,23 +67,13 @@ function VxgBasicLedPlugin(options) {
         if (null == item)
             return item;
         item = { ...item };
-        return { ...msg, item };
+        return item;
     })
         .add('aim:app,on:BasicLed,modify:save', function modify_save(msg) {
         let item = msg.data;
-        let fields = msg.fields;
         if (null == item)
             return item;
         item = { ...item };
-        // This code does not belong here
-        for (const field of fields) {
-            if ('Slider' === field.ux.kind) {
-                console.log('VxgBasicLedPlugin', 'modify:save', 'field', field);
-                console.log('VxgBasicLedPlugin', 'modify:save', 'item', item);
-                item[field.name] = Number(item[field.name]) * 60;
-            }
-        }
-        console.log('modify:save', 'item', item);
         return item;
     })
         .message('aim:app,on:BasicLed,edit:item,redux$:true', { item_id: String }, async function (msg, meta) {
@@ -109,9 +99,7 @@ function VxgBasicLedPlugin(options) {
             .filter((n) => false !== n[1].ux.edit)
             .reduce((a, n) => ((a[n[0]] = msg.data[n[0]]), a), {});
         const item = await seneca.entity(entCanon).save$(data);
-        // TODO: navigate to edit view
-        // navigate('/view/' + name + '/edit/' + item.id)
-        navigate('/view/' + name);
+        navigate('/view/' + name + '/edit/' + item.id);
     });
     seneca.prepare(async function () {
         this.act('aim:app,on:view,init:state,direct$:true', { view: name });

@@ -7,7 +7,7 @@ export declare function resolveDefault(cat: {
     multiple: number;
     item: any;
     default: string;
-}): string | any[];
+}): any;
 export declare function resolveValue(value: any, cat: {
     multiple: number;
     item: Record<string, {

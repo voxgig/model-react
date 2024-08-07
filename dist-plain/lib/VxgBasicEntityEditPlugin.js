@@ -17,58 +17,88 @@ function VxgBasicEntityEditPlugin(options) {
     const fields = spec.order.reduce((a, fn) => (fixField(fn, spec.field[fn], spec), a.push(spec.field[fn]), a), []);
     for (const field of fields) {
         if ('Date' === field.ux.kind) {
-            seneca.add('aim:app,on:BasicLed,modify:edit,view:' + spec.name, async function modify_edit_Date(msg) {
+            seneca
+                .add('aim:app,on:BasicLed,modify:edit,view:' + spec.name, async function modify_edit_Date(msg) {
                 const out = await this.prior(msg);
-                let { item } = out;
-                item = { ...item };
+                let item = { ...out };
                 if (!item[field.name + '_orig$']) {
                     const dt = util.dateTimeFromUTC(item[field.name]);
                     item[field.name + '_orig$'] = item[field.name];
                     item[field.name + '_udm$'] = dt.udm;
-                    item[field.name] = dt.localt;
+                    item[field.name] = dt.locald;
+                    console.log('modify_edit_Date', item[field.name]);
                 }
-                return { ...msg, item };
+                return item;
+            })
+                .add('aim:app,on:BasicLed,modify:save', { view: spec.name }, async function modify_save_Date(msg) {
+                const out = await this.prior(msg);
+                let item = { ...out };
+                const dt = util.localDateTimeToUTC(item[field.name]);
+                item[field.name] = dt;
+                return item;
             });
         }
         else if ('Time' === field.ux.kind) {
-            seneca.add('aim:app,on:BasicLed,modify:edit,view:' + spec.name, async function modify_edit_Time(msg) {
+            seneca
+                .add('aim:app,on:BasicLed,modify:edit,view:' + spec.name, async function modify_edit_Time(msg) {
                 const out = await this.prior(msg);
-                let { item } = out;
-                item = { ...item };
+                let item = { ...out };
                 if (!item[field.name + '_orig$']) {
                     const dt = util.dateTimeFromUTC(item[field.name]);
                     item[field.name + '_orig$'] = item[field.name];
                     item[field.name + '_udm$'] = dt.udm;
                     item[field.name] = dt.localt;
+                    console.log('modify_edit_Time', item[field.name]);
                 }
-                return { ...msg, item };
+                return item;
+            })
+                .add('aim:app,on:BasicLed,modify:save', { view: spec.name }, async function modify_save_Time(msg) {
+                const out = await this.prior(msg);
+                let item = { ...out };
+                const dt = util.localTimeToUTC(item[field.name]);
+                item[field.name] = dt;
+                return item;
             });
         }
         else if ('DateTime' === field.ux.kind) {
-            seneca.add('aim:app,on:BasicLed,modify:edit,view:' + spec.name, async function modify_edit_Datetime(msg) {
+            seneca
+                .add('aim:app,on:BasicLed,modify:edit,view:' + spec.name, async function modify_edit_Datetime(msg) {
                 const out = await this.prior(msg);
-                let { item } = out;
-                item = { ...item };
+                let item = { ...out };
                 if (!item[field.name + '_orig$']) {
                     const dt = util.dateTimeFromUTC(item[field.name]);
                     item[field.name + '_orig$'] = item[field.name];
                     item[field.name + '_udm$'] = dt.udm;
                     item[field.name] = dt.locald + 'T' + dt.localt;
                 }
-                return { ...msg, item };
+                return item;
+            })
+                .add('aim:app,on:BasicLed,modify:save', { view: spec.name }, async function modify_save_Datetime(msg) {
+                const out = await this.prior(msg);
+                let item = { ...out };
+                const dt = util.localDateTimeToUTC(item[field.name]);
+                item[field.name] = dt;
+                return item;
             });
         }
         else if ('Slider' === field.ux.kind) {
             // console.log('VxgBasicEntityEditPlugin', 'Slider')
-            seneca.add('aim:app,on:BasicLed,modify:edit,view:' + spec.name, async function modify_edit_Slider(msg) {
+            seneca
+                .add('aim:app,on:BasicLed,modify:edit', { view: spec.name }, async function modify_edit_Slider(msg) {
                 const out = await this.prior(msg);
-                let { item } = out;
-                item = { ...item };
+                let item = { ...out };
                 if (!item[field.name + '_orig$']) {
                     item[field.name + '_orig$'] = item[field.name];
                     item[field.name] = Number(item[field.name]) / 60;
                 }
-                return { ...msg, item };
+                // return { ...msg, item }
+                return item;
+            })
+                .add('aim:app,on:BasicLed,modify:save', { view: spec.name }, async function modify_save_Slider(msg) {
+                const out = await this.prior(msg);
+                let item = { ...out };
+                item[field.name] = Number(item[field.name]) * 60;
+                return item;
             });
         }
     }
@@ -127,6 +157,30 @@ const util = {
         out.locald = `${year}-${month}-${day}`;
         out.localt = `${hour}:${minute}:${second}`;
         return out;
+    },
+    localTimeToUTC: (timeString, tz) => {
+        tz = tz || Intl.DateTimeFormat().resolvedOptions().timeZone;
+        const now = new Date();
+        const [hours, minutes, seconds] = timeString.split(':').map(Number);
+        const localDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes, seconds);
+        const utcTimestamp = Date.UTC(localDate.getFullYear(), localDate.getMonth(), localDate.getDate(), localDate.getHours(), localDate.getMinutes(), localDate.getSeconds());
+        const tzOffset = new Date(utcTimestamp).getTimezoneOffset() * 60000;
+        return utcTimestamp - tzOffset;
+    },
+    localDateTimeToUTC: (dateOrDateTimeString, tz) => {
+        const date = new Date(dateOrDateTimeString);
+        // Check if the date is valid
+        if (isNaN(date.getTime())) {
+            throw new Error('Invalid date or datetime string');
+        }
+        // If a timezone is provided, adjust the date
+        if (tz) {
+            const tzDate = new Date(date.toLocaleString('en-GB', { timeZone: tz }));
+            const offset = date.getTime() - tzDate.getTime();
+            return date.getTime() + offset;
+        }
+        // If no timezone is provided, assume the input is already in local time
+        return date.getTime();
     },
 };
 Object.assign(VxgBasicEntityEditPlugin, {

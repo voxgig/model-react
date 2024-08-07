@@ -1690,26 +1690,38 @@ var gubu_min = gubu_min$2.exports;
 var gubu_minExports = gubu_min$2.exports;
 const gubu_min$1 = /* @__PURE__ */ getDefaultExportFromCjs(gubu_minExports);
 function cmap(o, p) {
-  return Object.entries(o).reduce((r2, n, _2) => (_2 = Object.entries(p).reduce((s, m) => cmap.FILTER === s ? s : (s[m[0]] = // transfom(val,key,current,parentkey,parent)
-  "function" === typeof m[1] ? m[1](n[1][m[0]], {
-    skey: m[0],
-    self: n[1],
-    key: n[0],
-    parent: o
-  }) : m[1], cmap.FILTER === s[m[0]] ? cmap.FILTER : s), {}), cmap.FILTER === _2 ? 0 : r2[n[0]] = _2, r2), {});
+  return Object.entries(o).reduce(
+    (r2, n, _2) => (_2 = Object.entries(p).reduce(
+      (s, m) => cmap.FILTER === s ? s : (s[m[0]] = // transfom(val,key,current,parentkey,parent)
+      "function" === typeof m[1] ? m[1](n[1][m[0]], {
+        skey: m[0],
+        self: n[1],
+        key: n[0],
+        parent: o
+      }) : m[1], cmap.FILTER === s[m[0]] ? cmap.FILTER : s),
+      {}
+    ), cmap.FILTER === _2 ? 0 : r2[n[0]] = _2, r2),
+    {}
+  );
 }
 cmap.COPY = (x) => x;
 cmap.FILTER = (x) => "function" === typeof x ? (y, p, _2) => (_2 = x(y, p), Array.isArray(_2) ? !_2[0] ? _2[1] : cmap.FILTER : _2) : x ? x : cmap.FILTER;
 cmap.KEY = (_2, p) => p.key;
 function vmap(o, p) {
-  return Object.entries(o).reduce((r2, n, _2) => (_2 = Object.entries(p).reduce((s, m) => vmap.FILTER === s ? s : (s[m[0]] = // transfom(val,key,current,parentkey,parent)
-  // 'function' === typeof m[1] ? m[1](n[1][m[0]], m[0], n[1], n[0], o) : m[1]
-  "function" === typeof m[1] ? m[1](n[1][m[0]], {
-    skey: m[0],
-    self: n[1],
-    key: n[0],
-    parent: o
-  }) : m[1], vmap.FILTER === s[m[0]] ? vmap.FILTER : s), {}), vmap.FILTER === _2 ? 0 : r2.push(_2), r2), []);
+  return Object.entries(o).reduce(
+    (r2, n, _2) => (_2 = Object.entries(p).reduce(
+      (s, m) => vmap.FILTER === s ? s : (s[m[0]] = // transfom(val,key,current,parentkey,parent)
+      // 'function' === typeof m[1] ? m[1](n[1][m[0]], m[0], n[1], n[0], o) : m[1]
+      "function" === typeof m[1] ? m[1](n[1][m[0]], {
+        skey: m[0],
+        self: n[1],
+        key: n[0],
+        parent: o
+      }) : m[1], vmap.FILTER === s[m[0]] ? vmap.FILTER : s),
+      {}
+    ), vmap.FILTER === _2 ? 0 : r2.push(_2), r2),
+    []
+  );
 }
 vmap.COPY = (x) => x;
 vmap.FILTER = (x) => "function" === typeof x ? (y, p, _2) => (_2 = x(y, p), Array.isArray(_2) ? !_2[0] ? _2[1] : vmap.FILTER : _2) : x ? x : vmap.FILTER;
@@ -1720,6 +1732,44 @@ function searchParamsToObject(searchParams) {
     params[key] = value;
   }
   return params;
+}
+function resvalue(value, cat, mapFn) {
+  const { item: items, multiple } = cat;
+  if (Object.keys(items).length === 0) {
+    return multiple === 1 ? "" : [];
+  }
+  if (Array.isArray(value)) {
+    return multiple === 1 && value[0] ? value[0] : value.slice(0, multiple);
+  }
+  if (typeof value === "object") {
+    return multiple === 1 ? value : [value];
+  }
+  const splitValue = value.split(",");
+  const mapValue = (val) => items[val] ? mapFn(val, items[val]) : void 0;
+  switch (multiple) {
+    case 1:
+      return mapValue(splitValue[0]) || "";
+    case -1:
+      return splitValue.map(mapValue).filter(Boolean) || [];
+    default:
+      return splitValue.slice(0, multiple).map(mapValue).filter(Boolean);
+  }
+}
+function resdefault(cat, mapFn) {
+  const { multiple, item: items, default: defaultValues } = cat;
+  if (Object.keys(items).length === 0) {
+    return multiple === 1 ? "" : [];
+  }
+  const defaultItems = defaultValues.split(",");
+  const mapResolvedDefault = (list) => list.map((val) => items[val] ? mapFn(val, items[val]) : void 0);
+  switch (multiple) {
+    case 1:
+      return defaultItems[0] ? mapFn(defaultItems[0], items[defaultItems[0]]) : "";
+    case -1:
+      return mapResolvedDefault(defaultItems).filter(Boolean) || [];
+    default:
+      return mapResolvedDefault(defaultItems.slice(0, multiple)).filter(Boolean) || [];
+  }
 }
 function VxgBasicAdminPlugin() {
   const seneca = this;
@@ -64791,62 +64841,20 @@ function BasicEntityAutocompleteField(props) {
     /* @__PURE__ */ jsxRuntimeExports.jsx(BasicEntityFieldError, { err })
   ] }, `${field.id}-box`);
 }
-function resolveCategories$2(cat) {
-  return Object.keys(cat.item).map((key) => {
-    var _a, _b;
-    return {
-      title: (_b = (_a = cat.item) == null ? void 0 : _a[key]) == null ? void 0 : _b.title,
-      key
-    };
-  });
-}
+const resolveCategories$2 = ({
+  item
+}) => Object.entries(item).map(([key, { title }]) => ({ key, title }));
 function resolveDefault$2(cat) {
-  var _a;
-  const { multiple, item: items, default: defaultValues } = cat;
-  if (Object.keys(items).length === 0) {
-    return multiple === 1 ? "" : [];
-  }
-  const defaultItems = defaultValues.split(",");
-  const mapResolvedDefault = (list) => list.map((val) => {
-    var _a2;
-    return {
-      title: (_a2 = items[val]) == null ? void 0 : _a2.title,
-      key: val
-    };
-  });
-  switch (multiple) {
-    case 1:
-      return defaultItems[0] ? {
-        key: defaultItems[0],
-        title: (_a = items[defaultItems[0]]) == null ? void 0 : _a.title
-      } : "";
-    case -1:
-      return mapResolvedDefault(defaultItems) || [];
-    default:
-      return mapResolvedDefault(defaultItems.slice(0, multiple)) || [];
-  }
+  return resdefault(cat, (val, item) => ({
+    key: val,
+    title: item.title
+  }));
 }
 function resolveValue$1(value, cat) {
-  const { item: items, multiple } = cat;
-  if (Object.keys(items).length === 0) {
-    return multiple === 1 ? "" : [];
-  }
-  if (Array.isArray(value)) {
-    return multiple === 1 && value[0] ? value[0] : value.slice(0, multiple);
-  }
-  if (typeof value === "object") {
-    return multiple === 1 ? value : [value];
-  }
-  const mapValue = (val) => items[val] ? { key: val, title: items[val].title } : void 0;
-  const splitValue = value.split(",");
-  switch (multiple) {
-    case 1:
-      return mapValue(splitValue[0]) || "";
-    case -1:
-      return splitValue.map(mapValue).filter(Boolean) || [];
-    default:
-      return splitValue.slice(0, multiple).map(mapValue).filter(Boolean);
-  }
+  return resvalue(value, cat, (val, item) => ({
+    key: val,
+    title: item.title
+  }));
 }
 const CMPNAME$l = "BasicEntitySliderField";
 const { Open: Open$k } = gubu_minExports.Gubu;
@@ -65392,42 +65400,10 @@ function resolveCategories(cat) {
   });
 }
 function resolveDefault(cat) {
-  const { multiple, item: items, default: defaultValues } = cat;
-  if (Object.keys(items).length === 0) {
-    return multiple === 1 ? "" : [];
-  }
-  const defaultItems = defaultValues.split(",");
-  const mapResolvedDefault = (list) => list.map((val) => items[val] ? val : void 0);
-  switch (multiple) {
-    case 1:
-      return defaultItems[0] ? defaultItems[0] : "";
-    case -1:
-      return mapResolvedDefault(defaultItems).filter(Boolean) || [];
-    default:
-      return mapResolvedDefault(defaultItems.slice(0, multiple)).filter(Boolean) || [];
-  }
+  return resdefault(cat, (val, item) => val);
 }
 function resolveValue(value, cat) {
-  const { item: items, multiple } = cat;
-  if (Object.keys(items).length === 0) {
-    return multiple === 1 ? "" : [];
-  }
-  if (Array.isArray(value)) {
-    return multiple === 1 && value[0] ? value[0] : value.slice(0, multiple);
-  }
-  if (typeof value === "object") {
-    return multiple === 1 ? value : [value];
-  }
-  const mapValue = (val) => items[val] ? val : void 0;
-  const splitValue = value.split(",");
-  switch (multiple) {
-    case 1:
-      return mapValue(splitValue[0]) || "";
-    case -1:
-      return splitValue.map(mapValue).filter(Boolean) || [];
-    default:
-      return splitValue.slice(0, multiple).map(mapValue).filter(Boolean) || [];
-  }
+  return resvalue(value, cat, (val, item) => val);
 }
 const CMPNAME$a = "BasicEntitySliderField";
 const { Open: Open$9 } = gubu_minExports.Gubu;
