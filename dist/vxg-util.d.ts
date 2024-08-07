@@ -11,4 +11,21 @@ declare namespace vmap {
     var KEY: (_: any, p: any) => any;
 }
 declare function searchParamsToObject(searchParams: URLSearchParams): any;
-export { cmap, vmap, searchParamsToObject, };
+declare function resvalue(value: object | any[] | string, cat: {
+    multiple: number;
+    item: Record<string, {
+        title: string;
+    }>;
+}, mapFn: (val: string, item: {
+    title: string;
+}) => any): any;
+declare function resdefault(cat: {
+    multiple: number;
+    item: Record<string, {
+        title: string;
+    }>;
+    default: string;
+}, mapFn: (val: string, item: {
+    title: string;
+}) => any): any;
+export { cmap, vmap, searchParamsToObject, resvalue, resdefault };
