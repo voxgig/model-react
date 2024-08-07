@@ -1,10 +1,9 @@
-import React, { useEffect, useState, useCallback } from 'react'
-
+import React, { useEffect, useState, useCallback, useRef } from 'react'
 import { useSelector } from 'react-redux'
-
 import { useParams } from 'react-router-dom'
 
-import { Box, Grid, Button, Toolbar } from '@mui/material'
+import { Box, Grid, Button, Toolbar, Alert } from '@mui/material'
+import CheckIcon from '@mui/icons-material/Check'
 
 import { useForm } from 'react-hook-form'
 
@@ -12,7 +11,48 @@ import { BasicEntityField } from './BasicEntityField'
 
 import { VxgBasicEntityEditPlugin } from './VxgBasicEntityEditPlugin'
 
+import type { Spec } from './basic-types'
+
+import { Default, Exact, Gubu, Skip } from 'gubu'
+import { VxgBasicEntityFieldPlugin } from './VxgBasicEntityFieldPlugin'
+
 const CMPNAME = 'BasicEntityEdit'
+
+const { Open } = Gubu
+const BasicEntityEditSpecShape = Gubu(
+  Open({
+    field: Open({
+      id: String,
+      cid: '',
+      name: String,
+      kind: '',
+      label: '',
+      ux: Open({
+        kind: Exact(
+          'Text',
+          'TextBox',
+          'Date',
+          'DateTime',
+          'Time',
+          'Checkbox',
+          'Autocomplete',
+          'Slider',
+          'RadioGroup',
+          'Rating',
+          'Button',
+          'ButtonGroup',
+          'Select',
+          'Switch',
+          'ToggleButton'
+        ),
+        edit: Default(true),
+        rows: Default(3),
+        props: Open({}),
+      }),
+    }),
+  }),
+  { name: CMPNAME }
+)
 
 // TODO: make this debuggable
 // Resolver for react-hook-form
@@ -75,11 +115,15 @@ function BasicEntityEdit (props: any) {
 
   const [plugin, setPlugin] = useState(false)
   const [ready, setReady] = useState(false)
+  const uniqueIdRef = useRef(seneca.util.Nid())
+  const cid = props.spec.name + '-' + uniqueIdRef.current
+
+  // console.log('BasicEntityEdit', 'cid', cid)
 
   useEffect(() => {
     if (!plugin) {
       seneca.use({
-        tag: props.spec.name,
+        tag: cid,
         define: VxgBasicEntityEditPlugin,
         options: {
           spec: props.spec,
@@ -193,6 +237,7 @@ function BasicEntityEdit (props: any) {
                 <BasicEntityField
                   ctx={ctx}
                   spec={{
+                    cid,
                     field,
                     register,
                     getValues,

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 import { BasicEntityCheckboxField } from './BasicEntityCheckboxField'
 import { BasicEntityAutocompleteField } from './BasicEntityAutocompleteField'
@@ -26,6 +26,7 @@ const CMPNAME = 'BasicEntityField'
 const { Open } = Gubu
 const BasicEntityFieldSpecShape = Gubu(
   Open({
+    cid: String,
     field: Open({
       id: String,
       name: String,
@@ -82,12 +83,14 @@ function BasicEntityField (props: any) {
 
   const basicEntityField: Spec = BasicEntityFieldSpecShape(spec)
   const [plugin, setPlugin] = useState(false)
+  const cid = basicEntityField.cid + '-' + basicEntityField.field.name
+
+  // console.log('BasicEntityField', 'cid', cid)
 
   useEffect(() => {
     if (!plugin) {
-      // TODO: plugin name needs to be unique across system (use field.name, view ...)
       seneca.use({
-        tag: basicEntityField.field.name,
+        tag: cid,
         define: VxgBasicEntityFieldPlugin,
         options: {
           spec: {
