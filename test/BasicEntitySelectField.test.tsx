@@ -1,6 +1,10 @@
 import { describe, it, expect, beforeEach } from 'vitest'
 
-import { resolveCategories, resolveDefault, resolveValue } from '../src/lib/BasicEntitySelectField'
+import {
+  resolveCategories,
+  resolveDefault,
+  resolveValue,
+} from '../src/lib/BasicEntitySelectField'
 
 describe('resolveValue', () => {
   let value: any
