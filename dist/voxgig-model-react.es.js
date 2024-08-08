@@ -53,8 +53,8 @@ var __async = (__this, __arguments, generator) => {
   });
 };
 import * as React$1 from "react";
-import React__default, { isValidElement, Children, cloneElement, useMemo, useState, useReducer, useRef, useEffect, useCallback, memo as memo$2, Fragment, useLayoutEffect } from "react";
-import { Button as Button$1, Avatar, Menu as Menu$1, MenuItem as MenuItem$1, IconButton as IconButton$1, useTheme as useTheme$5, Box as Box$2, TextField as TextField$1, Grid as Grid$1, Toolbar as Toolbar$1, Container as Container$2, Drawer as Drawer$1, List as List$1, ListItem as ListItem$1, ListItemButton as ListItemButton$1, ListItemIcon as ListItemIcon$1, ListItemText as ListItemText$1, Divider as Divider$1, Typography as Typography$1 } from "@mui/material";
+import React__default, { useId as useId$1, isValidElement, Children, cloneElement, useMemo, useState, useReducer, useRef, useEffect, useCallback, memo as memo$2, Fragment, useLayoutEffect } from "react";
+import { Button as Button$1, Avatar, Menu as Menu$1, MenuItem as MenuItem$1, IconButton as IconButton$1, useTheme as useTheme$5, Box as Box$2, FormControlLabel as FormControlLabel$1, Checkbox as Checkbox$1, Autocomplete as Autocomplete$1, TextField as TextField$1, FormLabel as FormLabel$1, Slider as Slider$1, RadioGroup, Radio as Radio$1, Rating, ButtonGroup, FormControl as FormControl$1, InputLabel as InputLabel$1, Select as Select$1, Switch as Switch$1, ToggleButtonGroup, ToggleButton, Grid as Grid$1, Toolbar as Toolbar$1, Container as Container$2, Drawer as Drawer$1, List as List$1, ListItem as ListItem$1, ListItemButton as ListItemButton$1, ListItemIcon as ListItemIcon$1, ListItemText as ListItemText$1, Divider as Divider$1, Typography as Typography$1 } from "@mui/material";
 import emStyled from "@emotion/styled";
 import { CacheProvider, Global, ThemeContext as ThemeContext$1, css, keyframes } from "@emotion/react";
 import { useSelector } from "react-redux";
@@ -1030,15 +1030,21 @@ function requireReactJsxRuntime_development() {
   }
   return reactJsxRuntime_development;
 }
-var jsxRuntime = jsxRuntime$2.exports;
-"use strict";
-if (process.env.NODE_ENV === "production") {
-  jsxRuntime$2.exports = requireReactJsxRuntime_production_min();
-} else {
-  jsxRuntime$2.exports = requireReactJsxRuntime_development();
+var jsxRuntime$1 = jsxRuntime$2.exports;
+var hasRequiredJsxRuntime;
+function requireJsxRuntime() {
+  if (hasRequiredJsxRuntime) return jsxRuntime$2.exports;
+  hasRequiredJsxRuntime = 1;
+  "use strict";
+  if (process.env.NODE_ENV === "production") {
+    jsxRuntime$2.exports = requireReactJsxRuntime_production_min();
+  } else {
+    jsxRuntime$2.exports = requireReactJsxRuntime_development();
+  }
+  return jsxRuntime$2.exports;
 }
-var jsxRuntimeExports = jsxRuntime$2.exports;
-const jsxRuntime$1 = /* @__PURE__ */ getDefaultExportFromCjs(jsxRuntimeExports);
+var jsxRuntimeExports = requireJsxRuntime();
+const jsxRuntime = /* @__PURE__ */ getDefaultExportFromCjs(jsxRuntimeExports);
 var gubu_min$2 = { exports: {} };
 var gubu_min = gubu_min$2.exports;
 (function(module, exports) {
@@ -1684,26 +1690,38 @@ var gubu_min = gubu_min$2.exports;
 var gubu_minExports = gubu_min$2.exports;
 const gubu_min$1 = /* @__PURE__ */ getDefaultExportFromCjs(gubu_minExports);
 function cmap(o, p) {
-  return Object.entries(o).reduce((r2, n, _2) => (_2 = Object.entries(p).reduce((s, m) => cmap.FILTER === s ? s : (s[m[0]] = // transfom(val,key,current,parentkey,parent)
-  "function" === typeof m[1] ? m[1](n[1][m[0]], {
-    skey: m[0],
-    self: n[1],
-    key: n[0],
-    parent: o
-  }) : m[1], cmap.FILTER === s[m[0]] ? cmap.FILTER : s), {}), cmap.FILTER === _2 ? 0 : r2[n[0]] = _2, r2), {});
+  return Object.entries(o).reduce(
+    (r2, n, _2) => (_2 = Object.entries(p).reduce(
+      (s, m) => cmap.FILTER === s ? s : (s[m[0]] = // transfom(val,key,current,parentkey,parent)
+      "function" === typeof m[1] ? m[1](n[1][m[0]], {
+        skey: m[0],
+        self: n[1],
+        key: n[0],
+        parent: o
+      }) : m[1], cmap.FILTER === s[m[0]] ? cmap.FILTER : s),
+      {}
+    ), cmap.FILTER === _2 ? 0 : r2[n[0]] = _2, r2),
+    {}
+  );
 }
 cmap.COPY = (x) => x;
 cmap.FILTER = (x) => "function" === typeof x ? (y, p, _2) => (_2 = x(y, p), Array.isArray(_2) ? !_2[0] ? _2[1] : cmap.FILTER : _2) : x ? x : cmap.FILTER;
 cmap.KEY = (_2, p) => p.key;
 function vmap(o, p) {
-  return Object.entries(o).reduce((r2, n, _2) => (_2 = Object.entries(p).reduce((s, m) => vmap.FILTER === s ? s : (s[m[0]] = // transfom(val,key,current,parentkey,parent)
-  // 'function' === typeof m[1] ? m[1](n[1][m[0]], m[0], n[1], n[0], o) : m[1]
-  "function" === typeof m[1] ? m[1](n[1][m[0]], {
-    skey: m[0],
-    self: n[1],
-    key: n[0],
-    parent: o
-  }) : m[1], vmap.FILTER === s[m[0]] ? vmap.FILTER : s), {}), vmap.FILTER === _2 ? 0 : r2.push(_2), r2), []);
+  return Object.entries(o).reduce(
+    (r2, n, _2) => (_2 = Object.entries(p).reduce(
+      (s, m) => vmap.FILTER === s ? s : (s[m[0]] = // transfom(val,key,current,parentkey,parent)
+      // 'function' === typeof m[1] ? m[1](n[1][m[0]], m[0], n[1], n[0], o) : m[1]
+      "function" === typeof m[1] ? m[1](n[1][m[0]], {
+        skey: m[0],
+        self: n[1],
+        key: n[0],
+        parent: o
+      }) : m[1], vmap.FILTER === s[m[0]] ? vmap.FILTER : s),
+      {}
+    ), vmap.FILTER === _2 ? 0 : r2.push(_2), r2),
+    []
+  );
 }
 vmap.COPY = (x) => x;
 vmap.FILTER = (x) => "function" === typeof x ? (y, p, _2) => (_2 = x(y, p), Array.isArray(_2) ? !_2[0] ? _2[1] : vmap.FILTER : _2) : x ? x : vmap.FILTER;
@@ -1714,6 +1732,49 @@ function searchParamsToObject(searchParams) {
     params[key] = value;
   }
   return params;
+}
+function resvalue(value, cat, mapFn) {
+  const { item: items, multiple } = cat;
+  if (Object.keys(items).length === 0) {
+    return multiple === 1 ? "" : [];
+  }
+  if (Array.isArray(value)) {
+    return multiple === 1 && value[0] ? value[0] : value.slice(0, multiple);
+  }
+  if (typeof value === "object") {
+    return multiple === 1 ? value : [value];
+  }
+  const splitValue = value.split(",");
+  const mapValue = (val) => items[val] ? mapFn(val, items[val]) : void 0;
+  switch (multiple) {
+    case 1:
+      return mapValue(splitValue[0]) || "";
+    case -1:
+      return splitValue.map(mapValue).filter(Boolean) || [];
+    default:
+      return splitValue.slice(0, multiple).map(mapValue).filter(Boolean);
+  }
+}
+function resdefault(cat, mapFn) {
+  const { multiple, item: items, default: defaultValues } = cat;
+  if (Object.keys(items).length === 0) {
+    return multiple === 1 ? "" : [];
+  }
+  const defaultItems = defaultValues.split(",");
+  const mapResolvedDefault = (list) => list.map((val) => items[val] ? mapFn(val, items[val]) : void 0);
+  switch (multiple) {
+    case 1:
+      return defaultItems[0] ? mapFn(defaultItems[0], items[defaultItems[0]]) : "";
+    case -1:
+      return mapResolvedDefault(defaultItems).filter(Boolean) || [];
+    default:
+      return mapResolvedDefault(defaultItems.slice(0, multiple)).filter(Boolean) || [];
+  }
+}
+function useSanitizedId() {
+  const id = useId$1();
+  const sanitizedId = id.replace(/[^a-zA-Z0-9_]/g, "x");
+  return sanitizedId;
 }
 function VxgBasicAdminPlugin() {
   const seneca = this;
@@ -1739,7 +1800,10 @@ function VxgBasicAdminPlugin() {
   });
   function setPath(msg, meta) {
     return __async(this, null, function* () {
-      const q = Object.entries(msg.query).reduce((s, n) => s + ("" === s ? "?" : "") + (encodeURIComponent(n[0]) + "=" + encodeURIComponent(n[1])), "");
+      const q = Object.entries(msg.query).reduce(
+        (s, n) => s + ("" === s ? "?" : "") + (encodeURIComponent(n[0]) + "=" + encodeURIComponent(n[1])),
+        ""
+      );
       const path = "/view/" + msg.view + q;
       msg.navigate(path);
     });
@@ -1772,7 +1836,12 @@ function VxgBasicAdminPlugin() {
       };
       const viewState = cmap(viewMap, {
         name: cmap.COPY,
-        active: cmap.FILTER
+        active: cmap.FILTER,
+        alert: {
+          active: false,
+          message: "",
+          level: "info"
+        }
       });
       state.view = viewState;
       state.nav = {
@@ -2848,6 +2917,7 @@ function requireObjectWithoutPropertiesLoose() {
   })(objectWithoutPropertiesLoose$1);
   return objectWithoutPropertiesLoose$1.exports;
 }
+var isDevelopment = false;
 function sheetForTag(tag) {
   if (tag.sheet) {
     return tag.sheet;
@@ -2857,6 +2927,7 @@ function sheetForTag(tag) {
       return document.styleSheets[i];
     }
   }
+  return void 0;
 }
 function createStyleElement(options) {
   var tag = document.createElement("style");
@@ -2887,7 +2958,7 @@ var StyleSheet = /* @__PURE__ */ function() {
       _this.container.insertBefore(tag, before);
       _this.tags.push(tag);
     };
-    this.isSpeedy = options.speedy === void 0 ? process.env.NODE_ENV === "production" : options.speedy;
+    this.isSpeedy = options.speedy === void 0 ? !isDevelopment : options.speedy;
     this.tags = [];
     this.ctr = 0;
     this.nonce = options.nonce;
@@ -2906,21 +2977,11 @@ var StyleSheet = /* @__PURE__ */ function() {
       this._insertTag(createStyleElement(this));
     }
     var tag = this.tags[this.tags.length - 1];
-    if (process.env.NODE_ENV !== "production") {
-      var isImportRule3 = rule.charCodeAt(0) === 64 && rule.charCodeAt(1) === 105;
-      if (isImportRule3 && this._alreadyInsertedOrderInsensitiveRule) {
-        console.error("You're attempting to insert the following rule:\n" + rule + "\n\n`@import` rules must be before all other types of rules in a stylesheet but other rules have already been inserted. Please ensure that `@import` rules are before all other rules.");
-      }
-      this._alreadyInsertedOrderInsensitiveRule = this._alreadyInsertedOrderInsensitiveRule || !isImportRule3;
-    }
     if (this.isSpeedy) {
       var sheet = sheetForTag(tag);
       try {
         sheet.insertRule(rule, sheet.cssRules.length);
       } catch (e) {
-        if (process.env.NODE_ENV !== "production" && !/:(-moz-placeholder|-moz-focus-inner|-moz-focusring|-ms-input-placeholder|-moz-read-write|-moz-read-only|-ms-clear|-ms-expand|-ms-reveal){/.test(rule)) {
-          console.error('There was a problem inserting the following rule: "' + rule + '"', e);
-        }
       }
     } else {
       tag.appendChild(document.createTextNode(rule));
@@ -2929,13 +2990,11 @@ var StyleSheet = /* @__PURE__ */ function() {
   };
   _proto.flush = function flush() {
     this.tags.forEach(function(tag) {
-      return tag.parentNode && tag.parentNode.removeChild(tag);
+      var _tag$parentNode;
+      return (_tag$parentNode = tag.parentNode) == null ? void 0 : _tag$parentNode.removeChild(tag);
     });
     this.tags = [];
     this.ctr = 0;
-    if (process.env.NODE_ENV !== "production") {
-      this._alreadyInsertedOrderInsensitiveRule = false;
-    }
   };
   return StyleSheet2;
 }();
@@ -3620,68 +3679,6 @@ var removeLabel = function removeLabel2(element) {
     }
   }
 };
-var ignoreFlag = "emotion-disable-server-rendering-unsafe-selector-warning-please-do-not-use-this-the-warning-exists-for-a-reason";
-var isIgnoringComment = function isIgnoringComment2(element) {
-  return element.type === "comm" && element.children.indexOf(ignoreFlag) > -1;
-};
-var createUnsafeSelectorsAlarm = function createUnsafeSelectorsAlarm2(cache2) {
-  return function(element, index2, children2) {
-    if (element.type !== "rule" || cache2.compat) return;
-    var unsafePseudoClasses = element.value.match(/(:first|:nth|:nth-last)-child/g);
-    if (unsafePseudoClasses) {
-      var isNested = !!element.parent;
-      var commentContainer = isNested ? element.parent.children : (
-        // global rule at the root level
-        children2
-      );
-      for (var i = commentContainer.length - 1; i >= 0; i--) {
-        var node2 = commentContainer[i];
-        if (node2.line < element.line) {
-          break;
-        }
-        if (node2.column < element.column) {
-          if (isIgnoringComment(node2)) {
-            return;
-          }
-          break;
-        }
-      }
-      unsafePseudoClasses.forEach(function(unsafePseudoClass) {
-        console.error('The pseudo class "' + unsafePseudoClass + '" is potentially unsafe when doing server-side rendering. Try changing it to "' + unsafePseudoClass.split("-child")[0] + '-of-type".');
-      });
-    }
-  };
-};
-var isImportRule = function isImportRule2(element) {
-  return element.type.charCodeAt(1) === 105 && element.type.charCodeAt(0) === 64;
-};
-var isPrependedWithRegularRules = function isPrependedWithRegularRules2(index2, children2) {
-  for (var i = index2 - 1; i >= 0; i--) {
-    if (!isImportRule(children2[i])) {
-      return true;
-    }
-  }
-  return false;
-};
-var nullifyElement = function nullifyElement2(element) {
-  element.type = "";
-  element.value = "";
-  element["return"] = "";
-  element.children = "";
-  element.props = "";
-};
-var incorrectImportAlarm = function incorrectImportAlarm2(element, index2, children2) {
-  if (!isImportRule(element)) {
-    return;
-  }
-  if (element.parent) {
-    console.error("`@import` rules can't be nested inside other rules. Please move it to the top level and put it before regular rules. Keep in mind that they can only be used within global styles.");
-    nullifyElement(element);
-  } else if (isPrependedWithRegularRules(index2, children2)) {
-    console.error("`@import` rules can't be after other rules. Please put your `@import` rules before your other rules.");
-    nullifyElement(element);
-  }
-};
 function prefix(value, length2) {
   switch (hash$2(value, length2)) {
     case 5103:
@@ -3828,9 +3825,6 @@ var prefixer = function prefixer2(element, index2, children2, callback) {
 var defaultStylisPlugins = [prefixer];
 var createCache = function createCache2(options) {
   var key = options.key;
-  if (process.env.NODE_ENV !== "production" && !key) {
-    throw new Error("You have to configure `key` for your cache. Please make sure it's unique (and not equal to 'css') as it's used for linking styles to your cache.\nIf multiple caches share the same key they might \"fight\" for each other's style elements.");
-  }
   if (key === "css") {
     var ssrStyles = document.querySelectorAll("style[data-emotion]:not([data-s])");
     Array.prototype.forEach.call(ssrStyles, function(node2) {
@@ -3843,11 +3837,6 @@ var createCache = function createCache2(options) {
     });
   }
   var stylisPlugins = options.stylisPlugins || defaultStylisPlugins;
-  if (process.env.NODE_ENV !== "production") {
-    if (/[^a-z-]/.test(key)) {
-      throw new Error('Emotion key must only contain lower case alphabetical characters and - but "' + key + '" was passed');
-    }
-  }
   var inserted = {};
   var container;
   var nodesToHydrate = [];
@@ -3868,24 +3857,9 @@ var createCache = function createCache2(options) {
   }
   var _insert;
   var omnipresentPlugins = [compat, removeLabel];
-  if (process.env.NODE_ENV !== "production") {
-    omnipresentPlugins.push(createUnsafeSelectorsAlarm({
-      get compat() {
-        return cache2.compat;
-      }
-    }), incorrectImportAlarm);
-  }
   {
     var currentSheet;
-    var finalizingPlugins = [stringify, process.env.NODE_ENV !== "production" ? function(element) {
-      if (!element.root) {
-        if (element["return"]) {
-          currentSheet.insert(element["return"]);
-        } else if (element.value && element.type !== COMMENT) {
-          currentSheet.insert(element.value + "{}");
-        }
-      }
-    } : rulesheet(function(rule) {
+    var finalizingPlugins = [stringify, rulesheet(function(rule) {
       currentSheet.insert(rule);
     })];
     var serializer = middleware(omnipresentPlugins.concat(stylisPlugins, finalizingPlugins));
@@ -3894,13 +3868,6 @@ var createCache = function createCache2(options) {
     };
     _insert = function insert2(selector, serialized, sheet, shouldCache) {
       currentSheet = sheet;
-      if (process.env.NODE_ENV !== "production" && serialized.map !== void 0) {
-        currentSheet = {
-          insert: function insert3(rule) {
-            sheet.insert(rule + serialized.map);
-          }
-        };
-      }
       stylis(selector ? selector + "{" + serialized.styles + "}" : serialized.styles);
       if (shouldCache) {
         cache2.inserted[serialized.name] = true;
@@ -5592,21 +5559,21 @@ const styleFunctionSx = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.def
 }, Symbol.toStringTag, { value: "Module" }));
 const require$$8 = /* @__PURE__ */ getAugmentedNamespace(styleFunctionSx);
 "use strict";
-var _interopRequireDefault$z = interopRequireDefaultExports;
+var _interopRequireDefault$A = interopRequireDefaultExports;
 Object.defineProperty(createStyled$2, "__esModule", {
   value: true
 });
-var _default$z = createStyled$2.default = createStyled$1;
+var _default$A = createStyled$2.default = createStyled$1;
 var shouldForwardProp_1 = createStyled$2.shouldForwardProp = shouldForwardProp$1;
 var systemDefaultTheme_1 = createStyled$2.systemDefaultTheme = void 0;
-var _extends2 = _interopRequireDefault$z(require_extends());
-var _objectWithoutPropertiesLoose2 = _interopRequireDefault$z(requireObjectWithoutPropertiesLoose());
+var _extends2 = _interopRequireDefault$A(require_extends());
+var _objectWithoutPropertiesLoose2 = _interopRequireDefault$A(requireObjectWithoutPropertiesLoose());
 var _styledEngine$1 = _interopRequireWildcard$1(require$$1$1);
 var _deepmerge = require$$4;
-var _capitalize = _interopRequireDefault$z(require$$5);
-var _getDisplayName = _interopRequireDefault$z(require$$6);
-var _createTheme = _interopRequireDefault$z(require$$7);
-var _styleFunctionSx = _interopRequireDefault$z(require$$8);
+var _capitalize = _interopRequireDefault$A(require$$5);
+var _getDisplayName = _interopRequireDefault$A(require$$6);
+var _createTheme = _interopRequireDefault$A(require$$7);
+var _styleFunctionSx = _interopRequireDefault$A(require$$8);
 const _excluded$2i = ["ownerState"], _excluded2$i = ["variants"], _excluded3$7 = ["name", "slot", "skipVariantsResolver", "skipSx", "overridesResolver"];
 function _getRequireWildcardCache$1(e) {
   if ("function" != typeof WeakMap) return null;
@@ -5896,7 +5863,7 @@ const clamp = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.definePropert
 }, Symbol.toStringTag, { value: "Module" }));
 const require$$2 = /* @__PURE__ */ getAugmentedNamespace(clamp);
 "use strict";
-var _interopRequireDefault$y = interopRequireDefaultExports;
+var _interopRequireDefault$z = interopRequireDefaultExports;
 Object.defineProperty(colorManipulator, "__esModule", {
   value: true
 });
@@ -5918,8 +5885,8 @@ var private_safeEmphasize_1 = colorManipulator.private_safeEmphasize = private_s
 var private_safeLighten_1 = colorManipulator.private_safeLighten = private_safeLighten$1;
 var recomposeColor_1 = colorManipulator.recomposeColor = recomposeColor$1;
 var rgbToHex_1 = colorManipulator.rgbToHex = rgbToHex$1;
-var _formatMuiErrorMessage2 = _interopRequireDefault$y(require$$1);
-var _clamp = _interopRequireDefault$y(require$$2);
+var _formatMuiErrorMessage2 = _interopRequireDefault$z(require$$1);
+var _clamp = _interopRequireDefault$z(require$$2);
 function clampWrapper$1(value, min2 = 0, max2 = 1) {
   if (process.env.NODE_ENV !== "production") {
     if (value < min2 || value > max2) {
@@ -6810,7 +6777,7 @@ function slotShouldForwardProp(prop) {
 }
 const rootShouldForwardProp = (prop) => slotShouldForwardProp(prop) && prop !== "classes";
 "use client";
-const styled$1 = _default$z({
+const styled$1 = _default$A({
   themeId: THEME_ID,
   defaultTheme: defaultTheme$5,
   rootShouldForwardProp
@@ -10684,8 +10651,8 @@ process.env.NODE_ENV !== "production" ? Toolbar.propTypes = {
    */
   variant: PropTypes.oneOfType([PropTypes.oneOf(["dense", "regular"]), PropTypes.string])
 } : void 0;
-const CMPNAME$c = "BasicAccountTool";
-console.log(CMPNAME$c, "1");
+const CMPNAME$r = "BasicAccountTool";
+console.log(CMPNAME$r, "1");
 const { Exact: Exact$2 } = gubu_minExports.Gubu;
 const BasicAccountToolSpecShape = gubu_minExports.Gubu({
   name: String,
@@ -10695,7 +10662,7 @@ const BasicAccountToolSpecShape = gubu_minExports.Gubu({
   attr: {},
   sx: {},
   style: {}
-}, { name: CMPNAME$c });
+}, { name: CMPNAME$r });
 function BasicAccountTool(props) {
   var _a;
   const { ctx, spec } = props;
@@ -10769,8 +10736,8 @@ function stringAvatar(s) {
     children: `${parts.join("")}`
   };
 }
-const CMPNAME$b = "BasicHeadTool";
-console.log(CMPNAME$b, "1");
+const CMPNAME$q = "BasicHeadTool";
+console.log(CMPNAME$q, "1");
 const { Exact: Exact$1 } = gubu_minExports.Gubu;
 const BasicHeadToolSpecShape = gubu_minExports.Gubu({
   name: String,
@@ -10780,7 +10747,7 @@ const BasicHeadToolSpecShape = gubu_minExports.Gubu({
   attr: {},
   sx: {},
   style: {}
-}, { name: CMPNAME$b });
+}, { name: CMPNAME$q });
 function BasicHeadTool(props) {
   const { ctx, spec } = props;
   const { seneca } = ctx();
@@ -10789,7 +10756,7 @@ function BasicHeadTool(props) {
   const { name, kind, attr, sx, style: style2 } = basicHeadToolSpec;
   let tool = /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, {});
   if ("" === kind) {
-    console.warn(CMPNAME$b, "empty-tool-kind", basicHeadToolSpec);
+    console.warn(CMPNAME$q, "empty-tool-kind", basicHeadToolSpec);
   } else if ("logo" === kind) {
     tool = /* @__PURE__ */ jsxRuntimeExports.jsxs(
       "div",
@@ -10806,7 +10773,7 @@ function BasicHeadTool(props) {
             {
               href: "/",
               style: style2,
-              className: `vxg-${CMPNAME$b}-logo`,
+              className: `vxg-${CMPNAME$q}-logo`,
               children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: attr.img })
             }
           ),
@@ -10838,27 +10805,34 @@ function BasicHeadTool(props) {
   } else if ("account" === kind) {
     tool = /* @__PURE__ */ jsxRuntimeExports.jsx(BasicAccountTool, { ctx, spec });
   } else {
-    console.warn(CMPNAME$b, "unknown-tool-kind", kind, basicHeadToolSpec);
+    console.warn(CMPNAME$q, "unknown-tool-kind", kind, basicHeadToolSpec);
   }
   return tool;
 }
-const CMPNAME$a = "BasicHead";
-const { Child: Child$5, Exact, Open: Open$8, Required: Required$1 } = gubu_minExports.Gubu;
-const BasicHeadSpecShape = gubu_minExports.Gubu({
-  head: {
-    name: String,
-    active: Boolean,
-    tool: Child$5(Open$8({
-      align: Exact("left", "right")
-    }))
+const CMPNAME$p = "BasicHead";
+const { Child: Child$6, Exact, Open: Open$o, Required: Required$1 } = gubu_minExports.Gubu;
+const BasicHeadSpecShape = gubu_minExports.Gubu(
+  {
+    head: {
+      name: String,
+      active: Boolean,
+      tool: Child$6(
+        Open$o({
+          align: Exact("left", "right")
+        })
+      )
+    },
+    tool: Required$1({}),
+    // Set MUI component props directly
+    ux: {
+      props: {
+        AppBar: {},
+        ToolBar: {}
+      }
+    }
   },
-  tool: Required$1({}),
-  // Set MUI component props directly 
-  mui: {
-    AppBar: {},
-    ToolBar: {}
-  }
-}, { name: CMPNAME$a });
+  { name: CMPNAME$p }
+);
 function BasicHead(props) {
   const { ctx, spec } = props;
   const { seneca } = ctx();
@@ -10869,36 +10843,26 @@ function BasicHead(props) {
     active: vmap2.FILTER,
     name: vmap2.FILTER((_2, p) => {
       var _a;
-      return [(_a = basicHeadSpec.tool[p.key]) == null ? void 0 : _a.active, p.key];
+      return [
+        (_a = basicHeadSpec.tool[p.key]) == null ? void 0 : _a.active,
+        p.key
+      ];
     }),
     align: vmap2.COPY
   }).map((t) => __spreadValues(__spreadValues({}, basicHeadSpec.tool[t.name]), t));
   const leftTools = tools.filter((t) => "left" === t.align);
   const rightTools = tools.filter((t) => "right" === t.align);
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(
-    AppBar,
-    __spreadProps(__spreadValues({
-      className: "vxg-BasicHead"
-    }, spec.mui.AppBar), {
-      children: /* @__PURE__ */ jsxRuntimeExports.jsxs(Toolbar, __spreadProps(__spreadValues({ className: "vxg-BasicHead-toolbar" }, spec.mui.ToolBar), { children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "div",
-          {
-            className: "vxg-BasicHead-toolbar vxg-BasicHead-toolbar-left",
-            children: leftTools.map((t) => /* @__PURE__ */ jsxRuntimeExports.jsx(BasicHeadTool, { ctx, spec: t }, t.name))
-          }
-        ),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "div",
-          {
-            className: "vxg-BasicHead-toolbar vxg-BasicHead-toolbar-right",
-            style: { marginLeft: "auto" },
-            children: rightTools.map((t) => /* @__PURE__ */ jsxRuntimeExports.jsx(BasicHeadTool, { ctx, spec: t }, t.name))
-          }
-        )
-      ] }))
-    })
-  );
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(AppBar, __spreadProps(__spreadValues({ className: "vxg-BasicHead" }, spec.ux.props.AppBar), { children: /* @__PURE__ */ jsxRuntimeExports.jsxs(Toolbar, __spreadProps(__spreadValues({ className: "vxg-BasicHead-toolbar" }, spec.ux.props.ToolBar), { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "vxg-BasicHead-toolbar vxg-BasicHead-toolbar-left", children: leftTools.map((t) => /* @__PURE__ */ jsxRuntimeExports.jsx(BasicHeadTool, { ctx, spec: t }, t.name)) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      "div",
+      {
+        className: "vxg-BasicHead-toolbar vxg-BasicHead-toolbar-right",
+        style: { marginLeft: "auto" },
+        children: rightTools.map((t) => /* @__PURE__ */ jsxRuntimeExports.jsx(BasicHeadTool, { ctx, spec: t }, t.name))
+      }
+    )
+  ] })) }));
 }
 /**
    * table-core
@@ -17649,7 +17613,7 @@ var useThemeWithoutDefault = {};
 Object.defineProperty(useThemeWithoutDefault, "__esModule", {
   value: true
 });
-var default_1$y = useThemeWithoutDefault.default = void 0;
+var default_1$z = useThemeWithoutDefault.default = void 0;
 var React = _interopRequireWildcard(React__default);
 var _styledEngine = require$$1$1;
 function _getRequireWildcardCache(e) {
@@ -17678,7 +17642,7 @@ function useTheme(defaultTheme2 = null) {
   const contextTheme = React.useContext(_styledEngine.ThemeContext);
   return !contextTheme || isObjectEmpty(contextTheme) ? defaultTheme2 : contextTheme;
 }
-var _default$y = default_1$y = useThemeWithoutDefault.default = useTheme;
+var _default$z = default_1$z = useThemeWithoutDefault.default = useTheme;
 var top = "top";
 var bottom = "bottom";
 var right = "right";
@@ -19460,7 +19424,7 @@ const PopperRoot = styled$1(Popper$1, {
 })({});
 const Popper2 = /* @__PURE__ */ React$1.forwardRef(function Popper3(inProps, ref) {
   var _slots$root;
-  const theme = default_1$y();
+  const theme = default_1$z();
   const props = useDefaultProps({
     props: inProps,
     name: "MuiPopper"
@@ -25401,450 +25365,450 @@ function requireCreateSvgIcon() {
 }
 "use strict";
 "use client";
-var _interopRequireDefault$x = interopRequireDefaultExports;
+var _interopRequireDefault$y = interopRequireDefaultExports;
 Object.defineProperty(ArrowDownward, "__esModule", {
   value: true
 });
-var default_1$x = ArrowDownward.default = void 0;
-var _createSvgIcon$x = _interopRequireDefault$x(requireCreateSvgIcon());
-var _jsxRuntime$x = jsxRuntimeExports;
-var _default$x = default_1$x = ArrowDownward.default = (0, _createSvgIcon$x.default)(/* @__PURE__ */ (0, _jsxRuntime$x.jsx)("path", {
+var default_1$y = ArrowDownward.default = void 0;
+var _createSvgIcon$y = _interopRequireDefault$y(requireCreateSvgIcon());
+var _jsxRuntime$y = requireJsxRuntime();
+var _default$y = default_1$y = ArrowDownward.default = (0, _createSvgIcon$y.default)(/* @__PURE__ */ (0, _jsxRuntime$y.jsx)("path", {
   d: "m20 12-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8z"
 }), "ArrowDownward");
 var ArrowRight = {};
 "use strict";
 "use client";
-var _interopRequireDefault$w = interopRequireDefaultExports;
+var _interopRequireDefault$x = interopRequireDefaultExports;
 Object.defineProperty(ArrowRight, "__esModule", {
   value: true
 });
-var default_1$w = ArrowRight.default = void 0;
-var _createSvgIcon$w = _interopRequireDefault$w(requireCreateSvgIcon());
-var _jsxRuntime$w = jsxRuntimeExports;
-var _default$w = default_1$w = ArrowRight.default = (0, _createSvgIcon$w.default)(/* @__PURE__ */ (0, _jsxRuntime$w.jsx)("path", {
+var default_1$x = ArrowRight.default = void 0;
+var _createSvgIcon$x = _interopRequireDefault$x(requireCreateSvgIcon());
+var _jsxRuntime$x = requireJsxRuntime();
+var _default$x = default_1$x = ArrowRight.default = (0, _createSvgIcon$x.default)(/* @__PURE__ */ (0, _jsxRuntime$x.jsx)("path", {
   d: "m10 17 5-5-5-5z"
 }), "ArrowRight");
 var Cancel = {};
 "use strict";
 "use client";
-var _interopRequireDefault$v = interopRequireDefaultExports;
+var _interopRequireDefault$w = interopRequireDefaultExports;
 Object.defineProperty(Cancel, "__esModule", {
   value: true
 });
-var default_1$v = Cancel.default = void 0;
-var _createSvgIcon$v = _interopRequireDefault$v(requireCreateSvgIcon());
-var _jsxRuntime$v = jsxRuntimeExports;
-var _default$v = default_1$v = Cancel.default = (0, _createSvgIcon$v.default)(/* @__PURE__ */ (0, _jsxRuntime$v.jsx)("path", {
+var default_1$w = Cancel.default = void 0;
+var _createSvgIcon$w = _interopRequireDefault$w(requireCreateSvgIcon());
+var _jsxRuntime$w = requireJsxRuntime();
+var _default$w = default_1$w = Cancel.default = (0, _createSvgIcon$w.default)(/* @__PURE__ */ (0, _jsxRuntime$w.jsx)("path", {
   d: "M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2m5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12z"
 }), "Cancel");
 var ChevronLeft = {};
 "use strict";
 "use client";
-var _interopRequireDefault$u = interopRequireDefaultExports;
+var _interopRequireDefault$v = interopRequireDefaultExports;
 Object.defineProperty(ChevronLeft, "__esModule", {
   value: true
 });
-var default_1$u = ChevronLeft.default = void 0;
-var _createSvgIcon$u = _interopRequireDefault$u(requireCreateSvgIcon());
-var _jsxRuntime$u = jsxRuntimeExports;
-var _default$u = default_1$u = ChevronLeft.default = (0, _createSvgIcon$u.default)(/* @__PURE__ */ (0, _jsxRuntime$u.jsx)("path", {
+var default_1$v = ChevronLeft.default = void 0;
+var _createSvgIcon$v = _interopRequireDefault$v(requireCreateSvgIcon());
+var _jsxRuntime$v = requireJsxRuntime();
+var _default$v = default_1$v = ChevronLeft.default = (0, _createSvgIcon$v.default)(/* @__PURE__ */ (0, _jsxRuntime$v.jsx)("path", {
   d: "M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"
 }), "ChevronLeft");
 var ChevronRight = {};
 "use strict";
 "use client";
-var _interopRequireDefault$t = interopRequireDefaultExports;
+var _interopRequireDefault$u = interopRequireDefaultExports;
 Object.defineProperty(ChevronRight, "__esModule", {
   value: true
 });
-var default_1$t = ChevronRight.default = void 0;
-var _createSvgIcon$t = _interopRequireDefault$t(requireCreateSvgIcon());
-var _jsxRuntime$t = jsxRuntimeExports;
-var _default$t = default_1$t = ChevronRight.default = (0, _createSvgIcon$t.default)(/* @__PURE__ */ (0, _jsxRuntime$t.jsx)("path", {
+var default_1$u = ChevronRight.default = void 0;
+var _createSvgIcon$u = _interopRequireDefault$u(requireCreateSvgIcon());
+var _jsxRuntime$u = requireJsxRuntime();
+var _default$u = default_1$u = ChevronRight.default = (0, _createSvgIcon$u.default)(/* @__PURE__ */ (0, _jsxRuntime$u.jsx)("path", {
   d: "M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
 }), "ChevronRight");
 var ClearAll = {};
 "use strict";
 "use client";
-var _interopRequireDefault$s = interopRequireDefaultExports;
+var _interopRequireDefault$t = interopRequireDefaultExports;
 Object.defineProperty(ClearAll, "__esModule", {
   value: true
 });
-var default_1$s = ClearAll.default = void 0;
-var _createSvgIcon$s = _interopRequireDefault$s(requireCreateSvgIcon());
-var _jsxRuntime$s = jsxRuntimeExports;
-var _default$s = default_1$s = ClearAll.default = (0, _createSvgIcon$s.default)(/* @__PURE__ */ (0, _jsxRuntime$s.jsx)("path", {
+var default_1$t = ClearAll.default = void 0;
+var _createSvgIcon$t = _interopRequireDefault$t(requireCreateSvgIcon());
+var _jsxRuntime$t = requireJsxRuntime();
+var _default$t = default_1$t = ClearAll.default = (0, _createSvgIcon$t.default)(/* @__PURE__ */ (0, _jsxRuntime$t.jsx)("path", {
   d: "M5 13h14v-2H5zm-2 4h14v-2H3zM7 7v2h14V7z"
 }), "ClearAll");
 var Close = {};
 "use strict";
 "use client";
-var _interopRequireDefault$r = interopRequireDefaultExports;
+var _interopRequireDefault$s = interopRequireDefaultExports;
 Object.defineProperty(Close, "__esModule", {
   value: true
 });
-var default_1$r = Close.default = void 0;
-var _createSvgIcon$r = _interopRequireDefault$r(requireCreateSvgIcon());
-var _jsxRuntime$r = jsxRuntimeExports;
-var _default$r = default_1$r = Close.default = (0, _createSvgIcon$r.default)(/* @__PURE__ */ (0, _jsxRuntime$r.jsx)("path", {
+var default_1$s = Close.default = void 0;
+var _createSvgIcon$s = _interopRequireDefault$s(requireCreateSvgIcon());
+var _jsxRuntime$s = requireJsxRuntime();
+var _default$s = default_1$s = Close.default = (0, _createSvgIcon$s.default)(/* @__PURE__ */ (0, _jsxRuntime$s.jsx)("path", {
   d: "M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
 }), "Close");
 var ContentCopy = {};
 "use strict";
 "use client";
-var _interopRequireDefault$q = interopRequireDefaultExports;
+var _interopRequireDefault$r = interopRequireDefaultExports;
 Object.defineProperty(ContentCopy, "__esModule", {
   value: true
 });
-var default_1$q = ContentCopy.default = void 0;
-var _createSvgIcon$q = _interopRequireDefault$q(requireCreateSvgIcon());
-var _jsxRuntime$q = jsxRuntimeExports;
-var _default$q = default_1$q = ContentCopy.default = (0, _createSvgIcon$q.default)(/* @__PURE__ */ (0, _jsxRuntime$q.jsx)("path", {
+var default_1$r = ContentCopy.default = void 0;
+var _createSvgIcon$r = _interopRequireDefault$r(requireCreateSvgIcon());
+var _jsxRuntime$r = requireJsxRuntime();
+var _default$r = default_1$r = ContentCopy.default = (0, _createSvgIcon$r.default)(/* @__PURE__ */ (0, _jsxRuntime$r.jsx)("path", {
   d: "M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2m0 16H8V7h11z"
 }), "ContentCopy");
 var DensityLarge = {};
 "use strict";
 "use client";
-var _interopRequireDefault$p = interopRequireDefaultExports;
+var _interopRequireDefault$q = interopRequireDefaultExports;
 Object.defineProperty(DensityLarge, "__esModule", {
   value: true
 });
-var default_1$p = DensityLarge.default = void 0;
-var _createSvgIcon$p = _interopRequireDefault$p(requireCreateSvgIcon());
-var _jsxRuntime$p = jsxRuntimeExports;
-var _default$p = default_1$p = DensityLarge.default = (0, _createSvgIcon$p.default)(/* @__PURE__ */ (0, _jsxRuntime$p.jsx)("path", {
+var default_1$q = DensityLarge.default = void 0;
+var _createSvgIcon$q = _interopRequireDefault$q(requireCreateSvgIcon());
+var _jsxRuntime$q = requireJsxRuntime();
+var _default$q = default_1$q = DensityLarge.default = (0, _createSvgIcon$q.default)(/* @__PURE__ */ (0, _jsxRuntime$q.jsx)("path", {
   d: "M3 3h18v2H3zm0 16h18v2H3z"
 }), "DensityLarge");
 var DensityMedium = {};
 "use strict";
 "use client";
-var _interopRequireDefault$o = interopRequireDefaultExports;
+var _interopRequireDefault$p = interopRequireDefaultExports;
 Object.defineProperty(DensityMedium, "__esModule", {
   value: true
 });
-var default_1$o = DensityMedium.default = void 0;
-var _createSvgIcon$o = _interopRequireDefault$o(requireCreateSvgIcon());
-var _jsxRuntime$o = jsxRuntimeExports;
-var _default$o = default_1$o = DensityMedium.default = (0, _createSvgIcon$o.default)(/* @__PURE__ */ (0, _jsxRuntime$o.jsx)("path", {
+var default_1$p = DensityMedium.default = void 0;
+var _createSvgIcon$p = _interopRequireDefault$p(requireCreateSvgIcon());
+var _jsxRuntime$p = requireJsxRuntime();
+var _default$p = default_1$p = DensityMedium.default = (0, _createSvgIcon$p.default)(/* @__PURE__ */ (0, _jsxRuntime$p.jsx)("path", {
   d: "M3 3h18v2H3zm0 16h18v2H3zm0-8h18v2H3z"
 }), "DensityMedium");
 var DensitySmall = {};
 "use strict";
 "use client";
-var _interopRequireDefault$n = interopRequireDefaultExports;
+var _interopRequireDefault$o = interopRequireDefaultExports;
 Object.defineProperty(DensitySmall, "__esModule", {
   value: true
 });
-var default_1$n = DensitySmall.default = void 0;
-var _createSvgIcon$n = _interopRequireDefault$n(requireCreateSvgIcon());
-var _jsxRuntime$n = jsxRuntimeExports;
-var _default$n = default_1$n = DensitySmall.default = (0, _createSvgIcon$n.default)(/* @__PURE__ */ (0, _jsxRuntime$n.jsx)("path", {
+var default_1$o = DensitySmall.default = void 0;
+var _createSvgIcon$o = _interopRequireDefault$o(requireCreateSvgIcon());
+var _jsxRuntime$o = requireJsxRuntime();
+var _default$o = default_1$o = DensitySmall.default = (0, _createSvgIcon$o.default)(/* @__PURE__ */ (0, _jsxRuntime$o.jsx)("path", {
   d: "M3 2h18v2H3zm0 18h18v2H3zm0-6h18v2H3zm0-6h18v2H3z"
 }), "DensitySmall");
 var DragHandle = {};
 "use strict";
 "use client";
-var _interopRequireDefault$m = interopRequireDefaultExports;
+var _interopRequireDefault$n = interopRequireDefaultExports;
 Object.defineProperty(DragHandle, "__esModule", {
   value: true
 });
-var default_1$m = DragHandle.default = void 0;
-var _createSvgIcon$m = _interopRequireDefault$m(requireCreateSvgIcon());
-var _jsxRuntime$m = jsxRuntimeExports;
-var _default$m = default_1$m = DragHandle.default = (0, _createSvgIcon$m.default)(/* @__PURE__ */ (0, _jsxRuntime$m.jsx)("path", {
+var default_1$n = DragHandle.default = void 0;
+var _createSvgIcon$n = _interopRequireDefault$n(requireCreateSvgIcon());
+var _jsxRuntime$n = requireJsxRuntime();
+var _default$n = default_1$n = DragHandle.default = (0, _createSvgIcon$n.default)(/* @__PURE__ */ (0, _jsxRuntime$n.jsx)("path", {
   d: "M20 9H4v2h16zM4 15h16v-2H4z"
 }), "DragHandle");
 var DynamicFeed = {};
 "use strict";
 "use client";
-var _interopRequireDefault$l = interopRequireDefaultExports;
+var _interopRequireDefault$m = interopRequireDefaultExports;
 Object.defineProperty(DynamicFeed, "__esModule", {
   value: true
 });
-var default_1$l = DynamicFeed.default = void 0;
-var _createSvgIcon$l = _interopRequireDefault$l(requireCreateSvgIcon());
-var _jsxRuntime$l = jsxRuntimeExports;
-var _default$l = default_1$l = DynamicFeed.default = (0, _createSvgIcon$l.default)([/* @__PURE__ */ (0, _jsxRuntime$l.jsx)("path", {
+var default_1$m = DynamicFeed.default = void 0;
+var _createSvgIcon$m = _interopRequireDefault$m(requireCreateSvgIcon());
+var _jsxRuntime$m = requireJsxRuntime();
+var _default$m = default_1$m = DynamicFeed.default = (0, _createSvgIcon$m.default)([/* @__PURE__ */ (0, _jsxRuntime$m.jsx)("path", {
   d: "M8 8H6v7c0 1.1.9 2 2 2h9v-2H8z"
-}, "0"), /* @__PURE__ */ (0, _jsxRuntime$l.jsx)("path", {
+}, "0"), /* @__PURE__ */ (0, _jsxRuntime$m.jsx)("path", {
   d: "M20 3h-8c-1.1 0-2 .9-2 2v6c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2m0 8h-8V7h8zM4 12H2v7c0 1.1.9 2 2 2h9v-2H4z"
 }, "1")], "DynamicFeed");
 var Edit = {};
 "use strict";
 "use client";
-var _interopRequireDefault$k = interopRequireDefaultExports;
+var _interopRequireDefault$l = interopRequireDefaultExports;
 Object.defineProperty(Edit, "__esModule", {
   value: true
 });
-var default_1$k = Edit.default = void 0;
-var _createSvgIcon$k = _interopRequireDefault$k(requireCreateSvgIcon());
-var _jsxRuntime$k = jsxRuntimeExports;
-var _default$k = default_1$k = Edit.default = (0, _createSvgIcon$k.default)(/* @__PURE__ */ (0, _jsxRuntime$k.jsx)("path", {
+var default_1$l = Edit.default = void 0;
+var _createSvgIcon$l = _interopRequireDefault$l(requireCreateSvgIcon());
+var _jsxRuntime$l = requireJsxRuntime();
+var _default$l = default_1$l = Edit.default = (0, _createSvgIcon$l.default)(/* @__PURE__ */ (0, _jsxRuntime$l.jsx)("path", {
   d: "M3 17.25V21h3.75L17.81 9.94l-3.75-3.75zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75z"
 }), "Edit");
 var ExpandMore = {};
 "use strict";
 "use client";
-var _interopRequireDefault$j = interopRequireDefaultExports;
+var _interopRequireDefault$k = interopRequireDefaultExports;
 Object.defineProperty(ExpandMore, "__esModule", {
   value: true
 });
-var default_1$j = ExpandMore.default = void 0;
-var _createSvgIcon$j = _interopRequireDefault$j(requireCreateSvgIcon());
-var _jsxRuntime$j = jsxRuntimeExports;
-var _default$j = default_1$j = ExpandMore.default = (0, _createSvgIcon$j.default)(/* @__PURE__ */ (0, _jsxRuntime$j.jsx)("path", {
+var default_1$k = ExpandMore.default = void 0;
+var _createSvgIcon$k = _interopRequireDefault$k(requireCreateSvgIcon());
+var _jsxRuntime$k = requireJsxRuntime();
+var _default$k = default_1$k = ExpandMore.default = (0, _createSvgIcon$k.default)(/* @__PURE__ */ (0, _jsxRuntime$k.jsx)("path", {
   d: "M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
 }), "ExpandMore");
 var FilterAlt = {};
 "use strict";
 "use client";
-var _interopRequireDefault$i = interopRequireDefaultExports;
+var _interopRequireDefault$j = interopRequireDefaultExports;
 Object.defineProperty(FilterAlt, "__esModule", {
   value: true
 });
-var default_1$i = FilterAlt.default = void 0;
-var _createSvgIcon$i = _interopRequireDefault$i(requireCreateSvgIcon());
-var _jsxRuntime$i = jsxRuntimeExports;
-var _default$i = default_1$i = FilterAlt.default = (0, _createSvgIcon$i.default)(/* @__PURE__ */ (0, _jsxRuntime$i.jsx)("path", {
+var default_1$j = FilterAlt.default = void 0;
+var _createSvgIcon$j = _interopRequireDefault$j(requireCreateSvgIcon());
+var _jsxRuntime$j = requireJsxRuntime();
+var _default$j = default_1$j = FilterAlt.default = (0, _createSvgIcon$j.default)(/* @__PURE__ */ (0, _jsxRuntime$j.jsx)("path", {
   d: "M4.25 5.61C6.27 8.2 10 13 10 13v6c0 .55.45 1 1 1h2c.55 0 1-.45 1-1v-6s3.72-4.8 5.74-7.39c.51-.66.04-1.61-.79-1.61H5.04c-.83 0-1.3.95-.79 1.61"
 }), "FilterAlt");
 var FilterList = {};
 "use strict";
 "use client";
-var _interopRequireDefault$h = interopRequireDefaultExports;
+var _interopRequireDefault$i = interopRequireDefaultExports;
 Object.defineProperty(FilterList, "__esModule", {
   value: true
 });
-var default_1$h = FilterList.default = void 0;
-var _createSvgIcon$h = _interopRequireDefault$h(requireCreateSvgIcon());
-var _jsxRuntime$h = jsxRuntimeExports;
-var _default$h = default_1$h = FilterList.default = (0, _createSvgIcon$h.default)(/* @__PURE__ */ (0, _jsxRuntime$h.jsx)("path", {
+var default_1$i = FilterList.default = void 0;
+var _createSvgIcon$i = _interopRequireDefault$i(requireCreateSvgIcon());
+var _jsxRuntime$i = requireJsxRuntime();
+var _default$i = default_1$i = FilterList.default = (0, _createSvgIcon$i.default)(/* @__PURE__ */ (0, _jsxRuntime$i.jsx)("path", {
   d: "M10 18h4v-2h-4zM3 6v2h18V6zm3 7h12v-2H6z"
 }), "FilterList");
 var FilterListOff = {};
 "use strict";
 "use client";
-var _interopRequireDefault$g = interopRequireDefaultExports;
+var _interopRequireDefault$h = interopRequireDefaultExports;
 Object.defineProperty(FilterListOff, "__esModule", {
   value: true
 });
-var default_1$g = FilterListOff.default = void 0;
-var _createSvgIcon$g = _interopRequireDefault$g(requireCreateSvgIcon());
-var _jsxRuntime$g = jsxRuntimeExports;
-var _default$g = default_1$g = FilterListOff.default = (0, _createSvgIcon$g.default)(/* @__PURE__ */ (0, _jsxRuntime$g.jsx)("path", {
+var default_1$h = FilterListOff.default = void 0;
+var _createSvgIcon$h = _interopRequireDefault$h(requireCreateSvgIcon());
+var _jsxRuntime$h = requireJsxRuntime();
+var _default$h = default_1$h = FilterListOff.default = (0, _createSvgIcon$h.default)(/* @__PURE__ */ (0, _jsxRuntime$h.jsx)("path", {
   d: "M10.83 8H21V6H8.83zm5 5H18v-2h-4.17zM14 16.83V18h-4v-2h3.17l-3-3H6v-2h2.17l-3-3H3V6h.17L1.39 4.22 2.8 2.81l18.38 18.38-1.41 1.41z"
 }), "FilterListOff");
 var FirstPage = {};
 "use strict";
 "use client";
-var _interopRequireDefault$f = interopRequireDefaultExports;
+var _interopRequireDefault$g = interopRequireDefaultExports;
 Object.defineProperty(FirstPage, "__esModule", {
   value: true
 });
-var default_1$f = FirstPage.default = void 0;
-var _createSvgIcon$f = _interopRequireDefault$f(requireCreateSvgIcon());
-var _jsxRuntime$f = jsxRuntimeExports;
-var _default$f = default_1$f = FirstPage.default = (0, _createSvgIcon$f.default)(/* @__PURE__ */ (0, _jsxRuntime$f.jsx)("path", {
+var default_1$g = FirstPage.default = void 0;
+var _createSvgIcon$g = _interopRequireDefault$g(requireCreateSvgIcon());
+var _jsxRuntime$g = requireJsxRuntime();
+var _default$g = default_1$g = FirstPage.default = (0, _createSvgIcon$g.default)(/* @__PURE__ */ (0, _jsxRuntime$g.jsx)("path", {
   d: "M18.41 16.59 13.82 12l4.59-4.59L17 6l-6 6 6 6zM6 6h2v12H6z"
 }), "FirstPage");
 var Fullscreen = {};
 "use strict";
 "use client";
-var _interopRequireDefault$e = interopRequireDefaultExports;
+var _interopRequireDefault$f = interopRequireDefaultExports;
 Object.defineProperty(Fullscreen, "__esModule", {
   value: true
 });
-var default_1$e = Fullscreen.default = void 0;
-var _createSvgIcon$e = _interopRequireDefault$e(requireCreateSvgIcon());
-var _jsxRuntime$e = jsxRuntimeExports;
-var _default$e = default_1$e = Fullscreen.default = (0, _createSvgIcon$e.default)(/* @__PURE__ */ (0, _jsxRuntime$e.jsx)("path", {
+var default_1$f = Fullscreen.default = void 0;
+var _createSvgIcon$f = _interopRequireDefault$f(requireCreateSvgIcon());
+var _jsxRuntime$f = requireJsxRuntime();
+var _default$f = default_1$f = Fullscreen.default = (0, _createSvgIcon$f.default)(/* @__PURE__ */ (0, _jsxRuntime$f.jsx)("path", {
   d: "M7 14H5v5h5v-2H7zm-2-4h2V7h3V5H5zm12 7h-3v2h5v-5h-2zM14 5v2h3v3h2V5z"
 }), "Fullscreen");
 var FullscreenExit = {};
 "use strict";
 "use client";
-var _interopRequireDefault$d = interopRequireDefaultExports;
+var _interopRequireDefault$e = interopRequireDefaultExports;
 Object.defineProperty(FullscreenExit, "__esModule", {
   value: true
 });
-var default_1$d = FullscreenExit.default = void 0;
-var _createSvgIcon$d = _interopRequireDefault$d(requireCreateSvgIcon());
-var _jsxRuntime$d = jsxRuntimeExports;
-var _default$d = default_1$d = FullscreenExit.default = (0, _createSvgIcon$d.default)(/* @__PURE__ */ (0, _jsxRuntime$d.jsx)("path", {
+var default_1$e = FullscreenExit.default = void 0;
+var _createSvgIcon$e = _interopRequireDefault$e(requireCreateSvgIcon());
+var _jsxRuntime$e = requireJsxRuntime();
+var _default$e = default_1$e = FullscreenExit.default = (0, _createSvgIcon$e.default)(/* @__PURE__ */ (0, _jsxRuntime$e.jsx)("path", {
   d: "M5 16h3v3h2v-5H5zm3-8H5v2h5V5H8zm6 11h2v-3h3v-2h-5zm2-11V5h-2v5h5V8z"
 }), "FullscreenExit");
 var KeyboardDoubleArrowDown = {};
 "use strict";
 "use client";
-var _interopRequireDefault$c = interopRequireDefaultExports;
+var _interopRequireDefault$d = interopRequireDefaultExports;
 Object.defineProperty(KeyboardDoubleArrowDown, "__esModule", {
   value: true
 });
-var default_1$c = KeyboardDoubleArrowDown.default = void 0;
-var _createSvgIcon$c = _interopRequireDefault$c(requireCreateSvgIcon());
-var _jsxRuntime$c = jsxRuntimeExports;
-var _default$c = default_1$c = KeyboardDoubleArrowDown.default = (0, _createSvgIcon$c.default)([/* @__PURE__ */ (0, _jsxRuntime$c.jsx)("path", {
+var default_1$d = KeyboardDoubleArrowDown.default = void 0;
+var _createSvgIcon$d = _interopRequireDefault$d(requireCreateSvgIcon());
+var _jsxRuntime$d = requireJsxRuntime();
+var _default$d = default_1$d = KeyboardDoubleArrowDown.default = (0, _createSvgIcon$d.default)([/* @__PURE__ */ (0, _jsxRuntime$d.jsx)("path", {
   d: "M18 6.41 16.59 5 12 9.58 7.41 5 6 6.41l6 6z"
-}, "0"), /* @__PURE__ */ (0, _jsxRuntime$c.jsx)("path", {
+}, "0"), /* @__PURE__ */ (0, _jsxRuntime$d.jsx)("path", {
   d: "m18 13-1.41-1.41L12 16.17l-4.59-4.58L6 13l6 6z"
 }, "1")], "KeyboardDoubleArrowDown");
 var LastPage = {};
 "use strict";
 "use client";
-var _interopRequireDefault$b = interopRequireDefaultExports;
+var _interopRequireDefault$c = interopRequireDefaultExports;
 Object.defineProperty(LastPage, "__esModule", {
   value: true
 });
-var default_1$b = LastPage.default = void 0;
-var _createSvgIcon$b = _interopRequireDefault$b(requireCreateSvgIcon());
-var _jsxRuntime$b = jsxRuntimeExports;
-var _default$b = default_1$b = LastPage.default = (0, _createSvgIcon$b.default)(/* @__PURE__ */ (0, _jsxRuntime$b.jsx)("path", {
+var default_1$c = LastPage.default = void 0;
+var _createSvgIcon$c = _interopRequireDefault$c(requireCreateSvgIcon());
+var _jsxRuntime$c = requireJsxRuntime();
+var _default$c = default_1$c = LastPage.default = (0, _createSvgIcon$c.default)(/* @__PURE__ */ (0, _jsxRuntime$c.jsx)("path", {
   d: "M5.59 7.41 10.18 12l-4.59 4.59L7 18l6-6-6-6zM16 6h2v12h-2z"
 }), "LastPage");
 var MoreHoriz = {};
 "use strict";
 "use client";
-var _interopRequireDefault$a = interopRequireDefaultExports;
+var _interopRequireDefault$b = interopRequireDefaultExports;
 Object.defineProperty(MoreHoriz, "__esModule", {
   value: true
 });
-var default_1$a = MoreHoriz.default = void 0;
-var _createSvgIcon$a = _interopRequireDefault$a(requireCreateSvgIcon());
-var _jsxRuntime$a = jsxRuntimeExports;
-var _default$a = default_1$a = MoreHoriz.default = (0, _createSvgIcon$a.default)(/* @__PURE__ */ (0, _jsxRuntime$a.jsx)("path", {
+var default_1$b = MoreHoriz.default = void 0;
+var _createSvgIcon$b = _interopRequireDefault$b(requireCreateSvgIcon());
+var _jsxRuntime$b = requireJsxRuntime();
+var _default$b = default_1$b = MoreHoriz.default = (0, _createSvgIcon$b.default)(/* @__PURE__ */ (0, _jsxRuntime$b.jsx)("path", {
   d: "M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
 }), "MoreHoriz");
 var MoreVert = {};
 "use strict";
 "use client";
-var _interopRequireDefault$9 = interopRequireDefaultExports;
+var _interopRequireDefault$a = interopRequireDefaultExports;
 Object.defineProperty(MoreVert, "__esModule", {
   value: true
 });
-var default_1$9 = MoreVert.default = void 0;
-var _createSvgIcon$9 = _interopRequireDefault$9(requireCreateSvgIcon());
-var _jsxRuntime$9 = jsxRuntimeExports;
-var _default$9 = default_1$9 = MoreVert.default = (0, _createSvgIcon$9.default)(/* @__PURE__ */ (0, _jsxRuntime$9.jsx)("path", {
+var default_1$a = MoreVert.default = void 0;
+var _createSvgIcon$a = _interopRequireDefault$a(requireCreateSvgIcon());
+var _jsxRuntime$a = requireJsxRuntime();
+var _default$a = default_1$a = MoreVert.default = (0, _createSvgIcon$a.default)(/* @__PURE__ */ (0, _jsxRuntime$a.jsx)("path", {
   d: "M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2m0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
 }), "MoreVert");
 var PushPin = {};
 "use strict";
 "use client";
-var _interopRequireDefault$8 = interopRequireDefaultExports;
+var _interopRequireDefault$9 = interopRequireDefaultExports;
 Object.defineProperty(PushPin, "__esModule", {
   value: true
 });
-var default_1$8 = PushPin.default = void 0;
-var _createSvgIcon$8 = _interopRequireDefault$8(requireCreateSvgIcon());
-var _jsxRuntime$8 = jsxRuntimeExports;
-var _default$8 = default_1$8 = PushPin.default = (0, _createSvgIcon$8.default)(/* @__PURE__ */ (0, _jsxRuntime$8.jsx)("path", {
+var default_1$9 = PushPin.default = void 0;
+var _createSvgIcon$9 = _interopRequireDefault$9(requireCreateSvgIcon());
+var _jsxRuntime$9 = requireJsxRuntime();
+var _default$9 = default_1$9 = PushPin.default = (0, _createSvgIcon$9.default)(/* @__PURE__ */ (0, _jsxRuntime$9.jsx)("path", {
   fillRule: "evenodd",
   d: "M16 9V4h1c.55 0 1-.45 1-1s-.45-1-1-1H7c-.55 0-1 .45-1 1s.45 1 1 1h1v5c0 1.66-1.34 3-3 3v2h5.97v7l1 1 1-1v-7H19v-2c-1.66 0-3-1.34-3-3"
 }), "PushPin");
 var RestartAlt = {};
 "use strict";
 "use client";
-var _interopRequireDefault$7 = interopRequireDefaultExports;
+var _interopRequireDefault$8 = interopRequireDefaultExports;
 Object.defineProperty(RestartAlt, "__esModule", {
   value: true
 });
-var default_1$7 = RestartAlt.default = void 0;
-var _createSvgIcon$7 = _interopRequireDefault$7(requireCreateSvgIcon());
-var _jsxRuntime$7 = jsxRuntimeExports;
-var _default$7 = default_1$7 = RestartAlt.default = (0, _createSvgIcon$7.default)(/* @__PURE__ */ (0, _jsxRuntime$7.jsx)("path", {
+var default_1$8 = RestartAlt.default = void 0;
+var _createSvgIcon$8 = _interopRequireDefault$8(requireCreateSvgIcon());
+var _jsxRuntime$8 = requireJsxRuntime();
+var _default$8 = default_1$8 = RestartAlt.default = (0, _createSvgIcon$8.default)(/* @__PURE__ */ (0, _jsxRuntime$8.jsx)("path", {
   d: "M12 5V2L8 6l4 4V7c3.31 0 6 2.69 6 6 0 2.97-2.17 5.43-5 5.91v2.02c3.95-.49 7-3.85 7-7.93 0-4.42-3.58-8-8-8m-6 8c0-1.65.67-3.15 1.76-4.24L6.34 7.34C4.9 8.79 4 10.79 4 13c0 4.08 3.05 7.44 7 7.93v-2.02c-2.83-.48-5-2.94-5-5.91"
 }), "RestartAlt");
 var Save = {};
 "use strict";
 "use client";
-var _interopRequireDefault$6 = interopRequireDefaultExports;
+var _interopRequireDefault$7 = interopRequireDefaultExports;
 Object.defineProperty(Save, "__esModule", {
   value: true
 });
-var default_1$6 = Save.default = void 0;
-var _createSvgIcon$6 = _interopRequireDefault$6(requireCreateSvgIcon());
-var _jsxRuntime$6 = jsxRuntimeExports;
-var _default$6 = default_1$6 = Save.default = (0, _createSvgIcon$6.default)(/* @__PURE__ */ (0, _jsxRuntime$6.jsx)("path", {
+var default_1$7 = Save.default = void 0;
+var _createSvgIcon$7 = _interopRequireDefault$7(requireCreateSvgIcon());
+var _jsxRuntime$7 = requireJsxRuntime();
+var _default$7 = default_1$7 = Save.default = (0, _createSvgIcon$7.default)(/* @__PURE__ */ (0, _jsxRuntime$7.jsx)("path", {
   d: "M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3m3-10H5V5h10z"
 }), "Save");
 var Search = {};
 "use strict";
 "use client";
-var _interopRequireDefault$5 = interopRequireDefaultExports;
+var _interopRequireDefault$6 = interopRequireDefaultExports;
 Object.defineProperty(Search, "__esModule", {
   value: true
 });
-var default_1$5 = Search.default = void 0;
-var _createSvgIcon$5 = _interopRequireDefault$5(requireCreateSvgIcon());
-var _jsxRuntime$5 = jsxRuntimeExports;
-var _default$5 = default_1$5 = Search.default = (0, _createSvgIcon$5.default)(/* @__PURE__ */ (0, _jsxRuntime$5.jsx)("path", {
+var default_1$6 = Search.default = void 0;
+var _createSvgIcon$6 = _interopRequireDefault$6(requireCreateSvgIcon());
+var _jsxRuntime$6 = requireJsxRuntime();
+var _default$6 = default_1$6 = Search.default = (0, _createSvgIcon$6.default)(/* @__PURE__ */ (0, _jsxRuntime$6.jsx)("path", {
   d: "M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"
 }), "Search");
 var SearchOff = {};
 "use strict";
 "use client";
-var _interopRequireDefault$4 = interopRequireDefaultExports;
+var _interopRequireDefault$5 = interopRequireDefaultExports;
 Object.defineProperty(SearchOff, "__esModule", {
   value: true
 });
-var default_1$4 = SearchOff.default = void 0;
-var _createSvgIcon$4 = _interopRequireDefault$4(requireCreateSvgIcon());
-var _jsxRuntime$4 = jsxRuntimeExports;
-var _default$4 = default_1$4 = SearchOff.default = (0, _createSvgIcon$4.default)([/* @__PURE__ */ (0, _jsxRuntime$4.jsx)("path", {
+var default_1$5 = SearchOff.default = void 0;
+var _createSvgIcon$5 = _interopRequireDefault$5(requireCreateSvgIcon());
+var _jsxRuntime$5 = requireJsxRuntime();
+var _default$5 = default_1$5 = SearchOff.default = (0, _createSvgIcon$5.default)([/* @__PURE__ */ (0, _jsxRuntime$5.jsx)("path", {
   d: "M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3 6.08 3 3.28 5.64 3.03 9h2.02C5.3 6.75 7.18 5 9.5 5 11.99 5 14 7.01 14 9.5S11.99 14 9.5 14c-.17 0-.33-.03-.5-.05v2.02c.17.02.33.03.5.03 1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19z"
-}, "0"), /* @__PURE__ */ (0, _jsxRuntime$4.jsx)("path", {
+}, "0"), /* @__PURE__ */ (0, _jsxRuntime$5.jsx)("path", {
   d: "M6.47 10.82 4 13.29l-2.47-2.47-.71.71L3.29 14 .82 16.47l.71.71L4 14.71l2.47 2.47.71-.71L4.71 14l2.47-2.47z"
 }, "1")], "SearchOff");
 var Sort = {};
 "use strict";
 "use client";
-var _interopRequireDefault$3 = interopRequireDefaultExports;
+var _interopRequireDefault$4 = interopRequireDefaultExports;
 Object.defineProperty(Sort, "__esModule", {
   value: true
 });
-var default_1$3 = Sort.default = void 0;
-var _createSvgIcon$3 = _interopRequireDefault$3(requireCreateSvgIcon());
-var _jsxRuntime$3 = jsxRuntimeExports;
-var _default$3 = default_1$3 = Sort.default = (0, _createSvgIcon$3.default)(/* @__PURE__ */ (0, _jsxRuntime$3.jsx)("path", {
+var default_1$4 = Sort.default = void 0;
+var _createSvgIcon$4 = _interopRequireDefault$4(requireCreateSvgIcon());
+var _jsxRuntime$4 = requireJsxRuntime();
+var _default$4 = default_1$4 = Sort.default = (0, _createSvgIcon$4.default)(/* @__PURE__ */ (0, _jsxRuntime$4.jsx)("path", {
   d: "M3 18h6v-2H3zM3 6v2h18V6zm0 7h12v-2H3z"
 }), "Sort");
 var SyncAlt = {};
 "use strict";
 "use client";
-var _interopRequireDefault$2 = interopRequireDefaultExports;
+var _interopRequireDefault$3 = interopRequireDefaultExports;
 Object.defineProperty(SyncAlt, "__esModule", {
   value: true
 });
-var default_1$2 = SyncAlt.default = void 0;
-var _createSvgIcon$2 = _interopRequireDefault$2(requireCreateSvgIcon());
-var _jsxRuntime$2 = jsxRuntimeExports;
-var _default$2 = default_1$2 = SyncAlt.default = (0, _createSvgIcon$2.default)(/* @__PURE__ */ (0, _jsxRuntime$2.jsx)("path", {
+var default_1$3 = SyncAlt.default = void 0;
+var _createSvgIcon$3 = _interopRequireDefault$3(requireCreateSvgIcon());
+var _jsxRuntime$3 = requireJsxRuntime();
+var _default$3 = default_1$3 = SyncAlt.default = (0, _createSvgIcon$3.default)(/* @__PURE__ */ (0, _jsxRuntime$3.jsx)("path", {
   d: "m18 12 4-4-4-4v3H3v2h15zM6 12l-4 4 4 4v-3h15v-2H6z"
 }), "SyncAlt");
 var ViewColumn = {};
 "use strict";
 "use client";
-var _interopRequireDefault$1 = interopRequireDefaultExports;
+var _interopRequireDefault$2 = interopRequireDefaultExports;
 Object.defineProperty(ViewColumn, "__esModule", {
   value: true
 });
-var default_1$1 = ViewColumn.default = void 0;
-var _createSvgIcon$1 = _interopRequireDefault$1(requireCreateSvgIcon());
-var _jsxRuntime$1 = jsxRuntimeExports;
-var _default$1 = default_1$1 = ViewColumn.default = (0, _createSvgIcon$1.default)(/* @__PURE__ */ (0, _jsxRuntime$1.jsx)("path", {
+var default_1$2 = ViewColumn.default = void 0;
+var _createSvgIcon$2 = _interopRequireDefault$2(requireCreateSvgIcon());
+var _jsxRuntime$2 = requireJsxRuntime();
+var _default$2 = default_1$2 = ViewColumn.default = (0, _createSvgIcon$2.default)(/* @__PURE__ */ (0, _jsxRuntime$2.jsx)("path", {
   d: "M14.67 5v14H9.33V5zm1 14H21V5h-5.33zm-7.34 0V5H3v14z"
 }), "ViewColumn");
 var VisibilityOff = {};
 "use strict";
 "use client";
-var _interopRequireDefault = interopRequireDefaultExports;
+var _interopRequireDefault$1 = interopRequireDefaultExports;
 Object.defineProperty(VisibilityOff, "__esModule", {
   value: true
 });
-var default_1 = VisibilityOff.default = void 0;
-var _createSvgIcon = _interopRequireDefault(requireCreateSvgIcon());
-var _jsxRuntime = jsxRuntimeExports;
-var _default = default_1 = VisibilityOff.default = (0, _createSvgIcon.default)(/* @__PURE__ */ (0, _jsxRuntime.jsx)("path", {
+var default_1$1 = VisibilityOff.default = void 0;
+var _createSvgIcon$1 = _interopRequireDefault$1(requireCreateSvgIcon());
+var _jsxRuntime$1 = requireJsxRuntime();
+var _default$1 = default_1$1 = VisibilityOff.default = (0, _createSvgIcon$1.default)(/* @__PURE__ */ (0, _jsxRuntime$1.jsx)("path", {
   d: "M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7M2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2m4.31-.78 3.15 3.15.02-.16c0-1.66-1.34-3-3-3z"
 }), "VisibilityOff");
 function memo(getDeps, fn2, opts) {
@@ -39119,7 +39083,7 @@ const PickersLayoutContentWrapper = styled$1("div", {
   display: "flex",
   flexDirection: "column"
 });
-const PickersLayout = function PickersLayout2(inProps) {
+const PickersLayout = /* @__PURE__ */ React$1.forwardRef(function PickersLayout2(inProps, ref) {
   const props = useThemeProps({
     props: inProps,
     name: "MuiPickersLayout"
@@ -39135,7 +39099,6 @@ const PickersLayout = function PickersLayout2(inProps) {
     sx,
     className,
     isLandscape,
-    ref,
     wrapperVariant
   } = props;
   const classes = useUtilityClasses$J(props);
@@ -39153,7 +39116,7 @@ const PickersLayout = function PickersLayout2(inProps) {
       })
     }), actionBar]
   });
-};
+});
 process.env.NODE_ENV !== "production" ? PickersLayout.propTypes = {
   // ----------------------------- Warning --------------------------------
   // | These PropTypes are generated from the TypeScript type definitions |
@@ -45057,7 +45020,7 @@ const pickersCalendarHeaderClasses = generateUtilityClasses("MuiPickersCalendarH
 function getPickersArrowSwitcherUtilityClass(slot) {
   return generateUtilityClass("MuiPickersArrowSwitcher", slot);
 }
-const pickersArrowSwitcherClasses = generateUtilityClasses("MuiPickersArrowSwitcher", ["root", "spacer", "button"]);
+const pickersArrowSwitcherClasses = generateUtilityClasses("MuiPickersArrowSwitcher", ["root", "spacer", "button", "previousIconButton", "nextIconButton", "leftArrowIcon", "rightArrowIcon"]);
 const _excluded$E = ["children", "className", "slots", "slotProps", "isNextDisabled", "isNextHidden", "onGoToNext", "nextLabel", "isPreviousDisabled", "isPreviousHidden", "onGoToPrevious", "previousLabel", "labelId"], _excluded2$3 = ["ownerState"], _excluded3$1 = ["ownerState"];
 const PickersArrowSwitcherRoot = styled$1("div", {
   name: "MuiPickersArrowSwitcher",
@@ -45096,7 +45059,11 @@ const useUtilityClasses$u = (ownerState) => {
   const slots = {
     root: ["root"],
     spacer: ["spacer"],
-    button: ["button"]
+    button: ["button"],
+    previousIconButton: ["previousIconButton"],
+    nextIconButton: ["nextIconButton"],
+    leftArrowIcon: ["leftArrowIcon"],
+    rightArrowIcon: ["rightArrowIcon"]
   };
   return composeClasses(slots, getPickersArrowSwitcherUtilityClass, classes);
 };
@@ -45151,7 +45118,7 @@ const PickersArrowSwitcher = /* @__PURE__ */ React$1.forwardRef(function Pickers
     ownerState: _extends$1({}, ownerState, {
       hidden: previousProps.isHidden
     }),
-    className: classes.button
+    className: clsx(classes.button, classes.previousIconButton)
   });
   const NextIconButton = (_b = slots == null ? void 0 : slots.nextIconButton) != null ? _b : PickersArrowSwitcherButton;
   const nextIconButtonProps = useSlotProps({
@@ -45168,7 +45135,7 @@ const PickersArrowSwitcher = /* @__PURE__ */ React$1.forwardRef(function Pickers
     ownerState: _extends$1({}, ownerState, {
       hidden: nextProps.isHidden
     }),
-    className: classes.button
+    className: clsx(classes.button, classes.nextIconButton)
   });
   const LeftArrowIcon = (_c = slots == null ? void 0 : slots.leftArrowIcon) != null ? _c : ArrowLeftIcon;
   const _useSlotProps = useSlotProps({
@@ -45177,7 +45144,8 @@ const PickersArrowSwitcher = /* @__PURE__ */ React$1.forwardRef(function Pickers
     additionalProps: {
       fontSize: "inherit"
     },
-    ownerState: void 0
+    ownerState,
+    className: classes.leftArrowIcon
   }), leftArrowIconProps = _objectWithoutPropertiesLoose(_useSlotProps, _excluded2$3);
   const RightArrowIcon = (_d = slots == null ? void 0 : slots.rightArrowIcon) != null ? _d : ArrowRightIcon;
   const _useSlotProps2 = useSlotProps({
@@ -45186,7 +45154,8 @@ const PickersArrowSwitcher = /* @__PURE__ */ React$1.forwardRef(function Pickers
     additionalProps: {
       fontSize: "inherit"
     },
-    ownerState: void 0
+    ownerState,
+    className: classes.rightArrowIcon
   }), rightArrowIconProps = _objectWithoutPropertiesLoose(_useSlotProps2, _excluded3$1);
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(PickersArrowSwitcherRoot, _extends$1({
     ref,
@@ -45367,7 +45336,7 @@ const PickersCalendarHeader = /* @__PURE__ */ React$1.forwardRef(function Picker
   const _useSlotProps = useSlotProps({
     elementType: SwitchViewIcon,
     externalSlotProps: slotProps == null ? void 0 : slotProps.switchViewIcon,
-    ownerState: void 0,
+    ownerState,
     className: classes.switchViewIcon
   }), switchViewIconProps = _objectWithoutPropertiesLoose(_useSlotProps, _excluded2$2);
   const selectNextMonth = () => onMonthChange(utils2.addMonths(month, 1), "left");
@@ -50297,10 +50266,11 @@ function ClockPointer(inProps) {
 function getClockUtilityClass(slot) {
   return generateUtilityClass("MuiClock", slot);
 }
-const clockClasses = generateUtilityClasses("MuiClock", ["root", "clock", "wrapper", "squareMask", "pin", "amButton", "pmButton", "meridiemText"]);
+const clockClasses = generateUtilityClasses("MuiClock", ["root", "clock", "wrapper", "squareMask", "pin", "amButton", "pmButton", "meridiemText", "selected"]);
 const useUtilityClasses$h = (ownerState) => {
   const {
-    classes
+    classes,
+    meridiemMode
   } = ownerState;
   const slots = {
     root: ["root"],
@@ -50308,8 +50278,8 @@ const useUtilityClasses$h = (ownerState) => {
     wrapper: ["wrapper"],
     squareMask: ["squareMask"],
     pin: ["pin"],
-    amButton: ["amButton"],
-    pmButton: ["pmButton"],
+    amButton: ["amButton", meridiemMode === "am" && "selected"],
+    pmButton: ["pmButton", meridiemMode === "pm" && "selected"],
     meridiemText: ["meridiemText"]
   };
   return composeClasses(slots, getClockUtilityClass, classes);
@@ -50392,23 +50362,15 @@ const ClockPin = styled$1("div", {
   left: "50%",
   transform: "translate(-50%, -50%)"
 }));
-const ClockAmButton = styled$1(IconButton, {
-  name: "MuiClock",
-  slot: "AmButton",
-  overridesResolver: (_2, styles2) => styles2.amButton
-})(({
-  theme
-}) => ({
+const meridiemButtonCommonStyles = (theme, meridiemMode) => ({
   zIndex: 1,
-  position: "absolute",
   bottom: 8,
-  left: 8,
   paddingLeft: 4,
   paddingRight: 4,
   width: CLOCK_HOUR_WIDTH,
   variants: [{
     props: {
-      meridiemMode: "am"
+      meridiemMode
     },
     style: {
       backgroundColor: (theme.vars || theme).palette.primary.main,
@@ -50418,6 +50380,17 @@ const ClockAmButton = styled$1(IconButton, {
       }
     }
   }]
+});
+const ClockAmButton = styled$1(IconButton, {
+  name: "MuiClock",
+  slot: "AmButton",
+  overridesResolver: (_2, styles2) => styles2.amButton
+})(({
+  theme
+}) => _extends$1({}, meridiemButtonCommonStyles(theme, "am"), {
+  // keeping it here to make TS happy
+  position: "absolute",
+  left: 8
 }));
 const ClockPmButton = styled$1(IconButton, {
   name: "MuiClock",
@@ -50425,26 +50398,10 @@ const ClockPmButton = styled$1(IconButton, {
   overridesResolver: (_2, styles2) => styles2.pmButton
 })(({
   theme
-}) => ({
-  zIndex: 1,
+}) => _extends$1({}, meridiemButtonCommonStyles(theme, "pm"), {
+  // keeping it here to make TS happy
   position: "absolute",
-  bottom: 8,
-  right: 8,
-  paddingLeft: 4,
-  paddingRight: 4,
-  width: CLOCK_HOUR_WIDTH,
-  variants: [{
-    props: {
-      meridiemMode: "pm"
-    },
-    style: {
-      backgroundColor: (theme.vars || theme).palette.primary.main,
-      color: (theme.vars || theme).palette.primary.contrastText,
-      "&:hover": {
-        backgroundColor: (theme.vars || theme).palette.primary.light
-      }
-    }
-  }]
+  right: 8
 }));
 const ClockMeridiemText = styled$1(Typography, {
   name: "MuiClock",
@@ -52511,7 +52468,7 @@ const renderMultiSectionDigitalClockTimeView = ({
   skipDisabled,
   timezone
 });
-function DesktopDateTimePickerLayout(props) {
+const DesktopDateTimePickerLayout = /* @__PURE__ */ React$1.forwardRef(function DesktopDateTimePickerLayout2(props, ref) {
   var _a, _b;
   const isRtl = useRtl();
   const {
@@ -52525,7 +52482,6 @@ function DesktopDateTimePickerLayout(props) {
     sx,
     className,
     isLandscape,
-    ref,
     classes
   } = props;
   const isActionBarVisible = actionBar && ((_b = (_a = actionBar.props.actions) == null ? void 0 : _a.length) != null ? _b : 0) > 0;
@@ -52558,7 +52514,7 @@ function DesktopDateTimePickerLayout(props) {
       })]
     }), actionBar]
   });
-}
+});
 process.env.NODE_ENV !== "production" ? DesktopDateTimePickerLayout.propTypes = {
   // ----------------------------- Warning --------------------------------
   // | These PropTypes are generated from the TypeScript type definitions |
@@ -60322,40 +60278,40 @@ const getMRT_RowSelectColumnDef = (tableOptions) => {
   }));
 };
 const MRT_Default_Icons = {
-  ArrowDownwardIcon: default_1$x,
-  ArrowRightIcon: default_1$w,
-  CancelIcon: default_1$v,
-  ChevronLeftIcon: default_1$u,
-  ChevronRightIcon: default_1$t,
-  ClearAllIcon: default_1$s,
-  CloseIcon: default_1$r,
-  ContentCopy: default_1$q,
-  DensityLargeIcon: default_1$p,
-  DensityMediumIcon: default_1$o,
-  DensitySmallIcon: default_1$n,
-  DragHandleIcon: default_1$m,
-  DynamicFeedIcon: default_1$l,
-  EditIcon: default_1$k,
-  ExpandMoreIcon: default_1$j,
-  FilterAltIcon: default_1$i,
-  FilterListIcon: default_1$h,
-  FilterListOffIcon: default_1$g,
-  FirstPageIcon: default_1$f,
-  FullscreenExitIcon: default_1$d,
-  FullscreenIcon: default_1$e,
-  KeyboardDoubleArrowDownIcon: default_1$c,
-  LastPageIcon: default_1$b,
-  MoreHorizIcon: default_1$a,
-  MoreVertIcon: default_1$9,
-  PushPinIcon: default_1$8,
-  RestartAltIcon: default_1$7,
-  SaveIcon: default_1$6,
-  SearchIcon: default_1$5,
-  SearchOffIcon: default_1$4,
-  SortIcon: default_1$3,
-  SyncAltIcon: default_1$2,
-  ViewColumnIcon: default_1$1,
-  VisibilityOffIcon: default_1
+  ArrowDownwardIcon: default_1$y,
+  ArrowRightIcon: default_1$x,
+  CancelIcon: default_1$w,
+  ChevronLeftIcon: default_1$v,
+  ChevronRightIcon: default_1$u,
+  ClearAllIcon: default_1$t,
+  CloseIcon: default_1$s,
+  ContentCopy: default_1$r,
+  DensityLargeIcon: default_1$q,
+  DensityMediumIcon: default_1$p,
+  DensitySmallIcon: default_1$o,
+  DragHandleIcon: default_1$n,
+  DynamicFeedIcon: default_1$m,
+  EditIcon: default_1$l,
+  ExpandMoreIcon: default_1$k,
+  FilterAltIcon: default_1$j,
+  FilterListIcon: default_1$i,
+  FilterListOffIcon: default_1$h,
+  FirstPageIcon: default_1$g,
+  FullscreenExitIcon: default_1$e,
+  FullscreenIcon: default_1$f,
+  KeyboardDoubleArrowDownIcon: default_1$d,
+  LastPageIcon: default_1$c,
+  MoreHorizIcon: default_1$b,
+  MoreVertIcon: default_1$a,
+  PushPinIcon: default_1$9,
+  RestartAltIcon: default_1$8,
+  SaveIcon: default_1$7,
+  SearchIcon: default_1$6,
+  SearchOffIcon: default_1$5,
+  SortIcon: default_1$4,
+  SyncAltIcon: default_1$3,
+  ViewColumnIcon: default_1$2,
+  VisibilityOffIcon: default_1$1
 };
 const MRT_Localization_EN = {
   actions: "Actions",
@@ -62810,17 +62766,17 @@ const MaterialReactTable = (props) => {
   }
   return jsxRuntimeExports.jsx(MRT_TablePaper, { table });
 };
-const { Open: Open$7, Child: Child$4 } = gubu_minExports.Gubu;
-const Shape$2 = gubu_minExports.Gubu(Open$7({
+const { Open: Open$n, Child: Child$5 } = gubu_minExports.Gubu;
+const Shape$3 = gubu_minExports.Gubu(Open$n({
   name: String,
   prefix: String,
   ent: String,
   order: [String],
-  field: Child$4({}, {})
+  field: Child$5({}, {})
 }), { name: "BasicEntityList" });
 function VxgBasicEntityListPlugin(options) {
   const seneca = this;
-  const spec = Shape$2(options.spec);
+  const spec = Shape$3(options.spec);
   const slot = spec.prefix + spec.name;
   const columns = spec.order.reduce((a, fn2) => {
     const field = spec.field[fn2];
@@ -62856,7 +62812,7 @@ Object.assign(VxgBasicEntityListPlugin, {
   }
 });
 Object.defineProperty(VxgBasicEntityListPlugin, "name", { value: "VxgBasicEntityListPlugin" });
-const CMPNAME$9 = "BasicEntityList";
+const CMPNAME$o = "BasicEntityList";
 function BasicEntityList(props) {
   const { ctx } = props;
   const { seneca } = ctx();
@@ -64776,32 +64732,396 @@ function useForm(props = {}) {
   _formControl.current.formState = getProxyFormState(formState, control);
   return _formControl.current;
 }
-const CMPNAME$8 = "BasicEntityField";
-const { Open: Open$6 } = gubu_minExports.Gubu;
-const BasicEntityFieldSpecShape = gubu_minExports.Gubu(Open$6({}), { name: CMPNAME$8 });
-const fieldMap = {
-  Text: BasicEntityTextField,
-  TextBox: BasicEntityTextBoxField,
-  Date: BasicEntityDateField,
-  DateTime: BasicEntityDateTimeField,
-  Time: BasicEntityTimeField
-};
-function BasicEntityField(props) {
-  const { ctx, spec } = props;
-  const basicEntityFieldSpec = BasicEntityFieldSpecShape(spec);
-  const field = basicEntityFieldSpec.field;
-  const Field = fieldMap[field.ux.kind];
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(Field, { ctx, spec });
-}
 function BasicEntityFieldError(props) {
   const { err } = props;
   return err ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "vxg-BasicEntityFieldError-active", children: err.message }) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "vxg-BasicEntityFieldError-none" });
 }
+const CMPNAME$n = "BasicEntitySliderField";
+const { Open: Open$m } = gubu_minExports.Gubu;
+const BasicEntityCheckboxFieldSpecShape = gubu_minExports.Gubu(
+  Open$m({
+    field: Open$m({
+      id: String,
+      name: String,
+      kind: "",
+      label: "",
+      ux: Open$m({
+        kind: gubu_minExports.Exact("Checkbox"),
+        edit: gubu_minExports.Default(true),
+        props: Open$m({})
+      })
+    })
+  }),
+  { name: CMPNAME$n }
+);
+function BasicEntityCheckboxField(props) {
+  const { spec } = props;
+  const basicEntityCheckboxField = BasicEntityCheckboxFieldSpecShape(spec);
+  const { control, field, getValues, errors } = basicEntityCheckboxField;
+  const val = getValues(field.name);
+  const err = errors[field.name];
+  const {
+    field: controllerField,
+    fieldState: { error }
+  } = useController({
+    name: field.name,
+    control,
+    defaultValue: !!val
+  });
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(Box$2, { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      FormControlLabel$1,
+      {
+        control: /* @__PURE__ */ jsxRuntimeExports.jsx(
+          Checkbox$1,
+          __spreadValues({
+            id: field.id,
+            checked: controllerField.value,
+            onChange: controllerField.onChange,
+            disabled: !field.ux.edit
+          }, field.ux.props)
+        ),
+        label: field.label
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(BasicEntityFieldError, { err })
+  ] }, `${field.id}-box`);
+}
+const CMPNAME$m = "BasicEntityAutocompleteField";
+const { Open: Open$l } = gubu_minExports.Gubu;
+const BasicEntityAutocompleteFieldSpecShape = gubu_minExports.Gubu(
+  Open$l({
+    field: Open$l({
+      id: String,
+      label: String,
+      kind: String,
+      name: String,
+      cat: Open$l({
+        default: String,
+        title: String,
+        multiple: Number,
+        order: {
+          sort: "",
+          exclude: "",
+          include: ""
+        },
+        item: Open$l({})
+      }),
+      ux: Open$l({
+        kind: gubu_minExports.Exact("Autocomplete"),
+        edit: gubu_minExports.Default(true)
+      })
+    })
+  }),
+  { name: CMPNAME$m }
+);
+function BasicEntityAutocompleteField(props) {
+  const { spec } = props;
+  const basicEntityAutocompleteField = BasicEntityAutocompleteFieldSpecShape(spec);
+  const { control, field, errors } = basicEntityAutocompleteField;
+  const err = errors[field.name];
+  const {
+    field: controllerField,
+    fieldState: { error }
+  } = useController({
+    name: field.name,
+    control,
+    defaultValue: resolveDefault$2(field.cat)
+  });
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(Box$2, { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      Autocomplete$1,
+      __spreadValues({
+        freeSolo: true,
+        forcePopupIcon: true,
+        multiple: field.cat.multiple !== 1,
+        options: resolveCategories$2(field.cat),
+        isOptionEqualToValue: (opt, val) => opt === val || (opt == null ? void 0 : opt.id) != null && (val == null ? void 0 : val.id) != null && opt.id === val.id || (opt == null ? void 0 : opt.key) != null && (val == null ? void 0 : val.key) != null && opt.key === val.key,
+        getOptionLabel: (option) => option.title,
+        value: resolveValue$1(controllerField.value, field.cat),
+        disabled: !field.ux.edit,
+        onChange: (_2, v) => {
+          controllerField.onChange(
+            Array.isArray(v) ? v.map((val) => val.key).join(",") : v == null ? void 0 : v.key
+          );
+        },
+        renderInput: (params) => /* @__PURE__ */ jsxRuntimeExports.jsx(TextField$1, __spreadProps(__spreadValues({}, params), { label: field.label }))
+      }, field.ux.props)
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(BasicEntityFieldError, { err })
+  ] }, `${field.id}-box`);
+}
+const resolveCategories$2 = ({
+  item
+}) => Object.entries(item).map(([key, { title }]) => ({ key, title }));
+function resolveDefault$2(cat) {
+  return resdefault(cat, (val, item) => ({
+    key: val,
+    title: item.title
+  }));
+}
+function resolveValue$1(value, cat) {
+  return resvalue(value, cat, (val, item) => ({
+    key: val,
+    title: item.title
+  }));
+}
+const CMPNAME$l = "BasicEntitySliderField";
+const { Open: Open$k } = gubu_minExports.Gubu;
+const BasicEntitySliderFieldSpecShape = gubu_minExports.Gubu(
+  Open$k({
+    field: Open$k({
+      id: String,
+      name: String,
+      kind: "",
+      label: "",
+      ux: Open$k({
+        kind: gubu_minExports.Exact("Slider"),
+        edit: gubu_minExports.Default(true),
+        step: gubu_minExports.Default(1),
+        min: gubu_minExports.Default(0),
+        max: gubu_minExports.Default(100),
+        props: Open$k({
+          marks: gubu_minExports.Default({}),
+          valueLabelDisplay: gubu_minExports.Exact("on", "auto", "off").Default("auto"),
+          direction: gubu_minExports.Exact("horizontal", "vertical").Default("horizontal"),
+          track: gubu_minExports.Exact("normal", "inverted", "disabled").Default("normal")
+        })
+      })
+    })
+  }),
+  { name: CMPNAME$l }
+);
+function BasicEntitySliderField(props) {
+  const { spec } = props;
+  const basicEntityAutocompleteField = BasicEntitySliderFieldSpecShape(spec);
+  const { control, field, getValues, errors } = basicEntityAutocompleteField;
+  const val = getValues(field.name);
+  const err = errors[field.name];
+  const { field: controllerField } = useController({
+    name: field.name,
+    control,
+    defaultValue: val || field.ux.min
+  });
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(FormLabel$1, { children: field.label }, `${field.id}-label`),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      Slider$1,
+      {
+        step: field.ux.step,
+        marks: resolveMarks(field.ux.props.marks),
+        min: field.ux.min,
+        max: field.ux.max,
+        value: controllerField.value,
+        onChange: (_2, newVal) => controllerField.onChange(newVal),
+        disabled: !field.ux.edit,
+        orientation: field.ux.direction,
+        track: field.ux.track,
+        valueLabelDisplay: field.ux.props.valueLabelDisplay
+      },
+      `${field.id}-slider`
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(BasicEntityFieldError, { err })
+  ] });
+}
+function resolveMarks(marks) {
+  if (!marks || typeof marks === "object" && Object.keys(marks).length === 0) {
+    return false;
+  }
+  if (typeof marks === "object") {
+    return Object.entries(marks).map(([key, value]) => ({
+      label: value,
+      value: +key
+    }));
+  }
+  return marks;
+}
+const CMPNAME$k = "BasicEntitySliderField";
+const { Open: Open$j } = gubu_minExports.Gubu;
+const BasicEntityRadioGroupFieldSpecShape = gubu_minExports.Gubu(
+  Open$j({
+    field: Open$j({
+      id: String,
+      name: String,
+      kind: "",
+      llabel: "",
+      ux: Open$j({
+        kind: gubu_minExports.Exact("RadioGroup"),
+        edit: gubu_minExports.Default(true),
+        direction: gubu_minExports.Exact("row", "column").Default("row")
+      }),
+      cat: Open$j({
+        default: "",
+        title: String,
+        order: {
+          sort: "",
+          exclude: "",
+          include: ""
+        },
+        item: Open$j({})
+      })
+    })
+  }),
+  { name: CMPNAME$k }
+);
+function BasicEntityRadioGroupField(props) {
+  const { spec } = props;
+  const basicEntityRadioGroupField = BasicEntityRadioGroupFieldSpecShape(spec);
+  const { control, field, errors } = basicEntityRadioGroupField;
+  const err = errors[field.name];
+  const {
+    field: controllerField,
+    fieldState: { error }
+  } = useController({
+    name: field.name,
+    control,
+    defaultValue: field.cat.default
+  });
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(FormLabel$1, { children: field.label }, `${field.id}-label`),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      RadioGroup,
+      __spreadProps(__spreadValues({
+        value: controllerField.value,
+        onChange: controllerField.onChange,
+        row: "row" === field.ux.direction,
+        disabled: !field.ux.edit
+      }, field.ux.props), {
+        children: resolveCategories$1(field.cat).map((option) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+          FormControlLabel$1,
+          {
+            value: option.key,
+            control: /* @__PURE__ */ jsxRuntimeExports.jsx(Radio$1, { disabled: !field.ux.edit }),
+            label: option.title
+          },
+          `${option.key}-option`
+        ))
+      }),
+      field.id
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(BasicEntityFieldError, { err })
+  ] });
+}
+function resolveCategories$1(cat) {
+  return Object.keys(cat.item).map((key) => {
+    var _a, _b;
+    return {
+      title: (_b = (_a = cat.item) == null ? void 0 : _a[key]) == null ? void 0 : _b.title,
+      key
+    };
+  });
+}
+function resolveDefault$1(cat) {
+  const { default: defaultValues } = cat;
+  return defaultValues;
+}
+const CMPNAME$j = "BasicEntityTextBoxField";
+const { Open: Open$i } = gubu_minExports.Gubu;
+const BasicEntityTextBoxFieldSpecShape = gubu_minExports.Gubu(
+  Open$i({
+    field: Open$i({
+      id: String,
+      name: String,
+      kind: "",
+      label: "",
+      ux: Open$i({
+        kind: gubu_minExports.Exact("TextBox"),
+        edit: gubu_minExports.Default(true),
+        props: Open$i({})
+      })
+    })
+  }),
+  { name: CMPNAME$j }
+);
+function BasicEntityTextBoxField(props) {
+  const { spec } = props;
+  const basicEntityTextBoxField = BasicEntityTextBoxFieldSpecShape(spec);
+  const { field, getValues, register, errors } = basicEntityTextBoxField;
+  const val = getValues(field.name);
+  const err = errors[field.name];
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      TextField$1,
+      __spreadValues(__spreadValues({
+        id: field.id,
+        name: field.name,
+        label: field.label,
+        variant: "outlined",
+        fullWidth: true,
+        multiline: true,
+        rows: field.ux.rows,
+        InputLabelProps: { shrink: (val == null ? void 0 : val.length) > 0 },
+        disabled: !field.ux.edit
+      }, field.ux.props), register(field.name))
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(BasicEntityFieldError, { err })
+  ] }, field.name);
+}
+const CMPNAME$i = "BasicEntityTextField";
+const { Open: Open$h } = gubu_minExports.Gubu;
+const BasicEntityTextFieldSpecShape = gubu_minExports.Gubu(
+  Open$h({
+    field: Open$h({
+      id: String,
+      name: String,
+      kind: "",
+      label: "",
+      ux: Open$h({
+        kind: gubu_minExports.Exact("Text"),
+        edit: gubu_minExports.Default(true),
+        props: Open$h({})
+      })
+    })
+  }),
+  { name: CMPNAME$i }
+);
 function BasicEntityTextField(props) {
   const { spec } = props;
-  const { field, register, getValues, errors } = spec;
-  const err = errors[field.name];
+  const basicEntityTextBoxField = BasicEntityTextFieldSpecShape(spec);
+  const { field, getValues, register, errors } = basicEntityTextBoxField;
   const val = getValues(field.name);
+  const err = errors[field.name];
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      TextField$1,
+      __spreadValues(__spreadProps(__spreadValues({
+        id: field.id,
+        name: field.name,
+        label: field.label,
+        fullWidth: true,
+        variant: "outlined",
+        InputLabelProps: { shrink: (val == null ? void 0 : val.length) > 0 }
+      }, register(field.name)), {
+        disabled: !field.ux.edit
+      }), field.ux.props)
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(BasicEntityFieldError, { err })
+  ] }, field.id);
+}
+const CMPNAME$h = "BasicEntityDateField";
+const { Open: Open$g } = gubu_minExports.Gubu;
+const BasicEntityDateFieldSpecShape = gubu_minExports.Gubu(
+  Open$g({
+    field: Open$g({
+      id: String,
+      name: String,
+      kind: "",
+      label: "",
+      ux: Open$g({
+        kind: gubu_minExports.Exact("Date"),
+        edit: gubu_minExports.Default(true),
+        props: Open$g({})
+      })
+    })
+  }),
+  { name: CMPNAME$h }
+);
+function BasicEntityDateField(props) {
+  const { spec } = props;
+  const basicEntityDateField = BasicEntityDateFieldSpecShape(spec);
+  const { field, getValues, register, errors } = basicEntityDateField;
+  const val = getValues(field.name);
+  const err = errors[field.name];
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx(
       TextField$1,
@@ -64811,97 +65131,641 @@ function BasicEntityTextField(props) {
         label: field.label,
         fullWidth: true,
         variant: "outlined",
+        type: "date",
+        disabled: !field.ux.edit,
         InputLabelProps: { shrink: (val == null ? void 0 : val.length) > 0 }
       }, register(field.name))
     ),
     /* @__PURE__ */ jsxRuntimeExports.jsx(BasicEntityFieldError, { err })
   ] }, field.id);
 }
-function BasicEntityTextBoxField(props) {
-  const { spec } = props;
-  const { field, register, getValues } = spec;
-  const val = getValues(field.name);
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-    TextField$1,
-    __spreadValues({
-      id: field.id,
-      name: field.name,
-      label: field.label,
-      variant: "outlined",
-      fullWidth: true,
-      multiline: true,
-      rows: 3,
-      InputLabelProps: { shrink: (val == null ? void 0 : val.length) > 0 }
-    }, register(field.name))
-  ) }, field.name);
-}
-function BasicEntityDateField(props) {
-  const { spec } = props;
-  const { field, register, getValues } = spec;
-  const val = getValues(field.name);
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-    TextField$1,
-    __spreadValues({
-      id: field.id,
-      name: field.name,
-      label: field.label,
-      fullWidth: true,
-      variant: "outlined",
-      type: "date",
-      disabled: !field.ux.edit,
-      InputLabelProps: { shrink: (val == null ? void 0 : val.length) > 0 }
-    }, register(field.name))
-  ) }, field.id);
-}
+const CMPNAME$g = "BasicEntityTimeField";
+const { Open: Open$f } = gubu_minExports.Gubu;
+const BasicEntityTimeFieldSpecShape = gubu_minExports.Gubu(
+  Open$f({
+    field: Open$f({
+      id: String,
+      name: String,
+      kind: "",
+      label: "",
+      ux: Open$f({
+        kind: gubu_minExports.Exact("Time"),
+        edit: gubu_minExports.Default(true),
+        props: Open$f({})
+      })
+    })
+  }),
+  { name: CMPNAME$g }
+);
 function BasicEntityTimeField(props) {
   const { spec } = props;
-  const { field, register, getValues } = spec;
+  const basicEntityTimeField = BasicEntityTimeFieldSpecShape(spec);
+  const { field, getValues, register, errors } = basicEntityTimeField;
   const val = getValues(field.name);
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-    TextField$1,
-    __spreadValues({
-      id: field.id,
-      name: field.name,
-      label: field.label,
-      fullWidth: true,
-      variant: "outlined",
-      type: "time",
-      disabled: !field.ux.edit,
-      InputLabelProps: { shrink: (val == null ? void 0 : val.length) > 0 }
-    }, register(field.name))
-  ) }, field.id);
+  const err = errors[field.name];
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      TextField$1,
+      __spreadValues(__spreadValues({
+        id: field.id,
+        name: field.name,
+        label: field.label,
+        fullWidth: true,
+        variant: "outlined",
+        type: "time",
+        disabled: !field.ux.edit,
+        InputLabelProps: { shrink: (val == null ? void 0 : val.length) > 0 }
+      }, register(field.name)), field.ux.props)
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(BasicEntityFieldError, { err })
+  ] }, field.id);
 }
+const CMPNAME$f = "BasicEntityDateTimeField";
+const { Open: Open$e } = gubu_minExports.Gubu;
+const BasicEntityDateTimeFieldSpecShape = gubu_minExports.Gubu(
+  Open$e({
+    field: Open$e({
+      id: String,
+      name: String,
+      kind: "",
+      label: "",
+      ux: Open$e({
+        kind: gubu_minExports.Exact("DateTime"),
+        edit: gubu_minExports.Default(true),
+        props: Open$e({})
+      })
+    })
+  }),
+  { name: CMPNAME$f }
+);
 function BasicEntityDateTimeField(props) {
   const { spec } = props;
-  const { field, register, getValues } = spec;
+  const basicEntityDateTimeField = BasicEntityDateTimeFieldSpecShape(spec);
+  const { field, getValues, register, errors } = basicEntityDateTimeField;
   const val = getValues(field.name);
+  const err = errors[field.name];
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      TextField$1,
+      __spreadValues({
+        id: field.id,
+        name: field.name,
+        label: field.label,
+        fullWidth: true,
+        variant: "outlined",
+        type: "datetime-local",
+        disabled: !field.ux.edit,
+        InputLabelProps: { shrink: (val == null ? void 0 : val.length) > 0 }
+      }, register(field.name))
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(BasicEntityFieldError, { err })
+  ] }, field.id);
+}
+const CMPNAME$e = "BasicEntitySliderField";
+const { Open: Open$d } = gubu_minExports.Gubu;
+const BasicEntityRatingFieldSpecShape = gubu_minExports.Gubu(
+  Open$d({
+    field: Open$d({
+      id: String,
+      name: String,
+      kind: "",
+      label: "",
+      ux: Open$d({
+        kind: gubu_minExports.Exact("Rating"),
+        edit: gubu_minExports.Default(true),
+        precision: 1,
+        props: Open$d({})
+      })
+    })
+  }),
+  { name: CMPNAME$e }
+);
+function BasicEntityRatingField(props) {
+  const { spec } = props;
+  const basicEntityRatingField = BasicEntityRatingFieldSpecShape(spec);
+  const { control, field, getValues, errors } = basicEntityRatingField;
+  const val = getValues(field.name);
+  const err = errors[field.name];
+  const {
+    field: controllerField,
+    fieldState: { error }
+  } = useController({
+    name: field.name,
+    control,
+    defaultValue: !!val || 0
+  });
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(FormLabel$1, { component: "legend", children: field.label }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      Rating,
+      __spreadValues({
+        name: field.name,
+        value: controllerField.value,
+        precision: field.ux.precision,
+        onChange: (_2, newValue) => controllerField.onChange(newValue),
+        disabled: !field.ux.edit
+      }, field.ux.props)
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(BasicEntityFieldError, { err })
+  ] }, `${field.id}-div`);
+}
+const CMPNAME$d = "BasicEntitySliderField";
+const { Open: Open$c } = gubu_minExports.Gubu;
+const BasicEntityButtonFieldSpecShape = gubu_minExports.Gubu(
+  Open$c({
+    field: Open$c({
+      id: String,
+      name: String,
+      kind: "",
+      label: String,
+      ux: Open$c({
+        kind: gubu_minExports.Exact("Button"),
+        edit: true,
+        variant: "contained",
+        props: Open$c({})
+      })
+    })
+  }),
+  { name: CMPNAME$d }
+);
+function BasicEntityButtonField(props) {
+  const { spec } = props;
+  const basicEntityButtonField = BasicEntityButtonFieldSpecShape(spec);
+  const { field } = basicEntityButtonField;
   return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-    TextField$1,
-    __spreadValues({
-      id: field.id,
-      name: field.name,
-      label: field.label,
-      fullWidth: true,
-      variant: "outlined",
-      type: "datetime-local",
+    Button$1,
+    __spreadProps(__spreadValues({
+      variant: field.ux.variant,
       disabled: !field.ux.edit,
-      InputLabelProps: { shrink: (val == null ? void 0 : val.length) > 0 }
-    }, register(field.name))
-  ) }, field.id);
+      onClick: () => {
+        console.log("Button clicked");
+      }
+    }, field.ux.props), {
+      children: field.label
+    })
+  ) }, `${field.id}-div`);
+}
+const CMPNAME$c = "BasicEntitySliderField";
+const { Open: Open$b } = gubu_minExports.Gubu;
+const BasicEntityButtonGroupFieldSpecShape = gubu_minExports.Gubu(
+  Open$b({
+    field: Open$b({
+      id: String,
+      name: String,
+      kind: "",
+      label: "",
+      options: Open$b({
+        label: { field: "label" },
+        value: { field: "value" },
+        ents: Open$b({})
+      }),
+      ux: Open$b({
+        kind: gubu_minExports.Exact("ButtonGroup"),
+        edit: gubu_minExports.Default(true),
+        props: Open$b({})
+      })
+    })
+  }),
+  { name: CMPNAME$c }
+);
+function BasicEntityButtonGroupField(props) {
+  const { spec } = props;
+  const basicEntityButtonGroupField = BasicEntityButtonGroupFieldSpecShape(spec);
+  const { field } = basicEntityButtonGroupField;
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(ButtonGroup, __spreadProps(__spreadValues({ disabled: !field.ux.edit }, field.ux.props), { children: Object.entries(field.options.ents).map(([key, val]) => /* @__PURE__ */ jsxRuntimeExports.jsx(Button$1, { onClick: () => {
+  }, children: val == null ? void 0 : val[field.options.label.field] }, `${field.id}-${key}`)) })) }, `${field.id}-div`);
+}
+const CMPNAME$b = "BasicEntitySelectField";
+const { Open: Open$a } = gubu_minExports.Gubu;
+const BasicEntitySelectFieldSpecShape = gubu_minExports.Gubu(
+  Open$a({
+    field: Open$a({
+      id: String,
+      name: String,
+      kind: "",
+      label: "",
+      cat: Open$a({
+        default: "",
+        title: String,
+        multiple: Number,
+        order: {
+          sort: "",
+          exclude: "",
+          include: ""
+        },
+        item: Open$a({})
+      }),
+      ux: Open$a({
+        kind: gubu_minExports.Exact("Select"),
+        edit: gubu_minExports.Default(true)
+      })
+    })
+  }),
+  { name: CMPNAME$b }
+);
+function BasicEntitySelectField(props) {
+  const { spec } = props;
+  const basicEntitySelectField = BasicEntitySelectFieldSpecShape(spec);
+  const { control, field, errors } = basicEntitySelectField;
+  const err = errors[field.name];
+  const {
+    field: controllerField,
+    fieldState: { error }
+  } = useController({
+    name: field.name,
+    control,
+    defaultValue: resolveDefault(field.cat)
+  });
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(Box$2, { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(FormControl$1, { fullWidth: true, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(InputLabel$1, { id: `${field.id}-label`, children: field.label }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        Select$1,
+        __spreadProps(__spreadValues({
+          labelId: `${field.id}-label`,
+          id: `${field.id}-select`,
+          value: resolveValue(controllerField.value, field.cat),
+          multiple: field.cat.multiple !== 1,
+          label: field.name,
+          onChange: (event) => {
+            const v = event.target.value;
+            controllerField.onChange(Array.isArray(v) ? v.join(",") : v);
+          },
+          disabled: !field.ux.edit
+        }, field.ux.props), {
+          children: resolveCategories(field.cat).map((opt) => /* @__PURE__ */ jsxRuntimeExports.jsx(MenuItem$1, { value: opt.key, children: opt.title }, opt.key))
+        })
+      )
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(BasicEntityFieldError, { err })
+  ] }, `${field.id}-box`);
+}
+function resolveCategories(cat) {
+  return Object.keys(cat.item).map((key) => {
+    var _a, _b;
+    return {
+      title: (_b = (_a = cat.item) == null ? void 0 : _a[key]) == null ? void 0 : _b.title,
+      key
+    };
+  });
+}
+function resolveDefault(cat) {
+  return resdefault(cat, (val, item) => val);
+}
+function resolveValue(value, cat) {
+  return resvalue(value, cat, (val, item) => val);
+}
+const CMPNAME$a = "BasicEntitySliderField";
+const { Open: Open$9 } = gubu_minExports.Gubu;
+const BasicEntitySwitchFieldSpecShape = gubu_minExports.Gubu(
+  Open$9({
+    field: Open$9({
+      id: String,
+      name: String,
+      kind: "",
+      label: "",
+      ux: Open$9({
+        kind: gubu_minExports.Exact("Switch"),
+        edit: gubu_minExports.Default(true),
+        props: Open$9({})
+      })
+    })
+  }),
+  { name: CMPNAME$a }
+);
+function BasicEntitySwitchField(props) {
+  const { spec } = props;
+  const basicEntitySwitchField = BasicEntitySwitchFieldSpecShape(spec);
+  const { control, field, getValues, errors } = basicEntitySwitchField;
+  const val = getValues(field.name);
+  const err = errors[field.name];
+  const {
+    field: controllerField,
+    fieldState: { error }
+  } = useController({
+    name: field.name,
+    control,
+    defaultValue: !!val
+  });
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(Box$2, { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      FormControlLabel$1,
+      {
+        control: /* @__PURE__ */ jsxRuntimeExports.jsx(
+          Switch$1,
+          __spreadValues({
+            id: field.id,
+            checked: controllerField.value,
+            onChange: controllerField.onChange,
+            disabled: !field.ux.edit
+          }, field.ux.props)
+        ),
+        label: field.label
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(BasicEntityFieldError, { err })
+  ] }, `${field.id}-box`);
+}
+const CMPNAME$9 = "BasicEntitySliderField";
+const { Open: Open$8 } = gubu_minExports.Gubu;
+const BasicEntityToggleButtonFieldSpecShape = gubu_minExports.Gubu(
+  Open$8({
+    field: Open$8({
+      id: String,
+      name: String,
+      kind: "",
+      label: "",
+      cat: Open$8({
+        default: "",
+        title: String,
+        multiple: Number,
+        order: {
+          sort: "",
+          exclude: "",
+          include: ""
+        },
+        item: Open$8({})
+      }),
+      ux: Open$8({
+        kind: gubu_minExports.Exact("ToggleButton"),
+        edit: gubu_minExports.Default(true),
+        props: Open$8({})
+      })
+    })
+  }),
+  { name: CMPNAME$9 }
+);
+function BasicEntityToggleButtonField(props) {
+  const { spec } = props;
+  const basicEntityToggleButtonField = BasicEntityToggleButtonFieldSpecShape(spec);
+  const { control, field, errors } = basicEntityToggleButtonField;
+  const err = errors[field.name];
+  const {
+    field: controllerField,
+    fieldState: { error }
+  } = useController({
+    name: field.name,
+    control
+  });
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(FormLabel$1, { component: "legend", children: field.label }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      ToggleButtonGroup,
+      __spreadProps(__spreadValues({
+        value: controllerField.value,
+        exclusive: field.cat.multiple === 1 ? true : false,
+        onChange: (_2, v) => {
+          field.cat.multiple === 1 ? controllerField.onChange(v) : controllerField.onChange([v]);
+        },
+        disabled: !field.ux.edit
+      }, field.ux.props), {
+        children: Object.entries(field.cat.item).map(([key, val]) => /* @__PURE__ */ jsxRuntimeExports.jsx(ToggleButton, { value: key, children: val == null ? void 0 : val.title }, `${field.id}-${key}`))
+      })
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(BasicEntityFieldError, { err })
+  ] }, `${field.id}-box`);
+}
+const { Open: Open$7, Child: Child$4 } = gubu_minExports.Gubu;
+const Shape$2 = gubu_minExports.Gubu(
+  Open$7({
+    field: {}
+  }),
+  { name: "BasicEntityField" }
+);
+function VxgBasicEntityFieldPlugin(options) {
+  const seneca = this;
+  const spec = Shape$2(options.spec);
+  options.setPlugin(true);
+  return {
+    exports: {
+      handle: {}
+    }
+  };
+}
+Object.assign(VxgBasicEntityFieldPlugin, {
+  defaults: {
+    spec: {},
+    setPlugin: Function
+  }
+});
+Object.defineProperty(VxgBasicEntityFieldPlugin, "name", {
+  value: "VxgBasicEntityFieldPlugin"
+});
+const CMPNAME$8 = "BasicEntityField";
+const { Open: Open$6 } = gubu_minExports.Gubu;
+const BasicEntityFieldSpecShape = gubu_minExports.Gubu(
+  Open$6({
+    cid: String,
+    field: Open$6({
+      id: String,
+      name: String,
+      kind: "",
+      label: "",
+      ux: Open$6({
+        kind: gubu_minExports.Exact(
+          "Text",
+          "TextBox",
+          "Date",
+          "DateTime",
+          "Time",
+          "Checkbox",
+          "Autocomplete",
+          "Slider",
+          "RadioGroup",
+          "Rating",
+          "Button",
+          "ButtonGroup",
+          "Select",
+          "Switch",
+          "ToggleButton"
+        ),
+        edit: gubu_minExports.Default(true),
+        rows: gubu_minExports.Default(3),
+        props: Open$6({})
+      })
+    })
+  }),
+  { name: CMPNAME$8 }
+);
+const fieldMap = {
+  Text: BasicEntityTextField,
+  TextBox: BasicEntityTextBoxField,
+  Date: BasicEntityDateField,
+  DateTime: BasicEntityDateTimeField,
+  Time: BasicEntityTimeField,
+  Checkbox: BasicEntityCheckboxField,
+  Autocomplete: BasicEntityAutocompleteField,
+  Slider: BasicEntitySliderField,
+  RadioGroup: BasicEntityRadioGroupField,
+  Rating: BasicEntityRatingField,
+  Button: BasicEntityButtonField,
+  ButtonGroup: BasicEntityButtonGroupField,
+  Select: BasicEntitySelectField,
+  Switch: BasicEntitySwitchField,
+  ToggleButton: BasicEntityToggleButtonField
+};
+function BasicEntityField(props) {
+  const { ctx, spec } = props;
+  const { seneca } = ctx();
+  const basicEntityField = BasicEntityFieldSpecShape(spec);
+  const [plugin, setPlugin] = useState(false);
+  const cid = basicEntityField.cid + "-" + basicEntityField.field.name;
+  useEffect(() => {
+    if (!plugin) {
+      seneca.use({
+        tag: cid,
+        define: VxgBasicEntityFieldPlugin,
+        options: {
+          spec: {
+            field: basicEntityField.field
+          },
+          setPlugin
+        }
+      });
+    }
+  }, []);
+  const field = spec.field;
+  const Field = fieldMap[field.ux.kind];
+  return Field ? /* @__PURE__ */ jsxRuntimeExports.jsx(Field, { ctx, spec: basicEntityField }) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", {});
 }
 const { Open: Open$5, Child: Child$3 } = gubu_minExports.Gubu;
-const Shape$1 = gubu_minExports.Gubu(Open$5({
-  name: String,
-  prefix: String,
-  ent: String,
-  order: [String],
-  field: Child$3({}, {})
-}), { name: "BasicEntityEdit" });
+const Shape$1 = gubu_minExports.Gubu(
+  Open$5({
+    name: String,
+    prefix: String,
+    ent: String,
+    order: [String],
+    field: Child$3({}, {})
+  }),
+  { name: "BasicEntityEdit" }
+);
 function VxgBasicEntityEditPlugin(options) {
   const seneca = this;
   const spec = Shape$1(options.spec);
   const slot = spec.prefix + spec.name;
-  const fields = spec.order.reduce((a, fn2) => (fixField(fn2, spec.field[fn2], spec), a.push(spec.field[fn2]), a), []);
+  const fields = spec.order.reduce(
+    (a, fn2) => (fixField(fn2, spec.field[fn2], spec), a.push(spec.field[fn2]), a),
+    []
+  );
+  for (const field of fields) {
+    if ("Date" === field.ux.kind) {
+      seneca.add(
+        "aim:app,on:BasicLed,modify:edit,view:" + spec.name,
+        function modify_edit_Date(msg) {
+          return __async(this, null, function* () {
+            const out = yield this.prior(msg);
+            let item = __spreadValues({}, out);
+            if (!item[field.name + "_orig$"]) {
+              const dt = util$1.dateTimeFromUTC(item[field.name]);
+              item[field.name + "_orig$"] = item[field.name];
+              item[field.name + "_udm$"] = dt.udm;
+              item[field.name] = dt.locald;
+              console.log("modify_edit_Date", item[field.name]);
+            }
+            return item;
+          });
+        }
+      ).add(
+        "aim:app,on:BasicLed,modify:save",
+        { view: spec.name },
+        function modify_save_Date(msg) {
+          return __async(this, null, function* () {
+            const out = yield this.prior(msg);
+            let item = __spreadValues({}, out);
+            const dt = util$1.localDateTimeToUTC(item[field.name]);
+            item[field.name] = dt;
+            return item;
+          });
+        }
+      );
+    } else if ("Time" === field.ux.kind) {
+      seneca.add(
+        "aim:app,on:BasicLed,modify:edit,view:" + spec.name,
+        function modify_edit_Time(msg) {
+          return __async(this, null, function* () {
+            const out = yield this.prior(msg);
+            let item = __spreadValues({}, out);
+            if (!item[field.name + "_orig$"]) {
+              const dt = util$1.dateTimeFromUTC(item[field.name]);
+              item[field.name + "_orig$"] = item[field.name];
+              item[field.name + "_udm$"] = dt.udm;
+              item[field.name] = dt.localt;
+              console.log("modify_edit_Time", item[field.name]);
+            }
+            return item;
+          });
+        }
+      ).add(
+        "aim:app,on:BasicLed,modify:save",
+        { view: spec.name },
+        function modify_save_Time(msg) {
+          return __async(this, null, function* () {
+            const out = yield this.prior(msg);
+            let item = __spreadValues({}, out);
+            const dt = util$1.localTimeToUTC(item[field.name]);
+            item[field.name] = dt;
+            return item;
+          });
+        }
+      );
+    } else if ("DateTime" === field.ux.kind) {
+      seneca.add(
+        "aim:app,on:BasicLed,modify:edit,view:" + spec.name,
+        function modify_edit_Datetime(msg) {
+          return __async(this, null, function* () {
+            const out = yield this.prior(msg);
+            let item = __spreadValues({}, out);
+            if (!item[field.name + "_orig$"]) {
+              const dt = util$1.dateTimeFromUTC(item[field.name]);
+              item[field.name + "_orig$"] = item[field.name];
+              item[field.name + "_udm$"] = dt.udm;
+              item[field.name] = dt.locald + "T" + dt.localt;
+            }
+            return item;
+          });
+        }
+      ).add(
+        "aim:app,on:BasicLed,modify:save",
+        { view: spec.name },
+        function modify_save_Datetime(msg) {
+          return __async(this, null, function* () {
+            const out = yield this.prior(msg);
+            let item = __spreadValues({}, out);
+            const dt = util$1.localDateTimeToUTC(item[field.name]);
+            item[field.name] = dt;
+            return item;
+          });
+        }
+      );
+    } else if ("Slider" === field.ux.kind) {
+      seneca.add(
+        "aim:app,on:BasicLed,modify:edit",
+        { view: spec.name },
+        function modify_edit_Slider(msg) {
+          return __async(this, null, function* () {
+            const out = yield this.prior(msg);
+            let item = __spreadValues({}, out);
+            if (!item[field.name + "_orig$"]) {
+              item[field.name + "_orig$"] = item[field.name];
+              item[field.name] = Number(item[field.name]) / 60;
+            }
+            return item;
+          });
+        }
+      ).add(
+        "aim:app,on:BasicLed,modify:save",
+        { view: spec.name },
+        function modify_save_Slider(msg) {
+          return __async(this, null, function* () {
+            const out = yield this.prior(msg);
+            let item = __spreadValues({}, out);
+            item[field.name] = Number(item[field.name]) * 60;
+            return item;
+          });
+        }
+      );
+    }
+  }
   options.setPlugin(true);
   return {
     exports: {
@@ -64909,7 +65773,8 @@ function VxgBasicEntityEditPlugin(options) {
         spec,
         slot,
         fields
-      }
+      },
+      util: util$1
     }
   };
 }
@@ -64919,46 +65784,126 @@ function fixField(name, field, spec) {
   field.ux = field.ux || {};
   field.ux.size = null == field.ux.size ? 4 : parseInt(field.ux.size, 10);
 }
+const util$1 = {
+  dateTimeFromUTC: (utc, tz) => {
+    const date = new Date(utc);
+    const iso = date.toISOString();
+    const isod = iso.split("T")[0];
+    const isot = iso.split("T")[1].split(".")[0];
+    const udm = date.getUTCHours() * 60 * 60 * 1e3 + date.getUTCMinutes() * 60 * 1e3 + date.getUTCSeconds() * 1e3 + date.getUTCMilliseconds();
+    let out = {
+      utc,
+      date,
+      isod,
+      isot,
+      udm
+    };
+    tz = tz || Intl.DateTimeFormat().resolvedOptions().timeZone;
+    const dateFormatter = new Intl.DateTimeFormat("en-GB", {
+      timeZone: tz,
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit"
+    });
+    const timeFormatter = new Intl.DateTimeFormat("en-GB", {
+      timeZone: tz,
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hour12: false
+    });
+    const [{ value: day }, , { value: month }, , { value: year }] = dateFormatter.formatToParts(date);
+    const [{ value: hour }, , { value: minute }, , { value: second }] = timeFormatter.formatToParts(date);
+    out.locald = `${year}-${month}-${day}`;
+    out.localt = `${hour}:${minute}:${second}`;
+    return out;
+  },
+  localTimeToUTC: (timeString, tz) => {
+    tz = tz || Intl.DateTimeFormat().resolvedOptions().timeZone;
+    const now = /* @__PURE__ */ new Date();
+    const [hours, minutes, seconds] = timeString.split(":").map(Number);
+    const localDate = new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate(),
+      hours,
+      minutes,
+      seconds
+    );
+    const utcTimestamp = Date.UTC(
+      localDate.getFullYear(),
+      localDate.getMonth(),
+      localDate.getDate(),
+      localDate.getHours(),
+      localDate.getMinutes(),
+      localDate.getSeconds()
+    );
+    const tzOffset = new Date(utcTimestamp).getTimezoneOffset() * 6e4;
+    return utcTimestamp - tzOffset;
+  },
+  localDateTimeToUTC: (dateOrDateTimeString, tz) => {
+    const date = new Date(dateOrDateTimeString);
+    if (isNaN(date.getTime())) {
+      throw new Error("Invalid date or datetime string");
+    }
+    if (tz) {
+      const tzDate = new Date(date.toLocaleString("en-GB", { timeZone: tz }));
+      const offset2 = date.getTime() - tzDate.getTime();
+      return date.getTime() + offset2;
+    }
+    return date.getTime();
+  }
+};
 Object.assign(VxgBasicEntityEditPlugin, {
   defaults: {
     spec: {},
     setPlugin: Function
   }
 });
-Object.defineProperty(VxgBasicEntityEditPlugin, "name", { value: "VxgBasicEntityEditPlugin" });
+Object.defineProperty(VxgBasicEntityEditPlugin, "name", {
+  value: "VxgBasicEntityEditPlugin"
+});
 const CMPNAME$7 = "BasicEntityEdit";
-const makeResolver = (seneca, spec) => useCallback((data) => __async(void 0, null, function* () {
-  const { ent, name } = spec;
-  const view = name;
-  let entity = seneca.entity(ent);
-  entity = entity.make$().data$(data);
-  let errors = entity.valid$({ errors: true });
-  seneca.act("aim:app,on:BasicLed,entity:valid", {
-    view,
-    entity,
-    errors
-  });
-  const errmsg = seneca.context.errmsg;
-  errors = errors.map((e) => (e.tag_kind = "ent", e)).reduce((a, e, _2) => (a[e.key] = {
-    type: e.type,
-    message: errmsg ? (_2 = errmsg.find(e)) ? _2.text : e.text : e.text
-  }, a), {});
-  const values2 = entity.data$(false);
-  const out = {
-    values: values2,
-    errors
-  };
-  return out;
-}), [spec.ent]);
+const makeResolver = (seneca, spec) => useCallback(
+  (data) => __async(void 0, null, function* () {
+    const { ent, name } = spec;
+    const view = name;
+    let entity = seneca.entity(ent);
+    entity = entity.make$().data$(data);
+    let errors = entity.valid$({ errors: true });
+    seneca.act("aim:app,on:BasicLed,entity:valid", {
+      view,
+      entity,
+      errors
+    });
+    const errmsg = seneca.context.errmsg;
+    errors = errors.map((e) => (e.tag_kind = "ent", e)).reduce(
+      (a, e, _2) => (a[e.key] = {
+        type: e.type,
+        message: errmsg ? (_2 = errmsg.find(e)) ? _2.text : e.text : e.text
+      }, a),
+      {}
+    );
+    const values2 = entity.data$(false);
+    const out = {
+      values: values2,
+      errors
+    };
+    return out;
+  }),
+  [spec.ent]
+);
 function BasicEntityEdit(props) {
   const { ctx } = props;
   const { seneca } = ctx();
   const [plugin, setPlugin] = useState(false);
   const [ready, setReady] = useState(false);
+  const cmpId = useSanitizedId();
+  const cid = props.spec.name + "-" + cmpId;
   useEffect(() => {
     if (!plugin) {
       seneca.use({
-        tag: props.spec.name,
+        tag: cid,
         define: VxgBasicEntityEditPlugin,
         options: {
           spec: props.spec,
@@ -64967,7 +65912,9 @@ function BasicEntityEdit(props) {
       });
     }
   }, []);
-  const { spec, slot, fields } = seneca.export("VxgBasicEntityEditPlugin/handle") || { spec: {}, slot: null, fields: [] };
+  const { spec, slot, fields } = seneca.export(
+    "VxgBasicEntityEditPlugin/handle"
+  ) || { spec: {}, slot: null, fields: [] };
   const { ent, name } = spec;
   if (plugin && !ready) {
     seneca.act("aim:app,on:BasicLed,ready:edit", { view: name, setReady });
@@ -64975,13 +65922,22 @@ function BasicEntityEdit(props) {
   const slotSelectors = seneca.export("Redux/slotSelectors");
   let { selectItem, selectList, selectMeta } = slotSelectors(slot);
   let item = useSelector((state) => selectItem(state));
-  if (item && name) {
-    item = seneca.direct("aim:app,on:BasicLed,modify:edit", {
-      view: name,
-      item,
-      fields
+  useEffect(() => {
+    const fetchData = () => __async(this, null, function* () {
+      console.log("BEE", "effect", "mod:edit", "init", "view", name);
+      console.log("BEE", "effect", "mod:edit", "init", "item", item == null ? void 0 : item.title);
+      if (item && name) {
+        item = yield seneca.direct("aim:app,on:BasicLed,modify:edit", {
+          view: name,
+          item,
+          fields
+        });
+        console.log("BEE", "effect", "resetting", item);
+        reset(item);
+      }
     });
-  }
+    fetchData();
+  }, [item, name]);
   const params = useParams();
   useEffect(() => {
     if (ready) {
@@ -64992,7 +65948,6 @@ function BasicEntityEdit(props) {
           item_id: params.item
         });
       }
-      reset(item);
     }
   }, [null == item, ready]);
   const resolver = makeResolver(seneca, spec);
@@ -65001,59 +65956,91 @@ function BasicEntityEdit(props) {
     handleSubmit,
     getValues,
     reset,
+    control,
     formState: { errors }
   } = useForm({
     mode: "onChange",
     resolver
   });
-  const onSubmit = (data) => {
-    seneca.act("aim:app,on:BasicLed,save:item", { view: name, data });
-  };
+  const onSubmit = (data) => __async(this, null, function* () {
+    console.log("BasicEntityEdit", "onSubmit", "data", data);
+    const modifiedData = yield seneca.direct(
+      "aim:app,on:BasicLed,modify:save",
+      {
+        view: name,
+        data,
+        fields
+      }
+    );
+    seneca.act("aim:app,on:BasicLed,save:item", {
+      view: name,
+      data: modifiedData
+    });
+  });
   return /* @__PURE__ */ jsxRuntimeExports.jsx(Box$2, { className: "vxg-BasicEntityEdit", children: item ? /* @__PURE__ */ jsxRuntimeExports.jsxs(
     "form",
     {
       className: "vxg-BasicEntityEdit-form",
       onSubmit: handleSubmit(onSubmit),
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(Grid$1, { container: true, spacing: 2, children: fields.map(
-          (field) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-            Grid$1,
-            {
-              item: true,
-              xs: field.ux.size,
-              children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-                BasicEntityField,
-                {
-                  ctx,
-                  spec: {
-                    field,
-                    register,
-                    getValues,
-                    errors
-                  }
-                }
-              )
-            },
-            field.id
-          )
-        ) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Grid$1, { container: true, spacing: 2, children: fields.map((field) => /* @__PURE__ */ jsxRuntimeExports.jsx(Grid$1, { item: true, xs: field.ux.size, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+          BasicEntityField,
+          {
+            ctx,
+            spec: {
+              cid,
+              field,
+              register,
+              getValues,
+              control,
+              errors
+            }
+          }
+        ) }, field.id)) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx(Toolbar$1, { className: "vxg-BasicEntityEdit-toolbar-foot", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Button$1, { type: "submit", variant: "contained", children: "Save" }) })
       ]
     }
   ) : /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, {}) });
 }
+var Check = {};
+"use strict";
+"use client";
+var _interopRequireDefault = interopRequireDefaultExports;
+Object.defineProperty(Check, "__esModule", {
+  value: true
+});
+var default_1 = Check.default = void 0;
+var _createSvgIcon = _interopRequireDefault(requireCreateSvgIcon());
+var _jsxRuntime = requireJsxRuntime();
+var _default = default_1 = Check.default = (0, _createSvgIcon.default)(/* @__PURE__ */ (0, _jsxRuntime.jsx)("path", {
+  d: "M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"
+}), "Check");
+function BasicAlert({
+  children: children2,
+  severity
+}) {
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(Alert, { icon: /* @__PURE__ */ jsxRuntimeExports.jsx(default_1, { fontSize: "inherit" }), severity, children: children2 });
+}
 const CMPNAME$6 = "BasicLedHead";
 const { Open: Open$4, Child: Child$2 } = gubu_minExports.Gubu;
-const BasicLedHeadSpecShape = gubu_minExports.Gubu(Open$4({
-  tool: Child$2({
-    id: String,
-    kind: String,
-    custom: ""
-  }, {}),
-  mui: Open$4({
-    Toolbar: Open$4({})
-  })
-}), { name: CMPNAME$6 });
+const BasicLedHeadSpecShape = gubu_minExports.Gubu(
+  Open$4({
+    tool: Child$2(
+      {
+        id: String,
+        kind: String,
+        custom: ""
+      },
+      {}
+    ),
+    ux: Open$4({
+      props: {
+        Toolbar: Open$4({})
+      }
+    })
+  }),
+  { name: CMPNAME$6 }
+);
 function BasicLedHead(props) {
   const { ctx, spec } = props;
   const { seneca, custom } = ctx();
@@ -65070,46 +66057,40 @@ function BasicLedHead(props) {
   const state = { item, view: viewState, navigate };
   const subview = "/view/" + viewName === loc.pathname ? "list" : "edit";
   const customButtons = Object.values(spec.tool || {}).filter((t) => "button" === t.kind).map((t) => (custom.BasicLedHead || {})[t.custom]).filter((t) => null != t);
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(Box$2, { className: "bxg-BasicLedHead", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
-    Toolbar$1,
-    {
-      className: "vxg-BasicLedHead-toolbar",
-      variant: "dense",
-      children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          Button$1,
-          {
-            color: "inherit",
-            onClick: () => navigate(-1),
-            disabled: "list" === subview,
-            children: "Back"
-          }
-        ),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          Button$1,
-          {
-            color: "inherit",
-            onClick: () => seneca.act("aim:app,on:view,add:item", { view: viewName }),
-            disabled: "edit" === subview,
-            children: "Add"
-          }
-        ),
-        customButtons.map(
-          (cb) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-            Button$1,
-            __spreadProps(__spreadValues({
-              color: "inherit",
-              onClick: () => seneca.act(cb.msg(state, spec, ctx)),
-              disabled: cb.disabled(state, spec, ctx)
-            }, cb.attr(state, spec, ctx)), {
-              children: cb.title(state, spec, ctx)
-            }),
-            cb.id
-          )
-        )
-      ]
-    }
-  ) });
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(Box$2, { className: "bxg-BasicLedHead", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(Toolbar$1, { className: "vxg-BasicLedHead-toolbar", variant: "dense", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        Button$1,
+        {
+          color: "inherit",
+          onClick: () => navigate(-1),
+          disabled: "list" === subview,
+          children: "Back"
+        }
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        Button$1,
+        {
+          color: "inherit",
+          onClick: () => seneca.act("aim:app,on:view,add:item", { view: viewName }),
+          disabled: "edit" === subview,
+          children: "Add"
+        }
+      ),
+      customButtons.map((cb) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+        Button$1,
+        __spreadProps(__spreadValues({
+          color: "inherit",
+          onClick: () => seneca.act(cb.msg(state, spec, ctx)),
+          disabled: cb.disabled(state, spec, ctx)
+        }, cb.attr(state, spec, ctx)), {
+          children: cb.title(state, spec, ctx)
+        }),
+        cb.id
+      ))
+    ] }),
+    viewState.alert.active ? /* @__PURE__ */ jsxRuntimeExports.jsx(BasicAlert, { severity: viewState.alert.level, children: viewState.alert.message }) : null
+  ] });
 }
 const CMPNAME$5 = "BasicLedFoot";
 const { Open: Open$3 } = gubu_minExports.Gubu;
@@ -65126,27 +66107,30 @@ function BasicLoading(props) {
   return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { children: "Loading..." }) });
 }
 const { Open: Open$2 } = gubu_minExports.Gubu;
-const Shape = gubu_minExports.Gubu({
-  name: String,
-  title: String,
-  active: Boolean,
-  kind: String,
-  def: {
-    ent: String,
-    head: Open$2({
-      active: false
-    }),
-    list: Open$2({
-      active: false
-    }),
-    edit: Open$2({
-      active: false
-    }),
-    foot: Open$2({
-      active: false
-    })
-  }
-}, { name: "BasicLed" });
+const Shape = gubu_minExports.Gubu(
+  {
+    name: String,
+    title: String,
+    active: Boolean,
+    kind: String,
+    def: {
+      ent: String,
+      head: Open$2({
+        active: false
+      }),
+      list: Open$2({
+        active: false
+      }),
+      edit: Open$2({
+        active: false
+      }),
+      foot: Open$2({
+        active: false
+      })
+    }
+  },
+  { name: "BasicLed" }
+);
 function VxgBasicLedPlugin(options) {
   const seneca = this;
   const spec = Shape(options.spec);
@@ -65185,34 +66169,17 @@ function VxgBasicLedPlugin(options) {
       setReady(true);
       reply();
     }
-  ).add(
-    "aim:app,on:BasicLed,modify:edit",
-    function(msg) {
-      let item = msg.item;
-      let fields = msg.fields;
-      if (null == item) return item;
-      item = __spreadValues({}, item);
-      for (const field of fields) {
-        if ("Date" === field.ux.kind) {
-          const dt = util$1.dateTimeFromUTC(item[field.name]);
-          item[field.name + "_orig$"] = item[field.name];
-          item[field.name + "_udm$"] = dt.udm;
-          item[field.name] = dt.locald;
-        } else if ("Time" === field.ux.kind) {
-          const dt = util$1.dateTimeFromUTC(item[field.name]);
-          item[field.name + "_orig$"] = item[field.name];
-          item[field.name + "_udm$"] = dt.udm;
-          item[field.name] = dt.localt;
-        } else if ("DateTime" === field.ux.kind) {
-          const dt = util$1.dateTimeFromUTC(item[field.name]);
-          item[field.name + "_orig$"] = item[field.name];
-          item[field.name + "_udm$"] = dt.udm;
-          item[field.name] = dt.locald + "T" + dt.localt;
-        }
-      }
-      return item;
-    }
-  ).message(
+  ).add("aim:app,on:BasicLed,modify:edit", function modify_edit(msg) {
+    let item = msg.item;
+    if (null == item) return item;
+    item = __spreadValues({}, item);
+    return item;
+  }).add("aim:app,on:BasicLed,modify:save", function modify_save(msg) {
+    let item = msg.data;
+    if (null == item) return item;
+    item = __spreadValues({}, item);
+    return item;
+  }).message(
     "aim:app,on:BasicLed,edit:item,redux$:true",
     { item_id: String },
     function(msg, meta) {
@@ -65240,10 +66207,13 @@ function VxgBasicLedPlugin(options) {
       });
     }
   ).message(
-    "aim:app,on:BasicLed,save:item",
-    function(msg) {
+    "aim:app,on:BasicLed,save:item,redux$:true",
+    function(msg, meta) {
       return __async(this, null, function* () {
         const data = Object.entries(spec.def.edit.field).filter((n) => false !== n[1].ux.edit).reduce((a, n) => (a[n[0]] = msg.data[n[0]], a), {});
+        const state = meta.custom.state();
+        let view = state.view[name];
+        view.alert = { active: true, message: "Saved", level: "success" };
         const item = yield seneca.entity(entCanon).save$(data);
         navigate("/view/" + name + "/edit/" + item.id);
       });
@@ -65270,46 +66240,10 @@ function VxgBasicLedPlugin(options) {
         edit: editSpec,
         head: headSpec,
         foot: footSpec
-      },
-      util: util$1
+      }
     }
   };
 }
-const util$1 = {
-  dateTimeFromUTC: (utc, tz) => {
-    const date = new Date(utc);
-    const iso = date.toISOString();
-    const isod = iso.split("T")[0];
-    const isot = iso.split("T")[1].split(".")[0];
-    const udm = date.getUTCHours() * 60 * 60 * 1e3 + date.getUTCMinutes() * 60 * 1e3 + date.getUTCSeconds() * 1e3 + date.getUTCMilliseconds();
-    let out = {
-      utc,
-      date,
-      isod,
-      isot,
-      udm
-    };
-    tz = tz || Intl.DateTimeFormat().resolvedOptions().timeZone;
-    const dateFormatter = new Intl.DateTimeFormat("en-GB", {
-      timeZone: tz,
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit"
-    });
-    const timeFormatter = new Intl.DateTimeFormat("en-GB", {
-      timeZone: tz,
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-      hour12: false
-    });
-    const [{ value: day }, , { value: month }, , { value: year }] = dateFormatter.formatToParts(date);
-    const [{ value: hour }, , { value: minute }, , { value: second }] = timeFormatter.formatToParts(date);
-    out.locald = `${year}-${month}-${day}`;
-    out.localt = `${hour}:${minute}:${second}`;
-    return out;
-  }
-};
 VxgBasicLedPlugin.defaults = {
   spec: {},
   navigate: Function
@@ -65320,12 +66254,14 @@ function BasicLed(props) {
   const { ctx } = props;
   const { seneca } = ctx();
   const name = props.spec.name;
+  const uniqueIdRef = useRef(seneca.util.Nid());
+  const cid = name;
   const navigate = useNavigate();
   const led = useSelector((state) => state.main.view[name]);
   const ready = true === (led == null ? void 0 : led.ready);
   if (!ready) {
     seneca.use({
-      tag: name,
+      tag: cid,
       define: VxgBasicLedPlugin,
       options: {
         spec: props.spec,
@@ -65333,13 +66269,25 @@ function BasicLed(props) {
       }
     });
   }
-  const { head, list, edit, foot } = seneca.export("VxgBasicLedPlugin$" + name + "/spec") || {};
+  const { head, list, edit, foot } = seneca.export("VxgBasicLedPlugin$" + cid + "/spec") || {};
   return ready ? /* @__PURE__ */ jsxRuntimeExports.jsxs(Box$2, { className: "vxg-BasicLed", children: [
     head.active && /* @__PURE__ */ jsxRuntimeExports.jsx(BasicLedHead, { ctx, spec: head }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs(Routes, { children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/", element: /* @__PURE__ */ jsxRuntimeExports.jsx(BasicEntityList, { ctx, spec: list }) }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/edit/:item", element: /* @__PURE__ */ jsxRuntimeExports.jsx(BasicEntityEdit, { ctx, spec: edit }) }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(Route, { path: "/add", element: /* @__PURE__ */ jsxRuntimeExports.jsx(BasicEntityEdit, { ctx, spec: edit }) })
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        Route,
+        {
+          path: "/edit/:item",
+          element: /* @__PURE__ */ jsxRuntimeExports.jsx(BasicEntityEdit, { ctx, spec: edit })
+        }
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        Route,
+        {
+          path: "/add",
+          element: /* @__PURE__ */ jsxRuntimeExports.jsx(BasicEntityEdit, { ctx, spec: edit })
+        }
+      )
     ] }),
     foot.active && /* @__PURE__ */ jsxRuntimeExports.jsx(BasicLedFoot, { ctx, spec: foot })
   ] }) : /* @__PURE__ */ jsxRuntimeExports.jsx(BasicLoading, {});
@@ -65354,12 +66302,16 @@ const BasicMainSpecShape = gubu_minExports.Gubu({
       default: String
     }
   },
-  view: Child$1(Open$1({
-    kind: String
-  })),
-  mui: {
-    Box: {},
-    Container: {}
+  view: Child$1(
+    Open$1({
+      kind: String
+    })
+  ),
+  ux: {
+    props: {
+      Box: {},
+      Container: {}
+    }
   }
 });
 function BasicMain(props) {
@@ -65385,7 +66337,7 @@ function BasicMain(props) {
     Box$2,
     __spreadProps(__spreadValues({
       className: "vxg-BasicMain"
-    }, basicMainSpec.mui.Box), {
+    }, basicMainSpec.ux.props.Box), {
       sx: (theme) => ({
         // TODO: should use actual toolbar height; 16 should be from standard spacing
         marginTop: theme.mixins.toolbar.minHeight + 38 + "px",
@@ -65393,30 +66345,33 @@ function BasicMain(props) {
         marginBottom: 0,
         marginRight: 0
       }),
-      children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-        Container$2,
-        __spreadProps(__spreadValues({}, basicMainSpec.mui.Container), {
-          children: View && /* @__PURE__ */ jsxRuntimeExports.jsx(View, { ctx, spec: viewSpec })
-        })
-      )
+      children: /* @__PURE__ */ jsxRuntimeExports.jsx(Container$2, __spreadProps(__spreadValues({}, basicMainSpec.ux.props.Container), { children: View && /* @__PURE__ */ jsxRuntimeExports.jsx(View, { ctx, spec: viewSpec }) }))
     })
   );
 }
 const CMPNAME$1 = "BasicSide";
 const { Child, Open, Required } = gubu_minExports.Gubu;
-const BasicSideSpecShape = gubu_minExports.Gubu({
-  side: {
-    name: String,
-    active: Boolean
+const BasicSideSpecShape = gubu_minExports.Gubu(
+  {
+    side: {
+      name: String,
+      active: Boolean
+    },
+    view: Child(
+      Open({
+        title: String
+      }),
+      Required({})
+    ),
+    // Set MUI component props directly
+    ux: {
+      props: {
+        Drawer: {}
+      }
+    }
   },
-  view: Child(Open({
-    title: String
-  }), Required({})),
-  // Set MUI component props directly 
-  mui: {
-    Drawer: {}
-  }
-}, { name: CMPNAME$1 });
+  { name: CMPNAME$1 }
+);
 function BasicSide(props) {
   const { spec, ctx } = props;
   const basicSideSpec = BasicSideSpecShape(spec);
@@ -65437,7 +66392,10 @@ function BasicSide(props) {
       })
     })
   });
-  const selectView = useCallback((view) => navigate("/view/" + view), []);
+  const selectView = useCallback(
+    (view) => navigate("/view/" + view),
+    []
+  );
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
     Drawer$1,
     __spreadProps(__spreadValues({
@@ -65452,54 +66410,47 @@ function BasicSide(props) {
           width: "var(--vxg-side-width)"
         }
       })
-    }, spec.mui.Drawer), {
-      children: sections.map(
-        (section) => /* @__PURE__ */ jsxRuntimeExports.jsxs(Fragment, { children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(
-            List$1,
-            {
-              className: "vxg-BasicSide-section",
-              "data-vxg-basicside-section": section.name,
-              children: section.items.map(
-                (item) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-                  ListItem$1,
-                  {
-                    disablePadding: true,
-                    className: "vxg-BasicSide-section-item",
-                    "data-vxg-basicside-section-item": item.name,
-                    children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
-                      ListItemButton$1,
-                      {
-                        onClick: () => selectView(item.view),
-                        children: [
-                          /* @__PURE__ */ jsxRuntimeExports.jsx(ListItemIcon$1, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(default_1$u, {}) }),
-                          /* @__PURE__ */ jsxRuntimeExports.jsx(ListItemText$1, { primary: item.title })
-                        ]
-                      }
-                    )
-                  },
-                  item.name
-                )
-              )
-            }
-          ),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(Divider$1, {})
-        ] }, section.name)
-      )
+    }, spec.ux.props.Drawer), {
+      children: sections.map((section) => /* @__PURE__ */ jsxRuntimeExports.jsxs(Fragment, { children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          List$1,
+          {
+            className: "vxg-BasicSide-section",
+            "data-vxg-basicside-section": section.name,
+            children: section.items.map((item) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+              ListItem$1,
+              {
+                disablePadding: true,
+                className: "vxg-BasicSide-section-item",
+                "data-vxg-basicside-section-item": item.name,
+                children: /* @__PURE__ */ jsxRuntimeExports.jsxs(ListItemButton$1, { onClick: () => selectView(item.view), children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(ListItemIcon$1, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(default_1$v, {}) }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(ListItemText$1, { primary: item.title })
+                ] })
+              },
+              item.name
+            ))
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Divider$1, {})
+      ] }, section.name))
     })
   );
 }
 const CMPNAME = "BasicAdmin";
-const BasicAdminSpecShape = gubu_minExports.Gubu({
-  frame: {
-    name: String,
-    kind: String,
-    part: {},
-    view: {},
-    nav: {},
-    tool: {}
-  }
-}, { name: CMPNAME });
+const BasicAdminSpecShape = gubu_minExports.Gubu(
+  {
+    frame: {
+      name: String,
+      kind: String,
+      part: {},
+      view: {},
+      nav: {},
+      tool: {}
+    }
+  },
+  { name: CMPNAME }
+);
 function Loading() {
   return /* @__PURE__ */ jsxRuntimeExports.jsx(Container$2, { children: "LOADING" });
 }
@@ -65521,23 +66472,29 @@ function BasicAdmin(props) {
   const headSpec = {
     head,
     tool: model.app.web.frame.private.tool,
-    mui: {
-      // TODO: set in theme: https://mui.com/material-ui/customization/z-index/
-      AppBar: { style: { zIndex: 4e3 } }
+    ux: {
+      props: {
+        // TODO: set in theme: https://mui.com/material-ui/customization/z-index/
+        AppBar: { style: { zIndex: 4e3 } }
+      }
     }
   };
   const sideSpec = {
     side,
     view: model.app.web.frame.private.view,
-    mui: {
-      Drawer: { style: { zIndex: 3e3 } }
+    ux: {
+      props: {
+        Drawer: { style: { zIndex: 3e3 } }
+      }
     }
   };
   const mainSpec = {
     main: main2,
     view: model.app.web.frame.private.view,
-    mui: {
-      Container: { style: { zIndex: 1e3 } }
+    ux: {
+      props: {
+        Container: { style: { zIndex: 1e3 } }
+      }
     }
   };
   return "done" === ready ? /* @__PURE__ */ jsxRuntimeExports.jsxs(Box$2, { className: "vxg-BasicAdmin", children: [

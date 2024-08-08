@@ -1,8 +1,6 @@
-
 import { vmap, cmap } from './vxg-util'
 
-
-function VxgBasicAdminPlugin(this: any) {
+function VxgBasicAdminPlugin (this: any) {
   const seneca = this
   const { Exact, Default } = seneca.valid
 
@@ -24,42 +22,39 @@ function VxgBasicAdminPlugin(this: any) {
       setMode
     )
 
-
     .message(
       'aim:app,on:nav,set:path',
       { navigate: Function, view: String },
       setPath
     )
 
-
-    .prepare(async function(this: any) {
+    .prepare(async function (this: any) {
       await this.post('aim:app,prepare:app')
     })
 
-
-  async function setPath(msg: any, meta: any) {
-    const q = Object.entries(msg.query)
-      .reduce((s: any, n: any) =>
-      (s + ('' === s ? '?' : '') +
-        (encodeURIComponent(n[0]) + '=' + encodeURIComponent(n[1]))), '')
+  async function setPath (msg: any, meta: any) {
+    const q = Object.entries(msg.query).reduce(
+      (s: any, n: any) =>
+        s +
+        ('' === s ? '?' : '') +
+        (encodeURIComponent(n[0]) + '=' + encodeURIComponent(n[1])),
+      ''
+    )
     const path = '/view/' + msg.view + q
     msg.navigate(path)
   }
 
-
-  async function setMode(msg: any, meta: any) {
+  async function setMode (msg: any, meta: any) {
     meta.custom.state().nav.mode = msg.mode
   }
 
-
-  async function syncView(msg: any, meta: any) {
+  async function syncView (msg: any, meta: any) {
     meta.custom.state().current.view.name = msg.name
     meta.custom.state().current.view.query = msg.query
     meta.custom.state().current.view.hash = msg.hash
   }
 
-
-  async function prepareApp(_msg: any, meta: any) {
+  async function prepareApp (_msg: any, meta: any) {
     let state = meta.custom.state()
 
     let model = seneca.context.model
@@ -72,13 +67,18 @@ function VxgBasicAdminPlugin(this: any) {
       view: {
         name: '',
         query: {},
-        hash: ''
-      }
+        hash: '',
+      },
     }
 
     const viewState = cmap(viewMap, {
       name: cmap.COPY,
       active: cmap.FILTER,
+      alert: {
+        active: false,
+        message: '',
+        level: 'info',
+      },
     })
     state.view = viewState
 
@@ -87,20 +87,15 @@ function VxgBasicAdminPlugin(this: any) {
       section: cmap(sectionMap, {
         name: cmap.COPY,
         active: cmap.FILTER,
-        item: (x: any) => cmap(x, {
-          active: cmap.FILTER,
-          view: cmap.COPY,
-          name: cmap.COPY,
-        })
-      })
+        item: (x: any) =>
+          cmap(x, {
+            active: cmap.FILTER,
+            view: cmap.COPY,
+            name: cmap.COPY,
+          }),
+      }),
     }
   }
-
 }
 
-
-
-
-export {
-  VxgBasicAdminPlugin,
-}
+export { VxgBasicAdminPlugin }

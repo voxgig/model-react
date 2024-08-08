@@ -1,24 +1,63 @@
-import React, { useEffect, forwardRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
-import {
-  TextField,
-  FormControl,
-  FormLabel,
-} from '@mui/material'
-
+import { BasicEntityCheckboxField } from './BasicEntityCheckboxField'
+import { BasicEntityAutocompleteField } from './BasicEntityAutocompleteField'
+import { BasicEntitySliderField } from './BasicEntitySliderField'
+import { BasicEntityRadioGroupField } from './BasicEntityRadioGroupField'
+import { BasicEntityTextBoxField } from './BasicEntityTextBoxField'
+import { BasicEntityTextField } from './BasicEntityTextField'
+import { BasicEntityDateField } from './BasicEntityDateField'
+import { BasicEntityTimeField } from './BasicEntityTimeField'
+import { BasicEntityDateTimeField } from './BasicEntityDateTimeField'
+import { BasicEntityRatingField } from './BasicEntityRatingField'
+import { BasicEntityButtonField } from './BasicEntityButtonField'
+import { BasicEntityButtonGroupField } from './BasicEntityButtonGroupField'
+import { BasicEntitySelectField } from './BasicEntitySelectField'
+import { BasicEntitySwitchField } from './BasicEntitySwitchField'
+import { BasicEntityToggleButtonField } from './BasicEntityToggleButtonField'
 
 import type { Spec } from './basic-types'
 
-import { Gubu } from 'gubu'
+import { Default, Exact, Gubu, Skip } from 'gubu'
+import { VxgBasicEntityFieldPlugin } from './VxgBasicEntityFieldPlugin'
 
 const CMPNAME = 'BasicEntityField'
 
 const { Open } = Gubu
-const BasicEntityFieldSpecShape = Gubu(Open({
-  
-}), {name: CMPNAME})
-
-
+const BasicEntityFieldSpecShape = Gubu(
+  Open({
+    cid: String,
+    field: Open({
+      id: String,
+      name: String,
+      kind: '',
+      label: '',
+      ux: Open({
+        kind: Exact(
+          'Text',
+          'TextBox',
+          'Date',
+          'DateTime',
+          'Time',
+          'Checkbox',
+          'Autocomplete',
+          'Slider',
+          'RadioGroup',
+          'Rating',
+          'Button',
+          'ButtonGroup',
+          'Select',
+          'Switch',
+          'ToggleButton'
+        ),
+        edit: Default(true),
+        rows: Default(3),
+        props: Open({}),
+      }),
+    }),
+  }),
+  { name: CMPNAME }
+)
 
 const fieldMap: any = {
   Text: BasicEntityTextField,
@@ -26,156 +65,96 @@ const fieldMap: any = {
   Date: BasicEntityDateField,
   DateTime: BasicEntityDateTimeField,
   Time: BasicEntityTimeField,
+  Checkbox: BasicEntityCheckboxField,
+  Autocomplete: BasicEntityAutocompleteField,
+  Slider: BasicEntitySliderField,
+  RadioGroup: BasicEntityRadioGroupField,
+  Rating: BasicEntityRatingField,
+  Button: BasicEntityButtonField,
+  ButtonGroup: BasicEntityButtonGroupField,
+  Select: BasicEntitySelectField,
+  Switch: BasicEntitySwitchField,
+  ToggleButton: BasicEntityToggleButtonField,
 }
-
 
 function BasicEntityField (props: any) {
   const { ctx, spec } = props
+  const { seneca } = ctx()
 
-  const basicEntityFieldSpec: Spec = BasicEntityFieldSpecShape(spec)
-  const field: any = basicEntityFieldSpec.field
+  const basicEntityField: Spec = BasicEntityFieldSpecShape(spec)
+  const [plugin, setPlugin] = useState(false)
+  const cid = basicEntityField.cid + '-' + basicEntityField.field.name
+
+  // console.log('BasicEntityField', 'cid', cid)
+
+  useEffect(() => {
+    if (!plugin) {
+      seneca.use({
+        tag: cid,
+        define: VxgBasicEntityFieldPlugin,
+        options: {
+          spec: {
+            field: basicEntityField.field,
+          },
+          setPlugin,
+        },
+      })
+    }
+  }, [])
+
+  // const { Field } = seneca.export(
+  //   'VxgBasicEntityFieldPlugin$' + spec.field.name + '/handle'
+  // ) || { Field: null }
+
+  const field: any = spec.field
   const Field: any = fieldMap[field.ux.kind]
 
-  return <Field ctx={ctx} spec={spec} />
+  return Field ? <Field ctx={ctx} spec={basicEntityField} /> : <div></div>
 }
 
-
-function BasicEntityFieldError (props: any) {
-  const { err } = props
-  return err ?
-  <div className="vxg-BasicEntityFieldError-active">{err.message}</div> :
-  <div className="vxg-BasicEntityFieldError-none"></div>
-}
-
-
-function BasicEntityTextField (props: any) {
-  const { spec } = props
-
-  const { field, register, getValues, errors } = spec
-
-  const err = errors[field.name]
-  
-  const val = getValues(field.name)
-  
-  return (
-    <div key={field.id}>
-      <TextField
-        id={field.id}
-        name={field.name}
-        label={field.label}
-        fullWidth
-        variant="outlined"
-        InputLabelProps={{ shrink: val?.length > 0 }}
-        {...register(field.name)} 
-      />
-      <BasicEntityFieldError err={err}/>
-    </div>
-  )
-}
-
-
-function BasicEntityTextBoxField (props: any) {
-  const { spec } = props
-
-  const { field, register, getValues } = spec
-
-  const val = getValues(field.name)
-  
-  return (
-    <div key={field.name}>
-      <TextField
-        id={field.id}
-        name={field.name}
-        label={field.label}
-        variant="outlined"
-        fullWidth
-        multiline
-        rows={3}
-                InputLabelProps={{ shrink: val?.length > 0 }}
-        {...register(field.name)} 
-      />
-    </div>
-  )
-}
-
-
-function BasicEntityDateField (props: any) {
-  const { spec } = props
-
-  const { field, register, getValues } = spec
-
-  const val = getValues(field.name)
-
-  return (
-    <div key={field.id}>
-      <TextField
-        id={field.id}
-        name={field.name}
-        label={field.label}
-        fullWidth
-        variant="outlined"
-        type="date"
-        disabled={!field.ux.edit}
-        InputLabelProps={{ shrink: val?.length > 0 }}
-        {...register(field.name)} 
-      />
-    </div>
-  )
-}
-
-
-function BasicEntityTimeField (props: any) {
-  const { spec } = props
-
-  const { field, register, getValues } = spec
-
-  const val = getValues(field.name)
-
-  return (
-    <div key={field.id}>
-      <TextField
-        id={field.id}
-        name={field.name}
-        label={field.label}
-        fullWidth
-        variant="outlined"
-        type="time"
-        disabled={!field.ux.edit}
-        InputLabelProps={{ shrink: val?.length > 0 }}
-        {...register(field.name)} 
-      />
-    </div>
-  )
-}
-
-
+/*
 function BasicEntityDateTimeField (props: any) {
   const { spec } = props
 
-  const { field, register, getValues } = spec
-
-  const val = getValues(field.name)
+  const field = spec.field
+  const register = spec.register
 
   return (
-    <div key={field.id}>
-      <TextField
-        id={field.id}
-        name={field.name}
-        label={field.label}
-        fullWidth
-        variant="outlined"
-        type="datetime-local"
-        disabled={!field.ux.edit}
-        InputLabelProps={{ shrink: val?.length > 0 }}
-        {...register(field.name)} 
-      />
-    </div>
+    <TextField
+      id={field.id}
+      name={field.name}
+      label={field.label}
+      fullWidth
+      variant="outlined"
+      disabled={!field.ux.edit}
+      value=" "
+      InputProps={{
+        inputComponent: forwardRef(()=>
+          <div
+            className="MuiInputBase-input MuiOutlinedInput-input"
+            style={{padding:'16px'}}
+          >
+        <input
+          id={field.id+'_date$'}
+          name={field.name+'_date$'}
+          type="date"
+          disabled={!field.ux.edit}
+          {...register(field.name+'_date$')}
+        />
+        <input
+          id={field.id+'_time$'}
+          name={field.name+'_time$'}
+          type="time"
+          disabled={!field.ux.edit}
+          {...register(field.name+'_time$')} 
+        />
+      </div>
+        ),
+      }}
+    />
   )
 }
-
-
-
-
+*/
 
 /* Notes
 
@@ -188,8 +167,4 @@ https://mui.com/material-ui/react-grid/
 
  */
 
-
-
-export {
-  BasicEntityField
-}
+export { BasicEntityField }

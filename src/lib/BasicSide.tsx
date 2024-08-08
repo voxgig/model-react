@@ -21,25 +21,30 @@ import { vmap, cmap } from './vxg-util'
 
 const CMPNAME = 'BasicSide'
 
-
 const { Child, Open, Required } = Gubu
-const BasicSideSpecShape = Gubu({
-  side: {
-    name: String,
-    active: Boolean,
+const BasicSideSpecShape = Gubu(
+  {
+    side: {
+      name: String,
+      active: Boolean,
+    },
+
+    view: Child(
+      Open({
+        title: String,
+      }),
+      Required({})
+    ),
+
+    // Set MUI component props directly
+    ux: {
+      props: {
+        Drawer: {},
+      },
+    },
   },
-
-  view: Child(Open({
-    title: String
-  }), Required({})),
-  
-  // Set MUI component props directly 
-  mui: {
-    Drawer: {},
-  }
-}, {name: CMPNAME})
-
-
+  { name: CMPNAME }
+)
 
 function BasicSide (props: any) {
   const { spec, ctx } = props
@@ -49,72 +54,70 @@ function BasicSide (props: any) {
 
   // const theme = useTheme()
   const navigate = useNavigate()
-  const nav = useSelector((state:any)=>state.main.nav)
+  const nav = useSelector((state: any) => state.main.nav)
 
   const viewMap = basicSideSpec.view
   const mode = nav.mode
-  
-  const sections = vmap(nav.section,{
+
+  const sections = vmap(nav.section, {
     active: vmap.FILTER,
     name: vmap.COPY,
-    items: (_:any,p:any)=>vmap(p.self.item,{
-      active: vmap.FILTER,
-      name: vmap.COPY,
-      view: vmap.COPY,
-      title: vmap.FILTER((_:any,p:any)=>viewMap[p.self.view]?.title)
-    })
+    items: (_: any, p: any) =>
+      vmap(p.self.item, {
+        active: vmap.FILTER,
+        name: vmap.COPY,
+        view: vmap.COPY,
+        title: vmap.FILTER((_: any, p: any) => viewMap[p.self.view]?.title),
+      }),
   })
 
-  const selectView = useCallback((view:string)=>navigate('/view/'+view),[])
+  const selectView = useCallback(
+    (view: string) => navigate('/view/' + view),
+    []
+  )
 
-  
   return (
     <Drawer
-      variant="persistent"
-      anchor="left"
+      variant='persistent'
+      anchor='left'
       open={'shown' === mode}
-      className="vxg-BasicSide"
-      sx={(theme:any)=>({
+      className='vxg-BasicSide'
+      sx={(theme: any) => ({
         '& .MuiDrawer-paper': {
           // TODO: should use actual toolbar height; 16 should be from standard spacing
-          paddingTop: (theme.mixins.toolbar.minHeight+16)+'px',
-          width: 'var(--vxg-side-width)'
+          paddingTop: theme.mixins.toolbar.minHeight + 16 + 'px',
+          width: 'var(--vxg-side-width)',
         },
       })}
-      {...spec.mui.Drawer}
+      {...spec.ux.props.Drawer}
     >
-
-      { sections.map((section:any) =>
+      {sections.map((section: any) => (
         <Fragment key={section.name}>
           <List
-            className="vxg-BasicSide-section"
+            className='vxg-BasicSide-section'
             data-vxg-basicside-section={section.name}
           >
-            { section.items.map((item:any) =>
+            {section.items.map((item: any) => (
               <ListItem
                 key={item.name}
                 disablePadding
-                className="vxg-BasicSide-section-item"
+                className='vxg-BasicSide-section-item'
                 data-vxg-basicside-section-item={item.name}
               >
-                <ListItemButton
-                  onClick={()=>selectView(item.view)}
-                >
+                <ListItemButton onClick={() => selectView(item.view)}>
                   <ListItemIcon>
                     <ChevronLeftIcon />
                   </ListItemIcon>
                   <ListItemText primary={item.title} />
                 </ListItemButton>
               </ListItem>
-            )}
+            ))}
           </List>
           <Divider />
         </Fragment>
-      )} 
+      ))}
     </Drawer>
   )
 }
 
-export {
-  BasicSide
-}
+export { BasicSide }

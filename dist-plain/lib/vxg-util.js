@@ -1,7 +1,9 @@
 "use strict";
 // TODO: cmap,vmap probably belong in @voxgig/model utils
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.searchParamsToObject = exports.vmap = exports.cmap = void 0;
+exports.cmap = cmap;
+exports.vmap = vmap;
+exports.searchParamsToObject = searchParamsToObject;
 // Map child objects to new child objects
 function cmap(o, p) {
     return Object
@@ -15,7 +17,6 @@ function cmap(o, p) {
     }) : m[1]), (cmap.FILTER === s[m[0]] ? cmap.FILTER : s))), {})
         , (cmap.FILTER === _ ? 0 : r[n[0]] = _), r), {});
 }
-exports.cmap = cmap;
 cmap.COPY = (x) => x;
 // keep self if x is truthy, or function returning truthy-new-value or [truthy,new-value]
 cmap.FILTER = (x) => 'function' === typeof x ? ((y, p, _) => (_ = x(y, p), Array.isArray(_) ? !_[0] ? _[1] : cmap.FILTER : _)) : (x ? x : cmap.FILTER);
@@ -34,7 +35,6 @@ function vmap(o, p) {
     }) : m[1]), (vmap.FILTER === s[m[0]] ? vmap.FILTER : s))), {})
         , (vmap.FILTER === _ ? 0 : r.push(_)), r), []);
 }
-exports.vmap = vmap;
 vmap.COPY = (x) => x;
 vmap.FILTER = (x) => 'function' === typeof x ? ((y, p, _) => (_ = x(y, p), Array.isArray(_) ? !_[0] ? _[1] : vmap.FILTER : _)) : (x ? x : vmap.FILTER);
 vmap.KEY = (_, p) => p.key;
@@ -45,5 +45,4 @@ function searchParamsToObject(searchParams) {
     }
     return params;
 }
-exports.searchParamsToObject = searchParamsToObject;
 //# sourceMappingURL=vxg-util.js.map

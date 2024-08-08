@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.VxgBasicAdminPlugin = void 0;
+exports.VxgBasicAdminPlugin = VxgBasicAdminPlugin;
 const vxg_util_1 = require("./vxg-util");
 function VxgBasicAdminPlugin() {
     const seneca = this;
@@ -20,7 +20,6 @@ function VxgBasicAdminPlugin() {
             .reduce((s, n) => (s + ('' === s ? '?' : '') +
             (encodeURIComponent(n[0]) + '=' + encodeURIComponent(n[1]))), '');
         const path = '/view/' + msg.view + q;
-        console.log('PATH', path);
         msg.navigate(path);
     }
     async function setMode(msg, meta) {
@@ -30,7 +29,6 @@ function VxgBasicAdminPlugin() {
         meta.custom.state().current.view.name = msg.name;
         meta.custom.state().current.view.query = msg.query;
         meta.custom.state().current.view.hash = msg.hash;
-        console.log('syncView', msg.name);
     }
     async function prepareApp(_msg, meta) {
         let state = meta.custom.state();
@@ -65,5 +63,4 @@ function VxgBasicAdminPlugin() {
         };
     }
 }
-exports.VxgBasicAdminPlugin = VxgBasicAdminPlugin;
 //# sourceMappingURL=VxgBasicAdminPlugin.js.map
