@@ -1,5 +1,3 @@
-import type { Spec } from './basic-types'
-
 import { Gubu } from 'gubu'
 
 const { Open, Child } = Gubu

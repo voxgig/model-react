@@ -25,7 +25,7 @@ const BasicEntityTextFieldSpecShape = Gubu(
   { name: CMPNAME }
 )
 
-function BasicEntityTextField(props: any) {
+function BasicEntityTextField (props: any) {
   const { spec } = props
 
   const basicEntityTextBoxField: Spec = BasicEntityTextFieldSpecShape(spec)
@@ -42,7 +42,7 @@ function BasicEntityTextField(props: any) {
         name={field.name}
         label={field.label}
         fullWidth
-        variant="outlined"
+        variant='outlined'
         InputLabelProps={{ shrink: val?.length > 0 }}
         {...register(field.name)}
         disabled={!field.ux.edit}

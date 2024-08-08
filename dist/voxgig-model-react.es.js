@@ -10810,13 +10810,13 @@ function BasicHeadTool(props) {
   return tool;
 }
 const CMPNAME$p = "BasicHead";
-const { Child: Child$5, Exact, Open: Open$o, Required: Required$1 } = gubu_minExports.Gubu;
+const { Child: Child$6, Exact, Open: Open$o, Required: Required$1 } = gubu_minExports.Gubu;
 const BasicHeadSpecShape = gubu_minExports.Gubu(
   {
     head: {
       name: String,
       active: Boolean,
-      tool: Child$5(
+      tool: Child$6(
         Open$o({
           align: Exact("left", "right")
         })
@@ -62766,13 +62766,13 @@ const MaterialReactTable = (props) => {
   }
   return jsxRuntimeExports.jsx(MRT_TablePaper, { table });
 };
-const { Open: Open$n, Child: Child$4 } = gubu_minExports.Gubu;
+const { Open: Open$n, Child: Child$5 } = gubu_minExports.Gubu;
 const Shape$3 = gubu_minExports.Gubu(Open$n({
   name: String,
   prefix: String,
   ent: String,
   order: [String],
-  field: Child$4({}, {})
+  field: Child$5({}, {})
 }), { name: "BasicEntityList" });
 function VxgBasicEntityListPlugin(options) {
   const seneca = this;
@@ -65525,7 +65525,7 @@ function BasicEntityToggleButtonField(props) {
     /* @__PURE__ */ jsxRuntimeExports.jsx(BasicEntityFieldError, { err })
   ] }, `${field.id}-box`);
 }
-const { Open: Open$7 } = gubu_minExports.Gubu;
+const { Open: Open$7, Child: Child$4 } = gubu_minExports.Gubu;
 const Shape$2 = gubu_minExports.Gubu(
   Open$7({
     field: {}
@@ -65538,9 +65538,7 @@ function VxgBasicEntityFieldPlugin(options) {
   options.setPlugin(true);
   return {
     exports: {
-      handle: {
-        spec
-      }
+      handle: {}
     }
   };
 }
