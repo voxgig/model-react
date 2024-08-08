@@ -141,11 +141,15 @@ function VxgBasicLedPlugin (this: any, options: any) {
     )
 
     .message(
-      'aim:app,on:BasicLed,save:item',
-      async function (this: any, msg: any) {
+      'aim:app,on:BasicLed,save:item,redux$:true',
+      async function (this: any, msg: any, meta: any) {
         const data = Object.entries(spec.def.edit.field)
           .filter((n: any[]) => false !== n[1].ux.edit)
           .reduce((a: any, n: any[]) => ((a[n[0]] = msg.data[n[0]]), a), {})
+
+        const state = meta.custom.state()
+        let view = state.view[name]
+        view.alert = { active: true, message: 'Saved', level: 'success' }
 
         const item = await seneca.entity(entCanon).save$(data)
         navigate('/view/' + name + '/edit/' + item.id)
