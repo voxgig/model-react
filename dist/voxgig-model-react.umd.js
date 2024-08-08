@@ -65091,7 +65091,6 @@ To suppress this warning, you need to explicitly provide the \`palette.${key}Cha
     const { spec } = props;
     const basicEntityTextBoxField = BasicEntityTextFieldSpecShape(spec);
     const { field, getValues, register, errors } = basicEntityTextBoxField;
-    console.log("BasicEntityTextField", field);
     const val = getValues(field.name);
     const err = errors[field.name];
     return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
