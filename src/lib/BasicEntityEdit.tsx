@@ -1,9 +1,8 @@
-import React, { useEffect, useState, useCallback, useRef } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import { useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 
-import { Box, Grid, Button, Toolbar, Alert } from '@mui/material'
-import CheckIcon from '@mui/icons-material/Check'
+import { Box, Grid, Button, Toolbar } from '@mui/material'
 
 import { useForm } from 'react-hook-form'
 
@@ -11,48 +10,9 @@ import { BasicEntityField } from './BasicEntityField'
 
 import { VxgBasicEntityEditPlugin } from './VxgBasicEntityEditPlugin'
 
-import type { Spec } from './basic-types'
-
-import { Default, Exact, Gubu, Skip } from 'gubu'
 import { useSanitizedId } from './vxg-util'
 
 const CMPNAME = 'BasicEntityEdit'
-
-const { Open } = Gubu
-const BasicEntityEditSpecShape = Gubu(
-  Open({
-    field: Open({
-      id: String,
-      cid: '',
-      name: String,
-      kind: '',
-      label: '',
-      ux: Open({
-        kind: Exact(
-          'Text',
-          'TextBox',
-          'Date',
-          'DateTime',
-          'Time',
-          'Checkbox',
-          'Autocomplete',
-          'Slider',
-          'RadioGroup',
-          'Rating',
-          'Button',
-          'ButtonGroup',
-          'Select',
-          'Switch',
-          'ToggleButton'
-        ),
-        edit: Default(true),
-        rows: Default(3),
-        props: Open({}),
-      }),
-    }),
-  }),
-  { name: CMPNAME }
-)
 
 // TODO: make this debuggable
 // Resolver for react-hook-form
@@ -115,8 +75,6 @@ function BasicEntityEdit (props: any) {
 
   const [plugin, setPlugin] = useState(false)
   const [ready, setReady] = useState(false)
-  const uniqueIdRef = useRef(seneca.util.Nid())
-  const cid = props.spec.name + '-' + uniqueIdRef.current
 
   const cmpId = useSanitizedId()
   const cid = props.spec.name + '-' + cmpId
