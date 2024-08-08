@@ -118,6 +118,8 @@ function BasicEntityEdit (props: any) {
   const uniqueIdRef = useRef(seneca.util.Nid())
   const cid = props.spec.name + '-' + uniqueIdRef.current
 
+  const cmpId = useSanitizedId()
+  const cid = props.spec.name + '-' + cmpId
   // console.log('BasicEntityEdit', 'cid', cid)
 
   useEffect(() => {

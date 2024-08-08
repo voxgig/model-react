@@ -28,4 +28,5 @@ declare function resdefault(cat: {
 }, mapFn: (val: string, item: {
     title: string;
 }) => any): any;
-export { cmap, vmap, searchParamsToObject, resvalue, resdefault };
+declare function useSanitizedId(): string;
+export { cmap, vmap, searchParamsToObject, resvalue, resdefault, useSanitizedId, };

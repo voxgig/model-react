@@ -1,5 +1,7 @@
 // TODO: cmap,vmap probably belong in @voxgig/model utils
 
+import { useId } from 'react'
+
 // Map child objects to new child objects
 function cmap (o: any, p: any) {
   return Object.entries(o).reduce(
@@ -159,4 +161,17 @@ function resdefault (
   }
 }
 
-export { cmap, vmap, searchParamsToObject, resvalue, resdefault }
+function useSanitizedId () {
+  const id = useId()
+  const sanitizedId = id.replace(/[^a-zA-Z0-9_]/g, 'x')
+  return sanitizedId
+}
+
+export {
+  cmap,
+  vmap,
+  searchParamsToObject,
+  resvalue,
+  resdefault,
+  useSanitizedId,
+}
