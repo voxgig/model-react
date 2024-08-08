@@ -26,6 +26,7 @@ function BasicLed (props: any) {
   const uniqueIdRef = useRef(seneca.util.Nid())
   // TODO: use uniqueIdRef.current to avoid name clashes but sort out store issues
   const cid = name // + '-' + uniqueIdRef.current
+  // TODO: look into custom hook implementation useComponentId()
 
   const navigate = useNavigate()
 

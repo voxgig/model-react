@@ -10810,14 +10810,14 @@ function BasicHeadTool(props) {
   return tool;
 }
 const CMPNAME$p = "BasicHead";
-const { Child: Child$6, Exact, Open: Open$p, Required: Required$1 } = gubu_minExports.Gubu;
+const { Child: Child$5, Exact, Open: Open$o, Required: Required$1 } = gubu_minExports.Gubu;
 const BasicHeadSpecShape = gubu_minExports.Gubu(
   {
     head: {
       name: String,
       active: Boolean,
-      tool: Child$6(
-        Open$p({
+      tool: Child$5(
+        Open$o({
           align: Exact("left", "right")
         })
       )
@@ -62766,13 +62766,13 @@ const MaterialReactTable = (props) => {
   }
   return jsxRuntimeExports.jsx(MRT_TablePaper, { table });
 };
-const { Open: Open$o, Child: Child$5 } = gubu_minExports.Gubu;
-const Shape$3 = gubu_minExports.Gubu(Open$o({
+const { Open: Open$n, Child: Child$4 } = gubu_minExports.Gubu;
+const Shape$3 = gubu_minExports.Gubu(Open$n({
   name: String,
   prefix: String,
   ent: String,
   order: [String],
-  field: Child$5({}, {})
+  field: Child$4({}, {})
 }), { name: "BasicEntityList" });
 function VxgBasicEntityListPlugin(options) {
   const seneca = this;
@@ -64737,18 +64737,18 @@ function BasicEntityFieldError(props) {
   return err ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "vxg-BasicEntityFieldError-active", children: err.message }) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "vxg-BasicEntityFieldError-none" });
 }
 const CMPNAME$n = "BasicEntitySliderField";
-const { Open: Open$n } = gubu_minExports.Gubu;
+const { Open: Open$m } = gubu_minExports.Gubu;
 const BasicEntityCheckboxFieldSpecShape = gubu_minExports.Gubu(
-  Open$n({
-    field: Open$n({
+  Open$m({
+    field: Open$m({
       id: String,
       name: String,
       kind: "",
       label: "",
-      ux: Open$n({
+      ux: Open$m({
         kind: gubu_minExports.Exact("Checkbox"),
         edit: gubu_minExports.Default(true),
-        props: Open$n({})
+        props: Open$m({})
       })
     })
   }),
@@ -64788,15 +64788,15 @@ function BasicEntityCheckboxField(props) {
   ] }, `${field.id}-box`);
 }
 const CMPNAME$m = "BasicEntityAutocompleteField";
-const { Open: Open$m } = gubu_minExports.Gubu;
+const { Open: Open$l } = gubu_minExports.Gubu;
 const BasicEntityAutocompleteFieldSpecShape = gubu_minExports.Gubu(
-  Open$m({
-    field: Open$m({
+  Open$l({
+    field: Open$l({
       id: String,
       label: String,
       kind: String,
       name: String,
-      cat: Open$m({
+      cat: Open$l({
         default: String,
         title: String,
         multiple: Number,
@@ -64805,9 +64805,9 @@ const BasicEntityAutocompleteFieldSpecShape = gubu_minExports.Gubu(
           exclude: "",
           include: ""
         },
-        item: Open$m({})
+        item: Open$l({})
       }),
-      ux: Open$m({
+      ux: Open$l({
         kind: gubu_minExports.Exact("Autocomplete"),
         edit: gubu_minExports.Default(true)
       })
@@ -64867,21 +64867,21 @@ function resolveValue$1(value, cat) {
   }));
 }
 const CMPNAME$l = "BasicEntitySliderField";
-const { Open: Open$l } = gubu_minExports.Gubu;
+const { Open: Open$k } = gubu_minExports.Gubu;
 const BasicEntitySliderFieldSpecShape = gubu_minExports.Gubu(
-  Open$l({
-    field: Open$l({
+  Open$k({
+    field: Open$k({
       id: String,
       name: String,
       kind: "",
       label: "",
-      ux: Open$l({
+      ux: Open$k({
         kind: gubu_minExports.Exact("Slider"),
         edit: gubu_minExports.Default(true),
         step: gubu_minExports.Default(1),
         min: gubu_minExports.Default(0),
         max: gubu_minExports.Default(100),
-        props: Open$l({
+        props: Open$k({
           marks: gubu_minExports.Default({}),
           valueLabelDisplay: gubu_minExports.Exact("on", "auto", "off").Default("auto"),
           direction: gubu_minExports.Exact("horizontal", "vertical").Default("horizontal"),
@@ -64937,20 +64937,20 @@ function resolveMarks(marks) {
   return marks;
 }
 const CMPNAME$k = "BasicEntitySliderField";
-const { Open: Open$k } = gubu_minExports.Gubu;
+const { Open: Open$j } = gubu_minExports.Gubu;
 const BasicEntityRadioGroupFieldSpecShape = gubu_minExports.Gubu(
-  Open$k({
-    field: Open$k({
+  Open$j({
+    field: Open$j({
       id: String,
       name: String,
       kind: "",
       llabel: "",
-      ux: Open$k({
+      ux: Open$j({
         kind: gubu_minExports.Exact("RadioGroup"),
         edit: gubu_minExports.Default(true),
         direction: gubu_minExports.Exact("row", "column").Default("row")
       }),
-      cat: Open$k({
+      cat: Open$j({
         default: "",
         title: String,
         order: {
@@ -64958,7 +64958,7 @@ const BasicEntityRadioGroupFieldSpecShape = gubu_minExports.Gubu(
           exclude: "",
           include: ""
         },
-        item: Open$k({})
+        item: Open$j({})
       })
     })
   }),
@@ -65016,18 +65016,18 @@ function resolveDefault$1(cat) {
   return defaultValues;
 }
 const CMPNAME$j = "BasicEntityTextBoxField";
-const { Open: Open$j } = gubu_minExports.Gubu;
+const { Open: Open$i } = gubu_minExports.Gubu;
 const BasicEntityTextBoxFieldSpecShape = gubu_minExports.Gubu(
-  Open$j({
-    field: Open$j({
+  Open$i({
+    field: Open$i({
       id: String,
       name: String,
       kind: "",
       label: "",
-      ux: Open$j({
+      ux: Open$i({
         kind: gubu_minExports.Exact("TextBox"),
         edit: gubu_minExports.Default(true),
-        props: Open$j({})
+        props: Open$i({})
       })
     })
   }),
@@ -65058,18 +65058,18 @@ function BasicEntityTextBoxField(props) {
   ] }, field.name);
 }
 const CMPNAME$i = "BasicEntityTextField";
-const { Open: Open$i } = gubu_minExports.Gubu;
+const { Open: Open$h } = gubu_minExports.Gubu;
 const BasicEntityTextFieldSpecShape = gubu_minExports.Gubu(
-  Open$i({
-    field: Open$i({
+  Open$h({
+    field: Open$h({
       id: String,
       name: String,
       kind: "",
       label: "",
-      ux: Open$i({
+      ux: Open$h({
         kind: gubu_minExports.Exact("Text"),
         edit: gubu_minExports.Default(true),
-        props: Open$i({})
+        props: Open$h({})
       })
     })
   }),
@@ -65079,6 +65079,7 @@ function BasicEntityTextField(props) {
   const { spec } = props;
   const basicEntityTextBoxField = BasicEntityTextFieldSpecShape(spec);
   const { field, getValues, register, errors } = basicEntityTextBoxField;
+  console.log("BasicEntityTextField", field);
   const val = getValues(field.name);
   const err = errors[field.name];
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
@@ -65099,18 +65100,18 @@ function BasicEntityTextField(props) {
   ] }, field.id);
 }
 const CMPNAME$h = "BasicEntityDateField";
-const { Open: Open$h } = gubu_minExports.Gubu;
+const { Open: Open$g } = gubu_minExports.Gubu;
 const BasicEntityDateFieldSpecShape = gubu_minExports.Gubu(
-  Open$h({
-    field: Open$h({
+  Open$g({
+    field: Open$g({
       id: String,
       name: String,
       kind: "",
       label: "",
-      ux: Open$h({
+      ux: Open$g({
         kind: gubu_minExports.Exact("Date"),
         edit: gubu_minExports.Default(true),
-        props: Open$h({})
+        props: Open$g({})
       })
     })
   }),
@@ -65140,18 +65141,18 @@ function BasicEntityDateField(props) {
   ] }, field.id);
 }
 const CMPNAME$g = "BasicEntityTimeField";
-const { Open: Open$g } = gubu_minExports.Gubu;
+const { Open: Open$f } = gubu_minExports.Gubu;
 const BasicEntityTimeFieldSpecShape = gubu_minExports.Gubu(
-  Open$g({
-    field: Open$g({
+  Open$f({
+    field: Open$f({
       id: String,
       name: String,
       kind: "",
       label: "",
-      ux: Open$g({
+      ux: Open$f({
         kind: gubu_minExports.Exact("Time"),
         edit: gubu_minExports.Default(true),
-        props: Open$g({})
+        props: Open$f({})
       })
     })
   }),
@@ -65181,18 +65182,18 @@ function BasicEntityTimeField(props) {
   ] }, field.id);
 }
 const CMPNAME$f = "BasicEntityDateTimeField";
-const { Open: Open$f } = gubu_minExports.Gubu;
+const { Open: Open$e } = gubu_minExports.Gubu;
 const BasicEntityDateTimeFieldSpecShape = gubu_minExports.Gubu(
-  Open$f({
-    field: Open$f({
+  Open$e({
+    field: Open$e({
       id: String,
       name: String,
       kind: "",
       label: "",
-      ux: Open$f({
+      ux: Open$e({
         kind: gubu_minExports.Exact("DateTime"),
         edit: gubu_minExports.Default(true),
-        props: Open$f({})
+        props: Open$e({})
       })
     })
   }),
@@ -65222,19 +65223,19 @@ function BasicEntityDateTimeField(props) {
   ] }, field.id);
 }
 const CMPNAME$e = "BasicEntitySliderField";
-const { Open: Open$e } = gubu_minExports.Gubu;
+const { Open: Open$d } = gubu_minExports.Gubu;
 const BasicEntityRatingFieldSpecShape = gubu_minExports.Gubu(
-  Open$e({
-    field: Open$e({
+  Open$d({
+    field: Open$d({
       id: String,
       name: String,
       kind: "",
       label: "",
-      ux: Open$e({
+      ux: Open$d({
         kind: gubu_minExports.Exact("Rating"),
         edit: gubu_minExports.Default(true),
         precision: 1,
-        props: Open$e({})
+        props: Open$d({})
       })
     })
   }),
@@ -65270,19 +65271,19 @@ function BasicEntityRatingField(props) {
   ] }, `${field.id}-div`);
 }
 const CMPNAME$d = "BasicEntitySliderField";
-const { Open: Open$d } = gubu_minExports.Gubu;
+const { Open: Open$c } = gubu_minExports.Gubu;
 const BasicEntityButtonFieldSpecShape = gubu_minExports.Gubu(
-  Open$d({
-    field: Open$d({
+  Open$c({
+    field: Open$c({
       id: String,
       name: String,
       kind: "",
       label: String,
-      ux: Open$d({
+      ux: Open$c({
         kind: gubu_minExports.Exact("Button"),
         edit: true,
         variant: "contained",
-        props: Open$d({})
+        props: Open$c({})
       })
     })
   }),
@@ -65306,23 +65307,23 @@ function BasicEntityButtonField(props) {
   ) }, `${field.id}-div`);
 }
 const CMPNAME$c = "BasicEntitySliderField";
-const { Open: Open$c } = gubu_minExports.Gubu;
+const { Open: Open$b } = gubu_minExports.Gubu;
 const BasicEntityButtonGroupFieldSpecShape = gubu_minExports.Gubu(
-  Open$c({
-    field: Open$c({
+  Open$b({
+    field: Open$b({
       id: String,
       name: String,
       kind: "",
       label: "",
-      options: Open$c({
+      options: Open$b({
         label: { field: "label" },
         value: { field: "value" },
-        ents: Open$c({})
+        ents: Open$b({})
       }),
-      ux: Open$c({
+      ux: Open$b({
         kind: gubu_minExports.Exact("ButtonGroup"),
         edit: gubu_minExports.Default(true),
-        props: Open$c({})
+        props: Open$b({})
       })
     })
   }),
@@ -65336,15 +65337,15 @@ function BasicEntityButtonGroupField(props) {
   }, children: val == null ? void 0 : val[field.options.label.field] }, `${field.id}-${key}`)) })) }, `${field.id}-div`);
 }
 const CMPNAME$b = "BasicEntitySelectField";
-const { Open: Open$b } = gubu_minExports.Gubu;
+const { Open: Open$a } = gubu_minExports.Gubu;
 const BasicEntitySelectFieldSpecShape = gubu_minExports.Gubu(
-  Open$b({
-    field: Open$b({
+  Open$a({
+    field: Open$a({
       id: String,
       name: String,
       kind: "",
       label: "",
-      cat: Open$b({
+      cat: Open$a({
         default: "",
         title: String,
         multiple: Number,
@@ -65353,9 +65354,9 @@ const BasicEntitySelectFieldSpecShape = gubu_minExports.Gubu(
           exclude: "",
           include: ""
         },
-        item: Open$b({})
+        item: Open$a({})
       }),
-      ux: Open$b({
+      ux: Open$a({
         kind: gubu_minExports.Exact("Select"),
         edit: gubu_minExports.Default(true)
       })
@@ -65416,18 +65417,18 @@ function resolveValue(value, cat) {
   return resvalue(value, cat, (val, item) => val);
 }
 const CMPNAME$a = "BasicEntitySliderField";
-const { Open: Open$a } = gubu_minExports.Gubu;
+const { Open: Open$9 } = gubu_minExports.Gubu;
 const BasicEntitySwitchFieldSpecShape = gubu_minExports.Gubu(
-  Open$a({
-    field: Open$a({
+  Open$9({
+    field: Open$9({
       id: String,
       name: String,
       kind: "",
       label: "",
-      ux: Open$a({
+      ux: Open$9({
         kind: gubu_minExports.Exact("Switch"),
         edit: gubu_minExports.Default(true),
-        props: Open$a({})
+        props: Open$9({})
       })
     })
   }),
@@ -65467,15 +65468,15 @@ function BasicEntitySwitchField(props) {
   ] }, `${field.id}-box`);
 }
 const CMPNAME$9 = "BasicEntitySliderField";
-const { Open: Open$9 } = gubu_minExports.Gubu;
+const { Open: Open$8 } = gubu_minExports.Gubu;
 const BasicEntityToggleButtonFieldSpecShape = gubu_minExports.Gubu(
-  Open$9({
-    field: Open$9({
+  Open$8({
+    field: Open$8({
       id: String,
       name: String,
       kind: "",
       label: "",
-      cat: Open$9({
+      cat: Open$8({
         default: "",
         title: String,
         multiple: Number,
@@ -65484,12 +65485,12 @@ const BasicEntityToggleButtonFieldSpecShape = gubu_minExports.Gubu(
           exclude: "",
           include: ""
         },
-        item: Open$9({})
+        item: Open$8({})
       }),
-      ux: Open$9({
+      ux: Open$8({
         kind: gubu_minExports.Exact("ToggleButton"),
         edit: gubu_minExports.Default(true),
-        props: Open$9({})
+        props: Open$8({})
       })
     })
   }),
@@ -65525,9 +65526,9 @@ function BasicEntityToggleButtonField(props) {
     /* @__PURE__ */ jsxRuntimeExports.jsx(BasicEntityFieldError, { err })
   ] }, `${field.id}-box`);
 }
-const { Open: Open$8, Child: Child$4 } = gubu_minExports.Gubu;
+const { Open: Open$7 } = gubu_minExports.Gubu;
 const Shape$2 = gubu_minExports.Gubu(
-  Open$8({
+  Open$7({
     field: {}
   }),
   { name: "BasicEntityField" }
@@ -65538,7 +65539,9 @@ function VxgBasicEntityFieldPlugin(options) {
   options.setPlugin(true);
   return {
     exports: {
-      handle: {}
+      handle: {
+        spec
+      }
     }
   };
 }
@@ -65552,16 +65555,16 @@ Object.defineProperty(VxgBasicEntityFieldPlugin, "name", {
   value: "VxgBasicEntityFieldPlugin"
 });
 const CMPNAME$8 = "BasicEntityField";
-const { Open: Open$7 } = gubu_minExports.Gubu;
+const { Open: Open$6 } = gubu_minExports.Gubu;
 const BasicEntityFieldSpecShape = gubu_minExports.Gubu(
-  Open$7({
+  Open$6({
     cid: String,
-    field: Open$7({
+    field: Open$6({
       id: String,
       name: String,
       kind: "",
       label: "",
-      ux: Open$7({
+      ux: Open$6({
         kind: gubu_minExports.Exact(
           "Text",
           "TextBox",
@@ -65581,7 +65584,7 @@ const BasicEntityFieldSpecShape = gubu_minExports.Gubu(
         ),
         edit: gubu_minExports.Default(true),
         rows: gubu_minExports.Default(3),
-        props: Open$7({})
+        props: Open$6({})
       })
     })
   }),
@@ -65628,9 +65631,9 @@ function BasicEntityField(props) {
   const Field = fieldMap[field.ux.kind];
   return Field ? /* @__PURE__ */ jsxRuntimeExports.jsx(Field, { ctx, spec: basicEntityField }) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", {});
 }
-const { Open: Open$6, Child: Child$3 } = gubu_minExports.Gubu;
+const { Open: Open$5, Child: Child$3 } = gubu_minExports.Gubu;
 const Shape$1 = gubu_minExports.Gubu(
-  Open$6({
+  Open$5({
     name: String,
     prefix: String,
     ent: String,
@@ -65864,20 +65867,6 @@ Object.defineProperty(VxgBasicEntityEditPlugin, "name", {
   value: "VxgBasicEntityEditPlugin"
 });
 const CMPNAME$7 = "BasicEntityEdit";
-const { Open: Open$5 } = gubu_minExports.Gubu;
-const BasicEntityEditSpecShape = gubu_minExports.Gubu(
-  Open$5({
-    field: Open$5({
-      id: String,
-      cid: "",
-      name: String,
-      kind: "",
-      label: "",
-      ux: Open$5({})
-    })
-  }),
-  { name: CMPNAME$7 }
-);
 const makeResolver = (seneca, spec) => useCallback(
   (data) => __async(void 0, null, function* () {
     const { ent, name } = spec;
@@ -66047,8 +66036,10 @@ const BasicLedHeadSpecShape = gubu_minExports.Gubu(
       },
       {}
     ),
-    mui: Open$4({
-      Toolbar: Open$4({})
+    ux: Open$4({
+      props: {
+        Toolbar: Open$4({})
+      }
     })
   }),
   { name: CMPNAME$6 }

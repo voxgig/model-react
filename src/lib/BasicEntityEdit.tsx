@@ -14,7 +14,7 @@ import { VxgBasicEntityEditPlugin } from './VxgBasicEntityEditPlugin'
 import type { Spec } from './basic-types'
 
 import { Default, Exact, Gubu, Skip } from 'gubu'
-import { VxgBasicEntityFieldPlugin } from './VxgBasicEntityFieldPlugin'
+import { useSanitizedId } from './vxg-util'
 
 const CMPNAME = 'BasicEntityEdit'
 
