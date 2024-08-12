@@ -40,15 +40,16 @@ function BasicEntitySliderField (props: any) {
 
   const basicEntityAutocompleteField: Spec =
     BasicEntitySliderFieldSpecShape(spec)
-  const { control, field, getValues, errors } = basicEntityAutocompleteField
+  const { control, field, getValues, setValue, errors } =
+    basicEntityAutocompleteField
 
-  // if cmp not ready, call seneca.add('modify:edit') and seneca.add('modify:save')
-  // const val = getValues(field.name + '_uival$')
-  const val = getValues(field.name)
-  const err = errors[field.name]
+  const fieldName = field.name
+  const val = getValues(`${fieldName}_uival$`)
+  const marks = getValues(`${fieldName}_marks$`)
+  const err = errors[fieldName]
 
   const { field: controllerField } = useController({
-    name: field.name,
+    name: `${fieldName}_uival$`,
     control,
     defaultValue: val || field.ux.min,
   })
@@ -59,11 +60,15 @@ function BasicEntitySliderField (props: any) {
       <Slider
         key={`${field.id}-slider`}
         step={field.ux.step}
-        marks={resolveMarks(field.ux.props.marks)}
+        marks={marks}
         min={field.ux.min}
         max={field.ux.max}
         value={controllerField.value}
-        onChange={(_, newVal) => controllerField.onChange(newVal)}
+        onChange={(_, newVal: any) => {
+          // FIXME: this should be elsewhere, and flexible
+          setValue(field.name, newVal * 60)
+          controllerField.onChange(newVal)
+        }}
         disabled={!field.ux.edit}
         orientation={field.ux.direction}
         track={field.ux.track}
@@ -72,23 +77,6 @@ function BasicEntitySliderField (props: any) {
       <BasicEntityFieldError err={err} />
     </div>
   )
-}
-
-function resolveMarks (marks: any) {
-  if (
-    !marks ||
-    (typeof marks === 'object' && Object.keys(marks).length === 0)
-  ) {
-    return false
-  }
-  if (typeof marks === 'object') {
-    return Object.entries(marks).map(([key, value]) => ({
-      label: value,
-      value: +key,
-    }))
-  }
-
-  return marks
 }
 
 export { BasicEntitySliderField }

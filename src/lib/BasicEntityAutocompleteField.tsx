@@ -7,7 +7,6 @@ import type { Spec } from './basic-types'
 
 import { Default, Exact, Gubu } from 'gubu'
 import { BasicEntityFieldError } from './BasicEntityFieldError'
-import { resvalue, resdefault } from './vxg-util'
 const CMPNAME = 'BasicEntityAutocompleteField'
 
 const { Open } = Gubu
@@ -43,16 +42,25 @@ function BasicEntityAutocompleteField (props: any) {
 
   const basicEntityAutocompleteField: Spec =
     BasicEntityAutocompleteFieldSpecShape(spec)
-  const { control, field, errors } = basicEntityAutocompleteField
+  const { control, field, errors, getValues, setValue } =
+    basicEntityAutocompleteField
+
+  console.log('BERF', 'multiple', field.cat.multiple)
+
+  const defaultAlternative = field.cat.multiple === 1 ? {} : []
+  const defaultValues =
+    getValues(`${field.name}_default$`) || defaultAlternative
+  const categories = getValues(`${field.name}_cat$`) || []
+
   const err = errors[field.name]
 
   const {
     field: controllerField,
     fieldState: { error },
   } = useController({
-    name: field.name,
+    name: field.name + '_uival$',
     control,
-    defaultValue: resolveDefault(field.cat),
+    defaultValue: defaultValues,
   })
 
   return (
@@ -61,19 +69,22 @@ function BasicEntityAutocompleteField (props: any) {
         freeSolo
         forcePopupIcon
         multiple={field.cat.multiple !== 1}
-        options={resolveCategories(field.cat)}
+        options={categories}
         isOptionEqualToValue={(opt: any, val: any) =>
           opt === val ||
           (opt?.id != null && val?.id != null && opt.id === val.id) ||
           (opt?.key != null && val?.key != null && opt.key === val.key)
         }
-        getOptionLabel={(option: any) => option.title}
-        value={resolveValue(controllerField.value, field.cat)}
+        getOptionLabel={(option: any) => option?.title || ''}
+        value={controllerField.value}
         disabled={!field.ux.edit}
         onChange={(_, v: any) => {
-          controllerField.onChange(
+          console.log('v', v)
+          setValue(
+            field.name,
             Array.isArray(v) ? v.map((val) => val.key).join(',') : v?.key
           )
+          controllerField.onChange(v)
         }}
         renderInput={(params: any) => (
           <TextField {...params} label={field.label} />
@@ -84,132 +95,5 @@ function BasicEntityAutocompleteField (props: any) {
     </Box>
   )
 }
-
-export const resolveCategories = ({
-  item,
-}: {
-  item: Record<string, { title: string }>
-}) => Object.entries(item).map(([key, { title }]) => ({ key, title }))
-
-export function resolveDefault (cat: {
-  multiple: number
-  item: any
-  default: string
-}) {
-  return resdefault(cat, (val: string, item: { title: string }) => ({
-    key: val,
-    title: item.title,
-  }))
-}
-
-export function resolveValue (
-  value: any,
-  cat: { multiple: number; item: Record<string, { title: string }> }
-) {
-  return resvalue(value, cat, (val: string, item: { title: string }) => ({
-    key: val,
-    title: item.title,
-  }))
-}
-
-// export function resolveDefault (cat: {
-//   multiple: number
-//   item: any
-//   default: string
-// }) {
-//   const { multiple, item: items, default: defaultValues } = cat
-
-//   if (Object.keys(items).length === 0) {
-//     return multiple === 1 ? '' : []
-//   }
-
-//   const defaultItems = defaultValues.split(',')
-
-//   const mapResolvedDefault = (list: string[]) =>
-//     list.map((val: any) => ({
-//       title: items[val]?.title,
-//       key: val,
-//     }))
-
-//   switch (multiple) {
-//     case 1:
-//       return defaultItems[0]
-//         ? {
-//             key: defaultItems[0],
-//             title: items[defaultItems[0]]?.title,
-//           }
-//         : ''
-//     case -1:
-//       return mapResolvedDefault(defaultItems) || []
-//     default:
-//       return mapResolvedDefault(defaultItems.slice(0, multiple)) || []
-//   }
-// }
-
-// export function resolveValueUtil (
-//   value: any,
-//   cat: { multiple: number; item: Record<string, { title: string }> },
-//   mapFn: (val: string, item: { title: string }) => any
-// ) {
-//   const { item: items, multiple } = cat
-
-//   if (Object.keys(items).length === 0) {
-//     return multiple === 1 ? '' : []
-//   }
-
-//   if (Array.isArray(value)) {
-//     return multiple === 1 && value[0] ? value[0] : value.slice(0, multiple)
-//   }
-
-//   if (typeof value === 'object') {
-//     return multiple === 1 ? value : [value]
-//   }
-
-//   const splitValue = value.split(',')
-
-//   const mapValue = (val: string) =>
-//     items[val] ? mapFn(val, items[val]) : undefined
-
-//   switch (multiple) {
-//     case 1:
-//       return mapValue(splitValue[0]) || ''
-//     case -1:
-//       return splitValue.map(mapValue).filter(Boolean) || []
-//     default:
-//       return splitValue.slice(0, multiple).map(mapValue).filter(Boolean)
-//   }
-// }
-
-// function resolveValueToObject (
-//   value: any,
-//   cat: { multiple: number; item: Record<string, { title: string }> }
-// ) {
-//   const { item: items, multiple } = cat
-
-//   if (Object.keys(items).length === 0) {
-//     return multiple === 1 ? '' : []
-//   }
-
-//   if (Array.isArray(value)) {
-//     return multiple === 1 && value[0] ? value[0] : value.slice(0, multiple)
-//   }
-
-//   if (typeof value === 'object') {
-//     return multiple === 1 ? value : [value]
-//   }
-
-//   const mapValue = (val: string) =>
-//     items[val] ? { key: val, title: items[val].title } : undefined
-//   const splitValue = value.split(',')
-
-//   switch (multiple) {
-//     case 1:
-//       return mapValue(splitValue[0]) || ''
-//     case -1:
-//       return splitValue.map(mapValue).filter(Boolean) || []
-//     default:
-//       return splitValue.slice(0, multiple).map(mapValue).filter(Boolean)
-//   }
-// }
 
 export { BasicEntityAutocompleteField }

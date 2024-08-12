@@ -98,6 +98,10 @@ function resvalue (
 ) {
   const { item: items, multiple } = cat
 
+  if (!value) {
+    return multiple === 1 ? '' : []
+  }
+
   if (Object.keys(items).length === 0) {
     return multiple === 1 ? '' : []
   }

@@ -1,6 +1,7 @@
 import type { Spec } from './basic-types'
 
 import { Gubu } from 'gubu'
+import { resdefault, resvalue } from './vxg-util'
 
 const { Open, Child } = Gubu
 
@@ -22,6 +23,8 @@ function VxgBasicEntityEditPlugin (this: any, options: any) {
 
   const slot = spec.prefix + spec.name
 
+  console.log('VxgBasicEntityEditPlugin', 'slot', slot, 'spec.name', spec.name)
+
   const fields = spec.order.reduce(
     (a: any, fn: any) => (
       fixField(fn, spec.field[fn], spec), a.push(spec.field[fn]), a
@@ -33,7 +36,8 @@ function VxgBasicEntityEditPlugin (this: any, options: any) {
     if ('Date' === field.ux.kind) {
       seneca
         .add(
-          'aim:app,on:BasicLed,modify:edit,view:' + spec.name,
+          'aim:app,on:BasicLed,modify:edit',
+          { view: spec.name },
           async function modify_edit_Date (this: any, msg: any) {
             const out = await this.prior(msg)
 
@@ -68,7 +72,8 @@ function VxgBasicEntityEditPlugin (this: any, options: any) {
     } else if ('Time' === field.ux.kind) {
       seneca
         .add(
-          'aim:app,on:BasicLed,modify:edit,view:' + spec.name,
+          'aim:app,on:BasicLed,modify:edit',
+          { view: spec.name },
           async function modify_edit_Time (this: any, msg: any) {
             const out = await this.prior(msg)
 
@@ -103,7 +108,8 @@ function VxgBasicEntityEditPlugin (this: any, options: any) {
     } else if ('DateTime' === field.ux.kind) {
       seneca
         .add(
-          'aim:app,on:BasicLed,modify:edit,view:' + spec.name,
+          'aim:app,on:BasicLed,modify:edit',
+          { view: spec.name },
           async function modify_edit_Datetime (this: any, msg: any) {
             const out = await this.prior(msg)
 
@@ -136,38 +142,134 @@ function VxgBasicEntityEditPlugin (this: any, options: any) {
         )
     } else if ('Slider' === field.ux.kind) {
       // console.log('VxgBasicEntityEditPlugin', 'Slider')
-      seneca
-        .add(
-          'aim:app,on:BasicLed,modify:edit',
-          { view: spec.name },
-          async function modify_edit_Slider (this: any, msg: any) {
-            const out = await this.prior(msg)
+      seneca.add(
+        'aim:app,on:BasicLed,modify:edit',
+        { view: spec.name },
+        async function modify_edit_Slider (this: any, msg: any) {
+          const out = await this.prior(msg)
 
-            let item = { ...out }
+          let item = { ...out }
 
-            if (!item[field.name + '_orig$']) {
-              item[field.name + '_orig$'] = item[field.name]
-              item[field.name] = Number(item[field.name]) / 60
-            }
-
-            // return { ...msg, item }
-            return item
+          if (!item[field.name + '_orig$']) {
+            item[field.name + '_orig$'] = item[field.name]
+            item[field.name + '_uival$'] = Number(item[field.name]) / 60
+            item[field.name + '_marks$'] = util.resolveMarks(
+              field.ux.props.marks
+            )
           }
-        )
 
-        .add(
-          'aim:app,on:BasicLed,modify:save',
-          { view: spec.name },
-          async function modify_save_Slider (this: any, msg: any) {
-            const out = await this.prior(msg)
+          return item
+        }
+      )
+    } else if ('Select' === field.ux.kind) {
+      console.log('VxgBasicEntityEditPlugin', 'Select', field.name)
+      seneca.add(
+        'aim:app,on:BasicLed,modify:edit',
+        { view: spec.name },
+        async function modify_edit_Select (this: any, msg: any) {
+          const out = await this.prior(msg)
 
-            let item = { ...out }
+          let item = { ...out }
 
-            item[field.name] = Number(item[field.name]) * 60
-
-            return item
+          if (!item[field.name + '_orig$']) {
+            item[field.name + '_orig$'] = item[field.name]
+            item[field.name + '_default$'] = resdefault(
+              field.cat,
+              (val: string) => val
+            )
+            item[field.name + '_cat$'] = Object.keys(field.cat.item).map(
+              (key) => ({
+                title: field.cat.item?.[key]?.title,
+                key: key,
+              })
+            )
+            item[field.name + '_uival$'] = resvalue(
+              item[field.name],
+              field.cat,
+              (val: string) => val
+            )
           }
-        )
+
+          return item
+        }
+      )
+    } else if ('Autocomplete' === field.ux.kind) {
+      console.log('VxgBasicEntityEditPlugin', 'Autocomplete', field.name)
+      seneca.add(
+        'aim:app,on:BasicLed,modify:edit',
+        { view: spec.name },
+        async function modify_edit_Autocomplete (this: any, msg: any) {
+          const out = await this.prior(msg)
+
+          let item = { ...out }
+
+          if (!item[field.name + '_orig$']) {
+            item[field.name + '_orig$'] = item[field.name]
+            item[field.name + '_default$'] = resdefault(
+              field.cat,
+              (val: string, item: { title: string }) => ({
+                key: val,
+                title: item.title,
+              })
+            )
+            item[field.name + '_cat$'] = Object.keys(field.cat.item).map(
+              (key) => ({
+                title: field.cat.item?.[key]?.title,
+                key: key,
+              })
+            )
+            item[field.name + '_uival$'] = resvalue(
+              item[field.name],
+              field.cat,
+              (val: string, item: { title: string }) => ({
+                key: val,
+                title: item.title,
+              })
+            )
+          }
+
+          // console.log('modify_edit_Autocomplete', item)
+
+          return item
+        }
+      )
+    } else if ('RadioGroup' === field.ux.kind) {
+      console.log('VxgBasicEntityEditPlugin', 'RadioGroup', field.name)
+      seneca.add(
+        'aim:app,on:BasicLed,modify:edit',
+        { view: spec.name },
+        async function modify_edit_RadioGroup (this: any, msg: any) {
+          const out = await this.prior(msg)
+
+          let item = { ...out }
+
+          if (!item[field.name + '_orig$']) {
+            item[field.name + '_orig$'] = item[field.name]
+
+            item[field.name + '_default$'] = field.cat.default
+
+            item[field.name + '_cat$'] = Object.keys(field.cat.item).map(
+              (key) => ({
+                title: field.cat.item?.[key]?.title,
+                key: key,
+              })
+            )
+
+            item[field.name + '_uival$'] = resvalue(
+              item[field.name],
+              field.cat,
+              (val: string, item: { title: string }) => ({
+                key: val,
+                title: item.title,
+              })
+            )
+          }
+
+          // console.log('modify_edit_Autocomplete', item)
+
+          return item
+        }
+      )
     }
   }
 
@@ -193,6 +295,16 @@ function fixField (name: string, field: any, spec: any) {
 }
 
 const util = {
+  resolveMarks: (marks: any) => {
+    if (!marks || (typeof marks === 'object' && !Object.keys(marks).length))
+      return false
+    return typeof marks === 'object'
+      ? Object.entries(marks).map(([key, value]) => ({
+          label: value,
+          value: +key,
+        }))
+      : marks
+  },
   dateTimeFromUTC: (utc: number, tz?: string) => {
     const date = new Date(utc)
     const iso = date.toISOString()

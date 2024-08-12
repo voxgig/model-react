@@ -7,7 +7,6 @@ import type { Spec } from './basic-types'
 
 import { Default, Exact, Gubu } from 'gubu'
 import { BasicEntityFieldError } from './BasicEntityFieldError'
-import { resvalue, resdefault } from './vxg-util'
 const CMPNAME = 'BasicEntitySelectField'
 
 const { Open } = Gubu
@@ -42,16 +41,20 @@ function BasicEntitySelectField (props: any) {
   const { spec } = props
 
   const basicEntitySelectField: Spec = BasicEntitySelectFieldSpecShape(spec)
-  const { control, field, errors } = basicEntitySelectField
+  const { control, field, errors, getValues, setValue } = basicEntitySelectField
   const err = errors[field.name]
+
+  const defaultValues =
+    getValues(field.name + '_default$') || (field.cat.multiple === 1 ? '' : [])
+  const categories = getValues(field.name + '_cat$') || []
 
   const {
     field: controllerField,
     fieldState: { error },
   } = useController({
-    name: field.name,
+    name: field.name + '_uival$',
     control,
-    defaultValue: resolveDefault(field.cat),
+    defaultValue: defaultValues,
   })
 
   return (
@@ -61,17 +64,19 @@ function BasicEntitySelectField (props: any) {
         <Select
           labelId={`${field.id}-label`}
           id={`${field.id}-select`}
-          value={resolveValue(controllerField.value, field.cat)}
+          value={controllerField.value}
           multiple={field.cat.multiple !== 1}
           label={field.name}
           onChange={(event: any) => {
-            const v = event.target.value
-            controllerField.onChange(Array.isArray(v) ? v.join(',') : v)
+            // TODO: consider moving it to a msg
+            const { value } = event.target
+            setValue(field.name, Array.isArray(value) ? value.join(',') : value)
+            controllerField.onChange(value)
           }}
           disabled={!field.ux.edit}
           {...field.ux.props}
         >
-          {resolveCategories(field.cat).map((opt: any) => (
+          {categories.map((opt: any) => (
             <MenuItem key={opt.key} value={opt.key}>
               {opt.title}
             </MenuItem>
@@ -82,129 +87,5 @@ function BasicEntitySelectField (props: any) {
     </Box>
   )
 }
-
-// Returns array of options based on field.cat object
-export function resolveCategories (cat: any) {
-  return Object.keys(cat.item).map((key) => ({
-    title: cat.item?.[key]?.title,
-    key: key,
-  }))
-}
-
-export function resolveDefault (cat: {
-  multiple: number
-  item: any
-  default: string
-}) {
-  return resdefault(cat, (val: string, item: { title: string }) => val)
-}
-
-export function resolveValue (
-  value: any,
-  cat: { multiple: number; item: Record<string, { title: string }> }
-) {
-  return resvalue(value, cat, (val: string, item: { title: string }) => val)
-}
-
-// export function resolveDefault (cat: {
-//   multiple: number
-//   item: any
-//   default: string
-// }) {
-//   const { multiple, item: items, default: defaultValues } = cat
-
-//   if (Object.keys(items).length === 0) {
-//     return multiple === 1 ? '' : []
-//   }
-
-//   const defaultItems = defaultValues.split(',')
-
-//   const mapResolvedDefault = (list: string[]) =>
-//     list.map((val: any) => (items[val] ? val : undefined))
-
-//   switch (multiple) {
-//     case 1:
-//       return defaultItems[0] ? defaultItems[0] : ''
-//     case -1:
-//       return mapResolvedDefault(defaultItems).filter(Boolean) || []
-//     default:
-//       return (
-//         mapResolvedDefault(defaultItems.slice(0, multiple)).filter(Boolean) ||
-//         []
-//       )
-//   }
-// }
-
-// export function resolveValueUtil (
-//   value: any,
-//   cat: { multiple: number; item: Record<string, { title: string }> },
-//   mapFn: (val: string, item: { title: string }) => any
-// ) {
-//   const { item: items, multiple } = cat
-
-//   if (Object.keys(items).length === 0) {
-//     return multiple === 1 ? '' : []
-//   }
-
-//   if (Array.isArray(value)) {
-//     return multiple === 1 && value[0] ? value[0] : value.slice(0, multiple)
-//   }
-
-//   if (typeof value === 'object') {
-//     return multiple === 1 ? value : [value]
-//   }
-
-//   const splitValue = value.split(',')
-
-//   const mapValue = (val: string) =>
-//     items[val] ? mapFn(val, items[val]) : undefined
-
-//   switch (multiple) {
-//     case 1:
-//       return mapValue(splitValue[0]) || ''
-//     case -1:
-//       console.log('splitValue', splitValue)
-//       console.log('items', items[splitValue[0]])
-//       console.log(
-//         'splitValue.map(mapValue)',
-//         splitValue.map(mapValue).filter(Boolean)
-//       )
-//       return splitValue.map(mapValue).filter(Boolean) || []
-//     default:
-//       console.log('splitValue', splitValue)
-//       return splitValue.slice(0, multiple).map(mapValue).filter(Boolean)
-//   }
-// }
-
-// function resolveValueToKey (
-//   value: any,
-//   cat: { multiple: number; item: Record<string, { title: string }> }
-// ) {
-//   const { item: items, multiple } = cat
-
-//   if (Object.keys(items).length === 0) {
-//     return multiple === 1 ? '' : []
-//   }
-
-//   if (Array.isArray(value)) {
-//     return multiple === 1 && value[0] ? value[0] : value.slice(0, multiple)
-//   }
-
-//   if (typeof value === 'object') {
-//     return multiple === 1 ? value : [value]
-//   }
-
-//   const mapValue = (val: string) => (items[val] ? val : undefined)
-//   const splitValue = value.split(',')
-
-//   switch (multiple) {
-//     case 1:
-//       return mapValue(splitValue[0]) || ''
-//     case -1:
-//       return splitValue.map(mapValue).filter(Boolean) || []
-//     default:
-//       return splitValue.slice(0, multiple).map(mapValue).filter(Boolean) || []
-//   }
-// }
 
 export { BasicEntitySelectField }

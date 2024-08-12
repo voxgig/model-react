@@ -42,7 +42,13 @@ function BasicEntityRadioGroupField (props: any) {
 
   const basicEntityRadioGroupField: Spec =
     BasicEntityRadioGroupFieldSpecShape(spec)
-  const { control, field, errors } = basicEntityRadioGroupField
+  const { control, field, errors, getValues, setValue } =
+    basicEntityRadioGroupField
+
+  const defaultValues = getValues(`${field.name}_default$`) || ''
+  const categories = getValues(`${field.name}_cat$`) || []
+
+  console.log('BERF', 'default', defaultValues)
 
   const err = errors[field.name]
 
@@ -50,9 +56,9 @@ function BasicEntityRadioGroupField (props: any) {
     field: controllerField,
     fieldState: { error },
   } = useController({
-    name: field.name,
+    name: field.name + '_uival$',
     control,
-    defaultValue: field.cat.default,
+    defaultValue: defaultValues,
   })
 
   return (
@@ -66,7 +72,7 @@ function BasicEntityRadioGroupField (props: any) {
         disabled={!field.ux.edit}
         {...field.ux.props}
       >
-        {resolveCategories(field.cat).map((option: any) => (
+        {categories.map((option: any) => (
           <FormControlLabel
             key={`${option.key}-option`}
             value={option.key}
