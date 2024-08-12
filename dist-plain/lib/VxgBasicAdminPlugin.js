@@ -16,9 +16,9 @@ function VxgBasicAdminPlugin() {
         await this.post('aim:app,prepare:app');
     });
     async function setPath(msg, meta) {
-        const q = Object.entries(msg.query)
-            .reduce((s, n) => (s + ('' === s ? '?' : '') +
-            (encodeURIComponent(n[0]) + '=' + encodeURIComponent(n[1]))), '');
+        const q = Object.entries(msg.query).reduce((s, n) => s +
+            ('' === s ? '?' : '') +
+            (encodeURIComponent(n[0]) + '=' + encodeURIComponent(n[1])), '');
         const path = '/view/' + msg.view + q;
         msg.navigate(path);
     }
@@ -33,6 +33,7 @@ function VxgBasicAdminPlugin() {
     async function prepareApp(_msg, meta) {
         let state = meta.custom.state();
         let model = seneca.context.model;
+        console.log('model', model);
         let frame = model.app.web.frame.private;
         let viewMap = frame.view;
         // let partMap = frame.part
@@ -41,12 +42,17 @@ function VxgBasicAdminPlugin() {
             view: {
                 name: '',
                 query: {},
-                hash: ''
-            }
+                hash: '',
+            },
         };
         const viewState = (0, vxg_util_1.cmap)(viewMap, {
             name: vxg_util_1.cmap.COPY,
             active: vxg_util_1.cmap.FILTER,
+            alert: {
+                active: false,
+                message: '',
+                level: 'info',
+            },
         });
         state.view = viewState;
         state.nav = {
@@ -58,8 +64,8 @@ function VxgBasicAdminPlugin() {
                     active: vxg_util_1.cmap.FILTER,
                     view: vxg_util_1.cmap.COPY,
                     name: vxg_util_1.cmap.COPY,
-                })
-            })
+                }),
+            }),
         };
     }
 }

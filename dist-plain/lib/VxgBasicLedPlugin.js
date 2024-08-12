@@ -94,10 +94,13 @@ function VxgBasicLedPlugin(options) {
         await seneca.entity(entCanon).save$({ add$: true, slot$: slotName });
         navigate('/view/' + name + '/add');
     })
-        .message('aim:app,on:BasicLed,save:item', async function (msg) {
+        .message('aim:app,on:BasicLed,save:item', async function (msg, meta) {
         const data = Object.entries(spec.def.edit.field)
             .filter((n) => false !== n[1].ux.edit)
             .reduce((a, n) => ((a[n[0]] = msg.data[n[0]]), a), {});
+        // const state = meta.custom.state()
+        // let view = state.view[name]
+        // view.alert = { active: true, message: 'Saved', level: 'success' }
         const item = await seneca.entity(entCanon).save$(data);
         navigate('/view/' + name + '/edit/' + item.id);
     });
