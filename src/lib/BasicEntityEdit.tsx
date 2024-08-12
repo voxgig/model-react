@@ -94,7 +94,7 @@ function BasicEntityEdit (props: any) {
   }, [])
 
   const { spec, slot, fields } = seneca.export(
-    'VxgBasicEntityEditPlugin/handle'
+    'VxgBasicEntityEditPlugin$' + cid + '/handle'
   ) || { spec: {}, slot: null, fields: [] }
 
   const { ent, name } = spec
@@ -119,11 +119,11 @@ function BasicEntityEdit (props: any) {
   // }
 
   useEffect(() => {
-    const fetchData = async () => {
-      console.log('BEE', 'effect', 'mod:edit', 'init', 'view', name)
-      console.log('BEE', 'effect', 'mod:edit', 'init', 'item', item?.title)
+    const modifyEdit = async () => {
+      console.log('BEE', 'effect', 'modify:edit', 'init', 'view', name)
+      console.log('BEE', 'effect', 'modify:edit', 'init', 'item', item)
       if (item && name) {
-        // console.log('BEE', 'effect', 'modify:edit', 'init')
+        console.log('BEE', 'effect', 'modify:edit', 'seneca.direct')
         item = await seneca.direct('aim:app,on:BasicLed,modify:edit', {
           view: name,
           item,
@@ -134,7 +134,7 @@ function BasicEntityEdit (props: any) {
       }
     }
 
-    fetchData()
+    modifyEdit()
   }, [item, name])
 
   const params: any = useParams()
@@ -159,6 +159,7 @@ function BasicEntityEdit (props: any) {
     register,
     handleSubmit,
     getValues,
+    setValue,
     reset,
     control,
     formState: { errors },
@@ -201,6 +202,7 @@ function BasicEntityEdit (props: any) {
                     field,
                     register,
                     getValues,
+                    setValue,
                     control,
                     errors,
                   }}
