@@ -48,7 +48,8 @@ const BasicEntityFieldSpecShape = Gubu(
           'ButtonGroup',
           'Select',
           'Switch',
-          'ToggleButton'
+          'ToggleButton',
+          'custom'
         ),
         edit: Default(true),
         rows: Default(3),
@@ -79,7 +80,7 @@ const fieldMap: any = {
 
 function BasicEntityField (props: any) {
   const { ctx, spec } = props
-  const { seneca } = ctx()
+  const { seneca, cmp } = ctx()
 
   const basicEntityField: Spec = BasicEntityFieldSpecShape(spec)
   const [plugin, setPlugin] = useState(false)
@@ -107,7 +108,8 @@ function BasicEntityField (props: any) {
   // ) || { Field: null }
 
   const field: any = spec.field
-  const Field: any = fieldMap[field.ux.kind]
+  const Field: any =
+    'custom' === field.ux.kind ? cmp[field.ux.cmp] : fieldMap[field.ux.kind]
 
   return Field ? <Field ctx={ctx} spec={basicEntityField} /> : <div></div>
 }
