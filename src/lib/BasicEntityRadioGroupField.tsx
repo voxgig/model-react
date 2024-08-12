@@ -47,9 +47,6 @@ function BasicEntityRadioGroupField (props: any) {
 
   const defaultValues = getValues(`${field.name}_default$`) || ''
   const categories = getValues(`${field.name}_cat$`) || []
-
-  console.log('BERF', 'default', defaultValues)
-
   const err = errors[field.name]
 
   const {
@@ -84,18 +81,6 @@ function BasicEntityRadioGroupField (props: any) {
       <BasicEntityFieldError err={err} />
     </>
   )
-}
-
-export function resolveCategories (cat: any) {
-  return Object.keys(cat.item).map((key) => ({
-    title: cat.item?.[key]?.title,
-    key: key,
-  }))
-}
-
-export function resolveDefault (cat: any) {
-  const { default: defaultValues } = cat
-  return defaultValues
 }
 
 export { BasicEntityRadioGroupField }

@@ -45,7 +45,7 @@ function BasicEntityAutocompleteField (props: any) {
   const { control, field, errors, getValues, setValue } =
     basicEntityAutocompleteField
 
-  console.log('BERF', 'multiple', field.cat.multiple)
+  // console.log('BERF', 'multiple', field.cat.multiple)
 
   const defaultAlternative = field.cat.multiple === 1 ? {} : []
   const defaultValues =

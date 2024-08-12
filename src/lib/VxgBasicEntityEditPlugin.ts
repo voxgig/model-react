@@ -258,14 +258,11 @@ function VxgBasicEntityEditPlugin (this: any, options: any) {
             item[field.name + '_uival$'] = resvalue(
               item[field.name],
               field.cat,
-              (val: string, item: { title: string }) => ({
-                key: val,
-                title: item.title,
-              })
+              (val: string) => val
             )
           }
 
-          // console.log('modify_edit_Autocomplete', item)
+          // console.log('modify_edit_RadioGroup', item)
 
           return item
         }
