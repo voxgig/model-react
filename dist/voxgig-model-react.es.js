@@ -65963,6 +65963,7 @@ const makeResolver = (seneca, spec) => useCallback(
       values: values2,
       errors
     };
+    console.log("makeResolver", "out", out);
     return out;
   }),
   [spec.ent]

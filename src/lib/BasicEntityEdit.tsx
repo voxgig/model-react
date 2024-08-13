@@ -64,6 +64,8 @@ const makeResolver = (seneca: any, spec: any) =>
         errors,
       }
 
+      console.log('makeResolver', 'out', out)
+
       return out
     },
     [spec.ent]
